@@ -78,6 +78,10 @@ export class ScrollView extends Layout {
   _verticalScrollBar = null;
   _horizontalScrollBar = null;
 
+  _scrollBarThumbTextureFile = null;
+  _scrollBarThumbCapInsets = null;
+  _scrollBarThumbColor = null;
+
   _scrollViewEventListener = null;
   _scrollViewEventSelector = null;
   _className = "ScrollView";
@@ -1784,6 +1788,51 @@ export class ScrollView extends Layout {
   }
 
   /**
+   * Set a custom Scale9Sprite texture for the scroll bar thumb.
+   * Replaces the default three-part (rounded caps + body) appearance with a nine-slice sprite.
+   * Must be called after the scroll bar is enabled.
+   * @param {string|SpriteFrame} file Texture file path or SpriteFrame.
+   * @param {Rect} [capInsets] Nine-slice cap insets.
+   * @param {Color} [color] Tint color for the thumb sprite.
+   */
+  setScrollBarThumbTexture(file, capInsets, color) {
+    assert(this._scrollBarEnabled, "Scroll bar should be enabled!");
+    this._scrollBarThumbTextureFile = file;
+    this._scrollBarThumbCapInsets = capInsets || null;
+    this._scrollBarThumbColor = color || null;
+    if (this._verticalScrollBar) {
+      this._verticalScrollBar.setThumbTexture(file, capInsets, color);
+    }
+    if (this._horizontalScrollBar) {
+      this._horizontalScrollBar.setThumbTexture(file, capInsets, color);
+    }
+  }
+
+  /**
+   * Get the texture file/SpriteFrame used for the scroll bar thumb, or null if using the default.
+   * @returns {string|SpriteFrame|null}
+   */
+  getScrollBarThumbTexture() {
+    return this._scrollBarThumbTextureFile;
+  }
+
+  /**
+   * Get the cap insets used for the scroll bar thumb's Scale9Sprite, or null if not set.
+   * @returns {Rect|null}
+   */
+  getScrollBarThumbCapInsets() {
+    return this._scrollBarThumbCapInsets;
+  }
+
+  /**
+   * Get the tint color applied to the scroll bar thumb, or null if not set.
+   * @returns {Color|null}
+   */
+  getScrollBarThumbColor() {
+    return this._scrollBarThumbColor;
+  }
+
+  /**
    * Gets inner container of ScrollView. Inner container is the container of ScrollView's children.
    * @returns {Layout}
    */
@@ -1881,6 +1930,13 @@ export class ScrollView extends Layout {
           scrollView.isScrollBarAutoHideEnabled()
         );
         this.setScrollBarAutoHideTime(scrollView.getScrollBarAutoHideTime());
+        if (scrollView.getScrollBarThumbTexture()) {
+          this.setScrollBarThumbTexture(
+            scrollView.getScrollBarThumbTexture(),
+            scrollView.getScrollBarThumbCapInsets(),
+            scrollView.getScrollBarThumbColor()
+          );
+        }
       }
     }
   }

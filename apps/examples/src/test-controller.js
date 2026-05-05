@@ -92,7 +92,7 @@ export class TestController extends Layer {
     const bg = new ImageView();
     bg.setScale9Enabled(true);
     bg.ignoreContentAdaptWithSize(false);
-    bg.loadTexture("squere_shadow_0.png", Widget.PLIST_TEXTURE);
+    bg.loadTexture("default_theme/squere_shadow_0.png", Widget.PLIST_TEXTURE);
     bg.setCapInsets(new Rect(12, 12, 12, 12));
     bg.setColor(new Color(0x35, 0x39, 0x41));
 
@@ -112,7 +112,10 @@ export class TestController extends Layer {
     const header = new ImageView();
     header.setScale9Enabled(true);
     header.ignoreContentAdaptWithSize(false);
-    header.loadTexture("squere_shadow_4.png", Widget.PLIST_TEXTURE);
+    header.loadTexture(
+      "default_theme/squere_shadow_4.png",
+      Widget.PLIST_TEXTURE
+    );
     header.setCapInsets(new Rect(12, 12, 12, 12));
     header.setColor(new Color(0x35, 0x39, 0x41));
     header.setContentSize(winSizeLocal.width, HEADER_HEIGHT);
@@ -131,9 +134,9 @@ export class TestController extends Layer {
 
     // close button in header
     const closeBtn = new BMButton(
-      "rounded_shadow_2.png",
-      "rounded_shadow_2.png",
-      "rounded_shadow_2.png",
+      "default_theme/rounded_shadow_2.png",
+      "default_theme/rounded_shadow_2.png",
+      "default_theme/rounded_shadow_2.png",
       Widget.PLIST_TEXTURE
     );
     closeBtn.setScale9Enabled(true);
@@ -169,12 +172,17 @@ export class TestController extends Layer {
     listView.setContentSize(listWidth, listHeight);
     listView.x = PADDING;
     listView.y = PADDING;
+    listView.setScrollBarThumbTexture(
+      "default_theme/thumb.png",
+      new Rect(3, 3, 3, 3),
+      new Color(0xaa, 0xaa, 0xaa)
+    );
 
     for (let i = 0; i < testNames.length; i++) {
       const btn = new BMButton(
-        "rounded_shadow_2.png",
-        "rounded_shadow_2.png",
-        "rounded_shadow_2.png",
+        "default_theme/rounded_shadow_2.png",
+        "default_theme/rounded_shadow_2.png",
+        "default_theme/rounded_shadow_2.png",
         Widget.PLIST_TEXTURE
       );
       btn.setScale9Enabled(true);

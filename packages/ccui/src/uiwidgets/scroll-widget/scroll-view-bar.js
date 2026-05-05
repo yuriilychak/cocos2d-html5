@@ -23,8 +23,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Point, Color } from '@aspect/core';
+import { Point, Color, Size } from '@aspect/core';
 import { ProtectedNode } from '../../base-classes/protected-node';
+import { Scale9Sprite } from '../../base-classes/scale9-sprite';
 import { helper } from '../../system/helper';
 
 // Local copies of ScrollView direction constants to avoid a circular import
@@ -55,6 +56,11 @@ export class ScrollViewBar extends ProtectedNode {
     autoHideTime = 0;
     _autoHideRemainingTime = 0;
     _className = "ScrollViewBar";
+
+    _thumbSprite = null;
+    _thumbTextureFile = null;
+    _thumbCapInsets = null;
+    _thumbColor = null;
 
     /**
      * Allocates and initializes a UIScrollViewBar.
@@ -153,10 +159,14 @@ export class ScrollViewBar extends ProtectedNode {
      * @param {number} width The scroll bar's width
      */
     setWidth(width) {
-        var scale = width / this._body.width;
-        this._body.setScaleX(scale);
-        this._upperHalfCircle.setScale(scale);
-        this._lowerHalfCircle.setScale(-scale);
+        if (this._thumbSprite) {
+            this._thumbSprite.setPreferredSize(new Size(width, this._thumbSprite.getPreferredSize().height));
+        } else {
+            var scale = width / this._body.width;
+            this._body.setScaleX(scale);
+            this._upperHalfCircle.setScale(scale);
+            this._lowerHalfCircle.setScale(-scale);
+        }
     }
 
     /**
@@ -164,6 +174,9 @@ export class ScrollViewBar extends ProtectedNode {
      * @returns {number} the scroll bar's width
      */
     getWidth() {
+        if (this._thumbSprite) {
+            return this._thumbSprite.getPreferredSize().width;
+        }
         return this._body.getBoundingBox().width;
     }
 
@@ -204,10 +217,78 @@ export class ScrollViewBar extends ProtectedNode {
         return this._opacity;
     }
 
+    /**
+     * Set a custom Scale9Sprite texture for the scroll bar thumb, replacing the default
+     * three-part (half-circles + body) appearance.
+     * @param {string|SpriteFrame} file Texture file path or SpriteFrame.
+     * @param {Rect} [capInsets] Nine-slice cap insets. If omitted the sprite uses its default thirds.
+     * @param {Color} [color] Tint color applied to the thumb sprite. Defaults to white (no tint).
+     */
+    setThumbTexture(file, capInsets, color) {
+        if (this._thumbSprite) {
+            this.removeProtectedChild(this._thumbSprite);
+            this._thumbSprite = null;
+        } else {
+            // First call: remove the default three-part sprites.
+            this.removeProtectedChild(this._upperHalfCircle);
+            this.removeProtectedChild(this._lowerHalfCircle);
+            this.removeProtectedChild(this._body);
+        }
+
+        this._thumbTextureFile = file;
+        this._thumbCapInsets = capInsets || null;
+        this._thumbColor = color || null;
+
+        // Make the bar a color+opacity pass-through so the thumb sprite's own
+        // color and alpha are displayed as-is, without the bar's DEFAULT_COLOR
+        // (52,65,87) multiplying into the cascade and darkening the thumb.
+        this._opacity = 255;
+        this.setColor(new Color(255, 255, 255));
+
+        var initialWidth = this.getWidth();
+        this._thumbSprite = new Scale9Sprite(file, capInsets);
+        this._thumbSprite.setAnchorPoint(new Point(0.5, 0));
+        this._thumbSprite.setPreferredSize(new Size(initialWidth, 0));
+        var alpha = color && color.a != null ? color.a : 255;
+        if (color) {
+            this._thumbSprite.setColor(color);
+        }
+        this._thumbSprite.setOpacity(alpha);
+        this.addProtectedChild(this._thumbSprite);
+    }
+
+    /**
+     * Returns the texture file/SpriteFrame used for the custom thumb, or null if using the default.
+     * @returns {string|SpriteFrame|null}
+     */
+    getThumbTexture() {
+        return this._thumbTextureFile;
+    }
+
+    /**
+     * Returns the cap insets used for the custom thumb's Scale9Sprite, or null if not set.
+     * @returns {Rect|null}
+     */
+    getThumbCapInsets() {
+        return this._thumbCapInsets;
+    }
+
+    /**
+     * Returns the tint color applied to the custom thumb, or null if not set.
+     * @returns {Color|null}
+     */
+    getThumbColor() {
+        return this._thumbColor;
+    }
+
     _updateLength(length) {
-        var ratio = length / this._body.getTextureRect().height;
-        this._body.setScaleY(ratio);
-        this._upperHalfCircle.setPositionY(this._body.getPositionY() + length);
+        if (this._thumbSprite) {
+            this._thumbSprite.setPreferredSize(new Size(this._thumbSprite.getPreferredSize().width, length));
+        } else {
+            var ratio = length / this._body.getTextureRect().height;
+            this._body.setScaleY(ratio);
+            this._upperHalfCircle.setPositionY(this._body.getPositionY() + length);
+        }
     }
 
     _processAutoHide(dt) {

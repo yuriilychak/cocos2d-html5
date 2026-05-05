@@ -4,7 +4,7 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>rounded_shadow_0.png</key>
+            <key>default_theme/rounded_shadow_0.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -19,7 +19,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>rounded_shadow_2.png</key>
+            <key>default_theme/rounded_shadow_2.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -34,7 +34,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>rounded_shadow_4.png</key>
+            <key>default_theme/rounded_shadow_4.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -49,7 +49,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>simple_font.png</key>
+            <key>default_theme/simple_font.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -64,7 +64,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>squere_shadow_0.png</key>
+            <key>default_theme/squere_shadow_0.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -79,7 +79,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>squere_shadow_2.png</key>
+            <key>default_theme/squere_shadow_2.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -94,7 +94,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>squere_shadow_4.png</key>
+            <key>default_theme/squere_shadow_4.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -106,6 +106,36 @@
                 <string>{32,32}</string>
                 <key>textureRect</key>
                 <string>{{416,0},{32,32}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>default_theme/thumb.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{16,16}</string>
+                <key>spriteSourceSize</key>
+                <string>{16,16}</string>
+                <key>textureRect</key>
+                <string>{{448,0},{16,16}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>thumb.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{8,8}</string>
+                <key>spriteSourceSize</key>
+                <string>{8,8}</string>
+                <key>textureRect</key>
+                <string>{{464,0},{8,8}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -123,7 +153,7 @@
             <key>size</key>
             <string>{512,512}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:f860eee495244bfecf56207d91544c45:2afc9afc69b69bd8d3e2046f7e2bf1a1:cd072108925d6695fb583da89de0247f$</string>
+            <string>$TexturePacker:SmartUpdate:9feadaf4e9dac23839ecf2cfc2223dc3:ceb32905a5b5bb319d7a838727509afc:cd072108925d6695fb583da89de0247f$</string>
             <key>textureFileName</key>
             <string>SimpleTheme.png</string>
         </dict>
