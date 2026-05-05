@@ -30,8 +30,7 @@ import { Layout } from "../../layouts/layout";
 import {
   LayoutParameter,
   LinearLayoutParameter,
-  Margin,
-  MarginZero
+  Margin
 } from "../../layouts/layout-parameter";
 
 /**
@@ -52,6 +51,8 @@ export class ListView extends ScrollView {
   _items = null;
   _gravity = null;
   _itemsMargin = 0;
+
+  _scrollPadding = 0;
 
   _curSelectedIndex = 0;
   _refreshViewDirty = true;
@@ -110,7 +111,7 @@ export class ListView extends ScrollView {
     switch (this.direction) {
       case ScrollView.DIR_VERTICAL:
         length = locItems.length;
-        var totalHeight = (length - 1) * this._itemsMargin;
+        var totalHeight = (length - 1) * this._itemsMargin + this._scrollPadding * 2;
         for (i = 0; i < length; i++) {
           totalHeight += locItems[i].getContentSize().height;
         }
@@ -120,7 +121,7 @@ export class ListView extends ScrollView {
         break;
       case ScrollView.DIR_HORIZONTAL:
         length = locItems.length;
-        var totalWidth = (length - 1) * this._itemsMargin;
+        var totalWidth = (length - 1) * this._itemsMargin + this._scrollPadding * 2;
         for (i = 0; i < length; i++) {
           totalWidth += locItems[i].getContentSize().width;
         }
@@ -174,7 +175,7 @@ export class ListView extends ScrollView {
       default:
         break;
     }
-    if (0 === itemIndex) layoutParameter.setMargin(MarginZero());
+    if (0 === itemIndex) layoutParameter.setMargin(new Margin(0.0, this._scrollPadding, 0.0, 0.0));
     else
       layoutParameter.setMargin(new Margin(0.0, this._itemsMargin, 0.0, 0.0));
   }
@@ -196,7 +197,7 @@ export class ListView extends ScrollView {
       default:
         break;
     }
-    if (0 === itemIndex) layoutParameter.setMargin(MarginZero());
+    if (0 === itemIndex) layoutParameter.setMargin(new Margin(this._scrollPadding, 0.0, 0.0, 0.0));
     else
       layoutParameter.setMargin(new Margin(this._itemsMargin, 0.0, 0.0, 0.0));
   }
@@ -417,6 +418,24 @@ export class ListView extends ScrollView {
    */
   getItemsMargin() {
     return this._itemsMargin;
+  }
+
+  /**
+   * Sets padding applied at both ends of the scroll direction (before first item and after last item).
+   * @param {Number} padding
+   */
+  setScrollContainerPadding(padding) {
+    if (this._scrollPadding === padding) return;
+    this._scrollPadding = padding;
+    this._refreshViewDirty = true;
+  }
+
+  /**
+   * Returns the scroll container padding.
+   * @returns {Number}
+   */
+  getScrollContainerPadding() {
+    return this._scrollPadding;
   }
 
   /**
@@ -991,6 +1010,7 @@ export class ListView extends ScrollView {
       super._copySpecialProperties(listView);
       this.setItemModel(listView._model);
       this.setItemsMargin(listView._itemsMargin);
+      this.setScrollContainerPadding(listView._scrollPadding);
       this.setGravity(listView._gravity);
 
       this._listViewEventListener = listView._listViewEventListener;

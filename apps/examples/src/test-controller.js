@@ -169,6 +169,7 @@ export class TestController extends Layer {
     listView.setBounceEnabled(true);
     listView.setGravity(ListView.GRAVITY_CENTER_HORIZONTAL);
     listView.setItemsMargin(ITEM_MARGIN);
+    listView.setScrollContainerPadding(24);
     listView.setContentSize(listWidth, listHeight);
     listView.x = PADDING;
     listView.y = PADDING;
@@ -191,7 +192,7 @@ export class TestController extends Layer {
       );
       btn.setScale9Enabled(true);
       btn.setCapInsets(new Rect(12, 12, 12, 12));
-      btn.setContentSize(listWidth - PADDING * 2, ITEM_HEIGHT);
+      btn.setContentSize(listWidth - 24 * 2, ITEM_HEIGHT);
       btn.setTitleFntFile(s_simpleFont_fnt);
       btn.setTitleText(i + 1 + ". " + testNames[i].title);
       btn.setTitleFontSize(16);
