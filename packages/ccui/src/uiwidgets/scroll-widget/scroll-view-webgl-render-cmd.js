@@ -32,12 +32,10 @@ export class ScrollViewWebGLRenderCmd extends LayoutWebGLRenderCmd {
                 renderer._uploadBufferData(cmd);
             }
             else {
-                if (cmd._batchingSize > 0) {
-                    renderer._batchRendering();
-                }
+                renderer._batchRendering();
                 cmd.rendering(context);
             }
-            renderer._batchRendering();
         }
+        renderer._batchRendering();
     }
 }

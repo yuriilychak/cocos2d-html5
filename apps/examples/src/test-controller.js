@@ -26,7 +26,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { s_pathClose, s_simpleFont_fnt } from "./resources";
+import { s_simpleFont_fnt } from "./resources";
 import {
   PLATFORM_HTML5,
   PLATFORM_HTML5_WEBGL,
@@ -34,22 +34,15 @@ import {
   PLATFORM_MAC,
   PLATFROM_ANDROID,
   PLATFROM_IOS,
-  _setAutoTestCurrentTestName,
-  _setAutoTestEnabled,
-  autoTestEnabled,
-  director,
-  winSize
+  _setAutoTestCurrentTestName
 } from "./constants";
-import { LINE_SPACE, curPos, testNames } from "./tests-main-helpers";
+import { testNames } from "./tests-main-helpers";
 import {
   Color,
   Director,
-  EventListener,
   EventManager,
-  EventMouse,
   Game,
   Layer,
-  LabelTTF,
   LoaderScene,
   Rect,
   RendererConfig,
@@ -62,30 +55,25 @@ import {
   TextBMFont,
   Widget,
   BMButton,
+  ListView,
+  ScrollView,
   helper
 } from "@aspect/ccui";
-import {
-  Menu,
-  MenuItemFont,
-  MenuItemImage,
-  MenuItemLabel,
-  MenuItemToggle
-} from "@aspect/menus";
 
 export class TestController extends Layer {
   constructor() {
     super();
 
-    this._itemMenu = null;
+    this._listView = null;
+    this._resizeListener = null;
 
-    this._beginPos = 0;
-
-    this.isMouseDown = false;
-
-    var winSizeLocal = Director.getInstance().getWinSize();
+    const winSizeLocal = Director.getInstance().getWinSize();
+    const PADDING = 12;
+    const HEADER_HEIGHT = 56;
+    const ITEM_HEIGHT = 44;
+    const ITEM_MARGIN = 6;
 
     // background layout with scale9 image
-    const PADDING = 12;
     const layout = new Layout();
     layout.setContentSize(winSizeLocal.width, winSizeLocal.height);
     layout.x = 0;
@@ -127,89 +115,21 @@ export class TestController extends Layer {
     header.loadTexture("squere_shadow_4.png", Widget.PLIST_TEXTURE);
     header.setCapInsets(new Rect(12, 12, 12, 12));
     header.setColor(new Color(0x35, 0x39, 0x41));
-
-    header.setContentSize(winSizeLocal.width, 56);
-
+    header.setContentSize(winSizeLocal.width, HEADER_HEIGHT);
     header.x = winSizeLocal.width / 2;
-    header.y = winSizeLocal.height - header.height / 2;
-
+    header.y = winSizeLocal.height - HEADER_HEIGHT / 2;
     this.addChild(header, 1);
 
     this._bgLayout = layout;
-    this._resizeListener = null;
 
-    var subItem1 = new MenuItemFont("Automated Test: Off");
-    subItem1.fontSize = 18;
-    var subItem2 = new MenuItemFont("Automated Test: On");
-    subItem2.fontSize = 18;
-
-    var toggleAutoTestItem = new MenuItemToggle(subItem1, subItem2);
-    toggleAutoTestItem.setCallback(this.onToggleAutoTest, this);
-    toggleAutoTestItem.x = winSize.width - toggleAutoTestItem.width / 2 - 10;
-    toggleAutoTestItem.y = 20;
-    toggleAutoTestItem.setVisible(false);
-    if (autoTestEnabled) toggleAutoTestItem.setSelectedIndex(1);
-
-    // sort the test title
-    testNames.sort(function (first, second) {
-      if (first.title > second.title) {
-        return 1;
-      }
-      return -1;
-    });
-
-    // add menu items for tests
-    this._itemMenu = new Menu(); //item menu is where all the label goes, and the one gets scrolled
-
-    for (var i = 0, len = testNames.length; i < len; i++) {
-      var label = new LabelTTF(i + 1 + ". " + testNames[i].title, "Arial", 24);
-      var menuItem = new MenuItemLabel(label, this.onMenuCallback, this);
-      this._itemMenu.addChild(menuItem, i + 10000);
-      menuItem.x = winSize.width / 2;
-      menuItem.y = winSize.height - (i + 1) * LINE_SPACE;
-
-      // enable disable
-      if (!Sys.getInstance().isNative) {
-        if (!RendererConfig.getInstance().isCanvas) {
-          menuItem.enabled =
-            (testNames[i].platforms & PLATFORM_HTML5) |
-            (testNames[i].platforms & PLATFORM_HTML5_WEBGL);
-        } else {
-          menuItem.setEnabled(testNames[i].platforms & PLATFORM_HTML5);
-        }
-      } else {
-        if (Sys.getInstance().os == Sys.getInstance().OS_ANDROID) {
-          menuItem.setEnabled(
-            testNames[i].platforms & (PLATFORM_JSB | PLATFROM_ANDROID)
-          );
-        } else if (Sys.getInstance().os == Sys.getInstance().OS_IOS) {
-          menuItem.setEnabled(
-            testNames[i].platforms & (PLATFORM_JSB | PLATFROM_IOS)
-          );
-        } else if (Sys.getInstance().os == Sys.getInstance().OS_OSX) {
-          menuItem.setEnabled(
-            testNames[i].platforms & (PLATFORM_JSB | PLATFORM_MAC)
-          );
-        } else {
-          menuItem.setEnabled(testNames[i].platforms & PLATFORM_JSB);
-        }
-      }
-    }
-
-    this._itemMenu.width = winSize.width;
-    this._itemMenu.height = (testNames.length + 1) * LINE_SPACE;
-    this._itemMenu.x = curPos.x;
-    this._itemMenu.y = curPos.y;
-    this.addChild(this._itemMenu);
-
-    var title = new TextBMFont("Examples", s_simpleFont_fnt);
-
+    // header title
+    const title = new TextBMFont("Examples", s_simpleFont_fnt);
     title.x = winSizeLocal.width / 2;
-    title.y = winSizeLocal.height - 24;
+    title.y = winSizeLocal.height - HEADER_HEIGHT / 2;
     title.fontSize = 32;
     this.addChild(title, 2);
 
-    // close BMButton
+    // close button in header
     const closeBtn = new BMButton(
       "rounded_shadow_2.png",
       "rounded_shadow_2.png",
@@ -227,48 +147,63 @@ export class TestController extends Layer {
     closeBtn.setDisabledBgColor(new Color(0x55, 0x55, 0x55));
     closeBtn.pressedActionEnabled = true;
     closeBtn.addClickEventListener(() => this.onCloseCallback());
-    closeBtn.x = winSizeLocal.width - closeBtn.width / 2 - 12;
-    closeBtn.y = winSizeLocal.height - closeBtn.height / 2 - 12;
+    closeBtn.x = winSizeLocal.width - closeBtn.width / 2 - PADDING;
+    closeBtn.y =
+      winSizeLocal.height -
+      closeBtn.height / 2 -
+      (HEADER_HEIGHT - closeBtn.height) / 2;
     this.addChild(closeBtn, 2);
 
-    // 'browser' can use touches or mouse.
-    // The benefit of using 'touches' in a browser, is that it works both with mouse events or touches events
-    if ("touches" in Sys.getInstance().capabilities) {
-      EventManager.getInstance().addListener(
-        {
-          event: EventListener.TOUCH_ALL_AT_ONCE,
-          onTouchesMoved: function (touches, event) {
-            var target = event.getCurrentTarget();
-            var delta = touches[0].getDelta();
-            target.moveMenu(delta);
-            return true;
-          }
-        },
-        this
+    // sort tests alphabetically
+    testNames.sort((a, b) => (a.title > b.title ? 1 : -1));
+
+    // test list view
+    const listWidth = winSizeLocal.width - PADDING * 2;
+    const listHeight = winSizeLocal.height - HEADER_HEIGHT - PADDING * 2;
+
+    const listView = new ListView();
+    listView.setTouchEnabled(true);
+    listView.setBounceEnabled(true);
+    listView.setGravity(ListView.GRAVITY_CENTER_HORIZONTAL);
+    listView.setItemsMargin(ITEM_MARGIN);
+    listView.setContentSize(listWidth, listHeight);
+    listView.x = PADDING;
+    listView.y = PADDING;
+
+    for (let i = 0; i < testNames.length; i++) {
+      const btn = new BMButton(
+        "rounded_shadow_2.png",
+        "rounded_shadow_2.png",
+        "rounded_shadow_2.png",
+        Widget.PLIST_TEXTURE
       );
-    } else if ("mouse" in Sys.getInstance().capabilities) {
-      EventManager.getInstance().addListener(
-        {
-          event: EventListener.MOUSE,
-          onMouseMove: function (event) {
-            if (event.getButton() == EventMouse.BUTTON_LEFT)
-              event.getCurrentTarget().moveMenu(event.getDelta());
-          },
-          onMouseScroll: function (event) {
-            var delta = Sys.getInstance().isNative
-              ? event.getScrollY() * 6
-              : -event.getScrollY();
-            event.getCurrentTarget().moveMenu({ y: delta });
-            return true;
-          }
-        },
-        this
-      );
+      btn.setScale9Enabled(true);
+      btn.setCapInsets(new Rect(12, 12, 12, 12));
+      btn.setContentSize(listWidth - PADDING * 2, ITEM_HEIGHT);
+      btn.setTitleFntFile(s_simpleFont_fnt);
+      btn.setTitleText(i + 1 + ". " + testNames[i].title);
+      btn.setTitleFontSize(16);
+      btn.setNormalBgColor(new Color(0x66, 0x66, 0x66));
+      btn.setPressedBgColor(new Color(0x44, 0x44, 0x44));
+      btn.setDisabledBgColor(new Color(0x88, 0x88, 0x88));
+      btn.pressedActionEnabled = true;
+      btn.setEnabled(this._isTestEnabled(testNames[i]));
+      const idx = i;
+      btn.addClickEventListener(() => this.onMenuCallback(idx));
+      listView.pushBackCustomItem(btn);
     }
+
+    this._listView = listView;
+    this.addChild(listView, 5);
   }
   onEnter() {
     super.onEnter();
-    this._itemMenu.y = TestController.YOffset;
+    if (TestController.YOffset !== 0) {
+      this._listView.setInnerContainerPosition({
+        x: 0,
+        y: TestController.YOffset
+      });
+    }
     helper.doLayout(this);
     this._resizeListener = EventManager.getInstance().addCustomListener(
       "canvas-resize",
@@ -285,12 +220,9 @@ export class TestController extends Layer {
     this._resizeListener = null;
     super.onExit();
   }
-  onMenuCallback(sender) {
-    TestController.YOffset = this._itemMenu.y;
-    var idx = sender.getLocalZOrder() - 10000;
-    // get the userdata, it's the index of the menu item clicked
-    // create the test scene and run it
 
+  onMenuCallback(idx) {
+    TestController.YOffset = this._listView.getInnerContainerPosition().y;
     _setAutoTestCurrentTestName(testNames[idx].title);
 
     var testCase = testNames[idx];
@@ -306,6 +238,7 @@ export class TestController extends Layer {
       this
     );
   }
+
   onCloseCallback() {
     if (Sys.getInstance().isNative) {
       Game.getInstance().end();
@@ -313,18 +246,27 @@ export class TestController extends Layer {
       window.history && window.history.go(-1);
     }
   }
-  onToggleAutoTest() {
-    _setAutoTestEnabled(!autoTestEnabled);
-  }
 
-  moveMenu(delta) {
-    var newY = this._itemMenu.y + delta.y;
-    if (newY < 0) newY = 0;
-
-    if (newY > (testNames.length + 1) * LINE_SPACE - winSize.height)
-      newY = (testNames.length + 1) * LINE_SPACE - winSize.height;
-
-    this._itemMenu.y = newY;
+  _isTestEnabled(testCase) {
+    if (!Sys.getInstance().isNative) {
+      if (!RendererConfig.getInstance().isCanvas) {
+        return !!(
+          (testCase.platforms & PLATFORM_HTML5) |
+          (testCase.platforms & PLATFORM_HTML5_WEBGL)
+        );
+      }
+      return !!(testCase.platforms & PLATFORM_HTML5);
+    }
+    if (Sys.getInstance().os == Sys.getInstance().OS_ANDROID) {
+      return !!(testCase.platforms & (PLATFORM_JSB | PLATFROM_ANDROID));
+    }
+    if (Sys.getInstance().os == Sys.getInstance().OS_IOS) {
+      return !!(testCase.platforms & (PLATFORM_JSB | PLATFROM_IOS));
+    }
+    if (Sys.getInstance().os == Sys.getInstance().OS_OSX) {
+      return !!(testCase.platforms & (PLATFORM_JSB | PLATFORM_MAC));
+    }
+    return !!(testCase.platforms & PLATFORM_JSB);
   }
 }
 
