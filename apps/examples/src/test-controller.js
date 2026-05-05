@@ -177,6 +177,10 @@ export class TestController extends Layer {
       new Rect(3, 3, 3, 3),
       new Color(0xaa, 0xaa, 0xaa)
     );
+    listView.setBackGroundImageScale9Enabled(true);
+    listView.setBackGroundImage("default_theme/rounded_shadow_2.png", Widget.PLIST_TEXTURE);
+    listView.setBackGroundImageCapInsets(new Rect(12, 12, 12, 12));
+    listView.setBackGroundImageColor(new Color(0x33, 0x33, 0x33));
 
     for (let i = 0; i < testNames.length; i++) {
       const btn = new BMButton(
