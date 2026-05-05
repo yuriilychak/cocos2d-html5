@@ -27,18 +27,17 @@
 
 import { TestController } from "./test-controller";
 import { _initGlobals } from "./constants";
-import { g_resources } from "./resources";
+import { g_resources, s_simpleTheme_plist } from "./resources";
 import {
   ContentStrategy,
-  ContainerStrategy,
   Director,
   EGLView,
   Game,
   Loader,
   LoaderScene,
-  ResolutionPolicy,
   Scene,
-  ORIENTATION_LANDSCAPE
+  ORIENTATION_LANDSCAPE,
+  SpriteFrameCache,
 } from "@aspect/core";
 const projectConfig = {
   debugMode: 1,
@@ -55,10 +54,7 @@ Game.getInstance().onStart = function () {
   EGLView.getInstance().setDesignResolutionSize(
     1280,
     720,
-    new ResolutionPolicy(
-      ContainerStrategy.EQUAL_TO_FRAME,
-      ContentStrategy.NO_BORDER
-    )
+    ContentStrategy.FIXED_HEIGHT
   );
   EGLView.getInstance().resizeWithBrowserSize(true);
 
@@ -71,6 +67,8 @@ Game.getInstance().onStart = function () {
       if (window.sideIndexBar && typeof sideIndexBar.start === "function") {
         sideIndexBar.start();
       } else {
+
+        SpriteFrameCache.getInstance().addSpriteFrames(s_simpleTheme_plist);
         var scene = new Scene();
         scene.addChild(new TestController());
         Director.getInstance().runScene(scene);

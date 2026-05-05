@@ -189,6 +189,10 @@ export var s_markerFelt_png = "fonts/markerFelt.png";
 export var s_markerFelt_hd_fnt = "fonts/markerFelt-hd.fnt";
 export var s_markerFelt_hd_png = "fonts/markerFelt-hd.png";
 
+export var s_simpleTheme_plist = "SimpleTheme.plist";
+export var s_simpleTheme_png = "SimpleTheme.png";
+export var s_simpleFont_fnt = "simple_font.fnt";
+
 export var s_larabie_16_plist = "fonts/larabie-16.plist";
 export var s_larabie_16_hd_plist = "fonts/larabie-16-hd.plist";
 export var s_tuffy_bold_italic_charmap = "fonts/tuffy_bold_italic-charmap.plist";
@@ -263,7 +267,10 @@ export var g_resources = [
     s_playSelect,
     s_bitmapFontTest5_fnt,
     s_extensions_background,
-    s_extensions_ribbon
+    s_extensions_ribbon,
+    s_simpleTheme_plist,
+    s_simpleTheme_png,
+    s_simpleFont_fnt,
 ];
 
 export var g_sprites = [

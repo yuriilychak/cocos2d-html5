@@ -61,6 +61,17 @@ export class TextBMFont extends Widget {
     this.setString(v);
   }
 
+  get fontSize() {
+    return this._labelBMFontRenderer.fontSize;
+  }
+  set fontSize(v) {
+    this._labelBMFontRenderer.fontSize = v;
+    this._updateContentSizeWithTextureSize(
+      this._labelBMFontRenderer.getContentSize()
+    );
+    this._labelBMFontRendererAdaptDirty = true;
+  }
+
   _initRenderer() {
     this._labelBMFontRenderer = new LabelBMFont();
     this.addProtectedChild(

@@ -34,6 +34,7 @@ import { RelativeBox } from './layouts/relative-box';
 
 // Widgets
 import { Button } from './uiwidgets/button';
+import { BMButton } from './uiwidgets/bm-button';
 import { CheckBox } from './uiwidgets/check-box';
 import { ImageView } from './uiwidgets/image-view';
 import { LoadingBar } from './uiwidgets/loading-bar';
@@ -110,6 +111,7 @@ export {
     VBox,
     RelativeBox,
     Button,
+    BMButton,
     CheckBox,
     ImageView,
     LoadingBar,

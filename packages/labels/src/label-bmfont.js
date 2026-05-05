@@ -29,6 +29,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
   //property string is Getter and Setter.
   //property textAlign is Getter and Setter.
   //property boundingWidth is Getter and Setter.
+  //property fontSize is Getter and Setter.
   _opacityModifyRGB = false;
 
   _string = "";
@@ -47,6 +48,9 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
   _width = -1;
   _lineBreakWithoutSpaces = false;
   _imageOffset = null;
+
+  // desired font size (0 = use native size from fnt file)
+  _fontSize = 0;
 
   _textureLoaded = false;
   _className = "LabelBMFont";
@@ -111,14 +115,15 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
    * @param {Number} [width=-1]
    * @param {Number} [alignment=TEXT_ALIGNMENT_LEFT]
    * @param {Point} [imageOffset=new Point(0,0)]
+   * @param {Number} [fontSize=0] desired font size; 0 means use the native size defined in the fnt file
    */
-  constructor(str, fntFile, width, alignment, imageOffset) {
+  constructor(str, fntFile, width, alignment, imageOffset, fontSize) {
     super();
     this._imageOffset = new Point(0, 0);
     this._cascadeColorEnabled = true;
     this._cascadeOpacityEnabled = true;
     if (str !== undefined && fntFile !== undefined)
-      this.initWithString(str, fntFile, width, alignment, imageOffset);
+      this.initWithString(str, fntFile, width, alignment, imageOffset, fontSize);
   }
 
   /**
@@ -170,9 +175,10 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
    * @param {Number} [width=-1]
    * @param {Number} [alignment=TEXT_ALIGNMENT_LEFT]
    * @param {Point} [imageOffset=new Point(0,0)]
+   * @param {Number} [fontSize=0] desired font size; 0 means use the native size defined in the fnt file
    * @return {Boolean}
    */
-  initWithString(str, fntFile, width, alignment, imageOffset) {
+  initWithString(str, fntFile, width, alignment, imageOffset, fontSize) {
     var self = this,
       theString = str || "";
 
@@ -234,6 +240,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
       self._alignment = alignment || TEXT_ALIGNMENT_LEFT;
       self._imageOffset = imageOffset || new Point(0, 0);
       self._width = width === undefined ? -1 : width;
+      self._fontSize = fontSize > 0 ? fontSize : 0;
 
       self._realOpacity = 255;
       self._realColor = color(255, 255, 255, 255);
@@ -272,8 +279,15 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
     var i,
       locCfg = self._config,
       locKerningDict = locCfg.kerningDict,
-      locCommonH = locCfg.commonHeight,
       locFontDict = locCfg.fontDefDictionary;
+
+    // Compute proportional scale from desired font size vs native fnt size
+    const locNativeFontSize = locCfg.fontSize || 0;
+    const locScale = this._fontSize > 0 && locNativeFontSize > 0
+      ? this._fontSize / locNativeFontSize
+      : 1;
+    const locCommonH = locCfg.commonHeight * locScale;
+
     for (i = 0; i < stringLen - 1; i++) {
       if (locStr.charCodeAt(i) === 10) quantityOfLines++;
     }
@@ -290,11 +304,11 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
       if (key === 10) {
         //new line
         nextFontPositionX = 0;
-        nextFontPositionY -= locCfg.commonHeight;
+        nextFontPositionY -= locCommonH;
         continue;
       }
 
-      var kerningAmount = locKerningDict[(prev << 16) | (key & 0xffff)] || 0;
+      var kerningAmount = (locKerningDict[(prev << 16) | (key & 0xffff)] || 0) * locScale;
       fontDef = locFontDict[key];
       if (!fontDef) {
         log("cocos2d: LabelBMFont: character not found " + locStr[i]);
@@ -351,19 +365,20 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
       // Apply label properties
       fontChar.opacityModifyRGB = this._opacityModifyRGB;
       cmd._updateCharColorAndOpacity(fontChar);
+      fontChar.setScale(locScale);
 
-      var yOffset = locCfg.commonHeight - fontDef.yOffset;
+      var yOffset = locCommonH - fontDef.yOffset * locScale;
       var fontPos = new Point(
         nextFontPositionX +
-          fontDef.xOffset +
-          fontDef.rect.width * 0.5 +
+          fontDef.xOffset * locScale +
+          fontDef.rect.width * locScale * 0.5 +
           kerningAmount,
-        nextFontPositionY + yOffset - rect.height * 0.5 * contentScaleFactor()
+        nextFontPositionY + yOffset - rect.height * locScale * 0.5 * contentScaleFactor()
       );
       fontChar.setPosition(pointPixelsToPoints(fontPos));
 
       // update kerning
-      nextFontPositionX += fontDef.xAdvance + kerningAmount;
+      nextFontPositionX += fontDef.xAdvance * locScale + kerningAmount;
       prev = key;
 
       if (longestLine < nextFontPositionX) longestLine = nextFontPositionX;
@@ -372,7 +387,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
     //If the last character processed has an xAdvance which is less that the width of the characters image, then we need
     // to adjust the width of the string to take this into account, or the character will overlap the end of the bounding box
     if (fontDef && fontDef.xAdvance < fontDef.rect.width)
-      tmpSize.width = longestLine - fontDef.xAdvance + fontDef.rect.width;
+      tmpSize.width = longestLine - fontDef.xAdvance * locScale + fontDef.rect.width * locScale;
     else tmpSize.width = longestLine;
     tmpSize.height = totalHeight;
     self.setContentSize(sizePixelsToPoints(tmpSize));
@@ -592,7 +607,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
 
           var lastChar = self.getChildByTag(index);
           if (lastChar == null) continue;
-          lineWidth = lastChar.getPositionX() + lastChar._getWidth() / 2;
+          lineWidth = lastChar.getPositionX() + lastChar._getWidth() * lastChar._scaleX / 2;
 
           var shift = 0;
           switch (self._alignment) {
@@ -697,6 +712,33 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
   }
 
   /**
+   * Get the current effective font size.
+   * Returns the overridden size if set, otherwise the native size from the fnt file.
+   * @return {Number}
+   */
+  get fontSize() {
+    return this._fontSize > 0 ? this._fontSize : (this._config ? this._config.fontSize : 0);
+  }
+
+  /**
+   * Set the font size, proportionally scaling all characters, spacing, and layout.
+   * Pass 0 to revert to the native size defined in the fnt file.
+   * @param {Number} fontSize
+   */
+  set fontSize(fontSize) {
+    fontSize = fontSize > 0 ? fontSize : 0;
+    
+    if (this._fontSize === fontSize) {
+      return;
+    }
+    this._fontSize = fontSize;
+
+    if (this._textureLoaded) {
+      this.updateLabel();
+    }
+  }
+
+  /**
    * set fnt file path. <br />
    * Change the fnt file path.
    * @param {String} fntFile
@@ -796,14 +838,14 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
   _getLetterPosXLeft(sp) {
     return (
       sp.getPositionX() * this._scaleX -
-      sp._getWidth() * this._scaleX * sp._getAnchorX()
+      sp._getWidth() * sp._scaleX * this._scaleX * sp._getAnchorX()
     );
   }
 
   _getLetterPosXRight(sp) {
     return (
       sp.getPositionX() * this._scaleX +
-      sp._getWidth() * this._scaleX * sp._getAnchorX()
+      sp._getWidth() * sp._scaleX * this._scaleX * sp._getAnchorX()
     );
   }
 
@@ -886,6 +928,10 @@ const _fntLoader = {
 
   _parseFntContent: function (fnt, fntStr, url, useAtlas) {
     var self = this;
+    //info (font size)
+    var infoMatch = fntStr.match(self.INFO_EXP);
+    fnt.fontSize = infoMatch ? (self._parseStrToObj(infoMatch[0])["size"] || 0) : 0;
+
     //common
     var commonObj = self._parseStrToObj(fntStr.match(self.COMMON_EXP)[0]);
     fnt.commonHeight = commonObj["lineHeight"];
@@ -1016,14 +1062,16 @@ export const Label = {
     text,
     alignment,
     maxLineWidth,
-    imageOffset
+    imageOffset,
+    fontSize
   ) {
     return new LabelBMFont(
       String(text != null ? text : ""),
       fntFile,
       maxLineWidth,
       alignment,
-      imageOffset
+      imageOffset,
+      fontSize
     );
   }
 };
