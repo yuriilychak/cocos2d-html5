@@ -50,7 +50,6 @@ export class LoaderTestLayer extends BaseTestLayer {
 
     this._subtitle = "";
 
-    var winSize = winSize;
     Loader.getInstance().load(s_helloWorld, function (err, results) {
       if (err) {
         log("Failed to load %s.", s_helloWorld);

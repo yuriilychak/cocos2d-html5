@@ -30,50 +30,57 @@ import { TestController } from "./test-controller";
 import { s_simpleFont_fnt } from "./resources";
 import { director } from "./constants";
 import { Color, Director, Game, Rect, Scene, Sys } from "@aspect/core";
-import { TransitionProgressRadialCCW } from "@aspect/transitions";
+import { TransitionFade } from "@aspect/transitions";
 import { BMButton, ImageView, TextBMFont, Widget } from "@aspect/ccui";
 
 export const HEADER_HEIGHT = 56;
 
-const PADDING = 12;
+const PADDING = 16;
 const BTN_WIDTH = 128;
 const BTN_HEIGHT = 32;
+const SUITE_TITLE_AREA = 220; // reserved width for suite title
 
 export class TestScene extends Scene {
   constructor(title = "", subtitle = null, bPortrait) {
     super();
 
     this._mainMenu = null;
+    this._testInfoLabel = null;
     this.init();
 
     const winSizeLocal = Director.getInstance().getWinSize();
-    const headerCenterY = winSizeLocal.height - HEADER_HEIGHT / 2;
-    const hasSubtitle = subtitle !== null && subtitle !== "";
+    const winH = winSizeLocal.height;
+    const winW = winSizeLocal.width;
+    const centerY = winH - HEADER_HEIGHT / 2;
 
     const header = new ImageView();
     header.setScale9Enabled(true);
     header.ignoreContentAdaptWithSize(false);
-    header.loadTexture("default_theme/squere_shadow_4.png", Widget.PLIST_TEXTURE);
+    header.loadTexture(
+      "default_theme/squere_shadow_4.png",
+      Widget.PLIST_TEXTURE
+    );
     header.setCapInsets(new Rect(12, 12, 12, 12));
     header.setColor(new Color(0x35, 0x39, 0x41));
-    header.setContentSize(winSizeLocal.width, HEADER_HEIGHT);
-    header.x = winSizeLocal.width / 2;
-    header.y = headerCenterY;
+    header.setContentSize(winW, HEADER_HEIGHT);
+    header.x = winW / 2;
+    header.y = winH - HEADER_HEIGHT / 2;
     this.addChild(header, 10);
 
     const titleLabel = new TextBMFont(title, s_simpleFont_fnt);
-    titleLabel.x = winSizeLocal.width / 2;
-    titleLabel.y = hasSubtitle ? headerCenterY + 10 : headerCenterY;
-    titleLabel.fontSize = hasSubtitle ? 24 : 32;
+    titleLabel.setAnchorPoint(0, 0.5);
+    titleLabel.x = PADDING;
+    titleLabel.y = centerY;
+    titleLabel.fontSize = 20;
     this.addChild(titleLabel, 11);
 
-    if (hasSubtitle) {
-      const subtitleLabel = new TextBMFont(subtitle, s_simpleFont_fnt);
-      subtitleLabel.x = winSizeLocal.width / 2;
-      subtitleLabel.y = headerCenterY - 10;
-      subtitleLabel.fontSize = 16;
-      this.addChild(subtitleLabel, 11);
-    }
+    const testInfoLabel = new TextBMFont("", s_simpleFont_fnt);
+    testInfoLabel.setAnchorPoint(0, 0.5);
+    testInfoLabel.x = PADDING + SUITE_TITLE_AREA + PADDING;
+    testInfoLabel.y = centerY;
+    testInfoLabel.fontSize = 14;
+    this.addChild(testInfoLabel, 11);
+    this._testInfoLabel = testInfoLabel;
 
     const btn = new BMButton(
       "default_theme/rounded_shadow_2.png",
@@ -92,8 +99,8 @@ export class TestScene extends Scene {
     btn.setDisabledBgColor(new Color(0x55, 0x55, 0x55));
     btn.pressedActionEnabled = true;
     btn.addClickEventListener(() => this.onMainMenuCallback());
-    btn.x = winSizeLocal.width - BTN_WIDTH / 2 - PADDING;
-    btn.y = headerCenterY;
+    btn.x = winW - BTN_WIDTH / 2 - PADDING;
+    btn.y = centerY;
     this.addChild(btn, 11);
 
     this._mainMenu = btn;
@@ -101,6 +108,11 @@ export class TestScene extends Scene {
     if (window.sideIndexBar) {
       btn.setVisible(false);
     }
+  }
+
+  setTestInfo(title, subtitle) {
+    const text = subtitle ? `${title} - ${subtitle}` : title || "";
+    this._testInfoLabel.setString(text);
   }
 
   onMainMenuCallback() {
@@ -118,7 +130,7 @@ export class TestScene extends Scene {
     };
     const layer = new TestController();
     scene.addChild(layer);
-    const transition = new TransitionProgressRadialCCW(0.5, scene);
+    const transition = new TransitionFade(0.5, scene, new Color(0, 0, 0, 255));
     director.runScene(transition);
   }
 

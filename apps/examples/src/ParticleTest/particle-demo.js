@@ -26,7 +26,6 @@
  ****************************************************************************/
 
 import {
-  BASE_TEST_TITLE_TAG,
   BaseTestLayer
 } from "../BaseTestLayer/BaseTestLayer";
 import { TAG_LABEL_ATLAS, particleSceneIdx } from "./particle-test-constants";
@@ -290,12 +289,6 @@ export class ParticleDemo extends BaseTestLayer {
     this.scheduleUpdate();
   }
 
-  onEnter() {
-    super.onEnter();
-
-    var pLabel = this.getChildByTag(BASE_TEST_TITLE_TAG);
-    pLabel.setString(this.title());
-  }
   title() {
     return "No title";
   }

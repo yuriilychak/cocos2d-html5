@@ -39,7 +39,7 @@ import {
   director,
   winSize
 } from "../constants";
-import { Color, Director, LabelTTF, LayerGradient, RendererConfig, Scene, Sys, log } from "@aspect/core";
+import { Color, Director, LayerGradient, RendererConfig, Scene, Sys, log } from "@aspect/core";
 import { Menu, MenuItemImage } from "@aspect/menus";
 
 export const BASE_TEST_MENUITEM_PREV_TAG = 1;
@@ -112,18 +112,13 @@ export class BaseTestLayer extends LayerGradient {
 
     Sys.getInstance().garbageCollect();
 
-    var t = this.getTitle();
-    var label = new LabelTTF(t, "Arial", 28);
-    this.addChild(label, 100, BASE_TEST_TITLE_TAG);
-    label.x = winSize.width / 2;
-    label.y = winSize.height - 50;
-
-    var st = this.getSubtitle();
-    if (st) {
-      var l = new LabelTTF(st.toString(), "Thonburi", 16);
-      this.addChild(l, 101, BASE_TEST_SUBTITLE_TAG);
-      l.x = winSize.width / 2;
-      l.y = winSize.height - 80;
+    // Push current test title/subtitle up into the parent scene's header.
+    let scene = this.getParent();
+    while (scene && !scene.setTestInfo) {
+      scene = scene.getParent();
+    }
+    if (scene) {
+      scene.setTestInfo(this.getTitle(), this.getSubtitle());
     }
 
     var item1 = new MenuItemImage(
