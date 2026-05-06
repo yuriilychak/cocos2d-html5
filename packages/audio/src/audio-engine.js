@@ -353,9 +353,8 @@ export class AudioEngine {
       for (let i = 0; i < list.length; i++) {
         list[i].stop();
       }
-      list.length = 0;
     }
-    ap.length = 0;
+    this._audioPool = {};
   }
 
   /**

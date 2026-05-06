@@ -26,83 +26,24 @@
  ****************************************************************************/
 
 import { DenshionTests } from "./cocos-denshion-test-constants";
-import { director, winSize } from "../constants";
-import { LINE_SPACE } from "../tests-main-helpers";
-import { Color, EventListener, EventManager, EventMouse, LabelTTF, LayerGradient, Point, Sys } from "@aspect/core";
-import { Menu, MenuItemLabel } from "@aspect/menus";
+import { MenuTestLayer } from "../menu-test-layer";
 
-export class CocosDenshionTest extends LayerGradient {
-  constructor() {
-    super(new Color(0, 0, 0, 255), new Color(148, 80, 120, 255));
+export class CocosDenshionTest extends MenuTestLayer {
+  constructor(onClose) {
+    const menuItems = DenshionTests.map(test => ({ title: test.title }));
+    super("CocosDenshionTest", menuItems, "Close", onClose);
 
-    this._itemMenu = null;
-
-    this._beginPos = new Point(0, 0);
-
-    this._testCount = 0;
-
-    this._itemMenu = new Menu();
-    var winSize = director.getWinSize();
-    for (var i = 0; i < DenshionTests.length; i++) {
-      var label = new LabelTTF(DenshionTests[i].title, "Arial", 24);
-      var menuItem = new MenuItemLabel(label, this.onMenuCallback, this);
-      this._itemMenu.addChild(menuItem, i + 10000);
-      menuItem.x = winSize.width / 2;
-      menuItem.y = winSize.height - (i + 1) * LINE_SPACE;
-    }
-    this._testCount = i;
-    this._itemMenu.width = winSize.width;
-    this._itemMenu.height = (this._testCount + 1) * LINE_SPACE;
-    this._itemMenu.x = 0;
-    this._itemMenu.y = 0;
-    this.addChild(this._itemMenu);
-
-    if ("touches" in Sys.getInstance().capabilities) {
-      EventManager.getInstance().addListener(
-        {
-          event: EventListener.TOUCH_ALL_AT_ONCE,
-          onTouchesMoved: function (touches, event) {
-            event.getCurrentTarget().moveMenu(touches[0].getDelta());
-          }
-        },
-        this
-      );
-    } else if ("mouse" in Sys.getInstance().capabilities)
-      EventManager.getInstance().addListener(
-        {
-          event: EventListener.MOUSE,
-          onMouseMove: function (event) {
-            if (event.getButton() == EventMouse.BUTTON_LEFT)
-              event.getCurrentTarget().moveMenu(event.getDelta());
-          }
-        },
-        this
-      );
-
-    // set default volume
     audioEngine.setEffectsVolume(0.5);
     audioEngine.setMusicVolume(0.5);
   }
+
   onExit() {
     super.onExit();
     audioEngine.stopMusic();
     audioEngine.stopAllEffects();
   }
 
-  onMenuCallback(sender) {
-    var idx = sender.zIndex - 10000;
-    // create the test scene and run it
-    var scene = DenshionTests[idx].playFunc();
-  }
-
-  moveMenu(delta) {
-    var newY = this._itemMenu.y + delta.y;
-
-    if (newY < 0) newY = 0;
-
-    if (newY > (DenshionTests.length + 1) * LINE_SPACE - winSize.height)
-      newY = (DenshionTests.length + 1) * LINE_SPACE - winSize.height;
-
-    this._itemMenu.y = newY;
+  onItemCallback(idx) {
+    DenshionTests[idx].playFunc();
   }
 }
