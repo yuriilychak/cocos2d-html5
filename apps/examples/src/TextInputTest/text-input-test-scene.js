@@ -31,6 +31,10 @@ import { _setsceneIdx, sceneIdx } from "./text-input-test-constants";
 import { Director } from "@aspect/core";
 
 export class TextInputTestScene extends TestScene {
+  constructor() {
+    super("TextInput Test");
+  }
+
   runThisTest(num) {
     _setsceneIdx(num || num == 0 ? num - 1 : -1);
     var layer = nextTextInputTest();

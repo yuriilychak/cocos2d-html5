@@ -30,6 +30,10 @@ import { TestScene } from "../test-scene";
 import { director } from "../constants";
 
 export class IntervalTestScene extends TestScene {
+  constructor() {
+    super("Interval Test");
+  }
+
   runThisTest() {
     var layer = new IntervalLayer();
     this.addChild(layer);

@@ -840,7 +840,7 @@ export class GUITestScene extends NewClass {
 
 var listScene = class listScene extends TestScene {
   constructor() {
-    super();
+    super("UI Test");
 
     UISceneManager.getInstance().ctor();
     var menu = new Menu();

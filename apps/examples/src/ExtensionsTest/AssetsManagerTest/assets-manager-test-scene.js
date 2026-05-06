@@ -30,7 +30,7 @@ import { TestScene } from "../../test-scene";
 
 export class AssetsManagerTestScene extends TestScene {
   constructor(background) {
-    super();
+    super("Assets Manager Test");
 
     this._background = "";
     var layer = new AssetsManagerTestLayer(background);

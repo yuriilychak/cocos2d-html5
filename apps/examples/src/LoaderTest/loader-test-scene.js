@@ -28,6 +28,10 @@ import { TestScene } from "../test-scene";
 import { director } from "../constants";
 
 export class LoaderTestScene extends TestScene {
+  constructor() {
+    super("Loader Test");
+  }
+
   runThisTest() {
     this.addChild(new LoaderTestLayer());
     director.runScene(this);

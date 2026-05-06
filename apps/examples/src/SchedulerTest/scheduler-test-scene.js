@@ -37,6 +37,10 @@ import {
 } from "./scheduler-test-constants";
 
 export class SchedulerTestScene extends TestScene {
+  constructor() {
+    super("Scheduler Test");
+  }
+
   runThisTest(num) {
     _setschedulerTestSceneIdx(num || num == 0 ? num - 1 : -1);
     var layer = nextSchedulerTest();

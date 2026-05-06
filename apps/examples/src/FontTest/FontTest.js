@@ -89,6 +89,10 @@ export function restartFontTestAction() {
   return fontList[fontIdx];
 }
 export class FontTestScene extends TestScene {
+  constructor() {
+    super("Font Test");
+  }
+
   runThisTest(num) {
     fontIdx = num || fontIdx;
 

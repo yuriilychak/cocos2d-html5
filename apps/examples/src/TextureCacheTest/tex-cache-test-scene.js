@@ -34,6 +34,10 @@ import {
 import { Director } from "@aspect/core";
 
 export class TexCacheTestScene extends TestScene {
+  constructor() {
+    super("TextureCache Test");
+  }
+
   runThisTest(num) {
     _settexCacheTestSceneIdx(num || num == 0 ? num - 1 : -1);
     var layer = nextTexCacheTest();

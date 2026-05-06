@@ -106,6 +106,10 @@ export class VibrateTest extends BaseTestLayer {
 }
 
 export class VibrateTestScene extends TestScene {
+  constructor() {
+    super("Vibrate Test");
+  }
+
   runThisTest() {
     var layer = new VibrateTest();
     this.addChild(layer);

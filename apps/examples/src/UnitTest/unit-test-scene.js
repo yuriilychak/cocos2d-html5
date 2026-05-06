@@ -29,6 +29,10 @@ import { nextUnitTest } from "./unit-test-helpers";
 import { _setunitTestSceneIdx, unitTestSceneIdx } from "./unit-test-constants";
 
 export class UnitTestScene extends TestScene {
+  constructor() {
+    super("Unit Tests");
+  }
+
   runThisTest(num) {
     _setunitTestSceneIdx(num || num == 0 ? num - 1 : -1);
     var layer = nextUnitTest();

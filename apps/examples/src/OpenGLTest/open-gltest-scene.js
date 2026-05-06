@@ -32,6 +32,10 @@ import { director } from "../constants";
 import { OpenGLTestIdx, _setOpenGLTestIdx } from "./open-gltest-constants";
 
 export class OpenGLTestScene extends TestScene {
+  constructor() {
+    super("OpenGL Test");
+  }
+
   runThisTest(num) {
     _setOpenGLTestIdx(num || num == 0 ? num - 1 : -1);
     this.addChild(nextOpenGLTest());

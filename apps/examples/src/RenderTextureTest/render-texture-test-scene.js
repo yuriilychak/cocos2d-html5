@@ -32,6 +32,10 @@ import {
 } from "./render-texture-test-constants";
 
 export class RenderTextureTestScene extends TestScene {
+  constructor() {
+    super("RenderTexture Test");
+  }
+
   runThisTest(num) {
     _setsceneRenderTextureIdx(num || num == 0 ? num - 1 : -1);
     var layer = nextRenderTextureTest();

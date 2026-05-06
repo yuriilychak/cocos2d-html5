@@ -32,6 +32,10 @@ import { director } from "../../constants";
 import { sceneIdx, _setsceneIdx } from "./s9-sprite-test-constants";
 
 export class S9SpriteTestScene extends TestScene {
+  constructor() {
+    super("Scale9Sprite Test");
+  }
+
   runThisTest(num) {
     _setsceneIdx(num || num == 0 ? num - 1 : -1);
     var layer = nextS9SpriteTest();

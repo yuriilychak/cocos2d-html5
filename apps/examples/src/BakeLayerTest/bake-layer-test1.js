@@ -42,7 +42,6 @@ export class BakeLayerTest1 extends BakeLayerBaseTest {
 
     this._bakeLayer = null;
 
-    var winSize = winSize;
     var bakeItem = new MenuItemFont("bake", this.onBake, this);
     var unbakeItem = new MenuItemFont("unbake", this.onUnbake, this);
     var runActionItem = new MenuItemFont(

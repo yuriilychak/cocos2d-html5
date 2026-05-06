@@ -41,7 +41,7 @@ import { LoadingBar } from "@aspect/ccui";
 
 export class AssetsManagerLoaderScene extends TestScene {
   constructor() {
-    super();
+    super("Assets Manager");
     this._am = null;
     this._progress = null;
     this._percent = 0;

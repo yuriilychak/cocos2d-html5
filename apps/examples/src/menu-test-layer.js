@@ -40,31 +40,28 @@ import {
   Layout,
   LayoutComponent,
   ListView,
-  TextBMFont,
   Widget,
   helper
 } from "@aspect/ccui";
 
+const HEADER_HEIGHT = 56;
+
 /**
- * Base layer that renders a scrollable menu list with a header bar.
+ * Base layer that renders a scrollable menu list.
+ * The header (title, close button) is provided by the parent TestScene.
  *
- * @param {string} title - Header title text.
  * @param {{ title: string, enabled?: boolean }[]} menuItems - List of menu entries.
- * @param {string} closeLabel - Label for the close button.
- * @param {Function} onClose - Called when the close button is pressed.
  */
 export class MenuTestLayer extends Layer {
-  constructor(title, menuItems, closeLabel, onClose) {
+  constructor(menuItems) {
     super();
 
     this._listView = null;
     this._resizeListener = null;
     this._bgLayout = null;
-    this._onClose = onClose;
 
     const winSizeLocal = Director.getInstance().getWinSize();
     const PADDING = 12;
-    const HEADER_HEIGHT = 56;
     const ITEM_HEIGHT = 44;
     const ITEM_MARGIN = 6;
 
@@ -103,50 +100,6 @@ export class MenuTestLayer extends Layer {
     layout.addChild(bg, -1);
     this.addChild(layout, -1);
     this._bgLayout = layout;
-
-    const header = new ImageView();
-    header.setScale9Enabled(true);
-    header.ignoreContentAdaptWithSize(false);
-    header.loadTexture(
-      "default_theme/squere_shadow_4.png",
-      Widget.PLIST_TEXTURE
-    );
-    header.setCapInsets(new Rect(12, 12, 12, 12));
-    header.setColor(new Color(0x35, 0x39, 0x41));
-    header.setContentSize(winSizeLocal.width, HEADER_HEIGHT);
-    header.x = winSizeLocal.width / 2;
-    header.y = winSizeLocal.height - HEADER_HEIGHT / 2;
-    this.addChild(header, 1);
-
-    const titleLabel = new TextBMFont(title, s_simpleFont_fnt);
-    titleLabel.x = winSizeLocal.width / 2;
-    titleLabel.y = winSizeLocal.height - HEADER_HEIGHT / 2;
-    titleLabel.fontSize = 32;
-    this.addChild(titleLabel, 2);
-
-    const closeBtn = new BMButton(
-      "default_theme/rounded_shadow_2.png",
-      "default_theme/rounded_shadow_2.png",
-      "default_theme/rounded_shadow_2.png",
-      Widget.PLIST_TEXTURE
-    );
-    closeBtn.setScale9Enabled(true);
-    closeBtn.setCapInsets(new Rect(12, 12, 12, 12));
-    closeBtn.setContentSize(80, 32);
-    closeBtn.setTitleFntFile(s_simpleFont_fnt);
-    closeBtn.setTitleText(closeLabel);
-    closeBtn.setTitleFontSize(18);
-    closeBtn.setNormalBgColor(new Color(0xff, 0x00, 0x00));
-    closeBtn.setPressedBgColor(new Color(0xdd, 0x00, 0x00));
-    closeBtn.setDisabledBgColor(new Color(0x55, 0x55, 0x55));
-    closeBtn.pressedActionEnabled = true;
-    closeBtn.addClickEventListener(() => this._onClose());
-    closeBtn.x = winSizeLocal.width - closeBtn.width / 2 - PADDING;
-    closeBtn.y =
-      winSizeLocal.height -
-      closeBtn.height / 2 -
-      (HEADER_HEIGHT - closeBtn.height) / 2;
-    this.addChild(closeBtn, 2);
 
     const listWidth = winSizeLocal.width - PADDING * 2;
     const listHeight = winSizeLocal.height - HEADER_HEIGHT - PADDING * 2;

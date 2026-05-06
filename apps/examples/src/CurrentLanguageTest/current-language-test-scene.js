@@ -30,6 +30,10 @@ import { TestScene } from "../test-scene";
 import { Director } from "@aspect/core";
 
 export class CurrentLanguageTestScene extends TestScene {
+  constructor() {
+    super("CurrentLanguage Test");
+  }
+
   runThisTest() {
     if (window.sideIndexBar) {
       window.sideIndexBar.changeTest(0, 8);

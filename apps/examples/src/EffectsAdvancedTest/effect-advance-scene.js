@@ -31,6 +31,10 @@ import { _setsceneIndex, sceneIndex } from "./effects-advanced-test-constants";
 import { Director } from "@aspect/core";
 
 export class EffectAdvanceScene extends TestScene {
+  constructor() {
+    super("Effects Advanced Test");
+  }
+
   runThisTest() {
     _setsceneIndex(-1);
     var pLayer = nextEffectAdvanceAction();

@@ -30,6 +30,10 @@ import { TestScene } from "../test-scene";
 import { director } from "../constants";
 
 export class SceneTestScene extends TestScene {
+  constructor() {
+    super("Scene Test");
+  }
+
   runThisTest() {
     var layer = new SceneTestLayer1();
     this.addChild(layer);

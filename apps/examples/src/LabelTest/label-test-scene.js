@@ -31,6 +31,10 @@ import { director } from "../constants";
 import { _setlabelTestIdx, labelTestIdx } from "./label-test-constants";
 
 export class LabelTestScene extends TestScene {
+  constructor() {
+    super("Label Test");
+  }
+
   runThisTest(num) {
     _setlabelTestIdx(num || num == 0 ? num - 1 : -1);
     this.addChild(nextLabelTest());

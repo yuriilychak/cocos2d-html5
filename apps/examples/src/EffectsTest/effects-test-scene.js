@@ -35,6 +35,10 @@ import {
 } from "./effects-test-constants";
 
 export class EffectsTestScene extends TestScene {
+  constructor() {
+    super("Effects Test");
+  }
+
   runThisTest(num) {
     _seteffectsTestSceneIdx(num || num == 0 ? num - 1 : -1);
     var layer = nextEffectsTest();

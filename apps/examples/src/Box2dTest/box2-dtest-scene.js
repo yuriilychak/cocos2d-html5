@@ -30,6 +30,10 @@ import { TestScene } from "../test-scene";
 import { Director } from "@aspect/core";
 
 export class Box2DTestScene extends TestScene {
+  constructor() {
+    super("Box2D Test");
+  }
+
   runThisTest() {
     var layer = new Box2DTestLayer();
     this.addChild(layer);

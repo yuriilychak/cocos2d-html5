@@ -31,7 +31,7 @@ import { Director } from "@aspect/core";
 
 export class XHRTestScene extends TestScene {
   constructor() {
-    super(true);
+    super("XMLHttpRequest", null, true);
     var xhrLayer = new XHRTestLayer();
     this.addChild(xhrLayer);
   }

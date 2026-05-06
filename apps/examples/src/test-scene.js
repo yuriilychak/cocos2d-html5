@@ -27,41 +27,98 @@
  ****************************************************************************/
 
 import { TestController } from "./test-controller";
-import { director, winSize } from "./constants";
-import { LabelTTF, Scene } from "@aspect/core";
+import { s_simpleFont_fnt } from "./resources";
+import { director } from "./constants";
+import { Color, Director, Game, Rect, Scene, Sys } from "@aspect/core";
 import { TransitionProgressRadialCCW } from "@aspect/transitions";
-import { Menu, MenuItemLabel } from "@aspect/menus";
+import { BMButton, ImageView, TextBMFont, Widget } from "@aspect/ccui";
+
+export const HEADER_HEIGHT = 56;
+
+const PADDING = 12;
+const BTN_WIDTH = 128;
+const BTN_HEIGHT = 32;
 
 export class TestScene extends Scene {
-  constructor(bPortrait) {
+  constructor(title = "", subtitle = null, bPortrait) {
     super();
 
     this._mainMenu = null;
     this.init();
 
-    var label = new LabelTTF("Main Menu", "Arial", 20);
-    var menuItem = new MenuItemLabel(label, this.onMainMenuCallback, this);
+    const winSizeLocal = Director.getInstance().getWinSize();
+    const headerCenterY = winSizeLocal.height - HEADER_HEIGHT / 2;
+    const hasSubtitle = subtitle !== null && subtitle !== "";
 
-    var menu = new Menu(menuItem);
-    this._mainMenu = menu;
-    menu.x = 0;
-    menu.y = 0;
-    menuItem.x = winSize.width - 50;
-    menuItem.y = 25;
+    const header = new ImageView();
+    header.setScale9Enabled(true);
+    header.ignoreContentAdaptWithSize(false);
+    header.loadTexture("default_theme/squere_shadow_4.png", Widget.PLIST_TEXTURE);
+    header.setCapInsets(new Rect(12, 12, 12, 12));
+    header.setColor(new Color(0x35, 0x39, 0x41));
+    header.setContentSize(winSizeLocal.width, HEADER_HEIGHT);
+    header.x = winSizeLocal.width / 2;
+    header.y = headerCenterY;
+    this.addChild(header, 10);
 
-    if (!window.sideIndexBar) {
-      this.addChild(menu, 1);
+    const titleLabel = new TextBMFont(title, s_simpleFont_fnt);
+    titleLabel.x = winSizeLocal.width / 2;
+    titleLabel.y = hasSubtitle ? headerCenterY + 10 : headerCenterY;
+    titleLabel.fontSize = hasSubtitle ? 24 : 32;
+    this.addChild(titleLabel, 11);
+
+    if (hasSubtitle) {
+      const subtitleLabel = new TextBMFont(subtitle, s_simpleFont_fnt);
+      subtitleLabel.x = winSizeLocal.width / 2;
+      subtitleLabel.y = headerCenterY - 10;
+      subtitleLabel.fontSize = 16;
+      this.addChild(subtitleLabel, 11);
+    }
+
+    const btn = new BMButton(
+      "default_theme/rounded_shadow_2.png",
+      "default_theme/rounded_shadow_2.png",
+      "default_theme/rounded_shadow_2.png",
+      Widget.PLIST_TEXTURE
+    );
+    btn.setScale9Enabled(true);
+    btn.setCapInsets(new Rect(12, 12, 12, 12));
+    btn.setContentSize(BTN_WIDTH, BTN_HEIGHT);
+    btn.setTitleFntFile(s_simpleFont_fnt);
+    btn.setTitleText("Main Menu");
+    btn.setTitleFontSize(18);
+    btn.setNormalBgColor(new Color(0x44, 0x55, 0x77));
+    btn.setPressedBgColor(new Color(0x22, 0x33, 0x55));
+    btn.setDisabledBgColor(new Color(0x55, 0x55, 0x55));
+    btn.pressedActionEnabled = true;
+    btn.addClickEventListener(() => this.onMainMenuCallback());
+    btn.x = winSizeLocal.width - BTN_WIDTH / 2 - PADDING;
+    btn.y = headerCenterY;
+    this.addChild(btn, 11);
+
+    this._mainMenu = btn;
+
+    if (window.sideIndexBar) {
+      btn.setVisible(false);
     }
   }
+
   onMainMenuCallback() {
     if (director.isPaused()) {
       director.resume();
     }
-    this._mainMenu.enabled = false;
-    var scene = new Scene();
-    var layer = new TestController();
+    this._mainMenu.setEnabled(false);
+    const scene = new TestScene("Examples");
+    scene.onMainMenuCallback = () => {
+      if (Sys.getInstance().isNative) {
+        Game.getInstance().end();
+      } else {
+        window.history && window.history.go(-1);
+      }
+    };
+    const layer = new TestController();
     scene.addChild(layer);
-    var transition = new TransitionProgressRadialCCW(0.5, scene);
+    const transition = new TransitionProgressRadialCCW(0.5, scene);
     director.runScene(transition);
   }
 

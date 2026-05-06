@@ -31,6 +31,10 @@ import { director } from "../constants";
 import { ActionMgrTestIdx, _setActionMgrTestIdx } from "./constants";
 
 export class ActionManagerTestScene extends TestScene {
+  constructor() {
+    super("ActionManager Test");
+  }
+
   runThisTest(num) {
     _setActionMgrTestIdx((num || 0) - 1);
     this.addChild(nextActionMgrTest());

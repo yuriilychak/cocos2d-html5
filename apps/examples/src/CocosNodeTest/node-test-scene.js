@@ -34,6 +34,10 @@ import { director } from "../constants";
 import { _setnodeTestSceneIdx } from "./cocos-node-test-constants";
 
 export class NodeTestScene extends TestScene {
+  constructor() {
+    super("Node Test");
+  }
+
   runThisTest(num) {
     _setnodeTestSceneIdx(num || num == 0 ? num - 1 : -1);
     var layer = nextNodeTest();

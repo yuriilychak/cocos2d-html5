@@ -36,6 +36,10 @@ import { director } from "../constants";
 import { LayerMultiplex } from "@aspect/core";
 
 export class MenuTestScene extends TestScene {
+  constructor() {
+    super("Menu Test");
+  }
+
   runThisTest() {
     var layer1 = new MenuLayerMainMenu();
     var layer2 = new MenuLayer2();

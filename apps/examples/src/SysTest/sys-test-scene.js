@@ -30,6 +30,10 @@ import { director } from "../constants";
 import { _setsysTestSceneIdx, sysTestSceneIdx } from "./sys-test-constants";
 
 export class SysTestScene extends TestScene {
+  constructor() {
+    super("Sys Tests");
+  }
+
   runThisTest(num) {
     _setsysTestSceneIdx(num || num == 0 ? num - 1 : -1);
     var layer = nextSysTest();

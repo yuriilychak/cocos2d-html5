@@ -31,6 +31,10 @@ import { director } from "../constants";
 import { _setspriteTestIdx, spriteTestIdx } from "./sprite-test-constants";
 
 export class SpriteTestScene extends TestScene {
+  constructor() {
+    super("Sprite Test");
+  }
+
   runThisTest(num) {
     _setspriteTestIdx(num || num == 0 ? num - 1 : -1);
     var layer = nextSpriteTest();

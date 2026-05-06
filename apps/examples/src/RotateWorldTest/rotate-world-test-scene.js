@@ -31,6 +31,10 @@ import { director } from "../constants";
 import { RotateBy } from "@aspect/actions";
 
 export class RotateWorldTestScene extends TestScene {
+  constructor() {
+    super("RotateWorld Test");
+  }
+
   runThisTest() {
     var layer = new RotateWorldMainLayer();
     this.addChild(layer);

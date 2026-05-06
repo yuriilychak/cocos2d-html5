@@ -29,6 +29,10 @@ import { director } from "../constants";
 import { sceneIdx, _setsceneIdx } from "./event-test-constants";
 
 export class EventTestScene extends TestScene {
+  constructor() {
+    super("Event Test");
+  }
+
   runThisTest(num) {
     _setsceneIdx(num || num == 0 ? num - 1 : -1);
     var layer = nextEventsTest();

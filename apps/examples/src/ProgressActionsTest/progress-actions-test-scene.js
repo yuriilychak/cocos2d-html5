@@ -34,6 +34,10 @@ import {
 } from "./progress-actions-test-constants";
 
 export class ProgressActionsTestScene extends TestScene {
+  constructor() {
+    super("ProgressActions Test");
+  }
+
   runThisTest(num) {
     _setProgressTestSceneIdx(num || num == 0 ? num - 1 : -1);
     this.addChild(nextProgressTest());

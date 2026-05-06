@@ -36,7 +36,7 @@ import {
   _setAutoTestCurrentTestName
 } from "./constants";
 import { testNames } from "./tests-main-helpers";
-import { Game, LoaderScene, RendererConfig, Sys } from "@aspect/core";
+import { LoaderScene, RendererConfig, Sys } from "@aspect/core";
 import { MenuTestLayer } from "./menu-test-layer";
 
 export class TestController extends MenuTestLayer {
@@ -48,13 +48,7 @@ export class TestController extends MenuTestLayer {
       enabled: TestController._isTestEnabled(testCase)
     }));
 
-    super("Examples", menuItems, "Close", () => {
-      if (Sys.getInstance().isNative) {
-        Game.getInstance().end();
-      } else {
-        window.history && window.history.go(-1);
-      }
-    });
+    super(menuItems);
   }
 
   onEnter() {

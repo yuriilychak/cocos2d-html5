@@ -34,6 +34,10 @@ import { director } from "../constants";
 import { _setactionsTestIdx, actionsTestIdx } from "./actions-test-constants";
 
 export class ActionsTestScene extends TestScene {
+  constructor() {
+    super("Actions Test");
+  }
+
   runThisTest(num) {
     _setactionsTestIdx(num || num == 0 ? num - 1 : -1);
     this.addChild(nextActionsTest());

@@ -31,6 +31,10 @@ import {
 } from "./performance-now-test-constants";
 
 export class PerformanceNowTestScene extends TestScene {
+  constructor() {
+    super("PerformanceNow Tests");
+  }
+
   runThisTest(num) {
     _setscenePerformanceNowTestIdx(num || num == 0 ? num - 1 : -1);
     var layer = nextPerformanceNowTest();

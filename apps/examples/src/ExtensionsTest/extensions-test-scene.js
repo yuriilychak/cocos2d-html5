@@ -30,6 +30,10 @@ import { TestScene } from "../test-scene";
 import { Director } from "@aspect/core";
 
 export class ExtensionsTestScene extends TestScene {
+  constructor() {
+    super("Extensions Test");
+  }
+
   runThisTest() {
     var pLayer = new ExtensionsMainLayer();
     this.addChild(pLayer);

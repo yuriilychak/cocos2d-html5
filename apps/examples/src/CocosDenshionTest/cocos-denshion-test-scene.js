@@ -30,8 +30,12 @@ import { TestScene } from "../test-scene";
 import { director } from "../constants";
 
 export class CocosDenshionTestScene extends TestScene {
+  constructor() {
+    super("CocosDenshion Test");
+  }
+
   runThisTest() {
-    var layer = new CocosDenshionTest(() => this.onMainMenuCallback());
+    var layer = new CocosDenshionTest();
     this.addChild(layer);
     director.runScene(this);
   }

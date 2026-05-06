@@ -33,6 +33,10 @@ import { director } from "../constants";
 import { TestLayer1 } from "./test-layer1";
 
 export class TransitionsTestScene extends TestScene {
+  constructor() {
+    super("Transitions Test");
+  }
+
   onEnter() {
     super.onEnter();
     director.setDepthTest(false);

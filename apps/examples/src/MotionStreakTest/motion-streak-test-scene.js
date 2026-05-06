@@ -32,6 +32,10 @@ import { sceneIdx, _setsceneIdx } from "./motion-streak-test-constants";
 import { Director } from "@aspect/core";
 
 export class MotionStreakTestScene extends TestScene {
+  constructor() {
+    super("MotionStreak Test");
+  }
+
   runThisTest(num) {
     _setsceneIdx(num || num == 0 ? num - 1 : -1);
     var pLayer = nextMotionAction();

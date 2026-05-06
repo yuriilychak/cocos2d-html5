@@ -33,6 +33,10 @@ import { TestScene } from "../test-scene";
 import { director } from "../constants";
 
 export class SpineTestScene extends TestScene {
+  constructor() {
+    super("Spine Test");
+  }
+
   runThisTest() {
     var layer = SpineTestScene.nextSpineTestLayer();
     this.addChild(layer);

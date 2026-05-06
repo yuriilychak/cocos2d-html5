@@ -29,6 +29,10 @@ import { TestScene } from "../test-scene";
 import { Director } from "@aspect/core";
 
 export class UIScene extends TestScene {
+  constructor() {
+    super("UI Test");
+  }
+
   runThisTest() {
     var layer = new UIMainLayer();
     this.addChild(layer);

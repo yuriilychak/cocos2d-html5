@@ -34,6 +34,10 @@ import {
 } from "./bake-layer-test-constants";
 
 export class BakeLayerTestScene extends TestScene {
+  constructor() {
+    super("Bake Layer Test");
+  }
+
   runThisTest(num) {
     _set_bakeLayerTestIdx((num || 0) - 1);
     this.addChild(nextBakeLayerTest());

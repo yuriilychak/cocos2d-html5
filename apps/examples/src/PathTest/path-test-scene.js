@@ -28,6 +28,10 @@ import { TestScene } from "../test-scene";
 import { director } from "../constants";
 
 export class PathTestScene extends TestScene {
+  constructor() {
+    super("Path Tests");
+  }
+
   runThisTest() {
     this.addChild(new PathTestLayer());
     director.runScene(this);

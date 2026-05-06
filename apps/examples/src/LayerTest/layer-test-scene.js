@@ -34,6 +34,10 @@ import {
 } from "./layer-test-constants";
 
 export class LayerTestScene extends TestScene {
+  constructor() {
+    super("Layer Test");
+  }
+
   runThisTest(num) {
     _setlayerTestSceneIdx(num || num == 0 ? num - 1 : -1);
     this.addChild(nextLayerTest());

@@ -36,6 +36,10 @@ import {
 } from "./draw-primitives-test-constants";
 
 export class DrawPrimitivesTestScene extends TestScene {
+  constructor() {
+    super("DrawPrimitives Test");
+  }
+
   runThisTest(num) {
     _setdrawTestSceneIdx(num || num == 0 ? num - 1 : -1);
     var layer = nextDrawTest();

@@ -31,7 +31,7 @@ import { Director } from "@aspect/core";
 
 export class XHRArrayBufferTestScene extends TestScene {
   constructor() {
-    super(true);
+    super("XMLHttpRequest send ArrayBuffer", null, true);
     var xhrLayer = new XHRArrayBufferTestLayer();
     this.addChild(xhrLayer);
   }

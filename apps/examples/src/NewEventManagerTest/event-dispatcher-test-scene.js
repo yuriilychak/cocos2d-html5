@@ -34,6 +34,10 @@ import {
 } from "./new-event-manager-test-constants";
 
 export class EventDispatcherTestScene extends TestScene {
+  constructor() {
+    super("Event Manager Test");
+  }
+
   runThisTest(num) {
     _seteventDispatcherSceneIdx(num || num == 0 ? num - 1 : -1);
     this.addChild(nextDispatcherTest());

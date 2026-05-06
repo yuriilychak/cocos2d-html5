@@ -34,6 +34,10 @@ import {
 import { Director } from "@aspect/core";
 
 export class ClippingNodeTestScene extends TestScene {
+  constructor() {
+    super("ClippingNode Test");
+  }
+
   runThisTest(num) {
     _setclippingNodeTestSceneIdx(num || num == 0 ? num - 1 : -1);
     Director.getInstance().runScene(this);

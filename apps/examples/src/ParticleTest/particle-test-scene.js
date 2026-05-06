@@ -34,6 +34,10 @@ import {
 } from "./particle-test-constants";
 
 export class ParticleTestScene extends TestScene {
+  constructor() {
+    super("Particle Test");
+  }
+
   runThisTest(num) {
     _setparticleSceneIdx(num || num == 0 ? num - 1 : -1);
 

@@ -31,7 +31,7 @@ import { Director } from "@aspect/core";
 
 export class TouchesTestScene extends TestScene {
   constructor() {
-    super(true);
+    super("Touches Test", null, true);
     var pongLayer = new PongLayer();
     this.addChild(pongLayer);
   }

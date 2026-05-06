@@ -34,6 +34,10 @@ import {
 } from "./tile-map-test-constants";
 
 export class TileMapTestScene extends TestScene {
+  constructor() {
+    super("TileMap Test");
+  }
+
   runThisTest(num) {
     _settileTestSceneIdx(num || num == 0 ? num - 1 : -1);
     var layer = nextTileMapTest();

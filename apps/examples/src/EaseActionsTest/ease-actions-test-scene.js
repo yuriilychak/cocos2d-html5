@@ -37,6 +37,10 @@ import {
 } from "./ease-actions-test-constants";
 
 export class EaseActionsTestScene extends TestScene {
+  constructor() {
+    super("EaseActions Test");
+  }
+
   runThisTest(num) {
     _seteaseActionsTestIdx(num || num == 0 ? num - 1 : -1);
     this.addChild(nextEaseActionsTest());

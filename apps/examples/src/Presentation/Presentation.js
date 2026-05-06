@@ -698,6 +698,10 @@ export class ThanksPage extends PresentationBaseLayer {
 //
 
 export class PresentationScene extends TestScene {
+  constructor() {
+    super("Presentation");
+  }
+
   runThisTest() {
     presentationSceneIdx = -1;
     centerPos = new Point(winSize.width / 2, winSize.height / 2);

@@ -35,6 +35,10 @@ import { TestScene } from "../test-scene";
 import { director } from "../constants";
 
 export class ParallaxTestScene extends TestScene {
+  constructor() {
+    super("Parallax Test");
+  }
+
   runThisTest(num) {
     _setparallaxTestSceneIdx(num || num == 0 ? num - 1 : -1);
     this.addChild(nextParallaxTest());

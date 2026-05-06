@@ -34,6 +34,10 @@ import {
 } from "./chipmunk-test-constants";
 
 export class ChipmunkTestScene extends TestScene {
+  constructor() {
+    super("Chipmunk Test");
+  }
+
   runThisTest(num) {
     _setchipmunkTestSceneIdx(num || num == 0 ? num - 1 : -1);
     var layer = nextChipmunkTest();

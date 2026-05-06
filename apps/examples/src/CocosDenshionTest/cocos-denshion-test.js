@@ -29,9 +29,9 @@ import { DenshionTests } from "./cocos-denshion-test-constants";
 import { MenuTestLayer } from "../menu-test-layer";
 
 export class CocosDenshionTest extends MenuTestLayer {
-  constructor(onClose) {
+  constructor() {
     const menuItems = DenshionTests.map(test => ({ title: test.title }));
-    super("CocosDenshionTest", menuItems, "Close", onClose);
+    super(menuItems);
 
     audioEngine.setEffectsVolume(0.5);
     audioEngine.setMusicVolume(0.5);
