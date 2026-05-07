@@ -36,11 +36,8 @@ import {
 } from "./particle-test-helpers";
 import { ParticleTestScene } from "./particle-test-scene";
 import {
-  s_MovementMenuItem,
   s_back3,
-  s_fpsImages,
-  s_shapeModeMenuItem,
-  s_textureModeMenuItem
+  s_simpleFont_fnt
 } from "../resources";
 import { director } from "../constants";
 import {
@@ -53,9 +50,8 @@ import {
   Sprite,
   Sys
 } from "@aspect/core";
-import { LabelAtlas } from "@aspect/labels";
 import { MoveBy, Sequence } from "@aspect/actions";
-import { Menu, MenuItemSprite } from "@aspect/menus";
+import { BMButton, TextBMFont, Widget } from "@aspect/ccui";
 import { ParticleSystem } from "@aspect/particle";
 
 export class ParticleDemo extends BaseTestLayer {
@@ -109,171 +105,80 @@ export class ParticleDemo extends BaseTestLayer {
 
     var s = director.getWinSize();
 
-    var freeBtnNormal = new Sprite(
-      s_MovementMenuItem,
-      new Rect(0, 23 * 2, 123, 23)
-    );
-    var freeBtnSelected = new Sprite(
-      s_MovementMenuItem,
-      new Rect(0, 23, 123, 23)
-    );
-    var freeBtnDisabled = new Sprite(
-      s_MovementMenuItem,
-      new Rect(0, 0, 123, 23)
-    );
+    const makePBtn = (text, x, y, visible, bgColor, callback) => {
+      const btn = new BMButton(
+        "default_theme/rounded_shadow_2.png",
+        "default_theme/rounded_shadow_2.png",
+        "default_theme/rounded_shadow_2.png",
+        Widget.PLIST_TEXTURE
+      );
+      btn.setScale9Enabled(true);
+      btn.setCapInsets(new Rect(12, 12, 12, 12));
+      btn.setContentSize(120, 28);
+      btn.setTitleFntFile(s_simpleFont_fnt);
+      btn.setTitleText(text);
+      btn.setTitleFontSize(12);
+      btn.setNormalBgColor(bgColor);
+      btn.setPressedBgColor(new Color(0x22, 0x33, 0x55));
+      btn.setDisabledBgColor(new Color(0x55, 0x55, 0x55));
+      btn.pressedActionEnabled = true;
+      btn.setAnchorPoint(0, 0);
+      btn.x = x;
+      btn.y = y;
+      if (!visible) btn.setVisible(false);
+      btn.addClickEventListener(callback);
+      this.addChild(btn, 100);
+      return btn;
+    };
 
-    var relativeBtnNormal = new Sprite(
-      s_MovementMenuItem,
-      new Rect(123, 23 * 2, 138, 23)
-    );
-    var relativeBtnSelected = new Sprite(
-      s_MovementMenuItem,
-      new Rect(123, 23, 138, 23)
-    );
-    var relativeBtnDisabled = new Sprite(
-      s_MovementMenuItem,
-      new Rect(123, 0, 138, 23)
-    );
+    const movementColor = new Color(0xFF, 0x88, 0x00);
+    const modeColor = new Color(0x00, 0xAA, 0x00);
 
-    var groupBtnNormal = new Sprite(
-      s_MovementMenuItem,
-      new Rect(261, 23 * 2, 136, 23)
-    );
-    var groupBtnSelected = new Sprite(
-      s_MovementMenuItem,
-      new Rect(261, 23, 136, 23)
-    );
-    var groupBtnDisabled = new Sprite(
-      s_MovementMenuItem,
-      new Rect(261, 0, 136, 23)
-    );
+    this._freeMovementButton = makePBtn("Free Movement", 10, 150, true, movementColor, () => {
+      this._emitter.setPositionType(ParticleSystem.TYPE_RELATIVE);
+      this._relativeMovementButton.setVisible(true);
+      this._freeMovementButton.setVisible(false);
+      this._groupMovementButton.setVisible(false);
+    });
 
-    var selfPoint = this;
-    this._freeMovementButton = new MenuItemSprite(
-      freeBtnNormal,
-      freeBtnSelected,
-      freeBtnDisabled,
-      function () {
-        selfPoint._emitter.setPositionType(ParticleSystem.TYPE_RELATIVE);
-        selfPoint._relativeMovementButton.setVisible(true);
-        selfPoint._freeMovementButton.setVisible(false);
-        selfPoint._groupMovementButton.setVisible(false);
-      }
-    );
-    this._freeMovementButton.x = 10;
-    this._freeMovementButton.y = 150;
-    this._freeMovementButton.setAnchorPoint(0, 0);
+    this._relativeMovementButton = makePBtn("Relative", 10, 150, false, movementColor, () => {
+      this._emitter.setPositionType(ParticleSystem.TYPE_GROUPED);
+      this._relativeMovementButton.setVisible(false);
+      this._freeMovementButton.setVisible(false);
+      this._groupMovementButton.setVisible(true);
+    });
 
-    this._relativeMovementButton = new MenuItemSprite(
-      relativeBtnNormal,
-      relativeBtnSelected,
-      relativeBtnDisabled,
-      function () {
-        selfPoint._emitter.setPositionType(ParticleSystem.TYPE_GROUPED);
-        selfPoint._relativeMovementButton.setVisible(false);
-        selfPoint._freeMovementButton.setVisible(false);
-        selfPoint._groupMovementButton.setVisible(true);
-      }
-    );
-    this._relativeMovementButton.setVisible(false);
-    this._relativeMovementButton.x = 10;
-    this._relativeMovementButton.y = 150;
-    this._relativeMovementButton.setAnchorPoint(0, 0);
+    this._groupMovementButton = makePBtn("Group", 10, 150, false, movementColor, () => {
+      this._emitter.setPositionType(ParticleSystem.TYPE_FREE);
+      this._relativeMovementButton.setVisible(false);
+      this._freeMovementButton.setVisible(true);
+      this._groupMovementButton.setVisible(false);
+    });
 
-    this._groupMovementButton = new MenuItemSprite(
-      groupBtnNormal,
-      groupBtnSelected,
-      groupBtnDisabled,
-      function () {
-        selfPoint._emitter.setPositionType(ParticleSystem.TYPE_FREE);
-        selfPoint._relativeMovementButton.setVisible(false);
-        selfPoint._freeMovementButton.setVisible(true);
-        selfPoint._groupMovementButton.setVisible(false);
-      }
-    );
-    this._groupMovementButton.setVisible(false);
-    this._groupMovementButton.x = 10;
-    this._groupMovementButton.y = 150;
-    this._groupMovementButton.setAnchorPoint(0, 0);
+    this._shapeModeButton = makePBtn("Shape Mode", 10, 100, false, modeColor, () => {
+      if (this._emitter.setDrawMode)
+        this._emitter.setDrawMode(ParticleSystem.TEXTURE_MODE);
+      this._textureModeButton.setVisible(true);
+      this._shapeModeButton.setVisible(false);
+    });
 
-    var spriteNormal = new Sprite(
-      s_shapeModeMenuItem,
-      new Rect(0, 23 * 2, 115, 23)
-    );
-    var spriteSelected = new Sprite(
-      s_shapeModeMenuItem,
-      new Rect(0, 23, 115, 23)
-    );
-    var spriteDisabled = new Sprite(
-      s_shapeModeMenuItem,
-      new Rect(0, 0, 115, 23)
-    );
-
-    this._shapeModeButton = new MenuItemSprite(
-      spriteNormal,
-      spriteSelected,
-      spriteDisabled,
-      function () {
-        if (selfPoint._emitter.setDrawMode)
-          selfPoint._emitter.setDrawMode(ParticleSystem.TEXTURE_MODE);
-        selfPoint._textureModeButton.setVisible(true);
-        selfPoint._shapeModeButton.setVisible(false);
-      }
-    );
-    this._shapeModeButton.setVisible(false);
-    this._shapeModeButton.x = 10;
-    this._shapeModeButton.y = 100;
-    this._shapeModeButton.setAnchorPoint(0, 0);
-
-    var spriteNormal_t = new Sprite(
-      s_textureModeMenuItem,
-      new Rect(0, 23 * 2, 115, 23)
-    );
-    var spriteSelected_t = new Sprite(
-      s_textureModeMenuItem,
-      new Rect(0, 23, 115, 23)
-    );
-    var spriteDisabled_t = new Sprite(
-      s_textureModeMenuItem,
-      new Rect(0, 0, 115, 23)
-    );
-
-    this._textureModeButton = new MenuItemSprite(
-      spriteNormal_t,
-      spriteSelected_t,
-      spriteDisabled_t,
-      function () {
-        if (selfPoint._emitter.setDrawMode)
-          selfPoint._emitter.setDrawMode(ParticleSystem.SHAPE_MODE);
-        selfPoint._textureModeButton.setVisible(false);
-        selfPoint._shapeModeButton.setVisible(true);
-      }
-    );
-    this._textureModeButton.x = 10;
-    this._textureModeButton.y = 100;
-    this._textureModeButton.setAnchorPoint(0, 0);
+    this._textureModeButton = makePBtn("Texture Mode", 10, 100, true, modeColor, () => {
+      if (this._emitter.setDrawMode)
+        this._emitter.setDrawMode(ParticleSystem.SHAPE_MODE);
+      this._textureModeButton.setVisible(false);
+      this._shapeModeButton.setVisible(true);
+    });
 
     if ("opengl" in Sys.getInstance().capabilities) {
       // Shape type is not compatible with JSB
-      this._textureModeButton.enabled = false;
+      this._textureModeButton.setEnabled(false);
     }
 
-    var menu = new Menu(
-      this._shapeModeButton,
-      this._textureModeButton,
-      this._freeMovementButton,
-      this._relativeMovementButton,
-      this._groupMovementButton
-    );
-    menu.x = 0;
-    menu.y = 0;
-
-    this.addChild(menu, 100);
-    //TODO
-    var labelAtlas = new LabelAtlas("0123456789", s_fpsImages, 12, 32, ".");
-    this.addChild(labelAtlas, 100, TAG_LABEL_ATLAS);
-    labelAtlas.x = s.width - 66;
-    labelAtlas.y = 50;
+    var particleCountLabel = new TextBMFont("0", s_simpleFont_fnt);
+    particleCountLabel.fontSize = 16;
+    this.addChild(particleCountLabel, 100, TAG_LABEL_ATLAS);
+    particleCountLabel.x = s.width - 66;
+    particleCountLabel.y = 50;
 
     // moving background
     this._background = new Sprite(s_back3);

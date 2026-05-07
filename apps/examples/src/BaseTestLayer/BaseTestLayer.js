@@ -25,14 +25,6 @@
 
 import { TestController } from "../test-controller";
 import {
-  s_pathB1,
-  s_pathB2,
-  s_pathF1,
-  s_pathF2,
-  s_pathR1,
-  s_pathR2
-} from "../resources";
-import {
   _initGlobals,
   autoTestCurrentTestName,
   autoTestEnabled,
@@ -40,7 +32,6 @@ import {
   winSize
 } from "../constants";
 import { Color, Director, LayerGradient, RendererConfig, Scene, Sys, log } from "@aspect/core";
-import { Menu, MenuItemImage } from "@aspect/menus";
 
 export const BASE_TEST_MENUITEM_PREV_TAG = 1;
 export const BASE_TEST_MENUITEM_RESET_TAG = 2;
@@ -105,8 +96,6 @@ export class BaseTestLayer extends LayerGradient {
     if (!autoTestEnabled) log(str);
   }
   //
-  // Menu
-  //
   onEnter() {
     super.onEnter();
 
@@ -119,45 +108,14 @@ export class BaseTestLayer extends LayerGradient {
     }
     if (scene) {
       scene.setTestInfo(this.getTitle(), this.getSubtitle());
+      if (scene.setNavCallbacks) {
+        scene.setNavCallbacks(
+          () => this.onBackCallback(),
+          () => this.onRestartCallback(),
+          () => this.onNextCallback()
+        );
+      }
     }
-
-    var item1 = new MenuItemImage(
-      s_pathB1,
-      s_pathB2,
-      this.onBackCallback,
-      this
-    );
-    var item2 = new MenuItemImage(
-      s_pathR1,
-      s_pathR2,
-      this.onRestartCallback,
-      this
-    );
-    var item3 = new MenuItemImage(
-      s_pathF1,
-      s_pathF2,
-      this.onNextCallback,
-      this
-    );
-
-    item1.tag = BASE_TEST_MENUITEM_PREV_TAG;
-    item2.tag = BASE_TEST_MENUITEM_RESET_TAG;
-    item3.tag = BASE_TEST_MENUITEM_NEXT_TAG;
-
-    var menu = new Menu(item1, item2, item3);
-
-    menu.x = 0;
-    menu.y = 0;
-    var width = item2.width,
-      height = item2.height;
-    item1.x = winSize.width / 2 - width * 2;
-    item1.y = height / 2;
-    item2.x = winSize.width / 2;
-    item2.y = height / 2;
-    item3.x = winSize.width / 2 + width * 2;
-    item3.y = height / 2;
-
-    this.addChild(menu, 102, BASE_TEST_MENU_TAG);
   }
   onRestartCallback(sender) {
     // override me

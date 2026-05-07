@@ -24,10 +24,6 @@
  ****************************************************************************/
 
 import {
-  BASE_TEST_MENUITEM_NEXT_TAG,
-  BASE_TEST_MENUITEM_PREV_TAG,
-  BASE_TEST_MENUITEM_RESET_TAG,
-  BASE_TEST_MENU_TAG,
   BASE_TEST_SUBTITLE_TAG,
   BASE_TEST_TITLE_TAG,
   BaseTestLayer
@@ -107,17 +103,6 @@ export class PresentationBaseLayer extends BaseTestLayer {
         this.sublabel.y = (winSize.height * 4) / 5;
       }
     } else this.sublabel = null;
-
-    // Opacity in Menu
-    var menu = this.getChildByTag(BASE_TEST_MENU_TAG);
-    var item1 = menu.getChildByTag(BASE_TEST_MENUITEM_PREV_TAG);
-    var item2 = menu.getChildByTag(BASE_TEST_MENUITEM_RESET_TAG);
-    var item3 = menu.getChildByTag(BASE_TEST_MENUITEM_NEXT_TAG);
-
-    [item1, item2, item3].forEach(function (item) {
-      item.getNormalImage().opacity = 45;
-      item.getSelectedImage().opacity = 45;
-    });
 
     // remove "super" titles
     this.removeChildByTag(BASE_TEST_TITLE_TAG);

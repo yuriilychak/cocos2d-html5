@@ -24,8 +24,10 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-import { Director, LabelTTF, Sys } from "@aspect/core";
+import { Director, Sys } from "@aspect/core";
 import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
+import { TextBMFont } from "@aspect/ccui";
+import { s_simpleFont_fnt } from "../resources";
 
 export class CurrentLanguageTest extends BaseTestLayer {
     constructor() {
@@ -33,7 +35,8 @@ export class CurrentLanguageTest extends BaseTestLayer {
 
         var s = Director.getInstance().getWinSize();
 
-        var labelLanguage = new LabelTTF("", "Arial", 20);
+        var labelLanguage = new TextBMFont("", s_simpleFont_fnt);
+        labelLanguage.fontSize = 20;
         labelLanguage.x = s.width / 2;
 	    labelLanguage.y = s.height / 2;
 

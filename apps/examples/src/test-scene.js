@@ -39,6 +39,8 @@ const PADDING = 16;
 const BTN_WIDTH = 128;
 const BTN_HEIGHT = 32;
 const SUITE_TITLE_AREA = 220; // reserved width for suite title
+const NAV_BTN_SIZE = 32;
+const NAV_BTN_GAP = 8;
 
 export class TestScene extends Scene {
   constructor(title = "", subtitle = null, bPortrait) {
@@ -107,6 +109,54 @@ export class TestScene extends Scene {
 
     if (window.sideIndexBar) {
       btn.setVisible(false);
+    }
+
+    const makeNavBtn = (text, x) => {
+      const b = new BMButton(
+        "default_theme/rounded_shadow_2.png",
+        "default_theme/rounded_shadow_2.png",
+        "default_theme/rounded_shadow_2.png",
+        Widget.PLIST_TEXTURE
+      );
+      b.setScale9Enabled(true);
+      b.setCapInsets(new Rect(12, 12, 12, 12));
+      b.setContentSize(NAV_BTN_SIZE, NAV_BTN_SIZE);
+      b.setTitleFntFile(s_simpleFont_fnt);
+      b.setTitleText(text);
+      b.setTitleFontSize(18);
+      b.setNormalBgColor(new Color(0x44, 0x55, 0x77));
+      b.setPressedBgColor(new Color(0x22, 0x33, 0x55));
+      b.setDisabledBgColor(new Color(0x55, 0x55, 0x55));
+      b.pressedActionEnabled = true;
+      b.x = x;
+      b.y = centerY;
+      b.setVisible(false);
+      this.addChild(b, 11);
+      return b;
+    };
+
+    const navRightEdge = winW - BTN_WIDTH - PADDING - NAV_BTN_GAP;
+    const navForwardX = navRightEdge - NAV_BTN_SIZE / 2;
+    const navRestartX = navForwardX - NAV_BTN_SIZE - NAV_BTN_GAP;
+    const navBackX = navRestartX - NAV_BTN_SIZE - NAV_BTN_GAP;
+
+    this._navBack = makeNavBtn("⬅", navBackX);
+    this._navRestart = makeNavBtn("⟳", navRestartX);
+    this._navForward = makeNavBtn("➡", navForwardX);
+  }
+
+  setNavCallbacks(onBack, onRestart, onForward) {
+    if (onBack) {
+      this._navBack.addClickEventListener(onBack);
+      this._navBack.setVisible(true);
+    }
+    if (onRestart) {
+      this._navRestart.addClickEventListener(onRestart);
+      this._navRestart.setVisible(true);
+    }
+    if (onForward) {
+      this._navForward.addClickEventListener(onForward);
+      this._navForward.setVisible(true);
     }
   }
 
