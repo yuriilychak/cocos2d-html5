@@ -26,18 +26,19 @@
  ****************************************************************************/
 
 import { winSize } from "../constants";
-import { LabelTTF, Layer, Loader, TEXT_ALIGNMENT_LEFT, log } from "@aspect/core";
-export class XHRTestLayer extends Layer {
+import { Loader, log } from "@aspect/core";
+import { TextBMFont } from "@aspect/ccui";
+import { s_simpleFont_fnt } from "../resources";
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
+
+export class XHRTestLayer extends BaseTestLayer {
   constructor() {
     super();
   }
 
   onEnter() {
+    //----start----onEnter
     super.onEnter();
-    var l = new LabelTTF("Get infos via XHR", "Thonburi", 16);
-    this.addChild(l, 1);
-    l.x = winSize.width / 2;
-    l.y = winSize.height - 60;
 
     this.sendGetRequest();
     this.sendPostPlainText();
@@ -47,7 +48,6 @@ export class XHRTestLayer extends Layer {
   ensureLeftAligned(label) {
     label.anchorX = 0;
     label.anchorY = 1;
-    label.textAlign = TEXT_ALIGNMENT_LEFT;
   }
 
   streamXHREventsToLabel(xhr, label, textbox, method, title) {
@@ -74,7 +74,8 @@ export class XHRTestLayer extends Layer {
   }
 
   sendGetRequest() {
-    var statusGetLabel = new LabelTTF("Status:", "Thonburi", 12);
+    var statusGetLabel = new TextBMFont("Status:", s_simpleFont_fnt);
+    statusGetLabel.fontSize = 12;
     this.addChild(statusGetLabel, 1);
 
     statusGetLabel.x = 10;
@@ -82,7 +83,8 @@ export class XHRTestLayer extends Layer {
     this.ensureLeftAligned(statusGetLabel);
     statusGetLabel.setString("Status: Send Get Request to httpbin.org");
 
-    var responseLabel = new LabelTTF("", "Thonburi", 16);
+    var responseLabel = new TextBMFont("", s_simpleFont_fnt);
+    responseLabel.fontSize = 16;
     this.addChild(responseLabel, 1);
 
     this.ensureLeftAligned(responseLabel);
@@ -108,7 +110,8 @@ export class XHRTestLayer extends Layer {
   }
 
   sendPostPlainText() {
-    var statusPostLabel = new LabelTTF("Status:", "Thonburi", 12);
+    var statusPostLabel = new TextBMFont("Status:", s_simpleFont_fnt);
+    statusPostLabel.fontSize = 12;
     this.addChild(statusPostLabel, 1);
 
     statusPostLabel.x = (winSize.width / 10) * 3;
@@ -118,7 +121,8 @@ export class XHRTestLayer extends Layer {
       "Status: Send Post Request to httpbin.org with plain text"
     );
 
-    var responseLabel = new LabelTTF("", "Thonburi", 16);
+    var responseLabel = new TextBMFont("", s_simpleFont_fnt);
+    responseLabel.fontSize = 16;
     this.addChild(responseLabel, 1);
     this.ensureLeftAligned(responseLabel);
     responseLabel.x = (winSize.width / 10) * 3;
@@ -141,7 +145,8 @@ export class XHRTestLayer extends Layer {
   }
 
   sendPostForms() {
-    var statusPostLabel = new LabelTTF("Status:", "Thonburi", 12);
+    var statusPostLabel = new TextBMFont("Status:", s_simpleFont_fnt);
+    statusPostLabel.fontSize = 12;
     this.addChild(statusPostLabel, 1);
 
     statusPostLabel.x = (winSize.width / 10) * 7;
@@ -151,7 +156,8 @@ export class XHRTestLayer extends Layer {
       "Status: Send Post Request to httpbin.org width form data"
     );
 
-    var responseLabel = new LabelTTF("", "Thonburi", 16);
+    var responseLabel = new TextBMFont("", s_simpleFont_fnt);
+    responseLabel.fontSize = 16;
     this.addChild(responseLabel, 1);
 
     this.ensureLeftAligned(responseLabel);
@@ -183,4 +189,20 @@ export class XHRTestLayer extends Layer {
 
   scrollViewDidScroll(view) {}
   scrollViewDidZoom(view) {}
+
+  title() {
+    return "XMLHttpRequest Test";
+  }
+
+  subtitle() {
+    return "";
+  }
+
+  numberOfPendingTests() {
+    return 0;
+  }
+
+  getTestNumber() {
+    return 0;
+  }
 }

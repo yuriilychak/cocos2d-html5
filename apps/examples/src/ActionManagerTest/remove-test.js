@@ -32,9 +32,10 @@
 //------------------------------------------------------------------
 import { NOT_CRASHED_CONST, TAG_GROSSINI, TAG_SEQUENCE } from "./constants";
 import { ActionManagerTest } from "./action-manager-test";
-import { s_pathGrossini } from "../resources";
+import { s_pathGrossini, s_simpleFont_fnt } from "../resources";
 import { director } from "../constants";
-import { LabelTTF, Point, Sprite } from "@aspect/core";
+import { Point, Sprite } from "@aspect/core";
+import { TextBMFont } from "@aspect/ccui";
 import { CallFunc, MoveBy, Sequence } from "@aspect/actions";
 
 export class RemoveTest extends ActionManagerTest {
@@ -51,7 +52,8 @@ export class RemoveTest extends ActionManagerTest {
     super.onEnter();
 
     var s = director.getWinSize();
-    var l = new LabelTTF("Should not crash", "Thonburi", 16);
+    var l = new TextBMFont("Should not crash", s_simpleFont_fnt);
+    l.fontSize = 16;
     this.addChild(l);
     l.x = s.width / 2;
     l.y = 245;

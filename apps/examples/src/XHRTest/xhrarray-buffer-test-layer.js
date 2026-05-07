@@ -26,18 +26,19 @@
  ****************************************************************************/
 
 import { winSize } from "../constants";
-import { LabelTTF, Layer, Loader, TEXT_ALIGNMENT_LEFT, log } from "@aspect/core";
-export class XHRArrayBufferTestLayer extends Layer {
+import { Loader, log } from "@aspect/core";
+import { TextBMFont } from "@aspect/ccui";
+import { s_simpleFont_fnt } from "../resources";
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
+
+export class XHRArrayBufferTestLayer extends BaseTestLayer {
   constructor() {
     super();
   }
 
   onEnter() {
+    //----start----onEnter
     super.onEnter();
-    var l = new LabelTTF("Get infos via XHR", "Thonburi", 16);
-    this.addChild(l, 1);
-    l.x = winSize.width / 2;
-    l.y = winSize.height - 60;
 
     this.sendPostArrayBuffer();
   }
@@ -46,7 +47,6 @@ export class XHRArrayBufferTestLayer extends Layer {
   ensureLeftAligned(label) {
     label.anchorX = 0;
     label.anchorY = 1;
-    label.textAlign = TEXT_ALIGNMENT_LEFT;
   }
 
   streamXHREventsToLabel(xhr, label, textbox, method, title) {
@@ -73,7 +73,8 @@ export class XHRArrayBufferTestLayer extends Layer {
   }
 
   sendPostArrayBuffer() {
-    var statusPostLabel = new LabelTTF("Status:", "Thonburi", 12);
+    var statusPostLabel = new TextBMFont("Status:", s_simpleFont_fnt);
+    statusPostLabel.fontSize = 12;
     this.addChild(statusPostLabel, 1);
 
     statusPostLabel.x = 10;
@@ -83,7 +84,8 @@ export class XHRArrayBufferTestLayer extends Layer {
       "Status: Send Post Request to httpbin.org with ArrayBuffer"
     );
 
-    var responseLabel = new LabelTTF("", "Thonburi", 16);
+    var responseLabel = new TextBMFont("", s_simpleFont_fnt);
+    responseLabel.fontSize = 16;
     this.addChild(responseLabel, 1);
     this.ensureLeftAligned(responseLabel);
     responseLabel.x = 10;
@@ -107,4 +109,20 @@ export class XHRArrayBufferTestLayer extends Layer {
 
   scrollViewDidScroll(view) {}
   scrollViewDidZoom(view) {}
+
+  title() {
+    return "XHR ArrayBuffer Test";
+  }
+
+  subtitle() {
+    return "";
+  }
+
+  numberOfPendingTests() {
+    return 0;
+  }
+
+  getTestNumber() {
+    return 0;
+  }
 }

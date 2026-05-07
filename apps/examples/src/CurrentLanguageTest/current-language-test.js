@@ -24,18 +24,14 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-import { Director, LabelTTF, Layer, Sys } from "@aspect/core";
+import { Director, LabelTTF, Sys } from "@aspect/core";
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
 
-
-export class CurrentLanguageTest extends Layer {
+export class CurrentLanguageTest extends BaseTestLayer {
     constructor() {
         super();
 
         var s = Director.getInstance().getWinSize();
-        var label = new LabelTTF("Current language Test", "Arial", 28);
-        this.addChild(label, 0);
-        label.x = s.width / 2;
-	    label.y = s.height - 50;
 
         var labelLanguage = new LabelTTF("", "Arial", 20);
         labelLanguage.x = s.width / 2;
@@ -69,4 +65,31 @@ export class CurrentLanguageTest extends Layer {
         this.addChild(labelLanguage);
     }
 
+    title() {
+        return "Current Language Test";
+    }
+
+    subtitle() {
+        return "";
+    }
+
+    onRestartCallback() {
+        Director.getInstance().getRunningScene().runThisTest();
+    }
+
+    onNextCallback() {
+        Director.getInstance().getRunningScene().runThisTest();
+    }
+
+    onBackCallback() {
+        Director.getInstance().getRunningScene().runThisTest();
+    }
+
+    numberOfPendingTests() {
+        return 0;
+    }
+
+    getTestNumber() {
+        return 0;
+    }
 }

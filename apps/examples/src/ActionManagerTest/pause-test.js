@@ -32,9 +32,10 @@
 //------------------------------------------------------------------
 import { TAG_GROSSINI } from "./constants";
 import { ActionManagerTest } from "./action-manager-test";
-import { s_pathGrossini } from "../resources";
+import { s_pathGrossini, s_simpleFont_fnt } from "../resources";
 import { autoTestEnabled, director } from "../constants";
-import { LabelTTF, Point, Sprite } from "@aspect/core";
+import { Point, Sprite } from "@aspect/core";
+import { TextBMFont } from "@aspect/ccui";
 import { MoveBy } from "@aspect/actions";
 
 export class PauseTest extends ActionManagerTest {
@@ -55,11 +56,11 @@ export class PauseTest extends ActionManagerTest {
     super.onEnter();
 
     var s = director.getWinSize();
-    var l = new LabelTTF(
+    var l = new TextBMFont(
       "After 3 seconds grossini should move",
-      "Thonburi",
-      16
+      s_simpleFont_fnt
     );
+    l.fontSize = 16;
     this.addChild(l);
     l.x = s.width / 2;
     l.y = 245;

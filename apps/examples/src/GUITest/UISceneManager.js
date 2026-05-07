@@ -102,6 +102,7 @@ import { UIRichTextXMLSUIB2 } from "./UIRichTextTest/uirich-text-xmlsuib2";
 import { UIRichTextXMLSUIB3 } from "./UIRichTextTest/uirich-text-xmlsuib3";
 import { UIRichTextXMLUrl } from "./UIRichTextTest/uirich-text-xmlurl";
 import { UIS9NinePatchTest } from "./UIS9NinePatchTest/UIS9NinePatchTest";
+import { MenuTestLayer } from "../menu-test-layer";
 import { UIScene } from "./uiscene";
 import { UIScrollViewDisableTest } from "./UIScrollViewTest/uiscroll-view-disable-test";
 import { UIScrollViewNestTest } from "./UIScrollViewTest/uiscroll-view-nest-test";
@@ -131,9 +132,7 @@ import { UITextTest } from "./UITextTest/uitext-test";
 import { UIVideoPlayerTest } from "./UIVideoPlayerTest/UIVideoPlayerTest";
 import { UIWebViewTest } from "./UIWebViewTest/UIWebViewTest";
 import { TestScene } from "../test-scene";
-import { winSize } from "../constants";
-import { Director, EventListener, EventManager, EventMouse, LabelTTF, NewClass, Sys } from "@aspect/core";
-import { Menu, MenuItemLabel } from "@aspect/menus";
+import { Director, NewClass, Sys } from "@aspect/core";
 
 var currentTestingArray = null;
 
@@ -833,95 +832,25 @@ if (
 var guiTestScene = null;
 export class GUITestScene extends NewClass {
   runThisTest() {
-    var guiTestScene = new listScene();
-    Director.getInstance().runScene(guiTestScene);
+    var scene = new TestScene("UI Test");
+    scene.addChild(new UIMainMenuLayer());
+    Director.getInstance().runScene(scene);
   }
 }
 
-var listScene = class listScene extends TestScene {
+class UIMainMenuLayer extends MenuTestLayer {
   constructor() {
-    super("UI Test");
+    const categories = Object.keys(testingItems);
+    super(categories.map(name => ({ title: name })));
+    this._categories = categories;
+  }
 
+  onItemCallback(idx) {
+    currentTestingArray = testingItems[this._categories[idx]];
     UISceneManager.getInstance().ctor();
-    var menu = new Menu();
-    menu.x = 0;
-    menu.y = 0;
-    var index = 0;
-    for (var p in testingItems) {
-      (function (name, list) {
-        var label = new LabelTTF(name, "Arial", 24);
-        var menuItem = new MenuItemLabel(
-          label,
-          function () {
-            currentTestingArray = list;
-            var manager = UISceneManager.getInstance();
-            var scene = manager.currentUIScene();
-            Director.getInstance().runScene(scene);
-          },
-          this
-        );
-        menuItem.x = winSize.width / 2;
-        menuItem.y = winSize.height - (index++ + 1) * 25;
-        index++;
-        menu.addChild(menuItem);
-      })(p, testingItems[p]);
-    }
-
-    this._menu = menu;
-    this.addChild(menu);
-
-    this._length = 0;
-    for (var p in testingItems) {
-      this._length++;
-    }
+    Director.getInstance().runScene(UISceneManager.getInstance().currentUIScene());
   }
-
-  onEnter() {
-    super.onEnter();
-    if ("touches" in Sys.getInstance().capabilities)
-      EventManager.getInstance().addListener(
-        {
-          event: EventListener.TOUCH_ALL_AT_ONCE,
-          onTouchesMoved: function (touches, event) {
-            var target = event.getCurrentTarget();
-            var delta = touches[0].getDelta();
-            target.moveMenu(delta);
-            return true;
-          }
-        },
-        this
-      );
-    else if ("mouse" in Sys.getInstance().capabilities) {
-      EventManager.getInstance().addListener(
-        {
-          event: EventListener.MOUSE,
-          onMouseMove: function (event) {
-            if (event.getButton() == EventMouse.BUTTON_LEFT)
-              event.getCurrentTarget().moveMenu(event.getDelta());
-          },
-          onMouseScroll: function (event) {
-            var delta = Sys.getInstance().isNative
-              ? event.getScrollY() * 6
-              : -event.getScrollY();
-            event.getCurrentTarget().moveMenu({ y: delta });
-            return true;
-          }
-        },
-        this
-      );
-    }
-  }
-
-  moveMenu(delta) {
-    var newY = this._menu.y + delta.y;
-    if (newY < 0) newY = 0;
-
-    if (newY > (this._length + 1) * 49 - winSize.height)
-      newY = (this._length + 1) * 49 - winSize.height;
-
-    this._menu.y = newY;
-  }
-};
+}
 
 export const UISceneManager = {
   _currentUISceneId: 0,

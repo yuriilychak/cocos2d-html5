@@ -32,9 +32,10 @@
 //------------------------------------------------------------------
 import { TAG_GROSSINI } from "./constants";
 import { ActionManagerTest } from "./action-manager-test";
-import { s_pathGrossini } from "../resources";
+import { s_pathGrossini, s_simpleFont_fnt } from "../resources";
 import { director } from "../constants";
-import { LabelTTF, Sprite } from "@aspect/core";
+import { Sprite } from "@aspect/core";
+import { TextBMFont } from "@aspect/ccui";
 import { RotateBy, ScaleBy } from "@aspect/actions";
 
 export class ResumeTest extends ActionManagerTest {
@@ -51,11 +52,11 @@ export class ResumeTest extends ActionManagerTest {
     super.onEnter();
 
     var s = director.getWinSize();
-    var l = new LabelTTF(
+    var l = new TextBMFont(
       "Grossini only rotate/scale in 3 seconds",
-      "Thonburi",
-      16
+      s_simpleFont_fnt
     );
+    l.fontSize = 16;
     this.addChild(l);
     l.x = s.width / 2;
     l.y = 245;

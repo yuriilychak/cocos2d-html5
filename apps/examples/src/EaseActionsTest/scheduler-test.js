@@ -33,7 +33,7 @@
 import { EaseSpriteDemo } from "./ease-sprite-demo";
 import { winSize } from "../constants";
 import { Point, textureCache } from "@aspect/core";
-import { JumpBy, RotateBy, Speed, Sequence, Spawn } from "@aspect/actions";
+import { JumpBy, RotateBy, Speed, Sequence, spawn } from "@aspect/actions";
 import { ParticleFireworks } from "../ParticleTest/ParticleExamples";
 
 export class SchedulerTest extends EaseSpriteDemo {
@@ -54,8 +54,8 @@ export class SchedulerTest extends EaseSpriteDemo {
 
     var seq3_1 = new Sequence(jump2, jump1);
     var seq3_2 = new Sequence(rot1, rot2);
-    var spawn = spawn(seq3_1, seq3_2);
-    var action = spawn.repeatForever();
+    var spawnAction = spawn(seq3_1, seq3_2);
+    var action = spawnAction.repeatForever();
 
     var action2 = action.clone();
     var action3 = action.clone();

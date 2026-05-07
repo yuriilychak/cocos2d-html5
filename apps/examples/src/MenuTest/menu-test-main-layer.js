@@ -25,39 +25,22 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { MenuBugsTest } from "./menu-bugs-test";
-import { MenuTestMainLayer } from "./menu-test-main-layer";
-import { MenuLayer2 } from "./menu-layer2";
-import { MenuLayer3 } from "./menu-layer3";
-import { MenuLayer4 } from "./menu-layer4";
-import { RemoveMenuItemWhenMove } from "./remove-menu-item-when-move";
-import { TestScene } from "../test-scene";
-import { director } from "../constants";
-import { LayerMultiplex } from "@aspect/core";
+import { MenuTestLayer } from "../menu-test-layer";
 
-export class MenuTestScene extends TestScene {
+const MENU_ITEMS = [
+  { title: "Image Menu (Opacity & Alignment)" },
+  { title: "Sprite Menu (Labels & Actions)" },
+  { title: "Toggle Items (Sound / Music / Quality)" },
+  { title: "Bugs Test (Issue 1410)" },
+  { title: "Remove Item When Move" }
+];
+
+export class MenuTestMainLayer extends MenuTestLayer {
   constructor() {
-    super("Menu Test");
+    super(MENU_ITEMS);
   }
 
-  runThisTest() {
-    var layer1 = new MenuTestMainLayer();
-    var layer2 = new MenuLayer2();
-    var layer3 = new MenuLayer3();
-    var layer4 = new MenuLayer4();
-    var layer5 = new MenuBugsTest();
-    var layer6 = new RemoveMenuItemWhenMove();
-
-    var layer = new LayerMultiplex(
-      layer1,
-      layer2,
-      layer3,
-      layer4,
-      layer5,
-      layer6
-    );
-    this.addChild(layer, 0);
-
-    director.runScene(this);
+  onItemCallback(idx) {
+    this.parent.switchTo(idx + 1, false);
   }
 }
