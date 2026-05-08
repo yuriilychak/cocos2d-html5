@@ -24,74 +24,43 @@
  ****************************************************************************/
 
 /**
- @brief EventTest for retain prev, reset, next, main menu buttons.
- */
+@brief EventTest for retain prev, reset, next, main menu buttons.
+*/
 import { nextEventsTest, previousEventsTest, restartEventsTest } from "./event-test-helpers";
 import { EventTestScene } from "./event-test-scene";
-import { s_pathB1, s_pathB2, s_pathF1, s_pathF2, s_pathR1, s_pathR2 } from "../resources";
 import { director } from "../constants";
-import { LabelTTF, Layer } from "@aspect/core";
-import { Menu, MenuItemImage } from "@aspect/menus";
+import { Color } from "@aspect/core";
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
 
-export class EventTest extends Layer {
+export class EventTest extends BaseTestLayer {
     constructor() {
-        super();
+        super(new Color(0, 0, 0, 255), new Color(98, 99, 117, 255));
         this.init();
-    }
-
-    restartCallback(sender) {
-        var s = new EventTestScene();
-        s.addChild(restartEventsTest());
-        director.runScene(s);
-    }
-    nextCallback(sender) {
-        var s = new EventTestScene();
-        s.addChild(nextEventsTest());
-        director.runScene(s);
-    }
-    backCallback(sender) {
-        var s = new EventTestScene();
-        s.addChild(previousEventsTest());
-        director.runScene(s);
     }
 
     title() {
         return "Event Test";
     }
 
-    onEnter() {
-        super.onEnter();
-
-        var s = director.getWinSize();
-
-        var label = new LabelTTF(this.title(), "Arial", 24);
-        this.addChild(label);
-        label.x = s.width / 2;
-        label.y = s.height - 50;
-
-        var subTitle = this.subtitle();
-        if (subTitle && subTitle !== "") {
-            var l = new LabelTTF(subTitle, "Thonburi", 16);
-            this.addChild(l, 1);
-            l.x = s.width / 2;
-            l.y = s.height - 80;
-        }
-
-        var item1 = new MenuItemImage(s_pathB1, s_pathB2, this.backCallback, this);
-        var item2 = new MenuItemImage(s_pathR1, s_pathR2, this.restartCallback, this);
-        var item3 = new MenuItemImage(s_pathF1, s_pathF2, this.nextCallback, this);
-
-        var menu = new Menu(item1, item2, item3);
-        menu.x = 0;
-        menu.y = 0;
-        item1.x = s.width / 2 - 100;
-        item1.y = 30;
-        item2.x = s.width / 2;
-        item2.y = 30;
-        item3.x = s.width / 2 + 100;
-        item3.y = 30;
-
-        this.addChild(menu, 1);
+    subtitle() {
+        return "";
     }
 
+    onRestartCallback() {
+        var s = new EventTestScene();
+        s.addChild(restartEventsTest());
+        director.runScene(s);
+    }
+
+    onNextCallback() {
+        var s = new EventTestScene();
+        s.addChild(nextEventsTest());
+        director.runScene(s);
+    }
+
+    onBackCallback() {
+        var s = new EventTestScene();
+        s.addChild(previousEventsTest());
+        director.runScene(s);
+    }
 }

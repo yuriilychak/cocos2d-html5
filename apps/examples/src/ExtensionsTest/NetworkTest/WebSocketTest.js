@@ -27,14 +27,20 @@
  ****************************************************************************/
 
 import { ExtensionsTestScene } from "../extensions-test-scene";
-import { Director, LabelTTF, Layer, Scene, Size, Sys, TEXT_ALIGNMENT_CENTER, VERTICAL_TEXT_ALIGNMENT_TOP, log } from "@aspect/core";
-import { Menu, MenuItemFont, MenuItemLabel } from "@aspect/menus";
+import { Director, Sys, Size, log } from "@aspect/core";
+import { Menu, MenuItemLabel } from "@aspect/menus";
+import { BaseTestLayer } from "../../BaseTestLayer/BaseTestLayer";
+import { TestScene } from "../../test-scene";
+import { s_simpleFont_fnt } from "../../resources";
+import { LinearLayoutParameter, TextBMFont, VBox } from "@aspect/ccui";
 
 export var WebSocket = WebSocket || window.WebSocket || window.MozWebSocket;
 
-export class WebSocketTestLayer extends Layer {
+export class WebSocketTestLayer extends BaseTestLayer {
   constructor() {
     super();
+    this._title = "WebSocket Test";
+    this._showNavButtons = false;
     this._wsiSendText = null;
     this._wsiSendBinary = null;
     this._wsiError = null;
@@ -43,6 +49,7 @@ export class WebSocketTestLayer extends Layer {
     this._errorStatus = null;
     this._sendTextTimes = 0;
     this._sendBinaryTimes = 0;
+    this.init();
   }
 
   init() {
@@ -51,18 +58,13 @@ export class WebSocketTestLayer extends Layer {
     var MARGIN = 40;
     var SPACE = 35;
 
-    var label = new LabelTTF("WebSocket Test", "Arial", 28);
-    label.x = winSize.width / 2;
-    label.y = winSize.height - MARGIN;
-    this.addChild(label, 0);
-
     var menuRequest = new Menu();
     menuRequest.x = 0;
     menuRequest.y = 0;
     this.addChild(menuRequest);
 
     // Send Text
-    var labelSendText = new LabelTTF("Send Text", "Arial", 22);
+    var labelSendText = new TextBMFont("Send Text", s_simpleFont_fnt);
     var itemSendText = new MenuItemLabel(
       labelSendText,
       this.onMenuSendTextClicked,
@@ -73,7 +75,7 @@ export class WebSocketTestLayer extends Layer {
     menuRequest.addChild(itemSendText);
 
     // Send Binary
-    var labelSendBinary = new LabelTTF("Send Binary", "Arial", 22);
+    var labelSendBinary = new TextBMFont("Send Binary", s_simpleFont_fnt);
     var itemSendBinary = new MenuItemLabel(
       labelSendBinary,
       this.onMenuSendBinaryClicked,
@@ -83,63 +85,30 @@ export class WebSocketTestLayer extends Layer {
     itemSendBinary.y = winSize.height - MARGIN - 2 * SPACE;
     menuRequest.addChild(itemSendBinary);
 
-    // Send Text Status Label
-    this._sendTextStatus = new LabelTTF(
-      "Send Text WS is waiting...",
-      "Arial",
-      14,
-      new Size(160, 100),
-      TEXT_ALIGNMENT_CENTER,
-      VERTICAL_TEXT_ALIGNMENT_TOP
-    );
-    this._sendTextStatus.anchorX = 0;
-    this._sendTextStatus.anchorY = 0;
-    this._sendTextStatus.x = 0;
-    this._sendTextStatus.y = 25;
-    this.addChild(this._sendTextStatus);
+    // Status labels inside a vertical layout
+    const PADDING = 10;
+    const statusBox = new VBox();
+    statusBox.setContentSize(new Size(winSize.width - PADDING * 2, 120));
+    statusBox.x = PADDING;
+    statusBox.y = PADDING;
+    this.addChild(statusBox);
 
-    // Send Binary Status Label
-    this._sendBinaryStatus = new LabelTTF(
-      "Send Binary WS is waiting...",
-      "Arial",
-      14,
-      new Size(160, 100),
-      TEXT_ALIGNMENT_CENTER,
-      VERTICAL_TEXT_ALIGNMENT_TOP
-    );
-    this._sendBinaryStatus.anchorX = 0;
-    this._sendBinaryStatus.anchorY = 0;
-    this._sendBinaryStatus.x = 160;
-    this._sendBinaryStatus.y = 25;
-    this.addChild(this._sendBinaryStatus);
+    const makeStatusLabel = (text) => {
+      const label = new TextBMFont(text, s_simpleFont_fnt);
+      label.setAnchorPoint(0, 0.5);
+      const param = new LinearLayoutParameter();
+      param.setGravity(LinearLayoutParameter.NONE);
+      param.setMargin(0, 8, 0, 0);
+      label.setLayoutParameter(param);
+      return label;
+    };
 
-    // Error Label
-    this._errorStatus = new LabelTTF(
-      "Error WS is waiting...",
-      "Arial",
-      14,
-      new Size(160, 100),
-      TEXT_ALIGNMENT_CENTER,
-      VERTICAL_TEXT_ALIGNMENT_TOP
-    );
-    this._errorStatus.anchorX = 0;
-    this._errorStatus.anchorY = 0;
-    this._errorStatus.x = 320;
-    this._errorStatus.y = 25;
-    this.addChild(this._errorStatus);
-
-    // Back Menu
-    var itemBack = new MenuItemFont(
-      "Back",
-      this.toExtensionsMainLayer,
-      this
-    );
-    itemBack.x = winSize.width - 50;
-    itemBack.y = 25;
-    var menuBack = new Menu(itemBack);
-    menuBack.x = 0;
-    menuBack.y = 0;
-    this.addChild(menuBack);
+    this._sendTextStatus = makeStatusLabel("Send Text WS is waiting...");
+    this._sendBinaryStatus = makeStatusLabel("Send Binary WS is waiting...");
+    this._errorStatus = makeStatusLabel("Error WS is waiting...");
+    statusBox.addChild(this._sendTextStatus);
+    statusBox.addChild(this._sendBinaryStatus);
+    statusBox.addChild(this._errorStatus);
 
     var self = this;
 
@@ -284,24 +253,13 @@ export class WebSocketTestLayer extends Layer {
       this._sendBinaryStatus.setString(warningStr);
     }
   }
-
-  toExtensionsMainLayer(sender) {
-    var scene = new ExtensionsTestScene();
-    scene.runThisTest();
-  }
 }
-
-WebSocketTestLayer.create = function () {
-  var retObj = new WebSocketTestLayer();
-  if (retObj && retObj.init()) {
-    return retObj;
-  }
-  return null;
-};
 
 export function runWebSocketTest() {
-  var pScene = new Scene();
-  var pLayer = WebSocketTestLayer.create();
-  pScene.addChild(pLayer);
-  Director.getInstance().runScene(pScene);
+  const scene = new TestScene("WebSocket Test", "Back");
+  scene.onMainMenuCallback = () => new ExtensionsTestScene().runThisTest();
+  const layer = new WebSocketTestLayer();
+  scene.addChild(layer);
+  Director.getInstance().runScene(scene);
 }
+

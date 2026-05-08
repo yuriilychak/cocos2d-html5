@@ -38,8 +38,6 @@ export class UIListViewTest_Magnetic extends UIMainLayer {
   init() {
     if (super.init()) {
       var widgetSize = this._widget.getContentSize();
-      var background = this._widget.getChildByName("background_Panel");
-      var backgroundSize = background.getContentSize();
 
       this._topDisplayLabel.setString("1");
       this._topDisplayLabel.setFontSize(14);

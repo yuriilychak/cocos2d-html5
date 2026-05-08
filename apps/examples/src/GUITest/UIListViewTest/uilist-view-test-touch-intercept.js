@@ -32,8 +32,6 @@ export class UIListViewTest_TouchIntercept extends UIMainLayer {
     init() {
         if(super.init()) {
             var widgetSize = this._widget.getContentSize();
-            var background = this._widget.getChildByName("background_Panel");
-            var backgroundSize = background.getContentSize();
 
             this._topDisplayLabel.setString("TouchIntercept");
             this._topDisplayLabel.x = widgetSize.width / 2.0;
@@ -51,8 +49,8 @@ export class UIListViewTest_TouchIntercept extends UIMainLayer {
             listView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
             listView.setBackGroundImageScale9Enabled(true);
             listView.setContentSize(new Size(240, 130));
-            listView.x = (widgetSize.width - backgroundSize.width) / 2 + (backgroundSize.width - listView.width) / 2;
-            listView.y = (widgetSize.height - backgroundSize.height) / 2 + (backgroundSize.height - listView.height) / 2;
+            listView.x = (widgetSize.width - listView.width) / 2;
+            listView.y = (widgetSize.height - listView.height) / 2;
             this._mainNode.addChild(listView);
 
             // create model

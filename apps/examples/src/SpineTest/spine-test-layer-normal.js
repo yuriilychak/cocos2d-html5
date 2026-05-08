@@ -27,9 +27,10 @@
 
 import { SkeletonAnimation, ANIMATION_EVENT_TYPE } from "@aspect/extensions";
 import { SpineTestLayer } from "./spine-test-layer";
+import { s_simpleFont_fnt } from "../resources";
 import { director } from "../constants";
-import { Color, EventListener, EventManager, Point, log } from "@aspect/core";
-import { Menu, MenuItemFont, MenuItemToggle } from "@aspect/menus";
+import { Color, EventListener, EventManager, Point, Rect, log } from "@aspect/core";
+import { BMButton, Widget } from "@aspect/ccui";
 
 export class SpineTestLayerNormal extends SpineTestLayer {
   constructor(idx) {
@@ -106,24 +107,47 @@ export class SpineTestLayerNormal extends SpineTestLayer {
       this
     );
 
-    MenuItemFont.setFontSize(20);
-    var bonesToggle = new MenuItemToggle(
-      new MenuItemFont("Debug Bones: Off"),
-      new MenuItemFont("Debug Bones: On")
-    );
-    bonesToggle.setCallback(this.onDebugBones, this);
-    bonesToggle.setPosition(160 - size.width / 2, 120 - size.height / 2);
-    var slotsToggle = new MenuItemToggle(
-      new MenuItemFont("Debug Slots: Off"),
-      new MenuItemFont("Debug Slots: On")
-    );
-    slotsToggle.setCallback(this.onDebugSlots, this);
-    slotsToggle.setPosition(160 - size.width / 2, 160 - size.height / 2);
-    var menu = new Menu();
-    menu.ignoreAnchorPointForPosition(true);
-    menu.addChild(bonesToggle);
-    menu.addChild(slotsToggle);
-    this.addChild(menu, 5);
+    let debugBonesOn = false;
+    const boneBtn = new BMButton("default_theme/rounded_shadow_2.png", "default_theme/rounded_shadow_2.png", "default_theme/rounded_shadow_2.png", Widget.PLIST_TEXTURE);
+    boneBtn.setScale9Enabled(true);
+    boneBtn.setCapInsets(new Rect(12, 12, 12, 12));
+    boneBtn.setContentSize(196, 32);
+    boneBtn.setTitleFntFile(s_simpleFont_fnt);
+    boneBtn.setTitleText("Debug Bones: Off");
+    boneBtn.setTitleFontSize(12);
+    boneBtn.setNormalBgColor(new Color(0x00, 0x99, 0x00));
+    boneBtn.setPressedBgColor(new Color(0x00, 0x66, 0x00));
+    boneBtn.setDisabledBgColor(new Color(0x55, 0x55, 0x55));
+    boneBtn.pressedActionEnabled = true;
+    boneBtn.x = 160;
+    boneBtn.y = 120;
+    boneBtn.addClickEventListener(() => {
+      debugBonesOn = !debugBonesOn;
+      boneBtn.setTitleText(debugBonesOn ? "Debug Bones: On" : "Debug Bones: Off");
+      this.onDebugBones();
+    });
+    this.addChild(boneBtn, 5);
+
+    let debugSlotsOn = false;
+    const slotBtn = new BMButton("default_theme/rounded_shadow_2.png", "default_theme/rounded_shadow_2.png", "default_theme/rounded_shadow_2.png", Widget.PLIST_TEXTURE);
+    slotBtn.setScale9Enabled(true);
+    slotBtn.setCapInsets(new Rect(12, 12, 12, 12));
+    slotBtn.setContentSize(196, 32);
+    slotBtn.setTitleFntFile(s_simpleFont_fnt);
+    slotBtn.setTitleText("Debug Slots: Off");
+    slotBtn.setTitleFontSize(12);
+    slotBtn.setNormalBgColor(new Color(0x00, 0x99, 0x00));
+    slotBtn.setPressedBgColor(new Color(0x00, 0x66, 0x00));
+    slotBtn.setDisabledBgColor(new Color(0x55, 0x55, 0x55));
+    slotBtn.pressedActionEnabled = true;
+    slotBtn.x = 160;
+    slotBtn.y = 160;
+    slotBtn.addClickEventListener(() => {
+      debugSlotsOn = !debugSlotsOn;
+      slotBtn.setTitleText(debugSlotsOn ? "Debug Slots: On" : "Debug Slots: Off");
+      this.onDebugSlots();
+    });
+    this.addChild(slotBtn, 5);
   }
 
   onDebugBones(sender) {

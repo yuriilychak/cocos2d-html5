@@ -28,6 +28,7 @@
 //
 //------------------------------------------------------------------
 import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
+import { s_simpleFont_fnt } from "../resources";
 import { chipmunkTestSceneIdx } from "./chipmunk-test-constants";
 import {
   arrayOfChipmunkTest,
@@ -37,9 +38,9 @@ import {
 } from "./chipmunk-test-helpers";
 import { ChipmunkTestScene } from "./chipmunk-test-scene";
 import { director, winSize } from "../constants";
-import { Color, Sys } from "@aspect/core";
+import { Color, Rect, Sys } from "@aspect/core";
 import { PhysicsDebugNode } from "@aspect/physics";
-import { Menu, MenuItemFont } from "@aspect/menus";
+import { BMButton, Widget } from "@aspect/ccui";
 
 export class ChipmunkBaseLayer extends BaseTestLayer {
   constructor() {
@@ -57,13 +58,26 @@ export class ChipmunkBaseLayer extends BaseTestLayer {
     this._title = "No title";
     this._subtitle = "No Subtitle";
 
-    // Menu to toggle debug physics on / off
-    var item = new MenuItemFont("Physics On/Off", this.onToggleDebug, this);
-    item.fontSize = 24;
-    var menu = new Menu(item);
-    this.addChild(menu);
-    menu.x = winSize.width - 100;
-    menu.y = winSize.height - 90;
+    const toggleBtn = new BMButton(
+      "default_theme/rounded_shadow_2.png",
+      "default_theme/rounded_shadow_2.png",
+      "default_theme/rounded_shadow_2.png",
+      Widget.PLIST_TEXTURE
+    );
+    toggleBtn.setScale9Enabled(true);
+    toggleBtn.setCapInsets(new Rect(12, 12, 12, 12));
+    toggleBtn.setContentSize(196, 32);
+    toggleBtn.setTitleFntFile(s_simpleFont_fnt);
+    toggleBtn.setTitleText("Physics On/Off");
+    toggleBtn.setTitleFontSize(12);
+    toggleBtn.setNormalBgColor(new Color(0x00, 0x99, 0x00));
+    toggleBtn.setPressedBgColor(new Color(0x00, 0x66, 0x00));
+    toggleBtn.setDisabledBgColor(new Color(0x55, 0x55, 0x55));
+    toggleBtn.pressedActionEnabled = true;
+    toggleBtn.x = winSize.width - 108;
+    toggleBtn.y = winSize.height - 80;
+    toggleBtn.addClickEventListener(() => this.onToggleDebug());
+    this.addChild(toggleBtn, 10);
 
     // Create the initial space
     this.space = new cp.Space();

@@ -40,6 +40,12 @@ import { AtlasNodeCanvasRenderCmd } from "./base-nodes/atlas-node-canvas-render-
 import { AtlasNodeWebGLRenderCmd } from "./base-nodes/atlas-node-webgl-render-cmd";
 
 // ======================================================================
+// Layers
+// ======================================================================
+import { Layer } from "./layers/layer";
+import { LayerCanvasRenderer, LayerWebGLRenderer } from "./layers/renderer";
+
+// ======================================================================
 // Textures
 // ======================================================================
 import TextureCache from "./textures/texture-cache";
@@ -58,7 +64,12 @@ import { LabelTTF } from "./labelttf/label-ttf";
 import {
   CanvasRenderCmd as LabelTTFCanvasRenderCmd,
   CacheCanvasRenderCmd as LabelTTFCacheCanvasRenderCmd,
-  wrapInspection as LabelTTFWrapInspection
+  wrapInspection as LabelTTFWrapInspection,
+  _wordRex as LabelTTFWordRex,
+  _symbolRex as LabelTTFSymbolRex,
+  _lastWordRex as LabelTTFLastWordRex,
+  _lastEnglish as LabelTTFLastEnglish,
+  _firsrEnglish as LabelTTFFirsrEnglish
 } from "./labelttf/label-ttf-canvas-render-cmd";
 import { WebGLRenderCmd as LabelTTFWebGLRenderCmd } from "./labelttf/label-ttf-webgl-render-cmd";
 
@@ -101,11 +112,18 @@ Loader.getInstance().register(["csb"], _csbLoader);
 // Render command wiring
 Node.CanvasRenderCmd = NodeCanvasRenderCmd;
 Node.WebGLRenderCmd = NodeWebGLRenderCmd;
+Layer.CanvasRenderCmd = LayerCanvasRenderer;
+Layer.WebGLRenderCmd = LayerWebGLRenderer;
 Sprite.CanvasRenderCmd = SpriteCanvasRenderCmd;
 Sprite.WebGLRenderCmd = SpriteWebGLRenderCmd;
 AtlasNode.CanvasRenderCmd = AtlasNodeCanvasRenderCmd;
 AtlasNode.WebGLRenderCmd = AtlasNodeWebGLRenderCmd;
 LabelTTF.wrapInspection = LabelTTFWrapInspection;
+LabelTTF._wordRex = LabelTTFWordRex;
+LabelTTF._symbolRex = LabelTTFSymbolRex;
+LabelTTF._lastWordRex = LabelTTFLastWordRex;
+LabelTTF._lastEnglish = LabelTTFLastEnglish;
+LabelTTF._firsrEnglish = LabelTTFFirsrEnglish;
 LabelTTF.CacheCanvasRenderCmd = LabelTTFCacheCanvasRenderCmd;
 LabelTTF.CanvasRenderCmd = LabelTTFCanvasRenderCmd;
 LabelTTF.WebGLRenderCmd = LabelTTFWebGLRenderCmd;

@@ -24,18 +24,18 @@
  ****************************************************************************/
 
 import { RenderTextureBaseLayer } from "./render-texture-base-layer";
-import { s_circle_plist, s_circle_png } from "../resources";
+import { s_circle_plist, s_circle_png, s_simpleFont_fnt } from "../resources";
 import {
   Color,
   Director,
   EventListener,
   EventManager,
-  LabelTTF,
   Sprite,
   SpriteBatchNode,
   SpriteFrameCache
 } from "@aspect/core";
 import { FadeTo, Hide, Sequence } from "@aspect/actions";
+import { TextBMFont } from "@aspect/ccui";
 
 import { RenderTexture } from "@aspect/render-texture";
 export class RenderTextureZbuffer extends RenderTextureBaseLayer {
@@ -73,17 +73,17 @@ export class RenderTextureZbuffer extends RenderTextureBaseLayer {
     );
 
     var size = Director.getInstance().getWinSize();
-    var label = new LabelTTF("vertexZ = 50", "Marker Felt", 64);
+    var label = new TextBMFont("vertexZ = 50", s_simpleFont_fnt);
     label.x = size.width / 2;
     label.y = size.height * 0.25;
     this.addChild(label);
 
-    var label2 = new LabelTTF("vertexZ = 0", "Marker Felt", 64);
+    var label2 = new TextBMFont("vertexZ = 0", s_simpleFont_fnt);
     label2.x = size.width / 2;
     label2.y = size.height * 0.5;
     this.addChild(label2);
 
-    var label3 = new LabelTTF("vertexZ = -50", "Marker Felt", 64);
+    var label3 = new TextBMFont("vertexZ = -50", s_simpleFont_fnt);
     label3.x = size.width / 2;
     label3.y = size.height * 0.75;
     this.addChild(label3);

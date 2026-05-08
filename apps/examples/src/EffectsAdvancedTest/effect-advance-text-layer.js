@@ -34,12 +34,6 @@ import {
 } from "./effects-advanced-test-helpers";
 import {
   s_back3,
-  s_pathB1,
-  s_pathB2,
-  s_pathF1,
-  s_pathF2,
-  s_pathR1,
-  s_pathR2,
   s_pathSister1,
   s_pathSister2
 } from "../resources";
@@ -47,26 +41,18 @@ import { winSize } from "../constants";
 import {
   Color,
   Director,
-  LabelTTF,
-  Layer,
   LayerGradient,
-  Sprite,
-  visibleRect
+  Sprite
 } from "@aspect/core";
 import { ScaleBy, Sequence } from "@aspect/actions";
-import { Menu, MenuItemImage } from "@aspect/menus";
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
 
 import { NodeGrid } from "@aspect/node-grid";
-export class EffectAdvanceTextLayer extends Layer {
+export class EffectAdvanceTextLayer extends BaseTestLayer {
   constructor() {
-    super();
-
-    this._atlas = null;
-
-    this._title = null;
+    super(new Color(0, 0, 0, 255), new Color(98, 99, 117, 255));
 
     this.rootNode = null;
-    this.init();
   }
 
   onEnter() {
@@ -82,7 +68,6 @@ export class EffectAdvanceTextLayer extends Layer {
     this.addChild(nodeGrid, 0, EffectsAdvancedTest.TAG_BACKGROUND);
 
     var bg = new Sprite(s_back3);
-    //this.addChild(bg, 0, EffectsAdvancedTest.TAG_BACKGROUND);
     this.rootNode.addChild(bg);
     bg.x = winSize.width / 2;
     bg.y = winSize.height / 2;
@@ -106,44 +91,6 @@ export class EffectAdvanceTextLayer extends Layer {
     var sc2 = new ScaleBy(2, 5);
     var sc2_back = sc2.reverse();
     tamara.runAction(new Sequence(sc2, sc2_back).repeatForever());
-
-    var label = new LabelTTF(this.title(), "Arial", 28);
-    label.x = visibleRect.center.x;
-    label.y = visibleRect.top.y - 80;
-    this.addChild(label);
-    label.tag = EffectsAdvancedTest.TAG_LABEL;
-
-    var strSubtitle = this.subtitle();
-    if (strSubtitle != "") {
-      var subtitleLabel = new LabelTTF(strSubtitle, "Arial", 16);
-      this.addChild(subtitleLabel, 101);
-      subtitleLabel.x = visibleRect.center.x;
-      subtitleLabel.y = visibleRect.top.y - 80;
-    }
-
-    var item1 = new MenuItemImage(s_pathB1, s_pathB2, this.backCallback, this);
-    var item2 = new MenuItemImage(
-      s_pathR1,
-      s_pathR2,
-      this.restartCallback,
-      this
-    );
-    var item3 = new MenuItemImage(s_pathF1, s_pathF2, this.nextCallback, this);
-
-    var menu = new Menu(item1, item2, item3);
-
-    menu.x = 0;
-    menu.y = 0;
-    var centerx = visibleRect.center.x,
-      bottomy = visibleRect.bottom.y;
-    item1.x = centerx - item2.width * 2;
-    item1.y = bottomy + item2.height / 2;
-    item2.x = centerx;
-    item2.y = bottomy + item2.height / 2;
-    item3.x = centerx + item2.width * 2;
-    item3.y = bottomy + item2.height / 2;
-
-    this.addChild(menu, 1);
   }
 
   title() {
@@ -154,19 +101,19 @@ export class EffectAdvanceTextLayer extends Layer {
     return "";
   }
 
-  restartCallback(sender) {
+  onRestartCallback() {
     var scene = new EffectAdvanceScene();
     scene.addChild(restartEffectAdvanceAction());
     Director.getInstance().runScene(scene);
   }
 
-  nextCallback(sender) {
+  onNextCallback() {
     var scene = new EffectAdvanceScene();
     scene.addChild(nextEffectAdvanceAction());
     Director.getInstance().runScene(scene);
   }
 
-  backCallback(sender) {
+  onBackCallback() {
     var scene = new EffectAdvanceScene();
     scene.addChild(backEffectAdvanceAction());
     Director.getInstance().runScene(scene);

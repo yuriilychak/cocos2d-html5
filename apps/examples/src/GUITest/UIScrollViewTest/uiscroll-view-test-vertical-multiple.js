@@ -52,8 +52,6 @@ export class UIScrollViewTest_Vertical_Multiple extends UIMainLayer {
       this._bottomDisplayLabel.y =
         widgetSize.height / 2 - this._bottomDisplayLabel.height * 4;
 
-      var background = this._widget.getChildByName("background_Panel");
-
       // Create the scrollview
       var scrollView = (this._scrollView = new ScrollView());
       scrollView.setDirection(ScrollView.DIR_VERTICAL);
@@ -61,11 +59,9 @@ export class UIScrollViewTest_Vertical_Multiple extends UIMainLayer {
       scrollView.setContentSize(new Size(280, 150));
 
       scrollView.x =
-        (widgetSize.width - background.width) / 2 +
-        (background.width - scrollView.width) / 2;
+        (widgetSize.width - scrollView.width) / 2;
       scrollView.y =
-        (widgetSize.height - background.height) / 2 +
-        (background.height - scrollView.height) / 2;
+        (widgetSize.height - scrollView.height) / 2;
       this._mainNode.addChild(scrollView);
 
       var labelText = new LabelTTF("Texts", "Arial", 25);

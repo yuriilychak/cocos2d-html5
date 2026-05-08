@@ -29,23 +29,10 @@
 
 import { CCPoolTest } from "./ccpool-test";
 import { MySprite } from "./my-sprite";
-import { Director, Scene } from "@aspect/core";
-
+import { ExtensionsTestScene } from "../extensions-test-scene";
+import { Director } from "@aspect/core";
+import { TestScene } from "../../test-scene";
 import { Pool } from "@aspect/ccpool";
-CCPoolTest.create = function () {
-  var retObj = new CCPoolTest();
-  if (retObj && retObj.init()) {
-    return retObj;
-  }
-  return null;
-};
-
-export function runCCPoolTest() {
-  var pScene = new Scene();
-  var pLayer = CCPoolTest.create();
-  pScene.addChild(pLayer);
-  Director.getInstance().runScene(pScene);
-}
 
 MySprite.create = function (f1, f2, f3) {
   return new MySprite(f1, f2, f3);
@@ -56,3 +43,10 @@ MySprite.reCreate = function (f1, f2, f3) {
   if (pool.hasObject(MySprite)) return pool.getFromPool(MySprite, f1, f2, f3);
   return MySprite.create(f1, f2, f3);
 };
+
+export function runCCPoolTest() {
+  var scene = new TestScene("CCPoolTest", "Back");
+  scene.onMainMenuCallback = () => new ExtensionsTestScene().runThisTest();
+  scene.addChild(new CCPoolTest());
+  Director.getInstance().runScene(scene);
+}

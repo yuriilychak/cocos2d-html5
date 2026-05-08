@@ -31,6 +31,7 @@ import { EventListener, EventManager, EventMouse, Point, Sprite, Sys } from "@as
 import { TMXTiledMap } from "@aspect/tilemap";
 
 import { ParallaxNode } from "@aspect/parallax";
+import { ParallaxDemo } from "./parallax-test-constants";
 export class Parallax2 extends ParallaxDemo {
   constructor() {
     super();

@@ -25,9 +25,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { s_simpleFont_fnt } from "../resources";
 import { winSize } from "../constants";
 import { TextureCacheTestBase } from "./texture-cache-test-base";
-import { LabelTTF, Sprite, Sys, textureCache } from "@aspect/core";
+import { Sprite, Sys, textureCache } from "@aspect/core";
+import { TextBMFont } from "@aspect/ccui";
 
 export class TextureLoadImgTest extends TextureCacheTestBase {
   constructor() {
@@ -40,10 +42,9 @@ export class TextureLoadImgTest extends TextureCacheTestBase {
     this._labelSecond = null;
 
     if ("opengl" in Sys.getInstance().capabilities && !Sys.getInstance().isNative) {
-      var label = new LabelTTF(
+      var label = new TextBMFont(
         "Not support Loading texture from remote site on HTML5-WebGL",
-        "Times New Roman",
-        28
+        s_simpleFont_fnt
       );
       label.x = winSize.width / 2;
       label.y = winSize.height / 2;
@@ -51,14 +52,14 @@ export class TextureLoadImgTest extends TextureCacheTestBase {
       return;
     }
 
-    this._labelFirst = new LabelTTF("load first image");
+    this._labelFirst = new TextBMFont("load first image", s_simpleFont_fnt);
     this._labelFirst.attr({
       x: winSize.width / 2,
       y: winSize.height / 2 + 30
     });
     this.addChild(this._labelFirst, 1);
 
-    this._labelSecond = new LabelTTF("load second image");
+    this._labelSecond = new TextBMFont("load second image", s_simpleFont_fnt);
     this._labelSecond.attr({
       x: winSize.width / 2,
       y: winSize.height / 2 - 30

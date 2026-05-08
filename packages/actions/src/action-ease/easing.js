@@ -1,4 +1,5 @@
 import { bounceTime } from '../action/utils';
+import EaseBezierAction from './ease-bezier-action';
 import EaseCircleActionIn from './ease-circle-action-in';
 import EaseCircleActionInOut from './ease-circle-action-in-out';
 import EaseCircleActionOut from './ease-circle-action-out';

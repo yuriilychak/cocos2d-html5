@@ -24,9 +24,9 @@
  ****************************************************************************/
 
 import { RenderTextureBaseLayer } from "./render-texture-base-layer";
-import { s_fire } from "../resources";
-import { Director, EventListener, EventManager, RendererConfig, Sprite, Texture2D } from "@aspect/core";
-import { Menu, MenuItemFont } from "@aspect/menus";
+import { s_fire, s_simpleFont_fnt } from "../resources";
+import { Color, Director, EventListener, EventManager, Rect, RendererConfig, Sprite, Texture2D } from "@aspect/core";
+import { BMButton, Widget } from "@aspect/ccui";
 
 import { RenderTexture } from "@aspect/render-texture";
 export class RenderTextureTestDepthStencil extends RenderTextureBaseLayer {
@@ -63,12 +63,21 @@ export class RenderTextureTestDepthStencil extends RenderTextureBaseLayer {
     this._rend.x = winSize.width * 0.5;
     this._rend.y = winSize.height * 0.5;
     this.addChild(this._rend);
-    var item = new MenuItemFont("Click Me", this.maskTest, this);
-    var menu = new Menu(item);
-    menu.x = winSize.width - 90;
-    menu.y = winSize.height - 100;
-
-    this.addChild(menu);
+    const clickBtn = new BMButton("default_theme/rounded_shadow_2.png", "default_theme/rounded_shadow_2.png", "default_theme/rounded_shadow_2.png", Widget.PLIST_TEXTURE);
+    clickBtn.setScale9Enabled(true);
+    clickBtn.setCapInsets(new Rect(12, 12, 12, 12));
+    clickBtn.setContentSize(196, 32);
+    clickBtn.setTitleFntFile(s_simpleFont_fnt);
+    clickBtn.setTitleText("Click Me");
+    clickBtn.setTitleFontSize(12);
+    clickBtn.setNormalBgColor(new Color(0x00, 0x99, 0x00));
+    clickBtn.setPressedBgColor(new Color(0x00, 0x66, 0x00));
+    clickBtn.setDisabledBgColor(new Color(0x55, 0x55, 0x55));
+    clickBtn.pressedActionEnabled = true;
+    clickBtn.x = winSize.width - 108;
+    clickBtn.y = winSize.height - 80;
+    clickBtn.addClickEventListener(() => this.maskTest());
+    this.addChild(clickBtn, 10);
     this.addChild(this._spriteDraw);
   }
 

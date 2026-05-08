@@ -33,21 +33,9 @@ import { runWebSocketTest } from "./NetworkTest/WebSocketTest";
 import { runTableViewTest } from "./TableViewTest/table-view-test-scene-helpers";
 import { Director, Sys } from "@aspect/core";
 
-export var LINE_SPACE = 40;
-
-export var ITEM_TAG_BASIC = 1000;
-
-export var TEST_NOTIFICATIONCENTER = 0;
-
-export var TEST_CCCONTROLBUTTON = 1;
-
-export var TEST_COCOSBUILDER = 2;
-
-export var TEST_HTTPCLIENT = 3;
-
-export var extensionsTestItemNames = [
+export const extensionsTestItems = [
   {
-    itemTitle: "CCControlButtonTest",
+    title: "CCControlButtonTest",
     testScene: function () {
       var pManager = ControlSceneManager.getInstance();
       var pScene = pManager.currentControlScene();
@@ -55,25 +43,25 @@ export var extensionsTestItemNames = [
     }
   },
   {
-    itemTitle: "TableViewTest",
+    title: "TableViewTest",
     testScene: function () {
       runTableViewTest();
     }
   },
   {
-    itemTitle: "WebSocketTest",
+    title: "WebSocketTest",
     testScene: function () {
       runWebSocketTest();
     }
   },
   {
-    itemTitle: "SocketIOTest",
+    title: "SocketIOTest",
     testScene: function () {
       runSocketIOTest();
     }
   },
   {
-    itemTitle: "CCPoolTest",
+    title: "CCPoolTest",
     testScene: function () {
       runCCPoolTest();
     }
@@ -81,8 +69,8 @@ export var extensionsTestItemNames = [
 ];
 
 if (!Sys.getInstance().isNative || Sys.getInstance().OS_LINUX !== Sys.getInstance().os) {
-  extensionsTestItemNames.push({
-    itemTitle: "EditBoxTest",
+  extensionsTestItems.push({
+    title: "EditBoxTest",
     testScene: function () {
       runEditBoxTest();
     }

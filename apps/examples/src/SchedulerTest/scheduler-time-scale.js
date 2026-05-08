@@ -27,12 +27,12 @@
 
 // SchedulerTimeScale
 import { SchedulerTestLayer } from "./scheduler-test-layer";
-import { s_stars1 } from "../resources";
-import { Director, LabelTTF, Point, Scheduler, ActionManager, Sprite, textureCache } from "@aspect/core";
+import { s_stars1, s_simpleFont_fnt } from "../resources";
+import { Director, Point, Scheduler, ActionManager, Sprite, textureCache } from "@aspect/core";
 import { JumpBy, Repeat, RotateBy, Sequence, Spawn, Speed } from "@aspect/actions";
 import { ParticleFireworks } from "../ParticleTest/ParticleExamples";
 import { winSize } from "../constants";
-import { Slider } from "@aspect/ccui";
+import { Slider, TextBMFont } from "@aspect/ccui";
 
 export class SchedulerTimeScale extends SchedulerTestLayer {
   constructor() {
@@ -108,7 +108,7 @@ export class SchedulerTimeScale extends SchedulerTestLayer {
     this.addChild(slider);
     slider.setPercent(20);
 
-    l = new LabelTTF("Control time scale only for Grossini", "Thonburi", 16);
+    l = new TextBMFont("Control time scale only for Grossini", s_simpleFont_fnt);
     this.addChild(l);
     l.x = slider.x;
     l.y = slider.y + 30;
@@ -127,7 +127,7 @@ export class SchedulerTimeScale extends SchedulerTestLayer {
     slider.addEventListener(this.sliderEventForGlobal, this);
     this.addChild(slider);
     slider.setPercent(20);
-    l = new LabelTTF("Control time scale for all", "Thonburi", 16);
+    l = new TextBMFont("Control time scale for all", s_simpleFont_fnt);
     this.addChild(l);
     l.x = slider.x;
     l.y = slider.y + 30;

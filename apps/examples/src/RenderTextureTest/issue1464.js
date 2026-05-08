@@ -29,10 +29,11 @@
 //
 //------------------------------------------------------------------
 import { RenderTextureBaseLayer } from "./render-texture-base-layer";
-import { s_grossini } from "../resources";
+import { s_grossini, s_simpleFont_fnt } from "../resources";
 import { winSize } from "../constants";
-import { LabelTTF, Sprite, Sys } from "@aspect/core";
+import { Sprite, Sys } from "@aspect/core";
 import { DelayTime, FadeOut, Sequence } from "@aspect/actions";
+import { TextBMFont } from "@aspect/ccui";
 
 import { RenderTexture } from "@aspect/render-texture";
 export class Issue1464 extends RenderTextureBaseLayer {
@@ -75,10 +76,9 @@ export class Issue1464 extends RenderTextureBaseLayer {
       !Sys.getInstance().isNative &&
       !("opengl" in Sys.getInstance().capabilities)
     ) {
-      var label = new LabelTTF(
+      var label = new TextBMFont(
         "Not support Actions on HTML5-canvas",
-        "Times New Roman",
-        30
+        s_simpleFont_fnt
       );
       label.x = winSize.width / 2;
       label.y = winSize.height / 2 + 50;

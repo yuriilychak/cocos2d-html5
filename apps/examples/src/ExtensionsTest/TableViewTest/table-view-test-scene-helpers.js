@@ -26,11 +26,13 @@
  ****************************************************************************/
 
 import { TableViewTestLayer } from "./table-view-test-layer";
-import { Director, Scene } from "@aspect/core";
+import { ExtensionsTestScene } from "../extensions-test-scene";
+import { Director } from "@aspect/core";
+import { TestScene } from "../../test-scene";
 
 export function runTableViewTest() {
-  var pScene = new Scene();
-  var pLayer = new TableViewTestLayer();
-  pScene.addChild(pLayer);
-  Director.getInstance().runScene(pScene);
+  var scene = new TestScene("TableView Test", "Back");
+  scene.onMainMenuCallback = () => new ExtensionsTestScene().runThisTest();
+  scene.addChild(new TableViewTestLayer());
+  Director.getInstance().runScene(scene);
 }

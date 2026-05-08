@@ -33,60 +33,21 @@
 //------------------------------------------------------------------
 import { nextS9SpriteTest, previousS9SpriteTest, restartS9SpriteTest } from "./s9-sprite-test-helpers";
 import { S9SpriteTestScene } from "./s9-sprite-test-scene";
-import { s_pathB1, s_pathB2, s_pathF1, s_pathF2, s_pathR1, s_pathR2, s_s9s_blocks9_plist } from "../../resources";
-import { director, winSize } from "../../constants";
-import { Color, LabelTTF, LayerGradient, SpriteFrameCache, log } from "@aspect/core";
-import { Menu, MenuItemImage } from "@aspect/menus";
+import { s_s9s_blocks9_plist } from "../../resources";
+import { director } from "../../constants";
+import { Color, SpriteFrameCache, log } from "@aspect/core";
+import { BaseTestLayer } from "../../BaseTestLayer/BaseTestLayer";
 
-export class S9SpriteTestDemo extends LayerGradient {
+export class S9SpriteTestDemo extends BaseTestLayer {
 
     constructor() {
-        super(new Color(0,0,0,255), new Color(98,99,117,255));
-
+        super(new Color(0, 0, 0, 255), new Color(98, 99, 117, 255));
 
         this._title = "";
-
-
         this._subtitle = "";
+
         SpriteFrameCache.getInstance().addSpriteFrames(s_s9s_blocks9_plist);
         log('sprite frames added to sprite frame cache...');
-    }
-    onEnter() {
-        super.onEnter();
-
-        var label = new LabelTTF(this._title, "Arial", 28);
-        this.addChild(label, 1);
-        label.x = winSize.width / 2;
-        label.y = winSize.height - 50;
-
-        if (this._subtitle !== "") {
-            var l = new LabelTTF(this._subtitle, "Thonburi", 16);
-            this.addChild(l, 1);
-            l.x = winSize.width / 2;
-            l.y = winSize.height - 80;
-        }
-
-        var item1 = new MenuItemImage(s_pathB1, s_pathB2, this.onBackCallback, this);
-        var item2 = new MenuItemImage(s_pathR1, s_pathR2, this.onRestartCallback, this);
-        var item3 = new MenuItemImage(s_pathF1, s_pathF2, this.onNextCallback, this);
-
-        var menu = new Menu(item1, item2, item3);
-
-        menu.x = 0;
-        menu.y = 0;
-        var width = item2.width, height = item2.height;
-        item1.x = winSize.width/2 - width*2;
-        item1.y = height/2;
-        item2.x = winSize.width/2;
-        item2.y = height/2;
-        item3.x = winSize.width/2 + width*2;
-        item3.y = height/2;
-
-        this.addChild(menu, 1);
-    }
-
-    onExit() {
-        super.onExit();
     }
 
     onRestartCallback(sender) {
@@ -94,15 +55,16 @@ export class S9SpriteTestDemo extends LayerGradient {
         s.addChild(restartS9SpriteTest());
         director.runScene(s);
     }
+
     onNextCallback(sender) {
         var s = new S9SpriteTestScene();
         s.addChild(nextS9SpriteTest());
         director.runScene(s);
     }
+
     onBackCallback(sender) {
         var s = new S9SpriteTestScene();
         s.addChild(previousS9SpriteTest());
         director.runScene(s);
     }
-
 }

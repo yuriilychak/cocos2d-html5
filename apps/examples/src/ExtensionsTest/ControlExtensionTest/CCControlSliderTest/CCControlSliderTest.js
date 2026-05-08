@@ -26,15 +26,11 @@
  ****************************************************************************/
 
 import { ControlScene } from "../CCControlScene";
-import { Director, LabelTTF, Scene } from "@aspect/core";
+import { Director, LabelTTF } from "@aspect/core";
+import { TestScene } from "../../../test-scene";
 
 import { CONTROL_EVENT_VALUE_CHANGED, ControlSlider } from "@aspect/gui";
 export class ControlSliderTest extends ControlScene {
-  constructor() {
-    super();
-    this._displayValueLabel = null;
-  }
-
   init() {
     if (super.init()) {
       var screenSize = Director.getInstance().getWinSize();
@@ -116,11 +112,9 @@ export class ControlSliderTest extends ControlScene {
 }
 
 ControlSliderTest.create = function (sceneTitle) {
-  var scene = new Scene();
-  var controlLayer = new ControlSliderTest();
-  if (controlLayer && controlLayer.init()) {
-    controlLayer.getSceneTitleLabel().setString(sceneTitle);
-    scene.addChild(controlLayer);
-  }
+  const scene = new TestScene("CCControlButtonTest", "Back");
+  const layer = new ControlSliderTest();
+  layer._title = sceneTitle;
+  scene.addChild(layer);
   return scene;
 };

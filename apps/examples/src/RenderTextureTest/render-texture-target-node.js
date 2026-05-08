@@ -24,9 +24,9 @@
  ****************************************************************************/
 
 import { RenderTextureBaseLayer } from "./render-texture-base-layer";
-import { s_fire } from "../resources";
-import { Color, Director, LayerColor, RendererConfig, Sprite } from "@aspect/core";
-import { Menu, MenuItemFont } from "@aspect/menus";
+import { s_fire, s_simpleFont_fnt } from "../resources";
+import { Color, Director, LayerColor, Rect, RendererConfig, Sprite } from "@aspect/core";
+import { BMButton, Widget } from "@aspect/ccui";
 
 import { RenderTexture } from "@aspect/render-texture";
 export class RenderTextureTargetNode extends RenderTextureBaseLayer {
@@ -95,12 +95,21 @@ export class RenderTextureTargetNode extends RenderTextureBaseLayer {
     this.scheduleUpdate();
 
     // Toggle clear on / off
-    var item = new MenuItemFont("Clear On/Off", this.touched, this);
-    var menu = new Menu(item);
-    this.addChild(menu);
-
-    menu.x = winSize.width / 2;
-    menu.y = winSize.height / 2;
+    const clearOnOffBtn = new BMButton("default_theme/rounded_shadow_2.png", "default_theme/rounded_shadow_2.png", "default_theme/rounded_shadow_2.png", Widget.PLIST_TEXTURE);
+    clearOnOffBtn.setScale9Enabled(true);
+    clearOnOffBtn.setCapInsets(new Rect(12, 12, 12, 12));
+    clearOnOffBtn.setContentSize(196, 32);
+    clearOnOffBtn.setTitleFntFile(s_simpleFont_fnt);
+    clearOnOffBtn.setTitleText("Clear On/Off");
+    clearOnOffBtn.setTitleFontSize(12);
+    clearOnOffBtn.setNormalBgColor(new Color(0x00, 0x99, 0x00));
+    clearOnOffBtn.setPressedBgColor(new Color(0x00, 0x66, 0x00));
+    clearOnOffBtn.setDisabledBgColor(new Color(0x55, 0x55, 0x55));
+    clearOnOffBtn.pressedActionEnabled = true;
+    clearOnOffBtn.x = winSize.width / 2;
+    clearOnOffBtn.y = winSize.height / 2;
+    clearOnOffBtn.addClickEventListener(() => this.touched());
+    this.addChild(clearOnOffBtn, 10);
   }
 
   update(dt) {

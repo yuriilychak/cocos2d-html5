@@ -226,6 +226,10 @@ export class ProgressTimerWebGLRenderCmd extends Node.WebGLRenderCmd {
     }
 
     _updateProgressData() {
+        if (!this._vertexData)
+            this.initCmd();
+        if (!this._vertexData)
+            return;
         const node = this._node;
         const locType = node._type;
         if (locType === TYPE_RADIAL)

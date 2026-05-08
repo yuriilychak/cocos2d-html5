@@ -44,20 +44,14 @@ export class UIScrollViewRotated extends UIMainLayer {
         widgetSize.height / 2.0 - this._bottomDisplayLabel.height * 3.075
       );
 
-      var root = this._mainNode.getChildByTag(81);
-      var background = root.getChildByName("background_Panel");
-
       // Create the scrollview by vertical
       var scrollView = new ScrollView();
       scrollView.setContentSize(new Size(280.0, 150.0));
       scrollView.setDirection(ScrollView.DIR_BOTH);
-      var backgroundSize = background.getContentSize();
       scrollView.setPosition(
         new Point(
-          (widgetSize.width - backgroundSize.width) / 2.0 +
-            (backgroundSize.width - scrollView.getContentSize().width) / 2.0,
-          (widgetSize.height - backgroundSize.height) / 2.0 +
-            (backgroundSize.height - scrollView.getContentSize().height) / 2.0 +
+          (widgetSize.width - scrollView.getContentSize().width) / 2.0,
+          (widgetSize.height - scrollView.getContentSize().height) / 2.0 +
             100
         )
       );

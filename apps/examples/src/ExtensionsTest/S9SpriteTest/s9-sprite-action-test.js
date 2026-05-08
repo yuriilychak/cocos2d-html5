@@ -58,15 +58,15 @@ export class S9SpriteActionTest extends S9SpriteTestDemo {
     var rotateBy = new RotateBy(2, 360);
     var rotateByBack = rotateBy.reverse();
 
-    var ScaleTo = new ScaleTo(2, -0.44, 0.47);
-    var ScaleToBack = new ScaleTo(2, 1.0, 1.0);
+    var scaleTo = new ScaleTo(2, -0.44, 0.47);
+    var scaleToBack = new ScaleTo(2, 1.0, 1.0);
 
     var moveBy = new MoveBy(1, new Point(80, 80));
     var moveByBack = moveBy.reverse();
 
     blocks_with_insets.runAction(new Sequence(rotateBy, delay, rotateByBack));
     blocks_with_insets.runAction(
-      new Sequence(ScaleTo, delay.clone(), ScaleToBack)
+      new Sequence(scaleTo, delay.clone(), scaleToBack)
     );
     blocks_with_insets.runAction(new Sequence(moveBy, moveByBack));
   }

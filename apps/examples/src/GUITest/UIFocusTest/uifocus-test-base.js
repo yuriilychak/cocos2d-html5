@@ -39,9 +39,6 @@ export class UIFocusTestBase extends UIMainLayer {
 
   init() {
     if (super.init()) {
-      var root = this._mainNode.getChildByTag(81);
-      var background = root.getChildByName("background_Panel");
-      background.removeFromParent(true);
 
       this._dpadMenu = new Menu();
 

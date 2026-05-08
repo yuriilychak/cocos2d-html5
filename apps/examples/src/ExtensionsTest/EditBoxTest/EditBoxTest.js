@@ -25,11 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ExtensionsTestScene } from "../extensions-test-scene";
-import { winSize } from "../../constants";
-import { Color, Director, Layer, Scene, Size, associateWithNative, log } from "@aspect/core";
+import { TestScene } from "../../test-scene";
+import { Color, Director, Layer, Size, log } from "@aspect/core";
 import { Scale9Sprite } from "@aspect/ccui";
-import { Menu, MenuItemFont } from "@aspect/menus";
 
 import { EditBox, EDITBOX_INPUT_FLAG_PASSWORD } from "@aspect/editbox";
 export class EditBoxTestLayer extends Layer {
@@ -43,7 +41,6 @@ export class EditBoxTestLayer extends Layer {
     this._box3 = null;
 
     this._box4 = null;
-    associateWithNative(this, Layer);
     this.init();
   }
 
@@ -101,24 +98,7 @@ export class EditBoxTestLayer extends Layer {
     this._box4.setTouchEnabled(false);
     this._box3.addChild(this._box4);
 
-    var itemBack = new MenuItemFont(
-      "Back",
-      this.toExtensionsMainLayer,
-      this
-    );
-    itemBack.x = winSize.width - 50;
-    itemBack.y = 25;
-    var menuBack = new Menu(itemBack);
-    menuBack.x = 0;
-    menuBack.y = 0;
-    this.addChild(menuBack);
-
     return true;
-  }
-
-  toExtensionsMainLayer(sender) {
-    var scene = new ExtensionsTestScene();
-    scene.runThisTest();
   }
 
   editBoxEditingDidBegin(editBox) {
@@ -157,7 +137,7 @@ export class EditBoxTestLayer extends Layer {
 }
 
 export function runEditBoxTest() {
-  var pScene = new Scene();
+  var pScene = new TestScene("Edit Box");
   var pLayer = new EditBoxTestLayer();
   pScene.addChild(pLayer);
   Director.getInstance().runScene(pScene);

@@ -26,141 +26,50 @@
  ****************************************************************************/
 
 import { ControlSceneManager } from "./CCControlSceneManager";
-import { ExtensionsTestScene } from "../extensions-test-scene";
-import {
-  s_extensions_background,
-  s_extensions_ribbon,
-  s_pathB1,
-  s_pathB2,
-  s_pathF1,
-  s_pathF2,
-  s_pathR1,
-  s_pathR2
-} from "../../resources";
-import { Director, LabelTTF, Layer, Rect, Scene, Sprite } from "@aspect/core";
-import { Scale9Sprite } from "@aspect/ccui";
-import { Menu, MenuItemFont, MenuItemImage } from "@aspect/menus";
+import { s_extensions_background } from "../../resources";
+import { Color, Director, Sprite } from "@aspect/core";
+import { BaseTestLayer } from "../../BaseTestLayer/BaseTestLayer";
 
-export class ControlScene extends Layer {
+export class ControlScene extends BaseTestLayer {
   constructor() {
-    super();
-    this._sceneTitleLabel = null;
+    super(new Color(0, 0, 0, 255), new Color(98, 99, 117, 255));
+    this.init();
   }
 
-  getSceneTitleLabel() {
-    return this._sceneTitleLabel;
-  }
-  setSceneTitleLabel(sceneTitleLabel) {
-    this._sceneTitleLabel = sceneTitleLabel;
+  subtitle() {
+    return "";
   }
 
   init() {
     if (super.init()) {
-      // Get the sceensize
-      var screensize = Director.getInstance().getWinSize();
-
-      var pBackItem = new MenuItemFont(
-        "Back",
-        this.toExtensionsMainLayer,
-        this
-      );
-      pBackItem.x = screensize.width - 50;
-      pBackItem.y = 25;
-      var pBackMenu = new Menu(pBackItem);
-      pBackMenu.x = 0;
-      pBackMenu.y = 0;
-      this.addChild(pBackMenu, 10);
-
-      // Add the generated background
-      var background = new Sprite(s_extensions_background);
+      const screensize = Director.getInstance().getWinSize();
+      const background = new Sprite(s_extensions_background);
       background.x = screensize.width / 2;
       background.y = screensize.height / 2;
-      var bgRect = background.getTextureRect();
+      const bgRect = background.getTextureRect();
       background.scaleX = screensize.width / bgRect.width;
       background.scaleY = screensize.height / bgRect.height;
       this.addChild(background);
-
-      // Add the ribbon
-      var ribbon = new Scale9Sprite(
-        s_extensions_ribbon,
-        new Rect(1, 1, 48, 55)
-      );
-      ribbon.width = screensize.width;
-      ribbon.height = 57;
-      ribbon.x = screensize.width / 2.0;
-      ribbon.y = screensize.height - ribbon.height / 2.0;
-      this.addChild(ribbon);
-
-      // Add the title
-      this.setSceneTitleLabel(new LabelTTF("Title", "Arial", 12));
-      this._sceneTitleLabel.x = screensize.width / 2;
-      this._sceneTitleLabel.y =
-        screensize.height - this._sceneTitleLabel.height / 2 - 5;
-      this.addChild(this._sceneTitleLabel, 1);
-
-      // Add the menu
-      var item1 = new MenuItemImage(
-        s_pathB1,
-        s_pathB2,
-        this.previousCallback,
-        this
-      );
-      var item2 = new MenuItemImage(
-        s_pathR1,
-        s_pathR2,
-        this.restartCallback,
-        this
-      );
-      var item3 = new MenuItemImage(
-        s_pathF1,
-        s_pathF2,
-        this.nextCallback,
-        this
-      );
-
-      var menu = new Menu(item1, item3, item2);
-      menu.x = 0;
-      menu.y = 0;
-      item1.x = screensize.width / 2 - 100;
-      item1.y = 37;
-      item2.x = screensize.width / 2;
-      item2.y = 35;
-      item3.x = screensize.width / 2 + 100;
-      item3.y = 37;
-
-      this.addChild(menu, 1);
-
       return true;
     }
     return false;
   }
 
-  toExtensionsMainLayer(sender) {
-    var pScene = new ExtensionsTestScene();
-    pScene.runThisTest();
-  }
-
-  previousCallback(sender) {
+  onBackCallback() {
     Director.getInstance().runScene(
       ControlSceneManager.getInstance().previousControlScene()
     );
   }
-  restartCallback(sender) {
+
+  onRestartCallback() {
     Director.getInstance().runScene(
       ControlSceneManager.getInstance().currentControlScene()
     );
   }
-  nextCallback(sender) {
-    Director.getInstance().runScene(ControlSceneManager.getInstance().nextControlScene());
+
+  onNextCallback() {
+    Director.getInstance().runScene(
+      ControlSceneManager.getInstance().nextControlScene()
+    );
   }
 }
-
-ControlScene.create = function (title) {
-  var scene = new Scene();
-  var controlLayer = new ControlScene();
-  if (controlLayer && controlLayer.init()) {
-    controlLayer.getSceneTitleLabel().setString(title);
-    scene.addChild(controlLayer);
-  }
-  return scene;
-};

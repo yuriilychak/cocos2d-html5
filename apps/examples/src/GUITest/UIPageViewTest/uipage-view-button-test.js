@@ -47,19 +47,13 @@ export class UIPageViewButtonTest extends UIMainLayer {
         widgetSize.height / 2.0 - this._bottomDisplayLabel.height * 3.075
       );
 
-      var root = this._mainNode.getChildByTag(81);
-      var background = root.getChildByName("background_Panel");
-
       // Create the page view
       var pageView = new PageView();
       pageView.setContentSize(new Size(240.0, 130.0));
-      var backgroundSize = background.getContentSize();
       pageView.setPosition(
         new Point(
-          (widgetSize.width - backgroundSize.width) / 2.0 +
-            (backgroundSize.width - pageView.getContentSize().width) / 2.0,
-          (widgetSize.height - backgroundSize.height) / 2.0 +
-            (backgroundSize.height - pageView.getContentSize().height) / 2.0
+          (widgetSize.width - pageView.getContentSize().width) / 2.0,
+          (widgetSize.height - pageView.getContentSize().height) / 2.0
         )
       );
 

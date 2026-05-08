@@ -26,7 +26,9 @@
  ****************************************************************************/
 
 import { TextureCacheTestBase } from "./texture-cache-test-base";
-import { Director, LabelTTF, Sprite, textureCache } from "@aspect/core";
+import { s_simpleFont_fnt } from "../resources";
+import { Director, Sprite, textureCache } from "@aspect/core";
+import { TextBMFont } from "@aspect/ccui";
 
 export class TextureCacheTest extends TextureCacheTestBase {
   constructor() {
@@ -44,8 +46,8 @@ export class TextureCacheTest extends TextureCacheTestBase {
 
     var size = Director.getInstance().getWinSize();
 
-    this._labelLoading = new LabelTTF("loading...", "Arial", 15);
-    this._labelPercent = new LabelTTF("%0", "Arial", 15);
+    this._labelLoading = new TextBMFont("loading...", s_simpleFont_fnt);
+    this._labelPercent = new TextBMFont("%0", s_simpleFont_fnt);
 
     this._labelLoading.x = size.width / 2;
 

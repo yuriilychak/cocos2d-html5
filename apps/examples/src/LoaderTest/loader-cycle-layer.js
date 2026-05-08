@@ -24,8 +24,10 @@
  ****************************************************************************/
 
 import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
+import { s_simpleFont_fnt } from "../resources";
 import { LoaderTestLayer } from "./loader-test-layer";
-import { Color, Director, LabelTTF, Loader } from "@aspect/core";
+import { Color, Director, Loader } from "@aspect/core";
+import { TextBMFont } from "@aspect/ccui";
 export class LoaderCycleLayer extends BaseTestLayer {
   constructor() {
     super();
@@ -36,7 +38,7 @@ export class LoaderCycleLayer extends BaseTestLayer {
 
     var winSize = Director.getInstance().getWinSize();
 
-    var resultTTF = new LabelTTF("result: unknown");
+    var resultTTF = new TextBMFont("result: unknown", s_simpleFont_fnt);
     resultTTF.x = winSize.width / 2;
     resultTTF.y = winSize.height / 2;
     this.addChild(resultTTF);
@@ -79,13 +81,13 @@ export class LoaderCycleLayer extends BaseTestLayer {
 
   createInfo() {
     var winSize = Director.getInstance().getWinSize();
-    var info1 = new LabelTTF("Load 5 files");
+    var info1 = new TextBMFont("Load 5 files", s_simpleFont_fnt);
     info1.x = winSize.width / 2;
     info1.y = winSize.height / 2 + 80;
-    var info2 = new LabelTTF("1 file does not exist");
+    var info2 = new TextBMFont("1 file does not exist", s_simpleFont_fnt);
     info2.x = winSize.width / 2;
     info2.y = winSize.height / 2 + 60;
-    var info3 = new LabelTTF("The other 4 files should be loaded.");
+    var info3 = new TextBMFont("The other 4 files should be loaded.", s_simpleFont_fnt);
     info3.x = winSize.width / 2;
     info3.y = winSize.height / 2 + 40;
 

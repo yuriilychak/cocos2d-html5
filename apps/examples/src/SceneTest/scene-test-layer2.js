@@ -26,69 +26,49 @@
  ****************************************************************************/
 
 import { SceneTestLayer3 } from "./scene-test-layer3";
+import { TestScene } from "../test-scene";
 import { s_pathGrossini } from "../resources";
 import { director } from "../constants";
-import { Layer, Sprite } from "@aspect/core";
+import { Sprite } from "@aspect/core";
 import { RotateBy } from "@aspect/actions";
 import { TransitionSlideInT } from "@aspect/transitions";
-import { Menu, MenuItemFont } from "@aspect/menus";
+import { MenuTestLayer } from "../menu-test-layer";
 
-export class SceneTestLayer2 extends Layer {
+const MENU_ITEMS = [
+  { title: "runScene" },
+  { title: "runScene w/transition" },
+  { title: "Go Back" }
+];
+
+export class SceneTestLayer2 extends MenuTestLayer {
   constructor() {
-    //----start0----Scene2-ctor
-    super();
+    super(MENU_ITEMS);
 
-    this.timeCounter = 0;
-    this.init();
-
-    this.timeCounter = 0;
-
-    var s = director.getWinSize();
-
-    var item1 = new MenuItemFont("runScene", this.runScene, this);
-    var item2 = new MenuItemFont(
-      "runScene w/transition",
-      this.runSceneTran,
-      this
-    );
-    var item3 = new MenuItemFont("Go Back", this.onGoBack, this);
-
-    var menu = new Menu(item1, item2, item3);
-    menu.alignItemsVertically();
-    this.addChild(menu);
-
-    var sprite = new Sprite(s_pathGrossini);
+    const s = director.getWinSize();
+    const sprite = new Sprite(s_pathGrossini);
     this.addChild(sprite);
-
     sprite.x = s.width - 40;
     sprite.y = s.height / 2;
-    var rotate = new RotateBy(2, 360);
-    var repeat = rotate.repeatForever();
-    sprite.runAction(repeat);
-    //----end0----
-
-    //schedule(this.testDealloc);
+    sprite.runAction(new RotateBy(2, 360).repeatForever());
   }
 
-  testDealloc(dt) {}
-
-  onGoBack(sender) {
-    director.popScene();
+  onItemCallback(idx) {
+    switch (idx) {
+      case 0: this._runScene(); break;
+      case 1: this._runSceneTran(); break;
+      case 2: director.popScene(); break;
+    }
   }
 
-  runScene(sender) {
-    var scene = new SceneTestScene();
-    var layer = new SceneTestLayer3();
-    scene.addChild(layer, 0);
+  _runScene() {
+    const scene = new TestScene("Scene Test");
+    scene.addChild(new SceneTestLayer3(), 0);
     director.runScene(scene);
   }
 
-  runSceneTran(sender) {
-    var scene = new SceneTestScene();
-    var layer = new SceneTestLayer3();
-    scene.addChild(layer, 0);
+  _runSceneTran() {
+    const scene = new TestScene("Scene Test");
+    scene.addChild(new SceneTestLayer3(), 0);
     director.runScene(new TransitionSlideInT(2, scene));
   }
-
-  //CREATE_NODE(SceneTestLayer2);
 }

@@ -26,16 +26,12 @@
  ****************************************************************************/
 
 import { ControlScene } from "../CCControlScene";
-import { Director, LabelTTF, Node, Scene } from "@aspect/core";
+import { Director, LabelTTF, Node } from "@aspect/core";
+import { TestScene } from "../../../test-scene";
 import { Scale9Sprite } from "@aspect/ccui";
 
 import { CONTROL_EVENT_VALUE_CHANGED, ControlPotentiometer } from "@aspect/gui";
 export class ControlPotentiometerTest extends ControlScene {
-  constructor() {
-    super();
-    this._displayValueLabel = null;
-  }
-
   init() {
     if (super.init()) {
       var screenSize = Director.getInstance().getWinSize();
@@ -102,11 +98,9 @@ export class ControlPotentiometerTest extends ControlScene {
   }
 }
 ControlPotentiometerTest.create = function (sceneTitle) {
-  var scene = new Scene();
-  var controlLayer = new ControlPotentiometerTest();
-  if (controlLayer && controlLayer.init()) {
-    controlLayer.getSceneTitleLabel().setString(sceneTitle);
-    scene.addChild(controlLayer);
-  }
+  const scene = new TestScene("CCControlButtonTest", "Back");
+  const layer = new ControlPotentiometerTest();
+  layer._title = sceneTitle;
+  scene.addChild(layer);
   return scene;
 };

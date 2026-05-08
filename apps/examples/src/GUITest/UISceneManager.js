@@ -882,6 +882,7 @@ export const UISceneManager = {
     layer.setSceneTitle(test.title);
     var scene = new UIScene();
     scene.addChild(layer);
+    scene.setTestInfo(test.title, "");
     return scene;
   }
 };

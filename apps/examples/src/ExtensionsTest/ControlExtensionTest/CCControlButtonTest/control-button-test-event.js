@@ -31,7 +31,8 @@ import {
   s_extensions_buttonBackground,
   s_extensions_buttonHighlighted
 } from "../../../resources";
-import { Color, Director, LabelTTF, Scene } from "@aspect/core";
+import { Color, Director, LabelTTF } from "@aspect/core";
+import { TestScene } from "../../../test-scene";
 import { Scale9Sprite } from "@aspect/ccui";
 
 import {
@@ -47,11 +48,6 @@ import {
     ControlButton
 } from "@aspect/gui";
 export class ControlButtonTest_Event extends ControlScene {
-  constructor() {
-    super();
-    this._displayValueLabel = null;
-  }
-
   init() {
     if (super.init()) {
       var screenSize = Director.getInstance().getWinSize();
@@ -177,11 +173,9 @@ export class ControlButtonTest_Event extends ControlScene {
 }
 
 ControlButtonTest_Event.create = function (sceneTitle) {
-  var scene = new Scene();
-  var controlLayer = new ControlButtonTest_Event();
-  if (controlLayer && controlLayer.init()) {
-    controlLayer.getSceneTitleLabel().setString(sceneTitle);
-    scene.addChild(controlLayer);
-  }
+  const scene = new TestScene("CCControlButtonTest", "Back");
+  const layer = new ControlButtonTest_Event();
+  layer._title = sceneTitle;
+  scene.addChild(layer);
   return scene;
 };

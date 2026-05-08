@@ -25,9 +25,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { s_simpleFont_fnt } from "../resources";
 import { winSize } from "../constants";
 import { TextureCacheTestBase } from "./texture-cache-test-base";
-import { LabelTTF, Loader, Sprite, Sys, Texture2D, log, textureCache } from "@aspect/core";
+import { Loader, Sprite, Sys, Texture2D, log, textureCache } from "@aspect/core";
+import { TextBMFont } from "@aspect/ccui";
 export class RemoteTextureTest extends TextureCacheTestBase {
   constructor() {
     super();
@@ -39,10 +41,9 @@ export class RemoteTextureTest extends TextureCacheTestBase {
   onEnter() {
     super.onEnter();
     if ("opengl" in Sys.getInstance().capabilities && !Sys.getInstance().isNative) {
-      var label = new LabelTTF(
+      var label = new TextBMFont(
         "Not support Loading texture from remote site on HTML5-WebGL",
-        "Times New Roman",
-        28
+        s_simpleFont_fnt
       );
       label.x = winSize.width / 2;
       label.y = winSize.height / 2;
@@ -89,7 +90,7 @@ export class RemoteTextureTest extends TextureCacheTestBase {
       str = "!!! Wrong behavior: succeed to download from wrong url";
     }
 
-    var label = new LabelTTF(str, "Times New Roman", 28);
+    var label = new TextBMFont(str, s_simpleFont_fnt);
     label.x = winSize.width / 2;
     label.y = winSize.height / 2;
     this.addChild(label, 100);

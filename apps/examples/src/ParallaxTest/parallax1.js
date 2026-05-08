@@ -31,6 +31,7 @@ import { DelayTime, MoveBy, Sequence } from "@aspect/actions";
 import { TMXTiledMap } from "@aspect/tilemap";
 
 import { ParallaxNode } from "@aspect/parallax";
+import { ParallaxDemo } from "./parallax-test-constants";
 export class Parallax1 extends ParallaxDemo {
   constructor() {
     super();

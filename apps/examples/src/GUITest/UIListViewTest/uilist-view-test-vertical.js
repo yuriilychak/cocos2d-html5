@@ -44,8 +44,6 @@ export class UIListViewTest_Vertical extends UIMainLayer {
   init() {
     if (super.init()) {
       var widgetSize = this._widget.getContentSize();
-      var background = this._widget.getChildByName("background_Panel");
-      var backgroundSize = background.getContentSize();
 
       this._topDisplayLabel.setString("We only create 8 item templates here.");
       this._topDisplayLabel.x = widgetSize.width / 2.0;
@@ -67,11 +65,9 @@ export class UIListViewTest_Vertical extends UIMainLayer {
       this.listView.setBackGroundImageScale9Enabled(true);
       this.listView.setContentSize(new Size(240, 130));
       this.listView.x =
-        (widgetSize.width - backgroundSize.width) / 2 +
-        (backgroundSize.width - this.listView.width) / 2;
+        (widgetSize.width - this.listView.width) / 2;
       this.listView.y =
-        (widgetSize.height - backgroundSize.height) / 2 +
-        (backgroundSize.height - this.listView.height) / 2;
+        (widgetSize.height - this.listView.height) / 2;
       this.listView.addEventListener(this.selectedItemEvent, this);
       this._mainNode.addChild(this.listView);
 

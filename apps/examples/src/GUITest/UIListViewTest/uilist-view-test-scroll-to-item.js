@@ -38,8 +38,6 @@ export class UIListViewTest_ScrollToItem extends UIMainLayer {
   init() {
     if (super.init()) {
       var widgetSize = this._widget.getContentSize();
-      var background = this._widget.getChildByName("background_Panel");
-      var backgroundSize = background.getContentSize();
 
       this._topDisplayLabel.setString("");
       this._topDisplayLabel.x = widgetSize.width / 2.0;
@@ -62,11 +60,9 @@ export class UIListViewTest_ScrollToItem extends UIMainLayer {
       listView.setItemsMargin(2.0);
 
       listView.x =
-        (widgetSize.width - backgroundSize.width) / 2 +
-        (backgroundSize.width - listView.width) / 2;
+        (widgetSize.width - listView.width) / 2;
       listView.y =
-        (widgetSize.height - backgroundSize.height) / 2 +
-        (backgroundSize.height - listView.height) / 2;
+        (widgetSize.height - listView.height) / 2;
       this._mainNode.addChild(listView);
 
       {

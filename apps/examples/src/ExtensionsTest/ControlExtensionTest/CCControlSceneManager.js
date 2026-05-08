@@ -33,6 +33,7 @@ import { ControlPotentiometerTest } from "./CCControlPotentiometerTest/CCControl
 import { ControlSliderTest } from "./CCControlSliderTest/CCControlSliderTest";
 import { ControlStepperTest } from "./CCControlStepperTest/CCControlStepperTest";
 import { ControlSwitchTest } from "./CCControlSwitchTest/CCControlSwitchTest";
+import { ExtensionsTestScene } from "../extensions-test-scene";
 import { NewClass } from "@aspect/core";
 
 export var controTestItemNames = [
@@ -117,7 +118,9 @@ export class ControlSceneManager extends NewClass {
   }
 
   currentControlScene() {
-    return controTestItemNames[this._currentControlSceneId].testScene();
+    const scene = controTestItemNames[this._currentControlSceneId].testScene();
+    scene.onMainMenuCallback = () => new ExtensionsTestScene().runThisTest();
+    return scene;
   }
 }
 

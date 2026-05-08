@@ -25,9 +25,9 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
-import { LabelTTF } from "@aspect/core";
+import { s_simpleFont_fnt } from "../../resources";
 import { Menu, MenuItemLabel } from "@aspect/menus";
-import { Button, Widget } from "@aspect/ccui";
+import { Button, TextBMFont, Widget } from "@aspect/ccui";
 
 export class UIButtonTest extends UIMainLayer {
   constructor() {
@@ -55,7 +55,7 @@ export class UIButtonTest extends UIMainLayer {
       button.addTouchEventListener(this.touchEvent, this);
       this._mainNode.addChild(button);
 
-      var label = new LabelTTF("setOpacity", "Arial", 25);
+      var label = new TextBMFont("setOpacity", s_simpleFont_fnt);
       var menuItem = new MenuItemLabel(label, this.setOpacityTest, this);
       var menu = new Menu(menuItem);
       menu.x = 0;

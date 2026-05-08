@@ -23,15 +23,17 @@
  ****************************************************************************/
 
 import { PerformanceNowBaseLayer } from "./performance-now-base-layer";
-import { LabelTTF } from "@aspect/core";
+import { s_simpleFont_fnt } from "../resources";
+import { TextBMFont } from "@aspect/ccui";
 import { winSize } from "../constants";
 
 export class MonotonicIncreaseTest extends PerformanceNowBaseLayer {
   constructor() {
     super();
     if (performance && typeof performance.now !== "function") {
-      var errLabel = new LabelTTF(
-        "On browser that does not support performance.now"
+      var errLabel = new TextBMFont(
+        "On browser that does not support performance.now",
+        s_simpleFont_fnt
       );
       this.addChild(errLabel);
       errLabel.attr({
@@ -51,8 +53,9 @@ export class MonotonicIncreaseTest extends PerformanceNowBaseLayer {
       monotonicIncrease = performanceValues[i] >= performanceValues[i - 1];
     }
 
-    var label = new LabelTTF(
-      "Result that values are montonically increasing : " + monotonicIncrease
+    var label = new TextBMFont(
+      "Result that values are montonically increasing : " + monotonicIncrease,
+      s_simpleFont_fnt
     );
     label.attr({
       x: winSize.width / 2,
@@ -60,14 +63,14 @@ export class MonotonicIncreaseTest extends PerformanceNowBaseLayer {
     });
     this.addChild(label);
 
-    var values = new LabelTTF(
-      "Result Values : " + JSON.stringify(performanceValues)
+    var values = new TextBMFont(
+      "Result Values : " + JSON.stringify(performanceValues),
+      s_simpleFont_fnt
     );
     values.attr({
       x: winSize.width / 2,
       y: winSize.height / 2 - 50
     });
-    values.setDimensions(winSize.width / 2, 100);
     this.addChild(values);
   }
 

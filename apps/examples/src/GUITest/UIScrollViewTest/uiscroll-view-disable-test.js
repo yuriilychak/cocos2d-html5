@@ -43,17 +43,12 @@ export class UIScrollViewDisableTest extends UIMainLayer {
       this._bottomDisplayLabel.y =
         widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
 
-      var background = this._widget.getChildByName("background_Panel");
-      var backgroundSize = background.getContentSize();
-
       var scrollView = new ScrollView();
       scrollView.setContentSize(new Size(280, 150));
       scrollView.x =
-        (widgetSize.width - backgroundSize.width) / 2 +
-        (backgroundSize.width - scrollView.width) / 2;
+        (widgetSize.width - scrollView.width) / 2;
       scrollView.y =
-        (widgetSize.height - backgroundSize.height) / 2 +
-        (backgroundSize.height - scrollView.height) / 2;
+        (widgetSize.height - scrollView.height) / 2;
       scrollView.setTouchEnabled(false);
 
       this._mainNode.addChild(scrollView);

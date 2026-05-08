@@ -46,8 +46,6 @@ export class UIScrollViewTest_ScrollBar extends UIMainLayer {
       this._bottomDisplayLabel.y =
         widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
 
-      var background = this._widget.getChildByName("background_Panel");
-
       // Create the scrollview
       var scrollView = new ScrollView();
       scrollView.setTouchEnabled(true);
@@ -60,11 +58,9 @@ export class UIScrollViewTest_ScrollBar extends UIMainLayer {
       var scrollViewSize = scrollView.getContentSize();
 
       scrollView.x =
-        (widgetSize.width - background.width) / 2 +
-        (background.width - scrollViewSize.width) / 2;
+        (widgetSize.width - scrollViewSize.width) / 2;
       scrollView.y =
-        (widgetSize.height - background.height) / 2 +
-        (background.height - scrollViewSize.height) / 2;
+        (widgetSize.height - scrollViewSize.height) / 2;
 
       this._mainNode.addChild(scrollView);
 

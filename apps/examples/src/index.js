@@ -26,6 +26,7 @@
  ****************************************************************************/
 
 import { TestController } from "./test-controller";
+import { TestScene } from "./test-scene";
 import { _initGlobals } from "./constants";
 import { g_resources, s_simpleTheme_plist } from "./resources";
 import {
@@ -35,9 +36,9 @@ import {
   Game,
   Loader,
   LoaderScene,
-  Scene,
   ORIENTATION_LANDSCAPE,
   SpriteFrameCache,
+  Sys,
 } from "@aspect/core";
 const projectConfig = {
   debugMode: 1,
@@ -69,7 +70,14 @@ Game.getInstance().onStart = function () {
       } else {
 
         SpriteFrameCache.getInstance().addSpriteFrames(s_simpleTheme_plist);
-        var scene = new Scene();
+        const scene = new TestScene("Examples", "Close");
+        scene.onMainMenuCallback = () => {
+          if (Sys.getInstance().isNative) {
+            Game.getInstance().end();
+          } else {
+            window.history && window.history.go(-1);
+          }
+        };
         scene.addChild(new TestController());
         Director.getInstance().runScene(scene);
       }

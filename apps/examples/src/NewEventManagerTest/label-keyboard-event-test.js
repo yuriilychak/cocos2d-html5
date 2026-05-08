@@ -26,8 +26,10 @@
  ****************************************************************************/
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
+import { s_simpleFont_fnt } from "../resources";
 import { director } from "../constants";
-import { EventListener, EventManager, KEY, LabelTTF, Sys } from "@aspect/core";
+import { EventListener, EventManager, KEY, Sys } from "@aspect/core";
+import { TextBMFont } from "@aspect/ccui";
 export class LabelKeyboardEventTest extends EventDispatcherTestDemo {
   onEnter() {
     //----start4----onEnter
@@ -36,7 +38,7 @@ export class LabelKeyboardEventTest extends EventDispatcherTestDemo {
     var origin = director.getVisibleOrigin();
     var size = director.getVisibleSize();
 
-    var statusLabel = new LabelTTF("No keyboard event received!", "", 20);
+    var statusLabel = new TextBMFont("No keyboard event received!", s_simpleFont_fnt);
     statusLabel.setPosition(
       origin.x + size.width / 2,
       origin.x + size.height / 2

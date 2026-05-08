@@ -25,7 +25,9 @@
  ****************************************************************************/
 
 import { SysTestBase } from "./sys-test-base";
-import { EventListener, EventManager, LabelTTF, Sys } from "@aspect/core";
+import { s_simpleFont_fnt } from "../resources";
+import { EventListener, EventManager, Sys } from "@aspect/core";
+import { TextBMFont } from "@aspect/ccui";
 import { winSize } from "../constants";
 
 export class OpenURLTest extends SysTestBase {
@@ -36,10 +38,9 @@ export class OpenURLTest extends SysTestBase {
   constructor() {
     super();
 
-    var label = new LabelTTF(
+    var label = new TextBMFont(
       "Touch the screen to open\nthe cocos2d-x home page",
-      "Arial",
-      22
+      s_simpleFont_fnt
     );
     this.addChild(label);
     label.setPosition(winSize.width / 2, winSize.height / 2);

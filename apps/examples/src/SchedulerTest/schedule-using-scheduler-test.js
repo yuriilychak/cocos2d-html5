@@ -95,6 +95,6 @@ export class ScheduleUsingSchedulerTest extends SchedulerTestLayer {
   unscheduleAll() {
     var scheduler = director.getScheduler();
     scheduler.unscheduleUpdate(this);
-    scheduler.unscheduleAllCallbacksForTarget(this);
+    scheduler.unscheduleAllForTarget(this);
   }
 }

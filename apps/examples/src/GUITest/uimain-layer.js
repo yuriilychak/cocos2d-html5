@@ -1,52 +1,20 @@
-/****************************************************************************
- Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2016 Chukong Technologies Inc.
- Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
-
- http://www.cocos2d-x.org
-
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
-
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
-
 import { UISceneManager, GUITestScene } from "./UISceneManager";
-import { Color, Director, LabelTTF, Layer, Node } from "@aspect/core";
-import { Menu, MenuItemLabel } from "@aspect/menus";
-import { Text, Widget } from "@aspect/ccui";
+import { Color, Director, Layer, Node } from "@aspect/core";
+import { Text } from "@aspect/ccui";
 import { winSize } from "../constants";
-import { load } from "@aspect/cocostudio";
 
 export class UIMainLayer extends Layer {
   constructor() {
     super();
 
     this._widget = null;
-
     this._sceneTitle = null;
-
     this._topDisplayLabel = null;
-
     this._bottomDisplayLabel = null;
-
     this._mainNode = null;
-    this._widget = null;
-    //this.init();
+    this._title = "";
   }
+
   init() {
     super.init();
 
@@ -61,52 +29,12 @@ export class UIMainLayer extends Layer {
     });
     this.addChild(mainNode);
 
-    var widget;
-    var json = load("ccs-res/cocosui/UITest/UITest.json");
-    widget = json.node;
-
-    // If the JSON couldn't be parsed (legacy widgetTree format not yet
-    // supported), widget will be an empty Node with no children.
-    // Return false so subclass init() blocks are skipped entirely.
-    if (!widget || widget.getChildrenCount() === 0) {
-      return false;
-    }
-
+    var widget = new Node();
+    widget.setContentSize(480, 320);
     mainNode.addChild(widget, -1);
 
-    this._sceneTitle = widget.getChildByName("UItest");
+    var widgetSize = { width: 480, height: 320 };
 
-    var back_label = widget.getChildByName("back");
-    if (back_label) {
-      back_label.addTouchEventListener(this.toExtensionsMainLayer, this);
-    } else {
-      var label = new LabelTTF("Back", "Arial", 20);
-      var menuItem = new MenuItemLabel(
-        label,
-        this.toExtensionsMainLayer,
-        this
-      );
-      var menu = new Menu(menuItem);
-      menu.x = 0;
-      menu.y = 0;
-      menuItem.x = winSize.width - 50;
-      menuItem.y = 25;
-      this.addChild(menu, 1);
-    }
-    var left_button = widget.getChildByName("left_Button");
-    if (left_button)
-      left_button.addTouchEventListener(this.previousCallback, this);
-
-    var middle_button = widget.getChildByName("middle_Button");
-    if (middle_button)
-      middle_button.addTouchEventListener(this.restartCallback, this);
-
-    var right_button = widget.getChildByName("right_Button");
-    if (right_button)
-      right_button.addTouchEventListener(this.nextCallback, this);
-
-    //add topDisplayLabel
-    var widgetSize = widget.getContentSize();
     var topDisplayText = new Text();
     topDisplayText.attr({
       string: "",
@@ -119,7 +47,6 @@ export class UIMainLayer extends Layer {
     });
     mainNode.addChild(topDisplayText);
 
-    //add bottomDisplayLabel
     var bottomDisplayText = new Text();
     bottomDisplayText.attr({
       string: "INIT",
@@ -138,29 +65,33 @@ export class UIMainLayer extends Layer {
     this._widget = widget;
     return true;
   }
+
+  onEnter() {
+    super.onEnter();
+    let scene = this.getParent();
+    while (scene && !scene.setTestInfo) {
+      scene = scene.getParent();
+    }
+    if (scene) {
+      scene.setTestInfo(this._title || "", "");
+      scene.setNavCallbacks(
+        () => Director.getInstance().runScene(UISceneManager.getInstance().previousUIScene()),
+        () => Director.getInstance().runScene(UISceneManager.getInstance().currentUIScene()),
+        () => Director.getInstance().runScene(UISceneManager.getInstance().nextUIScene())
+      );
+      scene.onMainMenuCallback = () => {
+        UISceneManager.purge();
+        GUITestScene.prototype.runThisTest();
+      };
+    }
+  }
+
   setSceneTitle(title) {
-    if (this._sceneTitle) this._sceneTitle.setString(title);
-  }
-  toExtensionsMainLayer(sender) {
-    UISceneManager.purge();
-    GUITestScene.prototype.runThisTest();
-  }
-
-  previousCallback(sender, type) {
-    if (type == Widget.TOUCH_ENDED) {
-      Director.getInstance().runScene(UISceneManager.getInstance().previousUIScene());
+    this._title = title;
+    let scene = this.getParent();
+    while (scene && !scene.setTestInfo) {
+      scene = scene.getParent();
     }
-  }
-
-  restartCallback(sender, type) {
-    if (type == Widget.TOUCH_ENDED) {
-      Director.getInstance().runScene(UISceneManager.getInstance().currentUIScene());
-    }
-  }
-
-  nextCallback(sender, type) {
-    if (type == Widget.TOUCH_ENDED) {
-      Director.getInstance().runScene(UISceneManager.getInstance().nextUIScene());
-    }
+    if (scene) scene.setTestInfo(title, "");
   }
 }

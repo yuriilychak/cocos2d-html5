@@ -30,10 +30,11 @@ import { TouchableSprite } from "./touchable-sprite";
 import {
   s_extensions_button,
   s_extensions_buttonBackground,
-  s_extensions_buttonHighlighted
+  s_extensions_buttonHighlighted,
+  s_simpleFont_fnt
 } from "../resources";
-import { Color, Director, EventManager, LabelTTF, LayerColor, visibleRect } from "@aspect/core";
-import { Scale9Sprite } from "@aspect/ccui";
+import { Color, Director, EventManager, LayerColor, visibleRect } from "@aspect/core";
+import { Scale9Sprite, TextBMFont } from "@aspect/ccui";
 import { Menu, MenuItemFont } from "@aspect/menus";
 
 import { CONTROL_EVENT_TOUCH_UP_INSIDE, CONTROL_STATE_HIGHLIGHTED, ControlButton } from "@aspect/gui";
@@ -76,7 +77,7 @@ export class PauseResumeTargetTest extends EventDispatcherTestDemo {
         s_extensions_buttonHighlighted
       );
 
-      var titleButton = new LabelTTF("Close Dialog", "Marker Felt", 26);
+      var titleButton = new TextBMFont("Close Dialog", s_simpleFont_fnt);
       titleButton.color = new Color(159, 168, 176);
 
       var controlButton = new ControlButton(titleButton, backgroundButton);

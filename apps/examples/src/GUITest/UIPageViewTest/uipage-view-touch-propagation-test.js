@@ -47,14 +47,10 @@ export class UIPageViewTouchPropagationTest extends UIMainLayer {
         widgetSize.height / 2.0 - this._bottomDisplayLabel.height * 3.075
       );
 
-      var root = this._mainNode.getChildByTag(81);
-      var background = root.getChildByName("background_Panel");
-
       // Create the page view
       var pageView = new PageView();
       pageView.setContentSize(new Size(240.0, 130.0));
       pageView.setAnchorPoint(new Point(0.5, 0.5));
-      var backgroundSize = background.getContentSize();
       pageView.setPosition(
         new Point(widgetSize.width / 2.0, widgetSize.height / 2.0)
       );

@@ -26,11 +26,12 @@
  ****************************************************************************/
 
 import { SpriteDemo } from "./sprite-demo";
-import { s_pathSister1, s_pathSister2 } from "../resources";
+import { s_pathSister1, s_pathSister2, s_simpleFont_fnt } from "../resources";
 import { winSize } from "../constants";
-import { LabelTTF, Point, Sprite } from "@aspect/core";
+import { Point, Sprite } from "@aspect/core";
 import { FadeTo, TintTo, Sequence } from "@aspect/actions";
 
+import { TextBMFont } from "@aspect/ccui";
 import { ProgressFromTo, ProgressTimer } from "@aspect/progress-timer";
 export class SpriteProgressBarTintAndFade extends SpriteDemo {
   onEnter() {
@@ -59,7 +60,7 @@ export class SpriteProgressBarTintAndFade extends SpriteDemo {
     left.runAction(to.clone().repeatForever());
     left.runAction(tint.clone().repeatForever());
 
-    left.addChild(new LabelTTF("Tint", "Marker Felt", 20.0));
+    left.addChild(new TextBMFont("Tint", s_simpleFont_fnt));
 
     var middle = new ProgressTimer(new Sprite(s_pathSister2));
     middle.type = ProgressTimer.TYPE_BAR;
@@ -73,7 +74,7 @@ export class SpriteProgressBarTintAndFade extends SpriteDemo {
     middle.runAction(to.clone().repeatForever());
     middle.runAction(fade.clone().repeatForever());
 
-    middle.addChild(new LabelTTF("Fade", "Marker Felt", 20.0));
+    middle.addChild(new TextBMFont("Fade", s_simpleFont_fnt));
 
     var right = new ProgressTimer(new Sprite(s_pathSister2));
     right.type = ProgressTimer.TYPE_BAR;
@@ -88,7 +89,7 @@ export class SpriteProgressBarTintAndFade extends SpriteDemo {
     right.runAction(tint.clone().repeatForever());
     right.runAction(fade.clone().repeatForever());
 
-    right.addChild(new LabelTTF("Tint and Fade", "Marker Felt", 20.0));
+    right.addChild(new TextBMFont("Tint and Fade", s_simpleFont_fnt));
     //----end5----
   }
 

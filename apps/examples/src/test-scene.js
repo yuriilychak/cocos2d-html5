@@ -38,14 +38,14 @@ export const HEADER_HEIGHT = 56;
 const PADDING = 16;
 const BTN_WIDTH = 128;
 const BTN_HEIGHT = 32;
-const SUITE_TITLE_AREA = 220; // reserved width for suite title
 const NAV_BTN_SIZE = 32;
 const NAV_BTN_GAP = 8;
 
 export class TestScene extends Scene {
-  constructor(title = "", subtitle = null, bPortrait) {
+  constructor(title = "", backButtonText = "Main Menu") {
     super();
 
+    this._suiteTitle = title;
     this._mainMenu = null;
     this._testInfoLabel = null;
     this.init();
@@ -69,16 +69,9 @@ export class TestScene extends Scene {
     header.y = winH - HEADER_HEIGHT / 2;
     this.addChild(header, 10);
 
-    const titleLabel = new TextBMFont(title, s_simpleFont_fnt);
-    titleLabel.setAnchorPoint(0, 0.5);
-    titleLabel.x = PADDING;
-    titleLabel.y = centerY;
-    titleLabel.fontSize = 20;
-    this.addChild(titleLabel, 11);
-
-    const testInfoLabel = new TextBMFont("", s_simpleFont_fnt);
+    const testInfoLabel = new TextBMFont(title, s_simpleFont_fnt);
     testInfoLabel.setAnchorPoint(0, 0.5);
-    testInfoLabel.x = PADDING + SUITE_TITLE_AREA + PADDING;
+    testInfoLabel.x = PADDING;
     testInfoLabel.y = centerY;
     testInfoLabel.fontSize = 14;
     this.addChild(testInfoLabel, 11);
@@ -94,7 +87,7 @@ export class TestScene extends Scene {
     btn.setCapInsets(new Rect(12, 12, 12, 12));
     btn.setContentSize(BTN_WIDTH, BTN_HEIGHT);
     btn.setTitleFntFile(s_simpleFont_fnt);
-    btn.setTitleText("Main Menu");
+    btn.setTitleText(backButtonText);
     btn.setTitleFontSize(18);
     btn.setNormalBgColor(new Color(0x44, 0x55, 0x77));
     btn.setPressedBgColor(new Color(0x22, 0x33, 0x55));
@@ -160,8 +153,10 @@ export class TestScene extends Scene {
     }
   }
 
-  setTestInfo(title, subtitle) {
-    const text = subtitle ? `${title} - ${subtitle}` : title || "";
+  setTestInfo(subtitle, description) {
+    let text = this._suiteTitle;
+    if (subtitle) text += `: ${subtitle}`;
+    if (description) text += ` - ${description}`;
     this._testInfoLabel.setString(text);
   }
 
@@ -170,7 +165,7 @@ export class TestScene extends Scene {
       director.resume();
     }
     this._mainMenu.setEnabled(false);
-    const scene = new TestScene("Examples");
+    const scene = new TestScene("Examples", "Close");
     scene.onMainMenuCallback = () => {
       if (Sys.getInstance().isNative) {
         Game.getInstance().end();

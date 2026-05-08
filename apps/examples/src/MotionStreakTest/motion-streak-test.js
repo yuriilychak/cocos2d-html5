@@ -26,23 +26,15 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { TAG_LABEL } from "./motion-streak-test-constants";
 import {
   backMotionAction,
   nextMotionAction,
   restartMotionAction
 } from "./motion-streak-test-helpers";
 import { MotionStreakTestScene } from "./motion-streak-test-scene";
-import {
-  s_pathB1,
-  s_pathB2,
-  s_pathF1,
-  s_pathF2,
-  s_pathR1,
-  s_pathR2
-} from "../resources";
-import { Director, LabelTTF, Layer, visibleRect } from "@aspect/core";
-import { Menu, MenuItemFont, MenuItemImage, MenuItemToggle } from "@aspect/menus";
+import { s_simpleFont_fnt } from "../resources";
+import { Color, Director, Layer, Rect } from "@aspect/core";
+import { BMButton, Widget } from "@aspect/ccui";
 
 export class MotionStreakTest extends Layer {
   constructor() {
@@ -59,66 +51,48 @@ export class MotionStreakTest extends Layer {
 
   onEnter() {
     super.onEnter();
-
     var winSize = Director.getInstance().getWinSize();
 
-    var label = new LabelTTF(this.title(), "Arial", 32);
-    this.addChild(label, 0, TAG_LABEL);
-    label.x = winSize.width / 2;
-    label.y = winSize.height - 50;
-
-    var subTitle = this.subtitle();
-    if (subTitle.length > 0) {
-      var l = new LabelTTF(subTitle, "Arial", 16);
-      this.addChild(l, 1);
-      l.x = winSize.width / 2;
-      l.y = winSize.height - 80;
+    let scene = this.getParent();
+    while (scene && !scene.setTestInfo) {
+      scene = scene.getParent();
+    }
+    if (scene) {
+      scene.setTestInfo(this.title(), this.subtitle());
+      scene.setNavCallbacks(
+        () => this.backCallback(),
+        () => this.restartCallback(),
+        () => this.nextCallback()
+      );
     }
 
-    var item1 = new MenuItemImage(
-      s_pathB1,
-      s_pathB2,
-      this.backCallback,
-      this
+    let isFastMode = false;
+    const modeBtn = new BMButton(
+      "default_theme/rounded_shadow_2.png",
+      "default_theme/rounded_shadow_2.png",
+      "default_theme/rounded_shadow_2.png",
+      Widget.PLIST_TEXTURE
     );
-    var item2 = new MenuItemImage(
-      s_pathR1,
-      s_pathR2,
-      this.restartCallback,
-      this
-    );
-    var item3 = new MenuItemImage(
-      s_pathF1,
-      s_pathF2,
-      this.nextCallback,
-      this
-    );
-
-    var menu = new Menu(item1, item2, item3);
-
-    menu.x = 0;
-    menu.y = 0;
-    item1.x = visibleRect.center.x - item2.width * 2;
-    item1.y = visibleRect.bottom.y + item2.height / 2;
-    item2.x = visibleRect.center.x;
-    item2.y = visibleRect.bottom.y + item2.height / 2;
-    item3.x = visibleRect.center.x + item2.width * 2;
-    item3.y = visibleRect.bottom.y + item2.height / 2;
-
-    this.addChild(menu, 1);
-
-    var itemMode = new MenuItemToggle(
-      new MenuItemFont("Use High Quality Mode"),
-      new MenuItemFont("Use Fast Mode"),
-      this.modeCallback,
-      this
-    );
-
-    var menuMode = new Menu(itemMode);
-    this.addChild(menuMode);
-
-    menuMode.x = winSize.width / 2;
-    menuMode.y = winSize.height / 4;
+    modeBtn.setScale9Enabled(true);
+    modeBtn.setCapInsets(new Rect(12, 12, 12, 12));
+    modeBtn.setContentSize(196, 32);
+    modeBtn.setTitleFntFile(s_simpleFont_fnt);
+    modeBtn.setTitleText("Use High Quality Mode");
+    modeBtn.setTitleFontSize(12);
+    modeBtn.setNormalBgColor(new Color(0x00, 0x99, 0x00));
+    modeBtn.setPressedBgColor(new Color(0x00, 0x66, 0x00));
+    modeBtn.setDisabledBgColor(new Color(0x55, 0x55, 0x55));
+    modeBtn.pressedActionEnabled = true;
+    modeBtn.x = winSize.width / 2;
+    modeBtn.y = winSize.height / 4;
+    modeBtn.addClickEventListener(() => {
+      isFastMode = !isFastMode;
+      modeBtn.setTitleText(isFastMode ? "Use Fast Mode" : "Use High Quality Mode");
+      if (this._streak) {
+        this._streak.fastMode = isFastMode;
+      }
+    });
+    this.addChild(modeBtn, 1);
   }
 
   restartCallback(sender) {

@@ -37,8 +37,6 @@ export class UIListViewTest_Horizontal extends UIMainLayer {
   init() {
     if (super.init()) {
       var widgetSize = this._widget.getContentSize();
-      var background = this._widget.getChildByName("background_Panel");
-      var backgroundSize = background.getContentSize();
 
       // create list view ex data
       this._array = [];
@@ -57,11 +55,9 @@ export class UIListViewTest_Horizontal extends UIMainLayer {
       listView.setBackGroundImageScale9Enabled(true);
       listView.setContentSize(new Size(240, 130));
       listView.x =
-        (widgetSize.width - backgroundSize.width) / 2 +
-        (backgroundSize.width - listView.width) / 2;
+        (widgetSize.width - listView.width) / 2;
       listView.y =
-        (widgetSize.height - backgroundSize.height) / 2 +
-        (backgroundSize.height - listView.height) / 2;
+        (widgetSize.height - listView.height) / 2;
       listView.addEventListener(this.selectedItemEvent, this);
       this._mainNode.addChild(listView);
 

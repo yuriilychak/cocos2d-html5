@@ -26,10 +26,10 @@
  ****************************************************************************/
 
 import { BakeLayerBaseTest } from "./bake-layer-base-test";
-import { s_pathGrossini } from "../resources";
-import { Layer, Point, Sprite } from "@aspect/core";
+import { s_pathGrossini, s_simpleFont_fnt } from "../resources";
+import { Color, Layer, Point, Rect, Sprite } from "@aspect/core";
 import { MoveBy, RotateBy, Sequence } from "@aspect/actions";
-import { Menu, MenuItemFont } from "@aspect/menus";
+import { BMButton, Widget } from "@aspect/ccui";
 import { winSize } from "../constants";
 
 export class BakeLayerTest1 extends BakeLayerBaseTest {
@@ -42,19 +42,53 @@ export class BakeLayerTest1 extends BakeLayerBaseTest {
 
     this._bakeLayer = null;
 
-    var bakeItem = new MenuItemFont("bake", this.onBake, this);
-    var unbakeItem = new MenuItemFont("unbake", this.onUnbake, this);
-    var runActionItem = new MenuItemFont(
-      "run action",
-      this.onRunAction,
-      this
-    );
-    var menu = new Menu(bakeItem, unbakeItem, runActionItem);
+    const bakeBtn = new BMButton("default_theme/rounded_shadow_2.png", "default_theme/rounded_shadow_2.png", "default_theme/rounded_shadow_2.png", Widget.PLIST_TEXTURE);
+    bakeBtn.setScale9Enabled(true);
+    bakeBtn.setCapInsets(new Rect(12, 12, 12, 12));
+    bakeBtn.setContentSize(196, 32);
+    bakeBtn.setTitleFntFile(s_simpleFont_fnt);
+    bakeBtn.setTitleText("bake");
+    bakeBtn.setTitleFontSize(12);
+    bakeBtn.setNormalBgColor(new Color(0x00, 0x99, 0x00));
+    bakeBtn.setPressedBgColor(new Color(0x00, 0x66, 0x00));
+    bakeBtn.setDisabledBgColor(new Color(0x55, 0x55, 0x55));
+    bakeBtn.pressedActionEnabled = true;
+    bakeBtn.x = winSize.width - 108;
+    bakeBtn.y = winSize.height - 80;
+    bakeBtn.addClickEventListener(() => this.onBake());
+    this.addChild(bakeBtn, 10);
 
-    menu.alignItemsVertically();
-    menu.x = winSize.width - 70;
-    menu.y = winSize.height - 120;
-    this.addChild(menu, 10);
+    const unbakeBtn = new BMButton("default_theme/rounded_shadow_2.png", "default_theme/rounded_shadow_2.png", "default_theme/rounded_shadow_2.png", Widget.PLIST_TEXTURE);
+    unbakeBtn.setScale9Enabled(true);
+    unbakeBtn.setCapInsets(new Rect(12, 12, 12, 12));
+    unbakeBtn.setContentSize(196, 32);
+    unbakeBtn.setTitleFntFile(s_simpleFont_fnt);
+    unbakeBtn.setTitleText("unbake");
+    unbakeBtn.setTitleFontSize(12);
+    unbakeBtn.setNormalBgColor(new Color(0x00, 0x99, 0x00));
+    unbakeBtn.setPressedBgColor(new Color(0x00, 0x66, 0x00));
+    unbakeBtn.setDisabledBgColor(new Color(0x55, 0x55, 0x55));
+    unbakeBtn.pressedActionEnabled = true;
+    unbakeBtn.x = winSize.width - 108;
+    unbakeBtn.y = winSize.height - 120;
+    unbakeBtn.addClickEventListener(() => this.onUnbake());
+    this.addChild(unbakeBtn, 10);
+
+    const runActionBtn = new BMButton("default_theme/rounded_shadow_2.png", "default_theme/rounded_shadow_2.png", "default_theme/rounded_shadow_2.png", Widget.PLIST_TEXTURE);
+    runActionBtn.setScale9Enabled(true);
+    runActionBtn.setCapInsets(new Rect(12, 12, 12, 12));
+    runActionBtn.setContentSize(196, 32);
+    runActionBtn.setTitleFntFile(s_simpleFont_fnt);
+    runActionBtn.setTitleText("run action");
+    runActionBtn.setTitleFontSize(12);
+    runActionBtn.setNormalBgColor(new Color(0x00, 0x99, 0x00));
+    runActionBtn.setPressedBgColor(new Color(0x00, 0x66, 0x00));
+    runActionBtn.setDisabledBgColor(new Color(0x55, 0x55, 0x55));
+    runActionBtn.pressedActionEnabled = true;
+    runActionBtn.x = winSize.width - 108;
+    runActionBtn.y = winSize.height - 160;
+    runActionBtn.addClickEventListener(() => this.onRunAction());
+    this.addChild(runActionBtn, 10);
 
     var rootLayer = new Layer();
     rootLayer.setPosition(20, 20);

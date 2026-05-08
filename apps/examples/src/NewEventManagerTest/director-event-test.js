@@ -26,8 +26,10 @@
  ****************************************************************************/
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
+import { s_simpleFont_fnt } from "../resources";
 import { director } from "../constants";
-import { Director, EventManager, LabelTTF } from "@aspect/core";
+import { Director, EventManager } from "@aspect/core";
+import { TextBMFont } from "@aspect/ccui";
 
 export class DirectorEventTest extends EventDispatcherTestDemo {
   constructor() {
@@ -53,19 +55,19 @@ export class DirectorEventTest extends EventDispatcherTestDemo {
     var s = director.getWinSize(),
       selfPointer = this;
 
-    this._label1 = new LabelTTF("Update: 0", "Arial", 20);
+    this._label1 = new TextBMFont("Update: 0", s_simpleFont_fnt);
     this._label1.setPosition(80, s.height / 2 + 60);
     this.addChild(this._label1);
 
-    this._label2 = new LabelTTF("Visit: 0", "Arial", 20);
+    this._label2 = new TextBMFont("Visit: 0", s_simpleFont_fnt);
     this._label2.setPosition(80, s.height / 2 + 20);
     this.addChild(this._label2);
 
-    this._label3 = new LabelTTF("Draw: 0", "Arial", 20);
+    this._label3 = new TextBMFont("Draw: 0", s_simpleFont_fnt);
     this._label3.setPosition(80, s.height / 2 - 20);
     this.addChild(this._label3);
 
-    this._label4 = new LabelTTF("Projection: 0", "Arial", 20);
+    this._label4 = new TextBMFont("Projection: 0", s_simpleFont_fnt);
     this._label4.setPosition(80, s.height / 2 - 60);
     this.addChild(this._label4);
 

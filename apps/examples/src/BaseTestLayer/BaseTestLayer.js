@@ -59,6 +59,7 @@ export class BaseTestLayer extends LayerGradient {
     super(a, b);
 
     this.testDuration = 0.25;
+    this._showNavButtons = true;
 
     // Update winsize in case it was resized
     _initGlobals();
@@ -108,7 +109,7 @@ export class BaseTestLayer extends LayerGradient {
     }
     if (scene) {
       scene.setTestInfo(this.getTitle(), this.getSubtitle());
-      if (scene.setNavCallbacks) {
+      if (scene.setNavCallbacks && this._showNavButtons) {
         scene.setNavCallbacks(
           () => this.onBackCallback(),
           () => this.onRestartCallback(),

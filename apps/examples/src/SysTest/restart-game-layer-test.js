@@ -30,8 +30,10 @@
 //
 //------------------------------------------------------------------
 import { SysTestBase } from "./sys-test-base";
+import { s_simpleFont_fnt } from "../resources";
 import { winSize } from "../constants";
-import { Game, LabelTTF, Point, visibleRect } from "@aspect/core";
+import { Game, Point, visibleRect } from "@aspect/core";
+import { TextBMFont } from "@aspect/ccui";
 import { Menu, MenuItemLabel } from "@aspect/menus";
 
 export class RestartGameLayerTest extends SysTestBase {
@@ -49,7 +51,7 @@ export class RestartGameLayerTest extends SysTestBase {
     menu.height = winSize.height;
     this.addChild(menu, 1);
     var item1 = new MenuItemLabel(
-      new LabelTTF("restartGame", "Arial", 22),
+      new TextBMFont("restartGame", s_simpleFont_fnt),
       this.restartGame,
       this
     );

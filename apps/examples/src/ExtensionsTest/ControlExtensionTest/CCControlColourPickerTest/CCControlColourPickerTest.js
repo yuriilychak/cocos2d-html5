@@ -26,16 +26,12 @@
  ****************************************************************************/
 
 import { ControlScene } from "../CCControlScene";
-import { Color, Director, LabelTTF, Node, Scene } from "@aspect/core";
+import { Color, Director, LabelTTF, Node } from "@aspect/core";
+import { TestScene } from "../../../test-scene";
 import { Scale9Sprite } from "@aspect/ccui";
 
 import { CONTROL_EVENT_VALUE_CHANGED, ControlColourPicker } from "@aspect/gui";
 export class ControlColourPickerTest extends ControlScene {
-  constructor() {
-    super();
-    this._colorLabel = null;
-  }
-
   init() {
     if (super.init()) {
       var screenSize = Director.getInstance().getWinSize();
@@ -99,11 +95,9 @@ export class ControlColourPickerTest extends ControlScene {
   }
 }
 ControlColourPickerTest.create = function (sceneTitle) {
-  var scene = new Scene();
-  var controlLayer = new ControlColourPickerTest();
-  if (controlLayer && controlLayer.init()) {
-    controlLayer.getSceneTitleLabel().setString(sceneTitle);
-    scene.addChild(controlLayer);
-  }
+  const scene = new TestScene("CCControlButtonTest", "Back");
+  const layer = new ControlColourPickerTest();
+  layer._title = sceneTitle;
+  scene.addChild(layer);
   return scene;
 };

@@ -26,7 +26,8 @@
  ****************************************************************************/
 
 import { ControlScene } from "../CCControlScene";
-import { Director, LabelTTF, Node, Scene, Sprite } from "@aspect/core";
+import { Director, LabelTTF, Node, Sprite } from "@aspect/core";
+import { TestScene } from "../../../test-scene";
 import { Scale9Sprite } from "@aspect/ccui";
 
 import { CONTROL_EVENT_VALUE_CHANGED, ControlSwitch } from "@aspect/gui";
@@ -99,11 +100,9 @@ export class ControlSwitchTest extends ControlScene {
 }
 
 ControlSwitchTest.create = function (sceneTitle) {
-  var scene = new Scene();
-  var controlLayer = new ControlSwitchTest();
-  if (controlLayer && controlLayer.init()) {
-    controlLayer.getSceneTitleLabel().setString(sceneTitle);
-    scene.addChild(controlLayer);
-  }
+  const scene = new TestScene("CCControlButtonTest", "Back");
+  const layer = new ControlSwitchTest();
+  layer._title = sceneTitle;
+  scene.addChild(layer);
   return scene;
 };

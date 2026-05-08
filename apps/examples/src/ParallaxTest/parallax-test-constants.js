@@ -34,12 +34,13 @@ import {
 } from "./parallax-test-helpers";
 import { director } from "../constants";
 import { Color } from "@aspect/core";
+import { TestScene } from "../test-scene";
 
 export var TAG_NODE = 9960;
 
 export let parallaxTestSceneIdx = -1;
 
-ParallaxDemo = class ParallaxDemo extends BaseTestLayer {
+export class ParallaxDemo extends BaseTestLayer {
   constructor() {
     super(new Color(0, 0, 0, 255), new Color(160, 32, 32, 255));
 
@@ -51,19 +52,19 @@ ParallaxDemo = class ParallaxDemo extends BaseTestLayer {
   }
 
   onBackCallback(sender) {
-    var s = new ParallaxTestScene();
+    var s = new TestScene("Parallax Test");
     s.addChild(previousParallaxTest());
     director.runScene(s);
   }
 
   onRestartCallback(sender) {
-    var s = new ParallaxTestScene();
+    var s = new TestScene("Parallax Test");
     s.addChild(restartParallaxTest());
     director.runScene(s);
   }
 
   onNextCallback(sender) {
-    var s = new ParallaxTestScene();
+    var s = new TestScene("Parallax Test");
     s.addChild(nextParallaxTest());
     director.runScene(s);
   }
@@ -75,7 +76,7 @@ ParallaxDemo = class ParallaxDemo extends BaseTestLayer {
   getTestNumber() {
     return parallaxTestSceneIdx;
   }
-};
+}
 
 export function _setparallaxTestSceneIdx(v) {
   parallaxTestSceneIdx = v;

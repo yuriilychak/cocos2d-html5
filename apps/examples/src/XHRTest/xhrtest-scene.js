@@ -31,14 +31,11 @@ import { Director } from "@aspect/core";
 
 export class XHRTestScene extends TestScene {
   constructor() {
-    super("XMLHttpRequest", null, true);
+    super("XMLHttpRequest");
     var xhrLayer = new XHRTestLayer();
     this.addChild(xhrLayer);
   }
   runThisTest() {
     Director.getInstance().runScene(this);
-  }
-  MainMenuCallback(sender) {
-    super.MainMenuCallback(sender);
   }
 }

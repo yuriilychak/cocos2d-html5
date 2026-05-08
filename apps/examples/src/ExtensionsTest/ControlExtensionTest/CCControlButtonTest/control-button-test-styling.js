@@ -31,7 +31,8 @@ import {
   s_extensions_buttonBackground,
   s_extensions_buttonHighlighted
 } from "../../../resources";
-import { Color, Director, LabelTTF, Node, Scene, Size } from "@aspect/core";
+import { Color, Director, LabelTTF, Node, Size } from "@aspect/core";
+import { TestScene } from "../../../test-scene";
 import { Scale9Sprite } from "@aspect/ccui";
 
 import { CONTROL_STATE_HIGHLIGHTED, ControlButton } from "@aspect/gui";
@@ -113,11 +114,9 @@ export class ControlButtonTest_Styling extends ControlScene {
 }
 
 ControlButtonTest_Styling.create = function (sceneTitle) {
-  var scene = new Scene();
-  var controlLayer = new ControlButtonTest_Styling();
-  if (controlLayer && controlLayer.init()) {
-    controlLayer.getSceneTitleLabel().setString(sceneTitle);
-    scene.addChild(controlLayer);
-  }
+  const scene = new TestScene("CCControlButtonTest", "Back");
+  const layer = new ControlButtonTest_Styling();
+  layer._title = sceneTitle;
+  scene.addChild(layer);
   return scene;
 };

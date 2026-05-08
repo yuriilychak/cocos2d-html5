@@ -25,16 +25,17 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ExtensionsTestScene } from "../extensions-test-scene";
 import { CustomTableViewCell } from "./custom-table-view-cell";
 import { s_image_icon } from "../../resources";
-import { Director, LabelTTF, Layer, Size, Sprite, log } from "@aspect/core";
-import { Menu, MenuItemFont } from "@aspect/menus";
+import { Director, LabelTTF, Size, Sprite, log } from "@aspect/core";
+import { BaseTestLayer } from "../../BaseTestLayer/BaseTestLayer";
 
 import { SCROLLVIEW_DIRECTION_HORIZONTAL, SCROLLVIEW_DIRECTION_VERTICAL, TABLEVIEW_FILL_TOPDOWN, TableView } from "@aspect/gui";
-export class TableViewTestLayer extends Layer {
+export class TableViewTestLayer extends BaseTestLayer {
   constructor() {
     super();
+    this._title = "TableView Test";
+    this._showNavButtons = false;
     this.init();
   }
 
@@ -58,25 +59,7 @@ export class TableViewTestLayer extends Layer {
     this.addChild(tableView);
     tableView.reloadData();
 
-    // Back Menu
-    var itemBack = new MenuItemFont(
-      "Back",
-      this.toExtensionsMainLayer,
-      this
-    );
-    itemBack.x = winSize.width - 50;
-    itemBack.y = 25;
-    var menuBack = new Menu(itemBack);
-    menuBack.x = 0;
-    menuBack.y = 0;
-    this.addChild(menuBack);
-
     return true;
-  }
-
-  toExtensionsMainLayer(sender) {
-    var scene = new ExtensionsTestScene();
-    scene.runThisTest();
   }
 
   scrollViewDidScroll(view) {}

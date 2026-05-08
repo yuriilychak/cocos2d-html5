@@ -47,20 +47,16 @@ export class UILayoutTestBase extends UIMainLayer {
       this._bottomDisplayLabel.y =
         widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
 
-      var background = this._widget.getChildByName("background_Panel");
       this._mainNode.width = widgetSize.width;
       this._mainNode.height = widgetSize.height;
 
       // Create the layout
       this.layout = this.createLayout();
       var layoutRect = this.layout.getContentSize();
-      var backgroundRect = background.getContentSize();
       this.layout.x =
-        (widgetSize.width - backgroundRect.width) / 2 +
-        (backgroundRect.width - layoutRect.width) / 2;
+        (widgetSize.width - layoutRect.width) / 2;
       this.layout.y =
-        (widgetSize.height - backgroundRect.height) / 2 +
-        (backgroundRect.height - layoutRect.height) / 2;
+        (widgetSize.height - layoutRect.height) / 2;
       this._mainNode.addChild(this.layout);
 
       this.button = new Button();

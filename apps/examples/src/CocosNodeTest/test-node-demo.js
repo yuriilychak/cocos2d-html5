@@ -3,6 +3,7 @@
  Copyright (c) 2011-2012 cocos2d-x.org
  Copyright (c) 2013-2016 Chukong Technologies Inc.
  Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ Copyright (c) 2008-2009 Jason Booth
 
  http://www.cocos2d-x.org
 
@@ -33,17 +34,8 @@ import {
   restartNodeTest
 } from "./cocos-node-test-helpers";
 import { NodeTestScene } from "./node-test-scene";
-import {
-  s_pathB1,
-  s_pathB2,
-  s_pathF1,
-  s_pathF2,
-  s_pathR1,
-  s_pathR2
-} from "../resources";
 import { director } from "../constants";
-import { LabelTTF, Layer } from "@aspect/core";
-import { Menu, MenuItemImage } from "@aspect/menus";
+import { Layer } from "@aspect/core";
 
 export class TestNodeDemo extends Layer {
   constructor() {
@@ -80,48 +72,17 @@ export class TestNodeDemo extends Layer {
   }
   onEnter() {
     super.onEnter();
-    var s = director.getWinSize();
-    var label = new LabelTTF(this.title(), "Arial", 24);
-    this.addChild(label);
-    label.x = s.width / 2;
-    label.y = s.height - 50;
-
-    var subTitle = this.subtitle();
-    if (subTitle && subTitle !== "") {
-      var l = new LabelTTF(subTitle, "Thonburi", 16);
-      this.addChild(l, 1);
-      l.x = s.width / 2;
-      l.y = s.height - 80;
+    let scene = this.getParent();
+    while (scene && !scene.setTestInfo) {
+      scene = scene.getParent();
     }
-    var item1 = new MenuItemImage(
-      s_pathB1,
-      s_pathB2,
-      this.onBackCallback,
-      this
-    );
-    var item2 = new MenuItemImage(
-      s_pathR1,
-      s_pathR2,
-      this.onRestartCallback,
-      this
-    );
-    var item3 = new MenuItemImage(
-      s_pathF1,
-      s_pathF2,
-      this.onNextCallback,
-      this
-    );
-
-    var menu = new Menu(item1, item2, item3);
-    menu.x = 0;
-    menu.y = 0;
-    item1.x = s.width / 2 - 100;
-    item1.y = 30;
-    item2.x = s.width / 2;
-    item2.y = 30;
-    item3.x = s.width / 2 + 100;
-    item3.y = 30;
-
-    this.addChild(menu, 1);
+    if (scene) {
+      scene.setTestInfo(this.title(), this.subtitle());
+      scene.setNavCallbacks(
+        () => this.onBackCallback(),
+        () => this.onRestartCallback(),
+        () => this.onNextCallback()
+      );
+    }
   }
 }

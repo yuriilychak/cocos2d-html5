@@ -29,10 +29,10 @@
 //
 //------------------------------------------------------------------
 import { RenderTextureBaseLayer } from "./render-texture-base-layer";
-import { s_fire } from "../resources";
+import { s_fire, s_simpleFont_fnt } from "../resources";
 import { winSize } from "../constants";
-import { Color, EventListener, EventManager, EventMouse, Point, Sprite, Sys, log } from "@aspect/core";
-import { Menu, MenuItemFont } from "@aspect/menus";
+import { Color, EventListener, EventManager, EventMouse, Point, Rect, Sprite, Sys, log } from "@aspect/core";
+import { BMButton, Widget } from "@aspect/ccui";
 
 import { RenderTexture, IMAGE_FORMAT_JPEG } from "@aspect/render-texture";
 export class RenderTextureSave extends RenderTextureBaseLayer {
@@ -69,13 +69,37 @@ export class RenderTextureSave extends RenderTextureBaseLayer {
 
         this._brushs = [];
 
-        var save = new MenuItemFont("Save", this.saveCB, this);
-        var clear = new MenuItemFont("Clear", this.clearCB.bind(this)); // another way to pass 'this'
-        var menu = new Menu(save, clear);
-        menu.alignItemsVertically();
-        menu.x = winSize.width - 70;
-        menu.y = winSize.height - 80;
-        this.addChild(menu, 10);
+        const saveBtn = new BMButton("default_theme/rounded_shadow_2.png", "default_theme/rounded_shadow_2.png", "default_theme/rounded_shadow_2.png", Widget.PLIST_TEXTURE);
+        saveBtn.setScale9Enabled(true);
+        saveBtn.setCapInsets(new Rect(12, 12, 12, 12));
+        saveBtn.setContentSize(196, 32);
+        saveBtn.setTitleFntFile(s_simpleFont_fnt);
+        saveBtn.setTitleText("Save");
+        saveBtn.setTitleFontSize(12);
+        saveBtn.setNormalBgColor(new Color(0x00, 0x99, 0x00));
+        saveBtn.setPressedBgColor(new Color(0x00, 0x66, 0x00));
+        saveBtn.setDisabledBgColor(new Color(0x55, 0x55, 0x55));
+        saveBtn.pressedActionEnabled = true;
+        saveBtn.x = winSize.width - 108;
+        saveBtn.y = winSize.height - 80;
+        saveBtn.addClickEventListener(() => this.saveCB());
+        this.addChild(saveBtn, 10);
+
+        const clearBtn = new BMButton("default_theme/rounded_shadow_2.png", "default_theme/rounded_shadow_2.png", "default_theme/rounded_shadow_2.png", Widget.PLIST_TEXTURE);
+        clearBtn.setScale9Enabled(true);
+        clearBtn.setCapInsets(new Rect(12, 12, 12, 12));
+        clearBtn.setContentSize(196, 32);
+        clearBtn.setTitleFntFile(s_simpleFont_fnt);
+        clearBtn.setTitleText("Clear");
+        clearBtn.setTitleFontSize(12);
+        clearBtn.setNormalBgColor(new Color(0x00, 0x99, 0x00));
+        clearBtn.setPressedBgColor(new Color(0x00, 0x66, 0x00));
+        clearBtn.setDisabledBgColor(new Color(0x55, 0x55, 0x55));
+        clearBtn.pressedActionEnabled = true;
+        clearBtn.x = winSize.width - 108;
+        clearBtn.y = winSize.height - 120;
+        clearBtn.addClickEventListener(() => this.clearCB());
+        this.addChild(clearBtn, 10);
 
         // create a render texture
         var target = new RenderTexture(winSize.width, winSize.height, 2);

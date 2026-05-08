@@ -25,18 +25,17 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { s_simpleFont_fnt } from "../resources";
 import { winSize } from "../constants";
-import { LabelTTF, Layer, Size, TEXT_ALIGNMENT_CENTER } from "@aspect/core";
+import { Layer } from "@aspect/core";
+import { TextBMFont } from "@aspect/ccui";
 export class ScriptTestTempLayer extends Layer {
   constructor() {
     super();
 
-    var labelTest = new LabelTTF(
+    var labelTest = new TextBMFont(
       "this is the ScriptTestTempLayer old file",
-      "Verdana",
-      32,
-      new Size(winSize.width, 50),
-      TEXT_ALIGNMENT_CENTER
+      s_simpleFont_fnt
     );
     var size = winSize;
     labelTest.setPosition(size.width / 2, size.height / 4);

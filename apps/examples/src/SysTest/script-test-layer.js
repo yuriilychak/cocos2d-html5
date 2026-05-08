@@ -25,10 +25,12 @@
  ****************************************************************************/
 
 import { ScriptTestTempLayer } from "./ScriptTestTempFile";
+import { s_simpleFont_fnt } from "../resources";
 import { SysTestBase } from "./sys-test-base";
 import { tempJSFileName } from "./sys-test-helpers";
 import { winSize } from "../constants";
-import { EventManager, LabelTTF, Point, Sys, log, visibleRect } from "@aspect/core";
+import { EventManager, Point, Sys, log, visibleRect } from "@aspect/core";
+import { TextBMFont } from "@aspect/ccui";
 import { Menu, MenuItemLabel } from "@aspect/menus";
 
 export class ScriptTestLayer extends SysTestBase {
@@ -130,14 +132,14 @@ export class ScriptTestLayer extends SysTestBase {
     menu.height = winSize.height;
     this.addChild(menu, 1);
     var item1 = new MenuItemLabel(
-      new LabelTTF("Click me show tempLayer", "Arial", 22),
+      new TextBMFont("Click me show tempLayer", s_simpleFont_fnt),
       this.clickMeShowTempLayer,
       this
     );
     menu.addChild(item1);
 
     var item2 = new MenuItemLabel(
-      new LabelTTF("Click me reload tempLayer", "Arial", 22),
+      new TextBMFont("Click me reload tempLayer", s_simpleFont_fnt),
       this.clickMeReloadTempLayer,
       this
     );

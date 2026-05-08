@@ -28,42 +28,35 @@
  ****************************************************************************/
 
 import { MySprite } from "./my-sprite";
-import { ExtensionsTestScene } from "../extensions-test-scene";
-import { winSize } from "../../constants";
-import { Color, Director, LabelTTF, Layer, Point, visibleRect } from "@aspect/core";
-import { Menu, MenuItemFont, MenuItemLabel } from "@aspect/menus";
-
+import { Color, Point, visibleRect } from "@aspect/core";
+import { Menu, MenuItemLabel } from "@aspect/menus";
 import { Pool } from "@aspect/ccpool";
-export class CCPoolTest extends Layer {
+import { BaseTestLayer } from "../../BaseTestLayer/BaseTestLayer";
+import { s_simpleFont_fnt } from "../../resources";
+import { TextBMFont } from "@aspect/ccui";
+
+export class CCPoolTest extends BaseTestLayer {
   constructor() {
     super();
+    this._title = "CCPoolTest";
+    this._showNavButtons = false;
     this.timeList = null;
+    this.init();
   }
 
   init() {
     this.timeList = {};
-    var winSize = Director.getInstance().getWinSize();
-
-    var MARGIN = 40;
-    var label = new LabelTTF("CCPoolTest", "Arial", 28);
-    label.setPosition(new Point(winSize.width / 2, winSize.height - MARGIN));
-    this.addChild(label, 0);
-
-    var menuRequest = new Menu();
-    menuRequest.setPosition(new Point(0, 0));
     this.initUI();
     return true;
   }
   initUI() {
-    var createLabel = new LabelTTF(
+    var createLabel = new TextBMFont(
       "click me to create\n 150 sprites directly",
-      "Arial",
-      23
+      s_simpleFont_fnt
     );
-    var reCreateLabel = new LabelTTF(
+    var reCreateLabel = new TextBMFont(
       "click me to create\n 150 sprites use pool",
-      "Arial",
-      23
+      s_simpleFont_fnt
     );
     reCreateLabel.color = new Color(255, 255, 255, 255);
     createLabel.color = new Color(255, 255, 255, 255);
@@ -79,8 +72,8 @@ export class CCPoolTest extends Layer {
     );
     var menu = new Menu(menuItem1, menuItem2);
     menu.alignItemsHorizontallyWithPadding(150);
-    this.directLabel = new LabelTTF("create directly cost:", "Arial", 18);
-    this.poolLabel = new LabelTTF("use pool cost:", "Arial", 18);
+    this.directLabel = new TextBMFont("create directly cost:", s_simpleFont_fnt);
+    this.poolLabel = new TextBMFont("use pool cost:", s_simpleFont_fnt);
     this.directLabel.setPosition(
       Point.add(visibleRect.center, new Point(-190, -65))
     );
@@ -92,17 +85,6 @@ export class CCPoolTest extends Layer {
     this.addChild(this.directLabel);
     this.addChild(this.poolLabel);
     this.addChild(menu, 100);
-
-    // Back Menu
-    var itemBack = new MenuItemFont(
-      "Back",
-      this.toExtensionsMainLayer,
-      this
-    );
-    itemBack.setPosition(new Point(winSize.width - 50, 25));
-    var menuBack = new Menu(itemBack);
-    menuBack.setPosition(new Point(0, 0));
-    this.addChild(menuBack);
   }
   setDirectLabel(time) {
     if (time == 0) {
@@ -150,7 +132,6 @@ export class CCPoolTest extends Layer {
       var sp = MySprite.reCreate(4, 5, 6);
       this.datalist2.push(sp);
       this.addChild(sp, 100);
-      //            sp.runAction(action);
       sp.x = 50 + 8 * i;
     }
     this.setPoolLabel(this.timeEnd("use Pool"));
@@ -175,9 +156,5 @@ export class CCPoolTest extends Layer {
     obj.EndTime = Date.now();
     obj.DeltaTime = obj.EndTime - obj.startTime;
     return obj.DeltaTime;
-  }
-  toExtensionsMainLayer(sender) {
-    var scene = new ExtensionsTestScene();
-    scene.runThisTest();
   }
 }

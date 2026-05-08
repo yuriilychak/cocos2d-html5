@@ -26,70 +26,32 @@
  ****************************************************************************/
 
 import { SceneTestLayer2 } from "./scene-test-layer2";
+import { TestScene } from "../test-scene";
 import { s_pathGrossini } from "../resources";
 import { director, winSize } from "../constants";
-import { Color, Director, Layer, LayerColor, Point, Sprite, log } from "@aspect/core";
+import { Color, Director, LayerColor, Point, Sprite, log } from "@aspect/core";
 import { RotateBy } from "@aspect/actions";
 import { TransitionSlideInT } from "@aspect/transitions";
-import { Menu, MenuItemFont } from "@aspect/menus";
+import { MenuTestLayer } from "../menu-test-layer";
 
-export class SceneTestLayer1 extends Layer {
+const MENU_ITEMS = [
+  { title: "Test pushScene" },
+  { title: "Test pushScene w/transition" },
+  { title: "Quit" },
+  { title: "setNotificationNode" },
+  { title: "clearNotificationNode" }
+];
+
+export class SceneTestLayer1 extends MenuTestLayer {
   constructor() {
-    //----start0----Scene1-ctor
-    super();
-    this.init();
+    super(MENU_ITEMS);
 
-    var s = director.getWinSize();
-    var item1 = new MenuItemFont("Test pushScene", this.onPushScene, this);
-    var item2 = new MenuItemFont(
-      "Test pushScene w/transition",
-      this.onPushSceneTran,
-      this
-    );
-    var item3 = new MenuItemFont(
-      "Quit",
-      function () {
-        log("quit!");
-      },
-      this
-    );
-    var item4 = new MenuItemFont(
-      "setNotificationNode",
-      function () {
-        var layerTemp = new LayerColor(new Color(0, 255, 255, 120));
-        var sprite = new Sprite(s_pathGrossini);
-        sprite.setPosition(new Point(winSize.width / 2, winSize.height / 2));
-        layerTemp.addChild(sprite);
-        Director.getInstance().setNotificationNode(layerTemp);
-        var rotation = new RotateBy(2, 360);
-        sprite.runAction(rotation.repeatForever());
-        log("setNotificationNode!");
-      },
-      this
-    );
-    var item5 = new MenuItemFont(
-      "clearNotificationNode",
-      function () {
-        log("clearNotificationNode!");
-        Director.getInstance().setNotificationNode(null);
-      },
-      this
-    );
-
-    var menu = new Menu(item1, item2, item3, item4, item5);
-    menu.alignItemsVertically();
-    this.addChild(menu);
-
-    var sprite = new Sprite(s_pathGrossini);
+    const s = director.getWinSize();
+    const sprite = new Sprite(s_pathGrossini);
     this.addChild(sprite);
     sprite.x = s.width - 40;
     sprite.y = s.height / 2;
-    var rotate = new RotateBy(2, 360);
-    var repeat = rotate.repeatForever();
-    sprite.runAction(repeat);
-    //----end0----
-
-    //schedule(this.testDealloc);
+    sprite.runAction(new RotateBy(2, 360).repeatForever());
   }
 
   onEnter() {
@@ -102,28 +64,45 @@ export class SceneTestLayer1 extends Layer {
     super.onEnterTransitionDidFinish();
   }
 
-  testDealloc(dt) {
-    //log("SceneTestLayer1:testDealloc");
+  onItemCallback(idx) {
+    switch (idx) {
+      case 0: this._onPushScene(); break;
+      case 1: this._onPushSceneTran(); break;
+      case 2: log("quit!"); break;
+      case 3: this._onSetNotificationNode(); break;
+      case 4: this._onClearNotificationNode(); break;
+    }
   }
 
-  onPushScene(sender) {
-    var scene = new SceneTestScene();
-    var layer = new SceneTestLayer2();
-    scene.addChild(layer, 0);
+  _onPushScene() {
+    const scene = new TestScene("Scene Test");
+    scene.addChild(new SceneTestLayer2(), 0);
     director.pushScene(scene);
   }
 
-  onPushSceneTran(sender) {
-    var scene = new SceneTestScene();
-    var layer = new SceneTestLayer2();
-    scene.addChild(layer, 0);
-
+  _onPushSceneTran() {
+    const scene = new TestScene("Scene Test");
+    scene.addChild(new SceneTestLayer2(), 0);
     director.pushScene(new TransitionSlideInT(1, scene));
   }
-  onExit(sender) {
+
+  _onSetNotificationNode() {
+    const layerTemp = new LayerColor(new Color(0, 255, 255, 120));
+    const sprite = new Sprite(s_pathGrossini);
+    sprite.setPosition(new Point(winSize.width / 2, winSize.height / 2));
+    layerTemp.addChild(sprite);
+    Director.getInstance().setNotificationNode(layerTemp);
+    sprite.runAction(new RotateBy(2, 360).repeatForever());
+    log("setNotificationNode!");
+  }
+
+  _onClearNotificationNode() {
+    log("clearNotificationNode!");
+    Director.getInstance().setNotificationNode(null);
+  }
+
+  onExit() {
     Director.getInstance().setNotificationNode(null);
     super.onExit();
   }
-
-  //CREATE_NODE(SceneTestLayer1);
 }

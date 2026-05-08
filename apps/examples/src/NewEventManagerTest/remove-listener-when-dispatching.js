@@ -26,8 +26,10 @@
  ****************************************************************************/
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
+import { s_simpleFont_fnt } from "../resources";
 import { director } from "../constants";
-import { Color, EventListener, EventManager, LabelTTF, Rect, Sprite } from "@aspect/core";
+import { Color, EventListener, EventManager, Rect, Sprite } from "@aspect/core";
+import { TextBMFont } from "@aspect/ccui";
 import { Menu, MenuItemFont, MenuItemToggle } from "@aspect/menus";
 
 export class RemoveListenerWhenDispatching extends EventDispatcherTestDemo {
@@ -65,7 +67,7 @@ export class RemoveListenerWhenDispatching extends EventDispatcherTestDemo {
 
     EventManager.getInstance().addListener(listener1, sprite1);
 
-    var statusLabel = new LabelTTF("The sprite could be touched!", "", 20);
+    var statusLabel = new TextBMFont("The sprite could be touched!", s_simpleFont_fnt);
     statusLabel.setPosition(
       origin.x + size.width / 2,
       origin.y + size.height - 90

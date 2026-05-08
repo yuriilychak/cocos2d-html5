@@ -43,18 +43,14 @@ export class UIPageViewChildSizeTest extends UIMainLayer {
       this._bottomDisplayLabel.y =
         widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
 
-      var background = this._widget.getChildByName("background_Panel");
-
       // Create the page view
       var pageView = new PageView();
       pageView.setTouchEnabled(true);
       pageView.setContentSize(new Size(240, 130));
       pageView.x =
-        (widgetSize.width - background.width) / 2 +
-        (background.width - pageView.width) / 2;
+        (widgetSize.width - pageView.width) / 2;
       pageView.y =
-        (widgetSize.height - background.height) / 2 +
-        (background.height - pageView.height) / 2;
+        (widgetSize.height - pageView.height) / 2;
       pageView.setIndicatorEnabled(true);
       pageView.removeAllItems();
 

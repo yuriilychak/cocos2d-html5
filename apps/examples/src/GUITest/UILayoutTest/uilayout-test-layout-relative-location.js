@@ -42,19 +42,13 @@ export class UILayoutTest_Layout_Relative_Location extends UIMainLayer {
       );
       this._mainNode.addChild(alert);
 
-      var root = this._mainNode.getChildByTag(81);
-      var background = root.getChildByName("background_Panel");
-
       // Create the layout
       var layout = new Layout();
       layout.setLayoutType(Layout.RELATIVE);
       layout.setContentSize(280, 150);
-      var backgroundSize = background.getContentSize();
       layout.setPosition(
-        (widgetSize.width - backgroundSize.width) / 2.0 +
-          (backgroundSize.width - layout.width) / 2.0,
-        (widgetSize.height - backgroundSize.height) / 2.0 +
-          (backgroundSize.height - layout.height) / 2.0
+        (widgetSize.width - layout.width) / 2.0,
+        (widgetSize.height - layout.height) / 2.0
       );
       this._mainNode.addChild(layout);
 

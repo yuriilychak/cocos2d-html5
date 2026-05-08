@@ -25,41 +25,15 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import {
-  ITEM_TAG_BASIC,
-  LINE_SPACE,
-  extensionsTestItemNames
-} from "./extensions-test-constants";
-import { Director, Layer } from "@aspect/core";
-import { Menu, MenuItemFont } from "@aspect/menus";
+import { extensionsTestItems } from "./extensions-test-constants";
+import { MenuTestLayer } from "../menu-test-layer";
 
-export class ExtensionsMainLayer extends Layer {
-  onEnter() {
-    super.onEnter();
-
-    var winSize = Director.getInstance().getWinSize();
-
-    var pMenu = new Menu();
-    pMenu.x = 0;
-    pMenu.y = 0;
-    MenuItemFont.setFontName("Arial");
-    MenuItemFont.setFontSize(24);
-    for (var i = 0; i < extensionsTestItemNames.length; ++i) {
-      var selItem = extensionsTestItemNames[i];
-      var pItem = new MenuItemFont(
-        selItem.itemTitle,
-        this.menuCallback,
-        this
-      );
-      pItem.x = winSize.width / 2;
-      pItem.y = winSize.height - (i + 1) * LINE_SPACE;
-      pMenu.addChild(pItem, ITEM_TAG_BASIC + i);
-    }
-    this.addChild(pMenu);
+export class ExtensionsMainLayer extends MenuTestLayer {
+  constructor() {
+    super(extensionsTestItems);
   }
 
-  menuCallback(sender) {
-    var nIndex = sender.zIndex - ITEM_TAG_BASIC;
-    extensionsTestItemNames[nIndex].testScene();
+  onItemCallback(idx) {
+    extensionsTestItems[idx].testScene();
   }
 }

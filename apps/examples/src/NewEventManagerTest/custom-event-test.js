@@ -26,8 +26,10 @@
  ****************************************************************************/
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
+import { s_simpleFont_fnt } from "../resources";
 import { director } from "../constants";
-import { EventCustom, EventListener, EventManager, LabelTTF } from "@aspect/core";
+import { EventCustom, EventListener, EventManager } from "@aspect/core";
+import { TextBMFont } from "@aspect/ccui";
 import { Menu, MenuItemFont } from "@aspect/menus";
 
 export class CustomEventTest extends EventDispatcherTestDemo {
@@ -49,7 +51,7 @@ export class CustomEventTest extends EventDispatcherTestDemo {
 
     MenuItemFont.setFontSize(20);
 
-    var statusLabel = new LabelTTF("No custom event 1 received!", "", 20);
+    var statusLabel = new TextBMFont("No custom event 1 received!", s_simpleFont_fnt);
     statusLabel.setPosition(
       origin.x + size.width / 2,
       origin.y + size.height - 90
@@ -77,7 +79,7 @@ export class CustomEventTest extends EventDispatcherTestDemo {
     });
     sendItem.setPosition(origin.x + size.width / 2, origin.y + size.height / 2);
 
-    var statusLabel2 = new LabelTTF("No custom event 2 received!", "", 20);
+    var statusLabel2 = new TextBMFont("No custom event 2 received!", s_simpleFont_fnt);
     statusLabel2.setPosition(
       origin.x + size.width / 2,
       origin.y + size.height - 120

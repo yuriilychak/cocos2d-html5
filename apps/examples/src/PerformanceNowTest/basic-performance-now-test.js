@@ -28,15 +28,17 @@
 //
 //------------------------------------------------------------------
 import { PerformanceNowBaseLayer } from "./performance-now-base-layer";
-import { LabelTTF } from "@aspect/core";
+import { s_simpleFont_fnt } from "../resources";
+import { TextBMFont } from "@aspect/ccui";
 import { winSize } from "../constants";
 
 export class BasicPerformanceNowTest extends PerformanceNowBaseLayer {
   onEnter() {
     super.onEnter();
     if (performance && typeof performance.now === "function") {
-      var currentPerformanceNow = new LabelTTF(
-        "Current time since start : " + performance.now()
+      var currentPerformanceNow = new TextBMFont(
+        "Current time since start : " + performance.now(),
+        s_simpleFont_fnt
       );
       this.addChild(currentPerformanceNow);
       currentPerformanceNow.attr({
@@ -44,8 +46,9 @@ export class BasicPerformanceNowTest extends PerformanceNowBaseLayer {
         y: winSize.height / 2
       });
     } else {
-      var errLabel = new LabelTTF(
-        "On browser that does not support performance.now"
+      var errLabel = new TextBMFont(
+        "On browser that does not support performance.now",
+        s_simpleFont_fnt
       );
       this.addChild(errLabel);
       errLabel.attr({

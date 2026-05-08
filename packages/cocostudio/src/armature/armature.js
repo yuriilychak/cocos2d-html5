@@ -100,8 +100,6 @@ export class Armature extends Node {
     this._topBoneList.length = 0;
 
     //this._name = name || "";
-    var armatureDataManager = armatureDataManager;
-
     var animationData;
     if (name !== "") {
       //animationData

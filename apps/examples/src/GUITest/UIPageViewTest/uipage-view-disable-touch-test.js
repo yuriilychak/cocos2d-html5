@@ -43,17 +43,12 @@ export class UIPageViewDisableTouchTest extends UIMainLayer {
       this._bottomDisplayLabel.y =
         widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
 
-      var background = this._widget.getChildByName("background_Panel");
-      var backgroundSize = background.getContentSize();
-
       var pageView = new PageView();
       pageView.setContentSize(new Size(240, 130));
       pageView.x =
-        (widgetSize.width - backgroundSize.width) / 2 +
-        (backgroundSize.width - pageView.width) / 2;
+        (widgetSize.width - pageView.width) / 2;
       pageView.y =
-        (widgetSize.height - backgroundSize.height) / 2 +
-        (backgroundSize.height - pageView.height) / 2;
+        (widgetSize.height - pageView.height) / 2;
       pageView.setTouchEnabled(false);
       pageView.removeAllPages();
 

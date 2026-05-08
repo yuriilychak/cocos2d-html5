@@ -25,17 +25,18 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { s_fire, s_pathGrossini } from "../resources";
+import { s_fire, s_pathGrossini, s_simpleFont_fnt } from "../resources";
 import { director } from "../constants";
 import {
   Color,
   LayerGradient,
   Point,
+  Rect,
   Sprite,
   textureCache
 } from "@aspect/core";
 import { JumpBy, Sequence } from "@aspect/actions";
-import { Menu, MenuItemFont } from "@aspect/menus";
+import { BMButton, Widget } from "@aspect/ccui";
 import { Label } from "@aspect/labels";
 import { ParticleSun } from "../ParticleTest/ParticleExamples";
 
@@ -117,12 +118,26 @@ export class IntervalLayer extends LayerGradient {
     sprite.runAction(new Sequence(jump, jump.reverse()).repeatForever());
 
     // pause button
-    var item1 = new MenuItemFont("Pause", this.onPause, this);
-    var menu = new Menu(item1);
-    menu.x = s.width / 2;
-    menu.y = s.height - 50;
-
-    this.addChild(menu);
+    const pauseBtn = new BMButton(
+      "default_theme/rounded_shadow_2.png",
+      "default_theme/rounded_shadow_2.png",
+      "default_theme/rounded_shadow_2.png",
+      Widget.PLIST_TEXTURE
+    );
+    pauseBtn.setScale9Enabled(true);
+    pauseBtn.setCapInsets(new Rect(12, 12, 12, 12));
+    pauseBtn.setContentSize(196, 32);
+    pauseBtn.setTitleFntFile(s_simpleFont_fnt);
+    pauseBtn.setTitleText("Pause");
+    pauseBtn.setTitleFontSize(12);
+    pauseBtn.setNormalBgColor(new Color(0x00, 0x99, 0x00));
+    pauseBtn.setPressedBgColor(new Color(0x00, 0x66, 0x00));
+    pauseBtn.setDisabledBgColor(new Color(0x55, 0x55, 0x55));
+    pauseBtn.pressedActionEnabled = true;
+    pauseBtn.addClickEventListener(() => this.onPause());
+    pauseBtn.x = s.width / 2;
+    pauseBtn.y = s.height - 80;
+    this.addChild(pauseBtn);
   }
 
   onPause(sender) {
