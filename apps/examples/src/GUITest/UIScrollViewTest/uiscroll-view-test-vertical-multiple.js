@@ -25,9 +25,9 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
-import { LabelTTF, Size } from "@aspect/core";
-import { Menu, MenuItemLabel } from "@aspect/menus";
+import { Color, Size } from "@aspect/core";
 import { Button, ScrollView, Text } from "@aspect/ccui";
+import { ButtonLayout } from "../../button-layout";
 
 export class UIScrollViewTest_Vertical_Multiple extends UIMainLayer {
   constructor() {
@@ -64,30 +64,19 @@ export class UIScrollViewTest_Vertical_Multiple extends UIMainLayer {
         (widgetSize.height - scrollView.height) / 2;
       this._mainNode.addChild(scrollView);
 
-      var labelText = new LabelTTF("Texts", "Arial", 25);
-      var labelButton = new LabelTTF("Buttons", "Arial", 25);
-      var labelS9sprite = new LabelTTF("s9Sprites", "Arial", 25);
-
-      var menuItem1 = new MenuItemLabel(labelText, this.drawTexts, this);
-      var menuItem2 = new MenuItemLabel(
-        labelButton,
-        this.drawButtons,
-        this,
-        false
-      );
-      var menuItem3 = new MenuItemLabel(
-        labelS9sprite,
-        this.drawS9Buttons,
-        this
-      );
-      var menu = new Menu(menuItem1, menuItem2, menuItem3);
-      menu.x = 0;
-      menu.y = 0;
-      menuItem1.x = menuItem2.x = menuItem3.x = 120;
-      menuItem1.y = 150;
-      menuItem2.y = 200;
-      menuItem3.y = 250;
-      this.addChild(menu, 1);
+      this.addChild(new ButtonLayout(
+        [
+          { label: "Texts", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
+          { label: "Buttons", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
+          { label: "s9Sprites", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) }
+        ],
+        196, "Draw Mode",
+        (i) => {
+          if (i === 0) this.drawTexts();
+          else if (i === 1) this.drawButtons();
+          else this.drawS9Buttons();
+        }
+      ), 1);
       this.drawTexts();
       return true;
     }

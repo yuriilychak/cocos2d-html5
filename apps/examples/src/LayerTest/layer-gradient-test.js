@@ -27,8 +27,8 @@
 
 import { LayerTest } from "./layer-test";
 import { director, winSize } from "../constants";
-import { Color, EventListener, EventManager, EventMouse, LabelTTF, LayerGradient, Point, Sys } from "@aspect/core";
-import { Menu, MenuItemLabel, MenuItemToggle } from "@aspect/menus";
+import { Color, EventListener, EventManager, EventMouse, LayerGradient, Point, Sys } from "@aspect/core";
+import { ButtonLayout } from "../button-layout";
 
 import { TAG_LAYER } from "./layer-test-constants";
 export class LayerGradientTest extends LayerTest {
@@ -77,24 +77,18 @@ export class LayerGradientTest extends LayerTest {
       );
     }
 
-    var label1 = new LabelTTF(
-      "Compressed Interpolation: Enabled",
-      "Marker Felt",
-      26
+    let isEnabled = true;
+    const layout = new ButtonLayout(
+      [{ label: "Compressed: Enabled", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) }],
+      196, "Options",
+      () => {
+        const gradient = this.getChildByTag(TAG_LAYER);
+        isEnabled = !isEnabled;
+        gradient.setCompressedInterpolation(isEnabled);
+        layout.setLabelText(0, isEnabled ? "Compressed: Enabled" : "Compressed: Disabled");
+      }
     );
-    var label2 = new LabelTTF(
-      "Compressed Interpolation: Disabled",
-      "Marker Felt",
-      26
-    );
-    var item1 = new MenuItemLabel(label1);
-    var item2 = new MenuItemLabel(label2);
-    var item = new MenuItemToggle(item1, item2, this.onToggleItem, this);
-
-    var menu = new Menu(item);
-    this.addChild(menu);
-    menu.x = winSize.width / 2;
-    menu.y = 100;
+    this.addChild(layout);
     //----end7----
   }
 
@@ -108,13 +102,6 @@ export class LayerGradientTest extends LayerTest {
 
     var gradient = this.getChildByTag(1);
     gradient.setVector(diff);
-    //----end7----
-  }
-
-  onToggleItem(sender) {
-    //----start7----onToggleItem
-    var gradient = this.getChildByTag(TAG_LAYER);
-    gradient.setCompressedInterpolation(!gradient.isCompressedInterpolation());
     //----end7----
   }
 

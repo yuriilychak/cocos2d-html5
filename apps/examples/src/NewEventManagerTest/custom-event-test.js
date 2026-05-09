@@ -28,9 +28,9 @@
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { s_simpleFont_fnt } from "../resources";
 import { director } from "../constants";
-import { EventCustom, EventListener, EventManager } from "@aspect/core";
+import { Color, EventCustom, EventListener, EventManager } from "@aspect/core";
 import { TextBMFont } from "@aspect/ccui";
-import { Menu, MenuItemFont } from "@aspect/menus";
+import { ButtonLayout } from "../button-layout";
 
 export class CustomEventTest extends EventDispatcherTestDemo {
   constructor() {
@@ -46,10 +46,7 @@ export class CustomEventTest extends EventDispatcherTestDemo {
     super.onEnter();
 
     var origin = director.getVisibleOrigin(),
-      size = director.getVisibleSize(),
-      selfPointer = this;
-
-    MenuItemFont.setFontSize(20);
+      size = director.getVisibleSize();
 
     var statusLabel = new TextBMFont("No custom event 1 received!", s_simpleFont_fnt);
     statusLabel.setPosition(
@@ -69,16 +66,6 @@ export class CustomEventTest extends EventDispatcherTestDemo {
     });
     EventManager.getInstance().addListener(this._listener1, 1);
 
-    var sendItem = new MenuItemFont("Send Custom Event 1", function (
-      sender
-    ) {
-      ++selfPointer._item1Count;
-      var event = new EventCustom("game_custom_event1");
-      event.setUserData(selfPointer._item1Count.toString());
-      EventManager.getInstance().dispatchEvent(event);
-    });
-    sendItem.setPosition(origin.x + size.width / 2, origin.y + size.height / 2);
-
     var statusLabel2 = new TextBMFont("No custom event 2 received!", s_simpleFont_fnt);
     statusLabel2.setPosition(
       origin.x + size.width / 2,
@@ -95,25 +82,33 @@ export class CustomEventTest extends EventDispatcherTestDemo {
         );
       }
     });
-
     EventManager.getInstance().addListener(this._listener2, 1);
-    var sendItem2 = new MenuItemFont("Send Custom Event 2", function (
-      sender
-    ) {
-      ++selfPointer._item2Count;
-      var event = new EventCustom("game_custom_event2");
-      event.setUserData(selfPointer._item2Count.toString());
-      EventManager.getInstance().dispatchEvent(event);
-    });
-    sendItem2.setPosition(
-      origin.x + size.width / 2,
-      origin.x + size.height / 2 - 40
-    );
 
-    var menu = new Menu(sendItem, sendItem2);
-    menu.setPosition(0, 0);
-    menu.setAnchorPoint(0, 0);
-    this.addChild(menu, 1);
+    const layout = new ButtonLayout(
+      [
+        { label: "Send Custom Event 1", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
+        { label: "Send Custom Event 2", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) }
+      ],
+      196,
+      "Events",
+      (i) => {
+        switch (i) {
+          case 0: {
+            const event = new EventCustom("game_custom_event1");
+            event.setUserData((++this._item1Count).toString());
+            EventManager.getInstance().dispatchEvent(event);
+            break;
+          }
+          case 1: {
+            const event = new EventCustom("game_custom_event2");
+            event.setUserData((++this._item2Count).toString());
+            EventManager.getInstance().dispatchEvent(event);
+            break;
+          }
+        }
+      }
+    );
+    this.addChild(layout, 1);
     //----end3----
   }
 

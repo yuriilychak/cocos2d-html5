@@ -17,8 +17,7 @@
   },
   "dependencies": {
     "@aspect/cocos2d": "*",
-    "@aspect/core": "*",
-    "@aspect/menus": "*"
+    "@aspect/core": "*"
   },
   "devDependencies": {
     "@capacitor/android": "^7.0.0",

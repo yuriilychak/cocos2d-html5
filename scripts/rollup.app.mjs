@@ -176,7 +176,8 @@ const ASPECT_GLOBALS = {
  */
 export function createTestsBundleConfig({
   input = 'src/index.js',
-  outputFile = 'dist/tests.min.js'
+  outputFile = 'dist/tests.min.js',
+  minify = true,
 } = {}) {
   const appDir = process.cwd();
   const rootDir = join(appDir, '..', '..');
@@ -204,7 +205,7 @@ export function createTestsBundleConfig({
         }
       },
       resolve(),
-      terser({
+      ...(minify ? [terser({
         ecma: 2020,
         module: false,
         compress: {
@@ -218,7 +219,7 @@ export function createTestsBundleConfig({
         format: {
           comments: false
         }
-      })
+      })] : [])
     ],
     output: {
       file: outputFile,

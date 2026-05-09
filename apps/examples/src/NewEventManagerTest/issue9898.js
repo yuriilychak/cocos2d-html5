@@ -26,8 +26,8 @@
  ****************************************************************************/
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
-import { Director, EventCustom, EventListener, EventManager, Node } from "@aspect/core";
-import { Menu, MenuItemFont } from "@aspect/menus";
+import { Color, EventCustom, EventListener, EventManager, Node } from "@aspect/core";
+import { ButtonLayout } from "../button-layout";
 
 export class Issue9898 extends EventDispatcherTestDemo {
   title() {
@@ -42,9 +42,6 @@ export class Issue9898 extends EventDispatcherTestDemo {
     super();
     //----start12----ctor
 
-    var origin = Director.getInstance().getVisibleOrigin();
-    var size = Director.getInstance().getVisibleSize();
-
     var node = new Node();
     this.addChild(node);
 
@@ -58,17 +55,17 @@ export class Issue9898 extends EventDispatcherTestDemo {
       }
     });
     EventManager.getInstance().addListener(_listener, 1);
-    var menuItem = new MenuItemFont("Dispatch Custom Event1", function (
-      sender
-    ) {
-      var event = new EventCustom("Issue9898");
-      EventManager.getInstance().dispatchEvent(event);
-    });
-    menuItem.setPosition(origin.x + size.width / 2, origin.y + size.height / 2);
 
-    var menu = new Menu(menuItem);
-    menu.setPosition(0, 0);
-    this.addChild(menu);
+    const layout = new ButtonLayout(
+      [{ label: "Dispatch Custom Event1", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) }],
+      196,
+      "Actions",
+      () => {
+        var event = new EventCustom("Issue9898");
+        EventManager.getInstance().dispatchEvent(event);
+      }
+    );
+    this.addChild(layout);
     //----end12----
   }
 }

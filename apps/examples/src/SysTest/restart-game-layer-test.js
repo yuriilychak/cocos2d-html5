@@ -30,11 +30,8 @@
 //
 //------------------------------------------------------------------
 import { SysTestBase } from "./sys-test-base";
-import { s_simpleFont_fnt } from "../resources";
-import { winSize } from "../constants";
-import { Game, Point, visibleRect } from "@aspect/core";
-import { TextBMFont } from "@aspect/ccui";
-import { Menu, MenuItemLabel } from "@aspect/menus";
+import { Color, Game } from "@aspect/core";
+import { ButtonLayout } from "../button-layout";
 
 export class RestartGameLayerTest extends SysTestBase {
   getTitle() {
@@ -45,17 +42,10 @@ export class RestartGameLayerTest extends SysTestBase {
   }
   constructor() {
     super();
-    var menu = new Menu();
-    menu.setPosition(new Point(0, 0));
-    menu.width = winSize.width;
-    menu.height = winSize.height;
-    this.addChild(menu, 1);
-    var item1 = new MenuItemLabel(
-      new TextBMFont("restartGame", s_simpleFont_fnt),
-      this.restartGame,
-      this
-    );
-    menu.addChild(item1);
-    menu.setPosition(Point.add(visibleRect.left, new Point(+180, 0)));
+    this.addChild(new ButtonLayout(
+      [{ label: "Restart Game", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) }],
+      196, "Actions",
+      () => this.restartGame()
+    ), 1);
   }
 }

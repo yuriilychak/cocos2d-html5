@@ -27,8 +27,8 @@
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { director } from "../constants";
-import { EventListener, EventManager, Node, Rect, Sprite, log, visibleRect } from "@aspect/core";
-import { Menu, MenuItemFont } from "@aspect/menus";
+import { Color, EventListener, EventManager, Node, Rect, Sprite, log } from "@aspect/core";
+import { ButtonLayout } from "../button-layout";
 
 export class TouchableSpriteTest extends EventDispatcherTestDemo {
   onEnter() {
@@ -99,39 +99,29 @@ export class TouchableSpriteTest extends EventDispatcherTestDemo {
     EventManager.getInstance().addListener(listener1, sprite1);
     EventManager.getInstance().addListener(listener1.clone(), sprite2);
     EventManager.getInstance().addListener(listener1.clone(), sprite3);
-    var selfPointer = this;
 
-    var removeAllTouchItem = new MenuItemFont(
-      "Remove All Touch Listeners",
-      function (senderItem) {
-        senderItem.setString("Only Next item could be clicked");
-
-        EventManager.getInstance().removeListeners(EventListener.TOUCH_ONE_BY_ONE);
-
-        var nextItem = new MenuItemFont("Next", function (sender) {
-          selfPointer.onNextCallback();
-        });
-
-        nextItem.fontSize = 16;
-        nextItem.x = visibleRect.right.x - 100;
-        nextItem.y = visibleRect.right.y - 30;
-
-        var menu2 = new Menu(nextItem);
-        menu2.setPosition(0, 0);
-        menu2.setAnchorPoint(0, 0);
-        selfPointer.addChild(menu2);
+    const layout = new ButtonLayout(
+      [
+        { label: "Remove All Touch Listeners", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
+        { label: "Next", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) }
+      ],
+      196,
+      "Actions",
+      (i) => {
+        switch (i) {
+          case 0:
+            layout.setLabelText(0, "Only Next item could be clicked");
+            EventManager.getInstance().removeListeners(EventListener.TOUCH_ONE_BY_ONE);
+            layout.showButton(1);
+            break;
+          case 1:
+            this.onNextCallback();
+            break;
+        }
       }
     );
-
-    removeAllTouchItem.fontSize = 16;
-    removeAllTouchItem.x =
-      visibleRect.right.x - removeAllTouchItem.width / 2 - 20;
-    removeAllTouchItem.y = visibleRect.right.y;
-
-    var menu = new Menu(removeAllTouchItem);
-    menu.setPosition(0, 0);
-    menu.setAnchorPoint(0, 0);
-    this.addChild(menu);
+    layout.hideButton(1);
+    this.addChild(layout);
     //----end0----
   }
 

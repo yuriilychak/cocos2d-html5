@@ -26,9 +26,9 @@
 
 import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
 import { TestScene } from "../test-scene";
-import { Device, Director, LabelTTF } from "@aspect/core";
-import { Menu, MenuItemFont } from "@aspect/menus";
+import { Color, Device, Director, LabelTTF } from "@aspect/core";
 import { Slider } from "@aspect/ccui";
+import { ButtonLayout } from "../button-layout";
 
 export class VibrateTest extends BaseTestLayer {
   constructor() {
@@ -45,18 +45,11 @@ export class VibrateTest extends BaseTestLayer {
 
     this._duration = 0.1;
 
-    MenuItemFont.setFontName("Arial");
-    MenuItemFont.setFontSize(24);
-
-    var vibrateItem = new MenuItemFont("Vibrate", this.startVibrate, this);
-    vibrateItem.x = s.width * 0.5;
-    vibrateItem.y = s.height * 0.7;
-
-    var menu = new Menu();
-    menu.addChild(vibrateItem);
-    menu.x = 0;
-    menu.y = 0;
-    this.addChild(menu);
+    this.addChild(new ButtonLayout(
+      [{ label: "Vibrate", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) }],
+      196, "Actions",
+      () => this.startVibrate()
+    ));
 
     this._durationLabel = new LabelTTF(
       "duration: " + this._duration.toFixed(3) + "s",

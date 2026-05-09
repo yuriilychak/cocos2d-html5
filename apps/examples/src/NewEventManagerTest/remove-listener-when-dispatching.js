@@ -30,7 +30,7 @@ import { s_simpleFont_fnt } from "../resources";
 import { director } from "../constants";
 import { Color, EventListener, EventManager, Rect, Sprite } from "@aspect/core";
 import { TextBMFont } from "@aspect/ccui";
-import { Menu, MenuItemFont, MenuItemToggle } from "@aspect/menus";
+import { ButtonLayout } from "../button-layout";
 
 export class RemoveListenerWhenDispatching extends EventDispatcherTestDemo {
   onEnter() {
@@ -76,28 +76,25 @@ export class RemoveListenerWhenDispatching extends EventDispatcherTestDemo {
 
     var enable = true;
 
-    // Enable/Disable item
-    var toggleItem = new MenuItemToggle(
-      new MenuItemFont("Enabled"),
-      new MenuItemFont("Disabled"),
-      function (sender) {
+    const layout = new ButtonLayout(
+      [{ label: "Enabled", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) }],
+      196,
+      "Touch",
+      () => {
         if (enable) {
           EventManager.getInstance().removeListener(listener1);
           statusLabel.setString("The sprite could not be touched!");
+          layout.setLabelText(0, "Disabled");
           enable = false;
         } else {
           EventManager.getInstance().addListener(listener1, sprite1);
           statusLabel.setString("The sprite could be touched!");
+          layout.setLabelText(0, "Enabled");
           enable = true;
         }
       }
     );
-
-    toggleItem.setPosition(origin.x + size.width / 2, origin.y + 80);
-    var menu = new Menu(toggleItem);
-    menu.setPosition(0, 0);
-    menu.setAnchorPoint(0, 0);
-    this.addChild(menu, 1);
+    this.addChild(layout, 1);
     //----end2----
   }
 

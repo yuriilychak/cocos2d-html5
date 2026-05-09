@@ -28,7 +28,7 @@
 import { AtlasDemo } from "./atlas-demo";
 import { director } from "../constants";
 import { Color, LabelTTF, LayerColor, Size, TEXT_ALIGNMENT_CENTER, TEXT_ALIGNMENT_LEFT, TEXT_ALIGNMENT_RIGHT, VERTICAL_TEXT_ALIGNMENT_BOTTOM, VERTICAL_TEXT_ALIGNMENT_CENTER, VERTICAL_TEXT_ALIGNMENT_TOP } from "@aspect/core";
-import { Menu, MenuItemFont } from "@aspect/menus";
+import { ButtonLayout } from "../button-layout";
 
 export class LabelTTFTest extends AtlasDemo {
   constructor() {
@@ -55,26 +55,36 @@ export class LabelTTFTest extends AtlasDemo {
 
     this.addChild(colorLayer);
 
-    MenuItemFont.setFontSize(30);
-    var menu = new Menu(
-      new MenuItemFont("Left", this.setAlignmentLeft, this),
-      new MenuItemFont("Center", this.setAlignmentCenter, this),
-      new MenuItemFont("Right", this.setAlignmentRight, this)
+    const hAlignLayout = new ButtonLayout(
+      [
+        { label: "Left", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
+        { label: "Center", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
+        { label: "Right", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) }
+      ],
+      100, "H-Align",
+      (i) => {
+        if (i === 0) this.setAlignmentLeft();
+        else if (i === 1) this.setAlignmentCenter();
+        else this.setAlignmentRight();
+      }
     );
-    menu.alignItemsVerticallyWithPadding(4);
-    menu.x = 50;
-    menu.y = s.height / 2 - 20;
-    this.addChild(menu);
+    hAlignLayout.x = 8;
+    this.addChild(hAlignLayout);
 
-    menu = new Menu(
-      new MenuItemFont("Top", this.setAlignmentTop, this),
-      new MenuItemFont("Middle", this.setAlignmentMiddle, this),
-      new MenuItemFont("Bottom", this.setAlignmentBottom, this)
+    const vAlignLayout = new ButtonLayout(
+      [
+        { label: "Top", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
+        { label: "Middle", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
+        { label: "Bottom", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) }
+      ],
+      100, "V-Align",
+      (i) => {
+        if (i === 0) this.setAlignmentTop();
+        else if (i === 1) this.setAlignmentMiddle();
+        else this.setAlignmentBottom();
+      }
     );
-    menu.alignItemsVerticallyWithPadding(4);
-    menu.x = s.width - 50;
-    menu.y = s.height / 2 - 20;
-    this.addChild(menu);
+    this.addChild(vAlignLayout);
 
     this._label = null;
     this._horizAlign = TEXT_ALIGNMENT_LEFT;

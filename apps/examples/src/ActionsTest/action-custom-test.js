@@ -29,7 +29,7 @@ import { ActionsDemo } from "./actions-demo";
 import { createCustomAction } from "./actions-test-helpers";
 import { CustomMoveBy } from "./custom-move-by";
 import { s_pathGrossini } from "../resources";
-import { Animation, LabelTTF, Layer, Point, Sprite, log } from "@aspect/core";
+import { Animation, Color, LabelTTF, Layer, Point, Sprite, log } from "@aspect/core";
 import {
   Animate,
   BezierBy,
@@ -63,7 +63,7 @@ import {
   Sequence,
   spawn
 } from "@aspect/actions";
-import { Menu, MenuItemLabel } from "@aspect/menus";
+import { ButtonLayout } from "../button-layout";
 import { winSize } from "../constants";
 
 export class ActionCustomTest extends ActionsDemo {
@@ -82,20 +82,17 @@ export class ActionCustomTest extends ActionsDemo {
     this._layer = new Layer();
     this.addChild(this._layer);
 
-    var label1 = new MenuItemLabel(
-      new LabelTTF("showInterval(click me)", "arial", 25),
-      this.createActionInterval,
-      this
-    );
-    var label2 = new MenuItemLabel(
-      new LabelTTF("showInstant(click me)", "arial", 25),
-      this.createActionInstant,
-      this
-    );
-    var buttonTemp = new Menu(label1, label2);
-    buttonTemp.alignItemsVerticallyWithPadding(10);
-    buttonTemp.setPosition(new Point(100, winSize.height / 2 + 100));
-    this.addChild(buttonTemp);
+    this.addChild(new ButtonLayout(
+      [
+        { label: "showInterval", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
+        { label: "showInstant", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) }
+      ],
+      196, "Actions",
+      (i) => {
+        if (i === 0) this.createActionInterval();
+        else this.createActionInstant();
+      }
+    ));
 
     this.createActionInterval();
   }

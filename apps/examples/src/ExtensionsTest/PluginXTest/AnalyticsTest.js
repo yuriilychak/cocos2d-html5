@@ -25,8 +25,8 @@
 
 import { PluginXTest } from "./PluginXTest";
 import { director } from "../../constants";
-import { Director, LabelTTF, Point, Size, Sys, TEXT_ALIGNMENT_CENTER, log } from "@aspect/core";
-import { Menu, MenuItemLabel } from "@aspect/menus";
+import { Color, Director, LabelTTF, Point, Size, Sys, TEXT_ALIGNMENT_CENTER, log } from "@aspect/core";
+import { ButtonLayout } from "../../button-layout";
 
 export var g_pAnalytics = null;
 export var s_strAppKey = "";
@@ -141,18 +141,28 @@ export class AnalyticsTestLayer extends PluginXTest {
 
     loadAnalyticsPlugin();
 
-    var pMenu = new Menu();
-    pMenu.setPosition(new Point(0, 0));
-    this.addChild(pMenu, 1);
+    const eventItems = s_EventMenuItem.map(item => ({
+      label: item.id,
+      tintDefault: new Color(0x44, 0x55, 0x77),
+      tintPressed: new Color(0x22, 0x33, 0x55)
+    }));
+    eventItems.push({
+      label: "reload all plugins",
+      tintDefault: new Color(0x44, 0x55, 0x77),
+      tintPressed: new Color(0x22, 0x33, 0x55)
+    });
 
-    var yPos = 0;
-    for (var i = 0; i < s_EventMenuItem.length; i++) {
-      var label = new LabelTTF(s_EventMenuItem[i].id, "Arial", 24);
-      var pMenuItem = new MenuItemLabel(label, this.eventMenuCallback, this);
-      pMenu.addChild(pMenuItem, 0, s_EventMenuItem[i].tag);
-      yPos = size.height - 50 * i - 100;
-      pMenuItem.setPosition(new Point(size.width / 2, yPos));
-    }
+    this.addChild(new ButtonLayout(
+      eventItems,
+      196, "Analytics",
+      (i) => {
+        if (i < s_EventMenuItem.length) {
+          this.eventMenuCallback(s_EventMenuItem[i].tag);
+        } else {
+          this.reloadPluginMenuCallback();
+        }
+      }
+    ), 1);
 
     var strName = g_pAnalytics.getPluginName();
     var strVer = g_pAnalytics.getPluginVersion();
@@ -164,29 +174,19 @@ export class AnalyticsTestLayer extends PluginXTest {
       new Size(size.width, 0),
       TEXT_ALIGNMENT_CENTER
     );
-    pLabel.setPosition(new Point(size.width / 2, yPos - 100));
+    pLabel.setPosition(new Point(size.width / 2, 80));
     this.addChild(pLabel);
-
-    var label = new LabelTTF("reload all plugins", "Arial", 24);
-    var pMenuItem = new MenuItemLabel(
-      label,
-      this.reloadPluginMenuCallback,
-      this
-    );
-    pMenuItem.setAnchorPoint(new Point(0.5, 0));
-    pMenu.addChild(pMenuItem, 0);
-    pMenuItem.setPosition(new Point(size.width / 2, 0));
   }
 
-  reloadPluginMenuCallback(pSender) {
+  reloadPluginMenuCallback() {
     plugin.PluginManager.getInstance().unloadPlugin("AnalyticsFlurry");
     plugin.PluginManager.getInstance().unloadPlugin("AnalyticsUmeng");
 
     loadAnalyticsPlugin();
   }
 
-  eventMenuCallback(pSender) {
-    switch (pSender.getTag()) {
+  eventMenuCallback(tag) {
+    switch (tag) {
       case TAG_LOG_EVENT_ID:
         {
           g_pAnalytics.logEvent("click");

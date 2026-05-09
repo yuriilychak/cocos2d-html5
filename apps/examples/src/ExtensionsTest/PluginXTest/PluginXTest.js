@@ -27,17 +27,11 @@ import { ExtensionsTestScene } from "../extensions-test-scene";
 import { pluginXSceneManager } from "./PluginXTestsManager";
 import {
   s_extensions_background,
-  s_extensions_ribbon,
-  s_pathB1,
-  s_pathB2,
-  s_pathF1,
-  s_pathF2,
-  s_pathR1,
-  s_pathR2
+  s_extensions_ribbon
 } from "../../resources";
-import { Director, LabelTTF, Layer, Rect, Sprite } from "@aspect/core";
+import { Color, Director, LabelTTF, Layer, Rect, Sprite } from "@aspect/core";
 import { Scale9Sprite } from "@aspect/ccui";
-import { Menu, MenuItemFont, MenuItemImage } from "@aspect/menus";
+import { ButtonLayout } from "../../button-layout";
 import { winSize } from "../../constants";
 
 export class PluginXTest extends Layer {
@@ -52,20 +46,7 @@ export class PluginXTest extends Layer {
     super();
 
     this._sceneTitleLabel = null;
-    // Get the sceensize
     var screensize = winSize;
-
-    var pBackItem = new MenuItemFont(
-      "Back",
-      this.toExtensionsMainLayer,
-      this
-    );
-    pBackItem.x = screensize.width - 50;
-    pBackItem.y = 25;
-    var pBackMenu = new Menu(pBackItem);
-    pBackMenu.x = 0;
-    pBackMenu.y = 0;
-    this.addChild(pBackMenu, 10);
 
     // Add the generated background
     var background = new Sprite(s_extensions_background);
@@ -94,37 +75,23 @@ export class PluginXTest extends Layer {
       screensize.height - this._sceneTitleLabel.height / 2 - 5;
     this.addChild(this._sceneTitleLabel, 1);
 
-    // Add the menu
-    var item1 = new MenuItemImage(
-      s_pathB1,
-      s_pathB2,
-      this.previousCallback,
-      this
-    );
-    var item2 = new MenuItemImage(
-      s_pathR1,
-      s_pathR2,
-      this.restartCallback,
-      this
-    );
-    var item3 = new MenuItemImage(
-      s_pathF1,
-      s_pathF2,
-      this.nextCallback,
-      this
-    );
-
-    var menu = new Menu(item1, item3, item2);
-    menu.x = 0;
-    menu.y = 0;
-    item1.x = screensize.width / 2 - 100;
-    item1.y = 37;
-    item2.x = screensize.width / 2;
-    item2.y = 35;
-    item3.x = screensize.width / 2 + 100;
-    item3.y = 37;
-
-    this.addChild(menu, 1);
+    this.addChild(new ButtonLayout(
+      [
+        { label: "Previous", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
+        { label: "Restart", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
+        { label: "Next", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
+        { label: "Back", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) }
+      ],
+      140, "Actions",
+      (i) => {
+        switch (i) {
+          case 0: this.previousCallback(); break;
+          case 1: this.restartCallback(); break;
+          case 2: this.nextCallback(); break;
+          case 3: this.toExtensionsMainLayer(); break;
+        }
+      }
+    ), 1);
   }
 
   toExtensionsMainLayer(sender) {

@@ -25,8 +25,8 @@
  ****************************************************************************/
 /** @expose */
 import { ExtensionsTestScene } from "../extensions-test-scene";
-import { Director, LabelTTF, Layer, Point, Scene, log } from "@aspect/core";
-import { Menu, MenuItemFont, MenuItemLabel } from "@aspect/menus";
+import { Color, Director, LabelTTF, Layer, Point, Scene, log } from "@aspect/core";
+import { ButtonLayout } from "../../button-layout";
 import { SocketIO } from "@aspect/socketio";
 
 export class SocketIOTestLayer extends Layer {
@@ -43,184 +43,44 @@ export class SocketIOTestLayer extends Layer {
 
   init() {
     var winSize = Director.getInstance().getWinSize();
-
     var MARGIN = 40;
-    var SPACE = 35;
 
     var label = new LabelTTF("SocketIO Test", "Arial", 28);
     label.setPosition(new Point(winSize.width / 2, winSize.height - MARGIN));
     this.addChild(label, 0);
 
-    var menuRequest = new Menu();
-    menuRequest.setPosition(new Point(0, 0));
-    this.addChild(menuRequest);
-
-    // Test to create basic client in the default namespace
-    var labelSIOClient = new LabelTTF("Open SocketIO Client", "Arial", 22);
-    labelSIOClient.setAnchorPoint(new Point(0, 0));
-    var itemSIOClient = new MenuItemLabel(
-      labelSIOClient,
-      this.onMenuSIOClientClicked,
-      this
-    );
-    itemSIOClient.setPosition(
-      new Point(
-        labelSIOClient.getContentSize().width / 2 + MARGIN,
-        winSize.height - MARGIN - SPACE
-      )
-    );
-    menuRequest.addChild(itemSIOClient);
-
-    // Test to create a client at the endpoint '/testpoint'
-    var labelSIOEndpoint = new LabelTTF(
-      "Open SocketIO Endpoint",
-      "Arial",
-      22
-    );
-    labelSIOEndpoint.setAnchorPoint(new Point(0, 0));
-    var itemSIOEndpoint = new MenuItemLabel(
-      labelSIOEndpoint,
-      this.onMenuSIOEndpointClicked,
-      this
-    );
-    itemSIOEndpoint.setPosition(
-      new Point(
-        winSize.width - (labelSIOEndpoint.getContentSize().width / 2 + MARGIN),
-        winSize.height - MARGIN - SPACE
-      )
-    );
-    menuRequest.addChild(itemSIOEndpoint);
-
-    // Test sending message to default namespace
-    var labelTestMessage = new LabelTTF("Send Test Message", "Arial", 22);
-    labelTestMessage.setAnchorPoint(new Point(0, 0));
-    var itemTestMessage = new MenuItemLabel(
-      labelTestMessage,
-      this.onMenuTestMessageClicked,
-      this
-    );
-    itemTestMessage.setPosition(
-      new Point(
-        labelTestMessage.getContentSize().width / 2 + MARGIN,
-        winSize.height - MARGIN - 2 * SPACE
-      )
-    );
-    menuRequest.addChild(itemTestMessage);
-
-    // Test sending message to the endpoint '/testpoint'
-    var labelTestMessageEndpoint = new LabelTTF(
-      "Test Endpoint Message",
-      "Arial",
-      22
-    );
-    labelTestMessageEndpoint.setAnchorPoint(new Point(0, 0));
-    var itemTestMessageEndpoint = new MenuItemLabel(
-      labelTestMessageEndpoint,
-      this.onMenuTestMessageEndpointClicked,
-      this
-    );
-    itemTestMessageEndpoint.setPosition(
-      new Point(
-        winSize.width -
-          (labelTestMessageEndpoint.getContentSize().width / 2 + MARGIN),
-        winSize.height - MARGIN - 2 * SPACE
-      )
-    );
-    menuRequest.addChild(itemTestMessageEndpoint);
-
-    // Test sending event 'echotest' to default namespace
-    var labelTestEvent = new LabelTTF("Send Test Event", "Arial", 22);
-    labelTestEvent.setAnchorPoint(new Point(0, 0));
-    var itemTestEvent = new MenuItemLabel(
-      labelTestEvent,
-      this.onMenuTestEventClicked,
-      this
-    );
-    itemTestEvent.setPosition(
-      new Point(
-        labelTestEvent.getContentSize().width / 2 + MARGIN,
-        winSize.height - MARGIN - 3 * SPACE
-      )
-    );
-    menuRequest.addChild(itemTestEvent);
-
-    // Test sending event 'echotest' to the endpoint '/testpoint'
-    var labelTestEventEndpoint = new LabelTTF(
-      "Test Endpoint Event",
-      "Arial",
-      22
-    );
-    labelTestEventEndpoint.setAnchorPoint(new Point(0, 0));
-    var itemTestEventEndpoint = new MenuItemLabel(
-      labelTestEventEndpoint,
-      this.onMenuTestEventEndpointClicked,
-      this
-    );
-    itemTestEventEndpoint.setPosition(
-      new Point(
-        winSize.width -
-          (labelTestEventEndpoint.getContentSize().width / 2 + MARGIN),
-        winSize.height - MARGIN - 3 * SPACE
-      )
-    );
-    menuRequest.addChild(itemTestEventEndpoint);
-
-    // Test disconnecting basic client
-    var labelTestClientDisconnect = new LabelTTF(
-      "Disconnect Socket",
-      "Arial",
-      22
-    );
-    labelTestClientDisconnect.setAnchorPoint(new Point(0, 0));
-    var itemClientDisconnect = new MenuItemLabel(
-      labelTestClientDisconnect,
-      this.onMenuTestClientDisconnectClicked,
-      this
-    );
-    itemClientDisconnect.setPosition(
-      new Point(
-        labelTestClientDisconnect.getContentSize().width / 2 + MARGIN,
-        winSize.height - MARGIN - 4 * SPACE
-      )
-    );
-    menuRequest.addChild(itemClientDisconnect);
-
-    // Test disconnecting the endpoint '/testpoint'
-    var labelTestEndpointDisconnect = new LabelTTF(
-      "Disconnect Endpoint",
-      "Arial",
-      22
-    );
-    labelTestEndpointDisconnect.setAnchorPoint(new Point(0, 0));
-    var itemTestEndpointDisconnect = new MenuItemLabel(
-      labelTestEndpointDisconnect,
-      this.onMenuTestEndpointDisconnectClicked,
-      this
-    );
-    itemTestEndpointDisconnect.setPosition(
-      new Point(
-        winSize.width -
-          (labelTestEndpointDisconnect.getContentSize().width / 2 + MARGIN),
-        winSize.height - MARGIN - 4 * SPACE
-      )
-    );
-    menuRequest.addChild(itemTestEndpointDisconnect);
+    this.addChild(new ButtonLayout(
+      [
+        { label: "Open Client", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
+        { label: "Open Endpoint", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
+        { label: "Send Message", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
+        { label: "Endpoint Message", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
+        { label: "Send Event", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
+        { label: "Endpoint Event", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
+        { label: "Disconnect Socket", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
+        { label: "Disconnect Endpoint", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
+        { label: "Back", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) }
+      ],
+      140, "SocketIO",
+      (i) => {
+        switch (i) {
+          case 0: this.onMenuSIOClientClicked(); break;
+          case 1: this.onMenuSIOEndpointClicked(); break;
+          case 2: this.onMenuTestMessageClicked(); break;
+          case 3: this.onMenuTestMessageEndpointClicked(); break;
+          case 4: this.onMenuTestEventClicked(); break;
+          case 5: this.onMenuTestEventEndpointClicked(); break;
+          case 6: this.onMenuTestClientDisconnectClicked(); break;
+          case 7: this.onMenuTestEndpointDisconnectClicked(); break;
+          case 8: this.toExtensionsMainLayer(); break;
+        }
+      }
+    ));
 
     this._sioClientStatus = new LabelTTF("Not connected...", "Arial", 14);
     this._sioClientStatus.setAnchorPoint(new Point(0, 0));
     this._sioClientStatus.setPosition(new Point(0, winSize.height * 0.25));
     this.addChild(this._sioClientStatus);
-
-    // Back Menu
-    var itemBack = new MenuItemFont(
-      "Back",
-      this.toExtensionsMainLayer,
-      this
-    );
-    itemBack.setPosition(new Point(winSize.width - 50, 25));
-    var menuBack = new Menu(itemBack);
-    menuBack.setPosition(new Point(0, 0));
-    this.addChild(menuBack);
 
     return true;
   }

@@ -25,13 +25,10 @@
  ****************************************************************************/
 
 import { ScriptTestTempLayer } from "./ScriptTestTempFile";
-import { s_simpleFont_fnt } from "../resources";
 import { SysTestBase } from "./sys-test-base";
 import { tempJSFileName } from "./sys-test-helpers";
-import { winSize } from "../constants";
-import { EventManager, Point, Sys, log, visibleRect } from "@aspect/core";
-import { TextBMFont } from "@aspect/ccui";
-import { Menu, MenuItemLabel } from "@aspect/menus";
+import { Color, EventManager, Sys, log } from "@aspect/core";
+import { ButtonLayout } from "../button-layout";
 
 export class ScriptTestLayer extends SysTestBase {
   startDownload() {
@@ -126,27 +123,17 @@ export class ScriptTestLayer extends SysTestBase {
 
     this._am = null;
 
-    var menu = new Menu();
-    menu.setPosition(new Point(0, 0));
-    menu.width = winSize.width;
-    menu.height = winSize.height;
-    this.addChild(menu, 1);
-    var item1 = new MenuItemLabel(
-      new TextBMFont("Click me show tempLayer", s_simpleFont_fnt),
-      this.clickMeShowTempLayer,
-      this
-    );
-    menu.addChild(item1);
-
-    var item2 = new MenuItemLabel(
-      new TextBMFont("Click me reload tempLayer", s_simpleFont_fnt),
-      this.clickMeReloadTempLayer,
-      this
-    );
-    menu.addChild(item2);
-
-    menu.alignItemsVerticallyWithPadding(8);
-    menu.setPosition(Point.add(visibleRect.left, new Point(+180, 0)));
+    this.addChild(new ButtonLayout(
+      [
+        { label: "Show tempLayer", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
+        { label: "Reload tempLayer", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) }
+      ],
+      196, "Script",
+      (i) => {
+        if (i === 0) this.clickMeShowTempLayer();
+        else this.clickMeReloadTempLayer();
+      }
+    ), 1);
   }
 
   getTitle() {

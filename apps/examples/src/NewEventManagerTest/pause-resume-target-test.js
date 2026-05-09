@@ -33,11 +33,11 @@ import {
   s_extensions_buttonHighlighted,
   s_simpleFont_fnt
 } from "../resources";
-import { Color, Director, EventManager, LayerColor, visibleRect } from "@aspect/core";
+import { Color, Director, EventManager, LayerColor } from "@aspect/core";
 import { Scale9Sprite, TextBMFont } from "@aspect/ccui";
-import { Menu, MenuItemFont } from "@aspect/menus";
-
 import { CONTROL_EVENT_TOUCH_UP_INSIDE, CONTROL_STATE_HIGHLIGHTED, ControlButton } from "@aspect/gui";
+import { ButtonLayout } from "../button-layout";
+
 export class PauseResumeTargetTest extends EventDispatcherTestDemo {
   constructor() {
     //----start11----ctor
@@ -65,63 +65,62 @@ export class PauseResumeTargetTest extends EventDispatcherTestDemo {
     sprite2.addChild(sprite3, -1);
 
     var _this = this;
-    var popup = new MenuItemFont("Popup", function (sender) {
-      sprite3.getListener().setEnabled(false);
-      EventManager.getInstance().pauseTarget(_this, true);
-      var colorLayer = new LayerColor(new Color(0, 0, 255, 100));
-      _this.addChild(colorLayer, 999); //set colorLayer to top
 
-      // Add the button
-      var backgroundButton = new Scale9Sprite(s_extensions_button);
-      var backgroundHighlightedButton = new Scale9Sprite(
-        s_extensions_buttonHighlighted
-      );
+    const layout = new ButtonLayout(
+      [{ label: "Popup", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) }],
+      196,
+      "Actions",
+      () => {
+        sprite3.getListener().setEnabled(false);
+        EventManager.getInstance().pauseTarget(_this, true);
+        var colorLayer = new LayerColor(new Color(0, 0, 255, 100));
+        _this.addChild(colorLayer, 999); //set colorLayer to top
 
-      var titleButton = new TextBMFont("Close Dialog", s_simpleFont_fnt);
-      titleButton.color = new Color(159, 168, 176);
+        // Add the button
+        var backgroundButton = new Scale9Sprite(s_extensions_button);
+        var backgroundHighlightedButton = new Scale9Sprite(
+          s_extensions_buttonHighlighted
+        );
 
-      var controlButton = new ControlButton(titleButton, backgroundButton);
-      controlButton.setBackgroundSpriteForState(
-        backgroundHighlightedButton,
-        CONTROL_STATE_HIGHLIGHTED
-      );
-      controlButton.setTitleColorForState(
-        Color.WHITE,
-        CONTROL_STATE_HIGHLIGHTED
-      );
+        var titleButton = new TextBMFont("Close Dialog", s_simpleFont_fnt);
+        titleButton.color = new Color(159, 168, 176);
 
-      controlButton.anchorX = 0.5;
-      controlButton.anchorY = 1;
-      controlButton.x = size.width / 2 + 50;
-      controlButton.y = size.height / 2;
-      colorLayer.addChild(controlButton, 1);
-      controlButton.addTargetWithActionForControlEvents(
-        this,
-        function () {
-          colorLayer.removeFromParent();
-          EventManager.getInstance().resumeTarget(_this, true);
-          sprite3.getListener().setEnabled(true);
-        },
-        CONTROL_EVENT_TOUCH_UP_INSIDE
-      );
+        var controlButton = new ControlButton(titleButton, backgroundButton);
+        controlButton.setBackgroundSpriteForState(
+          backgroundHighlightedButton,
+          CONTROL_STATE_HIGHLIGHTED
+        );
+        controlButton.setTitleColorForState(
+          Color.WHITE,
+          CONTROL_STATE_HIGHLIGHTED
+        );
 
-      // Add the black background
-      var background = new Scale9Sprite(s_extensions_buttonBackground);
-      background.width = 300;
-      background.height = 170;
-      background.x = size.width / 2.0 + 50;
-      background.y = size.height / 2.0;
-      colorLayer.addChild(background);
-    });
+        controlButton.anchorX = 0.5;
+        controlButton.anchorY = 1;
+        controlButton.x = size.width / 2 + 50;
+        controlButton.y = size.height / 2;
+        colorLayer.addChild(controlButton, 1);
+        controlButton.addTargetWithActionForControlEvents(
+          _this,
+          () => {
+            colorLayer.removeFromParent();
+            EventManager.getInstance().resumeTarget(_this, true);
+            sprite3.getListener().setEnabled(true);
+          },
+          CONTROL_EVENT_TOUCH_UP_INSIDE
+        );
 
-    popup.setAnchorPoint(1, 0.5);
-    popup.setPosition(visibleRect.right);
+        // Add the black background
+        var background = new Scale9Sprite(s_extensions_buttonBackground);
+        background.width = 300;
+        background.height = 170;
+        background.x = size.width / 2.0 + 50;
+        background.y = size.height / 2.0;
+        colorLayer.addChild(background);
+      }
+    );
 
-    var menu = new Menu(popup);
-    menu.setAnchorPoint(0, 0);
-    menu.setPosition(0, 0);
-
-    this.addChild(menu);
+    this.addChild(layout);
     //----end11----
   }
 

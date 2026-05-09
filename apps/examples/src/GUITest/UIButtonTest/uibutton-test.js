@@ -25,9 +25,9 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
-import { s_simpleFont_fnt } from "../../resources";
-import { Menu, MenuItemLabel } from "@aspect/menus";
-import { Button, TextBMFont, Widget } from "@aspect/ccui";
+import { Color } from "@aspect/core";
+import { Button, Widget } from "@aspect/ccui";
+import { ButtonLayout } from "../../button-layout";
 
 export class UIButtonTest extends UIMainLayer {
   constructor() {
@@ -55,14 +55,11 @@ export class UIButtonTest extends UIMainLayer {
       button.addTouchEventListener(this.touchEvent, this);
       this._mainNode.addChild(button);
 
-      var label = new TextBMFont("setOpacity", s_simpleFont_fnt);
-      var menuItem = new MenuItemLabel(label, this.setOpacityTest, this);
-      var menu = new Menu(menuItem);
-      menu.x = 0;
-      menu.y = 0;
-      menuItem.x = widgetSize.width - 100;
-      menuItem.y = 270;
-      this._mainNode.addChild(menu);
+      this.addChild(new ButtonLayout(
+        [{ label: "setOpacity", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) }],
+        196, "Actions",
+        () => this.setOpacityTest()
+      ));
       return true;
     }
     return false;

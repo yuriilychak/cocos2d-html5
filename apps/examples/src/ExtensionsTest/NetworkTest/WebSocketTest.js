@@ -27,8 +27,8 @@
  ****************************************************************************/
 
 import { ExtensionsTestScene } from "../extensions-test-scene";
-import { Director, Sys, Size, log } from "@aspect/core";
-import { Menu, MenuItemLabel } from "@aspect/menus";
+import { Director, Sys, Size, Color, log } from "@aspect/core";
+import { ButtonLayout } from "../../button-layout";
 import { BaseTestLayer } from "../../BaseTestLayer/BaseTestLayer";
 import { TestScene } from "../../test-scene";
 import { s_simpleFont_fnt } from "../../resources";
@@ -55,35 +55,17 @@ export class WebSocketTestLayer extends BaseTestLayer {
   init() {
     var winSize = Director.getInstance().getWinSize();
 
-    var MARGIN = 40;
-    var SPACE = 35;
-
-    var menuRequest = new Menu();
-    menuRequest.x = 0;
-    menuRequest.y = 0;
-    this.addChild(menuRequest);
-
-    // Send Text
-    var labelSendText = new TextBMFont("Send Text", s_simpleFont_fnt);
-    var itemSendText = new MenuItemLabel(
-      labelSendText,
-      this.onMenuSendTextClicked,
-      this
-    );
-    itemSendText.x = winSize.width / 2;
-    itemSendText.y = winSize.height - MARGIN - SPACE;
-    menuRequest.addChild(itemSendText);
-
-    // Send Binary
-    var labelSendBinary = new TextBMFont("Send Binary", s_simpleFont_fnt);
-    var itemSendBinary = new MenuItemLabel(
-      labelSendBinary,
-      this.onMenuSendBinaryClicked,
-      this
-    );
-    itemSendBinary.x = winSize.width / 2;
-    itemSendBinary.y = winSize.height - MARGIN - 2 * SPACE;
-    menuRequest.addChild(itemSendBinary);
+    this.addChild(new ButtonLayout(
+      [
+        { label: "Send Text", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
+        { label: "Send Binary", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) }
+      ],
+      196, "WebSocket",
+      (i) => {
+        if (i === 0) this.onMenuSendTextClicked();
+        else this.onMenuSendBinaryClicked();
+      }
+    ));
 
     // Status labels inside a vertical layout
     const PADDING = 10;

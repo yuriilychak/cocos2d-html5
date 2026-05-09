@@ -59,19 +59,12 @@ export var s_snow = "Images/snow.png";
 export var s_streak = "Images/streak.png";
 export var s_playNormal = "Images/btn-play-normal.png";
 export var s_playSelect = "Images/btn-play-selected.png";
-export var s_aboutNormal = "Images/btn-about-normal.png";
-export var s_aboutSelect = "Images/btn-about-selected.png";
-export var s_highNormal = "Images/btn-highscores-normal.png";
-export var s_highSelect = "Images/btn-highscores-selected.png";
 export var s_ball = "Images/ball.png";
 export var s_paddle = "Images/paddle.png";
 export var s_pathClose = "Images/close.png";
-export var s_menuItem = "Images/menuitemsprite.png";
 export var s_shapeModeMenuItem = "Images/shapemode.png";
 export var s_textureModeMenuItem = "Images/texturemode.png";
 export var s_MovementMenuItem = "Images/movement.png";
-export var s_sendScore = "Images/SendScoreButton.png";
-export var s_pressSendScore = "Images/SendScoreButtonPressed.png";
 export var s_power = "Images/powered.png";
 export var s_atlasTest = "Images/atlastest.png";
 export var s_stars2Grayscale = "Images/stars2-grayscale.png";
@@ -299,19 +292,6 @@ export var g_sprites = [
     s_s9s_blocks9,
     "Images/dot.png",
     "Images/wood.jpg"
-];
-
-export var g_menu = [
-    s_bitmapFontTest3_fnt,
-    s_bitmapFontTest3,
-    s_aboutNormal,
-    s_aboutSelect,
-    s_highNormal,
-    s_highSelect,
-    s_menuItem,
-    s_sendScore,
-    s_pressSendScore,
-    s_fpsImages
 ];
 
 export var g_touches = [

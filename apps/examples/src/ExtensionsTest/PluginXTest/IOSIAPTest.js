@@ -26,7 +26,7 @@
 import { ExtensionsTestScene } from "../extensions-test-scene";
 import { PluginXTest } from "./PluginXTest";
 import { Color, Director, EventListener, EventManager, LabelTTF, LayerColor, Loader, log } from "@aspect/core";
-import { Menu, MenuItemLabel } from "@aspect/menus";
+import { ButtonLayout } from "../../button-layout";
 import { winSize } from "../../constants";
 
 TAG_SETSERVERMODE = 0;
@@ -66,26 +66,25 @@ export class IAPTestLayer extends PluginXTest {
     this.PluginIAP.setListener(this);
   }
   addMenuItem() {
-    var payMenu = new Menu();
-    for (var i = 0; i < s_IAPFunctionItem.length; i++) {
-      var text = new LabelTTF(s_IAPFunctionItem[i].name, "Arial", 20);
-      var item = new MenuItemLabel(text, this.menuCallBack, this);
-      item.tag = s_IAPFunctionItem[i].tag;
-      item.x = 200;
-      item.y = winSize.height - 200 - i * 50;
+    this.addChild(new ButtonLayout(
+      s_IAPFunctionItem.map(item => ({
+        label: item.name,
+        tintDefault: new Color(0x44, 0x55, 0x77),
+        tintPressed: new Color(0x22, 0x33, 0x55)
+      })),
+      140, "IAP",
+      (i) => this.menuCallBack(i)
+    ));
 
+    for (var i = 0; i < s_IAPResultItem.length; i++) {
       var resultLabel = new LabelTTF(s_IAPResultItem[i].name, "Arial", 20);
       resultLabel.color = new Color(125, 125, 125);
       resultLabel.anchorX = 0;
       resultLabel.tag = s_IAPResultItem[i].tag;
       resultLabel.x = 300;
       resultLabel.y = winSize.height - 200 - i * 50;
-      payMenu.addChild(item);
       this.addChild(resultLabel);
     }
-    payMenu.x = 0;
-    payMenu.y = 0;
-    this.addChild(payMenu);
   }
   closeFunction(sender) {
     var scene = new ExtensionsTestScene();
@@ -130,9 +129,9 @@ export class IAPTestLayer extends PluginXTest {
       this.addTouch(false);
     }
   }
-  menuCallBack(sender) {
+  menuCallBack(index) {
     this.toggleToast(true);
-    if (sender.tag === TAG_SETSERVERMODE) {
+    if (index === TAG_SETSERVERMODE) {
       this.PluginIAP.callFuncWithParam("setServerMode");
       var label = this.getChildByTag(TAG_SETSERVERMODE_RESULT);
       this._serverMode = true;
@@ -140,7 +139,7 @@ export class IAPTestLayer extends PluginXTest {
         label.setString("true");
         this.toggleToast(false);
       }
-    } else if (sender.tag == TAG_GETPRODUCTLIST) {
+    } else if (index == TAG_GETPRODUCTLIST) {
       //replace these ids to your own productIdentifiers
       var pidList = ["001", "002"];
       this.PluginIAP.callFuncWithParam(
@@ -150,7 +149,7 @@ export class IAPTestLayer extends PluginXTest {
           pidList.toString()
         )
       );
-    } else if (sender.tag == TAG_PAYMENT) {
+    } else if (index == TAG_PAYMENT) {
       if (!this.product) {
         var label = this.getChildByTag(TAG_PAYMENT_RESULT);
         if (label) {

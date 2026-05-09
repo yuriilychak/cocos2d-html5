@@ -49,7 +49,6 @@ import { IntervalTestScene } from "./IntervalTest/interval-test-scene";
 import { LabelTestScene } from "./LabelTest/label-test-scene";
 import { LayerTestScene } from "./LayerTest/layer-test-scene";
 import { LoaderTestScene } from "./LoaderTest/loader-test-scene";
-import { MenuTestScene } from "./MenuTest/menu-test-scene";
 import { MotionStreakTestScene } from "./MotionStreakTest/motion-streak-test-scene";
 import { EventDispatcherTestScene } from "./NewEventManagerTest/event-dispatcher-test-scene";
 import { OpenGLTestScene } from "./OpenGLTest/open-gltest-scene";
@@ -71,7 +70,6 @@ import {
   g_extensions,
   g_fonts,
   g_label,
-  g_menu,
   g_opengl_resources,
   g_parallax,
   g_particle,
@@ -279,15 +277,6 @@ export var testNames = [
     linksrc: "src/LoaderTest/LoaderTest.js",
     testScene: function () {
       return new LoaderTestScene();
-    }
-  },
-  {
-    title: "Menu Test",
-    resource: g_menu,
-    platforms: PLATFORM_ALL,
-    linksrc: "src/MenuTest/MenuTest.js",
-    testScene: function () {
-      return new MenuTestScene();
     }
   },
   {

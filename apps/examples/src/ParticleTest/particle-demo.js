@@ -28,17 +28,14 @@
 import {
   BaseTestLayer
 } from "../BaseTestLayer/BaseTestLayer";
-import { TAG_LABEL_ATLAS, particleSceneIdx } from "./particle-test-constants";
+import { particleSceneIdx } from "./particle-test-constants";
 import {
   backParticleAction,
   nextParticleAction,
   particleSceneArr
 } from "./particle-test-helpers";
 import { ParticleTestScene } from "./particle-test-scene";
-import {
-  s_back3,
-  s_simpleFont_fnt
-} from "../resources";
+import { s_back3 } from "../resources";
 import { director } from "../constants";
 import {
   Color,
@@ -46,13 +43,12 @@ import {
   EventManager,
   EventMouse,
   Point,
-  Rect,
   Sprite,
   Sys
 } from "@aspect/core";
 import { MoveBy, Sequence } from "@aspect/actions";
-import { BMButton, TextBMFont, Widget } from "@aspect/ccui";
 import { ParticleSystem } from "@aspect/particle";
+import { ButtonLayout } from "../button-layout";
 
 export class ParticleDemo extends BaseTestLayer {
   setColor() {}
@@ -61,15 +57,11 @@ export class ParticleDemo extends BaseTestLayer {
     super(new Color(0, 0, 0, 255), new Color(98, 99, 117, 255));
 
     this._emitter = null;
-
     this._background = null;
-
-    this._shapeModeButton = null;
-
-    this._textureModeButton = null;
-
     this._isPressed = false;
-    this._emitter = null;
+
+    this._movementIdx = 0;
+    this._isTexture = true;
 
     if ("touches" in Sys.getInstance().capabilities) {
       EventManager.getInstance().addListener(
@@ -105,80 +97,25 @@ export class ParticleDemo extends BaseTestLayer {
 
     var s = director.getWinSize();
 
-    const makePBtn = (text, x, y, visible, bgColor, callback) => {
-      const btn = new BMButton(
-        "default_theme/rounded_shadow_2.png",
-        "default_theme/rounded_shadow_2.png",
-        "default_theme/rounded_shadow_2.png",
-        Widget.PLIST_TEXTURE
-      );
-      btn.setScale9Enabled(true);
-      btn.setCapInsets(new Rect(12, 12, 12, 12));
-      btn.setContentSize(120, 28);
-      btn.setTitleFntFile(s_simpleFont_fnt);
-      btn.setTitleText(text);
-      btn.setTitleFontSize(12);
-      btn.setNormalBgColor(bgColor);
-      btn.setPressedBgColor(new Color(0x22, 0x33, 0x55));
-      btn.setDisabledBgColor(new Color(0x55, 0x55, 0x55));
-      btn.pressedActionEnabled = true;
-      btn.setAnchorPoint(0, 0);
-      btn.x = x;
-      btn.y = y;
-      if (!visible) btn.setVisible(false);
-      btn.addClickEventListener(callback);
-      this.addChild(btn, 100);
-      return btn;
-    };
-
     const movementColor = new Color(0xFF, 0x88, 0x00);
     const modeColor = new Color(0x00, 0xAA, 0x00);
+    const pressedColor = new Color(0x22, 0x33, 0x55);
 
-    this._freeMovementButton = makePBtn("Free Movement", 10, 150, true, movementColor, () => {
-      this._emitter.setPositionType(ParticleSystem.TYPE_RELATIVE);
-      this._relativeMovementButton.setVisible(true);
-      this._freeMovementButton.setVisible(false);
-      this._groupMovementButton.setVisible(false);
-    });
-
-    this._relativeMovementButton = makePBtn("Relative", 10, 150, false, movementColor, () => {
-      this._emitter.setPositionType(ParticleSystem.TYPE_GROUPED);
-      this._relativeMovementButton.setVisible(false);
-      this._freeMovementButton.setVisible(false);
-      this._groupMovementButton.setVisible(true);
-    });
-
-    this._groupMovementButton = makePBtn("Group", 10, 150, false, movementColor, () => {
-      this._emitter.setPositionType(ParticleSystem.TYPE_FREE);
-      this._relativeMovementButton.setVisible(false);
-      this._freeMovementButton.setVisible(true);
-      this._groupMovementButton.setVisible(false);
-    });
-
-    this._shapeModeButton = makePBtn("Shape Mode", 10, 100, false, modeColor, () => {
-      if (this._emitter.setDrawMode)
-        this._emitter.setDrawMode(ParticleSystem.TEXTURE_MODE);
-      this._textureModeButton.setVisible(true);
-      this._shapeModeButton.setVisible(false);
-    });
-
-    this._textureModeButton = makePBtn("Texture Mode", 10, 100, true, modeColor, () => {
-      if (this._emitter.setDrawMode)
-        this._emitter.setDrawMode(ParticleSystem.SHAPE_MODE);
-      this._textureModeButton.setVisible(false);
-      this._shapeModeButton.setVisible(true);
-    });
+    this._layout = new ButtonLayout(
+      [
+        { type: "text", label: "Count: 0" },
+        { label: "Movement: Free", tintDefault: movementColor, tintPressed: pressedColor },
+        { label: "Mode: Texture",  tintDefault: modeColor,     tintPressed: pressedColor },
+      ],
+      196,
+      "Actions",
+      this._onButtonClick.bind(this)
+    );
+    this.addChild(this._layout, 100);
 
     if ("opengl" in Sys.getInstance().capabilities) {
-      // Shape type is not compatible with JSB
-      this._textureModeButton.setEnabled(false);
+      this._layout.getButton(2)?.setEnabled(false);
     }
-
-    var particleCountLabel = new TextBMFont("0", s_simpleFont_fnt);
-    particleCountLabel.fontSize = 16;
-    this.addChild(particleCountLabel, 100, TAG_LABEL_ATLAS);
-    particleCountLabel.x = s.width - 66;
-    particleCountLabel.y = 50;
 
     // moving background
     this._background = new Sprite(s_back3);
@@ -192,6 +129,31 @@ export class ParticleDemo extends BaseTestLayer {
     var seq = new Sequence(move, move_back);
     this._background.runAction(seq.repeatForever());
     this.scheduleUpdate();
+  }
+
+  _onButtonClick(i) {
+    const movements = [
+      { type: ParticleSystem.TYPE_FREE,     label: "Movement: Free" },
+      { type: ParticleSystem.TYPE_RELATIVE, label: "Movement: Relative" },
+      { type: ParticleSystem.TYPE_GROUPED,  label: "Movement: Group" },
+    ];
+
+    switch (i) {
+      case 1:
+        this._movementIdx = (this._movementIdx + 1) % movements.length;
+        const mv = movements[this._movementIdx];
+        this._emitter?.setPositionType(mv.type);
+        this._layout.setLabelText(1, mv.label);
+        break;
+      case 2:
+        this._isTexture = !this._isTexture;
+        if (this._emitter?.setDrawMode)
+          this._emitter.setDrawMode(
+            this._isTexture ? ParticleSystem.TEXTURE_MODE : ParticleSystem.SHAPE_MODE
+          );
+        this._layout.setLabelText(2, this._isTexture ? "Mode: Texture" : "Mode: Shape");
+        break;
+    }
   }
 
   title() {
@@ -235,8 +197,7 @@ export class ParticleDemo extends BaseTestLayer {
 
   update(dt) {
     if (this._emitter) {
-      var atlas = this.getChildByTag(TAG_LABEL_ATLAS);
-      atlas.setString(this._emitter.getParticleCount().toFixed(0));
+      this._layout.setLabelText(0, `Count: ${this._emitter.getParticleCount().toFixed(0)}`);
     }
   }
   setEmitterPosition() {

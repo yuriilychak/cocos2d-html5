@@ -29,7 +29,7 @@
 
 import { MySprite } from "./my-sprite";
 import { Color, Point, visibleRect } from "@aspect/core";
-import { Menu, MenuItemLabel } from "@aspect/menus";
+import { ButtonLayout } from "../../button-layout";
 import { Pool } from "@aspect/ccpool";
 import { BaseTestLayer } from "../../BaseTestLayer/BaseTestLayer";
 import { s_simpleFont_fnt } from "../../resources";
@@ -50,28 +50,17 @@ export class CCPoolTest extends BaseTestLayer {
     return true;
   }
   initUI() {
-    var createLabel = new TextBMFont(
-      "click me to create\n 150 sprites directly",
-      s_simpleFont_fnt
-    );
-    var reCreateLabel = new TextBMFont(
-      "click me to create\n 150 sprites use pool",
-      s_simpleFont_fnt
-    );
-    reCreateLabel.color = new Color(255, 255, 255, 255);
-    createLabel.color = new Color(255, 255, 255, 255);
-    var menuItem1 = new MenuItemLabel(
-      createLabel,
-      this.addSpriteByCreate,
-      this
-    );
-    var menuItem2 = new MenuItemLabel(
-      reCreateLabel,
-      this.addSpriteByPool,
-      this
-    );
-    var menu = new Menu(menuItem1, menuItem2);
-    menu.alignItemsHorizontallyWithPadding(150);
+    this.addChild(new ButtonLayout(
+      [
+        { label: "Create 150 Directly", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
+        { label: "Create 150 via Pool", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) }
+      ],
+      196, "Actions",
+      (i) => {
+        if (i === 0) this.addSpriteByCreate();
+        else this.addSpriteByPool();
+      }
+    ), 100);
     this.directLabel = new TextBMFont("create directly cost:", s_simpleFont_fnt);
     this.poolLabel = new TextBMFont("use pool cost:", s_simpleFont_fnt);
     this.directLabel.setPosition(
@@ -84,7 +73,6 @@ export class CCPoolTest extends BaseTestLayer {
     this.poolLabel.anchorY = 0;
     this.addChild(this.directLabel);
     this.addChild(this.poolLabel);
-    this.addChild(menu, 100);
   }
   setDirectLabel(time) {
     if (time == 0) {

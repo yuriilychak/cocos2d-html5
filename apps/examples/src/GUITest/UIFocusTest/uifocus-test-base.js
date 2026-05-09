@@ -25,8 +25,8 @@
 
 import { UIMainLayer } from "../uimain-layer";
 import { Color, Director, EventKeyboard, EventListener, EventManager, KEY, log } from "@aspect/core";
-import { Menu, MenuItemFont } from "@aspect/menus";
 import { Button, Widget } from "@aspect/ccui";
+import { ButtonLayout } from "../../button-layout";
 
 export class UIFocusTestBase extends UIMainLayer {
   constructor() {
@@ -40,31 +40,24 @@ export class UIFocusTestBase extends UIMainLayer {
   init() {
     if (super.init()) {
 
-      this._dpadMenu = new Menu();
-
-      MenuItemFont.setFontSize(20);
       var winSize = Director.getInstance().getVisibleSize();
-      var leftItem = new MenuItemFont("Left", this.onLeftKeyPressed, this);
-      leftItem.setPosition(winSize.width - 100, winSize.height / 2);
-      this._dpadMenu.addChild(leftItem);
-
-      var rightItem = new MenuItemFont(
-        "Right",
-        this.onRightKeyPressed,
-        this
+      this._dpadMenu = new ButtonLayout(
+        [
+          { label: "Left", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
+          { label: "Right", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
+          { label: "Up", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
+          { label: "Down", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) }
+        ],
+        80, "D-Pad",
+        (i) => {
+          switch (i) {
+            case 0: this.onLeftKeyPressed(); break;
+            case 1: this.onRightKeyPressed(); break;
+            case 2: this.onUpKeyPressed(); break;
+            case 3: this.onDownKeyPressed(); break;
+          }
+        }
       );
-      rightItem.setPosition(winSize.width - 30, winSize.height / 2);
-      this._dpadMenu.addChild(rightItem);
-
-      var upItem = new MenuItemFont("Up", this.onUpKeyPressed, this);
-      upItem.setPosition(winSize.width - 60, winSize.height / 2 + 50);
-      this._dpadMenu.addChild(upItem);
-
-      var downItem = new MenuItemFont("Down", this.onDownKeyPressed, this);
-      downItem.setPosition(winSize.width - 60, winSize.height / 2 - 50);
-      this._dpadMenu.addChild(downItem);
-
-      this._dpadMenu.setPosition(0, 0);
       this.addChild(this._dpadMenu);
 
       this._btn = new Button("ccs-res/cocosui/switch-mask.png");

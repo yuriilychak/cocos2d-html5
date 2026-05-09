@@ -26,10 +26,13 @@
  ****************************************************************************/
 
 import { BakeLayerBaseTest } from "./bake-layer-base-test";
-import { s_pathGrossini, s_pathSister1, s_simpleFont_fnt } from "../resources";
-import { Color, Layer, Rect, Sprite } from "@aspect/core";
-import { BMButton, Widget } from "@aspect/ccui";
+import { s_pathGrossini, s_pathSister1 } from "../resources";
+import { Color, Layer, Sprite } from "@aspect/core";
+import { ButtonLayout } from "../button-layout";
 import { winSize } from "../constants";
+
+const TINT_DEFAULT = new Color(0x00, 0x99, 0x00);
+const TINT_PRESSED = new Color(0x00, 0x66, 0x00);
 
 export class BakeLayerTest2 extends BakeLayerBaseTest {
   title() {
@@ -45,69 +48,18 @@ export class BakeLayerTest2 extends BakeLayerBaseTest {
 
     this._bakeLayer = null;
 
-    const bakeBtn = new BMButton("default_theme/rounded_shadow_2.png", "default_theme/rounded_shadow_2.png", "default_theme/rounded_shadow_2.png", Widget.PLIST_TEXTURE);
-    bakeBtn.setScale9Enabled(true);
-    bakeBtn.setCapInsets(new Rect(12, 12, 12, 12));
-    bakeBtn.setContentSize(196, 32);
-    bakeBtn.setTitleFntFile(s_simpleFont_fnt);
-    bakeBtn.setTitleText("bake");
-    bakeBtn.setTitleFontSize(12);
-    bakeBtn.setNormalBgColor(new Color(0x00, 0x99, 0x00));
-    bakeBtn.setPressedBgColor(new Color(0x00, 0x66, 0x00));
-    bakeBtn.setDisabledBgColor(new Color(0x55, 0x55, 0x55));
-    bakeBtn.pressedActionEnabled = true;
-    bakeBtn.x = winSize.width - 108;
-    bakeBtn.y = winSize.height - 80;
-    bakeBtn.addClickEventListener(() => this.onBake());
-    this.addChild(bakeBtn, 10);
-
-    const unbakeBtn = new BMButton("default_theme/rounded_shadow_2.png", "default_theme/rounded_shadow_2.png", "default_theme/rounded_shadow_2.png", Widget.PLIST_TEXTURE);
-    unbakeBtn.setScale9Enabled(true);
-    unbakeBtn.setCapInsets(new Rect(12, 12, 12, 12));
-    unbakeBtn.setContentSize(196, 32);
-    unbakeBtn.setTitleFntFile(s_simpleFont_fnt);
-    unbakeBtn.setTitleText("unbake");
-    unbakeBtn.setTitleFontSize(12);
-    unbakeBtn.setNormalBgColor(new Color(0x00, 0x99, 0x00));
-    unbakeBtn.setPressedBgColor(new Color(0x00, 0x66, 0x00));
-    unbakeBtn.setDisabledBgColor(new Color(0x55, 0x55, 0x55));
-    unbakeBtn.pressedActionEnabled = true;
-    unbakeBtn.x = winSize.width - 108;
-    unbakeBtn.y = winSize.height - 120;
-    unbakeBtn.addClickEventListener(() => this.onUnbake());
-    this.addChild(unbakeBtn, 10);
-
-    const chTopBtn = new BMButton("default_theme/rounded_shadow_2.png", "default_theme/rounded_shadow_2.png", "default_theme/rounded_shadow_2.png", Widget.PLIST_TEXTURE);
-    chTopBtn.setScale9Enabled(true);
-    chTopBtn.setCapInsets(new Rect(12, 12, 12, 12));
-    chTopBtn.setContentSize(196, 32);
-    chTopBtn.setTitleFntFile(s_simpleFont_fnt);
-    chTopBtn.setTitleText("change top layer");
-    chTopBtn.setTitleFontSize(12);
-    chTopBtn.setNormalBgColor(new Color(0x00, 0x99, 0x00));
-    chTopBtn.setPressedBgColor(new Color(0x00, 0x66, 0x00));
-    chTopBtn.setDisabledBgColor(new Color(0x55, 0x55, 0x55));
-    chTopBtn.pressedActionEnabled = true;
-    chTopBtn.x = winSize.width - 108;
-    chTopBtn.y = winSize.height - 160;
-    chTopBtn.addClickEventListener(() => this.onChangeZOrder());
-    this.addChild(chTopBtn, 10);
-
-    const chBakeBtn = new BMButton("default_theme/rounded_shadow_2.png", "default_theme/rounded_shadow_2.png", "default_theme/rounded_shadow_2.png", Widget.PLIST_TEXTURE);
-    chBakeBtn.setScale9Enabled(true);
-    chBakeBtn.setCapInsets(new Rect(12, 12, 12, 12));
-    chBakeBtn.setContentSize(196, 32);
-    chBakeBtn.setTitleFntFile(s_simpleFont_fnt);
-    chBakeBtn.setTitleText("change bake layer");
-    chBakeBtn.setTitleFontSize(12);
-    chBakeBtn.setNormalBgColor(new Color(0x00, 0x99, 0x00));
-    chBakeBtn.setPressedBgColor(new Color(0x00, 0x66, 0x00));
-    chBakeBtn.setDisabledBgColor(new Color(0x55, 0x55, 0x55));
-    chBakeBtn.pressedActionEnabled = true;
-    chBakeBtn.x = winSize.width - 108;
-    chBakeBtn.y = winSize.height - 200;
-    chBakeBtn.addClickEventListener(() => this.onChangeBakeZOrder());
-    this.addChild(chBakeBtn, 10);
+    const buttons = new ButtonLayout(
+      [
+        { label: "bake",              tintDefault: TINT_DEFAULT, tintPressed: TINT_PRESSED },
+        { label: "unbake",            tintDefault: TINT_DEFAULT, tintPressed: TINT_PRESSED },
+        { label: "change top layer",  tintDefault: TINT_DEFAULT, tintPressed: TINT_PRESSED },
+        { label: "change bake layer", tintDefault: TINT_DEFAULT, tintPressed: TINT_PRESSED },
+      ],
+      196,
+      "Actions",
+      this.onButtonClicked.bind(this)
+    );
+    this.addChild(buttons, 10);
 
     var rootLayer = new Layer();
     rootLayer.setPosition(20, 20);
@@ -148,6 +100,15 @@ export class BakeLayerTest2 extends BakeLayerBaseTest {
     this._normalLayer = normalLayer;
 
     this.zOrder = 0;
+  }
+
+  onButtonClicked(index) {
+    switch (index) {
+      case 0: this.onBake(); break;
+      case 1: this.onUnbake(); break;
+      case 2: this.onChangeZOrder(); break;
+      case 3: this.onChangeBakeZOrder(); break;
+    }
   }
 
   onBake() {

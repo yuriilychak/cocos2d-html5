@@ -46,6 +46,7 @@ import { PyramidTopple } from "./pyramid-topple";
 import { Query } from "./query";
 import { s_hole_stencil_png } from "../resources";
 import { Sprite, SpriteBatchNode, Sys } from "@aspect/core";
+import { winSize } from "../constants";
 
 //
 // Base class for Chipmunk Demo
@@ -176,8 +177,8 @@ export var LogoSmash = (function () {
           var x_jitter = 0.05 * Math.random();
           var y_jitter = 0.05 * Math.random();
 
-          var posx = 2 * (x - image_width / 2 + x_jitter) + 320;
-          var posy = 2 * (image_height / 2 - y + y_jitter) + 240;
+          var posx = 2 * (x - image_width / 2 + x_jitter) + winSize.width / 2;
+          var posy = 2 * (image_height / 2 - y + y_jitter) + winSize.height / 2;
           shape = make_ball(posx, posy);
           space.addBody(shape.getBody());
           space.addShape(shape);
@@ -191,7 +192,7 @@ export var LogoSmash = (function () {
       }
 
       body = space.addBody(new cp.Body(9999, Infinity));
-      body.setPos(cp.v(-1000, 240 - 10));
+      body.setPos(cp.v(-1000, winSize.height / 2 - 10));
       body.setVel(cp.v(400, 0));
 
       shape = space.addShape(new cp.CircleShape(body, 8, cp.vzero));

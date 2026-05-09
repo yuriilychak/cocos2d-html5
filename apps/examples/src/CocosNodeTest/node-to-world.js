@@ -26,10 +26,9 @@
  ****************************************************************************/
 
 import { TestNodeDemo } from "./test-node-demo";
-import { s_back3, s_playNormal, s_playSelect } from "../resources";
+import { s_back3, s_playNormal } from "../resources";
 import { Point, Sprite, log } from "@aspect/core";
 import { DelayTime, MoveBy, RotateBy, Sequence } from "@aspect/actions";
-import { Menu, MenuItemImage } from "@aspect/menus";
 
 export class NodeToWorld extends TestNodeDemo {
   constructor() {
@@ -45,12 +44,10 @@ export class NodeToWorld extends TestNodeDemo {
     back.anchorX = 0;
     back.anchorY = 0;
 
-    var item = new MenuItemImage(s_playNormal, s_playSelect, this.onClicked);
-    var menu = new Menu(item);
-    menu.alignItemsVertically();
-    menu.x = back.width / 2;
-    menu.y = back.height / 2;
-    back.addChild(menu);
+    var item = new Sprite(s_playNormal);
+    item.x = back.width / 2;
+    item.y = back.height / 2;
+    back.addChild(item);
 
     var rot = new RotateBy(3, 360);
     var delay = new DelayTime(0.3);

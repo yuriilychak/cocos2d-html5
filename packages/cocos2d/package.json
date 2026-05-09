@@ -18,7 +18,6 @@
     "@aspect/compression": "*",
     "@aspect/particle": "*",
     "@aspect/text-input": "*",
-    "@aspect/menus": "*",
     "@aspect/tilemap": "*",
     "@aspect/parallax": "*",
     "@aspect/audio": "*"

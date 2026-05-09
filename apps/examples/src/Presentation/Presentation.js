@@ -33,7 +33,7 @@ import { s_pathGrossini } from "../resources";
 import { director, winSize } from "../constants";
 import { Color, EventListener, EventManager, LabelTTF, Point, Sprite, SpriteBatchNode, Sys } from "@aspect/core";
 import { TransitionSlideInL, TransitionSlideInR } from "@aspect/transitions";
-import { Menu, MenuItemFont } from "@aspect/menus";
+import { ButtonLayout } from "../button-layout";
 import { ParticleFireworks, ParticleMeteor, ParticleSun } from "../ParticleTest/ParticleExamples";
 import { ParticleSystem } from "@aspect/particle";
 import { PhysicsSprite, PhysicsDebugNode } from "@aspect/physics";
@@ -321,17 +321,12 @@ export class ChipmunkPage extends PresentationBaseLayer {
     this.debugNode.visible = !this.debugNode.visible;
   }
   initMenu() {
-    // menu
-    MenuItemFont.setFontSize(16);
-    var menuItem = new MenuItemFont(
-      "Toggle Physics Debug",
-      this.onTogglePhysicsDebug,
-      this
+    const layout = new ButtonLayout(
+      [{ label: "Toggle Physics Debug", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) }],
+      196, "Actions",
+      () => this.onTogglePhysicsDebug()
     );
-    var menu = new Menu(menuItem);
-    this.addChild(menu, 99);
-    menu.x = winSize.width - 80;
-    menu.y = winSize.height - 100;
+    this.addChild(layout, 99);
   }
   initPhysics() {
     this.space = new cp.Space();

@@ -31,7 +31,7 @@ import { s_resprefix } from "../resources";
 import { director, winSize } from "../constants";
 import { Color, EventListener, EventManager, EventMouse, Point, Rect, Sprite, Sys, TEXT_ALIGNMENT_CENTER, TEXT_ALIGNMENT_LEFT, TEXT_ALIGNMENT_RIGHT } from "@aspect/core";
 import { LabelBMFont } from "@aspect/labels";
-import { Menu, MenuItemFont } from "@aspect/menus";
+import { ButtonLayout } from "../button-layout";
 
 export class BMFontMultiLineAlignmentTest extends AtlasDemo {
     constructor() {
@@ -43,10 +43,6 @@ export class BMFontMultiLineAlignmentTest extends AtlasDemo {
         this.arrowsBarShouldRetain = null;
 
         this.arrowsShouldRetain = null;
-
-        this.lastSentenceItem = null;
-
-        this.lastAlignmentItem = null;
 
         this.lineBreakFlag = false;
 
@@ -79,46 +75,64 @@ export class BMFontMultiLineAlignmentTest extends AtlasDemo {
         this.arrowsBarShouldRetain = new Sprite(s_resprefix + "Images/arrowsBar.png");
         this.arrowsShouldRetain = new Sprite(s_resprefix + "Images/arrows.png");
 
-        MenuItemFont.setFontSize(20);
-        var longSentences = new MenuItemFont("Long Flowing Sentences", this.onStringChanged, this);
-        var lineBreaks = new MenuItemFont("Short Sentences With Intentional Line Breaks", this.onStringChanged, this);
-        var mixed = new MenuItemFont("Long Sentences Mixed With Intentional Line Breaks", this.onStringChanged.bind(this)); // another way to pass 'this'
-        var changeChineseItem = new MenuItemFont("change chinese", this.onStringChanged, this);
-        var mixEnglishItem = new MenuItemFont("change chinesemixEnglish", this.onStringChanged, this);
-        var mixAllLanItem = new MenuItemFont("change mixAllLan", this.onStringChanged, this);
+        const STRING_LABELS = [
+            "Long Flowing Sentences",
+            "Short w/ Line Breaks",
+            "Long+Line Breaks Mixed",
+            "Chinese",
+            "Chinese Mix English",
+            "Mix All Languages"
+        ];
+        const STRING_TAGS = [LongSentences, LineBreaks, Mixed, chineseText, chineseMixEnglish, mixAllLanguage];
+        let lastStringIdx = 0;
+        const stringLayout = new ButtonLayout(
+            STRING_LABELS.map((label, i) => ({
+                label: i === 0 ? `> ${label}` : label,
+                tintDefault: new Color(0x44, 0x55, 0x77),
+                tintPressed: new Color(0x22, 0x33, 0x55)
+            })),
+            140, "String",
+            (i) => {
+                stringLayout.setLabelText(lastStringIdx, STRING_LABELS[lastStringIdx]);
+                lastStringIdx = i;
+                stringLayout.setLabelText(i, `> ${STRING_LABELS[i]}`);
+                this.applyStringChange(STRING_TAGS[i]);
+            }
+        );
+        stringLayout.y = size.height - stringLayout.height;
+        this.addChild(stringLayout);
 
-        var stringMenu = new Menu(longSentences, lineBreaks, mixed, changeChineseItem,mixEnglishItem, mixAllLanItem);
-        stringMenu.alignItemsVertically();
+        const ALIGN_LABELS = ["Left", "Center", "Right"];
+        const ALIGN_TAGS = [LeftAlign, CenterAlign, RightAlign];
+        let lastAlignIdx = 1;
+        const alignLayout = new ButtonLayout(
+            ALIGN_LABELS.map((label, i) => ({
+                label: i === 1 ? `> ${label}` : label,
+                tintDefault: new Color(0x44, 0x55, 0x77),
+                tintPressed: new Color(0x22, 0x33, 0x55)
+            })),
+            80, "Alignment",
+            (i) => {
+                alignLayout.setLabelText(lastAlignIdx, ALIGN_LABELS[lastAlignIdx]);
+                lastAlignIdx = i;
+                alignLayout.setLabelText(i, `> ${ALIGN_LABELS[i]}`);
+                this.applyAlignmentChange(ALIGN_TAGS[i]);
+            }
+        );
+        this.addChild(alignLayout);
 
-        var setLineBreakItem = new MenuItemFont("setLineBreakWithoutSpace", this.onLineBreakChanged, this);
-        var setScale = new MenuItemFont("setScale", this.onScaleChange, this);
-        var lineBreakMenu = new Menu(setLineBreakItem, setScale);
-        lineBreakMenu.x = 100;
-        lineBreakMenu.y = winSize.height / 2;
-        lineBreakMenu.alignItemsVertically();
-
-        longSentences.color = new Color(255, 0, 0);
-        this.lastSentenceItem = longSentences;
-        longSentences.tag = LongSentences;
-        lineBreaks.tag = LineBreaks;
-        mixed.tag = Mixed;
-        changeChineseItem.tag = chineseText;
-        mixEnglishItem.tag = chineseMixEnglish;
-        mixAllLanItem.tag = mixAllLanguage;
-
-        MenuItemFont.setFontSize(30);
-
-        var left = new MenuItemFont("Left", this.onAlignmentChanged, this);
-        var center = new MenuItemFont("Center", this.onAlignmentChanged, this);
-        var right = new MenuItemFont("Right", this.onAlignmentChanged.bind(this));    // another way to pass 'this'
-        var alignmentMenu = new Menu(left, center, right);
-        alignmentMenu.alignItemsHorizontallyWithPadding(alignmentItemPadding);
-
-        center.color = new Color(255, 0, 0);
-        this.lastAlignmentItem = center;
-        left.tag = LeftAlign;
-        center.tag = CenterAlign;
-        right.tag = RightAlign;
+        const lineBreakLayout = new ButtonLayout(
+            [
+                { label: "Set Line Break", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
+                { label: "Set Scale", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) }
+            ],
+            120, "Line Break",
+            (i) => {
+                if (i === 0) this.onLineBreakChanged();
+                else this.onScaleChange();
+            }
+        );
+        lineBreakLayout.x = 8;
 
         // position the label on the center of the screen
         this.labelShouldRetain.x = size.width / 2;
@@ -144,9 +158,9 @@ export class BMFontMultiLineAlignmentTest extends AtlasDemo {
         this.addChild(this.labelShouldRetain);
         this.addChild(this.arrowsBarShouldRetain);
         this.addChild(this.arrowsShouldRetain);
-        this.addChild(stringMenu);
-        this.addChild(alignmentMenu);
-        this.addChild(lineBreakMenu);
+        this.addChild(stringLayout);
+        this.addChild(alignLayout);
+        this.addChild(lineBreakLayout);
 
 
         //----end11----
@@ -176,12 +190,8 @@ export class BMFontMultiLineAlignmentTest extends AtlasDemo {
         this.lineBreakFlag = !this.lineBreakFlag;
         this.labelShouldRetain.setLineBreakWithoutSpace(this.lineBreakFlag);
     }
-    onStringChanged(sender) {
-        this.lastSentenceItem.color = new Color(255, 255, 255);
-        sender.color = new Color(255, 0, 0);
-        this.lastSentenceItem = sender;
-
-        switch (sender.tag) {
+    applyStringChange(tag) {
+        switch (tag) {
             case LongSentences:
                 this.labelShouldRetain.setString(LongSentencesExample);
                 this.labelShouldRetain.setFntFile(s_resprefix + "fonts/markerFelt.fnt");
@@ -209,16 +219,10 @@ export class BMFontMultiLineAlignmentTest extends AtlasDemo {
             default:
                 break;
         }
-
         this.snapArrowsToEdge();
     }
-    onAlignmentChanged(sender) {
-        var item = sender;
-        this.lastAlignmentItem.color = new Color(255, 255, 255);
-        item.color = new Color(255, 0, 0);
-        this.lastAlignmentItem = item;
-
-        switch (item.tag) {
+    applyAlignmentChange(tag) {
+        switch (tag) {
             case LeftAlign:
                 this.labelShouldRetain.textAlign = TEXT_ALIGNMENT_LEFT;
                 break;
@@ -231,7 +235,6 @@ export class BMFontMultiLineAlignmentTest extends AtlasDemo {
             default:
                 break;
         }
-
         this.snapArrowsToEdge();
     }
     onTouchesBegan(touches) {

@@ -1,6 +1,5 @@
 import { Layer, Sprite, LabelTTF, Director, log } from "@aspect/core";
-import { Menu, MenuItemImage } from "@aspect/menus";
-import { s_HelloWorld, s_CloseNormal, s_CloseSelected } from "./resource";
+import { s_HelloWorld } from "./resource";
 
 export class MyLayer extends Layer {
   constructor() {
@@ -19,22 +18,6 @@ export class MyLayer extends Layer {
     //    you may modify it.
     // ask director the window size
     const size = Director.getInstance().getWinSize();
-
-    // add a "close" icon to exit the progress. it's an autorelease object
-    const closeItem = new MenuItemImage(
-      s_CloseNormal,
-      s_CloseSelected,
-      function () {
-        log("close");
-      },
-      this
-    );
-    closeItem.setAnchorPoint(0.5, 0.5);
-
-    const menu = new Menu(closeItem);
-    menu.setPosition(0, 0);
-    this.addChild(menu, 1);
-    closeItem.setPosition(size.width - 20, 20);
 
     /////////////////////////////
     // 3. add your codes below...

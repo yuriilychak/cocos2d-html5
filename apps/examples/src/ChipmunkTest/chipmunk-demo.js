@@ -24,6 +24,7 @@
 
 import { ChipmunkBaseLayer } from "./chipmunk-base-layer";
 import { NOT_GRABABLE_MASK, v } from "./chipmunk-test-helpers";
+import { winSize } from "../constants";
 
 export class ChipmunkDemo extends ChipmunkBaseLayer {
   constructor() {
@@ -45,7 +46,7 @@ export class ChipmunkDemo extends ChipmunkBaseLayer {
   addFloor() {
     var space = this.space;
     var floor = space.addShape(
-      new cp.SegmentShape(space.staticBody, v(0, 0), v(640, 0), 0)
+      new cp.SegmentShape(space.staticBody, v(0, 0), v(winSize.width, 0), 0)
     );
     floor.setElasticity(1);
     floor.setFriction(1);
@@ -55,14 +56,14 @@ export class ChipmunkDemo extends ChipmunkBaseLayer {
   addWalls() {
     var space = this.space;
     var wall1 = space.addShape(
-      new cp.SegmentShape(space.staticBody, v(0, 0), v(0, 480), 0)
+      new cp.SegmentShape(space.staticBody, v(0, 0), v(0, winSize.height), 0)
     );
     wall1.setElasticity(1);
     wall1.setFriction(1);
     wall1.setLayers(NOT_GRABABLE_MASK);
 
     var wall2 = space.addShape(
-      new cp.SegmentShape(space.staticBody, v(640, 0), v(640, 480), 0)
+      new cp.SegmentShape(space.staticBody, v(winSize.width, 0), v(winSize.width, winSize.height), 0)
     );
     wall2.setElasticity(1);
     wall2.setFriction(1);
