@@ -35,6 +35,7 @@ export class PathTestLayer extends BaseTestLayer {
     super(new Color(0, 0, 0, 255), new Color(98, 99, 117, 255));
 
     this._title = "path";
+    this._showNavButtons = false;
 
     this._subtitle = "See the console please!";
 

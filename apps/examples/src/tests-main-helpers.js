@@ -26,7 +26,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { FontTestScene } from "./FontTest/FontTest";
 import { ParallaxTestScene } from "./ParallaxTest/parallax-test-helpers";
 import { SceneTestScene } from "./SceneTest/scene-test-helpers";
 import { ActionManagerTestScene } from "./ActionManagerTest/action-manager-test-scene";
@@ -46,7 +45,6 @@ import { EventTestScene } from "./EventTest/event-test-scene";
 import { ExtensionsTestScene } from "./ExtensionsTest/extensions-test-scene";
 import { S9SpriteTestScene } from "./ExtensionsTest/S9SpriteTest/s9-sprite-test-scene";
 import { IntervalTestScene } from "./IntervalTest/interval-test-scene";
-import { LabelTestScene } from "./LabelTest/label-test-scene";
 import { LayerTestScene } from "./LayerTest/layer-test-scene";
 import { LoaderTestScene } from "./LoaderTest/loader-test-scene";
 import { MotionStreakTestScene } from "./MotionStreakTest/motion-streak-test-scene";
@@ -68,8 +66,6 @@ import {
   g_cocosdeshion,
   g_eventDispatcher,
   g_extensions,
-  g_fonts,
-  g_label,
   g_opengl_resources,
   g_parallax,
   g_particle,
@@ -228,15 +224,6 @@ export var testNames = [
     }
   },
   {
-    title: "Font Test",
-    resource: g_fonts,
-    platforms: PLATFORM_ALL,
-    linksrc: "src/FontTest/FontTest.js",
-    testScene: function () {
-      return new FontTestScene();
-    }
-  },
-  {
     title: "UI Test",
     resource: g_ui,
     platforms: PLATFORM_ALL,
@@ -252,15 +239,6 @@ export var testNames = [
     linksrc: "src/IntervalTest/IntervalTest.js",
     testScene: function () {
       return new IntervalTestScene();
-    }
-  },
-  {
-    title: "Label Test",
-    resource: g_label,
-    platforms: PLATFORM_ALL,
-    linksrc: "src/LabelTest/LabelTest.js",
-    testScene: function () {
-      return new LabelTestScene();
     }
   },
   {

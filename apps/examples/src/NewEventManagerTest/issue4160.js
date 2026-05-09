@@ -27,7 +27,7 @@
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { TouchableSprite } from "./touchable-sprite";
-import { Director } from "@aspect/core";
+import { Color, Director } from "@aspect/core";
 
 export class Issue4160 extends EventDispatcherTestDemo {
   constructor() {
@@ -37,20 +37,20 @@ export class Issue4160 extends EventDispatcherTestDemo {
     var size = Director.getInstance().getVisibleSize();
 
     var sprite1 = TouchableSprite.create(-30);
-    sprite1.setTexture("Images/CyanSquare.png");
+    sprite1.setColor(new Color(0, 255, 255));
     sprite1.x = origin.x + size.width / 2 - 80;
     sprite1.y = origin.y + size.height / 2 + 40;
     this.addChild(sprite1, 5);
 
     var sprite2 = TouchableSprite.create(-20);
-    sprite2.setTexture("Images/MagentaSquare.png");
+    sprite2.setColor(new Color(255, 0, 255));
     sprite2.removeListenerOnTouchEnded(true);
     sprite2.x = origin.x + size.width / 2;
     sprite2.y = origin.y + size.height / 2;
     this.addChild(sprite2, 10);
 
     var sprite3 = TouchableSprite.create(-10);
-    sprite3.setTexture("Images/YellowSquare.png");
+    sprite3.setColor(new Color(255, 255, 0));
     sprite3.x = 0;
     sprite3.y = 0;
     sprite2.addChild(sprite3, 21);

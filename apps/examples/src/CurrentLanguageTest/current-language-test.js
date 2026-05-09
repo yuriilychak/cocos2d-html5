@@ -32,6 +32,7 @@ import { s_simpleFont_fnt } from "../resources";
 export class CurrentLanguageTest extends BaseTestLayer {
     constructor() {
         super();
+        this._showNavButtons = false;
 
         var s = Director.getInstance().getWinSize();
 

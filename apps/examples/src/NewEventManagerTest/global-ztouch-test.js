@@ -26,7 +26,8 @@
  ****************************************************************************/
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
-import { Director, EventListener, EventManager, Rect, Sprite, log, visibleRect } from "@aspect/core";
+import { createColoredView } from "./touchable-sprite";
+import { Director, Color, EventListener, EventManager, Rect, log, visibleRect } from "@aspect/core";
 
 export class GlobalZTouchTest extends EventDispatcherTestDemo {
   constructor() {
@@ -73,10 +74,10 @@ export class GlobalZTouchTest extends EventDispatcherTestDemo {
       sprite;
     for (var i = 0; i < SPRITE_COUNT; i++) {
       if (i == 4) {
-        sprite = new Sprite("Images/CyanSquare.png");
+        sprite = createColoredView(new Color(0, 255, 255));
         this._sprite = sprite;
         this._sprite.setGlobalZOrder(-1);
-      } else sprite = new Sprite("Images/YellowSquare.png");
+      } else sprite = createColoredView(new Color(255, 255, 0));
 
       EventManager.getInstance().addListener(listener.clone(), sprite);
       this.addChild(sprite);

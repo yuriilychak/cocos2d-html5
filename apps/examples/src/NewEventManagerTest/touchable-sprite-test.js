@@ -26,8 +26,9 @@
  ****************************************************************************/
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
+import { createColoredView } from "./touchable-sprite";
 import { director } from "../constants";
-import { Color, EventListener, EventManager, Node, Rect, Sprite, log } from "@aspect/core";
+import { Color, EventListener, EventManager, Node, Rect, log } from "@aspect/core";
 import { ButtonLayout } from "../button-layout";
 
 export class TouchableSpriteTest extends EventDispatcherTestDemo {
@@ -39,7 +40,7 @@ export class TouchableSpriteTest extends EventDispatcherTestDemo {
     var size = director.getVisibleSize();
 
     var containerForSprite1 = new Node();
-    var sprite1 = new Sprite("Images/CyanSquare.png");
+    var sprite1 = createColoredView(new Color(0, 255, 255));
     sprite1.setPosition(
       origin.x + size.width / 2 - 80,
       origin.y + size.height / 2 + 80
@@ -47,11 +48,11 @@ export class TouchableSpriteTest extends EventDispatcherTestDemo {
     containerForSprite1.addChild(sprite1);
     this.addChild(containerForSprite1, 10);
 
-    var sprite2 = new Sprite("Images/MagentaSquare.png");
+    var sprite2 = createColoredView(new Color(255, 0, 255));
     sprite2.setPosition(origin.x + size.width / 2, origin.y + size.height / 2);
     this.addChild(sprite2, 20);
 
-    var sprite3 = new Sprite("Images/YellowSquare.png");
+    var sprite3 = createColoredView(new Color(255, 255, 0));
     sprite3.setPosition(0, 0);
     sprite2.addChild(sprite3, 1);
 

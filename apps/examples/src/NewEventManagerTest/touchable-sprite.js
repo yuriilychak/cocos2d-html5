@@ -25,23 +25,40 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Color, EventListener, EventManager, Rect, Sprite } from "@aspect/core";
+import { Color, EventListener, EventManager, Rect } from "@aspect/core";
+import { ImageView, Widget } from "@aspect/ccui";
 
+const SQUARE_SIZE = 80;
+const SQUARE_TEXTURE = "default_theme/rounded_shadow_2.png";
+const SQUARE_CAP = new Rect(12, 12, 12, 12);
 
-export class TouchableSprite extends Sprite {
+export function createColoredView(color, size) {
+    size = size || SQUARE_SIZE;
+    const iv = new ImageView();
+    iv.setScale9Enabled(true);
+    iv.ignoreContentAdaptWithSize(false);
+    iv.loadTexture(SQUARE_TEXTURE, Widget.PLIST_TEXTURE);
+    iv.setCapInsets(SQUARE_CAP);
+    iv.setContentSize(size, size);
+    iv.setColor(color);
+    return iv;
+}
+
+export class TouchableSprite extends ImageView {
 
     constructor(priority){
         super();
 
-
         this._listener = null;
-
-
         this._fixedPriority = 0;
-
-
         this._removeListenerOnTouchEnded = false;
         this._fixedPriority = priority || 0;
+
+        this.setScale9Enabled(true);
+        this.ignoreContentAdaptWithSize(false);
+        this.loadTexture(SQUARE_TEXTURE, Widget.PLIST_TEXTURE);
+        this.setCapInsets(SQUARE_CAP);
+        this.setContentSize(SQUARE_SIZE, SQUARE_SIZE);
     }
 
     setPriority(fixedPriority){
@@ -61,7 +78,7 @@ export class TouchableSprite extends Sprite {
                 var rect = new Rect(0, 0, s.width, s.height);
 
                 if (Rect.containsPoint(rect, locationInNode)) {
-                    selfPointer.setColor(Color.RED);
+                    selfPointer.setOpacity(128);
                     return true;
                 }
                 return false;
@@ -70,7 +87,7 @@ export class TouchableSprite extends Sprite {
                 //this.setPosition(this.getPosition() + touch.getDelta());
             },
             onTouchEnded: function (touch, event) {
-                selfPointer.setColor(Color.WHITE);
+                selfPointer.setOpacity(255);
                 if(selfPointer._removeListenerOnTouchEnded) {
                     EventManager.getInstance().removeListener(selfPointer._listener);
                     selfPointer._listener = null;

@@ -25,6 +25,4 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-export var TAG_SPRITE_MANAGER = 1;
-
 export var PTM_RATIO = 32;

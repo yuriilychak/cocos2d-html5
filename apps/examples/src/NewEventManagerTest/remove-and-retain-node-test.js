@@ -26,12 +26,13 @@
  ****************************************************************************/
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
+import { createColoredView } from "./touchable-sprite";
 import { director } from "../constants";
 import {
+  Color,
   EventListener,
   EventManager,
   Rect,
-  Sprite,
   Sys,
   log
 } from "@aspect/core";
@@ -51,7 +52,7 @@ export class RemoveAndRetainNodeTest extends EventDispatcherTestDemo {
     var origin = director.getVisibleOrigin();
     var size = director.getVisibleSize();
 
-    this._sprite = new Sprite("Images/CyanSquare.png");
+    this._sprite = createColoredView(new Color(0, 255, 255));
     this._sprite.setPosition(
       origin.x + size.width / 2,
       origin.y + size.height / 2

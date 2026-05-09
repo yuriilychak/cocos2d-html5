@@ -29,12 +29,14 @@
 //
 //------------------------------------------------------------------
 import { EventTest } from "./event-test";
-import { Director, EventListener, EventManager, KEY, LabelTTF, Sys, log } from "@aspect/core";
+import { s_simpleFont_fnt } from "../resources";
+import { Director, EventListener, EventManager, KEY, Sys, log } from "@aspect/core";
+import { TextBMFont } from "@aspect/ccui";
 export class KeyboardTest extends EventTest {
   init() {
     super.init();
     var self = this;
-    var label = new LabelTTF("show key Code");
+    var label = new TextBMFont("show key Code", s_simpleFont_fnt);
     var size = Director.getInstance().getWinSize();
     label.setPosition(size.width / 2, size.height / 2);
     this.addChild(label);

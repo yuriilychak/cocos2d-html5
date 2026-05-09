@@ -332,50 +332,6 @@ export var g_opengl_resources = [
     "fonts/west_england-64.png"
 ];
 
-export var g_label = [
-    //s_atlasTest,
-    s_bitmapFontTest,
-    s_bitmapFontTest2,
-    s_bitmapFontTest3,
-    s_bitmapFontTest4,
-    s_konqa32,
-    s_konqa32_hd,
-    s_bitmapFontChinese,
-    s_arial16,
-    s_larabie_16,
-    s_larabie_16_hd,
-    s_futura48,
-    s_arial_unicode_26,
-    s_fnTuffyBoldItalicCharmapPng,
-
-    s_arrows,
-    s_arrowsBar,
-    s_arrows_hd,
-    s_arrowsBar_hd,
-    s_larabie_16_plist,
-    s_larabie_16_hd_plist,
-    s_tuffy_bold_italic_charmap,
-    s_tuffy_bold_italic_charmap_hd,
-    s_bitmapFontTest_fnt,
-    s_bitmapFontTest2_fnt,
-    s_bitmapFontTest3_fnt,
-    s_bitmapFontTest4_fnt,
-    s_konqa32_fnt,
-    s_konqa32_hd_fnt,
-    s_bitmapFontChinese_fnt,
-    s_arial16_fnt,
-    s_futura48_fnt,
-    s_helvetica32_fnt,
-    s_geneva32_fnt,
-    s_helvetica_helvetica_32_png,
-    s_arial_unicode_26_fnt,
-    s_markerFelt_fnt,
-    s_markerFelt_png,
-    s_markerFelt_hd_fnt,
-    s_markerFelt_hd_png,
-    "fonts/strings.xml"
-];
-
 export var g_transitions = [
     s_back1
 ];
@@ -435,30 +391,6 @@ export var g_particle = [
     "Particles/SpookyPeas.plist",
     "Particles/TestPremultipliedAlpha.plist",
     "Particles/Upsidedown.plist"
-];
-
-export var g_fonts = [
-    //@face-font for WebFonts
-    {
-        type:"font",
-        name:"Thonburi",
-        srcs:["res/fonts/Thonburi.eot", "res/fonts/Thonburi.ttf"]
-    },
-    {
-        type:"font",
-        name:"Schwarzwald Regular",
-        srcs:["res/fonts/Schwarzwald_Regular.eot", "res/fonts/Schwarzwald Regular.ttf"]
-    },
-    {
-        type:"font",
-        name:"ThonburiBold",
-        srcs:["res/fonts/ThonburiBold.eot", "res/fonts/ThonburiBold.ttf"]
-    },
-    {
-        type:"font",
-        name:"Courier New",
-        srcs:["res/fonts/Courier New.eot", "res/fonts/Courier New.ttf"]
-    }
 ];
 
 export var g_extensions = [

@@ -27,15 +27,9 @@
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { TouchableSprite } from "./touchable-sprite";
-import {
-  s_extensions_button,
-  s_extensions_buttonBackground,
-  s_extensions_buttonHighlighted,
-  s_simpleFont_fnt
-} from "../resources";
-import { Color, Director, EventManager, LayerColor } from "@aspect/core";
-import { Scale9Sprite, TextBMFont } from "@aspect/ccui";
-import { CONTROL_EVENT_TOUCH_UP_INSIDE, CONTROL_STATE_HIGHLIGHTED, ControlButton } from "@aspect/gui";
+import { s_simpleFont_fnt } from "../resources";
+import { Color, Director, EventManager, Rect } from "@aspect/core";
+import { BMButton, ImageView, Widget } from "@aspect/ccui";
 import { ButtonLayout } from "../button-layout";
 
 export class PauseResumeTargetTest extends EventDispatcherTestDemo {
@@ -47,19 +41,19 @@ export class PauseResumeTargetTest extends EventDispatcherTestDemo {
     var size = Director.getInstance().getVisibleSize();
 
     var sprite1 = TouchableSprite.create();
-    sprite1.setTexture("Images/CyanSquare.png");
+    sprite1.setColor(new Color(0, 255, 255));
     sprite1.x = origin.x + size.width / 2 - 180;
     sprite1.y = origin.y + size.height / 2 + 40;
     this.addChild(sprite1, 10);
 
     var sprite2 = TouchableSprite.create();
-    sprite2.setTexture("Images/MagentaSquare.png");
+    sprite2.setColor(new Color(255, 0, 255));
     sprite2.x = origin.x + size.width / 2 - 100;
     sprite2.y = origin.y + size.height / 2;
     this.addChild(sprite2, 1);
 
     var sprite3 = TouchableSprite.create(100); // Sprite3 uses fixed priority listener
-    sprite3.setTexture("Images/YellowSquare.png");
+    sprite3.setColor(new Color(255, 255, 0));
     sprite3.x = 0;
     sprite3.y = 0;
     sprite2.addChild(sprite3, -1);
@@ -73,50 +67,51 @@ export class PauseResumeTargetTest extends EventDispatcherTestDemo {
       () => {
         sprite3.getListener().setEnabled(false);
         EventManager.getInstance().pauseTarget(_this, true);
-        var colorLayer = new LayerColor(new Color(0, 0, 255, 100));
-        _this.addChild(colorLayer, 999); //set colorLayer to top
 
-        // Add the button
-        var backgroundButton = new Scale9Sprite(s_extensions_button);
-        var backgroundHighlightedButton = new Scale9Sprite(
-          s_extensions_buttonHighlighted
+        var overlay = new ImageView();
+        overlay.setScale9Enabled(true);
+        overlay.ignoreContentAdaptWithSize(false);
+        overlay.loadTexture("default_theme/squere_shadow_0.png", Widget.PLIST_TEXTURE);
+        overlay.setContentSize(size.width, size.height);
+        overlay.setColor(new Color(0, 0, 0));
+        overlay.setOpacity(128);
+        overlay.x = origin.x + size.width / 2;
+        overlay.y = origin.y + size.height / 2;
+        _this.addChild(overlay, 999);
+
+        var background = new ImageView();
+        background.setScale9Enabled(true);
+        background.ignoreContentAdaptWithSize(false);
+        background.loadTexture("default_theme/rounded_shadow_0.png", Widget.PLIST_TEXTURE);
+        background.setCapInsets(new Rect(12, 12, 12, 12));
+        background.setContentSize(300, 170);
+        background.x = size.width / 2 + 50;
+        background.y = size.height / 2;
+        overlay.addChild(background);
+
+        var closeBtn = new BMButton(
+          "default_theme/rounded_shadow_4.png",
+          "default_theme/rounded_shadow_4.png",
+          "default_theme/rounded_shadow_4.png",
+          Widget.PLIST_TEXTURE
         );
-
-        var titleButton = new TextBMFont("Close Dialog", s_simpleFont_fnt);
-        titleButton.color = new Color(159, 168, 176);
-
-        var controlButton = new ControlButton(titleButton, backgroundButton);
-        controlButton.setBackgroundSpriteForState(
-          backgroundHighlightedButton,
-          CONTROL_STATE_HIGHLIGHTED
-        );
-        controlButton.setTitleColorForState(
-          Color.WHITE,
-          CONTROL_STATE_HIGHLIGHTED
-        );
-
-        controlButton.anchorX = 0.5;
-        controlButton.anchorY = 1;
-        controlButton.x = size.width / 2 + 50;
-        controlButton.y = size.height / 2;
-        colorLayer.addChild(controlButton, 1);
-        controlButton.addTargetWithActionForControlEvents(
-          _this,
-          () => {
-            colorLayer.removeFromParent();
-            EventManager.getInstance().resumeTarget(_this, true);
-            sprite3.getListener().setEnabled(true);
-          },
-          CONTROL_EVENT_TOUCH_UP_INSIDE
-        );
-
-        // Add the black background
-        var background = new Scale9Sprite(s_extensions_buttonBackground);
-        background.width = 300;
-        background.height = 170;
-        background.x = size.width / 2.0 + 50;
-        background.y = size.height / 2.0;
-        colorLayer.addChild(background);
+        closeBtn.setScale9Enabled(true);
+        closeBtn.setCapInsets(new Rect(12, 12, 12, 12));
+        closeBtn.setContentSize(160, 40);
+        closeBtn.setTitleFntFile(s_simpleFont_fnt);
+        closeBtn.setTitleText("Close Dialog");
+        closeBtn.setTitleFontSize(16);
+        closeBtn.setNormalBgColor(new Color(0x44, 0x55, 0x77));
+        closeBtn.setPressedBgColor(new Color(0x22, 0x33, 0x55));
+        closeBtn.pressedActionEnabled = true;
+        closeBtn.x = size.width / 2 + 50;
+        closeBtn.y = size.height / 2;
+        overlay.addChild(closeBtn, 1);
+        closeBtn.addClickEventListener(() => {
+          overlay.removeFromParent();
+          EventManager.getInstance().resumeTarget(_this, true);
+          sprite3.getListener().setEnabled(true);
+        });
       }
     );
 

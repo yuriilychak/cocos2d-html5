@@ -26,9 +26,10 @@
  ****************************************************************************/
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
+import { createColoredView } from "./touchable-sprite";
 import { s_simpleFont_fnt } from "../resources";
 import { director } from "../constants";
-import { Color, EventListener, EventManager, Rect, Sprite } from "@aspect/core";
+import { Color, EventListener, EventManager, Rect } from "@aspect/core";
 import { TextBMFont } from "@aspect/ccui";
 import { ButtonLayout } from "../button-layout";
 
@@ -40,7 +41,7 @@ export class RemoveListenerWhenDispatching extends EventDispatcherTestDemo {
     var origin = director.getVisibleOrigin();
     var size = director.getVisibleSize();
 
-    var sprite1 = new Sprite("Images/CyanSquare.png");
+    var sprite1 = createColoredView(new Color(0, 255, 255));
     sprite1.setPosition(origin.x + size.width / 2, origin.y + size.height / 2);
     this.addChild(sprite1, 10);
 

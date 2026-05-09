@@ -26,7 +26,8 @@
  ****************************************************************************/
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
-import { Director, EventListener, EventManager, Rect, Sprite, log, visibleRect } from "@aspect/core";
+import { createColoredView } from "./touchable-sprite";
+import { Director, Color, EventListener, EventManager, Rect, log, visibleRect } from "@aspect/core";
 
 export class StopPropagationTest extends EventDispatcherTestDemo {
   constructor() {
@@ -114,17 +115,17 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
 
     for (var i = 0; i < SPRITE_COUNT; i++) {
       if (i == 4) {
-        sprite1 = new Sprite("Images/CyanSquare.png");
+        sprite1 = createColoredView(new Color(0, 255, 255));
         sprite1.setTag(StopPropagationTest._TAG_BLUE_SPRITE);
         this.addChild(sprite1, 100);
 
-        sprite2 = new Sprite("Images/CyanSquare.png");
+        sprite2 = createColoredView(new Color(0, 255, 255));
         sprite2.setTag(StopPropagationTest._TAG_BLUE_SPRITE2);
         this.addChild(sprite2, 100);
       } else {
-        sprite1 = new Sprite("Images/YellowSquare.png");
+        sprite1 = createColoredView(new Color(255, 255, 0));
         this.addChild(sprite1, 0);
-        sprite2 = new Sprite("Images/YellowSquare.png");
+        sprite2 = createColoredView(new Color(255, 255, 0));
         this.addChild(sprite2, 0);
       }
 
