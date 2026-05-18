@@ -36,7 +36,6 @@ import { TransitionSlideInL, TransitionSlideInR } from "@aspect/transitions";
 import { ButtonLayout } from "../button-layout";
 import { ParticleFireworks, ParticleMeteor, ParticleSun } from "../ParticleTest/ParticleExamples";
 import { ParticleSystem } from "@aspect/particle";
-import { PhysicsSprite, PhysicsDebugNode } from "@aspect/physics";
 
 export var presentationSceneIdx = -1;
 export var centerPos = new Point(0, 0); // will be updated later
@@ -293,144 +292,6 @@ export class WhatWeWantPage extends PresentationBaseLayer {
 }
 //------------------------------------------------------------------
 //
-// Chipmunk Page
-//
-//------------------------------------------------------------------
-export class ChipmunkPage extends PresentationBaseLayer {
-  constructor() {
-    super();
-
-    // batch node
-    this.batch = new SpriteBatchNode(s_pathGrossini, 50);
-    this.addChild(this.batch);
-
-    this.addSprite = function (pos) {
-      var sprite = this.createPhysicsSprite(pos);
-      this.batch.addChild(sprite);
-    };
-
-    this._title = "Performance";
-    this._subtitle = "Physics and Sprites";
-
-    this.initPhysics();
-
-    this.initMenu();
-  }
-
-  onTogglePhysicsDebug() {
-    this.debugNode.visible = !this.debugNode.visible;
-  }
-  initMenu() {
-    const layout = new ButtonLayout(
-      [{ label: "Toggle Physics Debug", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) }],
-      196, "Actions",
-      () => this.onTogglePhysicsDebug()
-    );
-    this.addChild(layout, 99);
-  }
-  initPhysics() {
-    this.space = new cp.Space();
-    var staticBody = this.space.getStaticBody();
-
-    // Walls
-    var walls = [
-      new cp.SegmentShape(staticBody, cp.v(0, 0), cp.v(winSize.width, 0), 0), // bottom
-      new cp.SegmentShape(
-        staticBody,
-        cp.v(0, winSize.height),
-        cp.v(winSize.width, winSize.height),
-        0
-      ), // top
-      new cp.SegmentShape(staticBody, cp.v(0, 0), cp.v(0, winSize.height), 0), // left
-      new cp.SegmentShape(
-        staticBody,
-        cp.v(winSize.width, 0),
-        cp.v(winSize.width, winSize.height),
-        0
-      ) // right
-    ];
-    for (var i = 0; i < walls.length; i++) {
-      var wall = walls[i];
-      wall.setElasticity(1);
-      wall.setFriction(1);
-      this.space.addStaticShape(wall);
-    }
-
-    // Gravity
-    this.space.gravity = cp.v(0, -100);
-
-    // Physics debug layer
-    this.debugNode = new PhysicsDebugNode(this.space.handle);
-    this.debugNode.visible = false;
-    this.addChild(this.debugNode, 100);
-  }
-  createPhysicsSprite(pos) {
-    var body = new cp.Body(1, cp.momentForBox(1, 48, 108));
-    body.setPos(pos);
-    this.space.addBody(body);
-    var shape = cp.BoxShape(body, 48, 108);
-    shape.setElasticity(0.5);
-    shape.setFriction(0.5);
-    this.space.addShape(shape);
-
-    var sprite = new PhysicsSprite(s_pathGrossini);
-    sprite.setBody(body.handle);
-    return sprite;
-  }
-  onEnter() {
-    super.onEnter();
-
-    for (var i = 0; i < 20; i++) {
-      var x = 40 + Math.random() * (winSize.width - 80);
-      var y = winSize.height / 2 + Math.random() * 80;
-      this.addSprite(cp.v(x, y));
-    }
-
-    if ("touches" in Sys.getInstance().capabilities) {
-      EventManager.getInstance().addListener(
-        {
-          event: EventListener.TOUCH_ALL_AT_ONCE,
-          onTouchesEnded: function (touches, event) {
-            var target = event.getCurrentTarget();
-            var l = touches.length;
-            for (var i = 0; i < l; i++) {
-              target.addSprite(touches[i].getLocation());
-            }
-          }
-        },
-        this
-      );
-    } else if ("mouse" in Sys.getInstance().capabilities)
-      EventManager.getInstance().addListener(
-        {
-          event: EventListener.MOUSE,
-          onMouseUp: function (event) {
-            event.getCurrentTarget().addSprite(event.getLocation());
-          }
-        },
-        this
-      );
-  }
-  onExitTransitionDidStart() {
-    director.setDisplayStats(false);
-  }
-  onEnterTransitionDidFinish() {
-    director.setDisplayStats(true);
-
-    this.scheduleUpdate();
-  }
-  update(delta) {
-    this.space.step(delta);
-  }
-}
-//
-//
-
-// Menu
-
-// init physics
-//------------------------------------------------------------------
-//
 // Particles Page
 //
 //------------------------------------------------------------------
@@ -598,22 +459,6 @@ export class CocosStatusPage extends PresentationBaseLayer {
 }
 //------------------------------------------------------------------
 //
-// ChipmunkStatusPage
-//
-//------------------------------------------------------------------
-export class ChipmunkStatusPage extends PresentationBaseLayer {
-  constructor() {
-    super();
-
-    this._title = "Physics Engine";
-    this._subtitle = "";
-    this.isMainTitle = false;
-
-    this.createImage(images_path + "chipmunk_status.png");
-  }
-}
-//------------------------------------------------------------------
-//
 // CCBStatusPage
 //
 //------------------------------------------------------------------
@@ -701,14 +546,12 @@ export var arrayOfPresentation = [
   FeaturesHTML5Page,
   ComparisonPage,
   WhatWeWantPage,
-  ChipmunkPage,
   ParticlesPage,
   HowToImprovePage,
   HTML5AcceleratorPage,
   GDKAcceleratorPage,
   GDKComponentsPage,
   // CocosStatusPage,
-  // ChipmunkStatusPage,
   // CCBStatusPage,
   DemoPage,
   WhoIsUsingItPage,

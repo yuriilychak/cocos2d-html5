@@ -29,11 +29,12 @@ import { ControlScene } from "../CCControlScene";
 import {
   s_extensions_button,
   s_extensions_buttonBackground,
-  s_extensions_buttonHighlighted
+  s_extensions_buttonHighlighted,
+  s_markerFelt_fnt
 } from "../../../resources";
-import { Color, Director, LabelTTF } from "@aspect/core";
+import { Color, Director } from "@aspect/core";
 import { TestScene } from "../../../test-scene";
-import { Scale9Sprite } from "@aspect/ccui";
+import { Scale9Sprite, TextBMFont } from "@aspect/ccui";
 
 import {
     CONTROL_EVENT_TOUCH_CANCEL,
@@ -59,14 +60,14 @@ export class ControlButtonTest_Event extends ControlScene {
       );
 
       // Add a label in which the button events will be displayed
-      this.setDisplayValueLabel(new LabelTTF("No Event", "Marker Felt", 32));
+      this.setDisplayValueLabel(new TextBMFont("No Event", s_markerFelt_fnt));
       this._displayValueLabel.anchorX = 0.5;
       this._displayValueLabel.anchorY = -1;
       this._displayValueLabel.x = screenSize.width / 2.0;
       this._displayValueLabel.y = screenSize.height / 2.0;
       this.addChild(this._displayValueLabel, 10);
 
-      var titleButton = new LabelTTF("Touch Me!", "Marker Felt", 30);
+      var titleButton = new TextBMFont("Touch Me!", s_markerFelt_fnt);
       titleButton.color = new Color(159, 168, 176);
 
       var controlButton = new ControlButton(titleButton, backgroundButton);

@@ -121,6 +121,7 @@ export class TextBMFont extends Widget {
    */
   setString(value) {
     this._loader.clear();
+    this._stringValue = value;
     if (!this._labelBMFontRenderer._textureLoaded) {
       this._loader.add(
         this._labelBMFontRenderer,
@@ -132,7 +133,6 @@ export class TextBMFont extends Widget {
       return;
     }
     if (value === this._labelBMFontRenderer.getString()) return;
-    this._stringValue = value;
     this._labelBMFontRenderer.setString(value);
     if (!this._fntFileHasInit) return;
     this._updateContentSizeWithTextureSize(

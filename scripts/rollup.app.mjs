@@ -15,6 +15,7 @@ import { readFileSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import terser from '@rollup/plugin-terser';
 import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
 import MagicString, { Bundle } from 'magic-string';
 
 const VIRTUAL_ENTRY_ID = 'app-concat-entry';
@@ -205,6 +206,7 @@ export function createTestsBundleConfig({
         }
       },
       resolve(),
+      commonjs(),
       ...(minify ? [terser({
         ecma: 2020,
         module: false,

@@ -1,8 +1,9 @@
 /**
- * Custom Rollup config for @aspect/chipmunk.
+ * Custom Rollup config for @aspect/rapier.
  *
- * The chipmunk npm package is a CommonJS module, so we need
- * @rollup/plugin-commonjs to properly convert it for bundling.
+ * @dimforge/rapier2d-compat embeds the WASM as a base64 data URL and uses
+ * internal dynamic imports for async WASM loading, which requires
+ * `inlineDynamicImports: true` so Rollup produces a single dist/index.js.
  */
 import { join } from "path";
 import MagicString from "magic-string";
@@ -48,20 +49,42 @@ function stripWorkspaceImportsPlugin() {
   };
 }
 
+function replaceImportMetaUrlPlugin() {
+  return {
+    name: "replace-import-meta-url",
+    renderChunk(code) {
+      if (!code.includes("import.meta.url")) return null;
+      const s = new MagicString(code);
+      const regex = /import\.meta\.url/g;
+      let match;
+      while ((match = regex.exec(code)) !== null) {
+        s.overwrite(
+          match.index,
+          match.index + match[0].length,
+          "(typeof document !== 'undefined' && document.currentScript ? document.currentScript.src : '')"
+        );
+      }
+      return { code: s.toString(), map: s.generateMap({ hires: true }) };
+    }
+  };
+}
+
 export default {
   input: join(PKG_DIR, "src", "index.js"),
   treeshake: false,
   external: (id) => id.startsWith("@aspect/"),
   plugins: [
-    resolve({ extensions: [".js"] }),
+    resolve({ extensions: [".js"], preferBuiltins: false }),
     commonjs(),
     stripExportsPlugin(),
-    stripWorkspaceImportsPlugin()
+    stripWorkspaceImportsPlugin(),
+    replaceImportMetaUrlPlugin()
   ],
   output: {
     file: "dist/index.js",
     format: "es",
     strict: false,
-    sourcemap: true
+    sourcemap: true,
+    inlineDynamicImports: true
   }
 };

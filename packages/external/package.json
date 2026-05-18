@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "@aspect/box2d": "*",
-    "@aspect/chipmunk": "*",
     "@aspect/socketio": "*"
   }
 }

@@ -264,6 +264,8 @@ export var g_resources = [
     s_simpleTheme_plist,
     s_simpleTheme_png,
     s_simpleFont_fnt,
+    s_markerFelt_fnt,
+    s_markerFelt_png,
 ];
 
 export var g_sprites = [

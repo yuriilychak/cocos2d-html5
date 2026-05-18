@@ -29,11 +29,12 @@ import { ControlScene } from "../CCControlScene";
 import {
   s_extensions_button,
   s_extensions_buttonBackground,
-  s_extensions_buttonHighlighted
+  s_extensions_buttonHighlighted,
+  s_markerFelt_fnt
 } from "../../../resources";
-import { Color, Director, LabelTTF, Node, Size } from "@aspect/core";
+import { Color, Director, Node, Size } from "@aspect/core";
 import { TestScene } from "../../../test-scene";
-import { Scale9Sprite } from "@aspect/ccui";
+import { Scale9Sprite, TextBMFont } from "@aspect/ccui";
 
 import { CONTROL_STATE_HIGHLIGHTED, ControlButton } from "@aspect/gui";
 export class ControlButtonTest_Styling extends ControlScene {
@@ -92,7 +93,7 @@ export class ControlButtonTest_Styling extends ControlScene {
     );
     backgroundHighlightedButton.setPreferredSize(new Size(45, 45)); // Set the prefered size
 
-    var titleButton = new LabelTTF(title, "Marker Felt", 30);
+    var titleButton = new TextBMFont(title, s_markerFelt_fnt);
 
     titleButton.color = new Color(159, 168, 176);
 

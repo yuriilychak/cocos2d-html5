@@ -32,7 +32,6 @@ import { ActionManagerTestScene } from "./ActionManagerTest/action-manager-test-
 import { ActionsTestScene } from "./ActionsTest/actions-test-scene";
 import { BakeLayerTestScene } from "./BakeLayerTest/bake-layer-test-scene";
 import { Box2DTestScene } from "./Box2dTest/box2-dtest-scene";
-import { ChipmunkTestScene } from "./ChipmunkTest/chipmunk-test-scene";
 import { ClippingNodeTestScene } from "./ClippingNodeTest/clipping-node-test-scene";
 import { CocosDenshionTestScene } from "./CocosDenshionTest/cocos-denshion-test-scene";
 import { NodeTestScene } from "./CocosNodeTest/node-test-scene";
@@ -130,14 +129,6 @@ export var testNames = [
     linksrc: "src/Box2dTest/Box2dTest.js",
     testScene: function () {
       return new Box2DTestScene();
-    }
-  },
-  {
-    title: "Chipmunk Test",
-    platforms: PLATFORM_ALL,
-    linksrc: "src/ChipmunkTest/ChipmunkTest.js",
-    testScene: function () {
-      return new ChipmunkTestScene();
     }
   },
   {
