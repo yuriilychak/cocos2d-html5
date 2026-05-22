@@ -25,9 +25,10 @@
  */
 
 import { ControlScene } from "../CCControlScene";
-import { Director, LabelTTF, Node, Sprite } from "@aspect/core";
+import { Director, Node, Sprite } from "@aspect/core";
 import { TestScene } from "../../../test-scene";
-import { Scale9Sprite } from "@aspect/ccui";
+import { Scale9Sprite, TextBMFont } from "@aspect/ccui";
+import { s_simpleFont_fnt } from "../../../resources";
 
 import { CONTROL_EVENT_VALUE_CHANGED, ControlStepper } from "@aspect/gui";
 export class ControlStepperTest extends ControlScene {
@@ -49,7 +50,7 @@ export class ControlStepperTest extends ControlScene {
       background.y = 0;
       layer.addChild(background);
 
-      this._displayValueLabel = new LabelTTF("0", "HelveticaNeue-Bold", 30);
+      this._displayValueLabel = new TextBMFont("0", s_simpleFont_fnt);
 
       this._displayValueLabel.x = background.x;
       this._displayValueLabel.y = background.y;

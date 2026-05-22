@@ -25,12 +25,9 @@
 
 import { ExtensionsTestScene } from "../extensions-test-scene";
 import { pluginXSceneManager } from "./PluginXTestsManager";
-import {
-  s_extensions_background,
-  s_extensions_ribbon
-} from "../../resources";
-import { Color, Director, LabelTTF, Layer, Rect, Sprite } from "@aspect/core";
-import { Scale9Sprite } from "@aspect/ccui";
+import { s_extensions_background, s_extensions_ribbon, s_simpleFont_fnt } from "../../resources";
+import { Color, Director, Layer, Rect, Sprite } from "@aspect/core";
+import { Scale9Sprite, TextBMFont } from "@aspect/ccui";
 import { ButtonLayout } from "../../button-layout";
 import { winSize } from "../../constants";
 
@@ -69,7 +66,7 @@ export class PluginXTest extends Layer {
     this.addChild(ribbon);
 
     // Add the title
-    this.setSceneTitleLabel(new LabelTTF(title || "Title", "Arial", 12));
+    this.setSceneTitleLabel(new TextBMFont(title || "Title", s_simpleFont_fnt));
     this._sceneTitleLabel.x = screensize.width / 2;
     this._sceneTitleLabel.y =
       screensize.height - this._sceneTitleLabel.height / 2 - 5;

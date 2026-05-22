@@ -31,10 +31,11 @@
 //
 //------------------------------------------------------------------
 import { LayerTest } from "./layer-test";
-import { s_pathSister1, s_pathSister2 } from "../resources";
+import { s_pathSister1, s_pathSister2, s_simpleFont_fnt } from "../resources";
 import { winSize } from "../constants";
-import { Color, LabelTTF, LayerColor, ONE_MINUS_DST_COLOR, ONE_MINUS_SRC_ALPHA, SRC_ALPHA, Sprite, Sys, ZERO } from "@aspect/core";
+import { Color, LayerColor, ONE_MINUS_DST_COLOR, ONE_MINUS_SRC_ALPHA, SRC_ALPHA, Sprite, Sys, ZERO } from "@aspect/core";
 import { TAG_LAYER } from "./layer-test-constants";
+import { TextBMFont } from "@aspect/ccui";
 export class LayerTestBlend extends LayerTest {
 
     constructor() {
@@ -59,7 +60,7 @@ export class LayerTestBlend extends LayerTest {
         sister2.y = winSize.height / 2;
 
         if (!Sys.getInstance().isNative && !("opengl" in Sys.getInstance().capabilities)) {
-            var label = new LabelTTF("Not supported on HTML5-canvas", "Times New Roman", 30);
+            var label = new TextBMFont("Not supported on HTML5-canvas", s_simpleFont_fnt);
             this.addChild(label);
             label.x = winSize.width / 2;
             label.y = winSize.height / 2;

@@ -26,9 +26,10 @@
 
 import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
 import { TestScene } from "../test-scene";
-import { Color, Device, Director, LabelTTF } from "@aspect/core";
-import { Slider } from "@aspect/ccui";
+import { Color, Device, Director } from "@aspect/core";
+import { Slider, TextBMFont } from "@aspect/ccui";
 import { ButtonLayout } from "../button-layout";
+import { s_simpleFont_fnt } from "../resources";
 
 export class VibrateTest extends BaseTestLayer {
   constructor() {
@@ -38,7 +39,7 @@ export class VibrateTest extends BaseTestLayer {
 
     this._durationLabel = null;
     var s = Director.getInstance().getWinSize();
-    var label = new LabelTTF("vibrate control test", "Arial", 28);
+    var label = new TextBMFont("vibrate control test", s_simpleFont_fnt);
     this.addChild(label, 0);
     label.x = s.width / 2;
     label.y = s.height - 50;
@@ -51,11 +52,7 @@ export class VibrateTest extends BaseTestLayer {
       () => this.startVibrate()
     ));
 
-    this._durationLabel = new LabelTTF(
-      "duration: " + this._duration.toFixed(3) + "s",
-      "Arial",
-      20
-    );
+    this._durationLabel = new TextBMFont("duration: " + this._duration.toFixed(3) + "s", s_simpleFont_fnt);
     this._durationLabel.x = s.width * 0.5;
     this._durationLabel.y = s.height * 0.5;
     this.addChild(this._durationLabel);

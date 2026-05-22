@@ -26,9 +26,10 @@
  ****************************************************************************/
 
 import { CustomTableViewCell } from "./custom-table-view-cell";
-import { s_image_icon } from "../../resources";
-import { Director, LabelTTF, Size, Sprite, log } from "@aspect/core";
+import { s_image_icon, s_simpleFont_fnt } from "../../resources";
+import { Director, Size, Sprite, log } from "@aspect/core";
 import { BaseTestLayer } from "../../BaseTestLayer/BaseTestLayer";
+import { TextBMFont } from "@aspect/ccui";
 
 import { SCROLLVIEW_DIRECTION_HORIZONTAL, SCROLLVIEW_DIRECTION_VERTICAL, TABLEVIEW_FILL_TOPDOWN, TableView } from "@aspect/gui";
 export class TableViewTestLayer extends BaseTestLayer {
@@ -93,7 +94,7 @@ export class TableViewTestLayer extends BaseTestLayer {
       sprite.y = 0;
       cell.addChild(sprite);
 
-      label = new LabelTTF(strValue, "Helvetica", 20.0);
+      label = new TextBMFont(strValue, s_simpleFont_fnt);
       label.x = 0;
       label.y = 0;
       label.anchorX = 0;

@@ -4,6 +4,36 @@
     <dict>
         <key>frames</key>
         <dict>
+            <key>default_theme/archivo_black_regular_12.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{104,109}</string>
+                <key>spriteSourceSize</key>
+                <string>{104,109}</string>
+                <key>textureRect</key>
+                <string>{{0,0},{104,109}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>default_theme/archivo_black_regular_24.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{184,184}</string>
+                <key>spriteSourceSize</key>
+                <string>{184,184}</string>
+                <key>textureRect</key>
+                <string>{{104,0},{184,184}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
             <key>default_theme/rounded_shadow_0.png</key>
             <dict>
                 <key>aliases</key>
@@ -15,7 +45,7 @@
                 <key>spriteSourceSize</key>
                 <string>{32,32}</string>
                 <key>textureRect</key>
-                <string>{{24,0},{32,32}}</string>
+                <string>{{288,0},{32,32}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -30,7 +60,7 @@
                 <key>spriteSourceSize</key>
                 <string>{32,32}</string>
                 <key>textureRect</key>
-                <string>{{56,0},{32,32}}</string>
+                <string>{{320,0},{32,32}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -45,22 +75,7 @@
                 <key>spriteSourceSize</key>
                 <string>{32,32}</string>
                 <key>textureRect</key>
-                <string>{{88,0},{32,32}}</string>
-                <key>textureRotated</key>
-                <false/>
-            </dict>
-            <key>default_theme/simple_font.png</key>
-            <dict>
-                <key>aliases</key>
-                <array/>
-                <key>spriteOffset</key>
-                <string>{0,0}</string>
-                <key>spriteSize</key>
-                <string>{184,184}</string>
-                <key>spriteSourceSize</key>
-                <string>{184,184}</string>
-                <key>textureRect</key>
-                <string>{{0,32},{184,184}}</string>
+                <string>{{352,0},{32,32}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -75,7 +90,7 @@
                 <key>spriteSourceSize</key>
                 <string>{32,32}</string>
                 <key>textureRect</key>
-                <string>{{120,0},{32,32}}</string>
+                <string>{{384,0},{32,32}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -90,7 +105,7 @@
                 <key>spriteSourceSize</key>
                 <string>{32,32}</string>
                 <key>textureRect</key>
-                <string>{{152,0},{32,32}}</string>
+                <string>{{416,0},{32,32}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -105,7 +120,7 @@
                 <key>spriteSourceSize</key>
                 <string>{32,32}</string>
                 <key>textureRect</key>
-                <string>{{184,0},{32,32}}</string>
+                <string>{{448,0},{32,32}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -120,22 +135,22 @@
                 <key>spriteSourceSize</key>
                 <string>{16,16}</string>
                 <key>textureRect</key>
-                <string>{{8,0},{16,16}}</string>
+                <string>{{480,0},{16,16}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>thumb.png</key>
+            <key>default_theme/thumb_shadow_2.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
-                <string>{8,8}</string>
+                <string>{16,16}</string>
                 <key>spriteSourceSize</key>
-                <string>{8,8}</string>
+                <string>{16,16}</string>
                 <key>textureRect</key>
-                <string>{{0,0},{8,8}}</string>
+                <string>{{496,0},{16,16}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -151,9 +166,9 @@
             <key>realTextureFileName</key>
             <string>SimpleTheme.png</string>
             <key>size</key>
-            <string>{256,256}</string>
+            <string>{512,512}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:c9b3ba0324f5fee8f53f334b1358a49e:4b9af5da5105d0cafdff5b071c397996:cd072108925d6695fb583da89de0247f$</string>
+            <string>$TexturePacker:SmartUpdate:4192da6dfb80837069cb847471508265:4a61e2bd612e669318cc058964a58532:cd072108925d6695fb583da89de0247f$</string>
             <key>textureFileName</key>
             <string>SimpleTheme.png</string>
         </dict>

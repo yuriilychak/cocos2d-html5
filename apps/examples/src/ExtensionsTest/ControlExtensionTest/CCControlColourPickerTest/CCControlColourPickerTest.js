@@ -26,9 +26,10 @@
  ****************************************************************************/
 
 import { ControlScene } from "../CCControlScene";
-import { Color, Director, LabelTTF, Node } from "@aspect/core";
+import { Color, Director, Node } from "@aspect/core";
 import { TestScene } from "../../../test-scene";
-import { Scale9Sprite } from "@aspect/ccui";
+import { Scale9Sprite, TextBMFont } from "@aspect/ccui";
+import { s_simpleFont_fnt } from "../../../resources";
 
 import { CONTROL_EVENT_VALUE_CHANGED, ControlColourPicker } from "@aspect/gui";
 export class ControlColourPickerTest extends ControlScene {
@@ -71,7 +72,8 @@ export class ControlColourPickerTest extends ControlScene {
 
       layer_width += background.width;
 
-      this._colorLabel = new LabelTTF("#color", "Marker Felt", 30);
+      this._colorLabel = new TextBMFont("#color", s_simpleFont_fnt);
+      this._colorLabel.color = Color.WHITE;
 
       this._colorLabel.x = background.x;
       this._colorLabel.y = background.y;

@@ -26,7 +26,9 @@
  ****************************************************************************/
 
 import { director } from "../constants";
-import { LabelTTF, Layer } from "@aspect/core";
+import { Layer } from "@aspect/core";
+import { TextBMFont } from "@aspect/ccui";
+import { s_simpleFont_fnt } from "../resources";
 
 export class TestLayer extends Layer {
   constructor() {
@@ -46,7 +48,7 @@ export class TestLayer extends Layer {
     //MutableArray *array = [UIFont familyNames];
     //for( String *s in array )
     //	NSLog( s );
-    var label = new LabelTTF("cocos2d", "Tahoma", 64);
+    var label = new TextBMFont("cocos2d", s_simpleFont_fnt);
 
     label.x = x / 2;
     label.y = y / 2;

@@ -29,13 +29,14 @@ import {
   BaseTestLayer
 } from "../BaseTestLayer/BaseTestLayer";
 import { TestScene } from "../test-scene";
-import { s_pathGrossini } from "../resources";
+import { s_pathGrossini, s_simpleFont_fnt } from "../resources";
 import { director, winSize } from "../constants";
-import { Color, EventListener, EventManager, LabelTTF, Point, Sprite, SpriteBatchNode, Sys } from "@aspect/core";
+import { Color, EventListener, EventManager, Point, Sprite, SpriteBatchNode, Sys } from "@aspect/core";
 import { TransitionSlideInL, TransitionSlideInR } from "@aspect/transitions";
 import { ButtonLayout } from "../button-layout";
 import { ParticleFireworks, ParticleMeteor, ParticleSun } from "../ParticleTest/ParticleExamples";
 import { ParticleSystem } from "@aspect/particle";
+import { TextBMFont } from "@aspect/ccui";
 
 export var presentationSceneIdx = -1;
 export var centerPos = new Point(0, 0); // will be updated later
@@ -71,7 +72,7 @@ export class PresentationBaseLayer extends BaseTestLayer {
       fontSize = winSize.width * 0.09;
     }
 
-    this.label = new LabelTTF(this._title, "Gill Sans", fontSize);
+    this.label = new TextBMFont(this._title, s_simpleFont_fnt);
     this.addChild(this.label, 100);
 
     var isMain = this.isMainTitle;
@@ -92,7 +93,7 @@ export class PresentationBaseLayer extends BaseTestLayer {
         subfontSize = fontSize * 0.4;
       }
 
-      this.sublabel = new LabelTTF(subStr, "Thonburi", subfontSize);
+      this.sublabel = new TextBMFont(subStr, s_simpleFont_fnt);
       this.addChild(this.sublabel, 90);
       if (isMain) {
         this.sublabel.x = winSize.width / 2;
@@ -121,7 +122,7 @@ export class PresentationBaseLayer extends BaseTestLayer {
     }
 
     var fontSize = winSize.height * 0.07;
-    var bullets = new LabelTTF(str, "Gill Sans", fontSize);
+    var bullets = new TextBMFont(str, s_simpleFont_fnt);
     bullets.x = centerPos.x;
     bullets.y = centerPos.y;
     this.addChild(bullets, 80);

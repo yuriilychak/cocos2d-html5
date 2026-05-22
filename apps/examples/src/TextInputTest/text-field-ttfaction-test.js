@@ -33,10 +33,12 @@ import {
   TEXT_INPUT_FONT_NAME,
   TEXT_INPUT_FONT_SIZE
 } from "./text-input-test-constants";
-import { Color, Director, LabelTTF, Point, log } from "@aspect/core";
+import { Color, Director, Point, log } from "@aspect/core";
 import { CallFunc, FadeIn, FadeOut, MoveTo, RotateBy, ScaleTo, Sequence, Spawn } from "@aspect/actions";
 
 import { TextFieldTTF } from "@aspect/text-input";
+import { TextBMFont } from "@aspect/ccui";
+import { s_simpleFont_fnt } from "../resources";
 export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
   constructor() {
     super();
@@ -124,11 +126,7 @@ export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
     }
 
     // create a insert text sprite and do some action
-    var label = new LabelTTF(
-      text,
-      TEXT_INPUT_FONT_NAME,
-      TEXT_INPUT_FONT_SIZE
-    );
+    var label = new TextBMFont(text, s_simpleFont_fnt);
     this.addChild(label);
     var color = new Color(226, 121, 7);
     label.color = color;
@@ -159,11 +157,7 @@ export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
 
   onTextFieldDeleteBackward(sender, delText, len) {
     // create a delete text sprite and do some action
-    var label = new LabelTTF(
-      delText,
-      TEXT_INPUT_FONT_NAME,
-      TEXT_INPUT_FONT_SIZE
-    );
+    var label = new TextBMFont(delText, s_simpleFont_fnt);
     this.addChild(label);
 
     // move the sprite to fly out

@@ -25,9 +25,11 @@
 
 import { ExtensionsTestScene } from "../extensions-test-scene";
 import { PluginXTest } from "./PluginXTest";
-import { Color, Director, EventListener, EventManager, LabelTTF, LayerColor, Loader, log } from "@aspect/core";
+import { Color, Director, EventListener, EventManager, LayerColor, Loader, log } from "@aspect/core";
 import { ButtonLayout } from "../../button-layout";
 import { winSize } from "../../constants";
+import { TextBMFont } from "@aspect/ccui";
+import { s_simpleFont_fnt } from "../../resources";
 
 TAG_SETSERVERMODE = 0;
 TAG_GETPRODUCTLIST = 1;
@@ -77,7 +79,7 @@ export class IAPTestLayer extends PluginXTest {
     ));
 
     for (var i = 0; i < s_IAPResultItem.length; i++) {
-      var resultLabel = new LabelTTF(s_IAPResultItem[i].name, "Arial", 20);
+      var resultLabel = new TextBMFont(s_IAPResultItem[i].name, s_simpleFont_fnt);
       resultLabel.color = new Color(125, 125, 125);
       resultLabel.anchorX = 0;
       resultLabel.tag = s_IAPResultItem[i].tag;
@@ -93,7 +95,7 @@ export class IAPTestLayer extends PluginXTest {
   }
   initToast() {
     this.toastLayer = new LayerColor();
-    var label = new LabelTTF("loading", "Arial", 16);
+    var label = new TextBMFont("loading", s_simpleFont_fnt);
     this.toastLayer.addChild(label);
     this.toastLayer.setTag(TAG_TOAST);
     label.x = winSize.width / 2;

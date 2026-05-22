@@ -32,8 +32,10 @@
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
 import { director } from "../constants";
-import { LabelTTF, Point } from "@aspect/core";
+import { Point } from "@aspect/core";
 import { CallFunc, FadeOut, MoveBy, RotateBy, ScaleBy, Sequence } from "@aspect/actions";
+import { TextBMFont } from "@aspect/ccui";
+import { s_simpleFont_fnt } from "../resources";
 
 export class ActionCallFunc1 extends ActionsDemo {
   constructor() {
@@ -78,7 +80,7 @@ export class ActionCallFunc1 extends ActionsDemo {
   }
   onCallback1(nodeExecutingAction, value) {
     var s = director.getWinSize();
-    var label = new LabelTTF("callback 1 called", "Marker Felt", 16);
+    var label = new TextBMFont("callback 1 called", s_simpleFont_fnt);
     label.x = (s.width / 4) * 1;
     label.y = s.height / 2;
     this.addChild(label);
@@ -86,7 +88,7 @@ export class ActionCallFunc1 extends ActionsDemo {
   }
   onCallback2(nodeExecutingAction, value) {
     var s = director.getWinSize();
-    var label = new LabelTTF("callback 2 called", "Marker Felt", 16);
+    var label = new TextBMFont("callback 2 called", s_simpleFont_fnt);
     label.x = (s.width / 4) * 2;
     label.y = s.height / 2;
 
@@ -95,7 +97,7 @@ export class ActionCallFunc1 extends ActionsDemo {
   }
   onCallback3(nodeExecutingAction, value) {
     var s = director.getWinSize();
-    var label = new LabelTTF("callback 3 called:" + value, "Marker Felt", 16);
+    var label = new TextBMFont("callback 3 called:" + value, s_simpleFont_fnt);
     label.x = (s.width / 4) * 3;
     label.y = s.height / 2;
     this.addChild(label);

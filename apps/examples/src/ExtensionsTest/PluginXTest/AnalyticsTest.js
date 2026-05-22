@@ -25,8 +25,10 @@
 
 import { PluginXTest } from "./PluginXTest";
 import { director } from "../../constants";
-import { Color, Director, LabelTTF, Point, Size, Sys, TEXT_ALIGNMENT_CENTER, log } from "@aspect/core";
+import { Color, Director, Point, Sys, log } from "@aspect/core";
 import { ButtonLayout } from "../../button-layout";
+import { TextBMFont } from "@aspect/ccui";
+import { s_simpleFont_fnt } from "../../resources";
 
 export var g_pAnalytics = null;
 export var s_strAppKey = "";
@@ -167,13 +169,7 @@ export class AnalyticsTestLayer extends PluginXTest {
     var strName = g_pAnalytics.getPluginName();
     var strVer = g_pAnalytics.getPluginVersion();
     var ret = "Plugin : " + strName + ", Ver : " + strVer;
-    var pLabel = new LabelTTF(
-      ret,
-      "Arial",
-      24,
-      new Size(size.width, 0),
-      TEXT_ALIGNMENT_CENTER
-    );
+    var pLabel = new TextBMFont(ret, s_simpleFont_fnt);
     pLabel.setPosition(new Point(size.width / 2, 80));
     this.addChild(pLabel);
   }

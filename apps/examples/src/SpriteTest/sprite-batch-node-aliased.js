@@ -36,17 +36,11 @@ import {
   TAG_SPRITE_BATCH_NODE
 } from "./sprite-test-constants";
 import { SpriteTestDemo } from "./sprite-test-demo";
-import { s_grossini_dance_atlas } from "../resources";
+import { s_grossini_dance_atlas, s_simpleFont_fnt } from "../resources";
 import { winSize } from "../constants";
-import {
-  LabelTTF,
-  Rect,
-  RendererConfig,
-  Sprite,
-  SpriteBatchNode,
-  Sys
-} from "@aspect/core";
+import { Rect, RendererConfig, Sprite, SpriteBatchNode, Sys } from "@aspect/core";
 import { ScaleBy, Sequence } from "@aspect/actions";
+import { TextBMFont } from "@aspect/ccui";
 
 export class SpriteBatchNodeAliased extends SpriteTestDemo {
   constructor() {
@@ -98,11 +92,7 @@ export class SpriteBatchNodeAliased extends SpriteTestDemo {
         RendererConfig.getInstance().isWebGL
       )
     ) {
-      var label = new LabelTTF(
-        "Not supported on HTML5-canvas",
-        "Times New Roman",
-        30
-      );
+      var label = new TextBMFont("Not supported on HTML5-canvas", s_simpleFont_fnt);
       this.addChild(label);
       label.x = winSize.width / 2;
       label.y = winSize.height / 2;

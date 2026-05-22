@@ -28,8 +28,8 @@
 import { ActionsDemo } from "./actions-demo";
 import { createCustomAction } from "./actions-test-helpers";
 import { CustomMoveBy } from "./custom-move-by";
-import { s_pathGrossini } from "../resources";
-import { Animation, Color, LabelTTF, Layer, Point, Sprite, log } from "@aspect/core";
+import { s_pathGrossini, s_simpleFont_fnt } from "../resources";
+import { Animation, Color, Layer, Point, Sprite, log } from "@aspect/core";
 import {
   Animate,
   BezierBy,
@@ -65,6 +65,7 @@ import {
 } from "@aspect/actions";
 import { ButtonLayout } from "../button-layout";
 import { winSize } from "../constants";
+import { TextBMFont } from "@aspect/ccui";
 
 export class ActionCustomTest extends ActionsDemo {
   constructor() {
@@ -318,7 +319,7 @@ export class ActionCustomTest extends ActionsDemo {
     }
 
     if (actionTypeName) {
-      var label = new LabelTTF(actionTypeName, "arial", 18);
+      var label = new TextBMFont(actionTypeName, s_simpleFont_fnt);
       if (addLabelInLayerFlag) {
         label.setPosition(spriteTemp.getPosition());
         this._layer.addChild(label);

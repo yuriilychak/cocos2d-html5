@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@aspect/core": "*",
+    "@aspect/ccui": "*",
     "@aspect/clipping-nodes": "*",
     "@aspect/render-texture": "*",
     "@aspect/actions": "*",

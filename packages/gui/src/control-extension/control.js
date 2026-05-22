@@ -197,11 +197,4 @@ export class Control extends Layer {
 
     needsLayout() {
     }
-
-    static create() {
-        var retControl = new Control();
-        if (retControl && retControl.init())
-            return retControl;
-        return null;
-    }
 }

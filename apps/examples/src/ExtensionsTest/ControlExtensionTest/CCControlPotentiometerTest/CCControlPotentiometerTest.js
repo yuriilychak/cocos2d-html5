@@ -26,9 +26,10 @@
  ****************************************************************************/
 
 import { ControlScene } from "../CCControlScene";
-import { Director, LabelTTF, Node } from "@aspect/core";
+import { Director, Node } from "@aspect/core";
 import { TestScene } from "../../../test-scene";
-import { Scale9Sprite } from "@aspect/ccui";
+import { Scale9Sprite, TextBMFont } from "@aspect/ccui";
+import { s_simpleFont_fnt } from "../../../resources";
 
 import { CONTROL_EVENT_VALUE_CHANGED, ControlPotentiometer } from "@aspect/gui";
 export class ControlPotentiometerTest extends ControlScene {
@@ -53,7 +54,7 @@ export class ControlPotentiometerTest extends ControlScene {
 
       layer_width += background.width;
 
-      this._displayValueLabel = new LabelTTF("", "HelveticaNeue-Bold", 30);
+      this._displayValueLabel = new TextBMFont("", s_simpleFont_fnt);
 
       this._displayValueLabel.x = background.x;
       this._displayValueLabel.y = background.y;

@@ -26,9 +26,10 @@
  ****************************************************************************/
 
 import { ControlScene } from "../CCControlScene";
-import { Director, LabelTTF, Node, Sprite } from "@aspect/core";
+import { Color, Director, Node, Sprite } from "@aspect/core";
 import { TestScene } from "../../../test-scene";
-import { Scale9Sprite } from "@aspect/ccui";
+import { Scale9Sprite, TextBMFont } from "@aspect/ccui";
+import { s_simpleFont_fnt } from "../../../resources";
 
 import { CONTROL_EVENT_VALUE_CHANGED, ControlSwitch } from "@aspect/gui";
 export class ControlSwitchTest extends ControlScene {
@@ -53,20 +54,25 @@ export class ControlSwitchTest extends ControlScene {
 
       layer_width += background.width;
 
-      this._displayValueLabel = new LabelTTF("#color", "Marker Felt", 30);
+      this._displayValueLabel = new TextBMFont("#color", s_simpleFont_fnt);
+      this._displayValueLabel.color = Color.WHITE;
 
       this._displayValueLabel.x = background.x;
       this._displayValueLabel.y = background.y;
       layer.addChild(this._displayValueLabel);
 
       // Create the switch
+      var onLabel = new TextBMFont("On", s_simpleFont_fnt);
+      onLabel.color = Color.WHITE;
+      var offLabel = new TextBMFont("Off", s_simpleFont_fnt);
+      offLabel.color = Color.WHITE;
       var switchControl = new ControlSwitch(
         new Sprite("extensions/switch-mask.png"),
         new Sprite("extensions/switch-on.png"),
         new Sprite("extensions/switch-off.png"),
         new Sprite("extensions/switch-thumb.png"),
-        new LabelTTF("On", "Arial-BoldMT", 16),
-        new LabelTTF("Off", "Arial-BoldMT", 16)
+        onLabel,
+        offLabel
       );
       switchControl.x = layer_width + 10 + switchControl.width / 2;
       switchControl.y = 0;

@@ -32,8 +32,10 @@
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
 import { winSize } from "../constants";
-import { LabelTTF, Sys } from "@aspect/core";
+import { Sys } from "@aspect/core";
 import { DelayTime, RotateBy, RotateTo, Sequence } from "@aspect/actions";
+import { TextBMFont } from "@aspect/ccui";
+import { s_simpleFont_fnt } from "../resources";
 
 export class ActionRotateXY extends ActionsDemo {
   constructor() {
@@ -61,11 +63,7 @@ export class ActionRotateXY extends ActionsDemo {
     );
 
     if (!Sys.getInstance().isNative && !("opengl" in Sys.getInstance().capabilities)) {
-      var label = new LabelTTF(
-        "Not support Actions on HTML5-canvas",
-        "Times New Roman",
-        30
-      );
+      var label = new TextBMFont("Not support Actions on HTML5-canvas", s_simpleFont_fnt);
       label.x = winSize.width / 2;
       label.y = winSize.height / 2 + 50;
       this.addChild(label, 100);

@@ -30,20 +30,14 @@
 // TMXOrthoVertexZ
 //
 //------------------------------------------------------------------
-import { s_resprefix } from "../resources";
+import { s_resprefix, s_simpleFont_fnt } from "../resources";
 import { director, winSize } from "../constants";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
 import { TMXFixBugLayer } from "./tmxfix-bug-layer";
-import {
-  Director,
-  LabelTTF,
-  Point,
-  RendererConfig,
-  Sprite,
-  Sys
-} from "@aspect/core";
+import { Director, Point, RendererConfig, Sprite, Sys } from "@aspect/core";
 import { DelayTime, MoveBy, Sequence } from "@aspect/actions";
 import { TMXTiledMap } from "@aspect/tilemap";
+import { TextBMFont } from "@aspect/ccui";
 
 export class TMXOrthoVertexZ extends TMXFixBugLayer {
   constructor() {
@@ -75,11 +69,7 @@ export class TMXOrthoVertexZ extends TMXFixBugLayer {
       !Sys.getInstance().isNative &&
       !("opengl" in Sys.getInstance().capabilities)
     ) {
-      var label = new LabelTTF(
-        "Not supported on HTML5-canvas",
-        "Times New Roman",
-        30
-      );
+      var label = new TextBMFont("Not supported on HTML5-canvas", s_simpleFont_fnt);
       this.addChild(label);
       label.x = winSize.width / 2;
       label.y = winSize.height / 2;

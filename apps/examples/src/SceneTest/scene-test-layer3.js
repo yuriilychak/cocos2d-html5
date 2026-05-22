@@ -25,10 +25,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { s_pathGrossini } from "../resources";
+import { s_pathGrossini, s_simpleFont_fnt } from "../resources";
 import { director } from "../constants";
-import { Color, EventListener, EventManager, LabelTTF, LayerColor, Sprite, Sys } from "@aspect/core";
+import { Color, EventListener, EventManager, LayerColor, Sprite, Sys } from "@aspect/core";
 import { RotateBy } from "@aspect/actions";
+import { TextBMFont } from "@aspect/ccui";
 
 export class SceneTestLayer3 extends LayerColor {
   constructor() {
@@ -36,7 +37,7 @@ export class SceneTestLayer3 extends LayerColor {
     super();
     this.init(new Color(0, 128, 255, 255));
 
-    var label = new LabelTTF("Touch to popScene", "Arial", 28);
+    var label = new TextBMFont("Touch to popScene", s_simpleFont_fnt);
     this.addChild(label);
     var s = director.getWinSize();
     label.x = s.width / 2;

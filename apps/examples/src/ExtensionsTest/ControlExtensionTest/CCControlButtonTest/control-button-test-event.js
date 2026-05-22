@@ -30,7 +30,7 @@ import {
   s_extensions_button,
   s_extensions_buttonBackground,
   s_extensions_buttonHighlighted,
-  s_markerFelt_fnt
+  s_simpleFont_fnt
 } from "../../../resources";
 import { Color, Director } from "@aspect/core";
 import { TestScene } from "../../../test-scene";
@@ -60,15 +60,16 @@ export class ControlButtonTest_Event extends ControlScene {
       );
 
       // Add a label in which the button events will be displayed
-      this.setDisplayValueLabel(new TextBMFont("No Event", s_markerFelt_fnt));
+      this.setDisplayValueLabel(new TextBMFont("No Event", s_simpleFont_fnt));
+      this._displayValueLabel.color = Color.WHITE;
       this._displayValueLabel.anchorX = 0.5;
       this._displayValueLabel.anchorY = -1;
       this._displayValueLabel.x = screenSize.width / 2.0;
       this._displayValueLabel.y = screenSize.height / 2.0;
       this.addChild(this._displayValueLabel, 10);
 
-      var titleButton = new TextBMFont("Touch Me!", s_markerFelt_fnt);
-      titleButton.color = new Color(159, 168, 176);
+      var titleButton = new TextBMFont("Touch Me!", s_simpleFont_fnt);
+      titleButton.color = Color.WHITE;
 
       var controlButton = new ControlButton(titleButton, backgroundButton);
       controlButton.setBackgroundSpriteForState(

@@ -30,7 +30,7 @@ import {
   s_extensions_button,
   s_extensions_buttonBackground,
   s_extensions_buttonHighlighted,
-  s_markerFelt_fnt
+  s_simpleFont_fnt
 } from "../../../resources";
 import { Color, Director, Node } from "@aspect/core";
 import { TestScene } from "../../../test-scene";
@@ -104,9 +104,9 @@ export class ControlButtonTest_HelloVariableSize extends ControlScene {
       s_extensions_buttonHighlighted
     );
 
-    var titleButton = new TextBMFont(title, s_markerFelt_fnt);
+    var titleButton = new TextBMFont(title, s_simpleFont_fnt);
 
-    titleButton.color = new Color(159, 168, 176);
+    titleButton.color = Color.WHITE;
 
     var button = new ControlButton(titleButton, backgroundButton);
     button.setBackgroundSpriteForState(

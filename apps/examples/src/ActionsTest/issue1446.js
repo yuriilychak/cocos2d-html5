@@ -32,8 +32,10 @@
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
 import { winSize } from "../constants";
-import { LabelTTF } from "@aspect/core";
+
 import { DelayTime, FadeTo, Sequence, Speed } from "@aspect/actions";
+import { TextBMFont } from "@aspect/ccui";
+import { s_simpleFont_fnt } from "../resources";
 
 export class Issue1446 extends ActionsDemo {
   title() {
@@ -48,7 +50,7 @@ export class Issue1446 extends ActionsDemo {
     //----start46----onEnter
     super.onEnter();
     this.centerSprites(0);
-    var label = (this.label = new LabelTTF("Hello World", "Arial", 64));
+    var label = (this.label = new TextBMFont("Hello World", s_simpleFont_fnt));
 
     label.x = winSize.width / 2;
     label.y = winSize.height / 2;

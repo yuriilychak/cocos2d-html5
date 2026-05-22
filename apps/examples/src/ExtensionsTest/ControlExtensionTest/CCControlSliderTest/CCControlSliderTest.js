@@ -25,66 +25,48 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ControlScene } from "../CCControlScene";
-import { Director, LabelTTF } from "@aspect/core";
-import { TestScene } from "../../../test-scene";
-
+import { Director, Color, Rect, Size, SpriteFrameCache } from "@aspect/core";
+import { Scale9Sprite, TextBMFont } from "@aspect/ccui";
 import { CONTROL_EVENT_VALUE_CHANGED, ControlSlider } from "@aspect/gui";
+import { ControlScene } from "../CCControlScene";
+import { TestScene } from "../../../test-scene";
+import { s_simpleFont_fnt, s_simpleTheme_plist } from "../../../resources";
 export class ControlSliderTest extends ControlScene {
   init() {
     if (super.init()) {
-      var screenSize = Director.getInstance().getWinSize();
+      const screenSize = Director.getInstance().getWinSize();
+
+      SpriteFrameCache.getInstance().addSpriteFrames(s_simpleTheme_plist);
 
       // Add a label in which the slider value will be displayed
-      this._displayValueLabel = new LabelTTF(
+      this._displayValueLabel = new TextBMFont(
         "Move the slider thumb!\nThe lower slider is restricted.",
-        "Marker Felt",
-        32
+        s_simpleFont_fnt
       );
+      this._displayValueLabel.color = Color.WHITE;
       this._displayValueLabel.anchorX = 0.5;
-      this._displayValueLabel.anchorY = -1.0;
-      this._displayValueLabel.x = screenSize.width / 1.7;
-      this._displayValueLabel.y = screenSize.height / 2.0;
+      this._displayValueLabel.anchorY = 0.5;
+      this._displayValueLabel.x = screenSize.width / 2.0;
+      this._displayValueLabel.y = screenSize.height / 2.0 - 100;
       this.addChild(this._displayValueLabel);
 
-      // Add the slider
-      var slider = new ControlSlider(
-        "extensions/sliderTrack.png",
-        "extensions/sliderProgress.png",
-        "extensions/sliderThumb.png"
-      );
-      slider.anchorX = 0.5;
-      slider.anchorY = 1.0;
-      slider.setMinimumValue(0.0); // Sets the min value of range
-      slider.setMaximumValue(5.0); // Sets the max value of range
+      const slider = this._createSlider();
       slider.x = screenSize.width / 2.0;
       slider.y = screenSize.height / 2.0 + 16;
       slider.tag = 1;
-
-      // When the value of the slider will change, the given selector will be call
       slider.addTargetWithActionForControlEvents(
         this,
         this.upperValueChanged,
         CONTROL_EVENT_VALUE_CHANGED
       );
 
-      var restrictSlider = new ControlSlider(
-        "extensions/sliderTrack.png",
-        "extensions/sliderProgress.png",
-        "extensions/sliderThumb.png"
-      );
-      restrictSlider.anchorX = 0.5;
-      restrictSlider.anchorY = 1.0;
-      restrictSlider.setMinimumValue(0.0); // Sets the min value of range
-      restrictSlider.setMaximumValue(5.0); // Sets the max value of range
-      restrictSlider.setMaximumAllowedValue(4.0);
-      restrictSlider.setMinimumAllowedValue(1.5);
-      restrictSlider.setValue(3.0);
+      const restrictSlider = this._createSlider();
+      restrictSlider.maximumAllowedValue = 4.0;
+      restrictSlider.minimumAllowedValue = 1.5;
+      restrictSlider.value = 3.0;
       restrictSlider.x = screenSize.width / 2.0;
       restrictSlider.y = screenSize.height / 2.0 - 24;
       restrictSlider.tag = 2;
-
-      //same with restricted
       restrictSlider.addTargetWithActionForControlEvents(
         this,
         this.lowerValueChanged,
@@ -93,20 +75,45 @@ export class ControlSliderTest extends ControlScene {
 
       this.addChild(slider);
       this.addChild(restrictSlider);
+
       return true;
     }
+
     return false;
   }
+  _createSlider() {
+    const backgroundSprite = new Scale9Sprite(
+      "default_theme/rounded_shadow_4.png",
+      new Rect(8, 8, 8, 8)
+    );
+    const progressSprite = new Scale9Sprite(
+      "default_theme/rounded_shadow_0.png",
+      new Rect(4, 4, 4, 4)
+    );
+    progressSprite.color = Color.GREEN;
+    const thumbSprite = new Scale9Sprite(
+      "default_theme/rounded_shadow_2.png",
+      new Rect(8, 8, 8, 8)
+    );
+    thumbSprite.setPreferredSize(new Size(24, 24));
+
+    const slider = new ControlSlider(256, 16, 0.0, 5.0, new Rect(4, 4, 8, 8));
+    slider.initWithSprites(backgroundSprite, thumbSprite, progressSprite);
+    slider.anchorX = 0.5;
+    slider.anchorY = 0.5;
+    return slider;
+  }
+
   upperValueChanged(sender, controlEvent) {
     // Change value of label.
     this._displayValueLabel.setString(
-      "Upper slider value = " + sender.getValue().toFixed(2)
+      `Upper slider value = ${sender.value.toFixed(2)}`
     );
   }
   lowerValueChanged(sender, controlEvent) {
     // Change value of label.
     this._displayValueLabel.setString(
-      "Lower slider value = " + sender.getValue().toFixed(2)
+      `Lower slider value = ${sender.value.toFixed(2)}`
     );
   }
 }

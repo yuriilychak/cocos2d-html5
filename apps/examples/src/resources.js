@@ -184,7 +184,7 @@ export var s_markerFelt_hd_png = "fonts/markerFelt-hd.png";
 
 export var s_simpleTheme_plist = "SimpleTheme.plist";
 export var s_simpleTheme_png = "SimpleTheme.png";
-export var s_simpleFont_fnt = "simple_font.fnt";
+export var s_simpleFont_fnt = "archivo_black_regular_24.fnt";
 
 export var s_larabie_16_plist = "fonts/larabie-16.plist";
 export var s_larabie_16_hd_plist = "fonts/larabie-16-hd.plist";

@@ -25,9 +25,11 @@
  ****************************************************************************/
 /** @expose */
 import { ExtensionsTestScene } from "../extensions-test-scene";
-import { Color, Director, LabelTTF, Layer, Point, Scene, log } from "@aspect/core";
+import { Color, Director, Layer, Point, Scene, log } from "@aspect/core";
 import { ButtonLayout } from "../../button-layout";
 import { SocketIO } from "@aspect/socketio";
+import { TextBMFont } from "@aspect/ccui";
+import { s_simpleFont_fnt } from "../../resources";
 
 export class SocketIOTestLayer extends Layer {
   constructor() {
@@ -45,7 +47,7 @@ export class SocketIOTestLayer extends Layer {
     var winSize = Director.getInstance().getWinSize();
     var MARGIN = 40;
 
-    var label = new LabelTTF("SocketIO Test", "Arial", 28);
+    var label = new TextBMFont("SocketIO Test", s_simpleFont_fnt);
     label.setPosition(new Point(winSize.width / 2, winSize.height - MARGIN));
     this.addChild(label, 0);
 
@@ -77,7 +79,7 @@ export class SocketIOTestLayer extends Layer {
       }
     ));
 
-    this._sioClientStatus = new LabelTTF("Not connected...", "Arial", 14);
+    this._sioClientStatus = new TextBMFont("Not connected...", s_simpleFont_fnt);
     this._sioClientStatus.setAnchorPoint(new Point(0, 0));
     this._sioClientStatus.setPosition(new Point(0, winSize.height * 0.25));
     this.addChild(this._sioClientStatus);

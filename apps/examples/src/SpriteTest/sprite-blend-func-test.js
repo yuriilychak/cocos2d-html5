@@ -26,7 +26,9 @@
  ****************************************************************************/
 
 import { SpriteTestDemo } from "./sprite-test-demo";
-import { LabelTTF, ONE, ONE_MINUS_SRC_ALPHA, RendererConfig, SRC_ALPHA, Size, Sprite, ZERO, textureCache, DST_COLOR, ONE_MINUS_DST_COLOR, DST_ALPHA, ONE_MINUS_DST_ALPHA, SRC_COLOR, ONE_MINUS_SRC_COLOR } from "@aspect/core";
+import { ONE, ONE_MINUS_SRC_ALPHA, RendererConfig, SRC_ALPHA, Size, Sprite, ZERO, textureCache, DST_COLOR, ONE_MINUS_DST_COLOR, DST_ALPHA, ONE_MINUS_DST_ALPHA, SRC_COLOR, ONE_MINUS_SRC_COLOR } from "@aspect/core";
+import { TextBMFont } from "@aspect/ccui";
+import { s_simpleFont_fnt } from "../resources";
 export class SpriteBlendFuncTest extends SpriteTestDemo {
   //webgl only
 
@@ -84,11 +86,7 @@ export class SpriteBlendFuncTest extends SpriteTestDemo {
     this.addChild(destSprite);
 
     if (RendererConfig.getInstance().isCanvas) {
-      var info = new LabelTTF(
-        "support is not complete on canvas",
-        "Arial",
-        18
-      );
+      var info = new TextBMFont("support is not complete on canvas", s_simpleFont_fnt);
       info.x = 680;
       info.y = 250;
       info.setDimensions(new Size(200, 200));
@@ -99,7 +97,7 @@ export class SpriteBlendFuncTest extends SpriteTestDemo {
     for (i = 0; i < destTitles.length; i++) {
       title = destTitles[i];
       fontSize = title.length > 10 ? 14 : 18;
-      titleLabel = new LabelTTF(title, "Arial", fontSize);
+      titleLabel = new TextBMFont(title, s_simpleFont_fnt);
       titleLabel.setAnchorPoint(0, 0.5);
       titleLabel.setPosition(0, 355 - 60 * i);
       this.addChild(titleLabel);
@@ -108,7 +106,7 @@ export class SpriteBlendFuncTest extends SpriteTestDemo {
     for (i = 0; i < srcTitles.length; i++) {
       title = srcTitles[i];
       fontSize = title.length > 10 ? 14 : 18;
-      titleLabel = new LabelTTF(title, "Arial", fontSize);
+      titleLabel = new TextBMFont(title, s_simpleFont_fnt);
       titleLabel.setAnchorPoint(0, 0.5);
       titleLabel.setPosition(220 + i * 60, 390);
       titleLabel.setRotation(-20);
