@@ -43,16 +43,20 @@ export class ControlSliderTest extends ControlScene {
         "Move the slider thumb!\nThe lower slider is restricted.",
         s_simpleFont_fnt
       );
+      this._displayValueLabel.lineHeight = 18;
       this._displayValueLabel.color = Color.WHITE;
       this._displayValueLabel.anchorX = 0.5;
       this._displayValueLabel.anchorY = 0.5;
-      this._displayValueLabel.x = screenSize.width / 2.0;
-      this._displayValueLabel.y = screenSize.height / 2.0 - 100;
+      this._displayValueLabel.x = screenSize.width >> 1;
+      this._displayValueLabel.y = (screenSize.height >> 1) + 70;
+      this._displayValueLabel.align = TextBMFont.ALIGN_CENTER;
       this.addChild(this._displayValueLabel);
 
-      const slider = this._createSlider();
-      slider.x = screenSize.width / 2.0;
-      slider.y = screenSize.height / 2.0 + 16;
+      const sliderWidth = 256;
+
+      const slider = this._createSlider(sliderWidth);
+      slider.x = (screenSize.width - sliderWidth) >> 1;
+      slider.y = (screenSize.height >> 1) + 16;
       slider.tag = 1;
       slider.addTargetWithActionForControlEvents(
         this,
@@ -60,12 +64,12 @@ export class ControlSliderTest extends ControlScene {
         CONTROL_EVENT_VALUE_CHANGED
       );
 
-      const restrictSlider = this._createSlider();
+      const restrictSlider = this._createSlider(sliderWidth);
       restrictSlider.maximumAllowedValue = 4.0;
       restrictSlider.minimumAllowedValue = 1.5;
       restrictSlider.value = 3.0;
-      restrictSlider.x = screenSize.width / 2.0;
-      restrictSlider.y = screenSize.height / 2.0 - 24;
+      restrictSlider.x = (screenSize.width - sliderWidth) >> 1;
+      restrictSlider.y = (screenSize.height >> 1) - 24;
       restrictSlider.tag = 2;
       restrictSlider.addTargetWithActionForControlEvents(
         this,
@@ -81,23 +85,32 @@ export class ControlSliderTest extends ControlScene {
 
     return false;
   }
-  _createSlider() {
+  _createSlider(width = 256, height = 16) {
     const backgroundSprite = new Scale9Sprite(
       "default_theme/rounded_shadow_4.png",
       new Rect(8, 8, 8, 8)
     );
+
+    backgroundSprite.color = new Color(64, 64, 64);
+
     const progressSprite = new Scale9Sprite(
       "default_theme/rounded_shadow_0.png",
       new Rect(4, 4, 4, 4)
     );
-    progressSprite.color = Color.GREEN;
+    progressSprite.color = new Color(50, 50, 255);
     const thumbSprite = new Scale9Sprite(
       "default_theme/rounded_shadow_2.png",
       new Rect(8, 8, 8, 8)
     );
     thumbSprite.setPreferredSize(new Size(24, 24));
 
-    const slider = new ControlSlider(256, 16, 0.0, 5.0, new Rect(4, 4, 8, 8));
+    const slider = new ControlSlider(
+      width,
+      height,
+      0.0,
+      5.0,
+      new Rect(4, 4, 8, 8)
+    );
     slider.initWithSprites(backgroundSprite, thumbSprite, progressSprite);
     slider.anchorX = 0.5;
     slider.anchorY = 0.5;
@@ -119,7 +132,7 @@ export class ControlSliderTest extends ControlScene {
 }
 
 ControlSliderTest.create = function (sceneTitle) {
-  const scene = new TestScene("CCControlButtonTest", "Back");
+  const scene = new TestScene("Slider Test ", "Back");
   const layer = new ControlSliderTest();
   layer._title = sceneTitle;
   scene.addChild(layer);

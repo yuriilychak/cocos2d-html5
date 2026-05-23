@@ -1,14 +1,14 @@
-import { Rect, Size, Color, Point } from "@aspect/core";
+import { Rect, Size, Point } from "@aspect/core";
 import { Scale9Sprite } from "@aspect/ccui";
 import { Control } from "./control";
 import { CONTROL_EVENT_VALUE_CHANGED } from "./constants";
 
 export class ControlSlider extends Control {
   _values = null;
-  _thumbSprite = null;
-  _progressSprite = null;
-  _backgroundSprite = null;
-  _className = "ControlSlider";
+  _thumb = null;
+  _progress = null;
+  _background = null;
+  _className = "SliderComponent";
   _thumbOffset = null;
   _progressSize = null;
   _backgroundPadding = null;
@@ -39,23 +39,23 @@ export class ControlSlider extends Control {
   }
 
   initWithSprites(backgroundSprite, thumbSprite = null, progressSprite = null) {
-    this._backgroundSprite = backgroundSprite;
-    this._thumbSprite = thumbSprite;
-    this._progressSprite = progressSprite;
+    this._background = backgroundSprite;
+    this._thumb = thumbSprite;
+    this._progress = progressSprite;
 
-    if (this._backgroundSprite) {
-      this.addChild(this._backgroundSprite);
-      this._backgroundSprite.setAnchorPoint(0, 0);
+    if (this._background) {
+      this.addChild(this._background);
+      this._background.setAnchorPoint(0, 0);
     }
 
-    if (this._progressSprite) {
-      this.addChild(this._progressSprite);
-      this._progressSprite.setAnchorPoint(0, 0);
+    if (this._progress) {
+      this.addChild(this._progress);
+      this._progress.setAnchorPoint(0, 0);
     }
 
-    if (this._thumbSprite) {
-      this.addChild(this._thumbSprite);
-      this._thumbSprite.setAnchorPoint(0.5, 0.5);
+    if (this._thumb) {
+      this.addChild(this._thumb);
+      this._thumb.setAnchorPoint(0.5, 0.5);
     }
 
     this.refresh();
@@ -71,108 +71,90 @@ export class ControlSlider extends Control {
   }
 
   isTouchInside(touch) {
-    var touchLocation = touch.getLocation();
-    touchLocation = this.getParent().convertToNodeSpace(touchLocation);
-    var rect = this.getBoundingBox();
-    rect.width += this._thumbSprite.getContentSize().width;
-    rect.x -= this._thumbSprite.getContentSize().width / 2;
+    const touchLocation = this.getParent().convertToNodeSpace(touch.getLocation());
+    const rect = this.getBoundingBox();
+    const thumbSize = this._thumb !== null ? this._thumb.getContentSize() : Size.ZERO;
+    rect.width += thumbSize.width;
+    rect.x -= thumbSize.width / 2;
+
     return Rect.containsPoint(rect, touchLocation);
   }
 
   locationFromTouch(touch) {
-    var touchLocation = touch.getLocation();
-    touchLocation = this.convertToNodeSpace(touchLocation);
-    if (touchLocation.x < 0) {
-      touchLocation.x = 0;
-    } else if (touchLocation.x > this._progressSize.width) {
-      touchLocation.x = this._progressSize.width;
-    }
+    const touchLocation = this.convertToNodeSpace(touch.getLocation());
+
+    touchLocation.x = Math.min(
+      this._progressSize.width,
+      Math.max(0, touchLocation.x)
+    );
 
     return touchLocation;
   }
 
-  setEnabled(enabled) {
-    super.setEnabled(enabled);
-    if (this._thumbSprite) {
-      this._thumbSprite.setOpacity(enabled ? 255 : 128);
-    }
-  }
-
-  sliderBegan(location) {
-    this.setSelected(true);
-    this._thumbSprite.setColor(Color.GRAY);
-    this.value = this.valueForLocation(location);
-  }
-
-  sliderMoved(location) {
-    this.value = this.valueForLocation(location);
-  }
-
-  sliderEnded(location) {
-    if (this.isSelected()) {
-      this.value = this.valueForLocation(this._thumbSprite.getPosition());
-    }
-    this._thumbSprite.setColor(Color.WHITE);
-    this.setSelected(false);
-  }
-
   onTouchBegan(touch, event) {
-    if (!this.isTouchInside(touch) || !this.isEnabled() || !this.isVisible())
+    if (!this.isTouchInside(touch) || !this.enabled || !this.isVisible()) {
       return false;
-    var location = this.locationFromTouch(touch);
-    this.sliderBegan(location);
+    }
+
+    const location = this.locationFromTouch(touch);
+    this.setSelected(true);
+    this.value = this.valueForLocation(location);
+
     return true;
   }
 
   onTouchMoved(touch, event) {
     var location = this.locationFromTouch(touch);
-    this.sliderMoved(location);
+    this.value = this.valueForLocation(location);
   }
 
   onTouchEnded(touch, event) {
-    this.sliderEnded(new Point(0, 0));
+    if (this.isSelected() && this._thumb !== null) {
+      this.value = this.valueForLocation(this._thumb.getPosition());
+    }
+
+    this.setSelected(false);
   }
 
   doLayout() {
     const percent = this.percentage;
 
-    if (this._thumbSprite !== null) {
-      this._thumbSprite.x =
+    if (this._thumb !== null) {
+      this._thumb.x =
         percent * this._progressSize.width + this._thumbOffset.x;
-      this._thumbSprite.y = this._thumbOffset.y + this._progressSize.height / 2.0;
+      this._thumb.y =
+        this._thumbOffset.y + this._progressSize.height / 2.0;
     }
 
-    if (this._progressSprite !== null) {
-      if (this._progressSprite instanceof Scale9Sprite) {
-        this._progressSprite.setPreferredSize(
-          new Size(
+    if (this._progress !== null) {
+      if (this._progress instanceof Scale9Sprite) {
+        this._progress.setPreferredSize(
             percent * this._progressSize.width,
             this._progressSize.height
-          )
         );
       } else {
-        var textureRect = this._progressSprite.getTextureRect();
+        var textureRect = this._progress.getTextureRect();
         textureRect = new Rect(
           textureRect.x,
           textureRect.y,
           percent * this._progressSize.width,
           textureRect.height
         );
-        this._progressSprite.setTextureRect(
+        this._progress.setTextureRect(
           textureRect,
-          this._progressSprite.isTextureRectRotated()
+          this._progress.isTextureRectRotated()
         );
       }
     }
 
-    if (this._backgroundSprite !== null) {
-      this._backgroundSprite.setPreferredSize(
+    if (this._background !== null) {
+      this._background.setPreferredSize(
         new Size(
           this._progressSize.width + this._backgroundPadding.width,
           this._progressSize.height + this._backgroundPadding.height
         )
       );
-      this._backgroundSprite.setPosition(
+      this._background.setPosition(
         -this._backgroundPadding.x,
         -this._backgroundPadding.y
       );
@@ -190,48 +172,39 @@ export class ControlSlider extends Control {
     );
   }
 
-  get minimumAllowedValue() {
-    return this._minimumAllowedValue;
-  }
-
-  set minimumAllowedValue(val) {
-    this._minimumAllowedValue = val;
-  }
-
-  get maximumAllowedValue() {
-    return this._maximumAllowedValue;
-  }
-
-  set maximumAllowedValue(val) {
-    this._maximumAllowedValue = val;
-  }
   get thumbSprite() {
-    return this._thumbSprite;
+    return this._thumb;
   }
 
   set thumbSprite(value) {
-    this._thumbSprite = value;
+    this._thumb = value;
   }
 
   get progressSprite() {
-    return this._progressSprite;
+    return this._progress;
   }
 
   set progressSprite(value) {
-    this._progressSprite = value;
+    this._progress = value;
   }
 
   get backgroundSprite() {
-    return this._backgroundSprite;
+    return this._background;
   }
 
   set backgroundSprite(value) {
-    this._backgroundSprite = value;
+    this._background = value;
   }
 
   get percentage() {
+    const acceptedValue = Math.min(
+      Math.max(this.value, this.minimumAllowedValue),
+      this.maximumAllowedValue
+    );
+
     return (
-      (this.value - this.minimumValue) / (this.maximumValue - this.minimumValue)
+      (acceptedValue - this.minimumValue) /
+      (this.maximumValue - this.minimumValue)
     );
   }
 
@@ -320,7 +293,7 @@ export class ControlSlider extends Control {
 
   set minimumAllowedValue(value) {
     this._values[3] = value;
-    if (this.minimumAllowedValue > this.minimumValue) {
+    if (this.minimumAllowedValue < this.minimumValue) {
       this.minimumValue = this.minimumAllowedValue;
     } else {
       this.refresh();
@@ -334,7 +307,7 @@ export class ControlSlider extends Control {
   set maximumAllowedValue(value) {
     this._values[4] = value;
 
-    if (this.maximumAllowedValue < this.maximumValue) {
+    if (this.maximumAllowedValue > this.maximumValue) {
       this.maximumValue = this.maximumAllowedValue;
     } else {
       this.refresh();
@@ -343,5 +316,16 @@ export class ControlSlider extends Control {
 
   get thumbOffset() {
     return this._thumbOffset;
+  }
+
+  get enabled() {
+    return super.isEnabled();
+  }
+
+  set enabled(value) {
+    super.setEnabled(value);
+    if (this._thumb !== null) {
+      this._thumb.disabled = !value;
+    }
   }
 }
