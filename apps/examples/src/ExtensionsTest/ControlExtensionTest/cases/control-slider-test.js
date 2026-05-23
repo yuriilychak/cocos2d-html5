@@ -25,13 +25,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Director, Color, Rect, Size, SpriteFrameCache } from "@aspect/core";
+import { Director, Color, Rect, SpriteFrameCache } from "@aspect/core";
 import { Scale9Sprite, TextBMFont } from "@aspect/ccui";
 import { CONTROL_EVENT_VALUE_CHANGED, ControlSlider } from "@aspect/gui";
-import { ControlScene } from "../CCControlScene";
+import ControlScene from "./control-scene";
 import { TestScene } from "../../../test-scene";
 import { s_simpleFont_fnt, s_simpleTheme_plist } from "../../../resources";
-export class ControlSliderTest extends ControlScene {
+
+export default class ControlSliderTest extends ControlScene {
   init() {
     if (super.init()) {
       const screenSize = Director.getInstance().getWinSize();
@@ -102,7 +103,8 @@ export class ControlSliderTest extends ControlScene {
       "default_theme/rounded_shadow_2.png",
       new Rect(8, 8, 8, 8)
     );
-    thumbSprite.setPreferredSize(new Size(24, 24));
+    thumbSprite.width = 24;
+    thumbSprite.height = 24;
 
     const slider = new ControlSlider(
       width,
@@ -123,18 +125,20 @@ export class ControlSliderTest extends ControlScene {
       `Upper slider value = ${sender.value.toFixed(2)}`
     );
   }
+
   lowerValueChanged(sender, controlEvent) {
     // Change value of label.
     this._displayValueLabel.setString(
       `Lower slider value = ${sender.value.toFixed(2)}`
     );
   }
-}
 
-ControlSliderTest.create = function (sceneTitle) {
-  const scene = new TestScene("Slider Test ", "Back");
-  const layer = new ControlSliderTest();
-  layer._title = sceneTitle;
-  scene.addChild(layer);
-  return scene;
-};
+  static create() {
+    const scene = new TestScene("GUI Component", "Back");
+    const layer = new ControlSliderTest();
+    layer._title = "Slider Test";
+    scene.addChild(layer);
+    
+    return scene;
+  }
+}

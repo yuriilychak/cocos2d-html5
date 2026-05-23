@@ -26,7 +26,7 @@
  ****************************************************************************/
 
 import { runCCPoolTest } from "./CCPoolTest/ccpool-test-helpers";
-import { ControlSceneManager } from "./ControlExtensionTest/CCControlSceneManager";
+import { ControlSceneManager } from "./ControlExtensionTest";
 import { runEditBoxTest } from "./EditBoxTest/EditBoxTest";
 import { runSocketIOTest } from "./NetworkTest/SocketIOTest_simple";
 import { runWebSocketTest } from "./NetworkTest/WebSocketTest";

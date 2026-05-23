@@ -25,14 +25,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ControlScene } from "../CCControlScene";
-import { Color, Director, Node, Sprite } from "@aspect/core";
-import { TestScene } from "../../../test-scene";
+import { Color, Director, Node, Sprite, Rect } from "@aspect/core";
 import { Scale9Sprite, TextBMFont } from "@aspect/ccui";
+import { CONTROL_EVENT_VALUE_CHANGED, ControlSwitch } from "@aspect/gui";
+import ControlScene from "./control-scene";
+import { TestScene } from "../../../test-scene";
 import { s_simpleFont_fnt } from "../../../resources";
 
-import { CONTROL_EVENT_VALUE_CHANGED, ControlSwitch } from "@aspect/gui";
-export class ControlSwitchTest extends ControlScene {
+export default class ControlSwitchTest extends ControlScene {
   init() {
     if (super.init()) {
       var screenSize = Director.getInstance().getWinSize();
@@ -45,11 +45,15 @@ export class ControlSwitchTest extends ControlScene {
       var layer_width = 0;
 
       // Add the black background for the text
-      var background = new Scale9Sprite("extensions/buttonBackground.png");
+      var background = new Scale9Sprite(
+        "default_theme/rounded_shadow_4.png",
+        new Rect(8, 8, 8, 8)
+      );
       background.width = 80;
       background.height = 50;
       background.x = layer_width + background.width / 2.0;
       background.y = 0;
+      background.color = new Color(64, 64, 64);
       layer.addChild(background);
 
       layer_width += background.width;
@@ -103,12 +107,13 @@ export class ControlSwitchTest extends ControlScene {
       this._displayValueLabel.setString("Off");
     }
   }
-}
 
-ControlSwitchTest.create = function (sceneTitle) {
-  const scene = new TestScene("CCControlButtonTest", "Back");
-  const layer = new ControlSwitchTest();
-  layer._title = sceneTitle;
-  scene.addChild(layer);
-  return scene;
-};
+  static create() {
+    const scene = new TestScene("GUI Component", "Back");
+    const layer = new ControlSwitchTest();
+    layer._title = "Switch Test";
+    scene.addChild(layer);
+
+    return scene;
+  }
+}

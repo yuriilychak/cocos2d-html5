@@ -29,6 +29,7 @@
 
 import { s_grossini } from "../../resources";
 import { Sprite } from "@aspect/core";
+import { Pool } from "@aspect/ccpool";
 
 export class MySprite extends Sprite {
   constructor(f1, f2, f3) {
@@ -56,5 +57,15 @@ export class MySprite extends Sprite {
   reuse(f1, f2, f3) {
     this.initData(f1, f2, f3);
     this.setVisible(true);
+  }
+
+  static create(f1, f2, f3) {
+    return new MySprite(f1, f2, f3);
+  }
+
+  static reCreate(f1, f2, f3) {
+    var pool = Pool.getInstance();
+    if (pool.hasObject(MySprite)) return pool.getFromPool(MySprite, f1, f2, f3);
+    return MySprite.create(f1, f2, f3);
   }
 }

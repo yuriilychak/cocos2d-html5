@@ -24,14 +24,14 @@
 
  */
 
-import { ControlScene } from "../CCControlScene";
+import ControlScene from "./control-scene";
 import { Director, Node, Sprite } from "@aspect/core";
 import { TestScene } from "../../../test-scene";
 import { Scale9Sprite, TextBMFont } from "@aspect/ccui";
 import { s_simpleFont_fnt } from "../../../resources";
 
 import { CONTROL_EVENT_VALUE_CHANGED, ControlStepper } from "@aspect/gui";
-export class ControlStepperTest extends ControlScene {
+export default class ControlStepperTest extends ControlScene {
   init() {
     if (super.init()) {
       var screenSize = Director.getInstance().getWinSize();
@@ -93,12 +93,12 @@ export class ControlStepperTest extends ControlScene {
     // Change value of label.
     this._displayValueLabel.setString(sender.getValue().toString());
   }
-}
 
-ControlStepperTest.create = function (sceneTitle) {
-  const scene = new TestScene("CCControlButtonTest", "Back");
-  const layer = new ControlStepperTest();
-  layer._title = sceneTitle;
-  scene.addChild(layer);
-  return scene;
-};
+  static create() {
+    const scene = new TestScene("GUI Component", "Back");
+    const layer = new ControlStepperTest();
+    layer._title = "Stepper Test";
+    scene.addChild(layer);
+    return scene;
+  }
+}

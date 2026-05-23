@@ -128,10 +128,8 @@ export class ControlSlider extends Control {
 
     if (this._progress !== null) {
       if (this._progress instanceof Scale9Sprite) {
-        this._progress.setPreferredSize(
-            percent * this._progressSize.width,
-            this._progressSize.height
-        );
+        this._progress.width = percent * this._progressSize.width;
+        this._progress.height = this._progressSize.height;
       } else {
         var textureRect = this._progress.getTextureRect();
         textureRect = new Rect(
@@ -148,16 +146,10 @@ export class ControlSlider extends Control {
     }
 
     if (this._background !== null) {
-      this._background.setPreferredSize(
-        new Size(
-          this._progressSize.width + this._backgroundPadding.width,
-          this._progressSize.height + this._backgroundPadding.height
-        )
-      );
-      this._background.setPosition(
-        -this._backgroundPadding.x,
-        -this._backgroundPadding.y
-      );
+      this._background.width = this._progressSize.width + this._backgroundPadding.width;
+      this._background.height = this._progressSize.height + this._backgroundPadding.height;
+      this._background.x = -this._backgroundPadding.x;
+      this._background.y = -this._backgroundPadding.y;
     }
   }
 
@@ -324,6 +316,7 @@ export class ControlSlider extends Control {
 
   set enabled(value) {
     super.setEnabled(value);
+
     if (this._thumb !== null) {
       this._thumb.disabled = !value;
     }

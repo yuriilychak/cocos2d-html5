@@ -25,34 +25,17 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ControlSceneManager } from "./CCControlSceneManager";
-import { s_extensions_background } from "../../resources";
-import { Color, Director, Sprite } from "@aspect/core";
-import { BaseTestLayer } from "../../BaseTestLayer/BaseTestLayer";
-
-export class ControlScene extends BaseTestLayer {
+import { Color, Director } from "@aspect/core";
+import ControlSceneManager from "../control-scene-manager";
+import { BaseTestLayer } from "../../../BaseTestLayer/BaseTestLayer";
+export default class ControlScene extends BaseTestLayer {
   constructor() {
-    super(new Color(0, 0, 0, 255), new Color(98, 99, 117, 255));
+    super(new Color(53, 57, 65, 255), new Color(53, 57, 65, 255));
     this.init();
   }
 
   subtitle() {
     return "";
-  }
-
-  init() {
-    if (super.init()) {
-      const screensize = Director.getInstance().getWinSize();
-      const background = new Sprite(s_extensions_background);
-      background.x = screensize.width / 2;
-      background.y = screensize.height / 2;
-      const bgRect = background.getTextureRect();
-      background.scaleX = screensize.width / bgRect.width;
-      background.scaleY = screensize.height / bgRect.height;
-      this.addChild(background);
-      return true;
-    }
-    return false;
   }
 
   onBackCallback() {

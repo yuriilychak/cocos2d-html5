@@ -25,14 +25,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ControlScene } from "../CCControlScene";
+import ControlScene from "./control-scene";
 import { Color, Director, Node } from "@aspect/core";
 import { TestScene } from "../../../test-scene";
 import { Scale9Sprite, TextBMFont } from "@aspect/ccui";
 import { s_simpleFont_fnt } from "../../../resources";
 
 import { CONTROL_EVENT_VALUE_CHANGED, ControlColourPicker } from "@aspect/gui";
-export class ControlColourPickerTest extends ControlScene {
+export default class ControlColourPickerTest extends ControlScene {
   init() {
     if (super.init()) {
       var screenSize = Director.getInstance().getWinSize();
@@ -95,11 +95,12 @@ export class ControlColourPickerTest extends ControlScene {
     // Change value of label.
     this._colorLabel.setString(Color.toHex(sender.color).toUpperCase());
   }
+
+  static create() {
+    const scene = new TestScene("GUI Component", "Back");
+    const layer = new ControlColourPickerTest();
+    layer._title = "Colour Picker Test";
+    scene.addChild(layer);
+    return scene;
+  }
 }
-ControlColourPickerTest.create = function (sceneTitle) {
-  const scene = new TestScene("CCControlButtonTest", "Back");
-  const layer = new ControlColourPickerTest();
-  layer._title = sceneTitle;
-  scene.addChild(layer);
-  return scene;
-};

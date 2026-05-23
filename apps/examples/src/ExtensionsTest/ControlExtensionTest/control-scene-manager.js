@@ -25,73 +25,31 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ControlButtonTest_Event } from "./CCControlButtonTest/control-button-test-event";
-import { ControlButtonTest_HelloVariableSize } from "./CCControlButtonTest/control-button-test-hello-variable-size";
-import { ControlButtonTest_Styling } from "./CCControlButtonTest/control-button-test-styling";
-import { ControlColourPickerTest } from "./CCControlColourPickerTest/CCControlColourPickerTest";
-import { ControlPotentiometerTest } from "./CCControlPotentiometerTest/CCControlPotentiometerTest";
-import { ControlSliderTest } from "./CCControlSliderTest/CCControlSliderTest";
-import { ControlStepperTest } from "./CCControlStepperTest/CCControlStepperTest";
-import { ControlSwitchTest } from "./CCControlSwitchTest/CCControlSwitchTest";
+import {
+  ControlButtonTest_Event,
+  ControlButtonTest_HelloVariableSize,
+  ControlButtonTest_Styling,
+  ControlColourPickerTest,
+  ControlPotentiometerTest,
+  ControlSliderTest,
+  ControlStepperTest,
+  ControlSwitchTest
+} from "./cases";
 import { ExtensionsTestScene } from "../extensions-test-scene";
-import { NewClass } from "@aspect/core";
 
-export var controTestItemNames = [
-  {
-    itemTitle: "ControlSliderTest",
-    testScene: function () {
-      return ControlSliderTest.create(this.itemTitle);
-    }
-  },
-  {
-    itemTitle: "ControlColourPickerTest",
-    testScene: function () {
-      return ControlColourPickerTest.create(this.itemTitle);
-    }
-  },
-  {
-    itemTitle: "ControlSwitchTest",
-    testScene: function () {
-      return ControlSwitchTest.create(this.itemTitle);
-    }
-  },
-  {
-    itemTitle: "ControlButtonTest_HelloVariableSize",
-    testScene: function () {
-      return ControlButtonTest_HelloVariableSize.create(this.itemTitle);
-    }
-  },
-  {
-    itemTitle: "ControlButtonTest_Event",
-    testScene: function () {
-      return ControlButtonTest_Event.create(this.itemTitle);
-    }
-  },
-  {
-    itemTitle: "ControlButtonTest_Styling",
-    testScene: function () {
-      return ControlButtonTest_Styling.create(this.itemTitle);
-    }
-  },
-  {
-    itemTitle: "ControlPotentiometerTest",
-    testScene: function () {
-      return ControlPotentiometerTest.create(this.itemTitle);
-    }
-  },
-  {
-    itemTitle: "ControlStepperTest",
-    testScene: function () {
-      return ControlStepperTest.create(this.itemTitle);
-    }
-  }
-];
+export default class ControlSceneManager {
+  static items = [
+    ControlSliderTest,
+    ControlColourPickerTest,
+    ControlSwitchTest,
+    ControlButtonTest_HelloVariableSize,
+    ControlButtonTest_Event,
+    ControlButtonTest_Styling,
+    ControlPotentiometerTest,
+    ControlStepperTest
+  ];
 
-export class ControlSceneManager extends NewClass {
   constructor() {
-    super();
-
-    this._currentControlSceneId = 0;
     this._currentControlSceneId = 0;
   }
 
@@ -104,33 +62,31 @@ export class ControlSceneManager extends NewClass {
 
   nextControlScene() {
     this._currentControlSceneId =
-      (this._currentControlSceneId + 1) % controTestItemNames.length;
+      (this._currentControlSceneId + 1) % ControlSceneManager.items.length;
     return this.currentControlScene();
   }
 
   previousControlScene() {
     this._currentControlSceneId = this._currentControlSceneId - 1;
     if (this._currentControlSceneId < 0) {
-      this._currentControlSceneId = controTestItemNames.length - 1;
+      this._currentControlSceneId = ControlSceneManager.items.length - 1;
     }
 
     return this.currentControlScene();
   }
 
   currentControlScene() {
-    const scene = controTestItemNames[this._currentControlSceneId].testScene();
+    const scene = ControlSceneManager.items[this._currentControlSceneId].create();
     scene.onMainMenuCallback = () => new ExtensionsTestScene().runThisTest();
     return scene;
   }
-}
 
-ControlSceneManager.sharedInstance = null;
-/**
- * Returns the singleton of the control scene manager.
- */
-ControlSceneManager.getInstance = function () {
-  if (ControlSceneManager.sharedInstance == null) {
-    ControlSceneManager.sharedInstance = new ControlSceneManager();
+  static sharedInstance = null;
+
+  static getInstance() {
+    if (ControlSceneManager.sharedInstance == null) {
+      ControlSceneManager.sharedInstance = new ControlSceneManager();
+    }
+    return ControlSceneManager.sharedInstance;
   }
-  return ControlSceneManager.sharedInstance;
-};
+}

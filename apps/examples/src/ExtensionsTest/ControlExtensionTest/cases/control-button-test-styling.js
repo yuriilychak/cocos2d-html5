@@ -25,7 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ControlScene } from "../CCControlScene";
+import ControlScene from "./control-scene";
 import {
   s_extensions_button,
   s_extensions_buttonBackground,
@@ -37,7 +37,7 @@ import { TestScene } from "../../../test-scene";
 import { Scale9Sprite, TextBMFont } from "@aspect/ccui";
 
 import { CONTROL_STATE_HIGHLIGHTED, ControlButton } from "@aspect/gui";
-export class ControlButtonTest_Styling extends ControlScene {
+export default class ControlButtonTest_Styling extends ControlScene {
   init() {
     if (super.init()) {
       var screenSize = Director.getInstance().getWinSize();
@@ -112,12 +112,12 @@ export class ControlButtonTest_Styling extends ControlScene {
 
     return button;
   }
-}
 
-ControlButtonTest_Styling.create = function (sceneTitle) {
-  const scene = new TestScene("CCControlButtonTest", "Back");
-  const layer = new ControlButtonTest_Styling();
-  layer._title = sceneTitle;
-  scene.addChild(layer);
-  return scene;
-};
+  static create() {
+    const scene = new TestScene("GUI Component", "Back");
+    const layer = new ControlButtonTest_Styling();
+    layer._title = "Button Styling";
+    scene.addChild(layer);
+    return scene;
+  }
+}

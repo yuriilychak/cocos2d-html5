@@ -25,14 +25,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { ControlScene } from "../CCControlScene";
+import ControlScene from "./control-scene";
 import { Director, Node } from "@aspect/core";
 import { TestScene } from "../../../test-scene";
 import { Scale9Sprite, TextBMFont } from "@aspect/ccui";
 import { s_simpleFont_fnt } from "../../../resources";
 
 import { CONTROL_EVENT_VALUE_CHANGED, ControlPotentiometer } from "@aspect/gui";
-export class ControlPotentiometerTest extends ControlScene {
+export default class ControlPotentiometerTest extends ControlScene {
   init() {
     if (super.init()) {
       var screenSize = Director.getInstance().getWinSize();
@@ -97,11 +97,12 @@ export class ControlPotentiometerTest extends ControlScene {
     // Change value of label.
     this._displayValueLabel.setString(sender.getValue().toFixed(2));
   }
+
+  static create() {
+    const scene = new TestScene("GUI Component", "Back");
+    const layer = new ControlPotentiometerTest();
+    layer._title = "Potentiometer Test";
+    scene.addChild(layer);
+    return scene;
+  }
 }
-ControlPotentiometerTest.create = function (sceneTitle) {
-  const scene = new TestScene("CCControlButtonTest", "Back");
-  const layer = new ControlPotentiometerTest();
-  layer._title = sceneTitle;
-  scene.addChild(layer);
-  return scene;
-};

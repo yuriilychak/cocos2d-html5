@@ -28,21 +28,9 @@
  ****************************************************************************/
 
 import { CCPoolTest } from "./ccpool-test";
-import { MySprite } from "./my-sprite";
 import { ExtensionsTestScene } from "../extensions-test-scene";
 import { Director } from "@aspect/core";
 import { TestScene } from "../../test-scene";
-import { Pool } from "@aspect/ccpool";
-
-MySprite.create = function (f1, f2, f3) {
-  return new MySprite(f1, f2, f3);
-};
-
-MySprite.reCreate = function (f1, f2, f3) {
-  var pool = Pool.getInstance();
-  if (pool.hasObject(MySprite)) return pool.getFromPool(MySprite, f1, f2, f3);
-  return MySprite.create(f1, f2, f3);
-};
 
 export function runCCPoolTest() {
   var scene = new TestScene("CCPoolTest", "Back");
