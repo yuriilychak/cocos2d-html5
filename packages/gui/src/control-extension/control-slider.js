@@ -172,27 +172,27 @@ export class ControlSlider extends Control {
     );
   }
 
-  get thumbSprite() {
+  get thumb() {
     return this._thumb;
   }
 
-  set thumbSprite(value) {
+  set thumb(value) {
     this._thumb = value;
   }
 
-  get progressSprite() {
+  get progress() {
     return this._progress;
   }
 
-  set progressSprite(value) {
+  set progress(value) {
     this._progress = value;
   }
 
-  get backgroundSprite() {
+  get background() {
     return this._background;
   }
 
-  set backgroundSprite(value) {
+  set background(value) {
     this._background = value;
   }
 
