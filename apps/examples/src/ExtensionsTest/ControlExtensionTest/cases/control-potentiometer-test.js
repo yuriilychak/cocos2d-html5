@@ -35,17 +35,17 @@ import { CONTROL_EVENT_VALUE_CHANGED, ControlPotentiometer } from "@aspect/gui";
 export default class ControlPotentiometerTest extends ControlScene {
   init() {
     if (super.init()) {
-      var screenSize = Director.getInstance().getWinSize();
+      const screenSize = Director.getInstance().getWinSize();
 
-      var layer = new Node();
+      const layer = new Node();
       layer.x = screenSize.width / 2;
       layer.y = screenSize.height / 2;
       this.addChild(layer, 1);
 
-      var layer_width = 0;
+      let layer_width = 0;
 
       // Add the black background for the text
-      var background = new Scale9Sprite(
+      const background = new Scale9Sprite(
         "default_theme/rounded_shadow_4.png",
         new Rect(8, 8, 8, 8)
       );
@@ -65,11 +65,13 @@ export default class ControlPotentiometerTest extends ControlScene {
       layer.addChild(this._displayValueLabel);
 
       // Add the slider
-      var potentiometer = new ControlPotentiometer(
-        "extensions/potentiometerTrack.png",
-        "extensions/potentiometerProgress.png",
-        "extensions/potentiometerButton.png"
+      const potentiometer = new ControlPotentiometer(
+        "#default_theme/potentiometer_track.png",
+        "#default_theme/potentiometer_progress.png",
+        "#default_theme/potentiometer_button.png"
       );
+      potentiometer.background.color = new Color(32, 32, 32);
+      potentiometer.progressTimer.color = Color.GREEN;
       potentiometer.x = layer_width + 10 + potentiometer.width / 2;
       potentiometer.y = 0;
 
@@ -99,7 +101,7 @@ export default class ControlPotentiometerTest extends ControlScene {
   }
   valueChanged(sender, controlEvent) {
     // Change value of label.
-    this._displayValueLabel.setString(sender.getValue().toFixed(2));
+    this._displayValueLabel.setString(sender.value.toFixed(2));
   }
 
   static create() {

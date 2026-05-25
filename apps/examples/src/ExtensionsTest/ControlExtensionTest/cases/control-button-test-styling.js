@@ -35,19 +35,19 @@ import { CONTROL_STATE_HIGHLIGHTED, ControlButton } from "@aspect/gui";
 export default class ControlButtonTest_Styling extends ControlScene {
   init() {
     if (super.init()) {
-      var screenSize = Director.getInstance().getWinSize();
+      const screenSize = Director.getInstance().getWinSize();
 
-      var layer = new Node();
+      const layer = new Node();
       this.addChild(layer, 1);
 
-      var space = 10; // px
+      const space = 10; // px
 
-      var max_w = 0,
+      let max_w = 0,
         max_h = 0;
-      for (var i = 0; i < 3; i++) {
-        for (var j = 0; j < 3; j++) {
+      for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
           // Add the buttons
-          var button = this.standardButtonWithTitle(
+          const button = this.standardButtonWithTitle(
             ((Math.random() * 30 + 10) << 0).toString()
           );
           button.setAdjustBackgroundImage(false); // Tells the button that the background image must not be adjust
@@ -69,7 +69,7 @@ export default class ControlButtonTest_Styling extends ControlScene {
       layer.y = screenSize.height / 2.0;
 
       // Add the black background
-      var backgroundButton = new Scale9Sprite(
+      const backgroundButton = new Scale9Sprite(
         "default_theme/rounded_shadow_4.png",
         new Rect(8, 8, 8, 8)
       );
@@ -86,24 +86,24 @@ export default class ControlButtonTest_Styling extends ControlScene {
   }
   standardButtonWithTitle(title) {
     /** Creates and return a button with a default background and title color. */
-    var backgroundButton = new Scale9Sprite(
+    const backgroundButton = new Scale9Sprite(
       "default_theme/rounded_shadow_4.png",
       new Rect(8, 8, 8, 8)
     );
     backgroundButton.color = new Color(96, 96, 96);
     backgroundButton.setPreferredSize(new Size(45, 45)); // Set the prefered size
-    var backgroundHighlightedButton = new Scale9Sprite(
+    const backgroundHighlightedButton = new Scale9Sprite(
       "default_theme/rounded_shadow_4.png",
       new Rect(8, 8, 8, 8)
     );
     backgroundHighlightedButton.color = new Color(128, 128, 128);
     backgroundHighlightedButton.setPreferredSize(new Size(45, 45)); // Set the prefered size
 
-    var titleButton = new TextBMFont(title, s_simpleFont_fnt);
+    const titleButton = new TextBMFont(title, s_simpleFont_fnt);
 
     titleButton.color = Color.WHITE;
 
-    var button = new ControlButton(
+    const button = new ControlButton(
       titleButton,
       backgroundButton,
       null,

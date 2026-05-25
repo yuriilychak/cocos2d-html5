@@ -51,17 +51,17 @@ import {
 export default class ControlButtonTest_Event extends ControlScene {
   init() {
     if (super.init()) {
-      var screenSize = Director.getInstance().getWinSize();
+      const screenSize = Director.getInstance().getWinSize();
 
       // Add the button
-      var backgroundButton = new Scale9Sprite(
+      const backgroundButton = new Scale9Sprite(
         "default_theme/rounded_shadow_4.png",
         new Rect(8, 8, 8, 8)
       );
 
       backgroundButton.color = new Color(96, 96, 96);
 
-      var backgroundHighlightedButton = new Scale9Sprite(
+      const backgroundHighlightedButton = new Scale9Sprite(
         "default_theme/rounded_shadow_4.png",
         new Rect(8, 8, 8, 8)
       );
@@ -77,10 +77,10 @@ export default class ControlButtonTest_Event extends ControlScene {
       this._displayValueLabel.y = screenSize.height / 2.0;
       this.addChild(this._displayValueLabel, 10);
 
-      var titleButton = new TextBMFont("Touch Me!", s_simpleFont_fnt);
+      const titleButton = new TextBMFont("Touch Me!", s_simpleFont_fnt);
       titleButton.color = Color.WHITE;
 
-      var controlButton = new ControlButton(titleButton, backgroundButton);
+      const controlButton = new ControlButton(titleButton, backgroundButton);
       controlButton.setBackgroundSpriteForState(
         backgroundHighlightedButton,
         CONTROL_STATE_HIGHLIGHTED
@@ -97,7 +97,7 @@ export default class ControlButtonTest_Event extends ControlScene {
       this.addChild(controlButton, 1);
 
       // Add the black background
-      var background = new Scale9Sprite(
+      const background = new Scale9Sprite(
         "default_theme/rounded_shadow_4.png",
         new Rect(8, 8, 8, 8)
       );

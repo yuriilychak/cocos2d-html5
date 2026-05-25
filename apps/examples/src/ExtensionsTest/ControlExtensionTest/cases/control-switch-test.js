@@ -35,17 +35,17 @@ import { s_simpleFont_fnt } from "../../../resources";
 export default class ControlSwitchTest extends ControlScene {
   init() {
     if (super.init()) {
-      var screenSize = Director.getInstance().getWinSize();
+      const screenSize = Director.getInstance().getWinSize();
 
-      var layer = new Node();
+      const layer = new Node();
       layer.x = screenSize.width / 2;
       layer.y = screenSize.height / 2;
       this.addChild(layer, 1);
 
-      var layer_width = 0;
+      let layer_width = 0;
 
       // Add the black background for the text
-      var background = new Scale9Sprite(
+      const background = new Scale9Sprite(
         "default_theme/rounded_shadow_4.png",
         new Rect(8, 8, 8, 8)
       );
@@ -66,11 +66,11 @@ export default class ControlSwitchTest extends ControlScene {
       layer.addChild(this._displayValueLabel);
 
       // Create the switch
-      var onLabel = new TextBMFont("On", s_simpleFont_fnt);
+      const onLabel = new TextBMFont("On", s_simpleFont_fnt);
       onLabel.color = Color.WHITE;
-      var offLabel = new TextBMFont("Off", s_simpleFont_fnt);
+      const offLabel = new TextBMFont("Off", s_simpleFont_fnt);
       offLabel.color = Color.WHITE;
-      var switchControl = new ControlSwitch(
+      const switchControl = new ControlSwitch(
         new Sprite("extensions/switch-mask.png"),
         new Sprite("extensions/switch-on.png"),
         new Sprite("extensions/switch-off.png"),

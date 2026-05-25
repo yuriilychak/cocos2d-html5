@@ -25,25 +25,25 @@
  */
 
 import ControlScene from "./control-scene";
-import { Director, Node, Sprite } from "@aspect/core";
+import { Color, Director, Node, Rect } from "@aspect/core";
 import { TestScene } from "../../../test-scene";
-import { Scale9Sprite, TextBMFont } from "@aspect/ccui";
+import { BMButton, Scale9Sprite, TextBMFont, Widget } from "@aspect/ccui";
 import { s_simpleFont_fnt } from "../../../resources";
 
 import { CONTROL_EVENT_VALUE_CHANGED, ControlStepper } from "@aspect/gui";
 export default class ControlStepperTest extends ControlScene {
   init() {
     if (super.init()) {
-      var screenSize = Director.getInstance().getWinSize();
+      const screenSize = Director.getInstance().getWinSize();
 
-      var layer = new Node();
+      const layer = new Node();
       layer.x = screenSize.width / 2;
       layer.y = screenSize.height / 2;
       this.addChild(layer, 1);
-      var layer_width = 0;
+      let layer_width = 0;
 
       // Add the black background for the text
-      var background = new Scale9Sprite(
+      const background = new Scale9Sprite(
         "default_theme/rounded_shadow_4.png",
         new Rect(8, 8, 8, 8)
       );
@@ -62,7 +62,7 @@ export default class ControlStepperTest extends ControlScene {
 
       layer_width += background.width;
 
-      var stepper = this.makeControlStepper();
+      const stepper = this.makeControlStepper();
       stepper.x = layer_width + 10 + stepper.width / 2;
       stepper.y = 0;
       stepper.addTargetWithActionForControlEvents(
@@ -87,15 +87,32 @@ export default class ControlStepperTest extends ControlScene {
     return false;
   }
   makeControlStepper() {
-    var minusSprite = new Sprite("extensions/stepper-minus.png");
-    var plusSprite = new Sprite("extensions/stepper-plus.png");
+    const makeBtn = (text) => {
+      const b = new BMButton(
+        "default_theme/rounded_shadow_2.png",
+        "default_theme/rounded_shadow_2.png",
+        "default_theme/rounded_shadow_2.png",
+        Widget.PLIST_TEXTURE
+      );
+      b.setScale9Enabled(true);
+      b.setCapInsets(new Rect(12, 12, 12, 12));
+      b.setContentSize(48, 48);
+      b.setTitleFntFile(s_simpleFont_fnt);
+      b.setTitleText(text);
+      b.setTitleFontSize(28);
+      b.setNormalBgColor(new Color(0x44, 0x55, 0x77));
+      b.setPressedBgColor(new Color(0x22, 0x33, 0x55));
+      b.setDisabledBgColor(new Color(0x55, 0x55, 0x55));
+      b.pressedActionEnabled = true;
+      return b;
+    };
 
-    return new ControlStepper(minusSprite, plusSprite);
+    return new ControlStepper(makeBtn("-"), makeBtn("+"));
   }
 
   valueChanged(sender, controlEvent) {
     // Change value of label.
-    this._displayValueLabel.setString(sender.getValue().toString());
+    this._displayValueLabel.setString(sender.value.toString());
   }
 
   static create() {

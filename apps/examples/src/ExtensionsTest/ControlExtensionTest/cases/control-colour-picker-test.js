@@ -35,17 +35,17 @@ import { CONTROL_EVENT_VALUE_CHANGED, ControlColourPicker } from "@aspect/gui";
 export default class ControlColourPickerTest extends ControlScene {
   init() {
     if (super.init()) {
-      var screenSize = Director.getInstance().getWinSize();
+      const screenSize = Director.getInstance().getWinSize();
 
-      var layer = new Node();
+      const layer = new Node();
       layer.x = screenSize.width / 2;
       layer.y = screenSize.height / 2;
       this.addChild(layer, 1);
 
-      var layer_width = 0;
+      let layer_width = 0;
 
       // Create the colour picker
-      var colourPicker = new ControlColourPicker();
+      const colourPicker = new ControlColourPicker();
       colourPicker.color = new Color(37, 46, 252);
       colourPicker.x = colourPicker.width / 2;
       colourPicker.y = 0;
@@ -63,7 +63,7 @@ export default class ControlColourPickerTest extends ControlScene {
       layer_width += colourPicker.width;
 
       // Add the black background for the text
-      var background = new Scale9Sprite(
+      const background = new Scale9Sprite(
         "default_theme/rounded_shadow_4.png",
         new Rect(8, 8, 8, 8)
       );
