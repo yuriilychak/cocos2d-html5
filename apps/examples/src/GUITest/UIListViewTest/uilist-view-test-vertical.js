@@ -25,7 +25,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
-import { Node, Size, log } from "@aspect/core";
+import { Size, log } from "@aspect/core";
 import { Button, Layout, ListView, ScrollView } from "@aspect/ccui";
 
 export class UIListViewTest_Vertical extends UIMainLayer {
@@ -117,7 +117,7 @@ export class UIListViewTest_Vertical extends UIMainLayer {
   }
 
   onEnter() {
-    Node.prototype.onEnter.call(this);
+    super.onEnter();
     //we must call foreceDoLayout in onEnter method in h5.
     this.listView.forceDoLayout();
     var totalHeight =

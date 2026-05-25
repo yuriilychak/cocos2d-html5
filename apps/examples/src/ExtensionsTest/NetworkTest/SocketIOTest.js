@@ -25,32 +25,27 @@
  ****************************************************************************/
 /** @expose */
 import { ExtensionsTestScene } from "../extensions-test-scene";
-import { Color, Director, Layer, Point, Scene, log } from "@aspect/core";
+import { Color, Director, log } from "@aspect/core";
 import { ButtonLayout } from "../../button-layout";
 import { SocketIO } from "@aspect/socketio";
 import { TextBMFont } from "@aspect/ccui";
 import { s_simpleFont_fnt } from "../../resources";
+import { BaseTestLayer } from "../../BaseTestLayer/BaseTestLayer";
+import { TestScene } from "../../test-scene";
 
-export class SocketIOTestLayer extends Layer {
+export class SocketIOTestLayer extends BaseTestLayer {
   constructor() {
     super();
 
+    this._title = "SocketIO Test";
+    this._showNavButtons = false;
     this._sioClient = null;
-
     this._sioEndpoint = null;
-
     this._sioClientStatus = null;
     this.init();
   }
 
   init() {
-    var winSize = Director.getInstance().getWinSize();
-    var MARGIN = 40;
-
-    var label = new TextBMFont("SocketIO Test", s_simpleFont_fnt);
-    label.setPosition(new Point(winSize.width / 2, winSize.height - MARGIN));
-    this.addChild(label, 0);
-
     this.addChild(new ButtonLayout(
       [
         { label: "Open Client", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
@@ -60,8 +55,7 @@ export class SocketIOTestLayer extends Layer {
         { label: "Send Event", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
         { label: "Endpoint Event", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
         { label: "Disconnect Socket", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
-        { label: "Disconnect Endpoint", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
-        { label: "Back", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) }
+        { label: "Disconnect Endpoint", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) }
       ],
       140, "SocketIO",
       (i) => {
@@ -74,14 +68,13 @@ export class SocketIOTestLayer extends Layer {
           case 5: this.onMenuTestEventEndpointClicked(); break;
           case 6: this.onMenuTestClientDisconnectClicked(); break;
           case 7: this.onMenuTestEndpointDisconnectClicked(); break;
-          case 8: this.toExtensionsMainLayer(); break;
         }
       }
     ));
 
     this._sioClientStatus = new TextBMFont("Not connected...", s_simpleFont_fnt);
-    this._sioClientStatus.setAnchorPoint(new Point(0, 0));
-    this._sioClientStatus.setPosition(new Point(0, winSize.height * 0.25));
+    this._sioClientStatus.setAnchorPoint(0, 0);
+    this._sioClientStatus.setPosition(10, 10);
     this.addChild(this._sioClientStatus);
 
     return true;
@@ -256,16 +249,12 @@ export class SocketIOTestLayer extends Layer {
       this._sioEndpoint = null;
     }
   }
-
-  toExtensionsMainLayer(sender) {
-    var scene = new ExtensionsTestScene();
-    scene.runThisTest();
-  }
 }
 
 export function runSocketIOTest() {
-  var pScene = new Scene();
-  var pLayer = new SocketIOTestLayer();
-  pScene.addChild(pLayer);
-  Director.getInstance().runScene(pScene);
+  const scene = new TestScene("SocketIO Test", "Back");
+  scene.onMainMenuCallback = () => new ExtensionsTestScene().runThisTest();
+  const layer = new SocketIOTestLayer();
+  scene.addChild(layer);
+  Director.getInstance().runScene(scene);
 }

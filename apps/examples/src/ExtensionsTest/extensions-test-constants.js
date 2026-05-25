@@ -28,7 +28,7 @@
 import { runCCPoolTest } from "./CCPoolTest/ccpool-test-helpers";
 import { ControlSceneManager } from "./ControlExtensionTest";
 import { runEditBoxTest } from "./EditBoxTest/EditBoxTest";
-import { runSocketIOTest } from "./NetworkTest/SocketIOTest_simple";
+import { runSocketIOTest } from "./NetworkTest/SocketIOTest";
 import { runWebSocketTest } from "./NetworkTest/WebSocketTest";
 import { runTableViewTest } from "./TableViewTest/table-view-test-scene-helpers";
 import { Director, Sys } from "@aspect/core";
