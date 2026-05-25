@@ -26,13 +26,8 @@
  ****************************************************************************/
 
 import ControlScene from "./control-scene";
-import {
-  s_extensions_button,
-  s_extensions_buttonBackground,
-  s_extensions_buttonHighlighted,
-  s_simpleFont_fnt
-} from "../../../resources";
-import { Color, Director, Node } from "@aspect/core";
+import { s_simpleFont_fnt } from "../../../resources";
+import { Color, Director, Node, Rect } from "@aspect/core";
 import { TestScene } from "../../../test-scene";
 import { Scale9Sprite, TextBMFont } from "@aspect/ccui";
 
@@ -86,7 +81,11 @@ export default class ControlButtonTest_HelloVariableSize extends ControlScene {
       layer.y = screenSize.height / 2.0;
 
       // Add the black background
-      var background = new Scale9Sprite(s_extensions_buttonBackground);
+      var background = new Scale9Sprite(
+        "default_theme/rounded_shadow_4.png",
+        new Rect(8, 8, 8, 8)
+      );
+      background.color = new Color(32, 32, 32);
       background.width = total_width + 14;
       background.height = height + 14;
       background.x = screenSize.width / 2.0;
@@ -99,10 +98,17 @@ export default class ControlButtonTest_HelloVariableSize extends ControlScene {
   // Creates and return a button with a default background and title color.
   standardButtonWithTitle(title) {
     // Creates and return a button with a default background and title color.
-    var backgroundButton = new Scale9Sprite(s_extensions_button);
-    var backgroundHighlightedButton = new Scale9Sprite(
-      s_extensions_buttonHighlighted
+    var backgroundButton = new Scale9Sprite(
+      "default_theme/rounded_shadow_4.png",
+      new Rect(8, 8, 8, 8)
     );
+    backgroundButton.color = new Color(96, 96, 96);
+
+    var backgroundHighlightedButton = new Scale9Sprite(
+      "default_theme/rounded_shadow_4.png",
+      new Rect(8, 8, 8, 8)
+    );
+    backgroundHighlightedButton.color = new Color(128, 128, 128);
 
     var titleButton = new TextBMFont(title, s_simpleFont_fnt);
 

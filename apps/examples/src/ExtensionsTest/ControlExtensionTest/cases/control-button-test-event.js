@@ -37,16 +37,16 @@ import { TestScene } from "../../../test-scene";
 import { Scale9Sprite, TextBMFont } from "@aspect/ccui";
 
 import {
-    CONTROL_EVENT_TOUCH_CANCEL,
-    CONTROL_EVENT_TOUCH_DOWN,
-    CONTROL_EVENT_TOUCH_DRAG_ENTER,
-    CONTROL_EVENT_TOUCH_DRAG_EXIT,
-    CONTROL_EVENT_TOUCH_DRAG_INSIDE,
-    CONTROL_EVENT_TOUCH_DRAG_OUTSIDE,
-    CONTROL_EVENT_TOUCH_UP_INSIDE,
-    CONTROL_EVENT_TOUCH_UP_OUTSIDE,
-    CONTROL_STATE_HIGHLIGHTED,
-    ControlButton
+  CONTROL_EVENT_TOUCH_CANCEL,
+  CONTROL_EVENT_TOUCH_DOWN,
+  CONTROL_EVENT_TOUCH_DRAG_ENTER,
+  CONTROL_EVENT_TOUCH_DRAG_EXIT,
+  CONTROL_EVENT_TOUCH_DRAG_INSIDE,
+  CONTROL_EVENT_TOUCH_DRAG_OUTSIDE,
+  CONTROL_EVENT_TOUCH_UP_INSIDE,
+  CONTROL_EVENT_TOUCH_UP_OUTSIDE,
+  CONTROL_STATE_HIGHLIGHTED,
+  ControlButton
 } from "@aspect/gui";
 export default class ControlButtonTest_Event extends ControlScene {
   init() {
@@ -54,10 +54,19 @@ export default class ControlButtonTest_Event extends ControlScene {
       var screenSize = Director.getInstance().getWinSize();
 
       // Add the button
-      var backgroundButton = new Scale9Sprite(s_extensions_button);
-      var backgroundHighlightedButton = new Scale9Sprite(
-        s_extensions_buttonHighlighted
+      var backgroundButton = new Scale9Sprite(
+        "default_theme/rounded_shadow_4.png",
+        new Rect(8, 8, 8, 8)
       );
+
+      backgroundButton.color = new Color(96, 96, 96);
+
+      var backgroundHighlightedButton = new Scale9Sprite(
+        "default_theme/rounded_shadow_4.png",
+        new Rect(8, 8, 8, 8)
+      );
+
+      backgroundHighlightedButton.color = new Color(128, 128, 128);
 
       // Add a label in which the button events will be displayed
       this.setDisplayValueLabel(new TextBMFont("No Event", s_simpleFont_fnt));
@@ -88,7 +97,11 @@ export default class ControlButtonTest_Event extends ControlScene {
       this.addChild(controlButton, 1);
 
       // Add the black background
-      var background = new Scale9Sprite(s_extensions_buttonBackground);
+      var background = new Scale9Sprite(
+        "default_theme/rounded_shadow_4.png",
+        new Rect(8, 8, 8, 8)
+      );
+      background.color = new Color(32, 32, 32);
       background.width = 300;
       background.height = 170;
       background.x = screenSize.width / 2.0;

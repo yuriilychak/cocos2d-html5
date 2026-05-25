@@ -26,13 +26,8 @@
  ****************************************************************************/
 
 import ControlScene from "./control-scene";
-import {
-  s_extensions_button,
-  s_extensions_buttonBackground,
-  s_extensions_buttonHighlighted,
-  s_simpleFont_fnt
-} from "../../../resources";
-import { Color, Director, Node, Size } from "@aspect/core";
+import { s_simpleFont_fnt } from "../../../resources";
+import { Color, Director, Node, Rect, Size } from "@aspect/core";
 import { TestScene } from "../../../test-scene";
 import { Scale9Sprite, TextBMFont } from "@aspect/ccui";
 
@@ -53,7 +48,7 @@ export default class ControlButtonTest_Styling extends ControlScene {
         for (var j = 0; j < 3; j++) {
           // Add the buttons
           var button = this.standardButtonWithTitle(
-            (0 | (Math.random() * 30)) + ""
+            ((Math.random() * 30 + 10) << 0).toString()
           );
           button.setAdjustBackgroundImage(false); // Tells the button that the background image must not be adjust
           // It'll use the prefered size of the background image
@@ -74,23 +69,34 @@ export default class ControlButtonTest_Styling extends ControlScene {
       layer.y = screenSize.height / 2.0;
 
       // Add the black background
-      var backgroundButton = new Scale9Sprite(s_extensions_buttonBackground);
+      var backgroundButton = new Scale9Sprite(
+        "default_theme/rounded_shadow_4.png",
+        new Rect(8, 8, 8, 8)
+      );
+      backgroundButton.color = new Color(32, 32, 32);
       backgroundButton.width = max_w + 14;
       backgroundButton.height = max_h + 14;
       backgroundButton.x = screenSize.width / 2.0;
       backgroundButton.y = screenSize.height / 2.0;
       this.addChild(backgroundButton);
+
       return true;
     }
     return false;
   }
   standardButtonWithTitle(title) {
     /** Creates and return a button with a default background and title color. */
-    var backgroundButton = new Scale9Sprite(s_extensions_button);
+    var backgroundButton = new Scale9Sprite(
+      "default_theme/rounded_shadow_4.png",
+      new Rect(8, 8, 8, 8)
+    );
+    backgroundButton.color = new Color(96, 96, 96);
     backgroundButton.setPreferredSize(new Size(45, 45)); // Set the prefered size
     var backgroundHighlightedButton = new Scale9Sprite(
-      s_extensions_buttonHighlighted
+      "default_theme/rounded_shadow_4.png",
+      new Rect(8, 8, 8, 8)
     );
+    backgroundHighlightedButton.color = new Color(128, 128, 128);
     backgroundHighlightedButton.setPreferredSize(new Size(45, 45)); // Set the prefered size
 
     var titleButton = new TextBMFont(title, s_simpleFont_fnt);
