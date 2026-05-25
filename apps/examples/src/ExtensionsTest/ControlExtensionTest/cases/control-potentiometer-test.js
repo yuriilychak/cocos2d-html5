@@ -45,7 +45,11 @@ export default class ControlPotentiometerTest extends ControlScene {
       var layer_width = 0;
 
       // Add the black background for the text
-      var background = new Scale9Sprite("extensions/buttonBackground.png");
+      var background = new Scale9Sprite(
+        "default_theme/rounded_shadow_4.png",
+        new Rect(8, 8, 8, 8)
+      );
+      background.color = new Color(32, 32, 32);
       background.width = 80;
       background.height = 50;
       background.x = layer_width + background.width / 2.0;
