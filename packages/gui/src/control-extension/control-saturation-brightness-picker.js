@@ -38,10 +38,10 @@ export class ControlSaturationBrightnessPicker extends Control {
 
     initWithTargetAndPos(target, pos) {
         if (super.init()) {
-            this._background = ControlUtils.addSpriteToTargetWithPosAndAnchor(new Sprite("#colourPickerBackground.png"), target, pos, new Point(0.0, 0.0));
-            this._overlay = ControlUtils.addSpriteToTargetWithPosAndAnchor(new Sprite("#colourPickerOverlay.png"), target, pos, new Point(0.0, 0.0));
-            this._shadow = ControlUtils.addSpriteToTargetWithPosAndAnchor(new Sprite("#colourPickerShadow.png"), target, pos, new Point(0.0, 0.0));
-            this._slider = ControlUtils.addSpriteToTargetWithPosAndAnchor(new Sprite("#colourPicker.png"), target, pos, new Point(0.5, 0.5));
+            this._background = ControlUtils.addSpriteToTargetWithPosAndAnchor(new Sprite("#default_theme/color_picker/tint.png"), target, pos, new Point(0.0, 0.0));
+            this._overlay = ControlUtils.addSpriteToTargetWithPosAndAnchor(new Sprite("#default_theme/color_picker/tint_gradient.png"), target, pos, new Point(0.0, 0.0));
+            this._shadow = ControlUtils.addSpriteToTargetWithPosAndAnchor(new Sprite("#default_theme/color_picker/tint_effect.png"), target, pos, new Point(0.0, 0.0));
+            this._slider = ControlUtils.addSpriteToTargetWithPosAndAnchor(new Sprite("#default_theme/color_picker/picker.png"), target, pos, new Point(0.5, 0.5));
             this._startPos = pos;
             this._boxPos = 35;
             this._boxSize = this._background.getContentSize().width / 2;

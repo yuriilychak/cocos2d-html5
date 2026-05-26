@@ -66,9 +66,9 @@ export default class ControlPotentiometerTest extends ControlScene {
 
       // Add the slider
       const potentiometer = new ControlPotentiometer(
-        "#default_theme/potentiometer_track.png",
-        "#default_theme/potentiometer_progress.png",
-        "#default_theme/potentiometer_button.png"
+        "#default_theme/potentiometr/track.png",
+        "#default_theme/potentiometr/progress.png",
+        "#default_theme/potentiometr/button.png"
       );
       potentiometer.background.color = new Color(32, 32, 32);
       potentiometer.progressTimer.color = Color.GREEN;
