@@ -1,114 +1,61 @@
-/****************************************************************************
- Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2016 Chukong Technologies Inc.
- Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
-
- http://www.cocos2d-x.org
-
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
-
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
-
-import ControlScene from "./control-scene";
-import { Director, Node } from "@aspect/core";
-import { TestScene } from "../../../test-scene";
+import { Color, Node, Rect } from "@aspect/core";
 import { Scale9Sprite, TextBMFont } from "@aspect/ccui";
+import { CONTROL_EVENT_VALUE_CHANGED, ControlPotentiometer } from "@aspect/gui";
 import { s_simpleFont_fnt } from "../../../resources";
 
-import { CONTROL_EVENT_VALUE_CHANGED, ControlPotentiometer } from "@aspect/gui";
-export default class ControlPotentiometerTest extends ControlScene {
-  init() {
-    if (super.init()) {
-      const screenSize = Director.getInstance().getWinSize();
+export default class ControlPotentiometerTest extends Node {
+  constructor() {
+    super();
 
-      const layer = new Node();
-      layer.x = screenSize.width / 2;
-      layer.y = screenSize.height / 2;
-      this.addChild(layer, 1);
+    let layer_width = 0;
 
-      let layer_width = 0;
+    const background = new Scale9Sprite(
+      "default_theme/rounded_shadow_4.png",
+      new Rect(8, 8, 8, 8)
+    );
+    background.color = new Color(32, 32, 32);
+    background.width = 80;
+    background.height = 50;
+    background.x = layer_width + background.width / 2.0;
+    background.y = 0;
+    this.addChild(background);
 
-      // Add the black background for the text
-      const background = new Scale9Sprite(
-        "default_theme/rounded_shadow_4.png",
-        new Rect(8, 8, 8, 8)
-      );
-      background.color = new Color(32, 32, 32);
-      background.width = 80;
-      background.height = 50;
-      background.x = layer_width + background.width / 2.0;
-      background.y = 0;
-      layer.addChild(background);
+    layer_width += background.width;
 
-      layer_width += background.width;
+    this._displayValueLabel = new TextBMFont("", s_simpleFont_fnt);
+    this._displayValueLabel.x = background.x;
+    this._displayValueLabel.y = background.y;
+    this.addChild(this._displayValueLabel);
 
-      this._displayValueLabel = new TextBMFont("", s_simpleFont_fnt);
+    const potentiometer = new ControlPotentiometer(
+      "#default_theme/potentiometr/track.png",
+      "#default_theme/potentiometr/progress.png",
+      "#default_theme/potentiometr/button.png"
+    );
+    potentiometer.background.color = new Color(32, 32, 32);
+    potentiometer.progressTimer.color = Color.GREEN;
+    potentiometer.x = layer_width + 10 + potentiometer.width / 2;
+    potentiometer.y = 0;
 
-      this._displayValueLabel.x = background.x;
-      this._displayValueLabel.y = background.y;
-      layer.addChild(this._displayValueLabel);
+    potentiometer.addTargetWithActionForControlEvents(
+      this,
+      this.valueChanged,
+      CONTROL_EVENT_VALUE_CHANGED
+    );
 
-      // Add the slider
-      const potentiometer = new ControlPotentiometer(
-        "#default_theme/potentiometr/track.png",
-        "#default_theme/potentiometr/progress.png",
-        "#default_theme/potentiometr/button.png"
-      );
-      potentiometer.background.color = new Color(32, 32, 32);
-      potentiometer.progressTimer.color = Color.GREEN;
-      potentiometer.x = layer_width + 10 + potentiometer.width / 2;
-      potentiometer.y = 0;
+    this.addChild(potentiometer);
 
-      // When the value of the slider will change, the given selector will be call
-      potentiometer.addTargetWithActionForControlEvents(
-        this,
-        this.valueChanged,
-        CONTROL_EVENT_VALUE_CHANGED
-      );
+    layer_width += 10 + potentiometer.width;
 
-      layer.addChild(potentiometer);
+    this.anchorX = 0.5;
+    this.anchorY = 0.5;
+    this.width = layer_width;
+    this.height = 0;
 
-      layer_width += potentiometer.width;
-
-      // Set the layer size
-      layer.width = layer_width;
-      layer.height = 0;
-      layer.anchorX = 0.5;
-      layer.anchorY = 0.5;
-
-      // Update the value label
-      this.valueChanged(potentiometer, CONTROL_EVENT_VALUE_CHANGED);
-
-      return true;
-    }
-    return false;
+    this.valueChanged(potentiometer, CONTROL_EVENT_VALUE_CHANGED);
   }
-  valueChanged(sender, controlEvent) {
-    // Change value of label.
+
+  valueChanged(sender) {
     this._displayValueLabel.setString(sender.value.toFixed(2));
-  }
-
-  static create() {
-    const scene = new TestScene("GUI Component", "Back");
-    const layer = new ControlPotentiometerTest();
-    layer._title = "Potentiometer Test";
-    scene.addChild(layer);
-    return scene;
   }
 }

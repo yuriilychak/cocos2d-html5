@@ -1,110 +1,47 @@
-/****************************************************************************
- Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2016 Chukong Technologies Inc.
- Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
-
- http://www.cocos2d-x.org
-
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
-
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
-
-import ControlScene from "./control-scene";
-import { Color, Director, Node } from "@aspect/core";
-import { TestScene } from "../../../test-scene";
+import { Color, Node, Rect } from "@aspect/core";
 import { Scale9Sprite, TextBMFont } from "@aspect/ccui";
+import { CONTROL_EVENT_VALUE_CHANGED, ControlColourPicker } from "@aspect/gui";
 import { s_simpleFont_fnt } from "../../../resources";
 
-import { CONTROL_EVENT_VALUE_CHANGED, ControlColourPicker } from "@aspect/gui";
-export default class ControlColourPickerTest extends ControlScene {
-  init() {
-    if (super.init()) {
-      const screenSize = Director.getInstance().getWinSize();
+export default class ControlColourPickerTest extends Node {
+  constructor() {
+    super();
 
-      const layer = new Node();
-      layer.x = screenSize.width / 2;
-      layer.y = screenSize.height / 2;
-      this.addChild(layer, 1);
+    const colourPicker = new ControlColourPicker();
+    colourPicker.color = new Color(37, 46, 252);
+    colourPicker.anchorX = 0.5;
+    colourPicker.anchorY = 0.5;
+    colourPicker.x = 0;
+    colourPicker.y = 30;
+    this.addChild(colourPicker);
 
-      let layer_width = 0;
+    const background = new Scale9Sprite(
+      "default_theme/rounded_shadow_4.png",
+      new Rect(8, 8, 8, 8)
+    );
+    background.color = new Color(32, 32, 32);
+    background.width = 150;
+    background.height = 50;
+    background.x = colourPicker.width + 10;
+    background.y = 25;
+    this.addChild(background);
 
-      // Create the colour picker
-      const colourPicker = new ControlColourPicker();
-      colourPicker.color = new Color(37, 46, 252);
-      colourPicker.x = colourPicker.width / 2;
-      colourPicker.y = 0;
+    this._colorLabel = new TextBMFont("#color", s_simpleFont_fnt);
+    this._colorLabel.color = Color.WHITE;
+    this._colorLabel.x = background.x;
+    this._colorLabel.y = background.y;
+    this.addChild(this._colorLabel);
 
-      // Add it to the layer
-      layer.addChild(colourPicker);
+    colourPicker.addTargetWithActionForControlEvents(
+      this,
+      this.colourValueChanged,
+      CONTROL_EVENT_VALUE_CHANGED
+    );
 
-      // Add the target-action pair
-      colourPicker.addTargetWithActionForControlEvents(
-        this,
-        this.colourValueChanged,
-        CONTROL_EVENT_VALUE_CHANGED
-      );
-
-      layer_width += colourPicker.width;
-
-      // Add the black background for the text
-      const background = new Scale9Sprite(
-        "default_theme/rounded_shadow_4.png",
-        new Rect(8, 8, 8, 8)
-      );
-      background.color = new Color(32, 32, 32);
-      background.width = 150;
-      background.height = 50;
-      background.x = layer_width + background.width / 2.0;
-      background.y = 0;
-      layer.addChild(background);
-
-      layer_width += background.width;
-
-      this._colorLabel = new TextBMFont("#color", s_simpleFont_fnt);
-      this._colorLabel.color = Color.WHITE;
-
-      this._colorLabel.x = background.x;
-      this._colorLabel.y = background.y;
-      layer.addChild(this._colorLabel);
-
-      // Set the layer size
-      layer.width = layer_width;
-      layer.height = 0;
-      layer.anchorX = 0.5;
-      layer.anchorY = 0.5;
-
-      // Update the color text
-      this.colourValueChanged(colourPicker, CONTROL_EVENT_VALUE_CHANGED);
-      return true;
-    }
-    return false;
+    this.colourValueChanged(colourPicker, CONTROL_EVENT_VALUE_CHANGED);
   }
-  colourValueChanged(sender, controlEvent) {
-    // Change value of label.
+
+  colourValueChanged(sender) {
     this._colorLabel.setString(Color.toHex(sender.color).toUpperCase());
-  }
-
-  static create() {
-    const scene = new TestScene("GUI Component", "Back");
-    const layer = new ControlColourPickerTest();
-    layer._title = "Colour Picker Test";
-    scene.addChild(layer);
-    return scene;
   }
 }

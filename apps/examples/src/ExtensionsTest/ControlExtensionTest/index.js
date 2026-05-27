@@ -1,1 +1,4 @@
-export { default as ControlSceneManager } from "./control-scene-manager";
+export {
+  default as ControlExtensionTestLayer,
+  runControlExtensionTest
+} from "./control-extension-test-layer";

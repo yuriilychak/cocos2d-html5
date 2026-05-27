@@ -26,7 +26,7 @@
  ****************************************************************************/
 
 import { runCCPoolTest } from "./CCPoolTest/ccpool-test-helpers";
-import { ControlSceneManager } from "./ControlExtensionTest";
+import { runControlExtensionTest } from "./ControlExtensionTest";
 import { runEditBoxTest } from "./EditBoxTest/EditBoxTest";
 import { runSocketIOTest } from "./NetworkTest/SocketIOTest";
 import { runWebSocketTest } from "./NetworkTest/WebSocketTest";
@@ -37,9 +37,7 @@ export const extensionsTestItems = [
   {
     title: "CCControlButtonTest",
     testScene: function () {
-      var pManager = ControlSceneManager.getInstance();
-      var pScene = pManager.currentControlScene();
-      Director.getInstance().runScene(pScene);
+      runControlExtensionTest();
     }
   },
   {
