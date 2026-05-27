@@ -1,4 +1,4 @@
-import { Node, color, RendererConfig } from "@aspect/core";
+import { Node, Color, RendererConfig } from "@aspect/core";
 import { DrawNodeCanvas } from "./draw-node-canvas";
 import { DrawNodeWebGL } from "./draw-node-webgl";
 
@@ -19,7 +19,7 @@ export class DrawNode extends Node {
 
   constructor() {
     super();
-    this._drawColor = color(255, 255, 255, 255);
+    this._drawColor = new Color(255, 255, 255, 255);
     this._initDrawNode.apply(this, arguments);
   }
 

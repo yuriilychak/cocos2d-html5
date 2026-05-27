@@ -1,4 +1,4 @@
-import { LabelTTF, Size, Point, Color, Rect } from "@aspect/core";
+import { Size, Point, Color, Rect } from "@aspect/core";
 import { Scale9Sprite } from "@aspect/ccui";
 import { LabelBMFont } from "@aspect/labels";
 import { ScaleTo } from "@aspect/actions";
@@ -61,12 +61,6 @@ export class ControlButton extends Control {
             this.initWithLabelAndBackgroundSprite(label, backgroundSprite);
         else if (label != null)
             this.initWithBackgroundSprite(label);
-        else
-            this.init();
-    }
-
-    init() {
-        return this.initWithLabelAndBackgroundSprite(new LabelTTF("", "Arial", 12), new Scale9Sprite());
     }
 
     needsLayout() {
@@ -176,16 +170,6 @@ export class ControlButton extends Control {
         return false;
     }
 
-    initWithTitleAndFontNameAndFontSize(title, fontName, fontSize) {
-        var label = new LabelTTF(title, fontName, fontSize);
-        return this.initWithLabelAndBackgroundSprite(label, new Scale9Sprite());
-    }
-
-    initWithBackgroundSprite(sprite) {
-        var label = new LabelTTF("", "Arial", 30);
-        return this.initWithLabelAndBackgroundSprite(label, sprite);
-    }
-
     doesAdjustBackgroundImage() {
         return this._doesAdjustBackgroundImage;
     }
@@ -238,30 +222,30 @@ export class ControlButton extends Control {
         return this._currentTitleColor;
     }
 
-    getOpacity() {
+    get opacity() {
         return this._opacity;
     }
 
-    setOpacity(opacity) {
+    set opacity(opacity) {
         super.setOpacity(opacity);
         var locTable = this._backgroundSpriteDispatchTable;
         for (var itemKey in locTable)
-            locTable[itemKey].setOpacity(opacity);
+            locTable[itemKey].opacity = opacity;
     }
 
-    setColor(color) {
+    set color(color) {
         super.setColor(color);
         var locTable = this._backgroundSpriteDispatchTable;
         for (var key in locTable)
-            locTable[key].setColor(color);
+            locTable[key].color = color;
     }
 
-    getColor() {
+    get color() {
         var locRealColor = this._realColor;
         return new Color(locRealColor.r, locRealColor.g, locRealColor.b, locRealColor.a);
     }
 
-    isPushed() {
+    get isPushed() {
         return this._isPushed;
     }
 
@@ -279,24 +263,41 @@ export class ControlButton extends Control {
         this.needsLayout();
     }
 
-    setEnabled(enabled) {
-        super.setEnabled(enabled);
+    set enabled(value) {
+        super.setEnabled(value);
         this.needsLayout();
     }
 
-    setSelected(enabled) {
-        super.setSelected(enabled);
+    get enabled() {
+        return super.enabled;
+    }
+
+    set selected(value) {
+        super.setSelected(value);
         this.needsLayout();
+    }
+
+    get selected() {
+        return super.selected;
+    }
+
+    set highlighted(enabled) {
+        this.setHighlighted(enabled);
+    }
+
+    get highlighted() {
+        return super.highlighted;
     }
 
     setHighlighted(enabled) {
         this._state = enabled ? CONTROL_STATE_HIGHLIGHTED : CONTROL_STATE_NORMAL;
-        super.setHighlighted(enabled);
+        this._highlighted = enabled;
+        this.needsLayout();
         var action = this.getActionByTag(CONTROL_ZOOM_ACTION_TAG);
         if (action)
             this.stopAction(action);
         if (this.zoomOnTouchDown) {
-            var scaleValue = (this.isHighlighted() && this.isEnabled() && !this.isSelected()) ? 1.1 : 1.0;
+            var scaleValue = (this.isHighlighted() && this.enabled && !this.isSelected()) ? 1.1 : 1.0;
             var zoomAction = new ScaleTo(0.05, scaleValue);
             zoomAction.setTag(CONTROL_ZOOM_ACTION_TAG);
             this.runAction(zoomAction);
@@ -304,7 +305,7 @@ export class ControlButton extends Control {
     }
 
     onTouchBegan(touch, event) {
-        if (!this.isTouchInside(touch) || !this.isEnabled() || !this.isVisible() || !this.hasVisibleParents())
+        if (!this.isTouchInside(touch) || !this.enabled || !this.isVisible() || !this.hasVisibleParents())
             return false;
         this._isPushed = true;
         this.setHighlighted(true);
@@ -360,7 +361,7 @@ export class ControlButton extends Control {
 
     setTitleForState(title, state) {
         this._titleDispatchTable[state] = title || "";
-        if (this.getState() === state)
+        if (this.state === state)
             this.needsLayout();
     }
 
@@ -376,7 +377,7 @@ export class ControlButton extends Control {
 
     setTitleColorForState(color, state) {
         this._titleColorDispatchTable[state] = color;
-        if (this.getState() === state)
+        if (this.state === state)
             this.needsLayout();
     }
 
@@ -398,38 +399,8 @@ export class ControlButton extends Control {
         titleLabel.setVisible(false);
         titleLabel.setAnchorPoint(0.5, 0.5);
         this.addChild(titleLabel, 1);
-        if (this.getState() === state)
+        if (this.state === state)
             this.needsLayout();
-    }
-
-    setTitleTTFForState(fntFile, state) {
-        var title = this.getTitleForState(state);
-        if (!title)
-            title = "";
-        this.setTitleLabelForState(new LabelTTF(title, fntFile, 12), state);
-    }
-
-    getTitleTTFForState(state) {
-        var labelTTF = this.getTitleLabelForState(state);
-        if ((labelTTF != null) && (labelTTF instanceof LabelTTF)) {
-            return labelTTF.getFontName();
-        }
-        return "";
-    }
-
-    setTitleTTFSizeForState(size, state) {
-        var labelTTF = this.getTitleLabelForState(state);
-        if ((labelTTF != null) && (labelTTF instanceof LabelTTF)) {
-            labelTTF.setFontSize(size);
-        }
-    }
-
-    getTitleTTFSizeForState(state) {
-        var labelTTF = this.getTitleLabelForState(state);
-        if ((labelTTF != null) && (labelTTF instanceof LabelTTF)) {
-            return labelTTF.getFontSize();
-        }
-        return 0;
     }
 
     setTitleBMFontForState(fntFile, state) {

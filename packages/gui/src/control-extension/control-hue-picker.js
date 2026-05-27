@@ -1,6 +1,5 @@
 import { Sprite, Point, degreesToRadians, radiansToDegrees } from "@aspect/core";
 import { Control } from "./control";
-import { ControlUtils } from "./control-utils";
 import { CONTROL_EVENT_VALUE_CHANGED } from "./constants";
 
 export class ControlHuePicker extends Control {
@@ -11,29 +10,23 @@ export class ControlHuePicker extends Control {
     _startPos = null;
     _className = "ControlHuePicker";
 
-    get hue() { return this.getHue(); }
-    set hue(v) { this.setHue(v); }
-    get huePercent() { return this.getHuePercentage(); }
-    set huePercent(v) { this.setHuePercentage(v); }
-    get background() { return this.getBackground(); }
-    get slider() { return this.getSlider(); }
-    get startPos() { return this.getStartPos(); }
-
     constructor(target, pos) {
         super();
         pos && this.initWithTargetAndPos(target, pos);
     }
 
-    getHue() { return this._hue; }
-
-    setHue(hueValue) {
-        this._hue = hueValue;
-        this.setHuePercentage(this._hue / 360.0);
+    get hue() { 
+        return this._hue; 
     }
 
-    getHuePercentage() { return this._huePercentage; }
+    set hue(hueValue) {
+        this._hue = hueValue;
+        this.huePercentage = this._hue / 360.0;
+    }
 
-    setHuePercentage(hueValueInPercent) {
+    get huePercentage() { return this._huePercentage; }
+
+    set huePercentage(hueValueInPercent) {
         this._huePercentage = hueValueInPercent;
         this._hue = this._huePercentage * 360.0;
         var backgroundBox = this._background.getBoundingBox();
@@ -47,21 +40,25 @@ export class ControlHuePicker extends Control {
         this._slider.setPosition(x, y);
     }
 
-    setEnabled(enabled) {
+    set enabled(enabled) {
         super.setEnabled(enabled);
         if (this._slider) {
             this._slider.setOpacity(enabled ? 255 : 128);
         }
     }
 
-    getBackground() { return this._background; }
-    getSlider() { return this._slider; }
-    getStartPos() { return this._startPos; }
+    get enabled() {
+        return super.enabled;
+    }
+
+    get background() { return this._background; }
+    get slider() { return this._slider; }
+    get startPos() { return this._startPos; }
 
     initWithTargetAndPos(target, pos) {
         if (super.init()) {
-            this._background = ControlUtils.addSpriteToTargetWithPosAndAnchor(new Sprite("#default_theme/color_picker/color.png"), target, pos, new Point(0.0, 0.0));
-            this._slider = ControlUtils.addSpriteToTargetWithPosAndAnchor(new Sprite("#default_theme/color_picker/picker.png"), target, pos, new Point(0.5, 0.5));
+            this._background = Control.addSpriteToTargetWithPosAndAnchor(new Sprite("#default_theme/color_picker/color.png"), target, pos, new Point(0.0, 0.0));
+            this._slider = Control.addSpriteToTargetWithPosAndAnchor(new Sprite("#default_theme/color_picker/picker.png"), target, pos, new Point(0.5, 0.5));
             this._slider.setPosition(pos.x, pos.y + this._background.getBoundingBox().height * 0.5);
             this._startPos = pos;
             this._hue = 0.0;
@@ -79,7 +76,7 @@ export class ControlHuePicker extends Control {
         var dy = location.y - centerY;
         var angle = Math.atan2(dy, dx);
         var angleDeg = radiansToDegrees(angle) + 180.0;
-        this.setHue(angleDeg);
+        this.hue = angleDeg;
         this.sendActionsForControlEvents(CONTROL_EVENT_VALUE_CHANGED);
     }
 
@@ -93,7 +90,7 @@ export class ControlHuePicker extends Control {
     }
 
     onTouchBegan(touch, event) {
-        if (!this.isEnabled() || !this.isVisible())
+        if (!this.enabled || !this.isVisible())
             return false;
         var touchLocation = this.getTouchLocation(touch);
         return this._checkSliderPosition(touchLocation);

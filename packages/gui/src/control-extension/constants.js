@@ -22,3 +22,5 @@ export const SLIDER_MARGIN_V = 8;
 export const STEPPER_PARTMINUS = 0;
 export const STEPPER_PARTPLUS = 1;
 export const STEPPER_PARTNONE = 2;
+
+export const CONTROL_EVENT_TOTAL_NUMBER = 9;

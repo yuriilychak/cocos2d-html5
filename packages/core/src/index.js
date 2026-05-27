@@ -216,7 +216,7 @@ export {
   ENABLE_STACKABLE_ACTIONS,
   DRAWNODE_TOTAL_VERTICES
 } from "./platform/config";
-export { Color, color } from "./platform/types/color";
+export { Color, Acceleration } from "./platform/types";
 export { BlendFunc } from "./platform/types/blend-func";
 export { GlobalVertexBuffer } from "./renderer/global-vertex-buffer";
 export { Animation } from "./sprites/animation/animation";

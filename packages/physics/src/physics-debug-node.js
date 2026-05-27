@@ -1,5 +1,5 @@
 import { DrawNode } from "@aspect/shape-nodes";
-import { RendererConfig, color, log, lerp } from "@aspect/core";
+import { RendererConfig, Color, log, lerp } from "@aspect/core";
 
 export function convertVerts(verts) {
   var ret = [];
@@ -19,7 +19,7 @@ export function colorForBody(body) {
   }
 }
 
-export const CONSTRAINT_COLOR = color(0, 255, 0, 128);
+export const CONSTRAINT_COLOR = new Color(0, 255, 0, 128);
 
 export function drawShape(shape, renderer) {
   var body = shape.body;
@@ -33,7 +33,7 @@ export function drawShape(shape, renderer) {
       this.drawSegment(shape.ta, shape.tb, Math.max(shape.r, 2.0), c);
       break;
     case cp.PolyShape.prototype.collisionCode:
-      var line = color(c.r, c.g, c.b, lerp(c.a, 255, 0.5));
+      var line = new Color(c.r, c.g, c.b, lerp(c.a, 255, 0.5));
       this.drawPoly(convertVerts(shape.tVerts), c, 1.0, line);
       break;
     default:

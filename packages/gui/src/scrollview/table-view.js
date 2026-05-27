@@ -2,7 +2,7 @@ import { Node, NewClass, Size, Point, Rect, arrayRemoveObject, INVALID_INDEX } f
 import {
     GScrollView, ScrollViewDelegate,
     SCROLLVIEW_DIRECTION_NONE, SCROLLVIEW_DIRECTION_HORIZONTAL,
-    SCROLLVIEW_DIRECTION_VERTICAL, SCROLLVIEW_DIRECTION_BOTH
+    SCROLLVIEW_DIRECTION_VERTICAL
 } from "./scroll-view";
 import { ArrayForObjectSorting } from "./sorting";
 

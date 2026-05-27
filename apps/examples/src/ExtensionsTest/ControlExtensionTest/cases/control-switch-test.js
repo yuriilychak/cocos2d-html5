@@ -65,18 +65,45 @@ export default class ControlSwitchTest extends ControlScene {
       this._displayValueLabel.y = background.y;
       layer.addChild(this._displayValueLabel);
 
-      // Create the switch
-      const onLabel = new TextBMFont("On", s_simpleFont_fnt);
-      onLabel.color = Color.WHITE;
-      const offLabel = new TextBMFont("Off", s_simpleFont_fnt);
-      offLabel.color = Color.WHITE;
+      const backgroundSprite = new Scale9Sprite(
+        "default_theme/rounded_shadow_4.png",
+        new Rect(8, 8, 8, 8)
+      );
+
+      backgroundSprite.width = 48;
+      backgroundSprite.height = 24;
+      backgroundSprite.color = new Color(32, 32, 32);
+
+      const thumbSprite = new Scale9Sprite(
+        "default_theme/rounded_shadow_2.png",
+        new Rect(8, 8, 8, 8)
+      );
+      thumbSprite.width = 24;
+      thumbSprite.height = 24;
+
+      const onSprite = new Scale9Sprite(
+        "default_theme/rounded_shadow_4.png",
+        new Rect(8, 8, 8, 8)
+      );
+      onSprite.width = 48;
+      onSprite.height = 24;
+      onSprite.color = Color.GREEN;
+
+      const offSprite = new Scale9Sprite(
+        "default_theme/rounded_shadow_4.png",
+        new Rect(8, 8, 8, 8)
+      );
+      offSprite.width = 48;
+      offSprite.height = 24;
+      offSprite.color = Color.RED;
+
       const switchControl = new ControlSwitch(
-        new Sprite("extensions/switch-mask.png"),
-        new Sprite("extensions/switch-on.png"),
-        new Sprite("extensions/switch-off.png"),
-        new Sprite("extensions/switch-thumb.png"),
-        onLabel,
-        offLabel
+        48,
+        24,
+        backgroundSprite,
+        onSprite,
+        offSprite,
+        thumbSprite
       );
       switchControl.x = layer_width + 10 + switchControl.width / 2;
       switchControl.y = 0;
@@ -101,7 +128,7 @@ export default class ControlSwitchTest extends ControlScene {
     return false;
   }
   valueChanged(sender, controlEvent) {
-    if (sender.isOn()) {
+    if (sender.isOn) {
       this._displayValueLabel.setString("On");
     } else {
       this._displayValueLabel.setString("Off");

@@ -8,7 +8,6 @@ import {
     SLIDER_MARGIN_H, SLIDER_MARGIN_V,
     STEPPER_PARTMINUS, STEPPER_PARTPLUS, STEPPER_PARTNONE
 } from "./control-extension/constants";
-import { RGBA, HSV, ControlUtils } from "./control-extension/control-utils";
 import { Invocation } from "./control-extension/invocation";
 import { Control } from "./control-extension/control";
 import { ControlButton } from "./control-extension/control-button";
@@ -18,7 +17,7 @@ import { ControlColourPicker } from "./control-extension/control-colour-picker";
 import { ControlSlider } from "./control-extension/control-slider";
 import { ControlStepper } from "./control-extension/control-stepper";
 import { ControlPotentiometer } from "./control-extension/control-potentiometer";
-import { ControlSwitch, ControlSwitchSprite } from "./control-extension/control-switch";
+import { ControlSwitch } from "./control-extension/control-switch";
 import { Spacer, MenuPassive } from "./control-extension/menu-passive";
 
 // scrollview
@@ -49,13 +48,11 @@ export {
     CONTROL_STATE_SELECTED, CONTROL_STATE_INITIAL, CONTROL_ZOOM_ACTION_TAG,
     SLIDER_MARGIN_H, SLIDER_MARGIN_V,
     STEPPER_PARTMINUS, STEPPER_PARTPLUS, STEPPER_PARTNONE,
-    // control-extension utils
-    RGBA, HSV, ControlUtils,
     // control-extension classes
     Invocation, Control, ControlButton,
     ControlSaturationBrightnessPicker, ControlHuePicker, ControlColourPicker,
     ControlSlider, ControlStepper, ControlPotentiometer,
-    ControlSwitch, ControlSwitchSprite,
+    ControlSwitch,
     Spacer, MenuPassive,
     // scrollview
     SortableObject, SortedObject, ArrayForObjectSorting,

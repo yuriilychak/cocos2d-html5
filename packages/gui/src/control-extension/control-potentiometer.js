@@ -50,13 +50,6 @@ export class ControlPotentiometer extends Control {
     return false;
   }
 
-  setEnabled(enabled) {
-    super.setEnabled(enabled);
-    if (this._thumb !== null) {
-      this._thumb.setOpacity(enabled ? 255 : 128);
-    }
-  }
-
   isTouchInside(touch) {
     var touchLocation = this.getTouchLocation(touch);
     var distance = this.distanceBetweenPointAndPoint(
@@ -73,7 +66,7 @@ export class ControlPotentiometer extends Control {
   }
 
   onTouchBegan(touch, event) {
-    if (!this.isTouchInside(touch) || !this.isEnabled() || !this.isVisible())
+    if (!this.isTouchInside(touch) || !this.enabled || !this.isVisible())
       return false;
     this._previousLocation = this.getTouchLocation(touch);
     this.potentiometerBegan(this._previousLocation);
@@ -111,8 +104,8 @@ export class ControlPotentiometer extends Control {
   }
 
   potentiometerBegan(location) {
-    this.setSelected(true);
-    this.thumb.setColor(Color.GRAY);
+    this.selected = true;
+    this.thumb.color = Color.GRAY;
   }
 
   potentiometerMoved(location) {
@@ -131,8 +124,8 @@ export class ControlPotentiometer extends Control {
   }
 
   potentiometerEnded(location) {
-    this.thumb.setColor(Color.WHITE);
-    this.setSelected(false);
+    this.thumb.color = Color.WHITE;
+    this.selected = false;
   }
 
   set thumb(value) {
@@ -197,5 +190,20 @@ export class ControlPotentiometer extends Control {
 
   get maximumValue() {
     return this._maximumValue;
+  }
+
+  set enabled(enabled) {
+    super.setEnabled(enabled);
+    if (this._thumb !== null) {
+      this._thumb.enabled = enabled;
+    }
+
+    if(this._progressTimer !== null) {
+      this._progressTimer.enabled = enabled;
+    }
+  }
+
+  get enabled() {
+    return super.enabled;
   }
 }

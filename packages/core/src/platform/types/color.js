@@ -80,6 +80,49 @@ export class Color {
     this._val = (this._val & 0xffffff00) | value;
   }
 
+  get hsv() {
+    const r = this.r / 255.0;
+    const g = this.g / 255.0;
+    const b = this.b / 255.0;
+    const min = Math.min(r, g, b);
+    const max = Math.max(r, g, b);
+    const delta = max - min;
+    const v = max;
+    let h = 0;
+    let s = 0;
+
+    if (delta < 0.00001) {
+      s = 0;
+      h = 0;
+
+      return { h, s, v };
+    }
+
+    if (max > 0.0) {
+      s = delta / max;
+    } else {
+      s = 0;
+      h = 0;
+
+      return { h, s, v };
+    }
+
+    if (r >= max) {
+      h = (g - b) / delta;
+    } else if (g >= max) {
+      h = 2 + (b - r) / delta;
+    } else {
+      h = 4 + (r - g) / delta;
+    }
+
+    h *= 60;
+
+    if (h < 0.0) {
+      h += 360.0;
+    }
+    return { h, s, v };
+  }
+
   /**
    * White color (255, 255, 255, 255)
    * @returns {Color}
@@ -189,35 +232,73 @@ export class Color {
 
     return `rgba(${c.join(",")})`;
   }
-}
 
-/**
- * Generate a color object based on multiple forms of parameters
- * @example
- *
- * // 1. All channels separately as parameters
- * var color1 = color(255, 255, 255, 255);
- *
- * // 2. Convert a hex string to a color
- * var color2 = color("#000000");
- *
- * // 3. An color object as parameter
- * var color3 = color({r: 255, g: 255, b: 255, a: 255});
- *
- * Alpha channel is optional. Default value is 255
- *
- * @param {Number|String|Color} r
- * @param {Number} [g]
- * @param {Number} [b]
- * @param {Number} [a=255]
- * @return {Color}
- */
-export function color(r, g, b, a) {
-  if (r === undefined) return new Color(0, 0, 0, 255);
-  if (typeof r === "object")
-    return new Color(r.r, r.g, r.b, r.a == null ? 255 : r.a);
-  if (typeof r === "string") return Color.fromHex(r);
-  return new Color(r, g, b, a == null ? 255 : a);
+  static fromHSV({ h, s, v }) {
+    var hh, p, q, t, ff;
+    let i;
+    let r = 0;
+    let g = 0;
+    let b = 0;
+
+    if (s <= 0.0) {
+      if (!h) {
+        r = v;
+        g = v;
+        b = v;
+        return new Color(0 | (r * 255), 0 | (g * 255), 0 | (b * 255));
+      }
+      r = 0.0;
+      g = 0.0;
+      b = 0.0;
+      return new Color(0 | (r * 255), 0 | (g * 255), 0 | (b * 255));
+    }
+    hh = h;
+    if (hh >= 360.0) {
+      hh = 0.0;
+    }
+    hh /= 60.0;
+    i = 0 | hh;
+    ff = hh - i;
+    p = v * (1.0 - s);
+    q = v * (1.0 - s * ff);
+    t = v * (1.0 - s * (1.0 - ff));
+
+    switch (i) {
+      case 0:
+        r = v;
+        g = t;
+        b = p;
+        break;
+      case 1:
+        r = q;
+        g = v;
+        b = p;
+        break;
+      case 2:
+        r = p;
+        g = v;
+        b = t;
+        break;
+      case 3:
+        r = p;
+        g = q;
+        b = v;
+        break;
+      case 4:
+        r = t;
+        g = p;
+        b = v;
+        break;
+      case 5:
+      default:
+        r = v;
+        g = p;
+        b = q;
+        break;
+    }
+
+    return new Color(0 | (r * 255), 0 | (g * 255), 0 | (b * 255));
+  }
 }
 
 /**
@@ -276,52 +357,3 @@ export const VERTICAL_TEXT_ALIGNMENT_CENTER = 1;
  * @type Number
  */
 export const VERTICAL_TEXT_ALIGNMENT_BOTTOM = 2;
-
-// Forward color preset getters on the color factory function for backward compatibility
-Object.defineProperties(color, {
-  WHITE: {
-    get() {
-      return Color.WHITE;
-    }
-  },
-  YELLOW: {
-    get() {
-      return Color.YELLOW;
-    }
-  },
-  BLUE: {
-    get() {
-      return Color.BLUE;
-    }
-  },
-  GREEN: {
-    get() {
-      return Color.GREEN;
-    }
-  },
-  RED: {
-    get() {
-      return Color.RED;
-    }
-  },
-  MAGENTA: {
-    get() {
-      return Color.MAGENTA;
-    }
-  },
-  BLACK: {
-    get() {
-      return Color.BLACK;
-    }
-  },
-  ORANGE: {
-    get() {
-      return Color.ORANGE;
-    }
-  },
-  GRAY: {
-    get() {
-      return Color.GRAY;
-    }
-  }
-});

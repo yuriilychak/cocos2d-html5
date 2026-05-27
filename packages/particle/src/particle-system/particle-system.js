@@ -28,7 +28,7 @@ import {
   Node,
   Point,
   Rect,
-  color,
+  Color,
   log,
   isNumber,
   isString,
@@ -232,10 +232,10 @@ export class ParticleSystem extends Node {
     this._sourcePosition = new Point(0, 0);
     this._posVar = new Point(0, 0);
 
-    this._startColor = color(255, 255, 255, 255);
-    this._startColorVar = color(255, 255, 255, 255);
-    this._endColor = color(255, 255, 255, 255);
-    this._endColorVar = color(255, 255, 255, 255);
+    this._startColor = Color.WHITE;
+    this._startColorVar = Color.WHITE;
+    this._endColor = Color.WHITE;
+    this._endColorVar = Color.WHITE;
 
     this._plistFile = "";
     this._elapsed = 0;

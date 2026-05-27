@@ -1,7 +1,6 @@
-import { REPEAT_FOREVER } from "@aspect/core";
+import { REPEAT_FOREVER, Rect } from "@aspect/core";
 import { Widget } from "@aspect/ccui";
 import { Control } from "./control";
-import { ControlUtils } from "./control-utils";
 import { CONTROL_EVENT_VALUE_CHANGED, STEPPER_PARTMINUS, STEPPER_PARTPLUS, STEPPER_PARTNONE } from "./constants";
 
 export class ControlStepper extends Control {
@@ -96,7 +95,7 @@ export class ControlStepper extends Control {
         }
       });
 
-      var maxRect = ControlUtils.CCRectUnion(
+      var maxRect = Rect.union(
         this._minusButton.getBoundingBox(),
         this._plusButton.getBoundingBox()
       );
@@ -225,5 +224,19 @@ export class ControlStepper extends Control {
 
   get isContinuous() {
     return this._continuous;
+  }
+
+  set enabled(enabled) {
+    super.setEnabled(enabled);
+    if (this._minusButton !== null) {
+      this._minusButton.enabled = enabled;
+    }
+    if (this._plusButton !== null) {
+      this._plusButton.enabled = enabled;
+    }
+  }
+
+  get enabled() {
+    return super.enabled;
   }
 }

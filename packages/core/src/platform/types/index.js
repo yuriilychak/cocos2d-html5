@@ -1,6 +1,5 @@
 export {
   Color,
-  color,
   Acceleration,
   TEXT_ALIGNMENT_LEFT,
   TEXT_ALIGNMENT_CENTER,

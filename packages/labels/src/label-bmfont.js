@@ -8,7 +8,7 @@ import {
   Size,
   Sprite,
   Texture2D,
-  color,
+  Color,
   log,
   contentScaleFactor,
   rectPixelsToPoints,
@@ -243,7 +243,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
       self._fontSize = fontSize > 0 ? fontSize : 0;
 
       self._realOpacity = 255;
-      self._realColor = color(255, 255, 255, 255);
+      self._realColor = new Color(255, 255, 255, 255);
 
       self._contentSize.width = 0;
       self._contentSize.height = 0;

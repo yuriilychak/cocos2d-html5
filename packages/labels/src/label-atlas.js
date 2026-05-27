@@ -1,7 +1,7 @@
 import { LabelBMFont } from "./label-bmfont";
 import { LabelBMFontCanvasRenderCmd } from "./label-bmfont-canvas-render-cmd";
 import { LabelBMFontWebGLRenderCmd } from "./label-bmfont-webgl-render-cmd";
-import { RendererConfig, Point, Texture2D, color, log, warn, contentScaleFactor, TEXT_ALIGNMENT_LEFT, Loader, Path, SpriteFrameCache, textureCache } from "@aspect/core";
+import { RendererConfig, Point, Texture2D, Color, log, warn, contentScaleFactor, TEXT_ALIGNMENT_LEFT, Loader, Path, SpriteFrameCache, textureCache } from "@aspect/core";
 
 export class LabelAtlas extends LabelBMFont {
     _className = "LabelAtlas";
@@ -116,7 +116,7 @@ export class LabelAtlas extends LabelBMFont {
             self._width = -1;
 
             self._realOpacity = 255;
-            self._realColor = color(255, 255, 255, 255);
+            self._realColor = new Color(255, 255, 255, 255);
 
             self._contentSize.width = 0;
             self._contentSize.height = 0;

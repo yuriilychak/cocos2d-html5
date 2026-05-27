@@ -3,7 +3,7 @@ import {
   BlendFunc,
   SRC_ALPHA,
   ONE_MINUS_SRC_ALPHA,
-  color,
+  Color,
   RendererConfig,
   GlobalVertexBuffer,
   DRAWNODE_TOTAL_VERTICES,
@@ -79,7 +79,7 @@ export class DrawNodeWebGL {
       SHADER_POSITION_LENGTHTEXTURECOLOR
     );
     this._blendFunc = new BlendFunc(SRC_ALPHA, ONE_MINUS_SRC_ALPHA);
-    this._drawColor = color(255, 255, 255, 255);
+    this._drawColor = new Color(255, 255, 255, 255);
 
     this._bufferCapacity = capacity || 64;
     this.manualRelease = manualRelease;

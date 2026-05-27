@@ -310,15 +310,20 @@ export class ControlSlider extends Control {
     return this._thumbOffset;
   }
 
-  get enabled() {
-    return super.isEnabled();
-  }
 
   set enabled(value) {
     super.setEnabled(value);
 
     if (this._thumb !== null) {
-      this._thumb.disabled = !value;
+      this._thumb.enabled = value;
     }
+
+    if (this._progress !== null) {
+      this._progress.enabled = value;
+    }
+  }
+
+  get enabled() {
+    return super.enabled;
   }
 }

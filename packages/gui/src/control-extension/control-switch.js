@@ -1,244 +1,221 @@
-import { Sprite, Point, Size, Color } from "@aspect/core";
-import { ClippingNode } from "@aspect/clipping-nodes";
+import { Point, Size } from "@aspect/core";
 import { ActionTween } from "@aspect/actions";
 import { Control } from "./control";
 import { CONTROL_EVENT_VALUE_CHANGED } from "./constants";
 
 export class ControlSwitch extends Control {
-    _switchSprite = null;
-    _initialTouchXPosition = 0;
-    _moved = false;
-    _on = false;
-    _className = "ControlSwitch";
+  _initialTouchXPosition = 0;
+  _moved = false;
+  _on = false;
+  _minX = 0;
+  _maxX = 0;
+  _sliderXPosition = 0;
+  _onProgress = null;
+  _offProgress = null;
+  _thumb = null;
+  _background = null;
+  _className = "SwitchComponent";
 
-    constructor(maskSprite, onSprite, offSprite, thumbSprite, onLabel, offLabel) {
-        super();
-        offLabel && this.initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, onLabel, offLabel);
+  constructor(width, height, maskSprite, onSprite, offSprite, thumbSprite) {
+    super();
+    this.initWithSprite(
+      width,
+      height,
+      maskSprite,
+      onSprite,
+      offSprite,
+      thumbSprite
+    );
+  }
+
+  initWithSprite(width, height, background, onProgress, offProgress, thumb) {
+    if (this.init()) {
+      this._on = true;
+      this.setContentSize(new Size(width, height));
+
+      this._onProgress = onProgress;
+      this._offProgress = offProgress;
+      this._thumb = thumb;
+      this._background = background;
+      this._minX = thumb.getContentSize().width / 2;
+      this._maxX = width - thumb.getContentSize().width / 2;
+
+      this.addChild(this._background);
+      this.addChild(this._onProgress);
+      this.addChild(this._offProgress);
+      this.addChild(this._thumb);
+      this.needsLayout();
+
+      return true;
     }
 
-    initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, onLabel, offLabel) {
-        if (!maskSprite) throw new Error("ControlSwitch.initWithMaskSprite(): maskSprite should be non-null.");
-        if (!onSprite) throw new Error("ControlSwitch.initWithMaskSprite(): onSprite should be non-null.");
-        if (!offSprite) throw new Error("ControlSwitch.initWithMaskSprite(): offSprite should be non-null.");
-        if (!thumbSprite) throw new Error("ControlSwitch.initWithMaskSprite(): thumbSprite should be non-null.");
-        if (this.init()) {
-            this._on = true;
-            this._switchSprite = new ControlSwitchSprite();
-            this._switchSprite.initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, onLabel, offLabel);
-            this._switchSprite.setPosition(this._switchSprite.getContentSize().width / 2, this._switchSprite.getContentSize().height / 2);
-            this.addChild(this._switchSprite);
-            this.ignoreAnchorPointForPosition(false);
-            this.setAnchorPoint(0.5, 0.5);
-            this.setContentSize(this._switchSprite.getContentSize());
-            return true;
-        }
-        return false;
+    return false;
+  }
+
+  setOn(isOn, animated) {
+    animated = animated || false;
+    this._on = isOn;
+    var xPosition = this._on ? this._maxX : this._minX;
+    if (animated) {
+      this.runAction(new ActionTween(0.2, "sliderX", this.sliderX, xPosition));
+    } else {
+      this.sliderX = xPosition;
+    }
+    this.sendActionsForControlEvents(CONTROL_EVENT_VALUE_CHANGED);
+  }
+
+  get isOn() {
+    return this._on;
+  }
+  get hasMoved() {
+    return this._moved;
+  }
+
+  set enabled(enabled) {
+    super.setEnabled(enabled);
+
+    if (this._thumb !== null) {
+      this._thumb.enabled = enabled;
     }
 
-    setOn(isOn, animated) {
-        animated = animated || false;
-        this._on = isOn;
-        var xPosition = (this._on) ? this._switchSprite.getOnPosition() : this._switchSprite.getOffPosition();
-        if (animated) {
-            this._switchSprite.runAction(new ActionTween(0.2, "sliderXPosition", this._switchSprite.getSliderXPosition(), xPosition));
-        } else {
-            this._switchSprite.setSliderXPosition(xPosition);
-        }
-        this.sendActionsForControlEvents(CONTROL_EVENT_VALUE_CHANGED);
+    if (this._onProgress !== null) {
+      this._onProgress.enabled = enabled;
     }
 
-    isOn() { return this._on; }
-    hasMoved() { return this._moved; }
+    if (this._offProgress !== null) {
+      this._offProgress.enabled = enabled;
+    }
+  }
 
-    setEnabled(enabled) {
-        this._enabled = enabled;
-        this._switchSprite.setOpacity(enabled ? 255 : 128);
+  get enabled() {
+    return super.enabled;
+  }
+
+  locationFromTouch(touch) {
+    var touchLocation = touch.getLocation();
+    touchLocation = this.convertToNodeSpace(touchLocation);
+    return touchLocation;
+  }
+
+  onTouchBegan(touch, event) {
+    if (!this.isTouchInside(touch) || !this.enabled || !this.isVisible())
+      return false;
+    this._moved = false;
+    var location = this.locationFromTouch(touch);
+    this._initialTouchXPosition = location.x - this.sliderX;
+    this.needsLayout();
+    return true;
+  }
+
+  onTouchMoved(touch, event) {
+    var location = this.locationFromTouch(touch);
+    location = new Point(location.x - this._initialTouchXPosition, 0);
+    this._moved = true;
+    this.sliderX = location.x;
+  }
+
+  onTouchEnded(touch, event) {
+    var location = this.locationFromTouch(touch);
+
+    if (this.hasMoved) {
+      this.setOn(!(location.x < this.getContentSize().width / 2), true);
+    } else {
+      this.setOn(!this._on, true);
+    }
+  }
+
+  onTouchCancelled(touch, event) {
+    var location = this.locationFromTouch(touch);
+
+    if (this.hasMoved()) {
+      this.setOn(!(location.x < this.getContentSize().width / 2), true);
+    } else {
+      this.setOn(!this._on, true);
+    }
+  }
+
+  needsLayout() {
+    const size = this.getContentSize();
+
+    if (this._background !== null) {
+      this._background.width = size.width;
+      this._background.height = size.height;
+      this._background.setAnchorPoint(new Point(0, 0));
+      this._background.x = 0;
+      this._background.y = 0;
     }
 
-    locationFromTouch(touch) {
-        var touchLocation = touch.getLocation();
-        touchLocation = this.convertToNodeSpace(touchLocation);
-        return touchLocation;
+    if (this._onProgress !== null) {
+      this._onProgress.width = this._sliderXPosition;
+      this._onProgress.height = size.height;
+      this._onProgress.setAnchorPoint(new Point(0, 0));
+      this._onProgress.x = 0;
+      this._onProgress.y = 0;
     }
 
-    onTouchBegan(touch, event) {
-        if (!this.isTouchInside(touch) || !this.isEnabled() || !this.isVisible())
-            return false;
-        this._moved = false;
-        var location = this.locationFromTouch(touch);
-        this._initialTouchXPosition = location.x - this._switchSprite.getSliderXPosition();
-        this._switchSprite.getThumbSprite().setColor(Color.GRAY);
-        this._switchSprite.needsLayout();
-        return true;
+    if (this._offProgress !== null) {
+      this._offProgress.width = size.width - this._sliderXPosition;
+      this._offProgress.x = this._sliderXPosition;
+      this._offProgress.height = size.height;
+      this._offProgress.setAnchorPoint(new Point(0, 0));
+      this._offProgress.y = 0;
     }
 
-    onTouchMoved(touch, event) {
-        var location = this.locationFromTouch(touch);
-        location = new Point(location.x - this._initialTouchXPosition, 0);
-        this._moved = true;
-        this._switchSprite.setSliderXPosition(location.x);
+    if (this._thumb !== null) {
+      this._thumb.x = this._sliderXPosition;
+      this._thumb.setAnchorPoint(new Point(0.5, 0.5));
+      this._thumb.y = size.height / 2;
     }
+  }
 
-    onTouchEnded(touch, event) {
-        var location = this.locationFromTouch(touch);
-        this._switchSprite.getThumbSprite().setColor(Color.WHITE);
-        if (this.hasMoved()) {
-            this.setOn(!(location.x < this._switchSprite.getContentSize().width / 2), true);
-        } else {
-            this.setOn(!this._on, true);
-        }
+  updateTweenAction(value, key) {
+    if (key === "sliderX") {
+      this.sliderX = value;
     }
+  }
 
-    onTouchCancelled(touch, event) {
-        var location = this.locationFromTouch(touch);
-        this._switchSprite.getThumbSprite().setColor(Color.WHITE);
-        if (this.hasMoved()) {
-            this.setOn(!(location.x < this._switchSprite.getContentSize().width / 2), true);
-        } else {
-            this.setOn(!this._on, true);
-        }
-    }
-}
+  set sliderX(sliderXPosition) {
+    this._sliderXPosition = Math.min(
+      Math.max(sliderXPosition, this._minX),
+      this._maxX
+    );
+    this.needsLayout();
+  }
 
-export class ControlSwitchSprite extends Sprite {
-    _sliderXPosition = 0;
-    _onPosition = 0;
-    _offPosition = 0;
-    _textureLocation = 0;
-    _maskLocation = 0;
-    _maskSize = null;
-    _onSprite = null;
-    _offSprite = null;
-    _thumbSprite = null;
-    _onLabel = null;
-    _offLabel = null;
-    _clipper = null;
-    _stencil = null;
+  get sliderX() {
+    return this._sliderXPosition;
+  }
 
-    get sliderX() { return this.getSliderXPosition(); }
-    set sliderX(v) { this.setSliderXPosition(v); }
-    get onPos() { return this.getOnPosition(); }
-    set onPos(v) { this.setOnPosition(v); }
-    get offPos() { return this.getOffPosition(); }
-    set offPos(v) { this.setOffPosition(v); }
-    get maskTexture() { return this.getMaskTexture(); }
-    set maskTexture(v) { this.setMaskTexture(v); }
-    get maskPos() { return this.getMaskLocation(); }
-    set maskPos(v) { this.setMaskLocation(v); }
-    get onSprite() { return this.getOnSprite(); }
-    set onSprite(v) { this.setOnSprite(v); }
-    get offSprite() { return this.getOffSprite(); }
-    set offSprite(v) { this.setOffSprite(v); }
-    get thumbSprite() { return this.getThumbSprite(); }
-    set thumbSprite(v) { this.setThumbSprite(v); }
-    get onLabel() { return this.getOnLabel(); }
-    set onLabel(v) { this.setOnLabel(v); }
-    get offLabel() { return this.getOffLabel(); }
-    set offLabel(v) { this.setOffLabel(v); }
-    get onSideWidth() { return this._getOnSideWidth(); }
-    get offSideWidth() { return this._getOffSideWidth(); }
+  get minX() {
+    return this._minX;
+  }
 
-    constructor() {
-        super();
-        this._maskSize = new Size(0, 0);
-    }
+  get maxX() {
+    return this._maxX;
+  }
 
-    initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, onLabel, offLabel) {
-        if (super.init()) {
-            this.setSpriteFrame(maskSprite.getSpriteFrame());
-            this._onPosition = 0;
-            this._offPosition = -onSprite.getContentSize().width + thumbSprite.getContentSize().width / 2;
-            this._sliderXPosition = this._onPosition;
-            this.setOnSprite(onSprite);
-            this.setOffSprite(offSprite);
-            this.setThumbSprite(thumbSprite);
-            this.setOnLabel(onLabel);
-            this.setOffLabel(offLabel);
-            this._stencil = maskSprite;
-            var maskSize = this._maskSize = this._stencil.getContentSize();
-            this._stencil.setPosition(0, 0);
-            this._clipper = new ClippingNode();
-            this._clipper.setAnchorPoint(0.5, 0.5);
-            this._clipper.setPosition(maskSize.width / 2, maskSize.height / 2);
-            this._clipper.setStencil(this._stencil);
-            this.addChild(this._clipper);
-            this._clipper.addChild(onSprite);
-            this._clipper.addChild(offSprite);
-            this._clipper.addChild(onLabel);
-            this._clipper.addChild(offLabel);
-            this.addChild(this._thumbSprite);
-            this.needsLayout();
-            return true;
-        }
-        return false;
-    }
-
-    needsLayout() {
-        var maskSize = this._maskSize;
-        this._onSprite.setPosition(
-            this._onSprite.getContentSize().width / 2 + this._sliderXPosition - maskSize.width / 2,
-            this._onSprite.getContentSize().height / 2 - maskSize.height / 2
-        );
-        this._offSprite.setPosition(
-            this._onSprite.getContentSize().width + this._offSprite.getContentSize().width / 2 + this._sliderXPosition - maskSize.width / 2,
-            this._offSprite.getContentSize().height / 2 - maskSize.height / 2
-        );
-        if (this._onLabel) {
-            this._onLabel.setPosition(
-                this._onSprite.getPositionX() - this._thumbSprite.getContentSize().width / 6,
-                this._onSprite.getContentSize().height / 2 - maskSize.height / 2
-            );
-        }
-        if (this._offLabel) {
-            this._offLabel.setPosition(
-                this._offSprite.getPositionX() + this._thumbSprite.getContentSize().width / 6,
-                this._offSprite.getContentSize().height / 2 - maskSize.height / 2
-            );
-        }
-        this._thumbSprite.setPosition(
-            this._onSprite.getContentSize().width + this._sliderXPosition,
-            this._maskSize.height / 2
-        );
-    }
-
-    setSliderXPosition(sliderXPosition) {
-        if (sliderXPosition <= this._offPosition) {
-            sliderXPosition = this._offPosition;
-        } else if (sliderXPosition >= this._onPosition) {
-            sliderXPosition = this._onPosition;
-        }
-        this._sliderXPosition = sliderXPosition;
-        this.needsLayout();
-    }
-
-    getSliderXPosition() { return this._sliderXPosition; }
-
-    _getOnSideWidth() { return this._onSprite.getContentSize().width; }
-    _getOffSideWidth() { return this._offSprite.getContentSize().height; }
-
-    updateTweenAction(value, key) {
-        if (key === "sliderXPosition")
-            this.setSliderXPosition(value);
-    }
-
-    setOnPosition(onPosition) { this._onPosition = onPosition; }
-    getOnPosition() { return this._onPosition; }
-    setOffPosition(offPosition) { this._offPosition = offPosition; }
-    getOffPosition() { return this._offPosition; }
-    setMaskTexture(maskTexture) { this._stencil.setTexture(maskTexture); }
-    getMaskTexture() { return this._stencil.getTexture(); }
-    setTextureLocation(textureLocation) { this._textureLocation = textureLocation; }
-    getTextureLocation() { return this._textureLocation; }
-    setMaskLocation(maskLocation) { this._maskLocation = maskLocation; }
-    getMaskLocation() { return this._maskLocation; }
-    setOnSprite(onSprite) { this._onSprite = onSprite; }
-    getOnSprite() { return this._onSprite; }
-    setOffSprite(offSprite) { this._offSprite = offSprite; }
-    getOffSprite() { return this._offSprite; }
-    setThumbSprite(thumbSprite) { this._thumbSprite = thumbSprite; }
-    getThumbSprite() { return this._thumbSprite; }
-    setOnLabel(onLabel) { this._onLabel = onLabel; }
-    getOnLabel() { return this._onLabel; }
-    setOffLabel(offLabel) { this._offLabel = offLabel; }
-    getOffLabel() { return this._offLabel; }
+  set onProgress(onProgress) {
+    this._onProgress = onProgress;
+  }
+  get onProgress() {
+    return this._onProgress;
+  }
+  set offProgress(offProgress) {
+    this._offProgress = offProgress;
+  }
+  get offProgress() {
+    return this._offProgress;
+  }
+  set thumb(value) {
+    this._thumb = value;
+  }
+  get thumb() {
+    return this._thumb;
+  }
+  get background() {
+    return this._background;
+  }
+  set background(value) {
+    this._background = value;
+  }
 }
