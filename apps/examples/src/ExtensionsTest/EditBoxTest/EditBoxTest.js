@@ -28,6 +28,7 @@
 import { TestScene } from "../../test-scene";
 import { Color, Director, Layer, Size, log, Rect } from "@aspect/core";
 import { Scale9Sprite } from "@aspect/ccui";
+import { s_markerFelt_fnt } from "../../resources";
 
 import { EditBox, EDITBOX_INPUT_FLAG_PASSWORD } from "@aspect/editbox";
 export class EditBoxTestLayer extends Layer {
@@ -101,7 +102,12 @@ export class EditBoxTestLayer extends Layer {
       "default_theme/rounded_shadow_4.png",
       new Rect(8, 8, 8, 8)
     );
-    const editBox = new EditBox(new Size(width, height), background);
+    const editBox = new EditBox(
+      new Size(width, height),
+      background,
+      "archivo_black_regular_12.fnt",
+      new Rect(8, 8, 8, 8)
+    );
     background.color = color;
     editBox.string = "EditBoxs";
     editBox.x = x;
@@ -144,7 +150,7 @@ export class EditBoxTestLayer extends Layer {
         return "box3";
       case this._box4:
         return "box4";
-        default:
+      default:
         return "Unknown EditBox";
     }
   }

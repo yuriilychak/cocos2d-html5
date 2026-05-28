@@ -5,7 +5,6 @@ import {
   Rect,
   EventListener,
   EventManager,
-  LabelTTF,
   Sys,
   warn
 } from "@aspect/core";
@@ -17,15 +16,23 @@ import {
 import { DesktopEditBoxInput } from "./edit-box-input-desktop";
 import { MobileEditBoxInput } from "./edit-box-input-mobile";
 
+const FONT_STYLE_RE = /^(\d+)px\s+['"]?([\w\s\d]+)['"]?$/;
+
 export class EditBox extends Node {
   /**
    * @param {Size} size
    * @param {Scale9Sprite} normal9SpriteBg
+   * @param {String} fntFile Path to a preloaded BMFont .fnt file used to
+   *                         render the text and placeholder labels.
+   * @param {Rect} [backgroundPadding] Optional Rect(paddingLeft, paddingTop,
+   *                         paddingRight, paddingBottom) that enlarges the
+   *                         background sprite around the edit box area.
    */
-  constructor(size, normal9SpriteBg) {
+  constructor(size, normal9SpriteBg, fntFile, backgroundPadding) {
     super();
 
     this._backgroundSprite = null;
+    this._backgroundPadding = backgroundPadding || new Rect(0, 0, 0, 0);
     this._delegate = null;
     this._editBoxInputMode = EDITBOX_INPUT_MODE_ANY;
     this._editBoxInputFlag = EDITBOX_INPUT_FLAG_SENSITIVE;
@@ -35,6 +42,7 @@ export class EditBox extends Node {
     this._placeholderText = "";
     this._placeholderFontName = "";
     this._placeholderFontSize = 14;
+    this._fntFile = fntFile || null;
     this._className = "EditBox";
     this._touchListener = null;
     this._touchEnabled = true;
@@ -60,6 +68,13 @@ export class EditBox extends Node {
     EventManager.getInstance().addListener(this._touchListener, this);
 
     this.inputFlag = this._editBoxInputFlag;
+  }
+
+  set font(fontStyle) {
+    var res = FONT_STYLE_RE.exec(fontStyle);
+    if (res) {
+      this._input.setFont(res[2], parseInt(res[1]));
+    }
   }
 
   set fontName(fontName) {
@@ -113,7 +128,7 @@ export class EditBox extends Node {
   }
 
   set placeholderFont(fontStyle) {
-    var res = LabelTTF._fontStyleRE.exec(fontStyle);
+    var res = FONT_STYLE_RE.exec(fontStyle);
     if (res) {
       this._placeholderFontName = res[2];
       this._placeholderFontSize = parseInt(res[1]);
@@ -287,7 +302,12 @@ export class EditBox extends Node {
 
   _updateBackgroundSpriteSize(width, height) {
     if (this._backgroundSprite) {
-      this._backgroundSprite.setContentSize(width, height);
+      var padding = this._backgroundPadding;
+      this._backgroundSprite.setPosition(-padding.x, -padding.y);
+      this._backgroundSprite.setContentSize(
+        width + padding.x + padding.width,
+        height + padding.y + padding.height
+      );
     }
   }
 
@@ -296,10 +316,6 @@ export class EditBox extends Node {
     var newHeight = typeof size.height === "number" ? size.height : height;
     this._updateBackgroundSpriteSize(newWidth, newHeight);
     this._input.updateSize(newWidth, newHeight);
-  }
-
-  setLineHeight(lineHeight) {
-    this._input.setLineHeight(lineHeight);
   }
 
   setFont(fontName, fontSize) {

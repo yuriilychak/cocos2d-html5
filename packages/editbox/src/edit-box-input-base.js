@@ -1,14 +1,11 @@
 import {
-    Point,
     Size,
     Color,
-    LabelTTF,
     KEY,
-    VERTICAL_TEXT_ALIGNMENT_TOP,
-    VERTICAL_TEXT_ALIGNMENT_CENTER,
     EGLView,
     Game
 } from '@aspect/core';
+import { LabelBMFont } from '@aspect/labels';
 import {
     EDITBOX_INPUT_MODE_ANY,
     EDITBOX_INPUT_MODE_EMAILADDR,
@@ -62,8 +59,7 @@ export class EditBoxInputBase {
     updateMatrix(worldTransform) {
         if (!this._edTxt) return;
 
-        var node = this._editBox,
-            view = EGLView.getInstance(),
+        var view = EGLView.getInstance(),
             scaleX = view._scaleX,
             scaleY = view._scaleY;
         var dpr = view._devicePixelRatio;
@@ -207,7 +203,6 @@ export class EditBoxInputBase {
         this._removeDomFromGameContainer();
         var self = this;
         var tmpEdTxt = (this._edTxt = document.createElement('textarea'));
-        tmpEdTxt.type = 'text';
         tmpEdTxt.style.fontFamily = this._edFontName;
         tmpEdTxt.style.fontSize = this._edFontSize + 'px';
         tmpEdTxt.style.color = '#000000';
@@ -283,15 +278,15 @@ export class EditBoxInputBase {
 
     // --- Labels (text + placeholder) ---
     _createLabels() {
+        var fntFile = this._editBox._fntFile;
+        if (!fntFile) return;
         var editBoxSize = this._editBox.getContentSize();
         if (!this._textLabel) {
-            this._textLabel = new LabelTTF();
-            this._textLabel.setAnchorPoint(new Point(0, 1));
+            this._textLabel = new LabelBMFont('', fntFile);
             this._editBox.addChild(this._textLabel, 100);
         }
         if (!this._placeholderLabel) {
-            this._placeholderLabel = new LabelTTF();
-            this._placeholderLabel.setAnchorPoint(new Point(0, 1));
+            this._placeholderLabel = new LabelBMFont('', fntFile);
             this._placeholderLabel.setColor(Color.GRAY);
             this._editBox.addChild(this._placeholderLabel, 100);
         }
@@ -307,33 +302,23 @@ export class EditBoxInputBase {
     _updateLabelPosition(editBoxSize) {
         if (!this._textLabel || !this._placeholderLabel) return;
 
-        var labelContentSize = new Size(
-            editBoxSize.width - LEFT_PADDING,
-            editBoxSize.height
-        );
-        this._textLabel.setContentSize(labelContentSize);
-        this._textLabel.setDimensions(labelContentSize);
-        this._placeholderLabel.setLineHeight(editBoxSize.height);
-        var placeholderLabelSize = this._placeholderLabel.getContentSize();
+        var boundingWidth = editBoxSize.width - LEFT_PADDING;
+        this._textLabel.boundingWidth = boundingWidth;
+        this._placeholderLabel.boundingWidth = boundingWidth;
 
         if (this._editBox._editBoxInputMode === EDITBOX_INPUT_MODE_ANY) {
+            // multiline: anchor top-left, position at top
+            this._textLabel.setAnchorPoint(0, 1);
+            this._placeholderLabel.setAnchorPoint(0, 1);
             this._textLabel.setPosition(LEFT_PADDING, editBoxSize.height);
             this._placeholderLabel.setPosition(LEFT_PADDING, editBoxSize.height);
-            this._placeholderLabel.setVerticalAlignment(VERTICAL_TEXT_ALIGNMENT_TOP);
-            this._textLabel.setVerticalAlignment(VERTICAL_TEXT_ALIGNMENT_TOP);
         } else {
-            this._textLabel.setPosition(LEFT_PADDING, editBoxSize.height);
-            this._placeholderLabel.setPosition(
-                LEFT_PADDING,
-                (editBoxSize.height + placeholderLabelSize.height) / 2
-            );
-            this._placeholderLabel.setVerticalAlignment(VERTICAL_TEXT_ALIGNMENT_CENTER);
-            this._textLabel.setVerticalAlignment(VERTICAL_TEXT_ALIGNMENT_CENTER);
+            // single-line: anchor left-middle, center vertically in the box
+            this._textLabel.setAnchorPoint(0, 0.5);
+            this._placeholderLabel.setAnchorPoint(0, 0.5);
+            this._textLabel.setPosition(LEFT_PADDING, editBoxSize.height / 2);
+            this._placeholderLabel.setPosition(LEFT_PADDING, editBoxSize.height / 2);
         }
-    }
-
-    setLineHeight(lineHeight) {
-        if (this._textLabel) this._textLabel.setLineHeight(lineHeight);
     }
 
     _hiddenLabels() {
@@ -433,8 +418,7 @@ export class EditBoxInputBase {
             this._edTxt.style.fontSize = this._edFontSize + 'px';
         }
         if (this._textLabel) {
-            this._textLabel.setFontSize(this._edFontSize);
-            this._textLabel.setFontName(this._edFontName);
+            this._textLabel.fontSize = this._edFontSize;
         }
     }
 
@@ -444,8 +428,9 @@ export class EditBoxInputBase {
     }
 
     _updateDOMPlaceholderFontStyle() {
-        this._placeholderLabel.setFontName(this._editBox._placeholderFontName);
-        this._placeholderLabel.setFontSize(this._editBox._placeholderFontSize);
+        if (this._placeholderLabel) {
+            this._placeholderLabel.fontSize = this._editBox._placeholderFontSize;
+        }
     }
 
     setPlaceholderFontColor(color) {
@@ -459,6 +444,7 @@ export class EditBoxInputBase {
     }
 
     _updateDomInputType() {
+        if (!this._edTxt || this._edTxt.tagName === 'TEXTAREA') return;
         var inputMode = this._editBox._editBoxInputMode;
         if (inputMode === EDITBOX_INPUT_MODE_EMAILADDR) {
             this._edTxt.type = 'email';
