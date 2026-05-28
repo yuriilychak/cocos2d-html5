@@ -26,7 +26,7 @@
  ****************************************************************************/
 
 import { TestScene } from "../../test-scene";
-import { Color, Director, Layer, Size, log } from "@aspect/core";
+import { Color, Director, Layer, Size, log, Rect } from "@aspect/core";
 import { Scale9Sprite } from "@aspect/ccui";
 
 import { EditBox, EDITBOX_INPUT_FLAG_PASSWORD } from "@aspect/editbox";
@@ -45,60 +45,72 @@ export class EditBoxTestLayer extends Layer {
   }
 
   init() {
-    this._box1 = new EditBox(
-      new Size(170, 50),
-      new Scale9Sprite("extensions/green_edit.png"),
-      new Scale9Sprite("extensions/orange_edit.png")
+    this._box1 = this.createEditBox(
+      170,
+      50,
+      220,
+      50,
+      new Color(240, 200, 0),
+      new Color(251, 250, 0)
     );
-    this._box1.setString("EditBoxs");
-    this._box1.x = 220;
-    this._box1.y = 50;
-    this._box1.setFontColor(new Color(251, 250, 0));
-    this._box1.setDelegate(this);
-    this.addChild(this._box1);
 
-    this._box2 = new EditBox(
-      new Size(130, 50),
-      new Scale9Sprite("extensions/green_edit.png")
+    this._box2 = this.createEditBox(
+      130,
+      50,
+      220,
+      190,
+      new Color(0, 200, 0),
+      new Color(255, 250, 0)
     );
-    this._box2.setString("EditBox Sample");
-    this._box2.x = 220;
-    this._box2.y = 190;
-    this._box2.setInputFlag(EDITBOX_INPUT_FLAG_PASSWORD);
-    this._box2.setFontColor(new Color(255, 250, 0));
-    this._box2.setPlaceHolder("please enter password");
-    this._box2.setPlaceholderFontColor(new Color(255, 255, 255));
-    this._box2.setDelegate(this);
-    this.addChild(this._box2);
+    this._box2.string = "EditBox Sample";
+    this._box2.inputFlag = EDITBOX_INPUT_FLAG_PASSWORD;
+    this._box2.placeholder = "please enter password";
+    this._box2.placeholderFontColor = new Color(255, 255, 255);
 
-    this._box3 = new EditBox(
-      new Size(65, 50),
-      new Scale9Sprite("extensions/orange_edit.png")
+    this._box3 = this.createEditBox(
+      65,
+      50,
+      220,
+      250,
+      new Color(200, 200, 0),
+      new Color(15, 250, 245)
     );
-    this._box3.setString("Image");
-    this._box3.x = 220;
-    this._box3.y = 250;
-    this._box3.setFontColor(new Color(15, 250, 245));
-    this._box3.setDelegate(this);
+    this._box3.string = "Image";
     this._box3.setTouchEnabled(false);
     this._box3.setTouchEnabled(true);
     this.addChild(this._box3);
 
-    this._box4 = new EditBox(
-      new Size(180, 50),
-      new Scale9Sprite("extensions/yellow_edit.png")
+    this._box4 = this.createEditBox(
+      180,
+      50,
+      40,
+      300,
+      new Color(230, 230, 0),
+      new Color(5, 4, 10)
     );
-    this._box4.setPlaceholderFontColor(new Color(255, 0, 0));
-    this._box4.setPlaceHolder("This editBox can't be touched!");
-    this._box4.x = 40;
-    this._box4.y = -100;
-    this._box4.setDelegate(this);
-    this._box4.setFontColor(new Color(5, 4, 10));
-    this._box4.setMaxLength(10);
+    this._box4.placeholderFontColor = new Color(255, 0, 0);
+    this._box4.placeholder = "This editBox can't be touched!";
+    this._box4.maxLength = 10;
     this._box4.setTouchEnabled(false);
-    this._box3.addChild(this._box4);
 
     return true;
+  }
+
+  createEditBox(width, height, x, y, color, fontColor) {
+    const background = new Scale9Sprite(
+      "default_theme/rounded_shadow_4.png",
+      new Rect(8, 8, 8, 8)
+    );
+    const editBox = new EditBox(new Size(width, height), background);
+    background.color = color;
+    editBox.string = "EditBoxs";
+    editBox.x = x;
+    editBox.y = y;
+    editBox.fontColor = fontColor;
+    editBox.delegate = this;
+    this.addChild(editBox);
+
+    return editBox;
   }
 
   editBoxEditingDidBegin(editBox) {
@@ -123,16 +135,18 @@ export class EditBoxTestLayer extends Layer {
   }
 
   _getEditBoxName(editBox) {
-    if (this._box1 == editBox) {
-      return "box1";
-    } else if (this._box2 == editBox) {
-      return "box2";
-    } else if (this._box3 == editBox) {
-      return "box3";
-    } else if (this._box4 == editBox) {
-      return "box4";
+    switch (editBox) {
+      case this._box1:
+        return "box1";
+      case this._box2:
+        return "box2";
+      case this._box3:
+        return "box3";
+      case this._box4:
+        return "box4";
+        default:
+        return "Unknown EditBox";
     }
-    return "Unknown EditBox";
   }
 }
 

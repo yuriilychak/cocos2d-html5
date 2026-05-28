@@ -1,13 +1,12 @@
 import {
   Node,
-  NewClass,
   Color,
   Point,
   Rect,
-  RendererConfig,
   EventListener,
   EventManager,
   LabelTTF,
+  Sys,
   warn
 } from "@aspect/core";
 import {
@@ -15,14 +14,8 @@ import {
   EDITBOX_INPUT_FLAG_SENSITIVE,
   KEYBOARD_RETURNTYPE_DEFAULT
 } from "./constants";
-
-export class EditBoxDelegate extends NewClass {
-    constructor() { super(); }
-    editBoxEditingDidBegin(sender) {}
-    editBoxEditingDidEnd(sender) {}
-    editBoxTextChanged(sender, text) {}
-    editBoxReturn(sender) {}
-}
+import { DesktopEditBoxInput } from "./edit-box-input-desktop";
+import { MobileEditBoxInput } from "./edit-box-input-mobile";
 
 export class EditBox extends Node {
   /**
@@ -39,11 +32,9 @@ export class EditBox extends Node {
     this._keyboardReturnType = KEYBOARD_RETURNTYPE_DEFAULT;
     this._maxLength = 50;
     this._text = "";
-    this._textColor = null;
     this._placeholderText = "";
     this._placeholderFontName = "";
     this._placeholderFontSize = 14;
-    this._placeholderColor = null;
     this._className = "EditBox";
     this._touchListener = null;
     this._touchEnabled = true;
@@ -52,7 +43,11 @@ export class EditBox extends Node {
     this._textColor = Color.WHITE;
     this._placeholderColor = Color.GRAY;
 
-    this._renderCmd._createLabels();
+    this._input = Sys.getInstance().isMobile
+      ? new MobileEditBoxInput(this)
+      : new DesktopEditBoxInput(this);
+
+    this._input._createLabels();
     this.createDomElementIfNeeded();
     this.initWithSizeAndBackgroundSprite(size, normal9SpriteBg);
 
@@ -64,66 +59,129 @@ export class EditBox extends Node {
     });
     EventManager.getInstance().addListener(this._touchListener, this);
 
-    this.setInputFlag(this._editBoxInputFlag);
+    this.inputFlag = this._editBoxInputFlag;
   }
 
-  set font(v) {
-    this._setFont(v);
+  set fontName(fontName) {
+    this._input.setFontName(fontName);
   }
-  set fontName(v) {
-    this.setFontName(v);
+
+  set fontSize(fontSize) {
+    this._input.setFontSize(fontSize);
   }
-  set fontSize(v) {
-    this.setFontSize(v);
+
+  get fontColor() {
+    return this._textColor;
   }
-  set fontColor(v) {
-    this.setFontColor(v);
+  set fontColor(color) {
+    this._textColor = color;
+    this._input.setFontColor(color);
   }
 
   get string() {
-    return this.getString();
+    return this._text;
   }
-  set string(v) {
-    this.setString(v);
+  set string(text) {
+    if (text.length >= this._maxLength) {
+      text = text.slice(0, this._maxLength);
+    }
+    this._text = text;
+    this._input.setString(text);
   }
 
   get maxLength() {
-    return this.getMaxLength();
+    return this._maxLength;
   }
-  set maxLength(v) {
-    this.setMaxLength(v);
+  set maxLength(maxLength) {
+    if (!isNaN(maxLength)) {
+      if (maxLength < 0) {
+        maxLength = 65535;
+      }
+      this._maxLength = maxLength;
+      this._input.setMaxLength(maxLength);
+    }
   }
 
   get placeholder() {
-    return this.getPlaceHolder();
+    return this._placeholderText;
   }
-  set placeholder(v) {
-    this.setPlaceHolder(v);
+  set placeholder(text) {
+    if (text !== null) {
+      this._input.setPlaceHolder(text);
+      this._placeholderText = text;
+    }
   }
 
-  set placeholderFont(v) {
-    this._setPlaceholderFont(v);
+  set placeholderFont(fontStyle) {
+    var res = LabelTTF._fontStyleRE.exec(fontStyle);
+    if (res) {
+      this._placeholderFontName = res[2];
+      this._placeholderFontSize = parseInt(res[1]);
+      this._input._updateDOMPlaceholderFontStyle();
+    }
   }
-  set placeholderFontName(v) {
-    this.setPlaceholderFontName(v);
+
+  get placeholderFontName() {
+    return this._placeholderFontName;
   }
-  set placeholderFontSize(v) {
-    this.setPlaceholderFontSize(v);
+  set placeholderFontName(fontName) {
+    this._placeholderFontName = fontName;
+    this._input._updateDOMPlaceholderFontStyle();
   }
-  set placeholderFontColor(v) {
-    this.setPlaceholderFontColor(v);
+
+  get placeholderFontSize() {
+    return this._placeholderFontSize;
   }
-  set inputFlag(v) {
-    this.setInputFlag(v);
+  set placeholderFontSize(fontSize) {
+    this._placeholderFontSize = fontSize;
+    this._input._updateDOMPlaceholderFontStyle();
   }
-  set delegate(v) {
-    this.setDelegate(v);
+
+  get placeholderFontColor() {
+    return this._placeholderColor;
   }
-  set inputMode(v) {
-    this.setInputMode(v);
+  set placeholderFontColor(color) {
+    this._placeholderColor = color;
+    this._input.setPlaceholderFontColor(color);
   }
-  set returnType(v) {
-    this.setReturnType(v);
+
+  get inputFlag() {
+    return this._editBoxInputFlag;
+  }
+  set inputFlag(inputFlag) {
+    this._editBoxInputFlag = inputFlag;
+    this._input.setInputFlag(inputFlag);
+  }
+
+  get delegate() {
+    return this._delegate;
+  }
+  set delegate(delegate) {
+    this._delegate = delegate;
+  }
+
+  get inputMode() {
+    return this._editBoxInputMode;
+  }
+  set inputMode(inputMode) {
+    if (this._editBoxInputMode === inputMode) return;
+
+    var oldText = this.string;
+    this._editBoxInputMode = inputMode;
+
+    this._input.setInputMode(inputMode);
+    this._renderCmd.transform();
+
+    this.string = oldText;
+    this._input._updateLabelPosition(this.getContentSize());
+  }
+
+  get returnType() {
+    return this._keyboardReturnType;
+  }
+  set returnType(returnType) {
+    this._keyboardReturnType = returnType;
+    this._input._updateDomInputType();
   }
 
   setTouchEnabled(enable) {
@@ -136,13 +194,12 @@ export class EditBox extends Node {
     }
   }
 
-  _createRenderCmd() {
-    if (RendererConfig.getInstance().isCanvas) {
-      return new this.constructor.CanvasRenderCmd(this);
-    } else {
-      return new this.constructor.WebGLRenderCmd(this);
-    }
+  visit(parent) {
+    super.visit(parent);
+    if (this._input) this._input.updateMatrix(this._renderCmd._worldTransform);
   }
+
+
 
   setContentSize(width, height) {
     if (width.width !== undefined && width.height !== undefined) {
@@ -155,38 +212,38 @@ export class EditBox extends Node {
 
   setVisible(visible) {
     super.setVisible(visible);
-    this._renderCmd.updateVisibility();
+    this._input.updateVisibility();
   }
 
   createDomElementIfNeeded() {
-    if (!this._renderCmd._edTxt) {
-      this._renderCmd._createDomTextArea();
+    if (!this._input._edTxt) {
+      this._input._createDomTextArea();
     }
   }
 
   setTabIndex(index) {
-    if (this._renderCmd._edTxt) {
-      this._renderCmd._edTxt.tabIndex = index;
+    if (this._input._edTxt) {
+      this._input._edTxt.tabIndex = index;
     }
   }
 
   getTabIndex() {
-    if (this._renderCmd._edTxt) {
-      return this._renderCmd._edTxt.tabIndex;
+    if (this._input._edTxt) {
+      return this._input._edTxt.tabIndex;
     }
     warn("The dom control is not created!");
     return -1;
   }
 
   setFocus() {
-    if (this._renderCmd._edTxt) {
-      this._renderCmd._edTxt.focus();
+    if (this._input._edTxt) {
+      this._input._edTxt.focus();
     }
   }
 
   isFocused() {
-    if (this._renderCmd._edTxt) {
-      return document.activeElement === this._renderCmd._edTxt;
+    if (this._input._edTxt) {
+      return document.activeElement === this._input._edTxt;
     }
     warn("The dom control is not created!");
     return false;
@@ -195,12 +252,12 @@ export class EditBox extends Node {
   stayOnTop(flag) {
     if (this._alwaysOnTop === flag) return;
     this._alwaysOnTop = flag;
-    this._renderCmd.stayOnTop(this._alwaysOnTop);
+    this._input.stayOnTop(this._alwaysOnTop);
   }
 
   cleanup() {
     super.cleanup();
-    this._renderCmd._removeDomFromGameContainer();
+    this._input._removeDomFromGameContainer();
   }
 
   _isAncestorsVisible(node) {
@@ -218,14 +275,14 @@ export class EditBox extends Node {
     if (hitted) {
       return true;
     } else {
-      this._renderCmd._endEditing();
+      this._input._endEditing();
       return false;
     }
   }
 
   _onTouchEnded() {
     if (!this.isVisible() || !this._isAncestorsVisible(this)) return;
-    this._renderCmd._beginEditing();
+    this._input._beginEditing();
   }
 
   _updateBackgroundSpriteSize(width, height) {
@@ -238,104 +295,25 @@ export class EditBox extends Node {
     var newWidth = typeof size.width === "number" ? size.width : size;
     var newHeight = typeof size.height === "number" ? size.height : height;
     this._updateBackgroundSpriteSize(newWidth, newHeight);
-    this._renderCmd.updateSize(newWidth, newHeight);
+    this._input.updateSize(newWidth, newHeight);
   }
 
   setLineHeight(lineHeight) {
-    this._renderCmd.setLineHeight(lineHeight);
+    this._input.setLineHeight(lineHeight);
   }
 
   setFont(fontName, fontSize) {
-    this._renderCmd.setFont(fontName, fontSize);
-  }
-
-  _setFont(fontStyle) {
-    this._renderCmd._setFont(fontStyle);
+    this._input.setFont(fontName, fontSize);
   }
 
   getBackgroundSprite() {
     return this._backgroundSprite;
   }
 
-  setFontName(fontName) {
-    this._renderCmd.setFontName(fontName);
-  }
-
-  setFontSize(fontSize) {
-    this._renderCmd.setFontSize(fontSize);
-  }
-
-  setString(text) {
-    if (text.length >= this._maxLength) {
-      text = text.slice(0, this._maxLength);
-    }
-    this._text = text;
-    this._renderCmd.setString(text);
-  }
-
-  setFontColor(color) {
-    this._textColor = color;
-    this._renderCmd.setFontColor(color);
-  }
-
-  setMaxLength(maxLength) {
-    if (!isNaN(maxLength)) {
-      if (maxLength < 0) {
-        maxLength = 65535;
-      }
-      this._maxLength = maxLength;
-      this._renderCmd.setMaxLength(maxLength);
-    }
-  }
-
-  getMaxLength() {
-    return this._maxLength;
-  }
-
-  setPlaceHolder(text) {
-    if (text !== null) {
-      this._renderCmd.setPlaceHolder(text);
-      this._placeholderText = text;
-    }
-  }
-
   setPlaceholderFont(fontName, fontSize) {
     this._placeholderFontName = fontName;
     this._placeholderFontSize = fontSize;
-    this._renderCmd._updateDOMPlaceholderFontStyle();
-  }
-
-  _setPlaceholderFont(fontStyle) {
-    var res = LabelTTF._fontStyleRE.exec(fontStyle);
-    if (res) {
-      this._placeholderFontName = res[2];
-      this._placeholderFontSize = parseInt(res[1]);
-      this._renderCmd._updateDOMPlaceholderFontStyle();
-    }
-  }
-
-  setPlaceholderFontName(fontName) {
-    this._placeholderFontName = fontName;
-    this._renderCmd._updateDOMPlaceholderFontStyle();
-  }
-
-  setPlaceholderFontSize(fontSize) {
-    this._placeholderFontSize = fontSize;
-    this._renderCmd._updateDOMPlaceholderFontStyle();
-  }
-
-  setPlaceholderFontColor(color) {
-    this._placeholderColor = color;
-    this._renderCmd.setPlaceholderFontColor(color);
-  }
-
-  setInputFlag(inputFlag) {
-    this._editBoxInputFlag = inputFlag;
-    this._renderCmd.setInputFlag(inputFlag);
-  }
-
-  getString() {
-    return this._text;
+    this._input._updateDOMPlaceholderFontStyle();
   }
 
   initWithSizeAndBackgroundSprite(size, normal9SpriteBg) {
@@ -354,44 +332,5 @@ export class EditBox extends Node {
     this.x = 0;
     this.y = 0;
     return true;
-  }
-
-  setDelegate(delegate) {
-    this._delegate = delegate;
-  }
-
-  getPlaceHolder() {
-    return this._placeholderText;
-  }
-
-  setInputMode(inputMode) {
-    if (this._editBoxInputMode === inputMode) return;
-
-    var oldText = this.getString();
-    this._editBoxInputMode = inputMode;
-
-    this._renderCmd.setInputMode(inputMode);
-    this._renderCmd.transform();
-
-    this.setString(oldText);
-    this._renderCmd._updateLabelPosition(this.getContentSize());
-  }
-
-  setReturnType(returnType) {
-    this._keyboardReturnType = returnType;
-    this._renderCmd._updateDomInputType();
-  }
-
-  /**
-   * @warning HTML5 Only
-   * @param {Size} size
-   * @param {color} bgColor
-   */
-  initWithBackgroundColor(size, bgColor) {
-    this._edWidth = size.width;
-    this.dom.style.width = this._edWidth.toString() + "px";
-    this._edHeight = size.height;
-    this.dom.style.height = this._edHeight.toString() + "px";
-    this.dom.style.backgroundColor = Color.toHex(bgColor);
   }
 }

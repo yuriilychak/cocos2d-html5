@@ -1,7 +1,7 @@
-import { EditBoxDelegate, EditBox } from './edit-box';
-import { EditBoxCanvasRenderCmd } from './edit-box-canvas-render-cmd';
-import { EditBoxWebGLRenderCmd } from './edit-box-webgl-render-cmd';
-import { editBoxPolyfill } from './edit-box-impl';
+import { EditBox } from './edit-box';
+import { EditBoxInputBase } from './edit-box-input-base';
+import { DesktopEditBoxInput } from './edit-box-input-desktop';
+import { MobileEditBoxInput, editBoxPolyfill } from './edit-box-input-mobile';
 import {
     KEYBOARD_RETURNTYPE_DEFAULT,
     KEYBOARD_RETURNTYPE_DONE,
@@ -22,21 +22,14 @@ import {
     EDITBOX_INPUT_FLAG_INITIAL_CAPS_ALL_CHARACTERS
 } from './constants';
 
-// Wire render commands
-EditBox.CanvasRenderCmd = EditBoxCanvasRenderCmd;
-EditBox.WebGLRenderCmd = EditBoxWebGLRenderCmd;
-
-// Wire polyfill reference
+// Backwards-compat handle for the Android Sougou/360 zoom polyfill flag
 EditBox._polyfill = editBoxPolyfill;
 
-// cc globals (backward compatibility)
-
-
 export {
-    EditBoxDelegate,
     EditBox,
-    EditBoxCanvasRenderCmd,
-    EditBoxWebGLRenderCmd,
+    EditBoxInputBase,
+    DesktopEditBoxInput,
+    MobileEditBoxInput,
     editBoxPolyfill,
     KEYBOARD_RETURNTYPE_DEFAULT,
     KEYBOARD_RETURNTYPE_DONE,
