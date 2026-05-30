@@ -16,6 +16,7 @@ export class RendererConfig {
   _renderContext = null;
   _renderer = null;
   _numberOfDraws = 0;
+  _glVersion = "canvas";
 
   get renderContext() {
     return this._renderContext;
@@ -23,6 +24,18 @@ export class RendererConfig {
 
   initRenderContext(context) {
     this._renderContext = context;
+  }
+
+  get glVersion() {
+    return this._glVersion;
+  }
+
+  setGLVersion(version) {
+    this._glVersion = version;
+  }
+
+  get isWebGL2() {
+    return this._glVersion === "webgl2";
   }
 
   get renderer() {

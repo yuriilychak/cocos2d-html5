@@ -487,14 +487,37 @@ export default class Game extends EventHelper(NewClass) {
     }
     if (this._renderContext) {
       win.gl = this._renderContext;
+      const gl = this._renderContext;
+      const isWebGL2 =
+        typeof WebGL2RenderingContext !== "undefined" &&
+        gl instanceof WebGL2RenderingContext;
+      RendererConfig.getInstance().setGLVersion(isWebGL2 ? "webgl2" : "webgl");
       RendererConfig.getInstance().setRenderer(rendererWebGL);
       RendererConfig.getInstance().renderer.init();
       this.drawingUtil = new DrawingPrimitiveWebGL(this._renderContext);
-      this.glExt = {};
-      this.glExt.instanced_arrays = win.gl.getExtension("ANGLE_instanced_arrays");
-      this.glExt.element_uint = win.gl.getExtension("OES_element_index_uint");
+      this.glExt = isWebGL2
+        ? {
+            instanced_arrays: {
+              drawArraysInstancedANGLE: gl.drawArraysInstanced.bind(gl),
+              drawElementsInstancedANGLE: gl.drawElementsInstanced.bind(gl),
+              vertexAttribDivisorANGLE: gl.vertexAttribDivisor.bind(gl)
+            },
+            vertex_array_object: {
+              createVertexArrayOES: gl.createVertexArray.bind(gl),
+              bindVertexArrayOES: gl.bindVertexArray.bind(gl),
+              deleteVertexArrayOES: gl.deleteVertexArray.bind(gl),
+              isVertexArrayOES: gl.isVertexArray.bind(gl)
+            },
+            element_uint: { native: true }
+          }
+        : {
+            instanced_arrays: gl.getExtension("ANGLE_instanced_arrays"),
+            vertex_array_object: gl.getExtension("OES_vertex_array_object"),
+            element_uint: gl.getExtension("OES_element_index_uint")
+          };
     } else {
       RendererConfig.getInstance().setRenderType(Game.RENDER_TYPE_CANVAS);
+      RendererConfig.getInstance().setGLVersion("canvas");
       RendererConfig.getInstance().setRenderer(rendererCanvas);
       this._renderContext = new CanvasContextWrapper(
         localCanvas.getContext("2d")
