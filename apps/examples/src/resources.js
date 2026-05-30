@@ -262,6 +262,8 @@ export var g_resources = [
     s_bitmapFontTest5_fnt,
     s_extensions_background,
     s_extensions_ribbon,
+    'TestAtlas.plist',
+    'TestAtlas.png',
     s_simpleTheme_plist,
     s_simpleTheme_png,
     s_simpleFont_fnt,

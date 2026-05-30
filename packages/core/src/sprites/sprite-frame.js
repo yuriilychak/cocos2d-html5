@@ -36,6 +36,7 @@ import { Texture2D } from "../textures/texture-2d";
 import { RendererConfig } from "../renderer/renderer-config";
 import { rectPixelsToPoints, rectPointsToPixels, _pointPixelsToPointsOut, _sizePixelsToPointsOut } from "../platform/macro/utils";
 import { SpriteCanvasRenderCmd } from "./sprite-canvas-render-cmd";
+import { PolygonInfo } from "./polygon-info";
 
 /**
  * <p>
@@ -75,6 +76,7 @@ export class SpriteFrame extends EventHelper(NewClass) {
     this._texture = null;
     this._textureFilename = "";
     this._textureLoaded = false;
+    this._polygonInfo = null;
     this._offset = new Point(0, 0);
     this._offsetInPixels = new Point(0, 0);
     this._originalSize = new Size(0, 0);
@@ -320,6 +322,7 @@ export class SpriteFrame extends EventHelper(NewClass) {
       this._originalSizeInPixels
     );
     frame.setTexture(this._texture);
+    if (this._polygonInfo) frame.setPolygonInfo(this._polygonInfo);
     return frame;
   }
 
@@ -337,6 +340,7 @@ export class SpriteFrame extends EventHelper(NewClass) {
       this._originalSizeInPixels
     );
     copy.setTexture(this._texture);
+    if (this._polygonInfo) copy.setPolygonInfo(this._polygonInfo);
     return copy;
   }
 
@@ -346,6 +350,35 @@ export class SpriteFrame extends EventHelper(NewClass) {
    */
   copy() {
     return this.copyWithZone();
+  }
+
+  /**
+   * Returns the polygon mesh assigned to this frame (or null for a quad frame).
+   * @returns {PolygonInfo|null}
+   */
+  getPolygonInfo() {
+    return this._polygonInfo;
+  }
+
+  /**
+   * Assigns a polygon mesh to this frame. Sprites that display the frame
+   * will be rendered as a triangle list instead of a quad.
+   * @param {PolygonInfo} polygonInfo
+   */
+  setPolygonInfo(polygonInfo) {
+    this._polygonInfo = polygonInfo || null;
+  }
+
+  /**
+   * @returns {Boolean} true if the frame carries polygon mesh data.
+   */
+  hasPolygonInfo() {
+    return !!(
+      this._polygonInfo &&
+      this._polygonInfo.triangles &&
+      this._polygonInfo.triangles.verts.length > 0 &&
+      this._polygonInfo.triangles.indices.length > 0
+    );
   }
 
   /**

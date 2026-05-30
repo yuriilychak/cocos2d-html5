@@ -264,12 +264,6 @@ export class EditBox extends Node {
     return false;
   }
 
-  stayOnTop(flag) {
-    if (this._alwaysOnTop === flag) return;
-    this._alwaysOnTop = flag;
-    this._input.stayOnTop(this._alwaysOnTop);
-  }
-
   cleanup() {
     super.cleanup();
     this._input._removeDomFromGameContainer();

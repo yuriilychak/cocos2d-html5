@@ -32,7 +32,7 @@ import {
   Director,
   EventManager,
   Layer,
-  Rect
+  Rect,
 } from "@aspect/core";
 import {
   BMButton,

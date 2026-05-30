@@ -42,6 +42,7 @@ export class EditBoxTestLayer extends Layer {
     this._box3 = null;
 
     this._box4 = null;
+    
     this.init();
   }
 

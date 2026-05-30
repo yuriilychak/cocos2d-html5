@@ -383,7 +383,7 @@ var rendererWebGL = {
       _batchingSize * _sizePerVertex
     );
     if (len > 0) {
-      this._increaseBatchingSize(len, cmd.vertexType);
+      this._increaseBatchingSize(len, cmd.vertexType, cmd._indices);
     }
   },
 

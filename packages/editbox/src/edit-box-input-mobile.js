@@ -48,10 +48,7 @@ export class MobileEditBoxInput extends EditBoxInputBase {
     }
 
     _adjustZoom(a, d) {
-        if (!editBoxPolyfill.zoomInvalid) return { a, d };
-        var node = this._editBox;
-        this.updateSize(node._contentSize.width * a, node._contentSize.height * d);
-        return { a: 1, d: 1 };
+        return { a, d };
     }
 
     _onBeginEditing() {

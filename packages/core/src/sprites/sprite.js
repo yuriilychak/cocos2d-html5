@@ -36,6 +36,7 @@ import { Texture2D } from "../textures/texture-2d";
 import { SpriteFrame } from "./sprite-frame";
 import SpriteFrameCache from "./sprite-frame-cache";
 import AnimationCache from "./animation-cache";
+import { PolygonInfo } from "./polygon-info";
 import { RendererConfig } from "../renderer/renderer-config";
 import { BLEND_DST, BLEND_SRC } from "../platform/macro/constants";
 import { sizePointsToPixels, rectPointsToPixels, pointPointsToPixels } from "../platform/macro/utils.js";
@@ -141,6 +142,7 @@ export class Sprite extends EventHelper(Node) {
 
     this._textureLoaded = false;
     this._className = "Sprite";
+    this._polygonInfo = null;
 
     // default transform anchor: center
     this.setAnchorPoint(0.5, 0.5);
@@ -421,6 +423,88 @@ export class Sprite extends EventHelper(Node) {
    */
   getTexture() {
     return this._texture;
+  }
+
+  /**
+   * Returns the polygon mesh used to render this sprite, or null if the
+   * sprite uses the default textured quad.
+   * @returns {PolygonInfo|null}
+   */
+  getPolygonInfo() {
+    return this._polygonInfo;
+  }
+
+  /**
+   * Switches the sprite to polygonal rendering using the supplied mesh.
+   * Passing null reverts the sprite to its default quad rendering.
+   * The polygon vertices are expected in pixel coordinates relative to
+   * the trimmed sprite frame's top-left corner; UVs are in pixel space
+   * (they are converted to texture-relative coordinates at upload time).
+   *
+   * @param {PolygonInfo|null} polygonInfo
+   */
+  setPolygonInfo(polygonInfo) {
+    this._polygonInfo = polygonInfo || null;
+    if (this._renderCmd && this._renderCmd._onPolygonInfoChanged) {
+      this._renderCmd._onPolygonInfoChanged();
+    }
+    this.setNodeDirty(true);
+  }
+
+  /**
+   * Returns whether the sprite currently uses polygon rendering.
+   * @returns {Boolean}
+   */
+  hasPolygonInfo() {
+    return !!(
+      this._polygonInfo &&
+      this._polygonInfo.triangles &&
+      this._polygonInfo.triangles.verts.length > 0 &&
+      this._polygonInfo.triangles.indices.length > 0
+    );
+  }
+
+  /**
+   * Initializes the sprite with a PolygonInfo and texture.
+   * @param {PolygonInfo} polygonInfo
+   * @param {Texture2D|String} [texture] Defaults to the texture loaded from polygonInfo.filename.
+   * @returns {Boolean}
+   */
+  initWithPolygon(polygonInfo, texture) {
+    if (!polygonInfo) return false;
+    if (!texture && polygonInfo.filename) texture = polygonInfo.filename;
+
+    var rect = polygonInfo.rect;
+    if (!rect || (rect.width === 0 && rect.height === 0)) {
+      var verts = polygonInfo.triangles.verts;
+      var minX = Infinity,
+        minY = Infinity,
+        maxX = -Infinity,
+        maxY = -Infinity;
+      for (var i = 0; i < verts.length; i++) {
+        var vx = verts[i].x,
+          vy = verts[i].y;
+        if (vx < minX) minX = vx;
+        if (vy < minY) minY = vy;
+        if (vx > maxX) maxX = vx;
+        if (vy > maxY) maxY = vy;
+      }
+      if (verts.length === 0) {
+        minX = minY = 0;
+        maxX = maxY = 0;
+      }
+      rect = new Rect(0, 0, maxX - minX, maxY - minY);
+    }
+
+    if (typeof texture === "string") {
+      var tex = TextureCache.getInstance().getTextureForKey(texture);
+      if (!tex) tex = TextureCache.getInstance().addImage(texture);
+      texture = tex;
+    }
+
+    var ok = this.initWithTexture(texture, rect, false);
+    if (ok) this.setPolygonInfo(polygonInfo);
+    return ok;
   }
 
   _softInit(fileName, rect, rotated) {
@@ -729,6 +813,15 @@ export class Sprite extends EventHelper(Node) {
       newFrame.isRotated(),
       newFrame.getOriginalSize()
     );
+
+    // Propagate polygon mesh from the frame (or clear it if the new frame
+    // is a plain quad). Done last so the render command picks up the rect
+    // that was just installed by setTextureRect.
+    if (newFrame.hasPolygonInfo && newFrame.hasPolygonInfo()) {
+      this.setPolygonInfo(newFrame.getPolygonInfo());
+    } else if (this._polygonInfo) {
+      this.setPolygonInfo(null);
+    }
   }
 
   /**

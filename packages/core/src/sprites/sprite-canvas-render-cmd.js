@@ -52,6 +52,8 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
 
   setDirtyRecursively(value) {}
 
+  _onPolygonInfoChanged() {}
+
   _setTexture(texture) {
     const node = this._node;
     if (node._texture !== texture) {
@@ -202,7 +204,19 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
         wrapper.setFillStyle(context.createPattern(image, texture._pattern));
         context.fillRect(x, y, w, h);
       } else {
+        // Polygonal sprite: clip drawImage to the polygon's outline so
+        // transparent regions outside the mesh are not drawn. Canvas
+        // doesn't natively support textured triangle lists, so we use
+        // the polygon as a clip mask around the standard atlas blit.
+        const polyInfo = node._polygonInfo;
+        const hasPoly = polyInfo && node.hasPolygonInfo && node.hasPolygonInfo();
+        if (hasPoly) {
+          wrapper.save();
+          this._tracePolygonPath(context, x, y, w, h, polyInfo);
+          context.clip();
+        }
         context.drawImage(image, sx, sy, sw, sh, x, y, w, h);
+        if (hasPoly) wrapper.restore();
       }
     } else {
       const contentSize = node._contentSize;
@@ -221,6 +235,25 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
     }
     if (node._flippedX || node._flippedY) wrapper.restore();
     RendererConfig.getInstance().incrementDrawCount();
+  }
+
+  _tracePolygonPath(context, x, y, w, h, polyInfo) {
+    const verts = polyInfo.triangles.verts;
+    const indices = polyInfo.triangles.indices;
+    context.beginPath();
+    for (let i = 0; i < indices.length; i += 3) {
+      const a = verts[indices[i]],
+        b = verts[indices[i + 1]],
+        c = verts[indices[i + 2]];
+      if (!a || !b || !c) continue;
+      // Polygon verts are top-left-origin pixels relative to the trimmed
+      // rect; drawImage(..., x, y, w, h) places that rect at (x, y) in
+      // the current canvas transform, so vert offsets map directly.
+      context.moveTo(x + a.x, y + a.y);
+      context.lineTo(x + b.x, y + b.y);
+      context.lineTo(x + c.x, y + c.y);
+      context.closePath();
+    }
   }
 
   _updateColor() {

@@ -35,6 +35,7 @@ import TextureCache from "../textures/texture-cache";
 import { Texture2D } from "../textures/texture-2d";
 import { SpriteFrame } from "./sprite-frame";
 import { Sprite } from './sprite';
+import { PolygonInfo, Triangles } from './polygon-info';
 import { RendererConfig } from "../renderer/renderer-config";
 import { isString } from "../boot/utils";
 
@@ -89,6 +90,28 @@ export default class SpriteFrameCache {
     var result = this._CCNS_REG1.exec(content);
     if (!result) return new Size(0, 0);
     return new Size(parseFloat(result[1]), parseFloat(result[2]));
+  }
+
+  /**
+   * Parse a list of numbers out of either a JSON-like array or a string of
+   * whitespace/separator delimited values (TexturePacker polygon plist
+   * exports use the latter for `vertices`, `verticesUV` and `triangles`).
+   * @param {String|Number[]} content
+   * @returns {Number[]}
+   */
+  _parseNumberList(content) {
+    if (!content) return [];
+    if (Array.isArray(content)) return content.map(Number);
+    return ("" + content)
+      .replace(/[\{\}\[\]\(\),]/g, " ")
+      .split(/\s+/)
+      .filter(function (s) {
+        return s.length > 0;
+      })
+      .map(parseFloat)
+      .filter(function (n) {
+        return !isNaN(n);
+      });
   }
 
   _getFrameConfig(url) {
@@ -175,6 +198,17 @@ export default class SpriteFrameCache {
         tempFrame.offset = this._pointFromString(frameDict["spriteOffset"]);
         tempFrame.size = this._sizeFromString(frameDict["spriteSourceSize"]);
         tempFrame.aliases = frameDict["aliases"];
+        // Optional polygon mesh (TexturePacker "Polygon Sprite" exporter).
+        var polyVerts = frameDict["vertices"];
+        var polyUVs = frameDict["verticesUV"];
+        var polyIdx = frameDict["triangles"];
+        if (polyVerts && polyUVs && polyIdx) {
+          tempFrame.polygon = {
+            vertices: this._parseNumberList(polyVerts),
+            verticesUV: this._parseNumberList(polyUVs),
+            triangles: this._parseNumberList(polyIdx)
+          };
+        }
       } else {
         var tmpFrame = frameDict["frame"],
           tmpSourceSize = frameDict["sourceSize"];
@@ -235,6 +269,37 @@ export default class SpriteFrameCache {
           frame.offset,
           frame.size
         );
+        if (frame.polygon) {
+          // TexturePacker exports polygon `vertices` in the *original
+          // untrimmed image's* pixel space (top-left origin), while UVs
+          // are in atlas-pixel space. Our renderer wants vertices in
+          // trimmed-rect-local space (origin at top-left of textureRect).
+          // Derive the trim offset from any vert/UV pair and shift the
+          // vertices into rect-local coords before storing.
+          var rawVerts = frame.polygon.vertices;
+          var rawUVs = frame.polygon.verticesUV;
+          var trimOffX = 0,
+            trimOffY = 0;
+          if (rawVerts.length >= 2 && rawUVs.length >= 2) {
+            trimOffX = rawVerts[0] - (rawUVs[0] - frame.rect.x);
+            trimOffY = rawVerts[1] - (rawUVs[1] - frame.rect.y);
+          }
+          var normVerts = rawVerts;
+          if (trimOffX !== 0 || trimOffY !== 0) {
+            normVerts = new Array(rawVerts.length);
+            for (var vi = 0; vi < rawVerts.length; vi += 2) {
+              normVerts[vi] = rawVerts[vi] - trimOffX;
+              normVerts[vi + 1] = rawVerts[vi + 1] - trimOffY;
+            }
+          }
+          var polyInfo = PolygonInfo.fromFlatArrays(
+            normVerts,
+            frame.polygon.verticesUV,
+            frame.polygon.triangles,
+            frame.rect
+          );
+          spriteFrame.setPolygonInfo(polyInfo);
+        }
         var aliases = frame.aliases;
         if (aliases) {
           //set aliases

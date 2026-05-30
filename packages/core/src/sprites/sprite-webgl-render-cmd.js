@@ -53,9 +53,34 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
     this._dirty = false;
     this._recursiveDirty = false;
 
+    // Polygon (triangle-list) rendering state. Populated lazily from the
+    // node's PolygonInfo when it has one.
+    this.vertexType = 0; // VertexType.QUAD by default
+    this._indices = null;
+    this._polyUVDirty = true;
+
     this._shaderProgram = ShaderCache.getInstance().programForKey(
       SHADER_SPRITE_POSITION_TEXTURECOLOR
     );
+  }
+
+  _onPolygonInfoChanged() {
+    const node = this._node;
+    const renderer = RendererConfig.getInstance().renderer;
+    if (node && node._polygonInfo && node.hasPolygonInfo && node.hasPolygonInfo()) {
+      this.vertexType = renderer.VertexType.CUSTOM;
+      const tris = node._polygonInfo.triangles;
+      // Use a typed array of indices for the batcher.
+      this._indices =
+        tris.indices instanceof Uint16Array
+          ? tris.indices
+          : new Uint16Array(tris.indices);
+      this._polyUVDirty = true;
+    } else {
+      this.vertexType = renderer.VertexType.QUAD;
+      this._indices = null;
+    }
+    this.setDirtyFlag(this._dirtyFlag || 0);
   }
 
   updateBlendFunc(blendFunc) {}
@@ -141,6 +166,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
   _setTextureCoords(rect, needConvert) {
     if (needConvert === undefined) needConvert = true;
     if (needConvert) rect = rectPointsToPixels(rect);
+    this._polyUVDirty = true;
     const node = this._node;
 
     const tex = node._batchNode ? node.textureAtlas.texture : node._texture;
@@ -376,6 +402,15 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
     this._color[0] = (opacity << 24) | (b << 16) | (g << 8) | r;
     const z = node._vertexZ;
 
+    if (node._polygonInfo && node.hasPolygonInfo && node.hasPolygonInfo()) {
+      return this._uploadPolygonData(
+        f32buffer,
+        ui32buffer,
+        vertexDataOffset,
+        z
+      );
+    }
+
     const vertices = this._vertices;
     const len = vertices.length;
     let i,
@@ -393,5 +428,80 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
     }
 
     return len;
+  }
+
+  /**
+   * Upload polygonal triangle-list vertex data for the current sprite.
+   * Returns the vertex count consumed so the renderer can advance its
+   * batching offset and append the appropriate indices.
+   */
+  _uploadPolygonData(f32buffer, ui32buffer, vertexDataOffset, z) {
+    const node = this._node;
+    const tex = node._texture;
+    if (!tex) return 0;
+
+    const tris = node._polygonInfo.triangles;
+    const verts = tris.verts;
+    const vertCount = verts.length;
+    if (vertCount === 0) return 0;
+
+    // Ensure the renderer is given the right index buffer for this batch.
+    if (!this._indices || this._indices.length !== tris.indices.length) {
+      this._indices =
+        tris.indices instanceof Uint16Array
+          ? tris.indices
+          : new Uint16Array(tris.indices);
+    }
+
+    // Convert UVs from pixel-space into normalized texture coords (once
+    // per UV change). The polygon's local x/y are kept in sprite-space
+    // pixels, and transformed by the world matrix at upload time.
+    const atlasW = tex.pixelsWidth || tex.getPixelsWide();
+    const atlasH = tex.pixelsHeight || tex.getPixelsHigh();
+
+    const wt = this._worldTransform,
+      wa = wt.a,
+      wb = wt.b,
+      wc = wt.c,
+      wd = wt.d,
+      wx = wt.tx,
+      wy = wt.ty;
+
+    // Offset the polygon so anchor-point/offset-position semantics match
+    // the quad path. _offsetPosition already accounts for the trimmed
+    // frame's center inside the untrimmed content size.
+    const ox = node._offsetPosition.x;
+    const oy = node._offsetPosition.y;
+    const rectH = node._rect.height;
+
+    const flipX = node._flippedX ? -1 : 1;
+    const flipY = node._flippedY ? -1 : 1;
+    const fxOff = node._flippedX ? node._rect.width : 0;
+    const fyOff = node._flippedY ? rectH : 0;
+
+    let offset = vertexDataOffset;
+    const color = this._color[0];
+
+    for (let i = 0; i < vertCount; i++) {
+      const v = verts[i];
+      // Map polygon-space (top-left origin, y-down, pixels relative to the
+      // trimmed rect) into the sprite's local cocos2d coord space
+      // (bottom-left origin, y-up, relative to _offsetPosition).
+      let lx = v.x * flipX + fxOff + ox;
+      let ly = (rectH - v.y) * flipY + fyOff + oy;
+      // Map to world space via the parent transform.
+      const x = lx * wa + ly * wc + wx;
+      const y = lx * wb + ly * wd + wy;
+
+      f32buffer[offset] = x;
+      f32buffer[offset + 1] = y;
+      f32buffer[offset + 2] = z;
+      ui32buffer[offset + 3] = color;
+      f32buffer[offset + 4] = atlasW > 0 ? v.u / atlasW : 0;
+      f32buffer[offset + 5] = atlasH > 0 ? v.v / atlasH : 0;
+      offset += 6;
+    }
+
+    return vertCount;
   }
 }

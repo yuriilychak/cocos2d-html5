@@ -282,6 +282,7 @@ export { ResolutionPolicy } from "./platform/egl-view/resolution-policy";
 export { ContainerStrategy } from "./platform/egl-view/container-strategy";
 export { ContentStrategy } from "./platform/egl-view/content-strategy";
 export { SpriteFrame } from "./sprites/sprite-frame";
+export { PolygonInfo, Triangles } from "./sprites/polygon-info";
 export { Component } from "./components/component";
 export { assert, error } from "./boot";
 export {
