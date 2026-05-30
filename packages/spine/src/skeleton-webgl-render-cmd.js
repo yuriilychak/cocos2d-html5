@@ -28,6 +28,9 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
   constructor(renderableObject) {
     super(renderableObject);
     this._needDraw = true;
+    // Drive the batcher directly (per-slot textures/blend) instead of being
+    // resolved to a single node texture by the central batcher.
+    this._selfBatch = true;
     this._matrix = new Matrix4();
     this._matrix.identity();
     this._currTexture = null;
@@ -38,6 +41,27 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
         SHADER_SPRITE_POSITION_TEXTURECOLOR
       )
     );
+  }
+
+  // A skeleton can join the shared multi-texture sprite batch (so it renders in
+  // the same draw call as surrounding sprites) only on WebGL2 and only when its
+  // current draw order contains no mesh attachments. Mesh attachments keep the
+  // legacy single-texture self-batch path. This is evaluated per frame because
+  // animations/skins can swap region and mesh attachments.
+  _canMultiBatch(locSkeleton) {
+    const renderer = RendererConfig.getInstance().renderer;
+    if (!RendererConfig.getInstance().isWebGL2) return false;
+    if (!renderer._getMultiProgramState || !renderer._appendMultiBatch) {
+      return false;
+    }
+    if (!renderer._getMultiProgramState()) return false;
+    const drawOrder = locSkeleton.drawOrder;
+    for (let i = 0, n = drawOrder.length; i < n; i++) {
+      const slot = drawOrder[i];
+      if (!slot.attachment) continue;
+      if (slot.attachment instanceof MeshAttachment) return false;
+    }
+    return true;
   }
 
   uploadData(f32buffer, ui32buffer, vertexDataOffset) {
@@ -61,6 +85,11 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
 
     const renderer = RendererConfig.getInstance().renderer;
     const stride = renderer.getSizePerVertex();
+    const multiBatch = !node._debugSlots && this._canMultiBatch(locSkeleton);
+    const multiProgramState = multiBatch
+      ? renderer._getMultiProgramState()
+      : null;
+
     for (let i = 0, n = locSkeleton.drawOrder.length; i < n; i++) {
       const slot = locSkeleton.drawOrder[i];
       if (!slot.attachment) continue;
@@ -79,9 +108,37 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
 
       const regionTextureAtlas = node.getTextureAtlas(attachment);
       this._currTexture = regionTextureAtlas.texture.getRealTexture();
+      const blendFunc = this._getBlendFunc(slot.data.blendMode, premultiAlpha);
+
+      let slotDebugPoints = null;
+
+      if (multiBatch) {
+        // Append the region quad into the shared multi-texture sprite batch so
+        // it can be drawn together with surrounding sprites.
+        const texSlot = renderer._appendMultiBatch(
+          this._currTexture,
+          blendFunc,
+          multiProgramState,
+          vertCount
+        );
+        const offset = renderer.getBatchingSize() * stride;
+        slotDebugPoints = this._uploadRegionAttachmentData(
+          attachment,
+          slot,
+          premultiAlpha,
+          f32buffer,
+          ui32buffer,
+          offset,
+          texSlot
+        );
+        renderer._increaseBatchingSize(vertCount, renderer.VertexType.TRIANGLE);
+        if (node._debugSlots) debugSlotsInfo[i] = slotDebugPoints;
+        continue;
+      }
+
       const batchBroken = renderer._updateBatchedInfo(
         this._currTexture,
-        this._getBlendFunc(slot.data.blendMode, premultiAlpha),
+        blendFunc,
         this._glProgramState
       );
 
@@ -94,7 +151,6 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
         vertexDataOffset = 0;
       }
 
-      let slotDebugPoints = null;
       if (attachment instanceof RegionAttachment) {
         slotDebugPoints = this._uploadRegionAttachmentData(
           attachment,
@@ -102,7 +158,8 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
           premultiAlpha,
           f32buffer,
           ui32buffer,
-          vertexDataOffset
+          vertexDataOffset,
+          0
         );
       } else if (attachment instanceof MeshAttachment) {
         this._uploadMeshAttachmentData(
@@ -217,7 +274,8 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
     premultipliedAlpha,
     f32buffer,
     ui32buffer,
-    vertexDataOffset
+    vertexDataOffset,
+    texIndex
   ) {
     const nodeColor = this._displayedColor;
     const nodeR = nodeColor.r,
@@ -271,7 +329,7 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
       ui32buffer[offset + 3] = colorVal;
       f32buffer[offset + 4] = uvs[srcIdx * 2];
       f32buffer[offset + 5] = uvs[srcIdx * 2 + 1];
-      if (stride > 6) f32buffer[offset + 6] = 0;
+      if (stride > 6) f32buffer[offset + 6] = texIndex || 0;
       offset += stride;
     }
 

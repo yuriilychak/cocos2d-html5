@@ -218,6 +218,47 @@ var rendererWebGL = {
     return _maxVertexSize;
   },
 
+  // Current number of vertices accumulated in the open batch. Self-batching
+  // commands (e.g. spine) use this to know where to write their next vertex.
+  getBatchingSize: function () {
+    return _batchingSize;
+  },
+
+  // Append geometry to the shared multi-texture batch on behalf of a
+  // self-batching command (spine). Flushes the open batch when it is
+  // incompatible (not multi, different program/blend) or when the texture-unit
+  // set or vertex buffer would overflow, then returns the texture-unit slot the
+  // caller must write as the per-vertex texIndex. After calling this, the write
+  // offset is getBatchingSize() * sizePerVertex.
+  _appendMultiBatch: function (texture, blendFunc, glProgramState, vertCount) {
+    if (
+      !_batchedInfo.isMulti ||
+      _batchedInfo.glProgramState !== glProgramState ||
+      _batchedInfo.blendSrc !== blendFunc.src ||
+      _batchedInfo.blendDst !== blendFunc.dst
+    ) {
+      this._batchRendering();
+      _batchedInfo.isMulti = true;
+      _batchedInfo.glProgramState = glProgramState;
+      _batchedInfo.blendSrc = blendFunc.src;
+      _batchedInfo.blendDst = blendFunc.dst;
+      _batchTextureCount = 0;
+    }
+
+    if (_batchingSize + vertCount > _maxVertexSize) {
+      this._batchRendering();
+      _batchTextureCount = 0;
+    }
+
+    var slot = this._resolveTextureSlot(texture, _maxBatchTextures);
+    if (slot === -1) {
+      this._batchRendering();
+      _batchTextureCount = 0;
+      slot = this._resolveTextureSlot(texture, _maxBatchTextures);
+    }
+    return slot;
+  },
+
   getRenderCmd: function (renderableObject) {
     //TODO Add renderCmd pool here
     return renderableObject._createRenderCmd();
@@ -412,6 +453,19 @@ var rendererWebGL = {
   },
 
   _uploadBufferData: function (cmd) {
+    // Self-batching commands (e.g. spine skeletons) emit many primitives with
+    // their own per-slot textures/blend and drive the batcher directly. Let
+    // them manage the shared batch state instead of resolving a single texture
+    // slot here (a skeleton has no single node texture).
+    if (cmd._selfBatch) {
+      cmd.uploadData(
+        _vertexDataF32,
+        _vertexDataUI32,
+        _batchingSize * _sizePerVertex
+      );
+      return;
+    }
+
     if (_batchingSize >= _maxVertexSize) {
       this._batchRendering();
       _batchTextureCount = 0;
