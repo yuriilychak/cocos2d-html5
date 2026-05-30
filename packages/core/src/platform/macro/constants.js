@@ -282,6 +282,12 @@ export const VERTEX_ATTRIB_COLOR = 1;
  */
 export const VERTEX_ATTRIB_TEX_COORDS = 2;
 /**
+ * Per-vertex texture-slot index used by the WebGL2 multi-texture batcher.
+ * @constant
+ * @type {Number}
+ */
+export const VERTEX_ATTRIB_TEX_INDEX = 3;
+/**
  * @constant
  * @type {Number}
  */
@@ -345,6 +351,13 @@ export const SHADER_POSITION_TEXTURECOLOR = "ShaderPositionTextureColor";
  * @type {String}
  */
 export const SHADER_SPRITE_POSITION_TEXTURECOLOR = "ShaderSpritePositionTextureColor";
+/**
+ * Multi-texture (WebGL2) variant of the default sprite shader. Samples from a
+ * sampler2D array indexed by a per-vertex texture-slot attribute.
+ * @constant
+ * @type {String}
+ */
+export const SHADER_SPRITE_POSITION_TEXTURECOLOR_MULTI = "ShaderSpritePositionTextureColorMulti";
 /**
  * @constant
  * @type {String}
@@ -459,6 +472,12 @@ export const ATTRIBUTE_NAME_POSITION = "a_position";
  * @type {String}
  */
 export const ATTRIBUTE_NAME_TEX_COORD = "a_texCoord";
+/**
+ * Vertex attribute name for the multi-texture batcher's per-vertex slot index.
+ * @constant
+ * @type {String}
+ */
+export const ATTRIBUTE_NAME_TEX_INDEX = "a_texIndex";
 /**
  * @constant
  * @type {String}

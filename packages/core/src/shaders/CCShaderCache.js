@@ -35,15 +35,18 @@ import {
     SHADER_POSITION_UCOLOR,
     SHADER_POSITION_LENGTHTEXTURECOLOR,
     SHADER_SPRITE_POSITION_TEXTURECOLOR,
+    SHADER_SPRITE_POSITION_TEXTURECOLOR_MULTI,
     SHADER_SPRITE_POSITION_TEXTURECOLORALPHATEST,
     SHADER_SPRITE_POSITION_COLOR,
     SHADER_SPRITE_POSITION_TEXTURECOLOR_GRAY,
     ATTRIBUTE_NAME_POSITION,
     ATTRIBUTE_NAME_COLOR,
     ATTRIBUTE_NAME_TEX_COORD,
+    ATTRIBUTE_NAME_TEX_INDEX,
     VERTEX_ATTRIB_POSITION,
     VERTEX_ATTRIB_COLOR,
-    VERTEX_ATTRIB_TEX_COORDS
+    VERTEX_ATTRIB_TEX_COORDS,
+    VERTEX_ATTRIB_TEX_INDEX
 } from "../platform/macro/constants";
 import {
     SHADER_POSITION_TEXTURE_COLOR_VERT,
@@ -63,10 +66,13 @@ import {
     SHADER_POSITION_COLOR_LENGTH_TEXTURE_FRAG,
     SHADER_SPRITE_POSITION_TEXTURE_COLOR_VERT,
     SHADER_SPRITE_POSITION_COLOR_VERT,
-    SHADER_SPRITE_POSITION_TEXTURE_COLOR_GRAY_FRAG
+    SHADER_SPRITE_POSITION_TEXTURE_COLOR_GRAY_FRAG,
+    buildSpriteMultiTextureVert,
+    buildSpriteMultiTextureFrag
 } from './CCShaders';
 import GLProgram from './CCGLProgram';
 import { checkGLErrorDebug } from "../platform/macro/utils";
+import { RendererConfig } from "../renderer/renderer-config";
 
 /**
  * ShaderCache is a singleton object that stores manages GL shaders
@@ -234,6 +240,16 @@ export default class ShaderCache {
                 program.addAttribute(ATTRIBUTE_NAME_COLOR, VERTEX_ATTRIB_COLOR);
                 program.addAttribute(ATTRIBUTE_NAME_TEX_COORD, VERTEX_ATTRIB_TEX_COORDS);
                 break;
+            case SHADER_SPRITE_POSITION_TEXTURECOLOR_MULTI:
+                program.initWithVertexShaderByteArray(
+                    buildSpriteMultiTextureVert(),
+                    buildSpriteMultiTextureFrag(RendererConfig.getInstance().getMaxBatchTextures())
+                );
+                program.addAttribute(ATTRIBUTE_NAME_POSITION, VERTEX_ATTRIB_POSITION);
+                program.addAttribute(ATTRIBUTE_NAME_COLOR, VERTEX_ATTRIB_COLOR);
+                program.addAttribute(ATTRIBUTE_NAME_TEX_COORD, VERTEX_ATTRIB_TEX_COORDS);
+                program.addAttribute(ATTRIBUTE_NAME_TEX_INDEX, VERTEX_ATTRIB_TEX_INDEX);
+                break;
             case SHADER_SPRITE_POSITION_TEXTURECOLORALPHATEST:
                 program.initWithVertexShaderByteArray(SHADER_SPRITE_POSITION_TEXTURE_COLOR_VERT, SHADER_POSITION_TEXTURE_COLOR_ALPHATEST_FRAG);
                 program.addAttribute(ATTRIBUTE_NAME_POSITION, VERTEX_ATTRIB_POSITION);
@@ -271,6 +287,9 @@ export default class ShaderCache {
         this.programForKey(SHADER_POSITION_LENGTHTEXTURECOLOR);
 
         this.programForKey(SHADER_SPRITE_POSITION_TEXTURECOLOR);
+        if (RendererConfig.getInstance().isWebGL2) {
+            this.programForKey(SHADER_SPRITE_POSITION_TEXTURECOLOR_MULTI);
+        }
         this.programForKey(SHADER_SPRITE_POSITION_TEXTURECOLORALPHATEST);
         this.programForKey(SHADER_SPRITE_POSITION_COLOR);
         this.programForKey(SHADER_SPRITE_POSITION_TEXTURECOLOR_GRAY);

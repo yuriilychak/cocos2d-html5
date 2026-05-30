@@ -312,3 +312,61 @@ export const SHADEREX_SWITCHMASK_FRAG =
         + "    vec4 finalColor = vec4(texColor.r, texColor.g, texColor.b, maskColor.a * texColor.a);        \n"
         + "    gl_FragColor    = v_fragmentColor * finalColor; \n"
         + "}";
+
+// -------------------- Multi-texture sprite shader (WebGL2 / GLSL ES 3.00) --------------------
+// Used by the multi-texture batcher: a single draw call can reference up to
+// `maxTextures` distinct textures, selected per-vertex via `a_texIndex`.
+
+/**
+ * Build the GLSL ES 3.00 vertex shader for the multi-texture sprite program.
+ * @returns {String}
+ */
+export function buildSpriteMultiTextureVert() {
+    return "#version 300 es\n"
+        + "in vec4 a_position;\n"
+        + "in vec4 a_color;\n"
+        + "in vec2 a_texCoord;\n"
+        + "in float a_texIndex;\n"
+        + "out lowp vec4 v_fragmentColor;\n"
+        + "out mediump vec2 v_texCoord;\n"
+        + "flat out int v_texIndex;\n"
+        + "void main()\n"
+        + "{\n"
+        + "    gl_Position = CC_PMatrix * a_position;\n"
+        + "    v_fragmentColor = a_color;\n"
+        + "    v_texCoord = a_texCoord;\n"
+        + "    v_texIndex = int(a_texIndex + 0.5);\n"
+        + "}\n";
+}
+
+/**
+ * Build the GLSL ES 3.00 fragment shader for the multi-texture sprite program.
+ * GLSL ES 3.00 forbids dynamic indexing of a sampler array, so a switch ladder
+ * over the (flat) integer index is used.
+ * @param {Number} maxTextures Number of sampler-array slots (>= 1).
+ * @returns {String}
+ */
+export function buildSpriteMultiTextureFrag(maxTextures) {
+    let src =
+        "#version 300 es\n"
+        + "precision highp int;\n"
+        + "in lowp vec4 v_fragmentColor;\n"
+        + "in mediump vec2 v_texCoord;\n"
+        + "flat in int v_texIndex;\n"
+        + "uniform sampler2D CC_Textures[" + maxTextures + "];\n"
+        + "out vec4 cc_FragColor;\n"
+        + "void main()\n"
+        + "{\n"
+        + "    vec4 texColor;\n"
+        + "    switch (v_texIndex)\n"
+        + "    {\n";
+    for (let i = 0; i < maxTextures; ++i) {
+        src += "        case " + i + ": texColor = texture(CC_Textures[" + i + "], v_texCoord); break;\n";
+    }
+    src +=
+        "        default: texColor = texture(CC_Textures[0], v_texCoord);\n"
+        + "    }\n"
+        + "    cc_FragColor = v_fragmentColor * texColor;\n"
+        + "}\n";
+    return src;
+}

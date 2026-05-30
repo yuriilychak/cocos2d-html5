@@ -118,7 +118,21 @@ export default class GLProgram extends NewClass {
     let preStr = GLProgram._isHighpSupported()
       ? "precision highp float;\n"
       : "precision mediump float;\n";
+
+    // GLSL ES 3.00 requires the `#version 300 es` directive to be the very first
+    // line of the shader. The CC_* uniform/precision block must be injected
+    // *after* it, so split the directive off before prepending the includes.
+    let versionStr = "";
+    if (source.indexOf("#version") === 0) {
+      let nl = source.indexOf("\n");
+      if (nl !== -1) {
+        versionStr = source.substring(0, nl + 1);
+        source = source.substring(nl + 1);
+      }
+    }
+
     source =
+      versionStr +
       preStr +
       "uniform mat4 CC_PMatrix;         \n" +
       "uniform mat4 CC_MVMatrix;        \n" +
@@ -389,6 +403,24 @@ export default class GLProgram extends NewClass {
    */
   getUniformSampler() {
     return this._uniforms[UNIFORM_SAMPLER_S];
+  }
+
+  /**
+   * Bind the multi-texture sampler array `CC_Textures[N]` to texture units
+   * `[0, 1, ..., N-1]`. The location is queried as `CC_Textures[0]`, which is
+   * the portable way to address a sampler array. Cached after first lookup.
+   * @param {Int32Array|Array<Number>} unitArray
+   */
+  setTextureUnits(unitArray) {
+    if (this._texturesUniformLocation === undefined) {
+      this._texturesUniformLocation = this._glContext.getUniformLocation(
+        this._programObj,
+        "CC_Textures[0]"
+      );
+    }
+    if (this._texturesUniformLocation !== null) {
+      this._glContext.uniform1iv(this._texturesUniformLocation, unitArray);
+    }
   }
 
   /**

@@ -60,6 +60,7 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
     if (node._debugSlots) debugSlotsInfo = [];
 
     const renderer = RendererConfig.getInstance().renderer;
+    const stride = renderer.getSizePerVertex();
     for (let i = 0, n = locSkeleton.drawOrder.length; i < n; i++) {
       const slot = locSkeleton.drawOrder[i];
       if (!slot.attachment) continue;
@@ -85,7 +86,7 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
       );
 
       const uploadAll =
-        vertexDataOffset / 6 + vertCount > (BATCH_VERTEX_COUNT - 200) * 0.5;
+        vertexDataOffset / stride + vertCount > (BATCH_VERTEX_COUNT - 200) * 0.5;
       if (!batchBroken && uploadAll) {
         renderer._batchRendering();
       }
@@ -128,7 +129,7 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
         );
       }
 
-      vertexDataOffset += vertCount * 6;
+      vertexDataOffset += vertCount * stride;
     }
 
     if (node._debugBones || node._debugSlots) {
@@ -252,6 +253,7 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
     const z = this._node.vertexZ;
 
     let offset = vertexDataOffset;
+    const stride = RendererConfig.getInstance().renderer.getSizePerVertex();
     for (let i = 0; i < 6; i++) {
       const srcIdx = i < 4 ? i % 3 : i - 2;
       const vx = vertices[srcIdx * 2],
@@ -269,7 +271,8 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
       ui32buffer[offset + 3] = colorVal;
       f32buffer[offset + 4] = uvs[srcIdx * 2];
       f32buffer[offset + 5] = uvs[srcIdx * 2 + 1];
-      offset += 6;
+      if (stride > 6) f32buffer[offset + 6] = 0;
+      offset += stride;
     }
 
     if (this._node._debugSlots) {
@@ -319,6 +322,7 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
     );
 
     let offset = vertexDataOffset;
+    const stride = RendererConfig.getInstance().renderer.getSizePerVertex();
     const nodeColor = this._displayedColor;
     const nodeR = nodeColor.r,
       nodeG = nodeColor.g,
@@ -340,7 +344,8 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
       ui32buffer[offset + 3] = colorVal;
       f32buffer[offset + 4] = uvs[i];
       f32buffer[offset + 5] = uvs[i + 1];
-      offset += 6;
+      if (stride > 6) f32buffer[offset + 6] = 0;
+      offset += stride;
     }
   }
 }

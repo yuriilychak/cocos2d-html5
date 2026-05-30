@@ -33,6 +33,7 @@ import {
   BLEND_DST,
   ONE,
   SHADER_SPRITE_POSITION_TEXTURECOLOR,
+  SHADER_SPRITE_POSITION_TEXTURECOLOR_MULTI,
   SRC_ALPHA
 } from "../platform/macro/constants";
 import { FIX_ARTIFACTS_BY_STRECHING_TEXEL } from "../platform/config";
@@ -60,7 +61,9 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
     this._polyUVDirty = true;
 
     this._shaderProgram = ShaderCache.getInstance().programForKey(
-      SHADER_SPRITE_POSITION_TEXTURECOLOR
+      RendererConfig.getInstance().isWebGL2
+        ? SHADER_SPRITE_POSITION_TEXTURECOLOR_MULTI
+        : SHADER_SPRITE_POSITION_TEXTURECOLOR
     );
   }
 
@@ -374,7 +377,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
     return this._needDraw && locTexture;
   }
 
-  uploadData(f32buffer, ui32buffer, vertexDataOffset) {
+  uploadData(f32buffer, ui32buffer, vertexDataOffset, texIndex) {
     const node = this._node,
       locTexture = node._texture;
     if (
@@ -407,12 +410,15 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
         f32buffer,
         ui32buffer,
         vertexDataOffset,
-        z
+        z,
+        texIndex || 0
       );
     }
 
+    const stride = RendererConfig.getInstance().renderer.getSizePerVertex();
     const vertices = this._vertices;
     const len = vertices.length;
+    const ti = texIndex || 0;
     let i,
       vertex,
       offset = vertexDataOffset;
@@ -424,7 +430,8 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
       ui32buffer[offset + 3] = this._color[0];
       f32buffer[offset + 4] = vertex.u;
       f32buffer[offset + 5] = vertex.v;
-      offset += 6;
+      if (stride > 6) f32buffer[offset + 6] = ti;
+      offset += stride;
     }
 
     return len;
@@ -435,7 +442,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
    * Returns the vertex count consumed so the renderer can advance its
    * batching offset and append the appropriate indices.
    */
-  _uploadPolygonData(f32buffer, ui32buffer, vertexDataOffset, z) {
+  _uploadPolygonData(f32buffer, ui32buffer, vertexDataOffset, z, texIndex) {
     const node = this._node;
     const tex = node._texture;
     if (!tex) return 0;
@@ -481,6 +488,8 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
 
     let offset = vertexDataOffset;
     const color = this._color[0];
+    const stride = RendererConfig.getInstance().renderer.getSizePerVertex();
+    const ti = texIndex || 0;
 
     for (let i = 0; i < vertCount; i++) {
       const v = verts[i];
@@ -499,7 +508,8 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
       ui32buffer[offset + 3] = color;
       f32buffer[offset + 4] = atlasW > 0 ? v.u / atlasW : 0;
       f32buffer[offset + 5] = atlasH > 0 ? v.v / atlasH : 0;
-      offset += 6;
+      if (stride > 6) f32buffer[offset + 6] = ti;
+      offset += stride;
     }
 
     return vertCount;

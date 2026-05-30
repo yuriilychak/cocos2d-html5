@@ -1,5 +1,16 @@
-import { Node, ShaderCache, SHADER_SPRITE_POSITION_TEXTURECOLOR, SHADER_SPRITE_POSITION_TEXTURECOLOR_GRAY } from '@aspect/core';
+import { Node, ShaderCache, RendererConfig, SHADER_SPRITE_POSITION_TEXTURECOLOR, SHADER_SPRITE_POSITION_TEXTURECOLOR_MULTI, SHADER_SPRITE_POSITION_TEXTURECOLOR_GRAY } from '@aspect/core';
 import { Scale9Sprite } from './scale9-sprite';
+
+// The normal-state Scale9Sprite shares the sprite quad vertex format and the
+// "vertexColor * texture" fragment semantics, so on WebGL2 it uses the same
+// multi-texture sprite program as Sprite. This lets Scale9Sprite instances
+// batch together with (and across textures alongside) regular sprites instead
+// of breaking the batch on every program boundary.
+function normalSpriteProgramKey() {
+    return RendererConfig.getInstance().isWebGL2
+        ? SHADER_SPRITE_POSITION_TEXTURECOLOR_MULTI
+        : SHADER_SPRITE_POSITION_TEXTURECOLOR;
+}
 
 export class Scale9SpriteWebGLRenderCmd extends Node.WebGLRenderCmd {
     constructor(renderable) {
@@ -7,14 +18,14 @@ export class Scale9SpriteWebGLRenderCmd extends Node.WebGLRenderCmd {
         this._needDraw = true;
         this._color = new Uint32Array(1);
         this._dirty = false;
-        this._shaderProgram = ShaderCache.getInstance().programForKey(SHADER_SPRITE_POSITION_TEXTURECOLOR);
+        this._shaderProgram = ShaderCache.getInstance().programForKey(normalSpriteProgramKey());
     }
 
     needDraw() {
         return this._needDraw && this._node.loaded();
     }
 
-    _uploadSliced(vertices, uvs, color, z, f32buffer, ui32buffer, offset) {
+    _uploadSliced(vertices, uvs, color, z, f32buffer, ui32buffer, offset, stride, texIndex) {
         var off;
         for (var r = 0; r < 3; ++r) {
             for (var c = 0; c < 3; ++c) {
@@ -26,7 +37,8 @@ export class Scale9SpriteWebGLRenderCmd extends Node.WebGLRenderCmd {
                 ui32buffer[offset+3] = color[0];
                 f32buffer[offset+4] = uvs[off];
                 f32buffer[offset+5] = uvs[off+1];
-                offset += 6;
+                if (stride > 6) f32buffer[offset+6] = texIndex;
+                offset += stride;
                 // rb
                 f32buffer[offset] = vertices[off+2];
                 f32buffer[offset + 1] = vertices[off+3];
@@ -34,7 +46,8 @@ export class Scale9SpriteWebGLRenderCmd extends Node.WebGLRenderCmd {
                 ui32buffer[offset + 3] = color[0];
                 f32buffer[offset + 4] = uvs[off+2];
                 f32buffer[offset + 5] = uvs[off+3];
-                offset += 6;
+                if (stride > 6) f32buffer[offset+6] = texIndex;
+                offset += stride;
                 // lt
                 f32buffer[offset] = vertices[off+8];
                 f32buffer[offset + 1] = vertices[off+9];
@@ -42,7 +55,8 @@ export class Scale9SpriteWebGLRenderCmd extends Node.WebGLRenderCmd {
                 ui32buffer[offset + 3] = color[0];
                 f32buffer[offset + 4] = uvs[off+8];
                 f32buffer[offset + 5] = uvs[off+9];
-                offset += 6;
+                if (stride > 6) f32buffer[offset+6] = texIndex;
+                offset += stride;
                 // rt
                 f32buffer[offset] = vertices[off+10];
                 f32buffer[offset + 1] = vertices[off+11];
@@ -50,7 +64,8 @@ export class Scale9SpriteWebGLRenderCmd extends Node.WebGLRenderCmd {
                 ui32buffer[offset + 3] = color[0];
                 f32buffer[offset + 4] = uvs[off+10];
                 f32buffer[offset + 5] = uvs[off+11];
-                offset += 6;
+                if (stride > 6) f32buffer[offset+6] = texIndex;
+                offset += stride;
             }
         }
         return 36;
@@ -64,7 +79,7 @@ export class Scale9SpriteWebGLRenderCmd extends Node.WebGLRenderCmd {
     _setColorDirty() {
     }
 
-    uploadData(f32buffer, ui32buffer, vertexDataOffset) {
+    uploadData(f32buffer, ui32buffer, vertexDataOffset, texIndex) {
         var node = this._node;
         if (this._displayedOpacity === 0) {
             return 0;
@@ -73,6 +88,9 @@ export class Scale9SpriteWebGLRenderCmd extends Node.WebGLRenderCmd {
         if (node._quadsDirty) {
             node._rebuildQuads();
         }
+
+        var ti = texIndex || 0;
+        var stride = RendererConfig.getInstance().renderer.getSizePerVertex();
 
         var opacity = this._displayedOpacity;
         var r = this._displayedColor.r,
@@ -102,11 +120,12 @@ export class Scale9SpriteWebGLRenderCmd extends Node.WebGLRenderCmd {
                   ui32buffer[offset + 3] = this._color[0];
                   f32buffer[offset + 4] = uvs[srcOff];
                   f32buffer[offset + 5] = uvs[srcOff+1];
-                  offset += 6;
+                  if (stride > 6) f32buffer[offset + 6] = ti;
+                  offset += stride;
               }
               break;
           case types.SLICED:
-              len = this._uploadSliced(vertices, uvs, this._color, z, f32buffer, ui32buffer, offset);
+              len = this._uploadSliced(vertices, uvs, this._color, z, f32buffer, ui32buffer, offset, stride, ti);
               break;
         }
         return len;
@@ -114,7 +133,7 @@ export class Scale9SpriteWebGLRenderCmd extends Node.WebGLRenderCmd {
 
     setState(state) {
         if (state === Scale9Sprite.state.NORMAL) {
-            this._shaderProgram = ShaderCache.getInstance().programForKey(SHADER_SPRITE_POSITION_TEXTURECOLOR);
+            this._shaderProgram = ShaderCache.getInstance().programForKey(normalSpriteProgramKey());
         } else if (state === Scale9Sprite.state.GRAY) {
             this._shaderProgram = ShaderCache.getInstance().programForKey(SHADER_SPRITE_POSITION_TEXTURECOLOR_GRAY);
         }

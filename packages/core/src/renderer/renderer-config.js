@@ -17,6 +17,7 @@ export class RendererConfig {
   _renderer = null;
   _numberOfDraws = 0;
   _glVersion = "canvas";
+  _maxBatchTextures = 0;
 
   get renderContext() {
     return this._renderContext;
@@ -36,6 +37,28 @@ export class RendererConfig {
 
   get isWebGL2() {
     return this._glVersion === "webgl2";
+  }
+
+  /**
+   * Number of distinct textures the WebGL2 multi-texture batcher may bind in a
+   * single draw call. Resolved lazily from MAX_TEXTURE_IMAGE_UNITS and capped at
+   * HARD_MAX_BATCH_TEXTURES. Returns 1 on WebGL1/Canvas (single-texture path).
+   * @returns {Number}
+   */
+  getMaxBatchTextures() {
+    if (this._maxBatchTextures === 0) {
+      if (this.isWebGL2 && this._renderContext) {
+        const gl = this._renderContext;
+        const units = gl.getParameter(gl.MAX_TEXTURE_IMAGE_UNITS) || 8;
+        this._maxBatchTextures = Math.max(
+          1,
+          Math.min(units, RendererConfig.HARD_MAX_BATCH_TEXTURES)
+        );
+      } else {
+        this._maxBatchTextures = 1;
+      }
+    }
+    return this._maxBatchTextures;
   }
 
   get renderer() {
@@ -112,4 +135,6 @@ export class RendererConfig {
   }
   
   static ENABLE_IMAGE_POOL = true;
+
+  static HARD_MAX_BATCH_TEXTURES = 8;
 }

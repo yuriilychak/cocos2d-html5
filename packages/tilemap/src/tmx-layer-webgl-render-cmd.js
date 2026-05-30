@@ -38,7 +38,7 @@ export class TMXLayerWebGLRenderCmd extends Node.WebGLRenderCmd {
     this._cos270 = Math.cos(radian);
   }
 
-  uploadData(f32buffer, ui32buffer, vertexDataOffset) {
+  uploadData(f32buffer, ui32buffer, vertexDataOffset, texIndex) {
     const node = this._node,
       hasRotation = node._rotationX || node._rotationY,
       layerOrientation = node.layerOrientation,
@@ -52,6 +52,8 @@ export class TMXLayerWebGLRenderCmd extends Node.WebGLRenderCmd {
     const director = Director.getInstance();
     const winSize = director.getWinSize();
     const rendererConfig = RendererConfig.getInstance();
+    const stride = rendererConfig.renderer.getSizePerVertex();
+    const ti = texIndex || 0;
 
     const scalex = view._scaleX,
       scaley = view._scaleY,
@@ -139,9 +141,9 @@ export class TMXLayerWebGLRenderCmd extends Node.WebGLRenderCmd {
     const vertices = this._vertices;
     for (row = startRow; row < maxRow; ++row) {
       for (col = startCol; col < maxCol; ++col) {
-        if (offset + 24 > f32buffer.length) {
+        if (offset + stride * 4 > f32buffer.length) {
           rendererConfig.renderer._increaseBatchingSize(
-            (offset - vertexDataOffset) / 6
+            (offset - vertexDataOffset) / stride
           );
           rendererConfig.renderer._batchRendering();
           vertexDataOffset = 0;
@@ -246,7 +248,8 @@ export class TMXLayerWebGLRenderCmd extends Node.WebGLRenderCmd {
               break;
           }
 
-          offset += 6;
+          if (stride > 6) f32buffer[offset + 6] = ti;
+          offset += stride;
         }
         if (flagged) {
           wa = a;
@@ -262,6 +265,6 @@ export class TMXLayerWebGLRenderCmd extends Node.WebGLRenderCmd {
       }
       colOffset += cols;
     }
-    return (offset - vertexDataOffset) / 6;
+    return (offset - vertexDataOffset) / stride;
   }
 }

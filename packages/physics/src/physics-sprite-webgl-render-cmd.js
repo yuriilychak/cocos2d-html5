@@ -6,13 +6,13 @@ export class PhysicsSpriteWebGLRenderCmd extends Sprite.WebGLRenderCmd {
     this._needDraw = true;
   }
 
-  uploadData(f32buffer, ui32buffer, vertexDataOffset) {
+  uploadData(f32buffer, ui32buffer, vertexDataOffset, texIndex) {
     const node = this._node;
     node._syncPosition();
     if (!node._ignoreBodyRotation)
       node._syncRotation();
     this.transform(this.getParentRenderCmd(), true);
 
-    return super.uploadData(f32buffer, ui32buffer, vertexDataOffset);
+    return super.uploadData(f32buffer, ui32buffer, vertexDataOffset, texIndex);
   }
 }

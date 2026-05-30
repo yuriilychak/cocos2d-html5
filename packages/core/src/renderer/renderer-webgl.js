@@ -30,22 +30,26 @@ import {
   BATCH_VERTEX_COUNT,
   VERTEX_ATTRIB_COLOR,
   VERTEX_ATTRIB_POSITION,
-  VERTEX_ATTRIB_TEX_COORDS
+  VERTEX_ATTRIB_TEX_COORDS,
+  VERTEX_ATTRIB_TEX_INDEX,
+  SHADER_SPRITE_POSITION_TEXTURECOLOR_MULTI
 } from "../platform/macro/constants";
 import { GLStateCache } from "../shaders/CCGLStateCache";
+import ShaderCache from "../shaders/CCShaderCache";
+import { GLProgramState } from "../shaders/CCGLProgramState";
 import Matrix4 from "../kazmath/mat4";
 
 // Internal variables
 // Batching general informations
 var _batchedInfo = {
-    // The batched texture, all batching element should have the same texture
-    texture: null,
     // The batched blend source, all batching element should have the same blend source
     blendSrc: null,
     // The batched blend destination, all batching element should have the same blend destination
     blendDst: null,
     // The batched gl program state, all batching element should have the same state
-    glProgramState: null
+    glProgramState: null,
+    // Whether the current batch uses the multi-texture sprite program
+    isMulti: false
   },
   _batchBroken = false,
   _indexBuffer = null,
@@ -66,7 +70,15 @@ var _batchedInfo = {
   _indexData = null,
   _prevIndexSize = 0,
   _pureQuad = true,
-  _IS_IOS = false;
+  _IS_IOS = false,
+  // Multi-texture batching (WebGL2). When enabled, a single batch may reference
+  // up to `_maxBatchTextures` distinct textures bound to separate texture units.
+  _multiTexture = false,
+  _maxBatchTextures = 1,
+  _batchTextures = [],
+  _batchTextureCount = 0,
+  _textureUnits = null,
+  _multiProgramState = null;
 
 // Inspired from @Heishe's gotta-batch-them-all branch
 // https://github.com/Talisca/cocos2d-html5/commit/de731f16414eb9bcaa20480006897ca6576d362c
@@ -145,12 +157,61 @@ var rendererWebGL = {
     gl.disable(gl.CULL_FACE);
     gl.disable(gl.DEPTH_TEST);
 
+    // Enable the WebGL2 multi-texture batcher when available.
+    _multiTexture = RendererConfig.getInstance().isWebGL2;
+    _sizePerVertex = _multiTexture ? 7 : 6;
+    if (_multiTexture) {
+      _maxBatchTextures = RendererConfig.getInstance().getMaxBatchTextures();
+      _textureUnits = new Int32Array(_maxBatchTextures);
+      for (var t = 0; t < _maxBatchTextures; ++t) {
+        _textureUnits[t] = t;
+      }
+    } else {
+      _maxBatchTextures = 1;
+    }
+    _batchTextures = new Array(_maxBatchTextures).fill(null);
+    _batchTextureCount = 0;
+
     this.mat4Identity = new Matrix4();
     this.mat4Identity.identity();
     initQuadBuffer(BATCH_VERTEX_COUNT);
     if (Sys.getInstance().os === Sys.getInstance().OS_IOS) {
       _IS_IOS = true;
     }
+  },
+
+  getSizePerVertex: function () {
+    return _sizePerVertex;
+  },
+
+  // The shared GLProgramState for the multi-texture sprite program, used to
+  // detect whether a render command participates in multi-texture batching.
+  _getMultiProgramState: function () {
+    if (!_multiTexture) {
+      return null;
+    }
+    if (!_multiProgramState) {
+      var program = ShaderCache.getInstance().programForKey(
+        SHADER_SPRITE_POSITION_TEXTURECOLOR_MULTI
+      );
+      _multiProgramState = GLProgramState.getOrCreateWithGLProgram(program);
+    }
+    return _multiProgramState;
+  },
+
+  // Find (or allocate) the texture-unit slot for a texture within the current
+  // batch. Returns -1 when the slot set is full (caller must flush).
+  _resolveTextureSlot: function (texture, maxTextures) {
+    for (var i = 0; i < _batchTextureCount; ++i) {
+      if (_batchTextures[i] === texture) {
+        return i;
+      }
+    }
+    if (_batchTextureCount < maxTextures) {
+      _batchTextures[_batchTextureCount] = texture;
+      return _batchTextureCount++;
+    }
+    return -1;
   },
 
   getVertexSize: function () {
@@ -324,15 +385,18 @@ var rendererWebGL = {
 
   _updateBatchedInfo: function (texture, blendFunc, glProgramState) {
     if (
-      texture !== _batchedInfo.texture ||
+      _batchedInfo.isMulti ||
+      _batchTextures[0] !== texture ||
       blendFunc.src !== _batchedInfo.blendSrc ||
       blendFunc.dst !== _batchedInfo.blendDst ||
       glProgramState !== _batchedInfo.glProgramState
     ) {
       // Draw batched elements
       this._batchRendering();
-      // Update _batchedInfo
-      _batchedInfo.texture = texture;
+      // Update _batchedInfo (single-texture batch)
+      _batchedInfo.isMulti = false;
+      _batchTextures[0] = texture;
+      _batchTextureCount = 1;
       _batchedInfo.blendSrc = blendFunc.src;
       _batchedInfo.blendDst = blendFunc.dst;
       _batchedInfo.glProgramState = glProgramState;
@@ -350,6 +414,7 @@ var rendererWebGL = {
   _uploadBufferData: function (cmd) {
     if (_batchingSize >= _maxVertexSize) {
       this._batchRendering();
+      _batchTextureCount = 0;
     }
 
     // Check batching
@@ -359,9 +424,16 @@ var rendererWebGL = {
     var blendSrc = node._blendFunc.src;
     var blendDst = node._blendFunc.dst;
     var glProgramState = cmd._glProgramState;
+    // Multi-texture batching only applies to commands using the default
+    // multi-texture sprite program; everything else keeps the single-texture
+    // (flush-on-texture-change) behavior.
+    var isMulti =
+      _multiTexture && glProgramState === this._getMultiProgramState();
+    var maxTextures = isMulti ? _maxBatchTextures : 1;
+
     if (
       _batchBroken ||
-      _batchedInfo.texture !== texture ||
+      _batchedInfo.isMulti !== isMulti ||
       _batchedInfo.blendSrc !== blendSrc ||
       _batchedInfo.blendDst !== blendDst ||
       _batchedInfo.glProgramState !== glProgramState
@@ -369,31 +441,57 @@ var rendererWebGL = {
       // Draw batched elements
       this._batchRendering();
       // Update _batchedInfo
-      _batchedInfo.texture = texture;
+      _batchedInfo.isMulti = isMulti;
       _batchedInfo.blendSrc = blendSrc;
       _batchedInfo.blendDst = blendDst;
       _batchedInfo.glProgramState = glProgramState;
+      _batchTextureCount = 0;
       _batchBroken = false;
     }
 
+    // Resolve the texture-unit slot for this command's texture, flushing if the
+    // slot set is full.
+    var beforeCount = _batchTextureCount;
+    var slot = this._resolveTextureSlot(texture, maxTextures);
+    if (slot === -1) {
+      this._batchRendering();
+      _batchedInfo.isMulti = isMulti;
+      _batchedInfo.blendSrc = blendSrc;
+      _batchedInfo.blendDst = blendDst;
+      _batchedInfo.glProgramState = glProgramState;
+      _batchTextureCount = 0;
+      beforeCount = 0;
+      slot = this._resolveTextureSlot(texture, maxTextures);
+    }
+    var appended = _batchTextureCount > beforeCount;
+
     // Upload vertex data
+    var sizeBefore = _batchingSize;
     var len = cmd.uploadData(
       _vertexDataF32,
       _vertexDataUI32,
-      _batchingSize * _sizePerVertex
+      _batchingSize * _sizePerVertex,
+      slot
     );
     if (len > 0) {
       this._increaseBatchingSize(len, cmd.vertexType, cmd._indices);
+    } else if (appended && _batchingSize === sizeBefore) {
+      // The command emitted no geometry (e.g. an unloaded texture or fully
+      // transparent node) and was not a self-batching command, so release the
+      // texture slot it just reserved. This keeps unloaded/incomplete textures
+      // out of the bound sampler set. Self-batching commands (spine/tilemap)
+      // advance _batchingSize themselves and are excluded by the size check.
+      _batchTextures[slot] = null;
+      _batchTextureCount = beforeCount;
     }
   },
 
   _batchRendering: function () {
-    if (_batchingSize === 0 || !_batchedInfo.texture) {
+    if (_batchingSize === 0 || _batchTextureCount === 0) {
       return;
     }
 
     var gl = RendererConfig.getInstance().renderContext;
-    var texture = _batchedInfo.texture;
     var glProgramState = _batchedInfo.glProgramState;
     var uploadAll = _batchingSize > _maxVertexSize * 0.5;
 
@@ -403,7 +501,26 @@ var rendererWebGL = {
     }
 
     GLStateCache.getInstance().blendFunc(_batchedInfo.blendSrc, _batchedInfo.blendDst);
-    GLStateCache.getInstance().bindTexture2DN(0, texture); // = glBindTexture2D(texture);
+
+    if (_batchedInfo.isMulti) {
+      // Bind every accumulated texture to its own unit, then pad the remaining
+      // declared sampler slots with slot 0 so no active sampler is left
+      // pointing at an incomplete texture.
+      var u;
+      for (u = 0; u < _batchTextureCount; ++u) {
+        GLStateCache.getInstance().bindTexture2DN(u, _batchTextures[u]);
+      }
+      for (u = _batchTextureCount; u < _maxBatchTextures; ++u) {
+        GLStateCache.getInstance().bindTexture2DN(u, _batchTextures[0]);
+      }
+      if (glProgramState) {
+        glProgramState.getGLProgram().setTextureUnits(_textureUnits);
+      }
+    } else {
+      GLStateCache.getInstance().bindTexture2DN(0, _batchTextures[0]);
+    }
+
+    var stride = _sizePerVertex * 4;
 
     gl.bindBuffer(gl.ARRAY_BUFFER, _vertexBuffer);
     // upload the vertex data to the gl buffer
@@ -417,13 +534,13 @@ var rendererWebGL = {
     gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
     gl.enableVertexAttribArray(VERTEX_ATTRIB_COLOR);
     gl.enableVertexAttribArray(VERTEX_ATTRIB_TEX_COORDS);
-    gl.vertexAttribPointer(VERTEX_ATTRIB_POSITION, 3, gl.FLOAT, false, 24, 0);
+    gl.vertexAttribPointer(VERTEX_ATTRIB_POSITION, 3, gl.FLOAT, false, stride, 0);
     gl.vertexAttribPointer(
       VERTEX_ATTRIB_COLOR,
       4,
       gl.UNSIGNED_BYTE,
       true,
-      24,
+      stride,
       12
     );
     gl.vertexAttribPointer(
@@ -431,9 +548,20 @@ var rendererWebGL = {
       2,
       gl.FLOAT,
       false,
-      24,
+      stride,
       16
     );
+    if (_multiTexture) {
+      gl.enableVertexAttribArray(VERTEX_ATTRIB_TEX_INDEX);
+      gl.vertexAttribPointer(
+        VERTEX_ATTRIB_TEX_INDEX,
+        1,
+        gl.FLOAT,
+        false,
+        stride,
+        24
+      );
+    }
 
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, _indexBuffer);
     if (!_prevIndexSize || !_pureQuad || _indexSize > _prevIndexSize) {
@@ -485,11 +613,17 @@ var rendererWebGL = {
         if (_batchingSize > 0) {
           this._batchRendering();
         }
+        // The pending batch (if any) was fully drawn above; start the next
+        // batch with a clean texture-slot set so it only binds the textures it
+        // actually uses.
+        _batchTextureCount = 0;
         cmd.rendering(context);
       }
     }
     this._batchRendering();
-    _batchedInfo.texture = null;
+    _batchTextureCount = 0;
+    _batchedInfo.glProgramState = null;
+    _batchedInfo.isMulti = false;
   }
 };
 
