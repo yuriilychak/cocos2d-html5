@@ -1,5 +1,4 @@
 import Game from "../boot/game";
-import { ServiceLocator } from "../service-locator";
 
 export class RendererConfig {
   _renderType = Game.RENDER_TYPE_CANVAS;
@@ -9,6 +8,11 @@ export class RendererConfig {
   _numberOfDraws = 0;
   _glVersion = "canvas";
   _maxBatchTextures = 0;
+  _sys = null;
+
+  injectServices({ sys }) {
+    this._sys = sys;
+  }
 
   get renderContext() {
     return this._renderContext;
@@ -103,22 +107,22 @@ export class RendererConfig {
     this._supportRender = false;
 
     if (userRenderMode === 0) {
-      if (ServiceLocator.sys.capabilities["opengl"]) {
+      if (this._sys.capabilities["opengl"]) {
         this._renderType = Game.RENDER_TYPE_WEBGL;
         this._supportRender = true;
-      } else if (ServiceLocator.sys.capabilities["canvas"]) {
+      } else if (this._sys.capabilities["canvas"]) {
         this._renderType = Game.RENDER_TYPE_CANVAS;
         this._supportRender = true;
       }
     } else if (
       userRenderMode === 1 &&
-      ServiceLocator.sys.capabilities["canvas"]
+      this._sys.capabilities["canvas"]
     ) {
       this._renderType = Game.RENDER_TYPE_CANVAS;
       this._supportRender = true;
     } else if (
       userRenderMode === 2 &&
-      ServiceLocator.sys.capabilities["opengl"]
+      this._sys.capabilities["opengl"]
     ) {
       this._renderType = Game.RENDER_TYPE_WEBGL;
       this._supportRender = true;

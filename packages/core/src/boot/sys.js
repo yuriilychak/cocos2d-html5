@@ -1,5 +1,4 @@
 import { log, warn } from "./debugger";
-import { ServiceLocator } from "../service-locator";
 
 export function create3DContext(canvas, opt_attribs) {
   var names = ["webgl2", "webgl", "experimental-webgl", "webkit-3d", "moz-webgl"];
@@ -19,6 +18,12 @@ export function create3DContext(canvas, opt_attribs) {
  * System variables singleton.
  */
 export default class Sys {
+  _rendererConfig = null;
+
+  injectServices({ rendererConfig }) {
+    this._rendererConfig = rendererConfig;
+  }
+
   constructor() {
     this.LANGUAGE_ENGLISH = "en";
     this.LANGUAGE_CHINESE = "zh";
@@ -191,8 +196,8 @@ export default class Sys {
       height: ratio * h
     };
 
-    this._checkWebGLRenderMode = function () {
-      if (!ServiceLocator.rendererConfig.isWebGL)
+    this._checkWebGLRenderMode = () => {
+      if (!this._rendererConfig.isWebGL)
         throw new Error("This feature supports WebGL render mode only.");
     };
 
@@ -354,7 +359,7 @@ export default class Sys {
     str += "platform : " + this.platform + "\r\n";
     str +=
       "Using " +
-      (ServiceLocator.rendererConfig.isWebGL ? "WEBGL" : "CANVAS") +
+      (this._rendererConfig.isWebGL ? "WEBGL" : "CANVAS") +
       " renderer." +
       "\r\n";
     log(str);

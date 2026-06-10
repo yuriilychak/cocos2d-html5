@@ -2,13 +2,19 @@ import Game from "./game";
 import Path from "./path";
 import { initDebugSetting } from "./debugger";
 import { ENGINE_VERSION } from "../platform/config";
-import { ServiceLocator } from "../service-locator";
 
 export class Engine {
   #jsAddedCache = {};
   #engineInitCalled = false;
   #engineLoadedCallback = null;
   loaded = false;
+  _game = null;
+  _rendererConfig = null;
+
+  injectServices({ game, rendererConfig }) {
+    this._game = game;
+    this._rendererConfig = rendererConfig;
+  }
 
   #getJsListOfModule(moduleMap, moduleName, dir) {
     if (this.#jsAddedCache[moduleName]) return null;
@@ -43,11 +49,11 @@ export class Engine {
 
   #boundWindowLoaded = () => {
     window.removeEventListener("load", this.#boundWindowLoaded, false);
-    this.#load(ServiceLocator.game.config);
+    this.#load(this._game.config);
   };
 
   init(config, cb) {
-    var game = ServiceLocator.game;
+    var game = this._game;
 
     if (this.#engineInitCalled) {
       var previousCallback = this.#engineLoadedCallback;
@@ -67,7 +73,7 @@ export class Engine {
     }
     config = game.config;
 
-    ServiceLocator.rendererConfig.determineRenderType(config);
+    this._rendererConfig.determineRenderType(config);
 
     document.body
       ? this.#load(config)

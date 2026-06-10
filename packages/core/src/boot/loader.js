@@ -5,14 +5,13 @@ import Path from "./path";
 import Sys from "./sys";
 import { error, log } from "./debugger";
 import { RendererConfig } from "../renderer/renderer-config";
-import { ServiceLocator } from "../service-locator";
 
 const _isNodeJs = typeof process !== "undefined" && process.versions != null && process.versions.node != null;
 
 var imagePool = new ImagePool();
 
 /**
- * Resource loading management. Singleton accessed via ServiceLocator.loader.
+ * Resource loading management. Singleton accessed via this.
  * @name Loader
  */
 export default class Loader {
@@ -31,6 +30,16 @@ export default class Loader {
   _loaderImage = null;
 
   _LogInfos = {};
+
+  _game = null;
+  _rendererConfig = null;
+  _sys = null;
+
+  injectServices({ game, rendererConfig, sys }) {
+    this._game = game;
+    this._rendererConfig = rendererConfig;
+    this._sys = sys;
+  }
 
   /**
    * Root path of resources.
@@ -147,7 +156,7 @@ export default class Loader {
       s = document.createElement("script");
     s.async = isAsync;
     this._jsCache[jsPath] = true;
-    if (ServiceLocator.game.config["noCache"] && typeof jsPath === "string") {
+    if (this._game.config["noCache"] && typeof jsPath === "string") {
       if (this._noCacheRex.test(jsPath))
         s.src = jsPath + "&_t=" + (new Date() - 0);
       else s.src = jsPath + "?_t=" + (new Date() - 0);
@@ -190,7 +199,7 @@ export default class Loader {
 
       if (this._loadingImage) jsLoadingImg.src = this._loadingImage;
 
-      var canvasNode = d.getElementById(ServiceLocator.game.config["id"]);
+      var canvasNode = d.getElementById(this._game.config["id"]);
       canvasNode.style.backgroundColor = "transparent";
       canvasNode.parentNode.appendChild(jsLoadingImg);
 
@@ -433,7 +442,7 @@ export default class Loader {
 
       if (
         RendererConfig.ENABLE_IMAGE_POOL &&
-        ServiceLocator.rendererConfig.isWebGL
+        this._rendererConfig.isWebGL
       ) {
         imagePool.put(img);
       }
@@ -450,7 +459,7 @@ export default class Loader {
       ) {
         opt.isCrossOrigin = false;
         this.release(url);
-        ServiceLocator.loader.loadImg(url, opt, callback, img);
+        this.loadImg(url, opt, callback, img);
       } else {
         var queue = this._queue[url];
         if (queue) {
@@ -465,7 +474,7 @@ export default class Loader {
           delete this._queue[url];
         }
 
-        if (ServiceLocator.rendererConfig.isWebGL) {
+        if (this._rendererConfig.isWebGL) {
           imagePool.put(img);
         }
       }
@@ -517,7 +526,7 @@ export default class Loader {
       realUrl = this.getUrl(basePath, url);
     }
 
-    if (ServiceLocator.game.config["noCache"] && typeof realUrl === "string") {
+    if (this._game.config["noCache"] && typeof realUrl === "string") {
       if (this._noCacheRex.test(realUrl)) realUrl += "&_t=" + (new Date() - 0);
       else realUrl += "?_t=" + (new Date() - 0);
     }
@@ -556,7 +565,7 @@ export default class Loader {
       url = this._langPathCache[url] =
         url.substring(0, url.length - extname.length) +
         "_" +
-        ServiceLocator.sys.language +
+        this._sys.language +
         extname;
     }
     return url;

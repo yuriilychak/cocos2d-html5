@@ -27,7 +27,6 @@
 import { log, assert, _LogInfos } from "./boot/debugger";
 import { ENGINE_VERSION } from "./platform/config";
 import { checkGLErrorDebug } from "./platform/macro/utils";
-import { ServiceLocator } from "./service-locator";
 
 /**
  * Class that contains some openGL variables
@@ -53,6 +52,13 @@ export class Configuration {
   _GlExtensions = "";
   _valueDict = {};
   _inited = false;
+  _loader = null;
+  _rendererConfig = null;
+
+  injectServices({ loader, rendererConfig }) {
+    this._loader = loader;
+    this._rendererConfig = rendererConfig;
+  }
 
   _init() {
     const locValueDict = this._valueDict;
@@ -124,10 +130,10 @@ export class Configuration {
   dumpInfo() {}
 
   gatherGPUInfo() {
-    if (ServiceLocator.rendererConfig.isCanvas) return;
+    if (this._rendererConfig.isCanvas) return;
 
     if (!this._inited) this._init();
-    const gl = ServiceLocator.rendererConfig.renderContext;
+    const gl = this._rendererConfig.renderContext;
     const locValueDict = this._valueDict;
     locValueDict["gl.vendor"] = gl.getParameter(gl.VENDOR);
     locValueDict["gl.renderer"] = gl.getParameter(gl.RENDERER);
@@ -175,7 +181,7 @@ export class Configuration {
 
   loadConfigFile(url) {
     if (!this._inited) this._init();
-    const dict = ServiceLocator.loader.getRes(url);
+    const dict = this._loader.getRes(url);
     if (!dict) throw new Error("Please load the resource first : " + url);
     assert(dict, _LogInfos.configuration_loadConfigFile_2, url);
 

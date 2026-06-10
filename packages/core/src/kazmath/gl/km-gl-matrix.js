@@ -2,7 +2,6 @@ import Matrix4 from "../mat4";
 import Vec3 from "../vec3";
 import Matrix4Stack from "./mat4-stack";
 import { degreesToRadians } from "../../platform/macro/utils";
-import { ServiceLocator } from "../../service-locator";
 
 export class KMGLMatrix {
   static KM_GL_MODELVIEW = 0x1700;
@@ -17,6 +16,11 @@ export class KMGLMatrix {
   _initialized = false;
   tmpMatrix = new Matrix4();
   tmpVector = new Vec3();
+  _director = null;
+
+  injectServices({ director }) {
+    this._director = director;
+  }
 
   lazyInitialize() {
     if (this._initialized) return;
@@ -72,7 +76,7 @@ export class KMGLMatrix {
       default:
         throw new Error("Invalid matrix mode specified");
     }
-    this.currentStack.lastUpdated = ServiceLocator.director.getTotalFrames();
+    this.currentStack.lastUpdated = this._director.getTotalFrames();
   }
 
   loadIdentity() {

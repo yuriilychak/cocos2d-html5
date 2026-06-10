@@ -1,24 +1,9 @@
 // Boot (barrel — re-exports boot modules; init side-effect runs on import)
-import {
-  _LogInfos,
-  _loadingImage,
-  _fpsImage,
-  _loaderImage
-} from "./boot";
+import "./boot";
 
 // ======================================================================
 // Platform — Foundation
 // ======================================================================
-import {
-  _txtLoader,
-  _jsonLoader,
-  _jsLoader,
-  _imgLoader,
-  _serverImgLoader,
-  _plistLoader,
-  _fontLoader,
-  _csbLoader
-} from "./platform/loaders";
 import { inputManager } from "./platform/input-manager";
 import { initInputExtension } from "./platform/input-extension";
 
@@ -79,32 +64,10 @@ import { WebGLRenderCmd as LabelTTFWebGLRenderCmd } from "./labelttf/label-ttf-w
 // Namespace assignments
 // ======================================================================
 
-// Boot — Debugger (used internally)
-ServiceLocator.loader._LogInfos = _LogInfos;
-
-// Boot — Base64 images (used internally)
-ServiceLocator.loader._loadingImage = _loadingImage;
-ServiceLocator.loader._fpsImage = _fpsImage;
-ServiceLocator.loader._loaderImage = _loaderImage;
-
-// Platform — Loaders
-ServiceLocator.loader.register(
-  ["txt", "xml", "vsh", "fsh", "atlas"],
-  _txtLoader
-);
-ServiceLocator.loader.register(["json", "ExportJson"], _jsonLoader);
-ServiceLocator.loader.register(["js"], _jsLoader);
-ServiceLocator.loader.register(
-  ["png", "jpg", "bmp", "jpeg", "gif", "ico", "tiff", "webp"],
-  _imgLoader
-);
-ServiceLocator.loader.register(["serverImg"], _serverImgLoader);
-ServiceLocator.loader.register(["plist"], _plistLoader);
-ServiceLocator.loader.register(
-  ["font", "eot", "ttf", "woff", "svg", "ttc"],
-  _fontLoader
-);
-ServiceLocator.loader.register(["csb"], _csbLoader);
+// Construct, wire and configure all core services up front. All service setup
+// (dependency injection, loader registration, matrix init) lives in the
+// locator, so index.js never manipulates service instances directly.
+ServiceLocator.construct();
 
 // Render command wiring
 Node.CanvasRenderCmd = NodeCanvasRenderCmd;
@@ -130,7 +93,6 @@ LabelTTF.WebGLRenderCmd = LabelTTFWebGLRenderCmd;
 // ======================================================================
 initInputExtension(inputManager);
 initBinaryLoader();
-ServiceLocator.kmglMatrix.lazyInitialize();
 
 // ======================================================================
 // Named re-exports for direct imports from other packages
@@ -148,8 +110,6 @@ export {
 } from "./platform/macro/utils";
 export { log, warn } from "./boot/debugger";
 export { RendererConfig } from "./renderer/renderer-config";
-// Export rendererConfig singleton instance
-export const rendererConfig = ServiceLocator.rendererConfig;
 export { Director, DisplayLinkDirector } from "./director/director";
 export { Sys } from "./boot";
 export { NewClass, classManager } from "./platform/class";
@@ -179,9 +139,8 @@ export {
   PIXEL_FORMAT_NAMES,
   PIXEL_FORMAT_BITS
 } from "./textures/constants";
-// Export TextureCache class and singleton instance
+// Export TextureCache class
 export { default as TextureCache } from "./textures/texture-cache";
-export const textureCache = ServiceLocator.textureCache;
 export { GLProgramState, ShaderCache } from "./shaders";
 export { GLStateCache } from "./shaders/CCGLStateCache";
 export {

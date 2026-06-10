@@ -39,10 +39,17 @@ export class GLStateCache {
     this._blendingDest = -1;
     this._GLServerState = 0;
     this._uVAO = TEXTURE_ATLAS_USE_VAO ? 0 : undefined;
+    this._kmglMatrix = null;
+    this._rendererConfig = null;
+  }
+
+  injectServices({ kmglMatrix, rendererConfig }) {
+    this._kmglMatrix = kmglMatrix;
+    this._rendererConfig = rendererConfig;
   }
 
   invalidateStateCache() {
-    ServiceLocator.kmglMatrix.freeAll();
+    this._kmglMatrix.freeAll();
     this._currentProjectionMatrix = -1;
     this._currentShaderProgram = -1;
     for (let i = 0; i < GLStateCache.MAX_ACTIVE_TEXTURE; i++) {
@@ -56,7 +63,7 @@ export class GLStateCache {
   useProgram(program) {
     if (program !== this._currentShaderProgram) {
       this._currentShaderProgram = program;
-      ServiceLocator.rendererConfig.renderContext.useProgram(program);
+      this._rendererConfig.renderContext.useProgram(program);
     }
   }
 
@@ -66,7 +73,7 @@ export class GLStateCache {
   }
 
   setBlending(sfactor, dfactor) {
-    const ctx = ServiceLocator.rendererConfig.renderContext;
+    const ctx = this._rendererConfig.renderContext;
     if (sfactor === ctx.ONE && dfactor === ctx.ZERO) {
       ctx.disable(ctx.BLEND);
     } else {
@@ -89,7 +96,7 @@ export class GLStateCache {
     if (sfactor !== this._blendingSource || dfactor !== this._blendingDest) {
       this._blendingSource = sfactor;
       this._blendingDest = dfactor;
-      const ctx = ServiceLocator.rendererConfig.renderContext;
+      const ctx = this._rendererConfig.renderContext;
       if (sfactor === ctx.ONE && dfactor === ctx.ZERO) {
         ctx.disable(ctx.BLEND);
       } else {
@@ -101,7 +108,7 @@ export class GLStateCache {
   }
 
   blendResetToCache() {
-    const ctx = ServiceLocator.rendererConfig.renderContext;
+    const ctx = this._rendererConfig.renderContext;
     ctx.blendEquation(ctx.FUNC_ADD);
     this.setBlending(this._blendingSource, this._blendingDest);
   }
@@ -118,7 +125,7 @@ export class GLStateCache {
     if (this._currentBoundTexture[textureUnit] === textureId) return;
     this._currentBoundTexture[textureUnit] = textureId;
 
-    const ctx = ServiceLocator.rendererConfig.renderContext;
+    const ctx = this._rendererConfig.renderContext;
     ctx.activeTexture(ctx.TEXTURE0 + textureUnit);
     if (textureId) ctx.bindTexture(ctx.TEXTURE_2D, textureId._webTextureObj);
     else ctx.bindTexture(ctx.TEXTURE_2D, null);
@@ -131,7 +138,7 @@ export class GLStateCache {
   deleteTextureN(textureUnit, textureId) {
     if (textureId === this._currentBoundTexture[textureUnit])
       this._currentBoundTexture[textureUnit] = -1;
-    ServiceLocator.rendererConfig.renderContext.deleteTexture(textureId._webTextureObj);
+    this._rendererConfig.renderContext.deleteTexture(textureId._webTextureObj);
   }
 
   bindVAO(vaoId) {

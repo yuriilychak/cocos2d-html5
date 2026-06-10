@@ -31,7 +31,6 @@ import {
 } from "../platform/macro/constants";
 import { AnimationFrame } from "./animation/animation-frame";
 import { Animation } from "./animation/animation";
-import { ServiceLocator } from "../service-locator";
 
 /**
  * <p>
@@ -45,6 +44,13 @@ import { ServiceLocator } from "../service-locator";
 export default class AnimationCache {
   constructor() {
     this._animations = {};
+    this._loader = null;
+    this._spriteFrameCache = null;
+  }
+
+  injectServices({ loader, spriteFrameCache }) {
+    this._loader = loader;
+    this._spriteFrameCache = spriteFrameCache;
   }
 
   /**
@@ -96,7 +102,7 @@ export default class AnimationCache {
       version =
         properties["format"] != null ? parseInt(properties["format"]) : version;
       var spritesheets = properties["spritesheets"];
-      var spriteFrameCache = ServiceLocator.spriteFrameCache;
+      var spriteFrameCache = this._spriteFrameCache;
       for (var i = 0; i < spritesheets.length; i++) {
         spriteFrameCache.addSpriteFrames(
           Path.changeBasename(plist, spritesheets[i])
@@ -127,7 +133,7 @@ export default class AnimationCache {
   addAnimations(plist) {
     assert(plist, _LogInfos.animationCache_addAnimations_2);
 
-    var dict = ServiceLocator.loader.getRes(plist);
+    var dict = this._loader.getRes(plist);
 
     if (!dict) {
       log(_LogInfos.animationCache_addAnimations);
@@ -138,7 +144,7 @@ export default class AnimationCache {
   }
 
   _parseVersion1(animations) {
-    var frameCache = ServiceLocator.spriteFrameCache;
+    var frameCache = this._spriteFrameCache;
 
     for (var key in animations) {
       var animationDict = animations[key];
@@ -178,7 +184,7 @@ export default class AnimationCache {
   }
 
   _parseVersion2(animations) {
-    var frameCache = ServiceLocator.spriteFrameCache;
+    var frameCache = this._spriteFrameCache;
 
     for (var key in animations) {
       var animationDict = animations[key];

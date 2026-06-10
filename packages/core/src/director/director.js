@@ -45,7 +45,6 @@ import {
 import { Size } from "../cocoa/geometry/size";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import { checkGLErrorDebug } from "../platform/macro/utils";
-import { ServiceLocator } from "../service-locator";
 
 export const defaultFPS = 60;
 
@@ -94,11 +93,36 @@ export class Director extends NewClass {
     this._eventAfterVisit = null;
     this._eventAfterDraw = null;
     this._rendererDelegate = null;
-    var self = this;
-    self._lastUpdate = Date.now();
-    ServiceLocator.eventManager.addCustomListener(Game.EVENT_SHOW, () => {
-      self._lastUpdate = Date.now();
-    });
+    this._lastUpdate = Date.now();
+    this._animationCache = null;
+    this._eglView = null;
+    this._eventManager = null;
+    this._game = null;
+    this._profiler = null;
+    this._rendererConfig = null;
+    this._spriteFrameCache = null;
+    this._textureCache = null;
+    this._showEventListenerRegistered = false;
+  }
+
+  injectServices({
+    animationCache,
+    eglView,
+    eventManager,
+    game,
+    profiler,
+    rendererConfig,
+    spriteFrameCache,
+    textureCache
+  }) {
+    this._animationCache = animationCache;
+    this._eglView = eglView;
+    this._eventManager = eventManager;
+    this._game = game;
+    this._profiler = profiler;
+    this._rendererConfig = rendererConfig;
+    this._spriteFrameCache = spriteFrameCache;
+    this._textureCache = textureCache;
   }
 
   init() {
@@ -141,10 +165,17 @@ export class Director extends NewClass {
     );
     this._eventProjectionChanged.setUserData(this);
 
-    if (ServiceLocator.rendererConfig.isCanvas) {
+    if (this._rendererConfig.isCanvas) {
       this._rendererDelegate = new DirectorCanvasRenderer(this);
     } else {
       this._rendererDelegate = new DirectorWebGLRenderer(this);
+    }
+
+    if (!this._showEventListenerRegistered) {
+      this._showEventListenerRegistered = true;
+      this._eventManager.addCustomListener(Game.EVENT_SHOW, () => {
+        this._lastUpdate = Date.now();
+      });
     }
 
     return true;
@@ -161,7 +192,7 @@ export class Director extends NewClass {
     }
 
     if (
-      ServiceLocator.game.config[Game.CONFIG_KEY.debugMode] > 0 &&
+      this._game.config[Game.CONFIG_KEY.debugMode] > 0 &&
       this._deltaTime > 0.2
     )
       this._deltaTime = 1 / 60.0;
@@ -171,7 +202,7 @@ export class Director extends NewClass {
 
   convertToGL(uiPoint) {
     var docElem = document.documentElement;
-    var view = ServiceLocator.eglView;
+    var view = this._eglView;
     var box = docElem.getBoundingClientRect();
     box.left += window.pageXOffset - docElem.clientLeft;
     box.top += window.pageYOffset - docElem.clientTop;
@@ -184,7 +215,7 @@ export class Director extends NewClass {
 
   convertToUI(glPoint) {
     var docElem = document.documentElement;
-    var view = ServiceLocator.eglView;
+    var view = this._eglView;
     var box = docElem.getBoundingClientRect();
     box.left += window.pageXOffset - docElem.clientLeft;
     box.top += window.pageYOffset - docElem.clientTop;
@@ -203,13 +234,13 @@ export class Director extends NewClass {
   }
 
   drawScene() {
-    var renderer = ServiceLocator.rendererConfig.renderer;
+    var renderer = this._rendererConfig.renderer;
 
     this.calculateDeltaTime();
 
     if (!this._paused) {
       this._scheduler.update(this._deltaTime);
-      ServiceLocator.eventManager.dispatchEvent(this._eventAfterUpdate);
+      this._eventManager.dispatchEvent(this._eventAfterUpdate);
     }
 
     if (this._nextScene) {
@@ -218,8 +249,8 @@ export class Director extends NewClass {
 
     if (this._runningScene) {
       if (renderer.childrenOrderDirty) {
-        ServiceLocator.rendererConfig.renderer.clearRenderCommands();
-        ServiceLocator.rendererConfig.renderer.assignedZ = 0;
+        this._rendererConfig.renderer.clearRenderCommands();
+        this._rendererConfig.renderer.assignedZ = 0;
         this._runningScene._renderCmd._curLevel = 0;
         this._runningScene.visit();
         renderer.resetFlag();
@@ -232,14 +263,14 @@ export class Director extends NewClass {
 
     if (this._notificationNode) this._notificationNode.visit();
 
-    ServiceLocator.eventManager.dispatchEvent(this._eventAfterVisit);
-    ServiceLocator.rendererConfig.resetDrawCount();
+    this._eventManager.dispatchEvent(this._eventAfterVisit);
+    this._rendererConfig.resetDrawCount();
 
-    renderer.rendering(ServiceLocator.rendererConfig.renderContext);
+    renderer.rendering(this._rendererConfig.renderContext);
     this._totalFrames++;
 
-    ServiceLocator.eventManager.dispatchEvent(this._eventAfterDraw);
-    ServiceLocator.eventManager.frameUpdateListeners();
+    this._eventManager.dispatchEvent(this._eventAfterDraw);
+    this._eventManager.frameUpdateListeners();
 
     this._calculateMPF();
   }
@@ -289,16 +320,16 @@ export class Director extends NewClass {
   }
 
   purgeCachedData() {
-    ServiceLocator.animationCache._clear();
-    ServiceLocator.spriteFrameCache._clear();
-    ServiceLocator.textureCache._clear();
+    this._animationCache._clear();
+    this._spriteFrameCache._clear();
+    this._textureCache._clear();
   }
 
   purgeDirector() {
     this.getScheduler().unscheduleAll();
 
-    if (ServiceLocator.eventManager)
-      ServiceLocator.eventManager.setEnabled(false);
+    if (this._eventManager)
+      this._eventManager.setEnabled(false);
 
     if (this._runningScene) {
       this._runningScene._performRecursive(
@@ -451,7 +482,7 @@ export class Director extends NewClass {
     }
 
     this._runningScene = this._nextScene;
-    ServiceLocator.rendererConfig.renderer.childrenOrderDirty = true;
+    this._rendererConfig.renderer.childrenOrderDirty = true;
 
     this._nextScene = null;
     if (!runningIsTransition && this._runningScene !== null) {
@@ -463,7 +494,7 @@ export class Director extends NewClass {
   }
 
   setNotificationNode(node) {
-    ServiceLocator.rendererConfig.renderer.childrenOrderDirty = true;
+    this._rendererConfig.renderer.childrenOrderDirty = true;
     if (this._notificationNode) {
       this._notificationNode._performRecursive(
         Node._stateCallbackType.onExitTransitionDidStart
@@ -500,11 +531,11 @@ export class Director extends NewClass {
   }
 
   isDisplayStats() {
-    return ServiceLocator.profiler.isShowingStats();
+    return this._profiler.isShowingStats();
   }
 
   setDisplayStats(displayStats) {
-    displayStats ? ServiceLocator.profiler.showStats() : ServiceLocator.profiler.hideStats();
+    displayStats ? this._profiler.showStats() : this._profiler.hideStats();
   }
 
   getSecondsPerFrame() {

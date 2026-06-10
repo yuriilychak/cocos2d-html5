@@ -34,7 +34,6 @@ import { SpriteFrame } from "./sprite-frame";
 import { Sprite } from './sprite';
 import { PolygonInfo, Triangles } from './polygon-info';
 import { isString } from "../boot/utils";
-import { ServiceLocator } from "../service-locator";
 
 /**
  * <p>
@@ -55,6 +54,15 @@ export default class SpriteFrameCache {
     this._spriteFrames = {};
     this._spriteFramesAliases = {};
     this._frameConfigCache = {};
+    this._loader = null;
+    this._rendererConfig = null;
+    this._textureCache = null;
+  }
+
+  injectServices({ loader, rendererConfig, textureCache }) {
+    this._loader = loader;
+    this._rendererConfig = rendererConfig;
+    this._textureCache = textureCache;
   }
 
   _rectFromString(content) {
@@ -103,11 +111,11 @@ export default class SpriteFrameCache {
   }
 
   _getFrameConfig(url) {
-    var dict = ServiceLocator.loader.getRes(url);
+    var dict = this._loader.getRes(url);
 
     assert(dict, _LogInfos.spriteFrameCache__getFrameConfig_2, url);
 
-    ServiceLocator.loader.release(url); //release it in loader
+    this._loader.release(url); //release it in loader
     if (dict._inited) {
       this._frameConfigCache[url] = dict;
       return dict;
@@ -233,12 +241,12 @@ export default class SpriteFrameCache {
       meta = frameConfig.meta;
     if (!texture) {
       var texturePath = Path.changeBasename(url, meta.image || ".png");
-      texture = ServiceLocator.textureCache.addImage(texturePath);
+      texture = this._textureCache.addImage(texturePath);
     } else if (texture instanceof Texture2D) {
       //do nothing
     } else if (isString(texture)) {
       //string
-      texture = ServiceLocator.textureCache.addImage(texture);
+      texture = this._textureCache.addImage(texture);
     } else {
       assert(0, _LogInfos.spriteFrameCache_addSpriteFrames_3);
     }
@@ -300,7 +308,7 @@ export default class SpriteFrameCache {
         }
 
         if (
-          ServiceLocator.rendererConfig.isCanvas &&
+          this._rendererConfig.isCanvas &&
           spriteFrame.isRotated()
         ) {
           //clip to canvas
@@ -343,7 +351,7 @@ export default class SpriteFrameCache {
     assert(url, _LogInfos.spriteFrameCache_addSpriteFrames_2);
 
     //Is it a SpriteFrame plist?
-    var dict = this._frameConfigCache[url] || ServiceLocator.loader.getRes(url);
+    var dict = this._frameConfigCache[url] || this._loader.getRes(url);
     if (!dict || !dict["frames"]) return;
 
     var frameConfig = this._frameConfigCache[url] || this._getFrameConfig(url);

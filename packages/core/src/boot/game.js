@@ -13,7 +13,6 @@ import Path from "./path";
 import { log } from "./debugger";
 import { create3DContext } from "./sys";
 import { isUndefined } from "./utils";
-import { ServiceLocator } from "../service-locator";
 
 /**
  * An object to boot the game.
@@ -56,6 +55,32 @@ export default class Game extends EventHelper(NewClass) {
 
   _eventHide = null;
   _eventShow = null;
+
+  _director = null;
+  _eglView = null;
+  _engine = null;
+  _eventManager = null;
+  _loader = null;
+  _rendererConfig = null;
+  _textureCache = null;
+
+  injectServices({
+    director,
+    eglView,
+    engine,
+    eventManager,
+    loader,
+    rendererConfig,
+    textureCache
+  }) {
+    this._director = director;
+    this._eglView = eglView;
+    this._engine = engine;
+    this._eventManager = eventManager;
+    this._loader = loader;
+    this._rendererConfig = rendererConfig;
+    this._textureCache = textureCache;
+  }
 
   constructor() {
     super();
@@ -151,7 +176,7 @@ export default class Game extends EventHelper(NewClass) {
    * Run the game frame by frame.
    */
   step() {
-    ServiceLocator.director.mainLoop();
+    this._director.mainLoop();
   }
 
   /**
@@ -190,7 +215,7 @@ export default class Game extends EventHelper(NewClass) {
    * Restart game.
    */
   restart() {
-    ServiceLocator.director.popToSceneStackLevel(0);
+    this._director.popToSceneStackLevel(0);
     this.audioEngine && this.audioEngine.end();
     this.onStart();
   }
@@ -224,16 +249,18 @@ export default class Game extends EventHelper(NewClass) {
     if (this._prepareCalled) {
       return;
     }
-    if (ServiceLocator.engine.loaded) {
+    if (this._engine.loaded) {
       this._prepareCalled = true;
 
       this._initRenderer(config[CONFIG_KEY.width], config[CONFIG_KEY.height]);
 
-      ServiceLocator.eglView;
+      // eglView is wired lazily; initialize it now that the renderer (and thus
+      // game.container/canvas) is ready.
+      this._eglView.initialize();
       // Director is created lazily; this is its first access, so initialize it here.
-      const director = ServiceLocator.director;
+      const director = this._director;
       director.init();
-      if (director.setOpenGLView) director.setOpenGLView(ServiceLocator.eglView);
+      if (director.setOpenGLView) director.setOpenGLView(this._eglView);
 
       this._initEvents();
 
@@ -242,7 +269,7 @@ export default class Game extends EventHelper(NewClass) {
 
       var jsList = config[CONFIG_KEY.jsList];
       if (jsList) {
-        ServiceLocator.loader.loadJsWithImg(jsList, (err) => {
+        this._loader.loadJsWithImg(jsList, (err) => {
           if (err) throw new Error(err);
           this._prepared = true;
           if (cb) cb();
@@ -254,7 +281,7 @@ export default class Game extends EventHelper(NewClass) {
       return;
     }
 
-    ServiceLocator.engine.init(this.config, () => {
+    this._engine.init(this.config, () => {
       this.prepare(cb);
     });
   }
@@ -331,7 +358,7 @@ export default class Game extends EventHelper(NewClass) {
   _runMainLoop() {
     var config = this.config,
       CONFIG_KEY = Game.CONFIG_KEY,
-      director = ServiceLocator.director,
+      director = this._director,
       skip = true,
       frameRate = config[CONFIG_KEY.frameRate];
 
@@ -378,13 +405,13 @@ export default class Game extends EventHelper(NewClass) {
         _src = cocos_script[i].src;
         if (_src) {
           _resPath = /(.*)\//.exec(_src)[0];
-          ServiceLocator.loader.resPath = _resPath;
+          this._loader.resPath = _resPath;
           _src = Path.join(_resPath, "project.json");
         }
-        ServiceLocator.loader.loadTxt(_src, loaded);
+        this._loader.loadTxt(_src, loaded);
       }
       if (!txt) {
-        ServiceLocator.loader.loadTxt("project.json", loaded);
+        this._loader.loadTxt("project.json", loaded);
       }
     }
   }
@@ -416,7 +443,7 @@ export default class Game extends EventHelper(NewClass) {
   _initRenderer(width, height) {
     if (this._rendererInitialized) return;
 
-    if (!ServiceLocator.rendererConfig.isSupportRenderer) {
+    if (!this._rendererConfig.isSupportRenderer) {
       throw new Error(
         "The renderer doesn't support the renderMode " +
           this.config[Game.CONFIG_KEY.renderMode]
@@ -464,12 +491,12 @@ export default class Game extends EventHelper(NewClass) {
     localCanvas.setAttribute("height", height || 320);
     localCanvas.setAttribute("tabindex", 99);
 
-    if (ServiceLocator.rendererConfig.isWebGL) {
+    if (this._rendererConfig.isWebGL) {
       this._renderContext = create3DContext(localCanvas, {
         stencil: true,
         alpha: false
       });
-      ServiceLocator.rendererConfig.initRenderContext(this._renderContext);
+      this._rendererConfig.initRenderContext(this._renderContext);
     }
     if (this._renderContext) {
       win.gl = this._renderContext;
@@ -477,9 +504,9 @@ export default class Game extends EventHelper(NewClass) {
       const isWebGL2 =
         typeof WebGL2RenderingContext !== "undefined" &&
         gl instanceof WebGL2RenderingContext;
-      ServiceLocator.rendererConfig.setGLVersion(isWebGL2 ? "webgl2" : "webgl");
-      ServiceLocator.rendererConfig.setRenderer(rendererWebGL);
-      ServiceLocator.rendererConfig.renderer.init();
+      this._rendererConfig.setGLVersion(isWebGL2 ? "webgl2" : "webgl");
+      this._rendererConfig.setRenderer(rendererWebGL);
+      this._rendererConfig.renderer.init();
       this.drawingUtil = new DrawingPrimitiveWebGL(this._renderContext);
       this.glExt = isWebGL2
         ? {
@@ -502,13 +529,13 @@ export default class Game extends EventHelper(NewClass) {
             element_uint: gl.getExtension("OES_element_index_uint")
           };
     } else {
-      ServiceLocator.rendererConfig.setRenderType(Game.RENDER_TYPE_CANVAS);
-      ServiceLocator.rendererConfig.setGLVersion("canvas");
-      ServiceLocator.rendererConfig.setRenderer(rendererCanvas);
+      this._rendererConfig.setRenderType(Game.RENDER_TYPE_CANVAS);
+      this._rendererConfig.setGLVersion("canvas");
+      this._rendererConfig.setRenderer(rendererCanvas);
       this._renderContext = new CanvasContextWrapper(
         localCanvas.getContext("2d")
       );
-      ServiceLocator.rendererConfig.initRenderContext(this._renderContext);
+      this._rendererConfig.initRenderContext(this._renderContext);
       this.drawingUtil = DrawingPrimitiveCanvas
         ? new DrawingPrimitiveCanvas(this._renderContext)
         : null;
@@ -524,7 +551,7 @@ export default class Game extends EventHelper(NewClass) {
     this._rendererInitialized = true;
 
     // Initialize TextureCache renderer after renderer type is determined
-    ServiceLocator.textureCache.initRenderer();
+    this._textureCache.initRenderer();
   }
 
   _initEvents() {
@@ -557,12 +584,12 @@ export default class Game extends EventHelper(NewClass) {
       "qbrowserVisibilityChange"
     ];
     var onHidden = () => {
-      if (ServiceLocator.eventManager && this._eventHide)
-        ServiceLocator.eventManager.dispatchEvent(this._eventHide);
+      if (this._eventManager && this._eventHide)
+        this._eventManager.dispatchEvent(this._eventHide);
     };
     var onShow = () => {
-      if (ServiceLocator.eventManager && this._eventShow)
-        ServiceLocator.eventManager.dispatchEvent(this._eventShow);
+      if (this._eventManager && this._eventShow)
+        this._eventManager.dispatchEvent(this._eventShow);
     };
 
     if (hidden) {
@@ -594,10 +621,10 @@ export default class Game extends EventHelper(NewClass) {
       win.addEventListener("pageshow", onShow, false);
     }
 
-    ServiceLocator.eventManager.addCustomListener(Game.EVENT_HIDE, () => {
+    this._eventManager.addCustomListener(Game.EVENT_HIDE, () => {
       this.pause();
     });
-    ServiceLocator.eventManager.addCustomListener(Game.EVENT_SHOW, () => {
+    this._eventManager.addCustomListener(Game.EVENT_SHOW, () => {
       this.resume();
     });
   }

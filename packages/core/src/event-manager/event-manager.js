@@ -42,7 +42,6 @@ import {
   _EventListenerKeyboard
 } from "./event-extension";
 import { log, assert, _LogInfos } from "../boot/debugger";
-import { ServiceLocator } from "../service-locator";
 
 /**
  * @ignore
@@ -140,6 +139,11 @@ export default class EventManager {
     this._isEnabled = false;
     this._nodePriorityIndex = 0;
     this._internalCustomListenerIDs = [Game.EVENT_HIDE, Game.EVENT_SHOW];
+    this._director = null;
+  }
+
+  injectServices({ director }) {
+    this._director = director;
   }
 
   _setDirtyForNode(node) {
@@ -312,7 +316,7 @@ export default class EventManager {
         this._sortListenersOfFixedPriority(listenerID);
 
       if (dirtyFlag & EventManager.DIRTY_SCENE_GRAPH_PRIORITY) {
-        var rootNode = ServiceLocator.director.getRunningScene();
+        var rootNode = this._director.getRunningScene();
         if (rootNode)
           this._sortListenersOfSceneGraphPriority(listenerID, rootNode);
         else locFlagMap[listenerID] = EventManager.DIRTY_SCENE_GRAPH_PRIORITY;
@@ -336,11 +340,11 @@ export default class EventManager {
     // After sort: priority < 0, > 0
     listeners
       .getSceneGraphPriorityListeners()
-      .sort(this._sortEventListenersOfSceneGraphPriorityDes);
+      .sort(this._sortEventListenersOfSceneGraphPriorityDes.bind(this));
   }
 
   _sortEventListenersOfSceneGraphPriorityDes(l1, l2) {
-    var locNodePriorityMap = ServiceLocator.eventManager._nodePriorityMap,
+    var locNodePriorityMap = this._nodePriorityMap,
       node1 = l1._getSceneGraphPriority(),
       node2 = l2._getSceneGraphPriority();
     if (!l2 || !node2 || !locNodePriorityMap[node2.__instanceId]) return -1;
@@ -531,7 +535,7 @@ export default class EventManager {
 
     // If the event was stopped, return directly.
     if (event.isStopped()) {
-      ServiceLocator.eventManager._updateTouchListeners(event);
+      this._updateTouchListeners(event);
       return true;
     }
 
@@ -573,7 +577,7 @@ export default class EventManager {
         oneByOneArgsObj.selTouch = originalTouches[i];
         this._dispatchEventToListeners(
           oneByOneListeners,
-          this._onTouchEventCallback,
+          this._onTouchEventCallback.bind(this),
           oneByOneArgsObj
         );
         if (event.isStopped()) return;
@@ -586,7 +590,7 @@ export default class EventManager {
     if (allAtOnceListeners && mutableTouches.length > 0) {
       this._dispatchEventToListeners(
         allAtOnceListeners,
-        this._onTouchesEventCallback,
+        this._onTouchesEventCallback.bind(this),
         { event: event, touches: mutableTouches }
       );
       if (event.isStopped()) return;
@@ -614,7 +618,7 @@ export default class EventManager {
 
     // If the event was stopped, return directly.
     if (event.isStopped()) {
-      ServiceLocator.eventManager._updateTouchListeners(event);
+      this._updateTouchListeners(event);
       return true;
     }
     return false;
