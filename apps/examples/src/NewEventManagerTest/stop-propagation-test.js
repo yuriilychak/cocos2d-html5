@@ -27,7 +27,7 @@
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { createColoredView } from "./touchable-sprite";
-import { Director, Color, EventListener, EventManager, Rect, log, visibleRect } from "@aspect/core";
+import { Color, EventListener, Rect, log, visibleRect, ServiceLocator } from "@aspect/core";
 
 export class StopPropagationTest extends EventDispatcherTestDemo {
   constructor() {
@@ -129,13 +129,13 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
         this.addChild(sprite2, 0);
       }
 
-      EventManager.getInstance().addListener(touchOneByOneListener.clone(), sprite1);
-      EventManager.getInstance().addListener(keyboardEventListener.clone(), sprite1);
+      ServiceLocator.eventManager.addListener(touchOneByOneListener.clone(), sprite1);
+      ServiceLocator.eventManager.addListener(keyboardEventListener.clone(), sprite1);
 
-      EventManager.getInstance().addListener(touchAllAtOnceListener.clone(), sprite2);
-      EventManager.getInstance().addListener(keyboardEventListener.clone(), sprite2);
+      ServiceLocator.eventManager.addListener(touchAllAtOnceListener.clone(), sprite2);
+      ServiceLocator.eventManager.addListener(keyboardEventListener.clone(), sprite2);
 
-      var visibleSize = Director.getInstance().getVisibleSize();
+      var visibleSize = ServiceLocator.director.getVisibleSize();
       sprite1.x =
         visibleRect.left.x + (visibleSize.width / (SPRITE_COUNT - 1)) * i;
       sprite1.y =
@@ -160,7 +160,7 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
 
   _isPointInTopHalfAreaOfScreen(pt) {
     //----start9----_isPointInTopHalfAreaOfScreen
-    var winSize = Director.getInstance().getWinSize();
+    var winSize = ServiceLocator.director.getWinSize();
     return pt.y >= winSize.height / 2;
     //----end9----
   }

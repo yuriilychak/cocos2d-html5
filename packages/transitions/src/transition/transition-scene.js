@@ -1,4 +1,4 @@
-import { Scene, Node, Director, EventManager } from "@aspect/core";
+import { Scene, Node, ServiceLocator } from "@aspect/core";
 
 export class TransitionScene extends Scene {
   _inScene = null;
@@ -15,10 +15,10 @@ export class TransitionScene extends Scene {
 
   _setNewScene(dt) {
     this.unschedule(this._setNewScene);
-    var director = Director.getInstance();
+    var director = ServiceLocator.director;
     this._isSendCleanupToScene = director.isSendCleanupToScene();
     director.runScene(this._inScene);
-    EventManager.getInstance().setEnabled(true);
+    ServiceLocator.eventManager.setEnabled(true);
     this._outScene.visible = true;
   }
 
@@ -39,7 +39,7 @@ export class TransitionScene extends Scene {
 
   onEnter() {
     Node.prototype.onEnter.call(this);
-    EventManager.getInstance().setEnabled(false);
+    ServiceLocator.eventManager.setEnabled(false);
     this._outScene._performRecursive(
       Node._stateCallbackType.onExitTransitionDidStart
     );
@@ -48,7 +48,7 @@ export class TransitionScene extends Scene {
 
   onExit() {
     Node.prototype.onExit.call(this);
-    EventManager.getInstance().setEnabled(true);
+    ServiceLocator.eventManager.setEnabled(true);
     this._outScene._performRecursive(Node._stateCallbackType.onExit);
     this._inScene._performRecursive(
       Node._stateCallbackType.onEnterTransitionDidFinish
@@ -76,7 +76,7 @@ export class TransitionScene extends Scene {
         anchorY: 0
       });
       this._inScene = scene;
-      this._outScene = Director.getInstance().getRunningScene();
+      this._outScene = ServiceLocator.director.getRunningScene();
       if (!this._outScene) {
         this._outScene = new Scene();
         this._outScene.init();

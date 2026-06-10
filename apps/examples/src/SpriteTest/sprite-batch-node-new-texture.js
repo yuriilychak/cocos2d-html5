@@ -37,16 +37,7 @@ import {
   s_grossini_dance_atlas_mono
 } from "../resources";
 import { winSize } from "../constants";
-import {
-  EventListener,
-  EventManager,
-  Point,
-  Rect,
-  Sprite,
-  SpriteBatchNode,
-  Sys,
-  textureCache
-} from "@aspect/core";
+import { EventListener, Point, Rect, Sprite, SpriteBatchNode, ServiceLocator } from "@aspect/core";
 import {
   Blink,
   FadeOut,
@@ -70,8 +61,8 @@ export class SpriteBatchNodeNewTexture extends SpriteTestDemo {
     this.testDuration = 1;
 
     this.pixel = { 0: 51, 1: 0, 2: 51, 3: 255 };
-    if ("touches" in Sys.getInstance().capabilities) {
-      EventManager.getInstance().addListener(
+    if ("touches" in ServiceLocator.sys.capabilities) {
+      ServiceLocator.eventManager.addListener(
         {
           event: EventListener.TOUCH_ALL_AT_ONCE,
           onTouchesEnded: function (touches, event) {
@@ -80,8 +71,8 @@ export class SpriteBatchNodeNewTexture extends SpriteTestDemo {
         },
         this
       );
-    } else if ("mouse" in Sys.getInstance().capabilities)
-      EventManager.getInstance().addListener(
+    } else if ("mouse" in ServiceLocator.sys.capabilities)
+      ServiceLocator.eventManager.addListener(
         {
           event: EventListener.MOUSE,
           onMouseUp: function (event) {
@@ -95,7 +86,7 @@ export class SpriteBatchNodeNewTexture extends SpriteTestDemo {
     this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
 
     this._texture1 = batch.texture;
-    this._texture2 = textureCache.addImage(s_grossini_dance_atlas_mono);
+    this._texture2 = ServiceLocator.textureCache.addImage(s_grossini_dance_atlas_mono);
 
     for (var i = 0; i < 30; i++) {
       this.addNewSprite();

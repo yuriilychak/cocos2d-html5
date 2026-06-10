@@ -1,5 +1,5 @@
 import { DrawNode } from "@aspect/shape-nodes";
-import { RendererConfig, Color, log, lerp } from "@aspect/core";
+import { Color, log, lerp, ServiceLocator } from "@aspect/core";
 
 export function convertVerts(verts) {
   var ret = [];
@@ -101,7 +101,7 @@ export class PhysicsDebugNode extends DrawNode {
   }
 
   _createRenderCmd() {
-    if (RendererConfig.getInstance().isCanvas)
+    if (ServiceLocator.rendererConfig.isCanvas)
       return new PhysicsDebugNode.CanvasRenderCmd(this);
     else
       return new PhysicsDebugNode.WebGLRenderCmd(this);

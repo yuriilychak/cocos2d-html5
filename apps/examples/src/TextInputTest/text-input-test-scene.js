@@ -28,7 +28,7 @@
 import { TestScene } from "../test-scene";
 import { nextTextInputTest } from "./text-input-test-helpers";
 import { _setsceneIdx, sceneIdx } from "./text-input-test-constants";
-import { Director } from "@aspect/core";
+import { ServiceLocator } from "@aspect/core";
 
 export class TextInputTestScene extends TestScene {
   constructor() {
@@ -40,6 +40,6 @@ export class TextInputTestScene extends TestScene {
     var layer = nextTextInputTest();
 
     this.addChild(layer);
-    Director.getInstance().runScene(this);
+    ServiceLocator.director.runScene(this);
   }
 }

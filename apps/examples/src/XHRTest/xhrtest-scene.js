@@ -27,7 +27,7 @@
 
 import { TestScene } from "../test-scene";
 import { XHRTestLayer } from "./xhrtest-layer";
-import { Director } from "@aspect/core";
+import { ServiceLocator } from "@aspect/core";
 
 export class XHRTestScene extends TestScene {
   constructor() {
@@ -36,6 +36,6 @@ export class XHRTestScene extends TestScene {
     this.addChild(xhrLayer);
   }
   runThisTest() {
-    Director.getInstance().runScene(this);
+    ServiceLocator.director.runScene(this);
   }
 }

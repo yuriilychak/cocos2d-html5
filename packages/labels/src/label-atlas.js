@@ -1,7 +1,7 @@
 import { LabelBMFont } from "./label-bmfont";
 import { LabelBMFontCanvasRenderCmd } from "./label-bmfont-canvas-render-cmd";
 import { LabelBMFontWebGLRenderCmd } from "./label-bmfont-webgl-render-cmd";
-import { RendererConfig, Point, Texture2D, Color, log, warn, contentScaleFactor, TEXT_ALIGNMENT_LEFT, Loader, Path, SpriteFrameCache, textureCache } from "@aspect/core";
+import { RendererConfig, Point, Texture2D, Color, log, warn, contentScaleFactor, TEXT_ALIGNMENT_LEFT, Path, ServiceLocator } from "@aspect/core";
 
 export class LabelAtlas extends LabelBMFont {
     _className = "LabelAtlas";
@@ -57,7 +57,7 @@ export class LabelAtlas extends LabelBMFont {
         self._string = theString;
 
         if (itemWidth === undefined) {
-            var dict = Loader.getInstance().getRes(charMapFile);
+            var dict = ServiceLocator.loader.getRes(charMapFile);
             if (!dict || parseInt(dict["version"], 10) !== 1) {
                 log("LabelAtlas.initWithString(): Unsupported version. Upgrade cocos2d version");
                 return false;
@@ -79,12 +79,12 @@ export class LabelAtlas extends LabelBMFont {
         if (charMapFile) {
             self._fntFile = "dummy_fnt_file:" + textureFilename;
             var spriteFrameBaseName = textureFilename;
-            var spriteFrame = SpriteFrameCache.getInstance().getSpriteFrame(spriteFrameBaseName) || SpriteFrameCache.getInstance().getSpriteFrame(Path.basename(spriteFrameBaseName));
+            var spriteFrame = ServiceLocator.spriteFrameCache.getSpriteFrame(spriteFrameBaseName) || ServiceLocator.spriteFrameCache.getSpriteFrame(Path.basename(spriteFrameBaseName));
             if(spriteFrame) {
                 texture = spriteFrame.getTexture();
                 this._spriteFrame = spriteFrame;
             } else {
-                texture = textureCache.addImage(textureFilename);
+                texture = ServiceLocator.textureCache.addImage(textureFilename);
             }
 
             var newConf = this._createFntConfig(texture, width, height, startChar);

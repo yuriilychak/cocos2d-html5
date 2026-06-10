@@ -1,4 +1,4 @@
-import { Director, Point } from "@aspect/core";
+import { Point, ServiceLocator } from "@aspect/core";
 import { Sequence, JumpBy, ScaleTo, DelayTime, CallFunc } from "@aspect/actions";
 import { TransitionScene } from "./transition-scene";
 
@@ -10,7 +10,7 @@ export class TransitionJumpZoom extends TransitionScene {
 
   onEnter() {
     super.onEnter();
-    var winSize = Director.getInstance().getWinSize();
+    var winSize = ServiceLocator.director.getWinSize();
 
     this._inScene.attr({
       scale: 0.5,

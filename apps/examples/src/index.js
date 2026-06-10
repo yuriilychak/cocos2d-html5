@@ -29,17 +29,7 @@ import { TestController } from "./test-controller";
 import { TestScene } from "./test-scene";
 import { _initGlobals } from "./constants";
 import { g_resources, s_simpleTheme_plist } from "./resources";
-import {
-  ContentStrategy,
-  Director,
-  EGLView,
-  Game,
-  Loader,
-  LoaderScene,
-  ORIENTATION_LANDSCAPE,
-  SpriteFrameCache,
-  Sys,
-} from "@aspect/core";
+import { ContentStrategy, LoaderScene, ORIENTATION_LANDSCAPE, ServiceLocator } from "@aspect/core";
 const projectConfig = {
   debugMode: 1,
   noCache: false,
@@ -49,17 +39,17 @@ const projectConfig = {
   renderMode: 0
 };
 
-Game.getInstance().onStart = function () {
-  EGLView.getInstance().enableRetina(true);
-  EGLView.getInstance().setOrientation(ORIENTATION_LANDSCAPE);
-  EGLView.getInstance().setDesignResolutionSize(
+ServiceLocator.game.onStart = function () {
+  ServiceLocator.eglView.enableRetina(true);
+  ServiceLocator.eglView.setOrientation(ORIENTATION_LANDSCAPE);
+  ServiceLocator.eglView.setDesignResolutionSize(
     1280,
     720,
     ContentStrategy.FIXED_HEIGHT
   );
-  EGLView.getInstance().resizeWithBrowserSize(true);
+  ServiceLocator.eglView.resizeWithBrowserSize(true);
 
-  Loader.getInstance().resPath = "res";
+  ServiceLocator.loader.resPath = "res";
 
   LoaderScene.getInstance().preload(
     g_resources,
@@ -69,20 +59,20 @@ Game.getInstance().onStart = function () {
         sideIndexBar.start();
       } else {
 
-        SpriteFrameCache.getInstance().addSpriteFrames(s_simpleTheme_plist);
+        ServiceLocator.spriteFrameCache.addSpriteFrames(s_simpleTheme_plist);
         const scene = new TestScene("Examples", "Close");
         scene.onMainMenuCallback = () => {
-          if (Sys.getInstance().isNative) {
-            Game.getInstance().end();
+          if (ServiceLocator.sys.isNative) {
+            ServiceLocator.game.end();
           } else {
             window.history && window.history.go(-1);
           }
         };
         scene.addChild(new TestController());
-        Director.getInstance().runScene(scene);
+        ServiceLocator.director.runScene(scene);
       }
     },
     this
   );
 };
-Game.getInstance().run(projectConfig);
+ServiceLocator.game.run(projectConfig);

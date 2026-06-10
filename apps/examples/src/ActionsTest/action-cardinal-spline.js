@@ -32,7 +32,7 @@
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
 import { winSize } from "../constants";
-import { Color, Director, Point } from "@aspect/core";
+import { Color, Point, ServiceLocator } from "@aspect/core";
 import { CardinalSplineBy, DelayTime, Sequence } from "@aspect/actions";
 import { DrawNode } from "@aspect/shape-nodes";
 
@@ -57,7 +57,7 @@ export class ActionCardinalSpline extends ActionsDemo {
     this._array = [];
 
     //add draw node
-    var winSize = Director.getInstance().getWinSize();
+    var winSize = ServiceLocator.director.getWinSize();
     this._drawNode1 = new DrawNode();
     this.addChild(this._drawNode1);
     this._drawNode1.x = 50;
@@ -74,7 +74,7 @@ export class ActionCardinalSpline extends ActionsDemo {
   onEnter() {
     //----start11----onEnter
     super.onEnter();
-    var winSize = Director.getInstance().getWinSize();
+    var winSize = ServiceLocator.director.getWinSize();
     this.centerSprites(2);
 
     var delay = new DelayTime(0.25);

@@ -31,7 +31,7 @@
 //
 //------------------------------------------------------------------
 import { DrawTestDemo } from "./draw-test-demo";
-import { Color, Director, Point, degreesToRadians } from "@aspect/core";
+import { Color, Point, degreesToRadians, ServiceLocator } from "@aspect/core";
 import { DrawNode } from "@aspect/shape-nodes";
 
 export class DrawNewAPITest2 extends DrawTestDemo {
@@ -46,7 +46,7 @@ export class DrawNewAPITest2 extends DrawTestDemo {
     super.onEnter();
     var draw = new DrawNode();
     this.addChild(draw, 10);
-    var winSize = Director.getInstance().getWinSize();
+    var winSize = ServiceLocator.director.getWinSize();
     var centerPos = new Point(winSize.width / 2, winSize.height / 2);
     //drawSegment
     draw.drawSegment(

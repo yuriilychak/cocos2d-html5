@@ -1,4 +1,4 @@
-import { Node, RendererConfig, Rect } from "@aspect/core";
+import { Node, Rect, ServiceLocator } from "@aspect/core";
 
 export class NodeGrid extends Node {
   grid = null;
@@ -45,7 +45,7 @@ export class NodeGrid extends Node {
   }
 
   _createRenderCmd() {
-    if (RendererConfig.getInstance().isWebGL)
+    if (ServiceLocator.rendererConfig.isWebGL)
       return new this.constructor.WebGLRenderCmd(this);
     else
       return new Node.CanvasRenderCmd(this);

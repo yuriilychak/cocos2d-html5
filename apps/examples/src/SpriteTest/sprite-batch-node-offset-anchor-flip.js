@@ -38,12 +38,7 @@ import {
 } from "../resources";
 import { winSize } from "../constants";
 import { Animate, DelayTime, FlipY, Sequence } from "@aspect/actions";
-import {
-  Animation,
-  Sprite,
-  SpriteBatchNode,
-  SpriteFrameCache
-} from "@aspect/core";
+import { Animation, Sprite, SpriteBatchNode, ServiceLocator } from "@aspect/core";
 export class SpriteBatchNodeOffsetAnchorFlip extends SpriteTestDemo {
   constructor() {
     //----start46----ctor
@@ -56,8 +51,8 @@ export class SpriteBatchNodeOffsetAnchorFlip extends SpriteTestDemo {
     this.testDuration = 1.5;
 
     this.pixel = { 0: 255, 1: 204, 2: 153, 3: 255 };
-    SpriteFrameCache.getInstance().addSpriteFrames(s_grossiniPlist);
-    SpriteFrameCache.getInstance().addSpriteFrames(
+    ServiceLocator.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+    ServiceLocator.spriteFrameCache.addSpriteFrames(
       s_grossini_grayPlist,
       s_grossini_gray
     );
@@ -70,7 +65,7 @@ export class SpriteBatchNodeOffsetAnchorFlip extends SpriteTestDemo {
       // Animation using Sprite batch
       //
       var sprite = new Sprite(
-        SpriteFrameCache.getInstance().getSpriteFrame("grossini_dance_01.png")
+        ServiceLocator.spriteFrameCache.getSpriteFrame("grossini_dance_01.png")
       );
       sprite.x = (winSize.width / 4) * (i + 1);
       sprite.y = winSize.height / 2;
@@ -103,7 +98,7 @@ export class SpriteBatchNodeOffsetAnchorFlip extends SpriteTestDemo {
       var tmp = "";
       for (var j = 1; j <= 14; j++) {
         tmp = "grossini_dance_" + (j < 10 ? "0" + j : j) + ".png";
-        var frame = SpriteFrameCache.getInstance().getSpriteFrame(tmp);
+        var frame = ServiceLocator.spriteFrameCache.getSpriteFrame(tmp);
         animFrames.push(frame);
       }
 

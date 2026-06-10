@@ -26,7 +26,7 @@
 
 import { SysTestBase } from "./sys-test-base";
 import { s_simpleFont_fnt } from "../resources";
-import { EventListener, EventManager, Sys } from "@aspect/core";
+import { EventListener, ServiceLocator } from "@aspect/core";
 import { TextBMFont } from "@aspect/ccui";
 import { winSize } from "../constants";
 
@@ -45,7 +45,7 @@ export class OpenURLTest extends SysTestBase {
     this.addChild(label);
     label.setPosition(winSize.width / 2, winSize.height / 2);
 
-    EventManager.getInstance().addListener(
+    ServiceLocator.eventManager.addListener(
       {
         event: EventListener.TOUCH_ONE_BY_ONE,
         swallowTouches: true,
@@ -53,7 +53,7 @@ export class OpenURLTest extends SysTestBase {
           return true;
         },
         onTouchEnded: function () {
-          Sys.getInstance().openURL("http://www.cocos2d-x.org/");
+          ServiceLocator.sys.openURL("http://www.cocos2d-x.org/");
         }
       },
       this

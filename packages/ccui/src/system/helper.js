@@ -1,4 +1,4 @@
-import { Rect, Sprite, TextureCache } from "@aspect/core";
+import { Rect, Sprite, ServiceLocator } from "@aspect/core";
 import { LayoutParameter } from "../layouts/layout-parameter";
 import { LayoutComponent } from "../layouts/layout-component";
 
@@ -127,13 +127,13 @@ export const helper = {
   },
 
   _createSpriteFromBase64: function (base64String, key) {
-    var texture2D = TextureCache.getInstance().getTextureForKey(key);
+    var texture2D = ServiceLocator.textureCache.getTextureForKey(key);
 
     if (!texture2D) {
       var image = new Image();
       image.src = base64String;
-      TextureCache.getInstance().cacheImage(key, image);
-      texture2D = TextureCache.getInstance().getTextureForKey(key);
+      ServiceLocator.textureCache.cacheImage(key, image);
+      texture2D = ServiceLocator.textureCache.getTextureForKey(key);
     }
 
     var sprite = new Sprite(texture2D);

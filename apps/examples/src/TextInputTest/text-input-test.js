@@ -34,7 +34,7 @@ import {
   restartTextInputTest
 } from "./text-input-test-helpers";
 import { TextInputTestScene } from "./text-input-test-scene";
-import { Director, Layer } from "@aspect/core";
+import { Layer, ServiceLocator } from "@aspect/core";
 
 export class TextInputTest extends Layer {
   constructor() {
@@ -47,17 +47,17 @@ export class TextInputTest extends Layer {
   restartCallback(sender) {
     var scene = new TextInputTestScene();
     scene.addChild(restartTextInputTest());
-    Director.getInstance().runScene(scene);
+    ServiceLocator.director.runScene(scene);
   }
   nextCallback(sender) {
     var scene = new TextInputTestScene();
     scene.addChild(nextTextInputTest());
-    Director.getInstance().runScene(scene);
+    ServiceLocator.director.runScene(scene);
   }
   backCallback(sender) {
     var scene = new TextInputTestScene();
     scene.addChild(previousTextInputTest());
-    Director.getInstance().runScene(scene);
+    ServiceLocator.director.runScene(scene);
   }
 
   title() {

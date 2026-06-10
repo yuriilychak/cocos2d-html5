@@ -1,5 +1,5 @@
 import TiledGrid3DAction from "../action-grid/tiled-grid3d-action";
-import { Size, Point, Director, RendererConfig } from "@aspect/core";
+import { Size, Point, ServiceLocator } from "@aspect/core";
 
 /**
  * SplitCols action.
@@ -45,11 +45,11 @@ export default class SplitCols extends TiledGrid3DAction {
 
       this.setTile(locPos, coords);
     }
-    RendererConfig.getInstance().renderer.childrenOrderDirty = true;
+    ServiceLocator.rendererConfig.renderer.childrenOrderDirty = true;
   }
 
   startWithTarget(target) {
     super.startWithTarget(target);
-    this._winSize = Director.getInstance().getWinSizeInPixels();
+    this._winSize = ServiceLocator.director.getWinSizeInPixels();
   }
 }

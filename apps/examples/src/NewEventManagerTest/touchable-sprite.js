@@ -25,7 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Color, EventListener, EventManager, Rect } from "@aspect/core";
+import { Color, EventListener, Rect, ServiceLocator } from "@aspect/core";
 import { ImageView, Widget } from "@aspect/ccui";
 
 const SQUARE_SIZE = 80;
@@ -89,21 +89,21 @@ export class TouchableSprite extends ImageView {
             onTouchEnded: function (touch, event) {
                 selfPointer.setOpacity(255);
                 if(selfPointer._removeListenerOnTouchEnded) {
-                    EventManager.getInstance().removeListener(selfPointer._listener);
+                    ServiceLocator.eventManager.removeListener(selfPointer._listener);
                     selfPointer._listener = null;
                 }
             }
         });
 
         if(this._fixedPriority != 0)
-            EventManager.getInstance().addListener(listener, this._fixedPriority);
+            ServiceLocator.eventManager.addListener(listener, this._fixedPriority);
         else
-            EventManager.getInstance().addListener(listener, this);
+            ServiceLocator.eventManager.addListener(listener, this);
         this._listener = listener;
     }
 
     onExit(){
-        this._listener && EventManager.getInstance().removeListener(this._listener);
+        this._listener && ServiceLocator.eventManager.removeListener(this._listener);
         super.onExit();
     }
 

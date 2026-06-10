@@ -33,16 +33,16 @@ import {
 } from "./render-texture-test-constants";
 import { RenderTextureTestDepthStencil } from "./render-texture-test-depth-stencil";
 import { RenderTextureZbuffer } from "./render-texture-zbuffer";
-import { RendererConfig, Sys } from "@aspect/core";
+import { ServiceLocator } from "@aspect/core";
 //
 // Flow control
 //
 export var arrayOfRenderTextureTest = [RenderTextureSave, Issue1464];
 
 if (
-  "opengl" in Sys.getInstance().capabilities &&
-  RendererConfig.getInstance().isWebGL &&
-  !Sys.getInstance().isNative
+  "opengl" in ServiceLocator.sys.capabilities &&
+  ServiceLocator.rendererConfig.isWebGL &&
+  !ServiceLocator.sys.isNative
 ) {
   arrayOfRenderTextureTest.push(RenderTextureIssue937);
   arrayOfRenderTextureTest.push(RenderTextureZbuffer);

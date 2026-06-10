@@ -1,7 +1,4 @@
-import {
-    Layer, Node, NewClass, Point, Size, Rect,
-    EventListener, EventManager, RendererConfig, EGLView
-} from "@aspect/core";
+import { Layer, Node, NewClass, Point, Size, Rect, EventListener, ServiceLocator } from "@aspect/core";
 import { MoveTo, CallFunc, sequence, ActionTween } from "@aspect/actions";
 
 export const SCROLLVIEW_DIRECTION_NONE = -1;
@@ -17,7 +14,7 @@ const MOVE_INCH = 7.0 / 160.0;
 const BOUNCE_BACK_FACTOR = 0.35;
 
 export function convertDistanceFromPointToInch(pointDis) {
-    var eglViewer = EGLView.getInstance();
+    var eglViewer = ServiceLocator.eglView;
     var factor = (eglViewer.getScaleX() + eglViewer.getScaleY()) / 2;
     return (pointDis * factor) / 160;
 }
@@ -128,7 +125,7 @@ export class GScrollView extends Layer {
             return;
         }
 
-        var renderer = RendererConfig.getInstance().renderer;
+        var renderer = ServiceLocator.rendererConfig.renderer;
         cmd.visit(parentCmd);
 
         if (this._clippingToBounds) {
@@ -496,7 +493,7 @@ export class GScrollView extends Layer {
 
     setTouchEnabled(e) {
         if (this._touchListener)
-            EventManager.getInstance().removeListener(this._touchListener);
+            ServiceLocator.eventManager.removeListener(this._touchListener);
         this._touchListener = null;
         if (!e) {
             this._dragging = false;
@@ -515,7 +512,7 @@ export class GScrollView extends Layer {
             if (this.onTouchCancelled)
                 listener.onTouchCancelled = this.onTouchCancelled.bind(this);
             this._touchListener = listener;
-            EventManager.getInstance().addListener(listener, this);
+            ServiceLocator.eventManager.addListener(listener, this);
         }
     }
 
@@ -632,7 +629,7 @@ export class GScrollView extends Layer {
     }
 
     _createRenderCmd() {
-        if (RendererConfig.getInstance().isCanvas) {
+        if (ServiceLocator.rendererConfig.isCanvas) {
             return new this.constructor.CanvasRenderCmd(this);
         } else {
             return new this.constructor.WebGLRenderCmd(this);

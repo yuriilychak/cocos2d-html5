@@ -1,4 +1,4 @@
-import { Director, Node, Size } from "@aspect/core";
+import { Node, Size, ServiceLocator } from "@aspect/core";
 import { NodeGrid } from "@aspect/node-grid";
 import { fadeOutTRTiles, stopGrid } from "@aspect/actions3d";
 import { Sequence, CallFunc } from "@aspect/actions";
@@ -23,7 +23,7 @@ export class TransitionFadeTR extends TransitionScene {
     this._gridProxy.setTarget(this._outScene);
     this._gridProxy._performRecursive(Node._stateCallbackType.onEnter);
 
-    var winSize = Director.getInstance().getWinSize();
+    var winSize = ServiceLocator.director.getWinSize();
     var aspect = winSize.width / winSize.height;
     var x = 0 | (12 * aspect);
     var y = 12;

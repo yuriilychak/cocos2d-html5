@@ -29,12 +29,12 @@
 
 import { CCPoolTest } from "./ccpool-test";
 import { ExtensionsTestScene } from "../extensions-test-scene";
-import { Director } from "@aspect/core";
+import { ServiceLocator } from "@aspect/core";
 import { TestScene } from "../../test-scene";
 
 export function runCCPoolTest() {
   var scene = new TestScene("CCPoolTest", "Back");
   scene.onMainMenuCallback = () => new ExtensionsTestScene().runThisTest();
   scene.addChild(new CCPoolTest());
-  Director.getInstance().runScene(scene);
+  ServiceLocator.director.runScene(scene);
 }

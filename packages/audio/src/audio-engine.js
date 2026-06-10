@@ -1,4 +1,4 @@
-import { Loader, log } from "@aspect/core";
+import { log, ServiceLocator } from "@aspect/core";
 import { Audio } from "./audio.js";
 import { audioSupport } from "./audio-support.js";
 import { loader } from "./audio-loader.js";
@@ -40,15 +40,15 @@ export class AudioEngine {
       bgMusic.stop();
     }
     const musicVolume = this._musicVolume;
-    let audio = Loader.getInstance().getRes(url);
+    let audio = ServiceLocator.loader.getRes(url);
     if (!audio) {
-      Loader.getInstance().load(url, function () {
+      ServiceLocator.loader.load(url, function () {
         if (!audio.getPlaying() && !audio.interruptPlay) {
           audio.setVolume(musicVolume);
           audio.play(0, loop || false);
         }
       });
-      audio = Loader.getInstance().getRes(url);
+      audio = ServiceLocator.loader.getRes(url);
     }
     audio.setVolume(musicVolume);
     audio.play(0, loop || false);
@@ -73,7 +73,7 @@ export class AudioEngine {
 
       audio.stop();
       this._currMusic = null;
-      if (releaseData) Loader.getInstance().release(audio.src);
+      if (releaseData) ServiceLocator.loader.release(audio.src);
     }
   }
 
@@ -205,10 +205,10 @@ export class AudioEngine {
       return audio;
     }
 
-    audio = Loader.getInstance().getRes(url);
+    audio = ServiceLocator.loader.getRes(url);
 
     if (audio && audioSupport.WEB_AUDIO && audio._AUDIO_TYPE === "AUDIO") {
-      Loader.getInstance().release(url);
+      ServiceLocator.loader.release(url);
       audio = null;
     }
 
@@ -230,8 +230,8 @@ export class AudioEngine {
 
     const cache = loader.useWebAudio;
     loader.useWebAudio = true;
-    Loader.getInstance().load(url, (audio) => {
-      audio = Loader.getInstance().getRes(url);
+    ServiceLocator.loader.load(url, (audio) => {
+      audio = ServiceLocator.loader.getRes(url);
       audio = audio.cloneNode();
       audio.setVolume(this._effectVolume);
       audio.play(0, loop || false);
@@ -368,7 +368,7 @@ export class AudioEngine {
       return;
     }
 
-    Loader.getInstance().release(url);
+    ServiceLocator.loader.release(url);
     const pool = this._audioPool[url];
     if (pool) {
       for (let i = 0; i < pool.length; i++) {

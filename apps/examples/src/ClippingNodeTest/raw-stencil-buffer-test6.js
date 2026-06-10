@@ -27,26 +27,26 @@
 
 import { _alphaThreshold } from "./clipping-node-test-helpers";
 import { RawStencilBufferTest } from "./raw-stencil-buffer-test";
-import { Color, Director, Game, Point, RendererConfig, SHADER_POSITION_TEXTURECOLORALPHATEST, ShaderCache, UNIFORM_ALPHA_TEST_VALUE_S, glUseProgram } from "@aspect/core";
+import { Color, Point, SHADER_POSITION_TEXTURECOLORALPHATEST, UNIFORM_ALPHA_TEST_VALUE_S, glUseProgram, ServiceLocator } from "@aspect/core";
 export class RawStencilBufferTest6 extends RawStencilBufferTest {
   subtitle() {
     return "6:ManualClear,AlphaTest:ENABLE";
   }
 
   setup() {
-    RendererConfig.getInstance().renderContext.stencilMask(~0);
+    ServiceLocator.rendererConfig.renderContext.stencilMask(~0);
     super.setup();
   }
 
   setupStencilForClippingOnPlane(plane) {
-    var gl = RendererConfig.getInstance().renderContext;
+    var gl = ServiceLocator.rendererConfig.renderContext;
     var planeMask = 0x1 << plane;
     gl.stencilMask(planeMask);
     gl.stencilFunc(gl.NEVER, 0, planeMask);
     gl.stencilOp(gl.REPLACE, gl.KEEP, gl.KEEP);
-    Game.getInstance().drawingUtils.drawSolidRect(
+    ServiceLocator.game.drawingUtils.drawSolidRect(
       new Point(0, 0),
-      Point.fromSize(Director.getInstance().getWinSize()),
+      Point.fromSize(ServiceLocator.director.getWinSize()),
       new Color(255, 255, 255, 255)
     );
     gl.stencilFunc(gl.NEVER, planeMask, planeMask);
@@ -54,7 +54,7 @@ export class RawStencilBufferTest6 extends RawStencilBufferTest {
     gl.disable(gl.DEPTH_TEST);
     gl.depthMask(false);
 
-    var program = ShaderCache.getInstance().programForKey(
+    var program = ServiceLocator.shaderCache.programForKey(
       SHADER_POSITION_TEXTURECOLORALPHATEST
     );
     var alphaValueLocation = gl.getUniformLocation(
@@ -69,7 +69,7 @@ export class RawStencilBufferTest6 extends RawStencilBufferTest {
   }
 
   setupStencilForDrawingOnPlane(plane) {
-    var gl = RendererConfig.getInstance().renderContext;
+    var gl = ServiceLocator.rendererConfig.renderContext;
     gl.depthMask(true);
     //gl.enable(gl.DEPTH_TEST);
     super.setupStencilForDrawingOnPlane(plane);

@@ -32,7 +32,7 @@
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
 import { winSize } from "../constants";
-import { Sys } from "@aspect/core";
+import { ServiceLocator } from "@aspect/core";
 import { DelayTime, RotateBy, RotateTo, Sequence } from "@aspect/actions";
 import { TextBMFont } from "@aspect/ccui";
 import { s_simpleFont_fnt } from "../resources";
@@ -62,7 +62,7 @@ export class ActionRotateXY extends ActionsDemo {
       new Sequence(actionBy2, delay.clone(), actionBy2.reverse())
     );
 
-    if (!Sys.getInstance().isNative && !("opengl" in Sys.getInstance().capabilities)) {
+    if (!ServiceLocator.sys.isNative && !("opengl" in ServiceLocator.sys.capabilities)) {
       var label = new TextBMFont("Not support Actions on HTML5-canvas", s_simpleFont_fnt);
       label.x = winSize.width / 2;
       label.y = winSize.height / 2 + 50;

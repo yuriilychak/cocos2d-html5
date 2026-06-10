@@ -28,7 +28,7 @@
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { s_simpleFont_fnt } from "../resources";
 import { director } from "../constants";
-import { EventListener, EventManager, KEY, Sys } from "@aspect/core";
+import { EventListener, KEY, ServiceLocator } from "@aspect/core";
 import { TextBMFont } from "@aspect/ccui";
 export class LabelKeyboardEventTest extends EventDispatcherTestDemo {
   onEnter() {
@@ -46,14 +46,14 @@ export class LabelKeyboardEventTest extends EventDispatcherTestDemo {
     this.addChild(statusLabel);
 
     var that = this;
-    EventManager.getInstance().addListener(
+    ServiceLocator.eventManager.addListener(
       {
         event: EventListener.KEYBOARD,
         onKeyPressed: function (keyCode, event) {
           var label = event.getCurrentTarget();
           label.setString(
             "Key " +
-              (Sys.getInstance().isNative
+              (ServiceLocator.sys.isNative
                 ? that.getNativeKeyName(keyCode)
                 : String.fromCharCode(keyCode)) +
               "(" +
@@ -65,7 +65,7 @@ export class LabelKeyboardEventTest extends EventDispatcherTestDemo {
           var label = event.getCurrentTarget();
           label.setString(
             "Key " +
-              (Sys.getInstance().isNative
+              (ServiceLocator.sys.isNative
                 ? that.getNativeKeyName(keyCode)
                 : String.fromCharCode(keyCode)) +
               "(" +

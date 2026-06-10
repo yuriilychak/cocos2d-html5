@@ -28,7 +28,7 @@
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_ghosts, s_ghostsPlist } from "../resources";
 import { winSize } from "../constants";
-import { RendererConfig, Sprite, SpriteBatchNode, SpriteFrameCache, Sys } from "@aspect/core";
+import { Sprite, SpriteBatchNode, ServiceLocator } from "@aspect/core";
 export class SpriteBatchNodeReorderOneChild extends SpriteTestDemo {
 
     constructor() {
@@ -50,7 +50,7 @@ export class SpriteBatchNodeReorderOneChild extends SpriteTestDemo {
 
         this.pixel = {"0":0, "1":102, "2":255, "3":255};
 
-        SpriteFrameCache.getInstance().addSpriteFrames(s_ghostsPlist);
+        ServiceLocator.spriteFrameCache.addSpriteFrames(s_ghostsPlist);
         //
         // SpriteBatchNode: 3 levels of children
         //
@@ -58,7 +58,7 @@ export class SpriteBatchNodeReorderOneChild extends SpriteTestDemo {
 
         this._batchNode = aParent;
         //[[aParent texture] generateMipmap];
-        if ("opengl" in Sys.getInstance().capabilities && RendererConfig.getInstance().isWebGL)
+        if ("opengl" in ServiceLocator.sys.capabilities && ServiceLocator.rendererConfig.isWebGL)
             aParent.texture.generateMipmap();
         this.addChild(aParent);
 

@@ -31,12 +31,12 @@
 import { OpenGLTestLayer } from "./open-gltest-layer";
 import { GLNode } from "./glnode-polyfill";
 import { winSize } from "../constants";
-import { ShaderCache, Sys, VERTEX_ATTRIB_POSITION, VERTEX_ATTRIB_TEX_COORDS } from "@aspect/core";
+import { VERTEX_ATTRIB_POSITION, VERTEX_ATTRIB_TEX_COORDS, ServiceLocator } from "@aspect/core";
 export class TexImage2DTest extends OpenGLTestLayer {
   constructor() {
     super();
 
-    if ("opengl" in Sys.getInstance().capabilities) {
+    if ("opengl" in ServiceLocator.sys.capabilities) {
       var glnode = new GLNode();
       this.addChild(glnode, 10);
       this.glnode = glnode;
@@ -47,7 +47,7 @@ export class TexImage2DTest extends OpenGLTestLayer {
       glnode.anchorX = 0.5;
       glnode.anchorY = 0.5;
 
-      this.shader = ShaderCache.getInstance().getProgram("ShaderPositionTexture");
+      this.shader = ServiceLocator.shaderCache.getProgram("ShaderPositionTexture");
       this.initGL();
 
       glnode.draw = function () {

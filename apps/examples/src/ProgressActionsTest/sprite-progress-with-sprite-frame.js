@@ -28,7 +28,7 @@
 import { SpriteDemo } from "./sprite-demo";
 import { s_grossiniPlist } from "../resources";
 import { winSize } from "../constants";
-import { Point, Sprite, SpriteFrameCache } from "@aspect/core";
+import { Point, Sprite, ServiceLocator } from "@aspect/core";
 
 import { ProgressFromTo, ProgressTimer } from "@aspect/progress-timer";
 export class SpriteProgressWithSpriteFrame extends SpriteDemo {
@@ -38,7 +38,7 @@ export class SpriteProgressWithSpriteFrame extends SpriteDemo {
 
         var to = new ProgressFromTo(6, 0, 100);
 
-        SpriteFrameCache.getInstance().addSpriteFrames(s_grossiniPlist);
+        ServiceLocator.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
 
         var left = new ProgressTimer(new Sprite("#grossini_dance_01.png"));
         left.type = ProgressTimer.TYPE_BAR;

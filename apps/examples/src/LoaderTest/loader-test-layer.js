@@ -38,7 +38,7 @@ import {
   s_lookup_html5_plist,
   s_lookup_mobile_plist
 } from "../resources";
-import { Color, Loader, Sprite, SpriteFrameCache, Sys, log } from "@aspect/core";
+import { Color, Loader, Sprite, log, ServiceLocator } from "@aspect/core";
 import { winSize } from "../constants";
 
 export class LoaderTestLayer extends BaseTestLayer {
@@ -50,7 +50,7 @@ export class LoaderTestLayer extends BaseTestLayer {
 
     this._subtitle = "";
 
-    Loader.getInstance().load(s_helloWorld, function (err, results) {
+    ServiceLocator.loader.load(s_helloWorld, function (err, results) {
       if (err) {
         log("Failed to load %s.", s_helloWorld);
         return;
@@ -63,7 +63,7 @@ export class LoaderTestLayer extends BaseTestLayer {
       bg.y = winSize.height / 2;
     });
 
-    Loader.getInstance().load([s_ghostsPlist, s_ghosts], function (err, results) {
+    ServiceLocator.loader.load([s_ghostsPlist, s_ghosts], function (err, results) {
       if (err) {
         log("Failed to load %s, %s .", s_ghostsPlist, s_ghosts);
         return;
@@ -73,7 +73,7 @@ export class LoaderTestLayer extends BaseTestLayer {
       log(results[0]);
       log(s_ghosts + "--->");
       log(results[1]);
-      SpriteFrameCache.getInstance().addSpriteFrames(s_ghostsPlist);
+      ServiceLocator.spriteFrameCache.addSpriteFrames(s_ghostsPlist);
       var frame = new Sprite("#sister1.gif");
       self.addChild(frame);
       frame.x = winSize.width / 4;
@@ -81,15 +81,15 @@ export class LoaderTestLayer extends BaseTestLayer {
     });
 
     var str;
-    if (Sys.getInstance().isNative) {
+    if (ServiceLocator.sys.isNative) {
       str = s_lookup_desktop_plist;
-    } else if (Sys.getInstance().isMobile) {
+    } else if (ServiceLocator.sys.isMobile) {
       str = s_lookup_mobile_plist;
     } else {
       str = s_lookup_html5_plist;
     }
 
-    Loader.getInstance().loadAliases(str, function () {
+    ServiceLocator.loader.loadAliases(str, function () {
       var sprite = new Sprite("grossini.bmp");
       self.addChild(sprite, 100);
       sprite.x = winSize.width / 2;

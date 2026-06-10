@@ -38,12 +38,7 @@ import {
   s_pathSister2
 } from "../resources";
 import { winSize } from "../constants";
-import {
-  Color,
-  Director,
-  LayerGradient,
-  Sprite
-} from "@aspect/core";
+import { Color, LayerGradient, Sprite, ServiceLocator } from "@aspect/core";
 import { ScaleBy, Sequence } from "@aspect/actions";
 import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
 
@@ -104,18 +99,18 @@ export class EffectAdvanceTextLayer extends BaseTestLayer {
   onRestartCallback() {
     var scene = new EffectAdvanceScene();
     scene.addChild(restartEffectAdvanceAction());
-    Director.getInstance().runScene(scene);
+    ServiceLocator.director.runScene(scene);
   }
 
   onNextCallback() {
     var scene = new EffectAdvanceScene();
     scene.addChild(nextEffectAdvanceAction());
-    Director.getInstance().runScene(scene);
+    ServiceLocator.director.runScene(scene);
   }
 
   onBackCallback() {
     var scene = new EffectAdvanceScene();
     scene.addChild(backEffectAdvanceAction());
-    Director.getInstance().runScene(scene);
+    ServiceLocator.director.runScene(scene);
   }
 }

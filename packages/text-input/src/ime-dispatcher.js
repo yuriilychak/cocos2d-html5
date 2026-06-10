@@ -1,4 +1,4 @@
-import { NewClass, Point, Sys, KEY, arrayRemoveObject, Game } from "@aspect/core";
+import { NewClass, Point, KEY, arrayRemoveObject, ServiceLocator } from "@aspect/core";
 
 export class IMEDispatcher extends NewClass {
   static _instance = null;
@@ -23,7 +23,7 @@ export class IMEDispatcher extends NewClass {
   }
 
   init() {
-    if (Sys.getInstance().isMobile) return;
+    if (ServiceLocator.sys.isMobile) return;
     this._domInputControl = document.getElementById("imeDispatcherInput");
     if (!this._domInputControl) {
       this._domInputControl = document.createElement("input");
@@ -169,7 +169,7 @@ export class IMEDispatcher extends NewClass {
   }
 
   _focusDomInput(delegate) {
-    if (Sys.getInstance().isMobile) {
+    if (ServiceLocator.sys.isMobile) {
       this._delegateWithIme = delegate;
       delegate.didAttachWithIME();
       this._currentInputString = delegate.string || "";
@@ -218,7 +218,7 @@ export class IMEDispatcher extends NewClass {
 
     this._delegateWithIme = null;
     delegate.didDetachWithIME();
-    Game.getInstance().canvas.focus();
+    ServiceLocator.game.canvas.focus();
     return true;
   }
 

@@ -1,4 +1,4 @@
-import { Node, RendererConfig, incrementGLDraws } from '@aspect/core';
+import { Node, incrementGLDraws, ServiceLocator } from "@aspect/core";
 import { Scale9Sprite } from './scale9-sprite';
 
 export class Scale9SpriteCanvasRenderCmd extends Node.CanvasRenderCmd {
@@ -51,7 +51,7 @@ export class Scale9SpriteCanvasRenderCmd extends Node.CanvasRenderCmd {
                 this._textureToRender = this._textureToRender._generateColorTexture(color.r,color.g,color.b);
         }
 
-        var wrapper = ctx || RendererConfig.getInstance().renderContext, context = wrapper.getContext();
+        var wrapper = ctx || ServiceLocator.rendererConfig.renderContext, context = wrapper.getContext();
         wrapper.setTransform(this._worldTransform, scaleX, scaleY);
         wrapper.setCompositeOperation(NodeCanvasRenderCmd._getCompositeOperationByBlendFunc(node._blendFunc));
         wrapper.setGlobalAlpha(alpha);

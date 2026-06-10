@@ -27,7 +27,7 @@
 
 import { SkeletonAnimation } from "@aspect/extensions";
 import { SpineTestLayer } from "./spine-test-layer";
-import { Color, EventListener, EventManager } from "@aspect/core";
+import { Color, EventListener, ServiceLocator } from "@aspect/core";
 
 export class SpineTestPerformanceLayer extends SpineTestLayer {
   constructor() {
@@ -52,7 +52,7 @@ export class SpineTestPerformanceLayer extends SpineTestLayer {
         return true;
       }
     });
-    EventManager.getInstance().addListener(listener, this);
+    ServiceLocator.eventManager.addListener(listener, this);
   }
   title() {
     return "Spine Test";

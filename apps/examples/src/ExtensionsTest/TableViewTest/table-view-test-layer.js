@@ -27,7 +27,7 @@
 
 import { CustomTableViewCell } from "./custom-table-view-cell";
 import { s_image_icon, s_simpleFont_fnt } from "../../resources";
-import { Director, Size, Sprite, log } from "@aspect/core";
+import { Size, Sprite, log, ServiceLocator } from "@aspect/core";
 import { BaseTestLayer } from "../../BaseTestLayer/BaseTestLayer";
 import { TextBMFont } from "@aspect/ccui";
 
@@ -41,7 +41,7 @@ export class TableViewTestLayer extends BaseTestLayer {
   }
 
   init() {
-    var winSize = Director.getInstance().getWinSize();
+    var winSize = ServiceLocator.director.getWinSize();
 
     var tableView = new TableView(this, new Size(600, 60));
     tableView.setDirection(SCROLLVIEW_DIRECTION_HORIZONTAL);

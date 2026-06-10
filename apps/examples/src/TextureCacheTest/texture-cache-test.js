@@ -27,7 +27,7 @@
 
 import { TextureCacheTestBase } from "./texture-cache-test-base";
 import { s_simpleFont_fnt } from "../resources";
-import { Director, Sprite, textureCache } from "@aspect/core";
+import { Sprite, ServiceLocator } from "@aspect/core";
 import { TextBMFont } from "@aspect/ccui";
 
 export class TextureCacheTest extends TextureCacheTestBase {
@@ -44,7 +44,7 @@ export class TextureCacheTest extends TextureCacheTestBase {
 
     this._numberOfLoadedSprites = 0;
 
-    var size = Director.getInstance().getWinSize();
+    var size = ServiceLocator.director.getWinSize();
 
     this._labelLoading = new TextBMFont("loading...", s_simpleFont_fnt);
     this._labelPercent = new TextBMFont("%0", s_simpleFont_fnt);
@@ -58,7 +58,7 @@ export class TextureCacheTest extends TextureCacheTestBase {
     this.addChild(this._labelLoading);
     this.addChild(this._labelPercent);
 
-    var texCache = textureCache;
+    var texCache = ServiceLocator.textureCache;
     // load textures
     texCache.addImageAsync("Images/HelloWorld.png", this.loadingCallBack, this);
     texCache.addImageAsync("Images/grossini.png", this.loadingCallBack, this);
@@ -150,7 +150,7 @@ export class TextureCacheTest extends TextureCacheTestBase {
     texCache.addImageAsync("Images/blocks.png", this.loadingCallBack, this);
   }
   addSprite() {
-    var size = Director.getInstance().getWinSize();
+    var size = ServiceLocator.director.getWinSize();
 
     // create sprites
     var bg = new Sprite("Images/HelloWorld.png");

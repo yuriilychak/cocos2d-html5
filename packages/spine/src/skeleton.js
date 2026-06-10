@@ -1,9 +1,4 @@
-import {
-    Node, Rect, RendererConfig, Director,
-    isString, log, FLT_MAX,
-    Path, Loader, TextureCache,
-    OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA
-} from "@aspect/core";
+import { Node, Rect, isString, log, FLT_MAX, Path, OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA, ServiceLocator } from "@aspect/core";
 import {
     TextureAtlas, AtlasAttachmentLoader, SkeletonJson,
     Skeleton as SpineSkeleton, Utils, RegionAttachment, Physics
@@ -34,7 +29,7 @@ export class Skeleton extends Node {
     get _texture() { return this._renderCmd._currTexture; }
 
     _createRenderCmd() {
-        if (RendererConfig.getInstance().isCanvas)
+        if (ServiceLocator.rendererConfig.isCanvas)
             return new this.constructor.CanvasRenderCmd(this);
         else
             return new this.constructor.WebGLRenderCmd(this);
@@ -42,7 +37,7 @@ export class Skeleton extends Node {
 
     init() {
         super.init();
-        this._premultipliedAlpha = (RendererConfig.getInstance().isWebGL && !!OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA);
+        this._premultipliedAlpha = (ServiceLocator.rendererConfig.isWebGL && !!OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA);
     }
 
     onEnter() {
@@ -72,19 +67,19 @@ export class Skeleton extends Node {
 
         if (isString(skeletonDataFile)) {
             if (isString(atlasFile)) {
-                const data = Loader.getInstance().getRes(atlasFile);
+                const data = ServiceLocator.loader.getRes(atlasFile);
                 atlas = new TextureAtlas(data);
                 _atlasLoader.loadAtlas(atlas, atlasFile);
             } else {
                 atlas = atlasFile;
             }
-            scale = scale || 1 / Director.getInstance().getContentScaleFactor();
+            scale = scale || 1 / ServiceLocator.director.getContentScaleFactor();
 
             const attachmentLoader = new AtlasAttachmentLoader(atlas);
             const skeletonJsonReader = new SkeletonJson(attachmentLoader);
             skeletonJsonReader.scale = scale;
 
-            const skeletonJson = _normalizeLegacyJson(Loader.getInstance().getRes(skeletonDataFile));
+            const skeletonJson = _normalizeLegacyJson(ServiceLocator.loader.getRes(skeletonDataFile));
             skeletonData = skeletonJsonReader.readSkeletonData(skeletonJson);
             ownsSkeletonData = true;
         } else {
@@ -140,8 +135,8 @@ export class Skeleton extends Node {
     setSkeletonData(skeletonData, ownsSkeletonData) {
         if (skeletonData.width != null && skeletonData.height != null)
             this.setContentSize(
-                skeletonData.width / Director.getInstance().getContentScaleFactor(),
-                skeletonData.height / Director.getInstance().getContentScaleFactor()
+                skeletonData.width / ServiceLocator.director.getContentScaleFactor(),
+                skeletonData.height / ServiceLocator.director.getContentScaleFactor()
             );
 
         this._skeleton = new SpineSkeleton(skeletonData);
@@ -201,7 +196,7 @@ export const _atlasLoader = {
     loadAtlas(atlas, atlasFilePath) {
         for (const page of atlas.pages) {
             const texturePath = Path.join(Path.dirname(atlasFilePath), page.name);
-            const texture = TextureCache.getInstance().addImage(texturePath);
+            const texture = ServiceLocator.textureCache.addImage(texturePath);
             const tex = new SkeletonTexture({ width: texture.getPixelsWide(), height: texture.getPixelsHigh() });
             tex.setRealTexture(texture);
             page.setTexture(tex);

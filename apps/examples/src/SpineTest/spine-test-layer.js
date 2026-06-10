@@ -27,24 +27,24 @@
 
 import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
 import { SpineTestScene } from "./spine-test-scene";
-import { Director } from "@aspect/core";
+import { ServiceLocator } from "@aspect/core";
 
 export class SpineTestLayer extends BaseTestLayer {
   onRestartCallback(sender) {
     var s = new SpineTestScene();
     s.addChild(SpineTestScene.restartSpineTestLayer());
-    Director.getInstance().runScene(s);
+    ServiceLocator.director.runScene(s);
   }
 
   onNextCallback(sender) {
     var s = new SpineTestScene();
     s.addChild(SpineTestScene.nextSpineTestLayer());
-    Director.getInstance().runScene(s);
+    ServiceLocator.director.runScene(s);
   }
 
   onBackCallback(sender) {
     var s = new SpineTestScene();
     s.addChild(SpineTestScene.backSpineTestLayer());
-    Director.getInstance().runScene(s);
+    ServiceLocator.director.runScene(s);
   }
 }

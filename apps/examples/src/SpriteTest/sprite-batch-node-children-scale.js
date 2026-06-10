@@ -34,7 +34,7 @@ import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_family, s_grossini_familyPlist } from "../resources";
 import { winSize } from "../constants";
 import { RotateBy } from "@aspect/actions";
-import { Node, Sprite, SpriteBatchNode, SpriteFrameCache } from "@aspect/core";
+import { Node, Sprite, SpriteBatchNode, ServiceLocator } from "@aspect/core";
 
 export class SpriteBatchNodeChildrenScale extends SpriteTestDemo {
 
@@ -58,7 +58,7 @@ export class SpriteBatchNodeChildrenScale extends SpriteTestDemo {
 
 
         this.pixel2 = {"0":0, "1":0, "2":0, "3":255};
-        SpriteFrameCache.getInstance().addSpriteFrames(s_grossini_familyPlist);
+        ServiceLocator.spriteFrameCache.addSpriteFrames(s_grossini_familyPlist);
 
         var rot = new RotateBy(10, 360);
         var seq = rot.repeatForever();
@@ -68,7 +68,7 @@ export class SpriteBatchNodeChildrenScale extends SpriteTestDemo {
         // Test 1
         //
         var aParent = new Node();
-        var sprite1 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("grossinis_sister1.png"));
+        var sprite1 = new Sprite(ServiceLocator.spriteFrameCache.getSpriteFrame("grossinis_sister1.png"));
         sprite1.x = winSize.width / 4;
         sprite1.y = winSize.height / 4;
         sprite1.scaleX = 0.5;
@@ -76,7 +76,7 @@ export class SpriteBatchNodeChildrenScale extends SpriteTestDemo {
         sprite1.runAction(seq);
 
 
-        var sprite2 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("grossinis_sister2.png"));
+        var sprite2 = new Sprite(ServiceLocator.spriteFrameCache.getSpriteFrame("grossinis_sister2.png"));
         sprite2.x = 50;
         sprite2.y = 0;
 
@@ -91,14 +91,14 @@ export class SpriteBatchNodeChildrenScale extends SpriteTestDemo {
         // Test 2
         //
         aParent = new SpriteBatchNode(s_grossini_family);
-        sprite1 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("grossinis_sister1.png"));
+        sprite1 = new Sprite(ServiceLocator.spriteFrameCache.getSpriteFrame("grossinis_sister1.png"));
         sprite1.x = 3 * winSize.width / 4;
         sprite1.y = winSize.height / 4;
         sprite1.scaleX = 0.5;
         sprite1.scaleY = 2.0;
         sprite1.runAction(seq);
 
-        sprite2 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("grossinis_sister2.png"));
+        sprite2 = new Sprite(ServiceLocator.spriteFrameCache.getSpriteFrame("grossinis_sister2.png"));
         sprite2.x = 50;
         sprite2.y = 0;
 
@@ -113,14 +113,14 @@ export class SpriteBatchNodeChildrenScale extends SpriteTestDemo {
         // Test 3
         //
         aParent = new Node();
-        sprite1 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("grossinis_sister1.png"));
+        sprite1 = new Sprite(ServiceLocator.spriteFrameCache.getSpriteFrame("grossinis_sister1.png"));
         sprite1.x = winSize.width / 4;
         sprite1.y = 2 * winSize.height / 3;
         sprite1.scaleX = 1.5;
         sprite1.scaleY = 0.5;
         sprite1.runAction(seq);
 
-        sprite2 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("grossinis_sister2.png"));
+        sprite2 = new Sprite(ServiceLocator.spriteFrameCache.getSpriteFrame("grossinis_sister2.png"));
         sprite2.x = 50;
         sprite2.y = 0;
 
@@ -135,14 +135,14 @@ export class SpriteBatchNodeChildrenScale extends SpriteTestDemo {
         // Test 4
         //
         aParent = new SpriteBatchNode(s_grossini_family);
-        sprite1 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("grossinis_sister1.png"));
+        sprite1 = new Sprite(ServiceLocator.spriteFrameCache.getSpriteFrame("grossinis_sister1.png"));
         sprite1.x = 3 * winSize.width / 4;
         sprite1.y = 2 * winSize.height / 3;
         sprite1.scaleX = 1.5;
         sprite1.scaleY = 0.5;
         sprite1.runAction(seq);
 
-        sprite2 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("grossinis_sister2.png"));
+        sprite2 = new Sprite(ServiceLocator.spriteFrameCache.getSpriteFrame("grossinis_sister2.png"));
         sprite2.x = 50;
         sprite2.y = 0;
 

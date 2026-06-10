@@ -1,12 +1,4 @@
-import {
-  Game,
-  Node,
-  Sprite,
-  Point,
-  Color,
-  Rect,
-  RendererConfig
-} from "@aspect/core";
+import { Node, Sprite, Point, Color, Rect, ServiceLocator } from "@aspect/core";
 import {
   RegionAttachment,
   MeshAttachment,
@@ -21,7 +13,7 @@ export class SkeletonCanvasRenderCmd extends Node.CanvasRenderCmd {
 
   rendering(wrapper, scaleX, scaleY) {
     const node = this._node;
-    wrapper = wrapper || RendererConfig.getInstance().renderContext;
+    wrapper = wrapper || ServiceLocator.rendererConfig.renderContext;
 
     const locSkeleton = node._skeleton;
     const drawOrder = locSkeleton.drawOrder;
@@ -40,7 +32,7 @@ export class SkeletonCanvasRenderCmd extends Node.CanvasRenderCmd {
 
     wrapper.setTransform(this._worldTransform, scaleX, scaleY);
     wrapper.setGlobalAlpha(1);
-    const drawingUtil = Game.getInstance().drawingUtil;
+    const drawingUtil = ServiceLocator.game.drawingUtil;
 
     if (node._debugSlots) {
       drawingUtil.setDrawColor(0, 0, 255, 255);

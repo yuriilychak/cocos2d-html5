@@ -1,5 +1,5 @@
 import { ActionInterval, ReverseTime } from "@aspect/actions";
-import { Size, RendererConfig, Sys, log } from "@aspect/core";
+import { Size, log, ServiceLocator } from "@aspect/core";
 
 /**
  * Base class for Grid actions
@@ -16,7 +16,7 @@ export default class GridAction extends ActionInterval {
    * @param {Size} gridSize
    */
   constructor(duration, gridSize) {
-    Sys.getInstance()._checkWebGLRenderMode();
+    ServiceLocator.sys._checkWebGLRenderMode();
     super();
     this._gridSize = new Size(0, 0);
 
@@ -48,7 +48,7 @@ export default class GridAction extends ActionInterval {
    */
   startWithTarget(target) {
     super.startWithTarget(target);
-    RendererConfig.getInstance().renderer.childrenOrderDirty = true;
+    ServiceLocator.rendererConfig.renderer.childrenOrderDirty = true;
     this._cacheTargetAsGridNode(target);
 
     const newGrid = this.getGrid();

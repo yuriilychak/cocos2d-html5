@@ -1,4 +1,4 @@
-import { Color, Director } from "@aspect/core";
+import { Color, ServiceLocator } from "@aspect/core";
 import { BaseTestLayer } from "../../BaseTestLayer/BaseTestLayer";
 import { TestScene } from "../../test-scene";
 import {
@@ -21,7 +21,7 @@ export default class ControlExtensionTestLayer extends BaseTestLayer {
     super(new Color(53, 57, 65, 255), new Color(53, 57, 65, 255));
     this._title = "Control Extension Tests";
 
-    const screenSize = Director.getInstance().getWinSize();
+    const screenSize = ServiceLocator.director.getWinSize();
 
     this.addExample(ControlSliderTest, 96, screenSize.height - 150);
     this.addExample(ControlColourPickerTest, 560, screenSize.height - 180);
@@ -48,5 +48,5 @@ export default class ControlExtensionTestLayer extends BaseTestLayer {
 export function runControlExtensionTest() {
   const scene = new TestScene("GUI Component", "Back");
   scene.addChild(new ControlExtensionTestLayer());
-  Director.getInstance().runScene(scene);
+  ServiceLocator.director.runScene(scene);
 }

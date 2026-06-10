@@ -29,7 +29,7 @@ import { ParticleDemo } from "./particle-demo";
 import { s_stars1 } from "../resources";
 import { ParticleExplosion } from "./ParticleExamples";
 import { ParticleSystem } from "@aspect/particle";
-import { textureCache } from "@aspect/core";
+import { ServiceLocator } from "@aspect/core";
 
 export class DemoExplosion extends ParticleDemo {
   onEnter() {
@@ -38,7 +38,7 @@ export class DemoExplosion extends ParticleDemo {
     this._emitter = new ParticleExplosion();
     this._background.addChild(this._emitter, 10);
 
-    this._emitter.texture = textureCache.addImage(s_stars1);
+    this._emitter.texture = ServiceLocator.textureCache.addImage(s_stars1);
     this._emitter.shapeType = ParticleSystem.STAR_SHAPE;
 
     this._emitter.setAutoRemoveOnFinish(true);

@@ -33,7 +33,7 @@
 import { s_resprefix } from "../resources";
 import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
-import { Sys } from "@aspect/core";
+import { ServiceLocator } from "@aspect/core";
 import { TMXTiledMap } from "@aspect/tilemap";
 
 export class TMXTilesetTest extends TileDemo {
@@ -50,7 +50,7 @@ export class TMXTilesetTest extends TileDemo {
     var map = new TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test5.tmx");
     this.addChild(map, 0, TAG_TILE_MAP);
 
-    if ("opengl" in Sys.getInstance().capabilities) {
+    if ("opengl" in ServiceLocator.sys.capabilities) {
       var layer;
       layer = map.getLayer("Layer 0");
       layer.texture.setAntiAliasTexParameters();

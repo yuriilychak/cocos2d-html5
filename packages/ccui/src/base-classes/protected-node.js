@@ -1,4 +1,4 @@
-import { Node, RendererConfig, assert, log, NODE_TAG_INVALID, s_globalOrderOfArrival, setGlobalOrderOfArrival } from '@aspect/core';
+import { Node, assert, log, NODE_TAG_INVALID, s_globalOrderOfArrival, setGlobalOrderOfArrival, ServiceLocator } from "@aspect/core";
 
 export class ProtectedNode extends Node {
     _insertProtectedChild(child, z) {
@@ -22,7 +22,7 @@ export class ProtectedNode extends Node {
         return;
       }
 
-      var renderer = RendererConfig.getInstance().renderer;
+      var renderer = ServiceLocator.rendererConfig.renderer;
       var i,
         children = this._children,
         len = children.length,
@@ -198,7 +198,7 @@ export class ProtectedNode extends Node {
     _changePosition() {}
 
     _createRenderCmd() {
-      if (RendererConfig.getInstance().isCanvas)
+      if (ServiceLocator.rendererConfig.isCanvas)
         return new this.constructor.CanvasRenderCmd(this);
       else return new this.constructor.WebGLRenderCmd(this);
     }

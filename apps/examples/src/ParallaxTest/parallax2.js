@@ -27,7 +27,7 @@
 
 import { TAG_NODE } from "./parallax-test-constants";
 import { s_back, s_power, s_resprefix } from "../resources";
-import { EventListener, EventManager, EventMouse, Point, Sprite, Sys } from "@aspect/core";
+import { EventListener, EventMouse, Point, Sprite, ServiceLocator } from "@aspect/core";
 import { TMXTiledMap } from "@aspect/tilemap";
 
 import { ParallaxNode } from "@aspect/parallax";
@@ -42,8 +42,8 @@ export class Parallax2 extends ParallaxDemo {
 
     this._streak = null;
 
-    if ("touches" in Sys.getInstance().capabilities) {
-      EventManager.getInstance().addListener(
+    if ("touches" in ServiceLocator.sys.capabilities) {
+      ServiceLocator.eventManager.addListener(
         {
           event: EventListener.TOUCH_ALL_AT_ONCE,
           onTouchesMoved: function (touches, event) {
@@ -55,8 +55,8 @@ export class Parallax2 extends ParallaxDemo {
         },
         this
       );
-    } else if ("mouse" in Sys.getInstance().capabilities) {
-      EventManager.getInstance().addListener(
+    } else if ("mouse" in ServiceLocator.sys.capabilities) {
+      ServiceLocator.eventManager.addListener(
         {
           event: EventListener.MOUSE,
           onMouseMove: function (event) {

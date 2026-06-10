@@ -24,7 +24,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-import { Director, Sys } from "@aspect/core";
+import { ServiceLocator } from "@aspect/core";
 import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
 import { TextBMFont } from "@aspect/ccui";
 import { s_simpleFont_fnt } from "../resources";
@@ -34,34 +34,34 @@ export class CurrentLanguageTest extends BaseTestLayer {
         super();
         this._showNavButtons = false;
 
-        var s = Director.getInstance().getWinSize();
+        var s = ServiceLocator.director.getWinSize();
 
         var labelLanguage = new TextBMFont("", s_simpleFont_fnt);
         labelLanguage.fontSize = 20;
         labelLanguage.x = s.width / 2;
 	    labelLanguage.y = s.height / 2;
 
-        var currentLanguageType = Sys.getInstance().language;
+        var currentLanguageType = ServiceLocator.sys.language;
         switch (currentLanguageType) {
-            case Sys.getInstance().LANGUAGE_ENGLISH:
+            case ServiceLocator.sys.LANGUAGE_ENGLISH:
                 labelLanguage.setString("current language is English");
                 break;
-            case Sys.getInstance().LANGUAGE_CHINESE:
+            case ServiceLocator.sys.LANGUAGE_CHINESE:
                 labelLanguage.setString("current language is Chinese");
                 break;
-            case Sys.getInstance().LANGUAGE_FRENCH:
+            case ServiceLocator.sys.LANGUAGE_FRENCH:
                 labelLanguage.setString("current language is French");
                 break;
-            case Sys.getInstance().LANGUAGE_GERMAN:
+            case ServiceLocator.sys.LANGUAGE_GERMAN:
                 labelLanguage.setString("current language is German");
                 break;
-            case Sys.getInstance().LANGUAGE_ITALIAN:
+            case ServiceLocator.sys.LANGUAGE_ITALIAN:
                 labelLanguage.setString("current language is Italian");
                 break;
-            case Sys.getInstance().LANGUAGE_RUSSIAN:
+            case ServiceLocator.sys.LANGUAGE_RUSSIAN:
                 labelLanguage.setString("current language is Russian");
                 break;
-            case Sys.getInstance().LANGUAGE_SPANISH:
+            case ServiceLocator.sys.LANGUAGE_SPANISH:
                 labelLanguage.setString("current language is Spanish");
                 break;
         }
@@ -78,15 +78,15 @@ export class CurrentLanguageTest extends BaseTestLayer {
     }
 
     onRestartCallback() {
-        Director.getInstance().getRunningScene().runThisTest();
+        ServiceLocator.director.getRunningScene().runThisTest();
     }
 
     onNextCallback() {
-        Director.getInstance().getRunningScene().runThisTest();
+        ServiceLocator.director.getRunningScene().runThisTest();
     }
 
     onBackCallback() {
-        Director.getInstance().getRunningScene().runThisTest();
+        ServiceLocator.director.getRunningScene().runThisTest();
     }
 
     numberOfPendingTests() {

@@ -1,4 +1,4 @@
-import { NewClass, Game } from "@aspect/core";
+import { NewClass, ServiceLocator } from "@aspect/core";
 
 /**
  * Encapsulate DOM and webAudio
@@ -62,7 +62,7 @@ export class Audio extends NewClass {
     if (Audio.bindTouch === false) {
       Audio.bindTouch = true;
       // Listen to the touchstart body event and play the audio when necessary.
-      Game.getInstance().canvas.addEventListener("touchstart", Audio.touchStart);
+      ServiceLocator.game.canvas.addEventListener("touchstart", Audio.touchStart);
     }
   }
 

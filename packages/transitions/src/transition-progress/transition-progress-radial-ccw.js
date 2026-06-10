@@ -1,4 +1,4 @@
-import { Director, RendererConfig } from "@aspect/core";
+import { ServiceLocator } from "@aspect/core";
 import { ProgressTimer } from "@aspect/progress-timer";
 import { TransitionProgress } from "./transition-progress";
 
@@ -9,10 +9,10 @@ export class TransitionProgressRadialCCW extends TransitionProgress {
   }
 
   _progressTimerNodeWithRenderTexture(texture) {
-    var size = Director.getInstance().getWinSize();
+    var size = ServiceLocator.director.getWinSize();
 
     var pNode = new ProgressTimer(texture.sprite);
-    if (RendererConfig.getInstance().isWebGL)
+    if (ServiceLocator.rendererConfig.isWebGL)
       pNode.sprite.flippedY = true;
     pNode.type = ProgressTimer.TYPE_RADIAL;
     pNode.reverseDir = false;

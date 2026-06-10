@@ -25,7 +25,7 @@
 
 import { RenderTextureBaseLayer } from "./render-texture-base-layer";
 import { s_fire, s_simpleFont_fnt } from "../resources";
-import { Color, Director, LayerColor, Rect, RendererConfig, Sprite } from "@aspect/core";
+import { Color, LayerColor, Rect, Sprite, ServiceLocator } from "@aspect/core";
 import { BMButton, Widget } from "@aspect/ccui";
 
 import { RenderTexture } from "@aspect/render-texture";
@@ -57,7 +57,7 @@ export class RenderTextureTargetNode extends RenderTextureBaseLayer {
     var background = new LayerColor(new Color(40, 40, 40, 255));
     this.addChild(background);
 
-    var winSize = Director.getInstance().getWinSize();
+    var winSize = ServiceLocator.director.getWinSize();
     this._winSize = winSize;
 
     // sprite 1
@@ -85,7 +85,7 @@ export class RenderTextureTargetNode extends RenderTextureBaseLayer {
     renderTexture.addChild(this._sprite1);
     renderTexture.addChild(this._sprite2);
     renderTexture.clearColorVal = new Color(0, 0, 0, 0);
-    renderTexture.clearFlags = RendererConfig.getInstance().renderContext.COLOR_BUFFER_BIT;
+    renderTexture.clearFlags = ServiceLocator.rendererConfig.renderContext.COLOR_BUFFER_BIT;
 
     /* add the render texture to the scene */
     this.addChild(renderTexture);
@@ -135,7 +135,7 @@ export class RenderTextureTargetNode extends RenderTextureBaseLayer {
   touched(sender) {
     if (this._renderTexture.clearFlags == 0)
       this._renderTexture.clearFlags =
-        RendererConfig.getInstance().renderContext.COLOR_BUFFER_BIT;
+        ServiceLocator.rendererConfig.renderContext.COLOR_BUFFER_BIT;
     else {
       this._renderTexture.clearFlags = 0;
       this._renderTexture.clearColorVal = new Color(

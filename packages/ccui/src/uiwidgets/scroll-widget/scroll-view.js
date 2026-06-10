@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Point, Color, Size, RendererConfig, log, assert } from "@aspect/core";
+import { Point, Color, Size, log, assert, ServiceLocator } from "@aspect/core";
 import { Layout } from "../../layouts/layout";
 import { Widget } from "../../base-classes/widget";
 import { ScrollViewBar } from "./scroll-view-bar";
@@ -153,7 +153,7 @@ export class ScrollView extends Layout {
   }
 
   onExit() {
-    RendererConfig.getInstance().renderer._removeCache(this.__instanceId);
+    ServiceLocator.rendererConfig.renderer._removeCache(this.__instanceId);
     super.onExit();
   }
 
@@ -170,7 +170,7 @@ export class ScrollView extends Layout {
     this._adaptRenderers();
     this._doLayout();
 
-    var renderer = RendererConfig.getInstance().renderer;
+    var renderer = ServiceLocator.rendererConfig.renderer;
     cmd.visit(parentCmd);
 
     renderer.pushRenderCommand(cmd);
@@ -269,7 +269,7 @@ export class ScrollView extends Layout {
   }
 
   _createRenderCmd() {
-    if (RendererConfig.getInstance().isWebGL)
+    if (ServiceLocator.rendererConfig.isWebGL)
       return new ScrollViewWebGLRenderCmd(this);
     else return new ScrollViewCanvasRenderCmd(this);
   }

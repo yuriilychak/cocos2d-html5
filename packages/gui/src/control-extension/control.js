@@ -1,6 +1,4 @@
-import {
-    Layer, Node, Color, Rect, EventListener, EventManager, arrayRemoveObject
-} from "@aspect/core";
+import { Layer, Node, Color, Rect, EventListener, arrayRemoveObject, ServiceLocator } from "@aspect/core";
 import { Invocation } from "./invocation";
 import {
   CONTROL_STATE_NORMAL,
@@ -63,7 +61,7 @@ export class Control extends Layer {
   onEnter() {
     var locListener = this._touchListener;
     if (!locListener._isRegistered())
-      EventManager.getInstance().addListener(locListener, this);
+      ServiceLocator.eventManager.addListener(locListener, this);
     Node.prototype.onEnter.call(this);
   }
 

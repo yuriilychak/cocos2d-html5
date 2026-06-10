@@ -1,8 +1,4 @@
-import {
-  RendererConfig,
-  Director,
-  incrementGLDraws
-} from "@aspect/core";
+import { incrementGLDraws, ServiceLocator } from "@aspect/core";
 import {
   TMX_ORIENTATION_ORTHO,
   TMX_ORIENTATION_ISO,
@@ -21,7 +17,7 @@ export class TMXLayerCanvasRenderCmd extends Node.CanvasRenderCmd {
 
   visit(parentCmd) {
     const node = this._node,
-      renderer = RendererConfig.getInstance().renderer;
+      renderer = ServiceLocator.rendererConfig.renderer;
 
     parentCmd = parentCmd || this.getParentRenderCmd();
     if (parentCmd) {
@@ -82,9 +78,9 @@ export class TMXLayerCanvasRenderCmd extends Node.CanvasRenderCmd {
       return;
     }
 
-    const director = Director.getInstance();
+    const director = ServiceLocator.director;
     const winSize = director.getWinSize();
-    const rendererConfig = RendererConfig.getInstance();
+    const rendererConfig = ServiceLocator.rendererConfig;
 
     const maptw = node._mapTileSize.width,
       mapth = node._mapTileSize.height,

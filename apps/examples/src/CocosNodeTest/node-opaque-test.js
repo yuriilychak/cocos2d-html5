@@ -27,12 +27,12 @@
 
 import { TestNodeDemo } from "./test-node-demo";
 import { s_back1 } from "../resources";
-import { Director, ONE, ONE_MINUS_SRC_ALPHA, Sprite } from "@aspect/core";
+import { ONE, ONE_MINUS_SRC_ALPHA, Sprite, ServiceLocator } from "@aspect/core";
 export class NodeOpaqueTest extends TestNodeDemo {
   constructor() {
     //----start13----ctor
     super();
-    var winSize = Director.getInstance().getWinSize();
+    var winSize = ServiceLocator.director.getWinSize();
     var background;
     for (var i = 0; i < 50; i++) {
       background = new Sprite(s_back1);

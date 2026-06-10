@@ -27,21 +27,21 @@
 
 import { RawStencilBufferTest } from "./raw-stencil-buffer-test";
 
-import { RendererConfig } from "@aspect/core";
+import { ServiceLocator } from "@aspect/core";
 export class RawStencilBufferTest3 extends RawStencilBufferTest {
   subtitle() {
     return "3:DepthTest:DISABLE,DepthMask:FALSE";
   }
 
   setupStencilForClippingOnPlane(plane) {
-    var gl = RendererConfig.getInstance().renderContext;
+    var gl = ServiceLocator.rendererConfig.renderContext;
     super.setupStencilForClippingOnPlane(plane);
     gl.disable(gl.DEPTH_TEST);
     gl.depthMask(false);
   }
 
   setupStencilForDrawingOnPlane(plane) {
-    var gl = RendererConfig.getInstance().renderContext;
+    var gl = ServiceLocator.rendererConfig.renderContext;
     gl.depthMask(true);
     //gl.enable(gl.DEPTH_TEST);
     super.setupStencilForDrawingOnPlane(plane);

@@ -25,7 +25,7 @@
 
 import { PluginXTest } from "./PluginXTest";
 import { director } from "../../constants";
-import { Color, Director, Point, Sys, log } from "@aspect/core";
+import { Color, Point, log, ServiceLocator } from "@aspect/core";
 import { ButtonLayout } from "../../button-layout";
 import { TextBMFont } from "@aspect/ccui";
 import { s_simpleFont_fnt } from "../../resources";
@@ -57,21 +57,21 @@ plugin.onApplicationWillEnterForeground = function () {
 };
 
 export function loadAnalyticsPlugin() {
-  var langType = Sys.getInstance().language; //Application.getInstance().getCurrentLanguage();
+  var langType = ServiceLocator.sys.language; //Application.getInstance().getCurrentLanguage();
 
   var umengKey = "";
   var flurryKey = "";
 
-  if (Sys.getInstance().os == Sys.getInstance().OS_IOS) {
+  if (ServiceLocator.sys.os == ServiceLocator.sys.OS_IOS) {
     umengKey = UMENG_KEY_IOS;
     flurryKey = FLURRY_KEY_IOS;
-  } else if (Sys.getInstance().os == Sys.getInstance().OS_ANDROID) {
+  } else if (ServiceLocator.sys.os == ServiceLocator.sys.OS_ANDROID) {
     umengKey = UMENG_KEY_ANDROID;
     flurryKey = FLURRY_KEY_ANDROID;
   }
 
   var pluginManager = plugin.PluginManager.getInstance();
-  if (Sys.getInstance().LANGUAGE_CHINESE == langType) {
+  if (ServiceLocator.sys.LANGUAGE_CHINESE == langType) {
     g_pAnalytics = pluginManager.loadPlugin("AnalyticsUmeng");
     s_strAppKey = umengKey;
   } else {
@@ -134,12 +134,12 @@ export class AnalyticsTestLayer extends PluginXTest {
     super();
     this._title = "Plugin-x Test";
     this._subtitle =
-      Sys.getInstance().LANGUAGE_CHINESE == Sys.getInstance().language ? "umeng" : "flurry"; //Application.getInstance().getCurrentLanguage() ? "umeng" : "flurry";
+      ServiceLocator.sys.LANGUAGE_CHINESE == ServiceLocator.sys.language ? "umeng" : "flurry"; //Application.getInstance().getCurrentLanguage() ? "umeng" : "flurry";
   }
 
   onEnter() {
     super.onEnter();
-    var size = Director.getInstance().getWinSize();
+    var size = ServiceLocator.director.getWinSize();
 
     loadAnalyticsPlugin();
 

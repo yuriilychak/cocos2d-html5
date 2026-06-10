@@ -26,7 +26,7 @@
 /**
  * @ignore
  */
-import { BLEND_DST, BLEND_SRC, DST_COLOR, Director, Loader, ONE, ONE_MINUS_DST_COLOR, ONE_MINUS_SRC_ALPHA, Path, Point, SAXParser, SRC_ALPHA, arrayRemoveObject, degreesToRadians, isFunction, log } from "@aspect/core";
+import { BLEND_DST, BLEND_SRC, DST_COLOR, ONE, ONE_MINUS_DST_COLOR, ONE_MINUS_SRC_ALPHA, Path, Point, SAXParser, SRC_ALPHA, arrayRemoveObject, degreesToRadians, isFunction, log, ServiceLocator } from "@aspect/core";
 
 import { TweenType } from "../../animation/tween-function/constants.js";
 import { VERSION_CHANGE_ROTATION_RANGE, VERSION_COLOR_READING } from "../../armature-define.js";
@@ -151,7 +151,7 @@ export const dataReaderHelper = {
             self._asyncRefCount--;
             self._asyncCallBack(selector,target, (self._asyncRefTotalCount - self._asyncRefCount) / self._asyncRefTotalCount);
         };
-        Director.getInstance().getScheduler().schedule(fun, this, 0.1, false, 0, false, "armatrueDataHelper");
+        ServiceLocator.director.getScheduler().schedule(fun, this, 0.1, false, 0, false, "armatrueDataHelper");
     },
 
     /**
@@ -1121,7 +1121,7 @@ export const dataReaderHelper = {
         /*
          *  Need to get the full path of the xml file, or the Tiny XML can't find the xml at IOS
          */
-        var xmlStr = Loader.getInstance().getRes(xml);
+        var xmlStr = ServiceLocator.loader.getRes(xml);
         if (!xmlStr) throw new Error("Please load the resource first : " + xml);
         var skeletonXML = new SAXParser().parse(xmlStr);
         var skeleton = skeletonXML.documentElement;
@@ -1135,7 +1135,7 @@ export const dataReaderHelper = {
      * @param {DataInfo} dataInfo
      */
     addDataFromJson: function (filePath, dataInfo) {
-        var fileContent = Loader.getInstance().getRes(filePath);
+        var fileContent = ServiceLocator.loader.getRes(filePath);
         this.addDataFromJsonCache(fileContent, dataInfo);
     }
 };

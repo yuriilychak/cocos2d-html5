@@ -1,16 +1,4 @@
-import {
-  Node,
-  Point,
-  BlendFunc,
-  SRC_ALPHA,
-  ONE_MINUS_SRC_ALPHA,
-  isString,
-  vertexLineToPolygon,
-  RendererConfig,
-  Color,
-  log,
-  textureCache
-} from "@aspect/core";
+import { Node, Point, BlendFunc, SRC_ALPHA, ONE_MINUS_SRC_ALPHA, isString, vertexLineToPolygon, Color, log, ServiceLocator } from "@aspect/core";
 
 /**
  * MotionStreak manages a Ribbon based on it's motion in absolute space.
@@ -133,7 +121,7 @@ export class MotionStreak extends Node {
         "MotionStreak.initWithFade(): Invalid filename or texture"
       );
 
-    if (isString(texture)) texture = textureCache.addImage(texture);
+    if (isString(texture)) texture = ServiceLocator.textureCache.addImage(texture);
 
     super.setPosition(new Point(0, 0));
     this.anchorX = 0;
@@ -368,7 +356,7 @@ export class MotionStreak extends Node {
   }
 
   _createRenderCmd() {
-    if (RendererConfig.getInstance().isWebGL)
+    if (ServiceLocator.rendererConfig.isWebGL)
       return new MotionStreak.WebGLRenderCmd(this);
     else return null; // MotionStreak doesn't support Canvas mode
   }

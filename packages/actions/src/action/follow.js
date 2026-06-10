@@ -1,5 +1,5 @@
 import Action from "./action";
-import { Rect, Point, Director } from "@aspect/core";
+import { Rect, Point, ServiceLocator } from "@aspect/core";
 
 /**
  * Follow is an action that "follows" a node.
@@ -124,7 +124,7 @@ export default class Follow extends Action {
 
     this._boundaryFullyCovered = false;
 
-    const winSize = Director.getInstance().getWinSize();
+    const winSize = ServiceLocator.director.getWinSize();
     this._fullScreenSize = new Point(winSize.width, winSize.height);
     this._halfScreenSize = Point.mult(this._fullScreenSize, 0.5);
 

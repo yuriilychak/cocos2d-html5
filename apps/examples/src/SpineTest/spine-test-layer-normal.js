@@ -28,7 +28,7 @@
 import { SkeletonAnimation, ANIMATION_EVENT_TYPE } from "@aspect/extensions";
 import { SpineTestLayer } from "./spine-test-layer";
 import { director } from "../constants";
-import { Color, EventListener, EventManager, Point, log } from "@aspect/core";
+import { Color, EventListener, Point, log, ServiceLocator } from "@aspect/core";
 import { ButtonLayout } from "../button-layout";
 
 export class SpineTestLayerNormal extends SpineTestLayer {
@@ -98,7 +98,7 @@ export class SpineTestLayerNormal extends SpineTestLayer {
     //     log("jumped!");
     // });
 
-    EventManager.getInstance().addListener(
+    ServiceLocator.eventManager.addListener(
       {
         event: EventListener.TOUCH_ALL_AT_ONCE,
         onTouchesBegan: function (touches, event) {

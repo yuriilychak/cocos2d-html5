@@ -132,7 +132,7 @@ import { UITextTest } from "./UITextTest/uitext-test";
 import { UIVideoPlayerTest } from "./UIVideoPlayerTest/UIVideoPlayerTest";
 import { UIWebViewTest } from "./UIWebViewTest/UIWebViewTest";
 import { TestScene } from "../test-scene";
-import { Director, NewClass, Sys } from "@aspect/core";
+import { NewClass, ServiceLocator } from "@aspect/core";
 
 var currentTestingArray = null;
 
@@ -785,7 +785,7 @@ var testingItems = {
   ]
 };
 
-if (Sys.getInstance().isNative) {
+if (ServiceLocator.sys.isNative) {
   testingItems["UIS9NinePatchTest"] = [
     {
       title: "UIS9NinePatchTest",
@@ -806,9 +806,9 @@ if (Sys.getInstance().isNative) {
 }
 
 if (
-  Sys.getInstance().os == Sys.getInstance().OS_ANDROID ||
-  Sys.getInstance().os == Sys.getInstance().OS_IOS ||
-  !Sys.getInstance().isNative
+  ServiceLocator.sys.os == ServiceLocator.sys.OS_ANDROID ||
+  ServiceLocator.sys.os == ServiceLocator.sys.OS_IOS ||
+  !ServiceLocator.sys.isNative
 ) {
   testingItems["UIVideoPlayer"] = [
     {
@@ -834,7 +834,7 @@ export class GUITestScene extends NewClass {
   runThisTest() {
     var scene = new TestScene("UI Test");
     scene.addChild(new UIMainMenuLayer());
-    Director.getInstance().runScene(scene);
+    ServiceLocator.director.runScene(scene);
   }
 }
 
@@ -848,7 +848,7 @@ class UIMainMenuLayer extends MenuTestLayer {
   onItemCallback(idx) {
     currentTestingArray = testingItems[this._categories[idx]];
     UISceneManager.getInstance().ctor();
-    Director.getInstance().runScene(UISceneManager.getInstance().currentUIScene());
+    ServiceLocator.director.runScene(UISceneManager.getInstance().currentUIScene());
   }
 }
 

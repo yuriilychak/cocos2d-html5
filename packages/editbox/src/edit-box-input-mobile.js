@@ -1,4 +1,4 @@
-import { EGLView, Game, Sys, screen, visibleRect, Point } from '@aspect/core';
+import { screen, visibleRect, Point, ServiceLocator } from "@aspect/core";
 import { EditBoxInputBase } from './edit-box-input-base';
 
 const SCROLLY = 40;
@@ -12,9 +12,9 @@ const TIMER_NAME = 400;
  */
 export const editBoxPolyfill = { zoomInvalid: false };
 if (
-    Sys.getInstance().OS_ANDROID === Sys.getInstance().os &&
-    (Sys.getInstance().browserType === Sys.getInstance().BROWSER_TYPE_SOUGOU ||
-        Sys.getInstance().browserType === Sys.getInstance().BROWSER_TYPE_360)
+    ServiceLocator.sys.OS_ANDROID === ServiceLocator.sys.os &&
+    (ServiceLocator.sys.browserType === ServiceLocator.sys.BROWSER_TYPE_SOUGOU ||
+        ServiceLocator.sys.browserType === ServiceLocator.sys.BROWSER_TYPE_360)
 ) {
     editBoxPolyfill.zoomInvalid = true;
 }
@@ -58,26 +58,26 @@ export class MobileEditBoxInput extends EditBoxInputBase {
         };
         window.addEventListener('orientationchange', this.__orientationChanged);
 
-        if (EGLView.getInstance().isAutoFullScreenEnabled()) {
+        if (ServiceLocator.eglView.isAutoFullScreenEnabled()) {
             this.__fullscreen = true;
-            EGLView.getInstance().enableAutoFullScreen(false);
+            ServiceLocator.eglView.enableAutoFullScreen(false);
             screen.exitFullScreen();
         } else {
             this.__fullscreen = false;
         }
-        this.__autoResize = EGLView.getInstance().__resizeWithBrowserSize;
-        EGLView.getInstance().resizeWithBrowserSize(false);
+        this.__autoResize = ServiceLocator.eglView.__resizeWithBrowserSize;
+        ServiceLocator.eglView.resizeWithBrowserSize(false);
     }
 
     _onEndEditing() {
         var self = this;
         setTimeout(function () {
             if (self.__rotateScreen) {
-                var containerStyle = Game.getInstance().container.style;
+                var containerStyle = ServiceLocator.game.container.style;
                 containerStyle['-webkit-transform'] = 'rotate(90deg)';
                 containerStyle.transform = 'rotate(90deg)';
 
-                var view = EGLView.getInstance();
+                var view = ServiceLocator.eglView;
                 var width = view._originalDesignResolutionSize.width;
                 var height = view._originalDesignResolutionSize.height;
                 if (width > 0) {
@@ -88,18 +88,18 @@ export class MobileEditBoxInput extends EditBoxInputBase {
             window.removeEventListener('orientationchange', self.__orientationChanged);
             window.scrollTo(0, 0);
             if (self.__fullscreen) {
-                EGLView.getInstance().enableAutoFullScreen(true);
+                ServiceLocator.eglView.enableAutoFullScreen(true);
             }
             if (self.__autoResize) {
-                EGLView.getInstance().resizeWithBrowserSize(true);
+                ServiceLocator.eglView.resizeWithBrowserSize(true);
             }
         }, TIMER_NAME);
     }
 
     _onFocus() {
         var editBox = this._editBox;
-        if (EGLView.getInstance()._isRotated) {
-            var containerStyle = Game.getInstance().container.style;
+        if (ServiceLocator.eglView._isRotated) {
+            var containerStyle = ServiceLocator.game.container.style;
             containerStyle['-webkit-transform'] = 'rotate(0deg)';
             containerStyle.transform = 'rotate(0deg)';
             containerStyle.margin = '0px';

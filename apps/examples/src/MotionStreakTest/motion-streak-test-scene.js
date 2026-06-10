@@ -29,7 +29,7 @@
 import { nextMotionAction } from "./motion-streak-test-helpers";
 import { TestScene } from "../test-scene";
 import { sceneIdx, _setsceneIdx } from "./motion-streak-test-constants";
-import { Director } from "@aspect/core";
+import { ServiceLocator } from "@aspect/core";
 
 export class MotionStreakTestScene extends TestScene {
   constructor() {
@@ -40,6 +40,6 @@ export class MotionStreakTestScene extends TestScene {
     _setsceneIdx(num || num == 0 ? num - 1 : -1);
     var pLayer = nextMotionAction();
     this.addChild(pLayer);
-    Director.getInstance().runScene(this);
+    ServiceLocator.director.runScene(this);
   }
 }

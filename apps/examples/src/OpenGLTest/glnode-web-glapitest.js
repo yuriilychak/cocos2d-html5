@@ -31,13 +31,13 @@
 import { OpenGLTestLayer } from "./open-gltest-layer";
 import { GLNode } from "./glnode-polyfill";
 import { winSize } from "../constants";
-import { Sys, log } from "@aspect/core";
+import { log, ServiceLocator } from "@aspect/core";
 
 export class GLNodeWebGLAPITest extends OpenGLTestLayer {
   constructor() {
     super();
 
-    if ("opengl" in Sys.getInstance().capabilities) {
+    if ("opengl" in ServiceLocator.sys.capabilities) {
       // simple shader example taken from:
       // http://learningwebgl.com/blog/?p=134
       var vsh =

@@ -40,14 +40,14 @@ import {
   restartTileMapTest
 } from "./tile-map-test-helpers";
 import { TileMapTestScene } from "./tile-map-test-scene";
-import { EventListener, EventManager, EventMouse, Sys } from "@aspect/core";
+import { EventListener, EventMouse, ServiceLocator } from "@aspect/core";
 
 export class TileDemo extends BaseTestLayer {
   constructor() {
     super();
 
-    if ("touches" in Sys.getInstance().capabilities) {
-      EventManager.getInstance().addListener(
+    if ("touches" in ServiceLocator.sys.capabilities) {
+      ServiceLocator.eventManager.addListener(
         {
           event: EventListener.TOUCH_ALL_AT_ONCE,
           onTouchesMoved: function (touches, event) {
@@ -61,8 +61,8 @@ export class TileDemo extends BaseTestLayer {
         },
         this
       );
-    } else if ("mouse" in Sys.getInstance().capabilities)
-      EventManager.getInstance().addListener(
+    } else if ("mouse" in ServiceLocator.sys.capabilities)
+      ServiceLocator.eventManager.addListener(
         {
           event: EventListener.MOUSE,
           onMouseMove: function (event) {

@@ -25,7 +25,7 @@
 
 import { ExtensionsTestScene } from "../extensions-test-scene";
 import { PluginXTest } from "./PluginXTest";
-import { Color, Director, EventListener, EventManager, LayerColor, Loader, log } from "@aspect/core";
+import { Color, EventListener, LayerColor, log, ServiceLocator } from "@aspect/core";
 import { ButtonLayout } from "../../button-layout";
 import { winSize } from "../../constants";
 import { TextBMFont } from "@aspect/ccui";
@@ -91,7 +91,7 @@ export class IAPTestLayer extends PluginXTest {
   closeFunction(sender) {
     var scene = new ExtensionsTestScene();
     scene.runThisTest();
-    Director.getInstance().runScene(scene);
+    ServiceLocator.director.runScene(scene);
   }
   initToast() {
     this.toastLayer = new LayerColor();
@@ -115,9 +115,9 @@ export class IAPTestLayer extends PluginXTest {
         onTouchEnded: function (touch, event) {},
         onTouchCancelled: function (touch, event) {}
       });
-      EventManager.getInstance().addListener(this.listener, self);
+      ServiceLocator.eventManager.addListener(this.listener, self);
     } else {
-      EventManager.getInstance().removeListener(this.listener);
+      ServiceLocator.eventManager.removeListener(this.listener);
     }
   }
   toggleToast(show) {
@@ -207,7 +207,7 @@ export class IAPTestLayer extends PluginXTest {
   }
   postServerData(data) {
     var that = this;
-    var xhr = Loader.getInstance().getXMLHttpRequest();
+    var xhr = ServiceLocator.loader.getXMLHttpRequest();
 
     //replace to your own server address
     xhr.open("POST", "http://localhost/");

@@ -1,4 +1,4 @@
-import { CustomRenderCmd, RendererConfig } from '@aspect/core';
+import { CustomRenderCmd, ServiceLocator } from "@aspect/core";
 import { ClippingNode } from '@aspect/clipping-nodes';
 import { ProtectedNodeCanvasRenderCmd } from '../base-classes/protected-node-canvas-render-cmd';
 
@@ -13,7 +13,7 @@ export class LayoutCanvasRenderCmd extends ProtectedNodeCanvasRenderCmd {
     }
 
     _onRenderSaveCmd(ctx, scaleX, scaleY) {
-        var wrapper = ctx || RendererConfig.getInstance().renderContext, context = wrapper.getContext();
+        var wrapper = ctx || ServiceLocator.rendererConfig.renderContext, context = wrapper.getContext();
         wrapper.save();
         wrapper.save();
         wrapper.setTransform(this._worldTransform, scaleX, scaleY);
@@ -31,13 +31,13 @@ export class LayoutCanvasRenderCmd extends ProtectedNodeCanvasRenderCmd {
     }
 
     _onRenderClipCmd(ctx) {
-        var wrapper = ctx || RendererConfig.getInstance().renderContext, context = wrapper.getContext();
+        var wrapper = ctx || ServiceLocator.rendererConfig.renderContext, context = wrapper.getContext();
         wrapper.restore();
         context.clip();
     }
 
     _onRenderRestoreCmd(ctx) {
-        var wrapper = ctx || RendererConfig.getInstance().renderContext;
+        var wrapper = ctx || ServiceLocator.rendererConfig.renderContext;
         wrapper.restore();
     }
 
@@ -61,14 +61,14 @@ export class LayoutCanvasRenderCmd extends ProtectedNodeCanvasRenderCmd {
             this._rendererRestoreCmd = new CustomRenderCmd(this, this._onRenderRestoreCmd);
         }
 
-        RendererConfig.getInstance().renderer.pushRenderCommand(this._rendererSaveCmd);
+        ServiceLocator.rendererConfig.renderer.pushRenderCommand(this._rendererSaveCmd);
         node._clippingStencil.visit(this);
 
-        RendererConfig.getInstance().renderer.pushRenderCommand(this._rendererClipCmd);
+        ServiceLocator.rendererConfig.renderer.pushRenderCommand(this._rendererClipCmd);
     }
 
     postStencilVisit() {
-        RendererConfig.getInstance().renderer.pushRenderCommand(this._rendererRestoreCmd);
+        ServiceLocator.rendererConfig.renderer.pushRenderCommand(this._rendererRestoreCmd);
     }
 }
 

@@ -27,7 +27,7 @@
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { createColoredView } from "./touchable-sprite";
-import { Director, Color, EventListener, EventManager, Rect, log, visibleRect } from "@aspect/core";
+import { Color, EventListener, Rect, log, visibleRect, ServiceLocator } from "@aspect/core";
 
 export class GlobalZTouchTest extends EventDispatcherTestDemo {
   constructor() {
@@ -79,10 +79,10 @@ export class GlobalZTouchTest extends EventDispatcherTestDemo {
         this._sprite.setGlobalZOrder(-1);
       } else sprite = createColoredView(new Color(255, 255, 0));
 
-      EventManager.getInstance().addListener(listener.clone(), sprite);
+      ServiceLocator.eventManager.addListener(listener.clone(), sprite);
       this.addChild(sprite);
 
-      var visibleSize = Director.getInstance().getVisibleSize();
+      var visibleSize = ServiceLocator.director.getVisibleSize();
       sprite.x =
         visibleRect.left.x + (visibleSize.width / (SPRITE_COUNT - 1)) * i;
       sprite.y = visibleRect.center.y;

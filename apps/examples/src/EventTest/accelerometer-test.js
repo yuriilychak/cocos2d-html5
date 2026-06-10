@@ -31,7 +31,7 @@
 import { EventTest } from "./event-test";
 import { s_pathR2 } from "../resources";
 import { winSize } from "../constants";
-import { EventListener, EventManager, Sprite, Sys, inputManager, log } from "@aspect/core";
+import { EventListener, Sprite, inputManager, log, ServiceLocator } from "@aspect/core";
 export class AccelerometerTest extends EventTest {
     constructor() {
         super();
@@ -41,12 +41,12 @@ export class AccelerometerTest extends EventTest {
     init() {
         super.init();
 
-        if( 'accelerometer' in Sys.getInstance().capabilities ) {
+        if( 'accelerometer' in ServiceLocator.sys.capabilities ) {
             var self = this;
             // call is called 30 times per second
             inputManager.setAccelerometerInterval(1/30);
             inputManager.setAccelerometerEnabled(true);
-            EventManager.getInstance().addListener({
+            ServiceLocator.eventManager.addListener({
                 event: EventListener.ACCELERATION,
                 callback: function(accelEvent, event){
                     var target = event.getCurrentTarget();
@@ -90,7 +90,7 @@ export class AccelerometerTest extends EventTest {
 
     onExit(){
         super.onExit();
-        if( 'accelerometer' in Sys.getInstance().capabilities )
+        if( 'accelerometer' in ServiceLocator.sys.capabilities )
             inputManager.setAccelerometerEnabled(false);
     }
 

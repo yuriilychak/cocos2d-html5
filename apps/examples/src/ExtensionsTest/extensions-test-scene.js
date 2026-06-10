@@ -27,7 +27,7 @@
 
 import { ExtensionsMainLayer } from "./extensions-main-layer";
 import { TestScene } from "../test-scene";
-import { Director } from "@aspect/core";
+import { ServiceLocator } from "@aspect/core";
 
 export class ExtensionsTestScene extends TestScene {
   constructor() {
@@ -37,6 +37,6 @@ export class ExtensionsTestScene extends TestScene {
   runThisTest() {
     var pLayer = new ExtensionsMainLayer();
     this.addChild(pLayer);
-    Director.getInstance().runScene(this);
+    ServiceLocator.director.runScene(this);
   }
 }

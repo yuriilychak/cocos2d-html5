@@ -28,7 +28,7 @@
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { s_simpleFont_fnt } from "../resources";
 import { director } from "../constants";
-import { Color, EventCustom, EventListener, EventManager } from "@aspect/core";
+import { Color, EventCustom, EventListener, ServiceLocator } from "@aspect/core";
 import { TextBMFont } from "@aspect/ccui";
 import { ButtonLayout } from "../button-layout";
 
@@ -64,7 +64,7 @@ export class CustomEventTest extends EventDispatcherTestDemo {
         );
       }
     });
-    EventManager.getInstance().addListener(this._listener1, 1);
+    ServiceLocator.eventManager.addListener(this._listener1, 1);
 
     var statusLabel2 = new TextBMFont("No custom event 2 received!", s_simpleFont_fnt);
     statusLabel2.setPosition(
@@ -82,7 +82,7 @@ export class CustomEventTest extends EventDispatcherTestDemo {
         );
       }
     });
-    EventManager.getInstance().addListener(this._listener2, 1);
+    ServiceLocator.eventManager.addListener(this._listener2, 1);
 
     const layout = new ButtonLayout(
       [
@@ -96,13 +96,13 @@ export class CustomEventTest extends EventDispatcherTestDemo {
           case 0: {
             const event = new EventCustom("game_custom_event1");
             event.setUserData((++this._item1Count).toString());
-            EventManager.getInstance().dispatchEvent(event);
+            ServiceLocator.eventManager.dispatchEvent(event);
             break;
           }
           case 1: {
             const event = new EventCustom("game_custom_event2");
             event.setUserData((++this._item2Count).toString());
-            EventManager.getInstance().dispatchEvent(event);
+            ServiceLocator.eventManager.dispatchEvent(event);
             break;
           }
         }
@@ -114,8 +114,8 @@ export class CustomEventTest extends EventDispatcherTestDemo {
 
   onExit() {
     //----start3----onExit
-    EventManager.getInstance().removeListener(this._listener1);
-    EventManager.getInstance().removeListener(this._listener2);
+    ServiceLocator.eventManager.removeListener(this._listener1);
+    ServiceLocator.eventManager.removeListener(this._listener2);
     super.onExit();
     //----end3----
   }

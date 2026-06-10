@@ -35,24 +35,13 @@ import { OpenGLTestLayer } from "./open-gltest-layer";
 import { ccbjs } from "../resources";
 import { winSize } from "../constants";
 import { RotateTo, Sequence } from "@aspect/actions";
-import {
-  GLProgram,
-  GLProgramState,
-  Sprite,
-  Sys,
-  VERTEX_ATTRIB_COLOR,
-  VERTEX_ATTRIB_POSITION,
-  VERTEX_ATTRIB_TEX_COORDS,
-  ATTRIBUTE_NAME_COLOR,
-  ATTRIBUTE_NAME_POSITION,
-  ATTRIBUTE_NAME_TEX_COORD
-} from "@aspect/core";
+import { GLProgram, GLProgramState, Sprite, VERTEX_ATTRIB_COLOR, VERTEX_ATTRIB_POSITION, VERTEX_ATTRIB_TEX_COORDS, ATTRIBUTE_NAME_COLOR, ATTRIBUTE_NAME_POSITION, ATTRIBUTE_NAME_TEX_COORD, ServiceLocator } from "@aspect/core";
 export class ShaderOutlineEffect extends OpenGLTestLayer {
   constructor() {
     super();
 
-    if ("opengl" in Sys.getInstance().capabilities) {
-      if (Sys.getInstance().isNative) {
+    if ("opengl" in ServiceLocator.sys.capabilities) {
+      if (ServiceLocator.sys.isNative) {
         this.shader = new GLProgram(
           ccbjs + "Shaders/example_Outline_noMVP.vsh",
           ccbjs + "Shaders/example_Outline.fsh"
@@ -101,7 +90,7 @@ export class ShaderOutlineEffect extends OpenGLTestLayer {
         ).repeatForever()
       );
 
-      if (Sys.getInstance().isNative) {
+      if (ServiceLocator.sys.isNative) {
         var glProgram_state = GLProgramState.getOrCreateWithGLProgram(
           this.shader
         );
@@ -122,8 +111,8 @@ export class ShaderOutlineEffect extends OpenGLTestLayer {
     }
   }
   update(dt) {
-    if ("opengl" in Sys.getInstance().capabilities) {
-      if (Sys.getInstance().isNative) {
+    if ("opengl" in ServiceLocator.sys.capabilities) {
+      if (ServiceLocator.sys.isNative) {
         this.sprite
           .getGLProgramState()
           .setUniformFloat(

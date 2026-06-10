@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass, Sys, RendererConfig, log } from "@aspect/core";
+import { NewClass, log, ServiceLocator } from "@aspect/core";
 
 /**
  * FBO class that grabs the the contents of the screen
@@ -34,9 +34,9 @@ export class Grabber extends NewClass {
    * constructor of Grabber
    */
   constructor() {
-    Sys.getInstance()._checkWebGLRenderMode();
+    ServiceLocator.sys._checkWebGLRenderMode();
     super();
-    this._gl = RendererConfig.getInstance().renderContext;
+    this._gl = ServiceLocator.rendererConfig.renderContext;
     this._oldClearColor = [0, 0, 0, 0];
     this._oldFBO = null;
     // generate FBO

@@ -28,7 +28,7 @@
 import { nextEffectAdvanceAction } from "./effects-advanced-test-helpers";
 import { TestScene } from "../test-scene";
 import { _setsceneIndex, sceneIndex } from "./effects-advanced-test-constants";
-import { Director } from "@aspect/core";
+import { ServiceLocator } from "@aspect/core";
 
 export class EffectAdvanceScene extends TestScene {
   constructor() {
@@ -39,6 +39,6 @@ export class EffectAdvanceScene extends TestScene {
     _setsceneIndex(-1);
     var pLayer = nextEffectAdvanceAction();
     this.addChild(pLayer);
-    Director.getInstance().runScene(this);
+    ServiceLocator.director.runScene(this);
   }
 }

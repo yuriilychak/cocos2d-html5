@@ -1,4 +1,4 @@
-import { Director, Point } from "@aspect/core";
+import { Point, ServiceLocator } from "@aspect/core";
 import { EaseOut, Sequence, MoveTo, CallFunc } from "@aspect/actions";
 import { TransitionScene } from "./transition-scene";
 
@@ -22,7 +22,7 @@ export class TransitionMoveInL extends TransitionScene {
   }
 
   initScenes() {
-    this._inScene.setPosition(-Director.getInstance().getWinSize().width, 0);
+    this._inScene.setPosition(-ServiceLocator.director.getWinSize().width, 0);
   }
 
   action() {

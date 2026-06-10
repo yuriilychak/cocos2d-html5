@@ -30,13 +30,13 @@
 //------------------------------------------------------------------
 import { OpenGLTestLayer } from "./open-gltest-layer";
 import { winSize } from "../constants";
-import { Sprite, Sys, log } from "@aspect/core";
+import { Sprite, log, ServiceLocator } from "@aspect/core";
 
 export class GLGetActiveTest extends OpenGLTestLayer {
   constructor() {
     super();
 
-    if ("opengl" in Sys.getInstance().capabilities) {
+    if ("opengl" in ServiceLocator.sys.capabilities) {
       var sprite = (this.sprite = new Sprite("Images/grossini.png"));
       sprite.x = winSize.width / 2;
       sprite.y = winSize.height / 2;

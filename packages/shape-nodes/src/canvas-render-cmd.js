@@ -1,10 +1,4 @@
-import {
-  Node,
-  RendererConfig,
-  SRC_ALPHA,
-  ONE,
-  Color
-} from "@aspect/core";
+import { Node, SRC_ALPHA, ONE, Color, ServiceLocator } from "@aspect/core";
 import { DrawNode } from "./draw-node";
 
 export class DrawNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
@@ -22,7 +16,7 @@ export class DrawNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
   }
 
   rendering(ctx, scaleX, scaleY) {
-    const wrapper = ctx || RendererConfig.getInstance().renderContext,
+    const wrapper = ctx || ServiceLocator.rendererConfig.renderContext,
       context = wrapper.getContext(),
       node = this._node;
     const alpha = this._displayedOpacity / 255;

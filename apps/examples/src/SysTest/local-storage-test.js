@@ -30,7 +30,7 @@
 //
 //------------------------------------------------------------------
 import { SysTestBase } from "./sys-test-base";
-import { Sys, log } from "@aspect/core";
+import { log, ServiceLocator } from "@aspect/core";
 
 export class LocalStorageTest extends SysTestBase {
   constructor() {
@@ -41,7 +41,7 @@ export class LocalStorageTest extends SysTestBase {
     this._subtitle = "See the console";
 
     var key = "key_" + Math.random();
-    var ls = Sys.getInstance().localStorage;
+    var ls = ServiceLocator.sys.localStorage;
     log("- Adding items");
     ls.setItem(key, "Hello world");
     var key1 = "1" + key;

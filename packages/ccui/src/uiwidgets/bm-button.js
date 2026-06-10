@@ -24,16 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import {
-  Rect,
-  Size,
-  Color,
-  Sprite,
-  SpriteFrame,
-  TextureCache,
-  SpriteFrameCache,
-  log
-} from "@aspect/core";
+import { Rect, Size, Color, Sprite, SpriteFrame, log, ServiceLocator } from "@aspect/core";
 import { LabelBMFont } from "@aspect/labels";
 import { ScaleTo, TintTo } from "@aspect/actions";
 import { Widget } from "../base-classes/widget";
@@ -261,9 +252,9 @@ export class BMButton extends Widget {
   }
 
   _createSpriteFrameWithFile(file) {
-    var texture = TextureCache.getInstance().getTextureForKey(file);
+    var texture = ServiceLocator.textureCache.getTextureForKey(file);
     if (!texture) {
-      texture = TextureCache.getInstance().addImage(file);
+      texture = ServiceLocator.textureCache.addImage(file);
     }
     if (!texture._textureLoaded) {
       return texture;
@@ -275,7 +266,7 @@ export class BMButton extends Widget {
   }
 
   _createSpriteFrameWithName(name) {
-    var frame = SpriteFrameCache.getInstance().getSpriteFrame(name);
+    var frame = ServiceLocator.spriteFrameCache.getSpriteFrame(name);
     if (frame == null) {
       log(
         "Scale9Sprite.initWithSpriteFrameName(): can't find the sprite frame by spriteFrameName"

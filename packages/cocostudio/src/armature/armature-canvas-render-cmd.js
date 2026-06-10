@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { AffineTransform, BlendFunc, CustomRenderCmd, Node, Point, RendererConfig } from "@aspect/core";
+import { AffineTransform, BlendFunc, CustomRenderCmd, Node, Point, ServiceLocator } from "@aspect/core";
 
 import { DISPLAY_TYPE_ARMATURE, DISPLAY_TYPE_SPRITE } from "./utils/datas/constants.js";
     export class ArmatureCanvasRenderCmd extends Node.CanvasRenderCmd {
@@ -60,7 +60,7 @@ import { DISPLAY_TYPE_ARMATURE, DISPLAY_TYPE_SPRITE } from "./utils/datas/consta
             var node = this._node, parent = node._parent;
             this.transform(parent ? parent._renderCmd : null);
 
-            var wrapper = ctx || RendererConfig.getInstance().renderContext;
+            var wrapper = ctx || ServiceLocator.rendererConfig.renderContext;
             wrapper.save();
             wrapper._switchToArmatureMode(true, this._worldTransform, scaleX, scaleY);
         }
@@ -175,11 +175,11 @@ import { DISPLAY_TYPE_ARMATURE, DISPLAY_TYPE_SPRITE } from "./utils/datas/consta
                     else
                         break;
                 }
-                RendererConfig.getInstance().renderer.pushRenderCommand(cmd);
+                ServiceLocator.rendererConfig.renderer.pushRenderCommand(cmd);
                 for (; i < len; i++)
                     children[i].visit(childNode);
             } else {
-                RendererConfig.getInstance().renderer.pushRenderCommand(cmd);
+                ServiceLocator.rendererConfig.renderer.pushRenderCommand(cmd);
             }
             this._dirtyFlag = 0;
         }
@@ -192,9 +192,9 @@ import { DISPLAY_TYPE_ARMATURE, DISPLAY_TYPE_SPRITE } from "./utils/datas/consta
             this._syncStatus(parentCmd);
             node.sortAllChildren();
 
-            RendererConfig.getInstance().renderer.pushRenderCommand(this._startRenderCmd);
+            ServiceLocator.rendererConfig.renderer.pushRenderCommand(this._startRenderCmd);
             this.rendering();
-            RendererConfig.getInstance().renderer.pushRenderCommand(this._RestoreRenderCmd);
+            ServiceLocator.rendererConfig.renderer.pushRenderCommand(this._RestoreRenderCmd);
 
             this._cacheDirty = false;
         }

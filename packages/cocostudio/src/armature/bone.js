@@ -46,7 +46,7 @@
  * @property {Boolean}              blendDirty              - Indicate whether the blend is dirty
  *
  */
-import { AffineTransform, BLEND_DST, BLEND_SRC, BlendFunc, Color, Node, RendererConfig, arrayRemoveObject, assert, degreesToRadians, log } from "@aspect/core";
+import { AffineTransform, BLEND_DST, BLEND_SRC, BlendFunc, Color, Node, arrayRemoveObject, assert, degreesToRadians, log, ServiceLocator } from "@aspect/core";
 
 import { Tween } from "./animation/tween.js";
 import { displayFactory } from "./display/display-factory.js";
@@ -683,7 +683,7 @@ export class Bone extends Node {
   }
 
   _createRenderCmd() {
-    if (RendererConfig.getInstance().isCanvas) return new Bone.CanvasRenderCmd(this);
+    if (ServiceLocator.rendererConfig.isCanvas) return new Bone.CanvasRenderCmd(this);
     else return new Bone.WebGLRenderCmd(this);
   }
 };

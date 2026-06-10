@@ -1,15 +1,4 @@
-import {
-  Sys,
-  Size,
-  EGLView,
-  Loader,
-  ResolutionPolicy,
-  ContainerStrategy,
-  ContentStrategy,
-  LoaderScene,
-  Director,
-  Game
-} from "@aspect/core";
+import { Size, ResolutionPolicy, ContainerStrategy, ContentStrategy, LoaderScene, ServiceLocator } from "@aspect/core";
 import { g_resources } from "./resource";
 import { MyScene } from "./my-scene";
 
@@ -22,22 +11,22 @@ const projectConfig = {
   renderMode: 0
 };
 
-const game = Game.getInstance();
+const game = ServiceLocator.game;
 
 game.onStart = function () {
-  if (!Sys.getInstance().isNative && document.getElementById("cocosLoading"))
+  if (!ServiceLocator.sys.isNative && document.getElementById("cocosLoading"))
     document.body.removeChild(document.getElementById("cocosLoading"));
 
   let designSize = new Size(1280, 720);
-  const screenSize = EGLView.getInstance().getFrameSize();
+  const screenSize = ServiceLocator.eglView.getFrameSize();
 
-  if (!Sys.getInstance().isNative && screenSize.height < 800) {
+  if (!ServiceLocator.sys.isNative && screenSize.height < 800) {
     designSize = new Size(960, 540);
-    Loader.getInstance().resPath = "res/Normal";
+    ServiceLocator.loader.resPath = "res/Normal";
   } else {
-    Loader.getInstance().resPath = "res/HD";
+    ServiceLocator.loader.resPath = "res/HD";
   }
-  EGLView.getInstance().setDesignResolutionSize(
+  ServiceLocator.eglView.setDesignResolutionSize(
     designSize.width,
     designSize.height,
     new ResolutionPolicy(
@@ -45,12 +34,12 @@ game.onStart = function () {
       ContentStrategy.NO_BORDER
     )
   );
-  EGLView.getInstance().resizeWithBrowserSize(true);
+  ServiceLocator.eglView.resizeWithBrowserSize(true);
 
   LoaderScene.getInstance().preload(
     g_resources,
     function () {
-      Director.getInstance().runScene(new MyScene());
+      ServiceLocator.director.runScene(new MyScene());
     },
     this
   );

@@ -22,17 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import {
-  Node,
-  Point,
-  Rect,
-  Game,
-  RendererConfig,
-  BLEND_SRC,
-  BLEND_DST,
-  degreesToRadians,
-  incrementGLDraws
-} from "@aspect/core";
+import { Node, Point, Rect, BLEND_SRC, BLEND_DST, degreesToRadians, incrementGLDraws, ServiceLocator } from "@aspect/core";
 import { Particle } from "./particle-system/particle";
 
 const TEXTURE_MODE = 1;
@@ -84,7 +74,7 @@ export class ParticleSystemCanvasRenderCmd extends Node.CanvasRenderCmd {
 
   rendering(ctx, scaleX, scaleY) {
     //TODO: need refactor rendering for performance
-    const wrapper = ctx || RendererConfig.getInstance().renderContext,
+    const wrapper = ctx || ServiceLocator.rendererConfig.renderContext,
       context = wrapper.getContext(),
       node = this._node,
       pointRect = this._pointRect;
@@ -143,7 +133,7 @@ export class ParticleSystemCanvasRenderCmd extends Node.CanvasRenderCmd {
         context.restore();
       }
     } else {
-      const drawTool = Game.getInstance().drawingUtil;
+      const drawTool = ServiceLocator.game.drawingUtil;
       for (i = 0; i < particleCount; i++) {
         particle = particles[i];
         lpx = 0 | (particle.size * 0.5);

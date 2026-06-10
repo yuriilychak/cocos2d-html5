@@ -26,7 +26,7 @@
  ****************************************************************************/
 
 import { winSize } from "../constants";
-import { Loader, log } from "@aspect/core";
+import { log, ServiceLocator } from "@aspect/core";
 import { TextBMFont } from "@aspect/ccui";
 import { s_simpleFont_fnt } from "../resources";
 import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
@@ -91,7 +91,7 @@ export class XHRArrayBufferTestLayer extends BaseTestLayer {
     responseLabel.x = 10;
     responseLabel.y = winSize.height / 2;
 
-    var xhr = Loader.getInstance().getXMLHttpRequest();
+    var xhr = ServiceLocator.loader.getXMLHttpRequest();
     this.streamXHREventsToLabel(
       xhr,
       statusPostLabel,

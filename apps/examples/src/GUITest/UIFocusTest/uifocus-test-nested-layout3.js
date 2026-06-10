@@ -24,7 +24,7 @@
  ****************************************************************************/
 
 import { UIFocusTestBase } from "./uifocus-test-base";
-import { Color, Director } from "@aspect/core";
+import { Color, ServiceLocator } from "@aspect/core";
 import { HBox, ImageView, LinearLayoutParameter, Margin, Text, VBox, Widget } from "@aspect/ccui";
 
 export class UIFocusTestNestedLayout3 extends UIFocusTestBase {
@@ -36,7 +36,7 @@ export class UIFocusTestNestedLayout3 extends UIFocusTestBase {
 
   init() {
     if (super.init()) {
-      var winSize = Director.getInstance().getVisibleSize();
+      var winSize = ServiceLocator.director.getVisibleSize();
 
       this._verticalLayout = new VBox();
       this._verticalLayout.setPosition(

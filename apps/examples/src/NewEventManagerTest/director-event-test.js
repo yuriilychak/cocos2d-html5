@@ -28,7 +28,7 @@
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { s_simpleFont_fnt } from "../resources";
 import { director } from "../constants";
-import { Director, EventManager } from "@aspect/core";
+import { Director, ServiceLocator } from "@aspect/core";
 import { TextBMFont } from "@aspect/ccui";
 
 export class DirectorEventTest extends EventDispatcherTestDemo {
@@ -71,7 +71,7 @@ export class DirectorEventTest extends EventDispatcherTestDemo {
     this._label4.setPosition(80, s.height / 2 - 60);
     this.addChild(this._label4);
 
-    var dispatcher = EventManager.getInstance();
+    var dispatcher = ServiceLocator.eventManager;
 
     this._event1 = dispatcher.addCustomListener(
       Director.EVENT_AFTER_UPDATE,
@@ -101,7 +101,7 @@ export class DirectorEventTest extends EventDispatcherTestDemo {
     //----start8----onExit
     super.onExit();
 
-    var eventManager = EventManager.getInstance();
+    var eventManager = ServiceLocator.eventManager;
     eventManager.removeListener(this._event1);
     eventManager.removeListener(this._event2);
     eventManager.removeListener(this._event3);
@@ -113,7 +113,7 @@ export class DirectorEventTest extends EventDispatcherTestDemo {
     //----start8----update
     this._time += dt;
     if (this._time > 0.5) {
-      Director.getInstance().setProjection(Director.PROJECTION_2D);
+      ServiceLocator.director.setProjection(Director.PROJECTION_2D);
       this._time = 0;
     }
     //----end8----

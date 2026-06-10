@@ -33,7 +33,7 @@
 import { s_resprefix } from "../resources";
 import { TileDemo } from "./tile-demo";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
-import { Point, Sys } from "@aspect/core";
+import { Point, ServiceLocator } from "@aspect/core";
 import {
   CallFunc,
   FadeIn,
@@ -62,7 +62,7 @@ export class TMXReadWriteTest extends TileDemo {
     this.addChild(map, 0, TAG_TILE_MAP);
 
     var layer = map.getLayer("Layer 0");
-    if ("opengl" in Sys.getInstance().capabilities)
+    if ("opengl" in ServiceLocator.sys.capabilities)
       layer.texture.setAntiAliasTexParameters();
 
     map.scale = 1;

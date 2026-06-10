@@ -38,13 +38,7 @@ import {
 } from "../resources";
 import { winSize } from "../constants";
 import { Animate, Sequence } from "@aspect/actions";
-import {
-  Animation,
-  AnimationCache,
-  AnimationFrame,
-  Sprite,
-  SpriteFrameCache
-} from "@aspect/core";
+import { Animation, AnimationCache, AnimationFrame, Sprite, ServiceLocator } from "@aspect/core";
 export class AnimationCacheTest extends SpriteTestDemo {
   constructor() {
     //----start40----ctor
@@ -67,9 +61,9 @@ export class AnimationCacheTest extends SpriteTestDemo {
     this.cPixel2 = null;
 
     this.cPixel3 = null;
-    SpriteFrameCache.getInstance().addSpriteFrames(s_grossiniPlist);
-    SpriteFrameCache.getInstance().addSpriteFrames(s_grossini_grayPlist);
-    SpriteFrameCache.getInstance().addSpriteFrames(s_grossini_bluePlist);
+    ServiceLocator.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+    ServiceLocator.spriteFrameCache.addSpriteFrames(s_grossini_grayPlist);
+    ServiceLocator.spriteFrameCache.addSpriteFrames(s_grossini_bluePlist);
 
     //
     // create animation "dance"
@@ -79,7 +73,7 @@ export class AnimationCacheTest extends SpriteTestDemo {
     var str = "";
     for (var i = 1; i < 15; i++) {
       str = "grossini_dance_" + (i < 10 ? "0" + i : i) + ".png";
-      frame = SpriteFrameCache.getInstance().getSpriteFrame(str);
+      frame = ServiceLocator.spriteFrameCache.getSpriteFrame(str);
       animFrame = new AnimationFrame(frame, 1);
       animFrames.push(animFrame);
     }
@@ -87,7 +81,7 @@ export class AnimationCacheTest extends SpriteTestDemo {
     var animation = new Animation(animFrames, 0.2);
 
     // Add an animation to the Cache
-    AnimationCache.getInstance().addAnimation(animation, "dance");
+    ServiceLocator.animationCache.addAnimation(animation, "dance");
 
     //
     // create animation "dance gray"
@@ -95,14 +89,14 @@ export class AnimationCacheTest extends SpriteTestDemo {
     animFrames = [];
     for (i = 1; i < 15; i++) {
       str = "grossini_dance_gray_" + (i < 10 ? "0" + i : i) + ".png";
-      frame = SpriteFrameCache.getInstance().getSpriteFrame(str);
+      frame = ServiceLocator.spriteFrameCache.getSpriteFrame(str);
       animFrames.push(frame);
     }
 
     animation = new Animation(animFrames, 0.2);
 
     // Add an animation to the Cache
-    AnimationCache.getInstance().addAnimation(animation, "dance_gray");
+    ServiceLocator.animationCache.addAnimation(animation, "dance_gray");
 
     //
     // create animation "dance blue"
@@ -110,16 +104,16 @@ export class AnimationCacheTest extends SpriteTestDemo {
     animFrames = [];
     for (i = 1; i < 4; i++) {
       str = "grossini_blue_0" + i + ".png";
-      frame = SpriteFrameCache.getInstance().getSpriteFrame(str);
+      frame = ServiceLocator.spriteFrameCache.getSpriteFrame(str);
       animFrames.push(frame);
     }
 
     animation = new Animation(animFrames, 0.2);
 
     // Add an animation to the Cache
-    AnimationCache.getInstance().addAnimation(animation, "dance_blue");
+    ServiceLocator.animationCache.addAnimation(animation, "dance_blue");
 
-    var animCache = AnimationCache.getInstance();
+    var animCache = ServiceLocator.animationCache;
 
     var normal = animCache.getAnimation("dance");
     normal.setRestoreOriginalFrame(true);
@@ -134,7 +128,7 @@ export class AnimationCacheTest extends SpriteTestDemo {
 
     var seq = new Sequence(animN, animG, animB);
 
-    frame = SpriteFrameCache.getInstance().getSpriteFrame(
+    frame = ServiceLocator.spriteFrameCache.getSpriteFrame(
       "grossini_dance_01.png"
     );
     var grossini = new Sprite(frame);

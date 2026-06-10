@@ -22,20 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import {
-  BlendFunc,
-  Color,
-  Loader,
-  Node,
-  Path,
-  Point,
-  Rect,
-  Size,
-  Sprite,
-  SpriteFrameCache,
-  Sys,
-  log
-} from "@aspect/core";
+import { BlendFunc, Color, Node, Path, Point, Rect, Size, Sprite, log, ServiceLocator } from "@aspect/core";
 import { ParticleSystem } from "@aspect/particle";
 import { TMXTiledMap } from "@aspect/tilemap";
 import { helper, Layout, LayoutComponent, Button, CheckBox, ImageView, ListView, LoadingBar, PageView, ScrollView, Slider, Text, TextAtlas, TextBMFont, TextField, Widget } from "@aspect/ccui";
@@ -193,7 +180,7 @@ parser.initSprite = function (json, resourcePath) {
   loadTexture(json["FileData"], resourcePath, function (path, type) {
     if (type === 0) node.setTexture(path);
     else if (type === 1) {
-      var spriteFrame = SpriteFrameCache.getInstance().getSpriteFrame(path);
+      var spriteFrame = ServiceLocator.spriteFrameCache.getSpriteFrame(path);
       if (spriteFrame) node.setSpriteFrame(spriteFrame);
     }
   });
@@ -226,12 +213,12 @@ parser.initParticle = function (json, resourcePath) {
   var node,
     self = this;
   loadTexture(json["FileData"], resourcePath, function (path, type) {
-    if (!Loader.getInstance().getRes(path))
+    if (!ServiceLocator.loader.getRes(path))
       log("%s need to be preloaded", path);
     node = new ParticleSystem(path);
     self.generalAttributes(node, json);
     node.setPositionType(ParticleSystem.TYPE_GROUPED);
-    !Sys.getInstance().isNative &&
+    !ServiceLocator.sys.isNative &&
       node.setDrawMode(ParticleSystem.TEXTURE_MODE);
 
     var blendData = json["BlendFunc"];
@@ -569,8 +556,8 @@ parser.initText = function (json, resourcePath) {
     var path = fontResource["Path"];
     //resoutceType = fontResource["Type"];
     if (path != null) {
-      if (Sys.getInstance().isNative) {
-        fontName = Path.join(Loader.getInstance().resPath, resourcePath, path);
+      if (ServiceLocator.sys.isNative) {
+        fontName = Path.join(ServiceLocator.loader.resPath, resourcePath, path);
       } else {
         fontName = path.match(/([^\/]+)\.(\S+)/);
         fontName = fontName ? fontName[1] : "";
@@ -652,8 +639,8 @@ parser.initButton = function (json, resourcePath) {
     var path = fontResource["Path"];
     //resoutceType = fontResource["Type"];
     if (path != null) {
-      if (Sys.getInstance().isNative) {
-        fontName = Path.join(Loader.getInstance().resPath, resourcePath, path);
+      if (ServiceLocator.sys.isNative) {
+        fontName = Path.join(ServiceLocator.loader.resPath, resourcePath, path);
       } else {
         fontName = path.match(/([^\/]+)\.(\S+)/);
         fontName = fontName ? fontName[1] : "";
@@ -883,7 +870,7 @@ parser.initLoadingBar = function (json, resourcePath) {
  */
 parser.initSlider = function (json, resourcePath) {
   var widget = new Slider();
-  var loader = Loader.getInstance();
+  var loader = ServiceLocator.loader;
 
   this.widgetAttributes(widget, json);
 
@@ -1065,7 +1052,7 @@ parser.initTextAtlas = function (json, resourcePath) {
     json["LabelAtlasFileImage_CNB"],
     resourcePath,
     function (path, type) {
-      if (!Loader.getInstance().getRes(path))
+      if (!ServiceLocator.loader.getRes(path))
         log("%s need to be preloaded", path);
       if (type === 0) {
         widget.setProperty(
@@ -1097,7 +1084,7 @@ parser.initTextBMFont = function (json, resourcePath) {
   this.widgetAttributes(widget, json);
 
   loadTexture(json["LabelBMFontFile_CNB"], resourcePath, function (path, type) {
-    if (!Loader.getInstance().getRes(path))
+    if (!ServiceLocator.loader.getRes(path))
       log("%s need to be pre loaded", path);
     widget.setFntFile(path);
   });
@@ -1152,8 +1139,8 @@ parser.initTextField = function (json, resourcePath) {
     var path = fontResource["Path"];
     //resoutceType = fontResource["Type"];
     if (path != null) {
-      if (Sys.getInstance().isNative) {
-        fontName = Path.join(Loader.getInstance().resPath, resourcePath, path);
+      if (ServiceLocator.sys.isNative) {
+        fontName = Path.join(ServiceLocator.loader.resPath, resourcePath, path);
       } else {
         fontName = path.match(/([^\/]+)\.(\S+)/);
         fontName = fontName ? fontName[1] : "";
@@ -1170,7 +1157,7 @@ parser.initTextField = function (json, resourcePath) {
 
   if (!widget.isIgnoreContentAdaptWithSize()) {
     setContentSize(widget, json["Size"]);
-    if (Sys.getInstance().isNative)
+    if (ServiceLocator.sys.isNative)
       widget.getVirtualRenderer().setLineBreakWithoutSpace(true);
   }
 
@@ -1221,7 +1208,7 @@ parser.initProjectNode = function (json, resourcePath) {
   var projectFile = json["FileData"];
   if (projectFile != null && projectFile["Path"]) {
     var file = resourcePath + projectFile["Path"];
-    if (Loader.getInstance().getRes(file)) {
+    if (ServiceLocator.loader.getRes(file)) {
       var obj = load(file, resourcePath);
       parser.generalAttributes(obj.node, json);
       if (obj.action && obj.node) {
@@ -1260,14 +1247,14 @@ parser.initArmature = function (json, resourcePath) {
 
   loadTexture(json["FileData"], resourcePath, function (path, type) {
     var plists, pngs;
-    var armJson = Loader.getInstance().getRes(path);
+    var armJson = ServiceLocator.loader.getRes(path);
     if (!armJson) log("%s need to be preloaded", path);
     else {
       plists = armJson["config_file_path"];
       pngs = armJson["config_png_path"];
       plists.forEach(function (plist, index) {
         if (pngs[index])
-          SpriteFrameCache.getInstance().addSpriteFrames(plist, pngs[index]);
+          ServiceLocator.spriteFrameCache.addSpriteFrames(plist, pngs[index]);
       });
     }
     armatureDataManager.addArmatureFileInfo(path);
@@ -1336,19 +1323,19 @@ var loadTexture = function (json, resourcePath, cb) {
     else type = 1;
     var plist = json["Plist"];
     if (plist) {
-      if (Loader.getInstance().getRes(resourcePath + plist)) {
+      if (ServiceLocator.loader.getRes(resourcePath + plist)) {
         loadedPlist[resourcePath + plist] = true;
-        SpriteFrameCache.getInstance().addSpriteFrames(resourcePath + plist);
+        ServiceLocator.spriteFrameCache.addSpriteFrames(resourcePath + plist);
       } else {
         if (
           !loadedPlist[resourcePath + plist] &&
-          !SpriteFrameCache.getInstance().getSpriteFrame(path)
+          !ServiceLocator.spriteFrameCache.getSpriteFrame(path)
         )
           log("%s need to be preloaded", resourcePath + plist);
       }
     }
     if (type !== 0) {
-      if (SpriteFrameCache.getInstance().getSpriteFrame(path)) cb(path, type);
+      if (ServiceLocator.spriteFrameCache.getSpriteFrame(path)) cb(path, type);
       else log("failed to get spriteFrame: %s", path);
     } else cb(resourcePath + path, type);
   }

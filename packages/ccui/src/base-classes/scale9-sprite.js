@@ -1,9 +1,4 @@
-import {
-    Node, EventHelper, SpriteFrame, RendererConfig,
-    Rect, Size, Point, Color, Sprite, BlendFunc, TextureCache, SpriteFrameCache,
-    rectPointsToPixels, contentScaleFactor, FIX_ARTIFACTS_BY_STRECHING_TEXEL,
-    BLEND_SRC, BLEND_DST, ONE, SRC_ALPHA, log, error
-} from '@aspect/core';
+import { Node, EventHelper, SpriteFrame, Rect, Size, Point, Color, Sprite, BlendFunc, rectPointsToPixels, contentScaleFactor, FIX_ARTIFACTS_BY_STRECHING_TEXEL, BLEND_SRC, BLEND_DST, ONE, SRC_ALPHA, log, error, ServiceLocator } from "@aspect/core";
 
 const dataPool = {
     _pool: {},
@@ -332,7 +327,7 @@ export class Scale9Sprite extends EventHelper(Node) {
             if (file instanceof SpriteFrame)
                 this.initWithSpriteFrame(file, rectOrCapInsets);
             else {
-                var frame = SpriteFrameCache.getInstance().getSpriteFrame(file);
+                var frame = ServiceLocator.spriteFrameCache.getSpriteFrame(file);
                 if (frame)
                     this.initWithSpriteFrame(frame, rectOrCapInsets);
                 else
@@ -341,7 +336,7 @@ export class Scale9Sprite extends EventHelper(Node) {
         }
 
         if (webgl === undefined) {
-            webgl = RendererConfig.getInstance().isWebGL;
+            webgl = ServiceLocator.rendererConfig.isWebGL;
         }
     }
 
@@ -423,9 +418,9 @@ export class Scale9Sprite extends EventHelper(Node) {
         if(!file)
             throw new Error("Scale9Sprite.initWithFile(): file should be non-null");
 
-        var texture = TextureCache.getInstance().getTextureForKey(file);
+        var texture = ServiceLocator.textureCache.getTextureForKey(file);
         if (!texture) {
-            texture = TextureCache.getInstance().addImage(file);
+            texture = ServiceLocator.textureCache.addImage(file);
         }
 
         var locLoaded = texture.isLoaded();
@@ -484,7 +479,7 @@ export class Scale9Sprite extends EventHelper(Node) {
             throw new Error("Scale9Sprite.initWithSpriteFrameName(): spriteFrameName should be non-null");
         capInsets = capInsets || new Rect(0, 0, 0, 0);
 
-        var frame = SpriteFrameCache.getInstance().getSpriteFrame(spriteFrameName);
+        var frame = ServiceLocator.spriteFrameCache.getSpriteFrame(spriteFrameName);
         if (frame == null) {
             log("Scale9Sprite.initWithSpriteFrameName(): can't find the sprite frame by spriteFrameName");
             return false;
@@ -547,7 +542,7 @@ export class Scale9Sprite extends EventHelper(Node) {
                 }
                 self._textureLoaded = true;
                 self._renderCmd.setDirtyFlag(Node._dirtyFlags.contentDirty);
-                RendererConfig.getInstance().renderer.childrenOrderDirty = true;
+                ServiceLocator.rendererConfig.renderer.childrenOrderDirty = true;
             };
             self._textureLoaded = spriteFrame.textureLoaded();
             if (self._textureLoaded) {
@@ -715,7 +710,7 @@ export class Scale9Sprite extends EventHelper(Node) {
     }
 
     _createRenderCmd() {
-        if (RendererConfig.getInstance().isCanvas)
+        if (ServiceLocator.rendererConfig.isCanvas)
             return new this.constructor.CanvasRenderCmd(this);
         else
             return new this.constructor.WebGLRenderCmd(this);

@@ -28,7 +28,7 @@
 import { EffectAdvanceTextLayer } from "./effect-advance-text-layer";
 import { EffectsAdvancedTest } from "./effects-advanced-test-constants";
 import { Lens3DTarget } from "./lens3-dtarget";
-import { Director, Point, Size } from "@aspect/core";
+import { Point, Size, ServiceLocator } from "@aspect/core";
 import { CallFunc, JumpBy, Sequence } from "@aspect/actions";
 import { Lens3D } from "@aspect/actions3d";
 
@@ -50,7 +50,7 @@ export class Effect4 extends EffectAdvanceTextLayer {
          While in cocos2d-x, the target of action only supports CCNode or its subclass,
          so we make an encapsulation for CCLens3D to achieve that.
          */
-    var director = Director.getInstance();
+    var director = ServiceLocator.director;
     var target = Lens3DTarget.create(lens);
 
     // Please make sure the target been added to its parent.

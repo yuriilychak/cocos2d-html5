@@ -332,3 +332,4 @@ export { vertexLineToPolygon } from "./support/vertex";
 export { plistParser } from "./platform/sax-parser";
 export { DirtyRegion } from "./renderer/dirty-region";
 export { _convertResponseBodyToText } from "./utils/binary-loader";
+export { ServiceLocator } from "./service-locator";

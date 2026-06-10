@@ -31,7 +31,7 @@ import {
   _setclippingNodeTestSceneIdx,
   clippingNodeTestSceneIdx
 } from "./clipping-node-test-constants";
-import { Director } from "@aspect/core";
+import { ServiceLocator } from "@aspect/core";
 
 export class ClippingNodeTestScene extends TestScene {
   constructor() {
@@ -40,7 +40,7 @@ export class ClippingNodeTestScene extends TestScene {
 
   runThisTest(num) {
     _setclippingNodeTestSceneIdx(num || num == 0 ? num - 1 : -1);
-    Director.getInstance().runScene(this);
+    ServiceLocator.director.runScene(this);
     var layer = nextClippingNodeTest();
     this.addChild(layer);
   }

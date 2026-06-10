@@ -31,7 +31,7 @@ import {
   TAG_CONTENTNODE
 } from "./clipping-node-test-constants";
 import { s_back2 } from "../resources";
-import { Color, EventListener, EventManager, Point, Rect, Sprite } from "@aspect/core";
+import { Color, EventListener, Point, Rect, Sprite, ServiceLocator } from "@aspect/core";
 import { RotateBy } from "@aspect/actions";
 import { DrawNode } from "@aspect/shape-nodes";
 
@@ -84,7 +84,7 @@ export class ScrollViewDemo extends BaseClippingNodeTest {
     clipper.addChild(content);
 
     this._scrolling = false;
-    EventManager.getInstance().addListener(
+    ServiceLocator.eventManager.addListener(
       EventListener.create({
         event: EventListener.TOUCH_ALL_AT_ONCE,
         onTouchesBegan: function (touches, event) {

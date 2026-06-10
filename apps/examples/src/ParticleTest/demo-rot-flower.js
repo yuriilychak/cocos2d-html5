@@ -27,7 +27,7 @@
 
 import { ParticleDemo } from "./particle-demo";
 import { s_stars2 } from "../resources";
-import { Color, Point, Sys, textureCache } from "@aspect/core";
+import { Color, Point, ServiceLocator } from "@aspect/core";
 import { ParticleSystem } from "@aspect/particle";
 
 export class DemoRotFlower extends ParticleDemo {
@@ -35,11 +35,11 @@ export class DemoRotFlower extends ParticleDemo {
     super.onEnter();
 
     this._emitter = new ParticleSystem(
-      "opengl" in Sys.getInstance().capabilities ? 300 : 150
+      "opengl" in ServiceLocator.sys.capabilities ? 300 : 150
     );
 
     this._background.addChild(this._emitter, 10);
-    this._emitter.texture = textureCache.addImage(s_stars2);
+    this._emitter.texture = ServiceLocator.textureCache.addImage(s_stars2);
     if (this._emitter.setShapeType)
       this._emitter.setShapeType(ParticleSystem.STAR_SHAPE);
 

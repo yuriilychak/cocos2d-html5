@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Color, Director, Point, rendererConfig } from "@aspect/core";
+import { Color, Point, ServiceLocator } from "@aspect/core";
 import { ParticleSystem } from "@aspect/particle";
 
 
@@ -41,7 +41,7 @@ export class ParticleFire extends ParticleSystem {
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
     constructor() {
-        super((rendererConfig.isWebGL) ? 300 : 150);
+        super((ServiceLocator.rendererConfig.isWebGL) ? 300 : 150);
     }
 
     /**
@@ -74,7 +74,7 @@ export class ParticleFire extends ParticleSystem {
             this.setAngleVar(10);
 
             // emitter position
-            var winSize = Director.getInstance().getWinSize();
+            var winSize = ServiceLocator.director.getWinSize();
             this.setPosition(winSize.width / 2, 60);
             this.setPosVar(new Point(40, 20));
 
@@ -119,7 +119,7 @@ export class ParticleFireworks extends ParticleSystem {
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
     constructor() {
-        super((rendererConfig.isWebGL) ? 1500 : 150);
+        super((ServiceLocator.rendererConfig.isWebGL) ? 1500 : 150);
     }
 
     /**
@@ -147,7 +147,7 @@ export class ParticleFireworks extends ParticleSystem {
             this.setSpeedVar(50);
 
             // emitter position
-            var winSize = Director.getInstance().getWinSize();
+            var winSize = ServiceLocator.director.getWinSize();
             this.setPosition(winSize.width / 2, winSize.height / 2);
 
             // angle
@@ -194,7 +194,7 @@ export class ParticleSun extends ParticleSystem {
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
     constructor() {
-        super((rendererConfig.isWebGL) ? 350 : 150);
+        super((ServiceLocator.rendererConfig.isWebGL) ? 350 : 150);
     }
 
     /**
@@ -229,7 +229,7 @@ export class ParticleSun extends ParticleSystem {
             this.setAngleVar(360);
 
             // emitter position
-            var winSize = Director.getInstance().getWinSize();
+            var winSize = ServiceLocator.director.getWinSize();
             this.setPosition(winSize.width / 2, winSize.height / 2);
             this.setPosVar(new Point(0,0));
 
@@ -272,7 +272,7 @@ export class ParticleGalaxy extends ParticleSystem {
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
     constructor() {
-        super((rendererConfig.isWebGL) ? 200 : 100);
+        super((ServiceLocator.rendererConfig.isWebGL) ? 200 : 100);
     }
 
     /**
@@ -308,7 +308,7 @@ export class ParticleGalaxy extends ParticleSystem {
             this.setAngleVar(360);
 
             // emitter position
-            var winSize = Director.getInstance().getWinSize();
+            var winSize = ServiceLocator.director.getWinSize();
             this.setPosition(winSize.width / 2, winSize.height / 2);
             this.setPosVar(new Point(0,0));
 
@@ -351,7 +351,7 @@ export class ParticleFlower extends ParticleSystem {
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
     constructor() {
-        super((rendererConfig.isWebGL) ? 250 : 100);
+        super((ServiceLocator.rendererConfig.isWebGL) ? 250 : 100);
     }
 
     /**
@@ -387,7 +387,7 @@ export class ParticleFlower extends ParticleSystem {
             this.setAngleVar(360);
 
             // emitter position
-            var winSize = Director.getInstance().getWinSize();
+            var winSize = ServiceLocator.director.getWinSize();
             this.setPosition(winSize.width / 2, winSize.height / 2);
             this.setPosVar(new Point(0,0));
 
@@ -432,7 +432,7 @@ export class ParticleMeteor extends ParticleSystem {
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
     constructor() {
-        super((rendererConfig.isWebGL) ? 150 : 100);
+        super((ServiceLocator.rendererConfig.isWebGL) ? 150 : 100);
     }
 
     /**
@@ -468,7 +468,7 @@ export class ParticleMeteor extends ParticleSystem {
             this.setAngleVar(360);
 
             // emitter position
-            var winSize = Director.getInstance().getWinSize();
+            var winSize = ServiceLocator.director.getWinSize();
             this.setPosition(winSize.width / 2, winSize.height / 2);
             this.setPosVar(new Point(0,0));
 
@@ -513,7 +513,7 @@ export class ParticleSpiral extends ParticleSystem {
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
     constructor() {
-        super((rendererConfig.isWebGL) ? 500 : 100);
+        super((ServiceLocator.rendererConfig.isWebGL) ? 500 : 100);
     }
 
     /**
@@ -549,7 +549,7 @@ export class ParticleSpiral extends ParticleSystem {
             this.setAngleVar(0);
 
             // emitter position
-            var winSize = Director.getInstance().getWinSize();
+            var winSize = ServiceLocator.director.getWinSize();
             this.setPosition(winSize.width / 2, winSize.height / 2);
             this.setPosVar(new Point(0,0));
 
@@ -593,7 +593,7 @@ export class ParticleExplosion extends ParticleSystem {
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
     constructor() {
-        super((rendererConfig.isWebGL) ? 700 : 300);
+        super((ServiceLocator.rendererConfig.isWebGL) ? 700 : 300);
     }
 
     /**
@@ -628,7 +628,7 @@ export class ParticleExplosion extends ParticleSystem {
             this.setAngleVar(360);
 
             // emitter position
-            var winSize = Director.getInstance().getWinSize();
+            var winSize = ServiceLocator.director.getWinSize();
             this.setPosition(winSize.width / 2, winSize.height / 2);
             this.setPosVar(new Point(0,0));
 
@@ -673,7 +673,7 @@ export class ParticleSmoke extends ParticleSystem {
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
     constructor() {
-        super((rendererConfig.isWebGL) ? 200 : 100);
+        super((ServiceLocator.rendererConfig.isWebGL) ? 200 : 100);
     }
 
     /**
@@ -705,7 +705,7 @@ export class ParticleSmoke extends ParticleSystem {
             this.setAngleVar(5);
 
             // emitter position
-            var winSize = Director.getInstance().getWinSize();
+            var winSize = ServiceLocator.director.getWinSize();
             this.setPosition(winSize.width / 2, 0);
             this.setPosVar(new Point(20, 0));
 
@@ -750,7 +750,7 @@ export class ParticleSnow extends ParticleSystem {
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
     constructor() {
-        super((rendererConfig.isWebGL) ? 700 : 250);
+        super((ServiceLocator.rendererConfig.isWebGL) ? 700 : 250);
     }
 
     /**
@@ -782,7 +782,7 @@ export class ParticleSnow extends ParticleSystem {
             this.setTangentialAccelVar(1);
 
             // emitter position
-            var winSize = Director.getInstance().getWinSize();
+            var winSize = ServiceLocator.director.getWinSize();
             this.setPosition(winSize.width / 2, winSize.height + 10);
             this.setPosVar(new Point(winSize.width / 2, 0));
 
@@ -832,7 +832,7 @@ export class ParticleRain extends ParticleSystem {
      * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
      */
     constructor() {
-        super((rendererConfig.isWebGL) ? 1000 : 300);
+        super((ServiceLocator.rendererConfig.isWebGL) ? 1000 : 300);
     }
 
     /**
@@ -868,7 +868,7 @@ export class ParticleRain extends ParticleSystem {
 
 
             // emitter position
-            var winSize = Director.getInstance().getWinSize();
+            var winSize = ServiceLocator.director.getWinSize();
             this.setPosition(winSize.width / 2, winSize.height);
             this.setPosVar(new Point(winSize.width / 2, 0));
 

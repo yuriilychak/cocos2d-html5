@@ -35,7 +35,7 @@ import { nextS9SpriteTest, previousS9SpriteTest, restartS9SpriteTest } from "./s
 import { S9SpriteTestScene } from "./s9-sprite-test-scene";
 import { s_s9s_blocks9_plist } from "../../resources";
 import { director } from "../../constants";
-import { Color, SpriteFrameCache, log } from "@aspect/core";
+import { Color, log, ServiceLocator } from "@aspect/core";
 import { BaseTestLayer } from "../../BaseTestLayer/BaseTestLayer";
 
 export class S9SpriteTestDemo extends BaseTestLayer {
@@ -46,7 +46,7 @@ export class S9SpriteTestDemo extends BaseTestLayer {
         this._title = "";
         this._subtitle = "";
 
-        SpriteFrameCache.getInstance().addSpriteFrames(s_s9s_blocks9_plist);
+        ServiceLocator.spriteFrameCache.addSpriteFrames(s_s9s_blocks9_plist);
         log('sprite frames added to sprite frame cache...');
     }
 

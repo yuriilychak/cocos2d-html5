@@ -29,7 +29,7 @@ import { SceneTestLayer2 } from "./scene-test-layer2";
 import { TestScene } from "../test-scene";
 import { s_pathGrossini } from "../resources";
 import { director, winSize } from "../constants";
-import { Color, Director, LayerColor, Point, Sprite, log } from "@aspect/core";
+import { Color, LayerColor, Point, Sprite, log, ServiceLocator } from "@aspect/core";
 import { RotateBy } from "@aspect/actions";
 import { TransitionSlideInT } from "@aspect/transitions";
 import { MenuTestLayer } from "../menu-test-layer";
@@ -91,18 +91,18 @@ export class SceneTestLayer1 extends MenuTestLayer {
     const sprite = new Sprite(s_pathGrossini);
     sprite.setPosition(new Point(winSize.width / 2, winSize.height / 2));
     layerTemp.addChild(sprite);
-    Director.getInstance().setNotificationNode(layerTemp);
+    ServiceLocator.director.setNotificationNode(layerTemp);
     sprite.runAction(new RotateBy(2, 360).repeatForever());
     log("setNotificationNode!");
   }
 
   _onClearNotificationNode() {
     log("clearNotificationNode!");
-    Director.getInstance().setNotificationNode(null);
+    ServiceLocator.director.setNotificationNode(null);
   }
 
   onExit() {
-    Director.getInstance().setNotificationNode(null);
+    ServiceLocator.director.setNotificationNode(null);
     super.onExit();
   }
 }

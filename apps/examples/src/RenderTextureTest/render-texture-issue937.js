@@ -25,12 +25,12 @@
 
 import { RenderTextureBaseLayer } from "./render-texture-base-layer";
 import { s_fire } from "../resources";
-import { Color, Director, LayerColor, Sprite, Texture2D } from "@aspect/core";
+import { Color, LayerColor, Sprite, Texture2D, ServiceLocator } from "@aspect/core";
 import { RenderTexture } from "@aspect/render-texture";
 export class RenderTextureIssue937 extends RenderTextureBaseLayer {
   constructor() {
     super();
-    var winSize = Director.getInstance().getWinSize();
+    var winSize = ServiceLocator.director.getWinSize();
     /*
      *     1    2
      * A: A1   A2

@@ -1,12 +1,4 @@
-import {
-  AtlasNode,
-  Point,
-  contentScaleFactor,
-  FIX_ARTIFACTS_BY_STRECHING_TEXEL,
-  LABELATLAS_DEBUG_DRAW,
-  log,
-  Game
-} from "@aspect/core";
+import { AtlasNode, Point, contentScaleFactor, FIX_ARTIFACTS_BY_STRECHING_TEXEL, LABELATLAS_DEBUG_DRAW, log, ServiceLocator } from "@aspect/core";
 
 export class LabelAtlasWebGLRenderCmd extends AtlasNode.WebGLRenderCmd {
   constructor(renderable) {
@@ -54,7 +46,7 @@ export class LabelAtlasWebGLRenderCmd extends AtlasNode.WebGLRenderCmd {
         new Point(s.width + posX, s.height + posY),
         new Point(posX, posY + s.height)
       ];
-      Game.getInstance().drawingUtil.drawPoly(vertices, 4, true);
+      ServiceLocator.game.drawingUtil.drawPoly(vertices, 4, true);
     }
   }
 

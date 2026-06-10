@@ -32,7 +32,7 @@
 //------------------------------------------------------------------
 import { EaseSpriteDemo } from "./ease-sprite-demo";
 import { winSize } from "../constants";
-import { Point, textureCache } from "@aspect/core";
+import { Point, ServiceLocator } from "@aspect/core";
 import { JumpBy, RotateBy, Speed, Sequence, spawn } from "@aspect/actions";
 import { ParticleFireworks } from "../ParticleTest/ParticleExamples";
 
@@ -71,7 +71,7 @@ export class SchedulerTest extends EaseSpriteDemo {
 
     var emitter = new ParticleFireworks();
     emitter.setTotalParticles(250);
-    emitter.texture = textureCache.addImage("Images/fire.png");
+    emitter.texture = ServiceLocator.textureCache.addImage("Images/fire.png");
     this.addChild(emitter);
     //----end13----
   }

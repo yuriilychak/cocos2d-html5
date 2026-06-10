@@ -34,7 +34,7 @@ import {
 } from "../resources";
 import { winSize } from "../constants";
 import { Animate, Sequence } from "@aspect/actions";
-import { AnimationCache, Sprite, SpriteFrameCache } from "@aspect/core";
+import { AnimationCache, Sprite, ServiceLocator } from "@aspect/core";
 export class AnimationCacheFile extends SpriteTestDemo {
   constructor() {
     //----start54----ctor
@@ -57,15 +57,15 @@ export class AnimationCacheFile extends SpriteTestDemo {
     this.cPixel2 = null;
 
     this.cPixel3 = null;
-    var frameCache = SpriteFrameCache.getInstance();
+    var frameCache = ServiceLocator.spriteFrameCache;
     frameCache.addSpriteFrames(s_grossiniPlist);
     frameCache.addSpriteFrames(s_grossini_grayPlist);
     frameCache.addSpriteFrames(s_grossini_bluePlist);
 
     // Purge previously loaded animation
-    if (AnimationCache.getInstance()._clear)
-      AnimationCache.getInstance()._clear();
-    var animCache = AnimationCache.getInstance();
+    if (ServiceLocator.animationCache._clear)
+      ServiceLocator.animationCache._clear();
+    var animCache = ServiceLocator.animationCache;
 
     // Add an animation to the Cache
     // XXX API-FIX XXX

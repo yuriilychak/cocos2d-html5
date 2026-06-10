@@ -1,11 +1,4 @@
-import {
-  Node,
-  RendererConfig,
-  Point,
-  Rect,
-  Size,
-  incrementGLDraws
-} from "@aspect/core";
+import { Node, Point, Rect, Size, incrementGLDraws, ServiceLocator } from "@aspect/core";
 import { TYPE_BAR, TYPE_RADIAL } from "./constants";
 
 /**
@@ -27,7 +20,7 @@ export class ProgressTimerCanvasRenderCmd extends Node.CanvasRenderCmd {
   }
 
   rendering(ctx, scaleX, scaleY) {
-    const wrapper = ctx || RendererConfig.getInstance().renderContext;
+    const wrapper = ctx || ServiceLocator.rendererConfig.renderContext;
     const context = wrapper.getContext();
     const node = this._node;
     const locSprite = node._sprite;

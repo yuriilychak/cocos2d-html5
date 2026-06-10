@@ -25,7 +25,7 @@
  ****************************************************************************/
 /** @expose */
 import { ExtensionsTestScene } from "../extensions-test-scene";
-import { Color, Director, log } from "@aspect/core";
+import { Color, log, ServiceLocator } from "@aspect/core";
 import { ButtonLayout } from "../../button-layout";
 import { SocketIO } from "@aspect/socketio";
 import { TextBMFont } from "@aspect/ccui";
@@ -256,5 +256,5 @@ export function runSocketIOTest() {
   scene.onMainMenuCallback = () => new ExtensionsTestScene().runThisTest();
   const layer = new SocketIOTestLayer();
   scene.addChild(layer);
-  Director.getInstance().runScene(scene);
+  ServiceLocator.director.runScene(scene);
 }

@@ -31,7 +31,7 @@ import {
   director,
   winSize
 } from "../constants";
-import { Color, Director, LayerGradient, RendererConfig, Scene, Sys, log } from "@aspect/core";
+import { Color, LayerGradient, Scene, log, ServiceLocator } from "@aspect/core";
 
 export const BASE_TEST_MENUITEM_PREV_TAG = 1;
 export const BASE_TEST_MENUITEM_RESET_TAG = 2;
@@ -100,7 +100,7 @@ export class BaseTestLayer extends LayerGradient {
   onEnter() {
     super.onEnter();
 
-    Sys.getInstance().garbageCollect();
+    ServiceLocator.sys.garbageCollect();
 
     // Push current test title/subtitle up into the parent scene's header.
     let scene = this.getParent();
@@ -266,14 +266,14 @@ export class BaseTestLayer extends LayerGradient {
   }
 
   readPixels(x, y, w, h) {
-    if ("opengl" in Sys.getInstance().capabilities) {
+    if ("opengl" in ServiceLocator.sys.capabilities) {
       var size = 4 * w * h;
       var array = new Uint8Array(size);
       gl.readPixels(x, y, w, h, gl.RGBA, gl.UNSIGNED_BYTE, array);
       return array;
     } else {
       // implement a canvas-html5 readpixels
-      return RendererConfig.getInstance().renderContext.getImageData(
+      return ServiceLocator.rendererConfig.renderContext.getImageData(
         x,
         winSize.height - y - h,
         w,
@@ -333,7 +333,7 @@ export var FlowControl = function (testArray) {
       sceneIdx = 0;
       var s = new Scene();
       s.addChild(this.current());
-      Director.getInstance().runScene(s);
+      ServiceLocator.director.runScene(s);
     }
   };
 };

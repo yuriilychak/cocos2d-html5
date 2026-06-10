@@ -1,4 +1,4 @@
-import { Game } from "@aspect/core";
+import { ServiceLocator } from "@aspect/core";
 import "./audio-support.js";
 import { Audio } from "./audio.js";
 import { WebAudio } from "./web-audio.js";
@@ -9,6 +9,6 @@ import { AudioEngine } from "./audio-engine.js";
 Audio.WebAudio = WebAudio;
 
 export const audioEngine = new AudioEngine();
-Game.getInstance().audioEngine = audioEngine;
+ServiceLocator.game.audioEngine = audioEngine;
 
 export { Audio, WebAudio, AudioEngine };

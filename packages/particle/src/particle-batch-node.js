@@ -27,20 +27,7 @@
  *
  */
 
-import {
-  Node,
-  Texture2D,
-  TextureAtlas,
-  TextureCache,
-  RendererConfig,
-  BlendFunc,
-  BLEND_SRC,
-  BLEND_DST,
-  SRC_ALPHA,
-  ONE_MINUS_SRC_ALPHA,
-  log,
-  isString
-} from "@aspect/core";
+import { Node, Texture2D, TextureAtlas, BlendFunc, BLEND_SRC, BLEND_DST, SRC_ALPHA, ONE_MINUS_SRC_ALPHA, log, isString, ServiceLocator } from "@aspect/core";
 import { ParticleSystem } from "./particle-system/particle-system";
 
 /**
@@ -81,7 +68,7 @@ export const PARTICLE_DEFAULT_CAPACITY = 500;
  *
  * 2.
  * //Create a ParticleBatchNode with a texture and capacity
- * var texture = TextureCache.getInstance().addImage("res/grossini_dance.png");
+ * var texture = ServiceLocator.textureCache.addImage("res/grossini_dance.png");
  * var particleBatchNode = new ParticleBatchNode(texture, 30);
  */
 export class ParticleBatchNode extends Node {
@@ -102,7 +89,7 @@ export class ParticleBatchNode extends Node {
    *
    * 2.
    * //Create a ParticleBatchNode with a texture and capacity
-   * var texture = TextureCache.getInstance().addImage("res/grossini_dance.png");
+   * var texture = ServiceLocator.textureCache.addImage("res/grossini_dance.png");
    * var particleBatchNode = new ParticleBatchNode(texture, 30);
    */
   constructor(fileImage, capacity) {
@@ -123,7 +110,7 @@ export class ParticleBatchNode extends Node {
   }
 
   _createRenderCmd() {
-    if (RendererConfig.getInstance().isCanvas)
+    if (ServiceLocator.rendererConfig.isCanvas)
       return new ParticleBatchNode.CanvasRenderCmd(this);
     else return new ParticleBatchNode.WebGLRenderCmd(this);
   }
@@ -152,7 +139,7 @@ export class ParticleBatchNode extends Node {
    * @return {Boolean}
    */
   initWithFile(fileImage, capacity) {
-    var tex = TextureCache.getInstance().addImage(fileImage);
+    var tex = ServiceLocator.textureCache.addImage(fileImage);
     return this.initWithTexture(tex, capacity);
   }
 
@@ -163,7 +150,7 @@ export class ParticleBatchNode extends Node {
    * @return {Boolean}
    */
   init(fileImage, capacity) {
-    var tex = TextureCache.getInstance().addImage(fileImage);
+    var tex = ServiceLocator.textureCache.addImage(fileImage);
     return this.initWithTexture(tex, capacity);
   }
 
@@ -178,7 +165,7 @@ export class ParticleBatchNode extends Node {
     }
 
     cmd.visit(parentCmd);
-    RendererConfig.getInstance().renderer.pushRenderCommand(cmd);
+    ServiceLocator.rendererConfig.renderer.pushRenderCommand(cmd);
     cmd._dirtyFlag = 0;
   }
 

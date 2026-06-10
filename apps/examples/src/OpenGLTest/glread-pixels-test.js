@@ -30,13 +30,13 @@
 //------------------------------------------------------------------
 import { OpenGLTestLayer } from "./open-gltest-layer";
 import { winSize } from "../constants";
-import { Color, LayerColor, Sys } from "@aspect/core";
+import { Color, LayerColor, ServiceLocator } from "@aspect/core";
 
 export class GLReadPixelsTest extends OpenGLTestLayer {
   constructor() {
     super();
 
-    if ("opengl" in Sys.getInstance().capabilities) {
+    if ("opengl" in ServiceLocator.sys.capabilities) {
       var x = winSize.width;
       var y = winSize.height;
 

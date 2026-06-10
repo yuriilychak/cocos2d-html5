@@ -1,4 +1,4 @@
-import { Node, RendererConfig } from "@aspect/core";
+import { Node, ServiceLocator } from "@aspect/core";
 
 export class ClippingNode extends Node {
   static stencilBits = -1;
@@ -59,7 +59,7 @@ export class ClippingNode extends Node {
   }
 
   _visitChildren() {
-    const renderer = RendererConfig.getInstance().renderer;
+    const renderer = ServiceLocator.rendererConfig.renderer;
     if (this._reorderChildDirty) {
       this.sortAllChildren();
     }
@@ -103,7 +103,7 @@ export class ClippingNode extends Node {
   }
 
   _createRenderCmd() {
-    if (RendererConfig.getInstance().isCanvas)
+    if (ServiceLocator.rendererConfig.isCanvas)
       return new this.constructor.CanvasRenderCmd(this);
     else return new this.constructor.WebGLRenderCmd(this);
   }

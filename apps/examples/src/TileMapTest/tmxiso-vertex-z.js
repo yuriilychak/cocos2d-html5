@@ -34,7 +34,7 @@ import { s_resprefix, s_simpleFont_fnt } from "../resources";
 import { director, winSize } from "../constants";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
 import { TMXFixBugLayer } from "./tmxfix-bug-layer";
-import { Director, Point, RendererConfig, Sprite, Sys } from "@aspect/core";
+import { Director, Point, Sprite, ServiceLocator } from "@aspect/core";
 import { DelayTime, MoveBy, Sequence } from "@aspect/actions";
 import { TMXTiledMap } from "@aspect/tilemap";
 import { TextBMFont } from "@aspect/ccui";
@@ -66,8 +66,8 @@ export class TMXIsoVertexZ extends TMXFixBugLayer {
     this.tamara.runAction(seq.repeatForever());
 
     if (
-      !Sys.getInstance().isNative &&
-      !("opengl" in Sys.getInstance().capabilities)
+      !ServiceLocator.sys.isNative &&
+      !("opengl" in ServiceLocator.sys.capabilities)
     ) {
       var label = new TextBMFont("Not supported on HTML5-canvas", s_simpleFont_fnt);
       this.addChild(label);
@@ -94,13 +94,13 @@ export class TMXIsoVertexZ extends TMXFixBugLayer {
     super.onExit();
   }
   repositionSprite(dt) {
-    if (Sys.getInstance().isNative) {
+    if (ServiceLocator.sys.isNative) {
       this.tamara.vertexZ = -(this.tamara.y + 32) / 16;
     } else {
       var layer = this.tamara.parent;
       this.tamara.vertexZ =
         layer.vertexZ +
-        (RendererConfig.getInstance().renderer.assignedZStep *
+        (ServiceLocator.rendererConfig.renderer.assignedZStep *
           Math.floor(30 - this.tamara.y / 32)) /
           30;
     }

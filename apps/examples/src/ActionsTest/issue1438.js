@@ -34,7 +34,7 @@ import { ActionsDemo } from "./actions-demo";
 import { s_animations2Plist } from "../resources";
 import { Animate, Sequence } from "@aspect/actions";
 
-import { Animation, AnimationCache } from "@aspect/core";
+import { Animation, ServiceLocator } from "@aspect/core";
 export class Issue1438 extends ActionsDemo {
   onEnter() {
     //----start45----onEnter
@@ -64,7 +64,7 @@ export class Issue1438 extends ActionsDemo {
     //
     // File animation
     //
-    var animCache = AnimationCache.getInstance();
+    var animCache = ServiceLocator.animationCache;
     animCache.addAnimations(s_animations2Plist);
     var animation2 = animCache.getAnimation("dance_1");
     animation2.setDelayPerUnit(1 / 60);

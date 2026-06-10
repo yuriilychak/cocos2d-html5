@@ -31,7 +31,7 @@ import { RestartGameLayerTest } from "./restart-game-layer-test";
 import { ScriptTestLayer } from "./script-test-layer";
 import { setClearColorTest } from "./set-clear-color-test";
 import { sysTestSceneIdx, _setsysTestSceneIdx } from "./sys-test-constants";
-import { Sys } from "@aspect/core";
+import { ServiceLocator } from "@aspect/core";
 
 //------------------------------------------------------------------
 //
@@ -50,7 +50,7 @@ export var arrayOfSysTest = [
   setClearColorTest
 ];
 
-if (Sys.getInstance().isNative && Sys.getInstance().OS_WINDOWS != Sys.getInstance().os) {
+if (ServiceLocator.sys.isNative && ServiceLocator.sys.OS_WINDOWS != ServiceLocator.sys.os) {
   arrayOfSysTest.push(ScriptTestLayer);
   arrayOfSysTest.push(RestartGameLayerTest);
 }

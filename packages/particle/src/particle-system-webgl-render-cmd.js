@@ -22,29 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import {
-  Node,
-  Rect,
-  Matrix4,
-  RendererConfig,
-  ShaderCache,
-  glBindTexture2D,
-  glBlendFuncForParticle,
-  VERTEX_ATTRIB_POSITION,
-  VERTEX_ATTRIB_COLOR,
-  VERTEX_ATTRIB_TEX_COORDS,
-  V3F_C4B_T2F_Quad,
-  V3F_C4B_T2F_QuadZero,
-  SHADER_POSITION_TEXTURECOLOR,
-  SRC_ALPHA,
-  ONE_MINUS_SRC_ALPHA,
-  BLEND_SRC,
-  BLEND_DST,
-  contentScaleFactor,
-  degreesToRadians,
-  log,
-  FIX_ARTIFACTS_BY_STRECHING_TEXEL
-} from "@aspect/core";
+import { Node, Rect, Matrix4, glBindTexture2D, glBlendFuncForParticle, VERTEX_ATTRIB_POSITION, VERTEX_ATTRIB_COLOR, VERTEX_ATTRIB_TEX_COORDS, V3F_C4B_T2F_Quad, V3F_C4B_T2F_QuadZero, SHADER_POSITION_TEXTURECOLOR, SRC_ALPHA, ONE_MINUS_SRC_ALPHA, BLEND_SRC, BLEND_DST, contentScaleFactor, degreesToRadians, log, FIX_ARTIFACTS_BY_STRECHING_TEXEL, ServiceLocator } from "@aspect/core";
 import { Particle } from "./particle-system/particle";
 
 export class ParticleSystemWebGLRenderCmd extends Node.WebGLRenderCmd {
@@ -91,7 +69,7 @@ export class ParticleSystemWebGLRenderCmd extends Node.WebGLRenderCmd {
           node.atlasIndex
         );
 
-        RendererConfig.getInstance().renderContext.deleteBuffer(
+        ServiceLocator.rendererConfig.renderContext.deleteBuffer(
           this._buffersVBO[1]
         );
       }
@@ -203,7 +181,7 @@ export class ParticleSystemWebGLRenderCmd extends Node.WebGLRenderCmd {
     const node = this._node;
     if (!node._texture) return;
 
-    const gl = ctx || RendererConfig.getInstance().renderContext;
+    const gl = ctx || ServiceLocator.rendererConfig.renderContext;
 
     if (!this._matrix) {
       this._matrix = new Matrix4();
@@ -366,7 +344,7 @@ export class ParticleSystemWebGLRenderCmd extends Node.WebGLRenderCmd {
   }
 
   _setupVBO() {
-    const gl = RendererConfig.getInstance().renderContext;
+    const gl = ServiceLocator.rendererConfig.renderContext;
 
     this._buffersVBO[0] = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, this._buffersVBO[0]);
@@ -411,7 +389,7 @@ export class ParticleSystemWebGLRenderCmd extends Node.WebGLRenderCmd {
   }
 
   postStep() {
-    const gl = RendererConfig.getInstance().renderContext;
+    const gl = ServiceLocator.rendererConfig.renderContext;
     gl.bindBuffer(gl.ARRAY_BUFFER, this._buffersVBO[0]);
     gl.bufferSubData(gl.ARRAY_BUFFER, 0, this._quadsArrayBuffer);
   }
@@ -433,7 +411,7 @@ export class ParticleSystemWebGLRenderCmd extends Node.WebGLRenderCmd {
     this.initIndices(totalParticles);
     this._setupVBO();
 
-    this._shaderProgram = ShaderCache.getInstance().programForKey(
+    this._shaderProgram = ServiceLocator.shaderCache.programForKey(
       SHADER_POSITION_TEXTURECOLOR
     );
   }

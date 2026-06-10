@@ -26,7 +26,7 @@
  ****************************************************************************/
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
-import { Color, EventListener, EventManager, assert } from "@aspect/core";
+import { Color, EventListener, assert, ServiceLocator } from "@aspect/core";
 import { ButtonLayout } from "../button-layout";
 
 export class RemoveListenerAfterAddingTest extends EventDispatcherTestDemo {
@@ -53,8 +53,8 @@ export class RemoveListenerAfterAddingTest extends EventDispatcherTestDemo {
                 return true;
               }
             });
-            EventManager.getInstance().addListener(listener, -1);
-            EventManager.getInstance().removeListener(listener);
+            ServiceLocator.eventManager.addListener(listener, -1);
+            ServiceLocator.eventManager.removeListener(listener);
             break;
           }
           case 1: {
@@ -65,8 +65,8 @@ export class RemoveListenerAfterAddingTest extends EventDispatcherTestDemo {
                 return true;
               }
             });
-            EventManager.getInstance().addListener(listener, -1);
-            EventManager.getInstance().removeListeners(EventListener.TOUCH_ONE_BY_ONE);
+            ServiceLocator.eventManager.addListener(listener, -1);
+            ServiceLocator.eventManager.removeListeners(EventListener.TOUCH_ONE_BY_ONE);
             layout.showButton(3);
             break;
           }
@@ -78,8 +78,8 @@ export class RemoveListenerAfterAddingTest extends EventDispatcherTestDemo {
                 return true;
               }
             });
-            EventManager.getInstance().addListener(listener, -1);
-            EventManager.getInstance().removeAllListeners();
+            ServiceLocator.eventManager.addListener(listener, -1);
+            ServiceLocator.eventManager.removeAllListeners();
             layout.showButton(3);
             break;
           }

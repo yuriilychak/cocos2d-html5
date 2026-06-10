@@ -28,7 +28,7 @@
 import { s_simpleFont_fnt } from "../resources";
 import { winSize } from "../constants";
 import { TextureCacheTestBase } from "./texture-cache-test-base";
-import { Loader, Sprite, Sys, Texture2D, log, textureCache } from "@aspect/core";
+import { Sprite, Texture2D, log, ServiceLocator } from "@aspect/core";
 import { TextBMFont } from "@aspect/ccui";
 export class RemoteTextureTest extends TextureCacheTestBase {
   constructor() {
@@ -40,7 +40,7 @@ export class RemoteTextureTest extends TextureCacheTestBase {
 
   onEnter() {
     super.onEnter();
-    if ("opengl" in Sys.getInstance().capabilities && !Sys.getInstance().isNative) {
+    if ("opengl" in ServiceLocator.sys.capabilities && !ServiceLocator.sys.isNative) {
       var label = new TextBMFont(
         "Not support Loading texture from remote site on HTML5-WebGL",
         s_simpleFont_fnt
@@ -60,10 +60,10 @@ export class RemoteTextureTest extends TextureCacheTestBase {
     ];
 
     for (var i = 0; i < imageUrlArray.length; i++) {
-      textureCache.addImageAsync(imageUrlArray[i], this.texLoaded, this);
+      ServiceLocator.textureCache.addImageAsync(imageUrlArray[i], this.texLoaded, this);
     }
 
-    Loader.getInstance().loadImg(
+    ServiceLocator.loader.loadImg(
       "http://www.cocos2d-x.org/no_such_file.jpg",
       this.failLoaded.bind(this)
     );

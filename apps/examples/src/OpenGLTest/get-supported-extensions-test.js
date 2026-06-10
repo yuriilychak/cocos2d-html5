@@ -30,13 +30,13 @@
 //------------------------------------------------------------------
 import { OpenGLTestLayer } from "./open-gltest-layer";
 import { autoTestEnabled } from "../constants";
-import { Sys, log } from "@aspect/core";
+import { log, ServiceLocator } from "@aspect/core";
 
 export class GetSupportedExtensionsTest extends OpenGLTestLayer {
   constructor() {
     super();
 
-    if ("opengl" in Sys.getInstance().capabilities) {
+    if ("opengl" in ServiceLocator.sys.capabilities) {
       if (!autoTestEnabled) {
         var array = gl.getSupportedExtensions();
         log(JSON.stringify(array));

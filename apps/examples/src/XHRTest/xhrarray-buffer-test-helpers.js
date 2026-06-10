@@ -26,11 +26,11 @@
  ****************************************************************************/
 
 import { XHRArrayBufferTestLayer } from "./xhrarray-buffer-test-layer";
-import { Director, Scene } from "@aspect/core";
+import { Scene, ServiceLocator } from "@aspect/core";
 
 export function runXHRArrayBufferTest() {
   var pScene = new Scene();
   var pLayer = new XHRArrayBufferTestLayer();
   pScene.addChild(pLayer);
-  Director.getInstance().runScene(pScene);
+  ServiceLocator.director.runScene(pScene);
 }

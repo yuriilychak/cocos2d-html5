@@ -21,7 +21,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-import { Game, Sys } from "@aspect/core";
+import { ServiceLocator } from "@aspect/core";
 
 
 // Resources prefix
@@ -30,8 +30,8 @@ export var s_resprefix = "";
 export var ccbjs = "";
 // js-test use cpptest resource in debug mode , and in the release mode, console will copy the resource into the res dir
 // so the respath will modify to res,
-if (!Sys.getInstance().isNative) {
-    if (Game.getInstance().config && Game.getInstance().config[Game.getInstance().CONFIG_KEY.engineDir] !== "frameworks/cocos2d-html5") {
+if (!ServiceLocator.sys.isNative) {
+    if (ServiceLocator.game.config && ServiceLocator.game.config[ServiceLocator.game.CONFIG_KEY.engineDir] !== "frameworks/cocos2d-html5") {
         ccbjs = "";
     } else {
         ccbjs = "";
@@ -609,7 +609,7 @@ export var g_spine = [
     "spine/goblins-pro.json"
 ];
 
-if (!Sys.getInstance().isNative) {
+if (!ServiceLocator.sys.isNative) {
     var res = res || {};
     res.CCControlColourPickerSpriteSheet_plist = "extensions/CCControlColourPickerSpriteSheet.plist";
     res.CCControlColourPickerSpriteSheet_png = "extensions/CCControlColourPickerSpriteSheet.png";

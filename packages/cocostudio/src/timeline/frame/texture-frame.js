@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { SpriteFrameCache } from "@aspect/core";
+import { ServiceLocator } from "@aspect/core";
 import { Frame } from "./frame.js";
 
 
@@ -53,7 +53,7 @@ export class TextureFrame extends Frame {
   onEnter(nextFrame) {
     if (this._sprite) {
       var spriteBlendFunc = this._sprite.getBlendFunc();
-      var spriteFrame = SpriteFrameCache.getInstance()._spriteFrames[this._textureName];
+      var spriteFrame = ServiceLocator.spriteFrameCache._spriteFrames[this._textureName];
       if (spriteFrame != null) this._sprite.setSpriteFrame(spriteFrame);
       else this._sprite.setTexture(this._textureName);
 

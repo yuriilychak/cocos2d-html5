@@ -1,4 +1,4 @@
-import { Layer, Sprite, LabelTTF, Director, log } from "@aspect/core";
+import { Layer, Sprite, LabelTTF, log, ServiceLocator } from "@aspect/core";
 import { s_HelloWorld } from "./resource";
 
 export class MyLayer extends Layer {
@@ -17,7 +17,7 @@ export class MyLayer extends Layer {
     // 2. add a menu item with "X" image, which is clicked to quit the program
     //    you may modify it.
     // ask director the window size
-    const size = Director.getInstance().getWinSize();
+    const size = ServiceLocator.director.getWinSize();
 
     /////////////////////////////
     // 3. add your codes below...

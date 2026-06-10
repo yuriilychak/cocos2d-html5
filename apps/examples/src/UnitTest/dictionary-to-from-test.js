@@ -30,7 +30,7 @@
 //------------------------------------------------------------------
 import { s_animations2Plist, s_grossiniPlist } from "../resources";
 import { UnitTestBase } from "./unit-test-base";
-import { AnimationCache, SpriteFrameCache } from "@aspect/core";
+import { ServiceLocator } from "@aspect/core";
 export class DictionaryToFromTest extends UnitTestBase {
   constructor() {
     super();
@@ -45,11 +45,11 @@ export class DictionaryToFromTest extends UnitTestBase {
   }
 
   runTest() {
-    var frameCache = SpriteFrameCache.getInstance();
+    var frameCache = ServiceLocator.spriteFrameCache;
     frameCache.addSpriteFrames(s_grossiniPlist);
 
     // Purge previously loaded animation
-    var animCache = AnimationCache.getInstance();
+    var animCache = ServiceLocator.animationCache;
     animCache.addAnimations(s_animations2Plist);
 
     var normal = animCache.getAnimation("dance_1");

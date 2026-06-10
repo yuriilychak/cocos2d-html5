@@ -1,4 +1,4 @@
-import { Layer, CustomRenderCmd, EGLView, Rect, RendererConfig } from "@aspect/core";
+import { Layer, CustomRenderCmd, Rect, ServiceLocator } from "@aspect/core";
 
 export class GuiScrollViewWebGLRenderCmd extends Layer.WebGLRenderCmd {
     constructor(renderable) {
@@ -11,7 +11,7 @@ export class GuiScrollViewWebGLRenderCmd extends Layer.WebGLRenderCmd {
 
     _startCmd() {
         var node = this._node;
-        var eglView = EGLView.getInstance();
+        var eglView = ServiceLocator.eglView;
         var frame = node._getViewRect();
         if (eglView.isScissorEnabled()) {
             node._scissorRestored = true;
@@ -25,7 +25,7 @@ export class GuiScrollViewWebGLRenderCmd extends Layer.WebGLRenderCmd {
                 eglView.setScissorInPoints(x, y, xx - x, yy - y);
             }
         } else {
-            var ctx = RendererConfig.getInstance().renderContext;
+            var ctx = ServiceLocator.rendererConfig.renderContext;
             ctx.enable(ctx.SCISSOR_TEST);
             eglView.setScissorInPoints(frame.x, frame.y, frame.width, frame.height);
         }
@@ -35,9 +35,9 @@ export class GuiScrollViewWebGLRenderCmd extends Layer.WebGLRenderCmd {
         var node = this._node;
         if (node._scissorRestored) {
             var rect = node._parentScissorRect;
-            EGLView.getInstance().setScissorInPoints(rect.x, rect.y, rect.width, rect.height);
+            ServiceLocator.eglView.setScissorInPoints(rect.x, rect.y, rect.width, rect.height);
         } else {
-            var ctx = RendererConfig.getInstance().renderContext;
+            var ctx = ServiceLocator.rendererConfig.renderContext;
             ctx.disable(ctx.SCISSOR_TEST);
         }
     }

@@ -27,7 +27,7 @@
 
 import { TestScene } from "../test-scene";
 import { PongLayer } from "./pong-layer";
-import { Director } from "@aspect/core";
+import { ServiceLocator } from "@aspect/core";
 
 export class TouchesTestScene extends TestScene {
   constructor() {
@@ -36,6 +36,6 @@ export class TouchesTestScene extends TestScene {
     this.addChild(pongLayer);
   }
   runThisTest() {
-    Director.getInstance().runScene(this);
+    ServiceLocator.director.runScene(this);
   }
 }

@@ -25,16 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import {
-  log,
-  Vertex3F,
-  Quad3,
-  RendererConfig,
-  VERTEX_ATTRIB_POSITION,
-  VERTEX_ATTRIB_TEX_COORDS,
-  incrementGLDraws,
-  Matrix4
-} from "@aspect/core";
+import { log, Vertex3F, Quad3, VERTEX_ATTRIB_POSITION, VERTEX_ATTRIB_TEX_COORDS, incrementGLDraws, Matrix4, ServiceLocator } from "@aspect/core";
 import { GridBase } from "./grid-base.js";
 
 /**
@@ -172,7 +163,7 @@ export class TiledGrid3D extends GridBase {
     //
     // Attributes
     //
-    const gl = RendererConfig.getInstance().renderContext;
+    const gl = ServiceLocator.rendererConfig.renderContext;
     const locDirty = this._dirty;
     gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
     gl.enableVertexAttribArray(VERTEX_ATTRIB_TEX_COORDS);
@@ -232,7 +223,7 @@ export class TiledGrid3D extends GridBase {
     this._texCoordinates = new Float32Array(numQuads * 8);
     this._indices = new Uint16Array(numQuads * 6);
 
-    const gl = RendererConfig.getInstance().renderContext;
+    const gl = ServiceLocator.rendererConfig.renderContext;
     if (this._verticesBuffer) gl.deleteBuffer(this._verticesBuffer);
     this._verticesBuffer = gl.createBuffer();
     if (this._texCoordinateBuffer) gl.deleteBuffer(this._texCoordinateBuffer);

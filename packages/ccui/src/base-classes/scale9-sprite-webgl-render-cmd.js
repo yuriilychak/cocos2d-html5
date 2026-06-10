@@ -1,4 +1,4 @@
-import { Node, ShaderCache, RendererConfig, SHADER_SPRITE_POSITION_TEXTURECOLOR, SHADER_SPRITE_POSITION_TEXTURECOLOR_MULTI, SHADER_SPRITE_POSITION_TEXTURECOLOR_GRAY } from '@aspect/core';
+import { Node, SHADER_SPRITE_POSITION_TEXTURECOLOR, SHADER_SPRITE_POSITION_TEXTURECOLOR_MULTI, SHADER_SPRITE_POSITION_TEXTURECOLOR_GRAY, ServiceLocator } from "@aspect/core";
 import { Scale9Sprite } from './scale9-sprite';
 
 // The normal-state Scale9Sprite shares the sprite quad vertex format and the
@@ -7,7 +7,7 @@ import { Scale9Sprite } from './scale9-sprite';
 // batch together with (and across textures alongside) regular sprites instead
 // of breaking the batch on every program boundary.
 function normalSpriteProgramKey() {
-    return RendererConfig.getInstance().isWebGL2
+    return ServiceLocator.rendererConfig.isWebGL2
         ? SHADER_SPRITE_POSITION_TEXTURECOLOR_MULTI
         : SHADER_SPRITE_POSITION_TEXTURECOLOR;
 }
@@ -18,7 +18,7 @@ export class Scale9SpriteWebGLRenderCmd extends Node.WebGLRenderCmd {
         this._needDraw = true;
         this._color = new Uint32Array(1);
         this._dirty = false;
-        this._shaderProgram = ShaderCache.getInstance().programForKey(normalSpriteProgramKey());
+        this._shaderProgram = ServiceLocator.shaderCache.programForKey(normalSpriteProgramKey());
     }
 
     needDraw() {
@@ -90,7 +90,7 @@ export class Scale9SpriteWebGLRenderCmd extends Node.WebGLRenderCmd {
         }
 
         var ti = texIndex || 0;
-        var stride = RendererConfig.getInstance().renderer.getSizePerVertex();
+        var stride = ServiceLocator.rendererConfig.renderer.getSizePerVertex();
 
         var opacity = this._displayedOpacity;
         var r = this._displayedColor.r,
@@ -133,9 +133,9 @@ export class Scale9SpriteWebGLRenderCmd extends Node.WebGLRenderCmd {
 
     setState(state) {
         if (state === Scale9Sprite.state.NORMAL) {
-            this._shaderProgram = ShaderCache.getInstance().programForKey(normalSpriteProgramKey());
+            this._shaderProgram = ServiceLocator.shaderCache.programForKey(normalSpriteProgramKey());
         } else if (state === Scale9Sprite.state.GRAY) {
-            this._shaderProgram = ShaderCache.getInstance().programForKey(SHADER_SPRITE_POSITION_TEXTURECOLOR_GRAY);
+            this._shaderProgram = ServiceLocator.shaderCache.programForKey(SHADER_SPRITE_POSITION_TEXTURECOLOR_GRAY);
         }
     }
 }

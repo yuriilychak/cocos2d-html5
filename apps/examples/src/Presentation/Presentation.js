@@ -31,7 +31,7 @@ import {
 import { TestScene } from "../test-scene";
 import { s_pathGrossini, s_simpleFont_fnt } from "../resources";
 import { director, winSize } from "../constants";
-import { Color, EventListener, EventManager, Point, Sprite, SpriteBatchNode, Sys } from "@aspect/core";
+import { Color, EventListener, Point, Sprite, SpriteBatchNode, ServiceLocator } from "@aspect/core";
 import { TransitionSlideInL, TransitionSlideInR } from "@aspect/transitions";
 import { ButtonLayout } from "../button-layout";
 import { ParticleFireworks, ParticleMeteor, ParticleSun } from "../ParticleTest/ParticleExamples";
@@ -330,8 +330,8 @@ export class ParticlesPage extends PresentationBaseLayer {
 
     this.particle = firework;
 
-    if ("touches" in Sys.getInstance().capabilities) {
-      EventManager.getInstance().addListener(
+    if ("touches" in ServiceLocator.sys.capabilities) {
+      ServiceLocator.eventManager.addListener(
         {
           event: EventListener.TOUCH_ALL_AT_ONCE,
           onTouchesMoved: function (touches, event) {
@@ -349,8 +349,8 @@ export class ParticlesPage extends PresentationBaseLayer {
         },
         this
       );
-    } else if ("mouse" in Sys.getInstance().capabilities)
-      EventManager.getInstance().addListener(
+    } else if ("mouse" in ServiceLocator.sys.capabilities)
+      ServiceLocator.eventManager.addListener(
         {
           event: EventListener.MOUSE,
           onMouseMove: function (event) {

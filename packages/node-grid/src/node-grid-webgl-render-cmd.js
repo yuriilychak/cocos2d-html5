@@ -1,4 +1,4 @@
-import { Node, RendererConfig, CustomRenderCmd, KMGLMatrix } from "@aspect/core";
+import { Node, CustomRenderCmd, ServiceLocator } from "@aspect/core";
 
 export class NodeGridWebGLRenderCmd extends Node.WebGLRenderCmd {
   constructor(renderable) {
@@ -17,12 +17,12 @@ export class NodeGridWebGLRenderCmd extends Node.WebGLRenderCmd {
     if (parentCmd)
       this._curLevel = parentCmd._curLevel + 1;
 
-    const currentStack = KMGLMatrix.getInstance().currentStack;
+    const currentStack = ServiceLocator.kmglMatrix.currentStack;
     currentStack.stack.push(currentStack.top);
     this._syncStatus(parentCmd);
     currentStack.top = this._stackMatrix;
 
-    RendererConfig.getInstance().renderer.pushRenderCommand(this._gridBeginCommand);
+    ServiceLocator.rendererConfig.renderer.pushRenderCommand(this._gridBeginCommand);
 
     if (node._target)
       node._target.visit();
@@ -37,7 +37,7 @@ export class NodeGridWebGLRenderCmd extends Node.WebGLRenderCmd {
       }
     }
 
-    RendererConfig.getInstance().renderer.pushRenderCommand(this._gridEndCommand);
+    ServiceLocator.rendererConfig.renderer.pushRenderCommand(this._gridEndCommand);
 
     this._dirtyFlag = 0;
     currentStack.top = currentStack.stack.pop();

@@ -32,13 +32,13 @@ import { OpenGLTestLayer } from "./open-gltest-layer";
 import { ShaderNode } from "./shader-node";
 import { ccbjs } from "../resources";
 import { winSize } from "../constants";
-import { Sys } from "@aspect/core";
+import { ServiceLocator } from "@aspect/core";
 
 export class ShaderHeartTest extends OpenGLTestLayer {
     constructor() {
         super();
 
-        if( 'opengl' in Sys.getInstance().capabilities ) {
+        if( 'opengl' in ServiceLocator.sys.capabilities ) {
             var shaderNode = new ShaderNode(ccbjs + "Shaders/example_Heart.vsh", ccbjs + "Shaders/example_Heart.fsh");
             this.addChild(shaderNode,10);
             shaderNode.x = winSize.width/2;

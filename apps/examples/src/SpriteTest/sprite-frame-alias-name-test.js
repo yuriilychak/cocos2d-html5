@@ -34,7 +34,7 @@ import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_aliases, s_grossini_aliasesPlist } from "../resources";
 import { winSize } from "../constants";
 import { Animate } from "@aspect/actions";
-import { Animation, Sprite, SpriteBatchNode, SpriteFrameCache } from "@aspect/core";
+import { Animation, Sprite, SpriteBatchNode, ServiceLocator } from "@aspect/core";
 export class SpriteFrameAliasNameTest extends SpriteTestDemo {
     constructor() {
         super();
@@ -52,7 +52,7 @@ export class SpriteFrameAliasNameTest extends SpriteTestDemo {
         //
         // spriteFrameCache is a cache of SpriteFrames
         // SpriteFrames each contain a texture id and a rect (frame).
-        SpriteFrameCache.getInstance().addSpriteFrames(s_grossini_aliasesPlist, s_grossini_aliases);
+        ServiceLocator.spriteFrameCache.addSpriteFrames(s_grossini_aliasesPlist, s_grossini_aliases);
 
         //
         // Animation using Sprite batch
@@ -80,7 +80,7 @@ export class SpriteFrameAliasNameTest extends SpriteTestDemo {
         for (var i = 1; i < 15; i++) {
             // Obtain frames by alias name
             str = "dance_" + (i < 10 ? ("0" + i) : i);
-            var frame = SpriteFrameCache.getInstance().getSpriteFrame(str);
+            var frame = ServiceLocator.spriteFrameCache.getSpriteFrame(str);
             animFrames.push(frame);
         }
 
@@ -92,7 +92,7 @@ export class SpriteFrameAliasNameTest extends SpriteTestDemo {
     }
     onExit() {
         super.onExit();
-        SpriteFrameCache.getInstance().removeSpriteFramesFromFile(s_grossini_aliasesPlist);
+        ServiceLocator.spriteFrameCache.removeSpriteFramesFromFile(s_grossini_aliasesPlist);
     }
     //
     // Automation

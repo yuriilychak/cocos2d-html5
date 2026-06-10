@@ -33,7 +33,7 @@ import {
   _set_stencilBits
 } from "./clipping-node-test-helpers";
 import { s_pathGrossini } from "../resources";
-import { Color, CustomRenderCmd, Director, Game, Point, RendererConfig, Sprite, kmGLPopMatrix, kmGLPushMatrix, log } from "@aspect/core";
+import { Color, CustomRenderCmd, Point, Sprite, kmGLPopMatrix, kmGLPushMatrix, log, ServiceLocator } from "@aspect/core";
 export class RawStencilBufferTest extends BaseClippingNodeTest {
   constructor() {
     super();
@@ -54,8 +54,8 @@ export class RawStencilBufferTest extends BaseClippingNodeTest {
 
   setup() {
     _set_stencilBits(
-      RendererConfig.getInstance().renderContext.getParameter(
-        RendererConfig.getInstance().renderContext.STENCIL_BITS
+      ServiceLocator.rendererConfig.renderContext.getParameter(
+        ServiceLocator.rendererConfig.renderContext.STENCIL_BITS
       )
     );
     if (_stencilBits < 3)
@@ -65,12 +65,12 @@ export class RawStencilBufferTest extends BaseClippingNodeTest {
     this._sprite.anchorX = 0.5;
     this._sprite.anchorY = 0;
     this._sprite.scale = 2.5;
-    Director.getInstance().setAlphaBlending(true);
+    ServiceLocator.director.setAlphaBlending(true);
   }
 
   draw(ctx) {
-    var gl = ctx || RendererConfig.getInstance().renderContext;
-    var winPoint = Point.fromSize(Director.getInstance().getWinSize());
+    var gl = ctx || ServiceLocator.rendererConfig.renderContext;
+    var winPoint = Point.fromSize(ServiceLocator.director.getWinSize());
     var planeSize = Point.mult(winPoint, 1.0 / _PLANE_COUNT);
 
     gl.enable(gl.STENCIL_TEST);
@@ -88,7 +88,7 @@ export class RawStencilBufferTest extends BaseClippingNodeTest {
       this.setupStencilForClippingOnPlane(i);
       //checkGLErrorDebug();
 
-      Game.getInstance().drawingUtils.drawSolidRect(
+      ServiceLocator.game.drawingUtils.drawSolidRect(
         new Point(0, 0),
         stencilPoint,
         new Color(255, 255, 255, 255)
@@ -102,7 +102,7 @@ export class RawStencilBufferTest extends BaseClippingNodeTest {
       this.setupStencilForDrawingOnPlane(i);
       //checkGLErrorDebug();
 
-      Game.getInstance().drawingUtils.drawSolidRect(
+      ServiceLocator.game.drawingUtils.drawSolidRect(
         new Point(0, 0),
         winPoint,
         _planeColor[i]
@@ -119,7 +119,7 @@ export class RawStencilBufferTest extends BaseClippingNodeTest {
   }
 
   setupStencilForClippingOnPlane(plane) {
-    var gl = RendererConfig.getInstance().renderContext;
+    var gl = ServiceLocator.rendererConfig.renderContext;
     var planeMask = 0x1 << plane;
     gl.stencilMask(planeMask);
     gl.clearStencil(0x0);
@@ -130,7 +130,7 @@ export class RawStencilBufferTest extends BaseClippingNodeTest {
   }
 
   setupStencilForDrawingOnPlane(plane) {
-    var gl = RendererConfig.getInstance().renderContext;
+    var gl = ServiceLocator.rendererConfig.renderContext;
     var planeMask = 0x1 << plane;
     var equalOrLessPlanesMask = planeMask | (planeMask - 1);
     gl.stencilFunc(gl.EQUAL, equalOrLessPlanesMask, equalOrLessPlanesMask);

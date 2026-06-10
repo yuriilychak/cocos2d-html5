@@ -22,15 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import {
-  EventManager,
-  RendererConfig,
-  Node,
-  EGLView,
-  log,
-  Sys,
-  Game
-} from "@aspect/core";
+import { Node, log, Sys, Game, ServiceLocator } from "@aspect/core";
 import { Widget } from "../base-classes/widget";
 
 /**
@@ -51,8 +43,8 @@ export class WebView extends Widget {
   visit() {
     var cmd = this._renderCmd,
       div = cmd._div,
-      container = Game.getInstance().container,
-      eventManager = EventManager.getInstance();
+      container = ServiceLocator.game.container,
+      eventManager = ServiceLocator.eventManager;
     if (this._visible) {
       container.appendChild(div);
       if (this._listener === null)
@@ -78,7 +70,7 @@ export class WebView extends Widget {
       cmd._listener = null;
     }
     cmd.updateStatus();
-    cmd.resize(EGLView.getInstance());
+    cmd.resize(ServiceLocator.eglView);
   }
 
   setJavascriptInterfaceScheme(scheme) {}
@@ -276,7 +268,7 @@ if (Sys.isMobile) {
 
 {
   const polyfill = WebView._polyfill;
-  const RenderCmd = RendererConfig.getInstance().isWebGL
+  const RenderCmd = ServiceLocator.rendererConfig.isWebGL
     ? Node.WebGLRenderCmd
     : Node.CanvasRenderCmd;
   WebView.RenderCmd = class extends RenderCmd {
@@ -319,21 +311,21 @@ if (Sys.isMobile) {
       this.originTransform(parentCmd, recursive);
       this.updateMatrix(
         this._worldTransform,
-        EGLView.getInstance()._scaleX,
-        EGLView.getInstance()._scaleY
+        ServiceLocator.eglView._scaleX,
+        ServiceLocator.eglView._scaleY
       );
     }
 
     updateStatus() {
-      polyfill.devicePixelRatio = EGLView.getInstance().isRetinaEnabled();
+      polyfill.devicePixelRatio = ServiceLocator.eglView.isRetinaEnabled();
       var flags = Node._dirtyFlags,
         locFlag = this._dirtyFlag;
       if (locFlag & flags.transformDirty) {
         this.transform(this.getParentRenderCmd(), true);
         this.updateMatrix(
           this._worldTransform,
-          EGLView.getInstance()._scaleX,
-          EGLView.getInstance()._scaleY
+          ServiceLocator.eglView._scaleX,
+          ServiceLocator.eglView._scaleY
         );
         this._dirtyFlag =
           (this._dirtyFlag & Node._dirtyFlags.transformDirty) ^ this._dirtyFlag;
@@ -346,9 +338,9 @@ if (Sys.isMobile) {
     }
 
     resize(view) {
-      view = view || EGLView.getInstance();
+      view = view || ServiceLocator.eglView;
       var node = this._node,
-        eventManager = EventManager.getInstance();
+        eventManager = ServiceLocator.eventManager;
       if (node._parent && node._visible)
         this.updateMatrix(this._worldTransform, view._scaleX, view._scaleY);
       else {
@@ -364,12 +356,12 @@ if (Sys.isMobile) {
     updateMatrix(t, scaleX, scaleY) {
       var node = this._node;
       if (polyfill.devicePixelRatio) {
-        var dpr = EGLView.getInstance().getDevicePixelRatio();
+        var dpr = ServiceLocator.eglView.getDevicePixelRatio();
         scaleX = scaleX / dpr;
         scaleY = scaleY / dpr;
       }
       if (this._loaded === false) return;
-      var containerStyle = Game.getInstance().container.style,
+      var containerStyle = ServiceLocator.game.container.style,
         offsetX = parseInt(containerStyle.paddingLeft),
         offsetY = parseInt(containerStyle.paddingBottom),
         cw = node._contentSize.width,
@@ -430,13 +422,13 @@ if (Sys.isMobile) {
       var div = this._div;
       if (div) {
         var hasChild = false;
-        if ("contains" in Game.getInstance().container) {
-          hasChild = Game.getInstance().container.contains(div);
+        if ("contains" in ServiceLocator.game.container) {
+          hasChild = ServiceLocator.game.container.contains(div);
         } else {
           hasChild =
-            Game.getInstance().container.compareDocumentPosition(div) % 16;
+            ServiceLocator.game.container.compareDocumentPosition(div) % 16;
         }
-        if (hasChild) Game.getInstance().container.removeChild(div);
+        if (hasChild) ServiceLocator.game.container.removeChild(div);
       }
     }
   };

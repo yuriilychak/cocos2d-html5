@@ -24,33 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import {
-  Node,
-  Point,
-  Rect,
-  Color,
-  log,
-  isNumber,
-  isString,
-  isObject,
-  BLEND_SRC,
-  BLEND_DST,
-  SRC_ALPHA,
-  ONE,
-  ONE_MINUS_SRC_ALPHA,
-  RendererConfig,
-  Loader,
-  Game,
-  Path,
-  TextureCache,
-  Texture2D,
-  degreesToRadians,
-  radiansToDegrees,
-  randomMinus1To1,
-  FMT_PNG,
-  FMT_TIFF,
-  getImageFormatByData
-} from "@aspect/core";
+import { Node, Point, Rect, Color, log, isNumber, isString, isObject, BLEND_SRC, BLEND_DST, SRC_ALPHA, ONE, ONE_MINUS_SRC_ALPHA, Path, Texture2D, degreesToRadians, radiansToDegrees, randomMinus1To1, FMT_PNG, FMT_TIFF, getImageFormatByData, ServiceLocator } from "@aspect/core";
 import { unzipBase64AsArray } from "@aspect/compression";
 import { Particle, ParticleModeA, ParticleModeB } from "./particle";
 import { PNGReader } from "../png-reader";
@@ -445,7 +419,7 @@ export class ParticleSystem extends Node {
   }
 
   _createRenderCmd() {
-    if (RendererConfig.getInstance().isCanvas)
+    if (ServiceLocator.rendererConfig.isCanvas)
       return new ParticleSystem.CanvasRenderCmd(this);
     else return new ParticleSystem.WebGLRenderCmd(this);
   }
@@ -1474,7 +1448,7 @@ export class ParticleSystem extends Node {
    */
   initWithFile(plistFile) {
     this._plistFile = plistFile;
-    var dict = Loader.getInstance().getRes(plistFile);
+    var dict = ServiceLocator.loader.getRes(plistFile);
     if (!dict) {
       log("ParticleSystem.initWithFile(): Particles: file not found");
       return false;
@@ -1489,7 +1463,7 @@ export class ParticleSystem extends Node {
    * @return {Rect}
    */
   getBoundingBoxToWorld() {
-    return new Rect(0, 0, Game.getInstance().canvas.width, Game.getInstance().canvas.height);
+    return new Rect(0, 0, ServiceLocator.game.canvas.width, ServiceLocator.game.canvas.height);
   }
 
   /**
@@ -1683,7 +1657,7 @@ export class ParticleSystem extends Node {
         // Try to get the texture from the cache
         var textureName = locValueForKey("textureFileName", dictionary);
         var imgPath = Path.changeBasename(this._plistFile, textureName);
-        var tex = TextureCache.getInstance().getTextureForKey(imgPath);
+        var tex = ServiceLocator.textureCache.getTextureForKey(imgPath);
 
         if (tex) {
           this.setTexture(tex);
@@ -1691,7 +1665,7 @@ export class ParticleSystem extends Node {
           var textureData = locValueForKey("textureImageData", dictionary);
 
           if (!textureData || textureData.length === 0) {
-            tex = TextureCache.getInstance().addImage(imgPath);
+            tex = ServiceLocator.textureCache.addImage(imgPath);
             if (!tex) return false;
             this.setTexture(tex);
           } else {
@@ -1719,9 +1693,9 @@ export class ParticleSystem extends Node {
               myTIFFObj.parseTIFF(buffer, canvasObj);
             }
 
-            TextureCache.getInstance().cacheImage(imgPath, canvasObj);
+            ServiceLocator.textureCache.cacheImage(imgPath, canvasObj);
 
-            var addTexture = TextureCache.getInstance().getTextureForKey(imgPath);
+            var addTexture = ServiceLocator.textureCache.getTextureForKey(imgPath);
             if (!addTexture)
               log(
                 "ParticleSystem.initWithDictionary() : error loading the texture"

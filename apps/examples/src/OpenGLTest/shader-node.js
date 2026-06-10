@@ -29,13 +29,13 @@
 //
 //------------------------------------------------------------------
 import { GLNode } from "./glnode-polyfill";
-import { EGLView, GLProgram, Sys, VERTEX_ATTRIB_POSITION } from "@aspect/core";
+import { GLProgram, VERTEX_ATTRIB_POSITION, ServiceLocator } from "@aspect/core";
 export class ShaderNode extends GLNode {
   constructor(vertexShader, framentShader) {
     super();
     this.init();
 
-    if ("opengl" in Sys.getInstance().capabilities) {
+    if ("opengl" in ServiceLocator.sys.capabilities) {
       this.width = 256;
       this.height = 256;
       this.anchorX = 0.5;
@@ -62,9 +62,9 @@ export class ShaderNode extends GLNode {
     //
     // Uniforms
     //
-    var frameSize = EGLView.getInstance().getFrameSize();
-    var visibleSize = EGLView.getInstance().getVisibleSize();
-    var retinaFactor = EGLView.getInstance().getDevicePixelRatio();
+    var frameSize = ServiceLocator.eglView.getFrameSize();
+    var visibleSize = ServiceLocator.eglView.getVisibleSize();
+    var retinaFactor = ServiceLocator.eglView.getDevicePixelRatio();
     var position = this.getPosition();
 
     var centerx =

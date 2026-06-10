@@ -33,7 +33,7 @@ import {
 } from "./motion-streak-test-helpers";
 import { MotionStreakTestScene } from "./motion-streak-test-scene";
 import { s_simpleFont_fnt } from "../resources";
-import { Color, Director, Layer, Rect } from "@aspect/core";
+import { Color, Layer, Rect, ServiceLocator } from "@aspect/core";
 import { BMButton, Widget } from "@aspect/ccui";
 
 export class MotionStreakTest extends Layer {
@@ -51,7 +51,7 @@ export class MotionStreakTest extends Layer {
 
   onEnter() {
     super.onEnter();
-    var winSize = Director.getInstance().getWinSize();
+    var winSize = ServiceLocator.director.getWinSize();
 
     let scene = this.getParent();
     while (scene && !scene.setTestInfo) {
@@ -98,19 +98,19 @@ export class MotionStreakTest extends Layer {
   restartCallback(sender) {
     var scene = new MotionStreakTestScene();
     scene.addChild(restartMotionAction());
-    Director.getInstance().runScene(scene);
+    ServiceLocator.director.runScene(scene);
   }
 
   nextCallback(sender) {
     var scene = new MotionStreakTestScene();
     scene.addChild(nextMotionAction());
-    Director.getInstance().runScene(scene);
+    ServiceLocator.director.runScene(scene);
   }
 
   backCallback(sender) {
     var scene = new MotionStreakTestScene();
     scene.addChild(backMotionAction());
-    Director.getInstance().runScene(scene);
+    ServiceLocator.director.runScene(scene);
   }
 
   modeCallback(sender) {

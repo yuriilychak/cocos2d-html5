@@ -25,7 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Director, Point, Rect, Sprite, Texture2D } from "@aspect/core";
+import { Point, Rect, Sprite, Texture2D, ServiceLocator } from "@aspect/core";
 export class Ball extends Sprite {
     constructor() {
         super();
@@ -42,7 +42,7 @@ export class Ball extends Sprite {
     move(delta) {
 	    this.x += this._velocity.x * delta;
 	    this.y += this._velocity.y * delta;
-        var winSize = Director.getInstance().getWinSize();
+        var winSize = ServiceLocator.director.getWinSize();
         if (this.x > winSize.width - this.radius()) {
             this.x = winSize.width - this.radius();
             this._velocity.x *= -1;

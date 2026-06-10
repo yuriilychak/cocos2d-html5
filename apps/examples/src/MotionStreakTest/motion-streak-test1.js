@@ -28,7 +28,7 @@
 
 import { MotionStreakTest } from "./motion-streak-test";
 import { s_pathR1, s_streak } from "../resources";
-import { Color, Director, Point, Sprite } from "@aspect/core";
+import { Color, Point, Sprite, ServiceLocator } from "@aspect/core";
 import { MoveBy, RotateBy, TintTo, Sequence } from "@aspect/actions";
 
 import { MotionStreak } from "@aspect/motion-streak";
@@ -42,7 +42,7 @@ export class MotionStreakTest1 extends MotionStreakTest {
   onEnter() {
     super.onEnter();
 
-    var winSize = Director.getInstance().getWinSize();
+    var winSize = ServiceLocator.director.getWinSize();
     // the root object just rotates around
     this._root = new Sprite(s_pathR1);
     this.addChild(this._root, 1);

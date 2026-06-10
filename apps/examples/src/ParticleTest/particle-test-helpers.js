@@ -53,7 +53,7 @@ import {
 } from "./particle-test-constants";
 import { RadiusMode1 } from "./radius-mode1";
 import { RadiusMode2 } from "./radius-mode2";
-import { RendererConfig, Sys } from "@aspect/core";
+import { ServiceLocator } from "@aspect/core";
 export var particleSceneArr = [
   function () {
     return new DemoFlower();
@@ -159,7 +159,7 @@ export var particleSceneArr = [
   }
 ];
 
-if ("opengl" in Sys.getInstance().capabilities && RendererConfig.getInstance().isWebGL) {
+if ("opengl" in ServiceLocator.sys.capabilities && ServiceLocator.rendererConfig.isWebGL) {
   particleSceneArr.push(function () {
     return new ParallaxParticle();
   });

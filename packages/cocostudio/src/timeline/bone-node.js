@@ -32,7 +32,7 @@
 
     // Node imported from @aspect/core
     
-import { AffineTransform, BlendFunc, Color, Node, Point, Rect, RendererConfig, Size, arrayRemoveObject, assert, log } from "@aspect/core";
+import { AffineTransform, BlendFunc, Color, Node, Point, Rect, Size, arrayRemoveObject, assert, log, ServiceLocator } from "@aspect/core";
 import { DrawNode } from "@aspect/shape-nodes";
 
 let _SkeletonNode = null;
@@ -235,7 +235,7 @@ export function _setSkeletonNodeClass(SN) { _SkeletonNode = SN; }
                 return;
 
             renderCmd._debug = isDebugDraw;
-            RendererConfig.getInstance().renderer.childrenOrderDirty = true;
+            ServiceLocator.rendererConfig.renderer.childrenOrderDirty = true;
 
             if (this._visible && null != this._rootSkeleton) {
                 this._rootSkeleton._subBonesDirty = true;
@@ -509,7 +509,7 @@ export function _setSkeletonNodeClass(SN) { _SkeletonNode = SN; }
         }
 
         _createRenderCmd() {
-            if (RendererConfig.getInstance().isCanvas)
+            if (ServiceLocator.rendererConfig.isCanvas)
                 return new BoneNodeCanvasCmd(this);
             else
                 return new BoneNodeWebGLCmd(this);

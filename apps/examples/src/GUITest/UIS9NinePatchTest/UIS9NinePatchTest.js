@@ -26,7 +26,7 @@
 
 import { UIMainLayer } from "../uimain-layer";
 import { director } from "../../constants";
-import { Point, Size, SpriteFrameCache, log } from "@aspect/core";
+import { Point, Size, log, ServiceLocator } from "@aspect/core";
 import { Scale9Sprite } from "@aspect/ccui";
 
 export class UIS9NinePatchTest extends UIMainLayer {
@@ -36,7 +36,7 @@ export class UIS9NinePatchTest extends UIMainLayer {
       this._topDisplayLabel.setString("");
       this._bottomDisplayLabel.setString("");
 
-      SpriteFrameCache.getInstance().addSpriteFrames(
+      ServiceLocator.spriteFrameCache.addSpriteFrames(
         "ccs-res/cocosui/android9patch.plist"
       );
 
@@ -97,7 +97,7 @@ export class UIS9NinePatchTest extends UIMainLayer {
       this.addChild(monsterSprite);
 
       var spriteFrame =
-        SpriteFrameCache.getInstance().getSpriteFrame("buttonnormal.9.png");
+        ServiceLocator.spriteFrameCache.getSpriteFrame("buttonnormal.9.png");
       var buttonScale9Sprite = new Scale9Sprite(spriteFrame);
       buttonScale9Sprite.setContentSize(new Size(150, 80));
       buttonScale9Sprite.setPosition(new Point(100, 200));

@@ -27,7 +27,7 @@
 
 import { CurrentLanguageTest } from "./current-language-test";
 import { TestScene } from "../test-scene";
-import { Director } from "@aspect/core";
+import { ServiceLocator } from "@aspect/core";
 
 export class CurrentLanguageTestScene extends TestScene {
   constructor() {
@@ -42,6 +42,6 @@ export class CurrentLanguageTestScene extends TestScene {
     var layer = new CurrentLanguageTest();
     this.addChild(layer);
 
-    Director.getInstance().runScene(this);
+    ServiceLocator.director.runScene(this);
   }
 }

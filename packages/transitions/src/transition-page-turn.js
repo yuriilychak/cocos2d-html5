@@ -1,4 +1,4 @@
-import { Director, Node, Size } from "@aspect/core";
+import { Node, Size, ServiceLocator } from "@aspect/core";
 import { NodeGrid } from "@aspect/node-grid";
 import { pageTurn3D, reverseTime, stopGrid } from "@aspect/actions3d";
 import { Sequence, CallFunc, Show } from "@aspect/actions";
@@ -31,7 +31,7 @@ export class TransitionPageTurn extends TransitionScene {
 
   onEnter() {
     super.onEnter();
-    var winSize = Director.getInstance().getWinSize();
+    var winSize = ServiceLocator.director.getWinSize();
     var x, y;
     if (winSize.width > winSize.height) {
       x = 16;

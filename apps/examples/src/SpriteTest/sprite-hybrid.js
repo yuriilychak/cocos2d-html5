@@ -35,7 +35,7 @@ import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini, s_grossiniPlist } from "../resources";
 import { winSize } from "../constants";
 import { RotateBy } from "@aspect/actions";
-import { Node, Sprite, SpriteBatchNode, SpriteFrameCache } from "@aspect/core";
+import { Node, Sprite, SpriteBatchNode, ServiceLocator } from "@aspect/core";
 
 export class SpriteHybrid extends SpriteTestDemo {
 
@@ -69,7 +69,7 @@ export class SpriteHybrid extends SpriteTestDemo {
 
         // IMPORTANT:
         // The sprite frames will be cached AND RETAINED, and they won't be released unless you call
-        SpriteFrameCache.getInstance().addSpriteFrames(s_grossiniPlist);
+        ServiceLocator.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
 
         // create 250 sprites
         // only show 80% of them
@@ -79,7 +79,7 @@ export class SpriteHybrid extends SpriteTestDemo {
                 spriteIdx = 1;
             var str = "grossini_dance_" + (spriteIdx < 10 ? ("0" + spriteIdx) : spriteIdx) + ".png";
 
-            var frame = SpriteFrameCache.getInstance().getSpriteFrame(str);
+            var frame = ServiceLocator.spriteFrameCache.getSpriteFrame(str);
             var sprite = new Sprite(frame);
             parent1.addChild(sprite, i, i);
 
@@ -104,7 +104,7 @@ export class SpriteHybrid extends SpriteTestDemo {
     onExit() {
         //----start28----onExit
         super.onExit();
-        SpriteFrameCache.getInstance().removeSpriteFramesFromFile(s_grossiniPlist);
+        ServiceLocator.spriteFrameCache.removeSpriteFramesFromFile(s_grossiniPlist);
         //----end28----
     }
     reparentSprite() {
@@ -152,7 +152,7 @@ export class SpriteHybrid extends SpriteTestDemo {
     }
     addTestSprite() {
         var p = this.getChildByTag(TAG_NODE);
-        var frame = SpriteFrameCache.getInstance().getSpriteFrame("grossini_dance_01.png");
+        var frame = ServiceLocator.spriteFrameCache.getSpriteFrame("grossini_dance_01.png");
         var sprite1 = new Sprite(frame);
         p.addChild(sprite1, 1000);
         sprite1.x = winSize.width / 4;

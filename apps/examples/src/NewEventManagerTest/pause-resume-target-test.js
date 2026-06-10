@@ -28,7 +28,7 @@
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { TouchableSprite } from "./touchable-sprite";
 import { s_simpleFont_fnt } from "../resources";
-import { Color, Director, EventManager, Rect } from "@aspect/core";
+import { Color, Rect, ServiceLocator } from "@aspect/core";
 import { BMButton, ImageView, Widget } from "@aspect/ccui";
 import { ButtonLayout } from "../button-layout";
 
@@ -37,8 +37,8 @@ export class PauseResumeTargetTest extends EventDispatcherTestDemo {
     //----start11----ctor
     super();
 
-    var origin = Director.getInstance().getVisibleOrigin();
-    var size = Director.getInstance().getVisibleSize();
+    var origin = ServiceLocator.director.getVisibleOrigin();
+    var size = ServiceLocator.director.getVisibleSize();
 
     var sprite1 = TouchableSprite.create();
     sprite1.setColor(new Color(0, 255, 255));
@@ -66,7 +66,7 @@ export class PauseResumeTargetTest extends EventDispatcherTestDemo {
       "Actions",
       () => {
         sprite3.getListener().setEnabled(false);
-        EventManager.getInstance().pauseTarget(_this, true);
+        ServiceLocator.eventManager.pauseTarget(_this, true);
 
         var overlay = new ImageView();
         overlay.setScale9Enabled(true);
@@ -109,7 +109,7 @@ export class PauseResumeTargetTest extends EventDispatcherTestDemo {
         overlay.addChild(closeBtn, 1);
         closeBtn.addClickEventListener(() => {
           overlay.removeFromParent();
-          EventManager.getInstance().resumeTarget(_this, true);
+          ServiceLocator.eventManager.resumeTarget(_this, true);
           sprite3.getListener().setEnabled(true);
         });
       }

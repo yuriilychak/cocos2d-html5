@@ -27,7 +27,7 @@
  ****************************************************************************/
 
 import { ExtensionsTestScene } from "../extensions-test-scene";
-import { Director, Sys, Size, Color, log } from "@aspect/core";
+import { Size, Color, log, ServiceLocator } from "@aspect/core";
 import { ButtonLayout } from "../../button-layout";
 import { BaseTestLayer } from "../../BaseTestLayer/BaseTestLayer";
 import { TestScene } from "../../test-scene";
@@ -53,7 +53,7 @@ export class WebSocketTestLayer extends BaseTestLayer {
   }
 
   init() {
-    var winSize = Director.getInstance().getWinSize();
+    var winSize = ServiceLocator.director.getWinSize();
 
     this.addChild(new ButtonLayout(
       [
@@ -115,7 +115,7 @@ export class WebSocketTestLayer extends BaseTestLayer {
 
     this._wsiSendText.onerror = function (evt) {
       log("_wsiSendText Error was fired");
-      if (Sys.getInstance().isObjectValid(self)) {
+      if (ServiceLocator.sys.isObjectValid(self)) {
         self._errorStatus.setString("an error was fired");
       } else {
         log("WebSocket test layer was destroyed!");
@@ -160,7 +160,7 @@ export class WebSocketTestLayer extends BaseTestLayer {
 
     this._wsiSendBinary.onerror = function (evt) {
       log("_wsiSendBinary Error was fired");
-      if (Sys.getInstance().isObjectValid(self)) {
+      if (ServiceLocator.sys.isObjectValid(self)) {
         self._errorStatus.setString("an error was fired");
       } else {
         log("WebSocket test layer was destroyed!");
@@ -177,7 +177,7 @@ export class WebSocketTestLayer extends BaseTestLayer {
     this._wsiError.onmessage = function (evt) {};
     this._wsiError.onerror = function (evt) {
       log("_wsiError Error was fired");
-      if (Sys.getInstance().isObjectValid(self)) {
+      if (ServiceLocator.sys.isObjectValid(self)) {
         self._errorStatus.setString("an error was fired");
       } else {
         log("WebSocket test layer was destroyed!");
@@ -242,6 +242,6 @@ export function runWebSocketTest() {
   scene.onMainMenuCallback = () => new ExtensionsTestScene().runThisTest();
   const layer = new WebSocketTestLayer();
   scene.addChild(layer);
-  Director.getInstance().runScene(scene);
+  ServiceLocator.director.runScene(scene);
 }
 

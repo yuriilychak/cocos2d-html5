@@ -31,7 +31,7 @@ import {
   TAG_STENCILNODE
 } from "./clipping-node-test-constants";
 import { s_pathGrossini } from "../resources";
-import { Color, Director, Point, Sprite } from "@aspect/core";
+import { Color, Point, Sprite, ServiceLocator } from "@aspect/core";
 import { RotateBy, ScaleBy, Sequence } from "@aspect/actions";
 import { DrawNode } from "@aspect/shape-nodes";
 
@@ -46,7 +46,7 @@ export class BasicTest extends BaseClippingNodeTest {
   }
 
   setup() {
-    var winSize = Director.getInstance().getWinSize();
+    var winSize = ServiceLocator.director.getWinSize();
 
     var stencil = this.stencil();
     stencil.tag = TAG_STENCILNODE;

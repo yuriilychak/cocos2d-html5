@@ -1,4 +1,4 @@
-import { NewClass, EventListener, EventManager, KEY, Point, Size, Rect, Node, RendererConfig, ShaderCache, log, arrayRemoveObject, EventFocus, SHADER_SPRITE_POSITION_TEXTURECOLOR, SHADER_SPRITE_POSITION_TEXTURECOLOR_GRAY } from '@aspect/core';
+import { NewClass, EventListener, KEY, Point, Size, Rect, Node, log, arrayRemoveObject, EventFocus, SHADER_SPRITE_POSITION_TEXTURECOLOR, SHADER_SPRITE_POSITION_TEXTURECOLOR_GRAY, ServiceLocator } from "@aspect/core";
 import { ProtectedNode } from './protected-node.js';
 import { WidgetCanvasRenderCmd, WidgetWebGLRenderCmd } from './widget-render-cmd.js';
 import { LayoutParameter } from '../layouts/layout-parameter';
@@ -50,12 +50,12 @@ export class FocusNavigationController extends NewClass {
                 event: EventListener.KEYBOARD,
                 onKeyReleased: this._onKeyPressed.bind(this)
             });
-            EventManager.getInstance().addListener(this._keyboardListener, this._keyboardEventPriority);
+            ServiceLocator.eventManager.addListener(this._keyboardListener, this._keyboardEventPriority);
         }
     }
     _removeKeyboardEventListener() {
         if (this._keyboardListener) {
-            EventManager.getInstance().removeEventListener(this._keyboardListener);
+            ServiceLocator.eventManager.removeEventListener(this._keyboardListener);
             this._keyboardListener = null;
         }
     }
@@ -183,7 +183,7 @@ export class Widget extends ProtectedNode {
     onEnter() {
         var locListener = this._touchListener;
         if (locListener && !locListener._isRegistered() && this._touchEnabled)
-            EventManager.getInstance().addListener(locListener, this);
+            ServiceLocator.eventManager.addListener(locListener, this);
         if(!this._usingLayoutComponent)
             this.updateSizeAndPosition();
         if (this._sizeDirty)
@@ -555,9 +555,9 @@ export class Widget extends ProtectedNode {
                     onTouchMoved: this.onTouchMoved.bind(this),
                     onTouchEnded: this.onTouchEnded.bind(this)
                 });
-            EventManager.getInstance().addListener(this._touchListener, this);
+            ServiceLocator.eventManager.addListener(this._touchListener, this);
         } else {
-            EventManager.getInstance().removeListener(this._touchListener);
+            ServiceLocator.eventManager.removeListener(this._touchListener);
         }
     }
 
@@ -655,7 +655,7 @@ export class Widget extends ProtectedNode {
                 widgetGetFocus.onFocusChanged(widgetLostFocus, widgetGetFocus);
             if (widgetLostFocus && widgetGetFocus.onFocusChanged)
                 widgetLostFocus.onFocusChanged(widgetLostFocus, widgetGetFocus);
-            EventManager.getInstance().dispatchEvent(new EventFocus(widgetLostFocus, widgetGetFocus));
+            ServiceLocator.eventManager.dispatchEvent(new EventFocus(widgetLostFocus, widgetGetFocus));
         }
     }
 
@@ -1200,10 +1200,10 @@ export class Widget extends ProtectedNode {
         arrayRemoveObject(this._nodes, node);
     }
     _getNormalGLProgram() {
-        return ShaderCache.getInstance().programForKey(SHADER_SPRITE_POSITION_TEXTURECOLOR);
+        return ServiceLocator.shaderCache.programForKey(SHADER_SPRITE_POSITION_TEXTURECOLOR);
     }
     _getGrayGLProgram() {
-        return ShaderCache.getInstance().programForKey(SHADER_SPRITE_POSITION_TEXTURECOLOR_GRAY);
+        return ServiceLocator.shaderCache.programForKey(SHADER_SPRITE_POSITION_TEXTURECOLOR_GRAY);
     }
 
     removeNodeByTag(tag, cleanup) {
@@ -1222,7 +1222,7 @@ export class Widget extends ProtectedNode {
         this._nodes.length = 0;
     }
     _findLayout() {
-        RendererConfig.getInstance().renderer.childrenOrderDirty = true;
+        ServiceLocator.rendererConfig.renderer.childrenOrderDirty = true;
         var layout = this._parent;
         while (layout) {
             if (layout._doLayout) {
@@ -1303,7 +1303,7 @@ export class Widget extends ProtectedNode {
         return this._usingLayoutComponent;
     }
     _createRenderCmd() {
-        if (RendererConfig.getInstance().isWebGL)
+        if (ServiceLocator.rendererConfig.isWebGL)
             return new WidgetWebGLRenderCmd(this);
         else
             return new WidgetCanvasRenderCmd(this);

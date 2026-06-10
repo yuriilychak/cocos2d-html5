@@ -28,7 +28,7 @@
 import { ParticleDemo } from "./particle-demo";
 import { s_fire } from "../resources";
 import { director } from "../constants";
-import { Color, Point, textureCache } from "@aspect/core";
+import { Color, Point, ServiceLocator } from "@aspect/core";
 import { RotateBy } from "@aspect/actions";
 import { ParticleSystem } from "@aspect/particle";
 
@@ -42,7 +42,7 @@ export class Issue704 extends ParticleDemo {
 
         this._emitter = new ParticleSystem(100);
         this.addChild(this._emitter, 10);
-        this._emitter.texture = textureCache.addImage(s_fire);
+        this._emitter.texture = ServiceLocator.textureCache.addImage(s_fire);
         this._emitter.shapeType = ParticleSystem.BALL_SHAPE;
 
         // duration

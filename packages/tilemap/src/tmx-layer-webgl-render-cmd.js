@@ -1,10 +1,4 @@
-import {
-  RendererConfig,
-  EGLView,
-  Director,
-  ShaderCache,
-  SHADER_SPRITE_POSITION_TEXTURECOLORALPHATEST
-} from "@aspect/core";
+import { SHADER_SPRITE_POSITION_TEXTURECOLORALPHATEST, ServiceLocator } from "@aspect/core";
 import {
   TMX_ORIENTATION_ORTHO,
   TMX_ORIENTATION_ISO,
@@ -26,7 +20,7 @@ export class TMXLayerWebGLRenderCmd extends Node.WebGLRenderCmd {
       { x: 0, y: 0 }
     ];
     this._color = new Uint32Array(1);
-    this._shaderProgram = ShaderCache.getInstance().programForKey(
+    this._shaderProgram = ServiceLocator.shaderCache.programForKey(
       SHADER_SPRITE_POSITION_TEXTURECOLORALPHATEST
     );
 
@@ -48,10 +42,10 @@ export class TMXLayerWebGLRenderCmd extends Node.WebGLRenderCmd {
       return 0;
     }
 
-    const view = EGLView.getInstance();
-    const director = Director.getInstance();
+    const view = ServiceLocator.eglView;
+    const director = ServiceLocator.director;
     const winSize = director.getWinSize();
-    const rendererConfig = RendererConfig.getInstance();
+    const rendererConfig = ServiceLocator.rendererConfig;
     const stride = rendererConfig.renderer.getSizePerVertex();
     const ti = texIndex || 0;
 

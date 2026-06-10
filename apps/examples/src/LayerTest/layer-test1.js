@@ -32,7 +32,7 @@
 //------------------------------------------------------------------
 import { LayerTest } from "./layer-test";
 import { director, winSize } from "../constants";
-import { Color, EventListener, EventManager, EventMouse, LayerColor, Sys } from "@aspect/core";
+import { Color, EventListener, EventMouse, LayerColor, ServiceLocator } from "@aspect/core";
 
 import { TAG_LAYER } from "./layer-test-constants";
 export class LayerTest1 extends LayerTest {
@@ -45,8 +45,8 @@ export class LayerTest1 extends LayerTest {
     //----start0----onEnter
     super.onEnter();
 
-    if ("touches" in Sys.getInstance().capabilities)
-      EventManager.getInstance().addListener(
+    if ("touches" in ServiceLocator.sys.capabilities)
+      ServiceLocator.eventManager.addListener(
         {
           event: EventListener.TOUCH_ALL_AT_ONCE,
           onTouchesMoved: function (touches, event) {
@@ -55,8 +55,8 @@ export class LayerTest1 extends LayerTest {
         },
         this
       );
-    else if ("mouse" in Sys.getInstance().capabilities)
-      EventManager.getInstance().addListener(
+    else if ("mouse" in ServiceLocator.sys.capabilities)
+      ServiceLocator.eventManager.addListener(
         {
           event: EventListener.MOUSE,
           onMouseMove: function (event) {

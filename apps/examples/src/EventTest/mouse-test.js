@@ -30,7 +30,7 @@
 //------------------------------------------------------------------
 import { EventTest } from "./event-test";
 import { s_pathR2 } from "../resources";
-import { Color, EventListener, EventManager, EventMouse, Sprite, Sys, log } from "@aspect/core";
+import { Color, EventListener, EventMouse, Sprite, log, ServiceLocator } from "@aspect/core";
 
 export class MouseTest extends EventTest {
   init() {
@@ -46,8 +46,8 @@ export class MouseTest extends EventTest {
       Math.random() * 200 + 55
     );
 
-    if ("mouse" in Sys.getInstance().capabilities) {
-      EventManager.getInstance().addListener(
+    if ("mouse" in ServiceLocator.sys.capabilities) {
+      ServiceLocator.eventManager.addListener(
         {
           event: EventListener.MOUSE,
           onMouseDown: function (event) {

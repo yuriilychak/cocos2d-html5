@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Node, Point, pointEqualToPoint, RendererConfig, log } from "@aspect/core";
+import { Node, Point, pointEqualToPoint, log, ServiceLocator } from "@aspect/core";
 import { PointObject } from "./point-object";
 
 /**
@@ -145,7 +145,7 @@ export class ParallaxNode extends Node {
     }
 
     _createRenderCmd() {
-        if(RendererConfig.getInstance().isCanvas)
+        if(ServiceLocator.rendererConfig.isCanvas)
             return new this.constructor.CanvasRenderCmd(this);
         else
             return new this.constructor.WebGLRenderCmd(this);

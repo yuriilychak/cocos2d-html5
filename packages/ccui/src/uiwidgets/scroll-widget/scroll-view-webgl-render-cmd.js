@@ -1,4 +1,4 @@
-import { RendererConfig } from '@aspect/core';
+import { ServiceLocator } from "@aspect/core";
 import { LayoutWebGLRenderCmd } from '../../layouts/layout-webgl-render-cmd';
 
 export class ScrollViewWebGLRenderCmd extends LayoutWebGLRenderCmd {
@@ -9,11 +9,11 @@ export class ScrollViewWebGLRenderCmd extends LayoutWebGLRenderCmd {
     }
 
     rendering(ctx) {
-        var renderer = RendererConfig.getInstance().renderer;
+        var renderer = ServiceLocator.rendererConfig.renderer;
         var currentID = this._node.__instanceId,
             locCmds = renderer._cacheToBufferCmds[currentID],
             i, len, checkNode, cmd,
-            context = ctx || RendererConfig.getInstance().renderContext;
+            context = ctx || ServiceLocator.rendererConfig.renderContext;
         if (!locCmds) {
             return;
         }

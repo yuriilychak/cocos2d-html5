@@ -24,18 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import {
-  LabelTTF,
-  Rect,
-  Size,
-  Color,
-  Sprite,
-  SpriteFrame,
-  TextureCache,
-  SpriteFrameCache,
-  VERTICAL_TEXT_ALIGNMENT_CENTER,
-  log
-} from "@aspect/core";
+import { LabelTTF, Rect, Size, Color, Sprite, SpriteFrame, VERTICAL_TEXT_ALIGNMENT_CENTER, log, ServiceLocator } from "@aspect/core";
 import { ScaleTo } from "@aspect/actions";
 import { Widget } from "../base-classes/widget";
 import { ProtectedNode } from "../base-classes/protected-node";
@@ -251,9 +240,9 @@ export class Button extends Widget {
   }
 
   _createSpriteFrameWithFile(file) {
-    var texture = TextureCache.getInstance().getTextureForKey(file);
+    var texture = ServiceLocator.textureCache.getTextureForKey(file);
     if (!texture) {
-      texture = TextureCache.getInstance().addImage(file);
+      texture = ServiceLocator.textureCache.addImage(file);
     }
     if (!texture._textureLoaded) {
       return texture;
@@ -265,7 +254,7 @@ export class Button extends Widget {
   }
 
   _createSpriteFrameWithName(name) {
-    var frame = SpriteFrameCache.getInstance().getSpriteFrame(name);
+    var frame = ServiceLocator.spriteFrameCache.getSpriteFrame(name);
     if (frame == null) {
       log(
         "Scale9Sprite.initWithSpriteFrameName(): can't find the sprite frame by spriteFrameName"

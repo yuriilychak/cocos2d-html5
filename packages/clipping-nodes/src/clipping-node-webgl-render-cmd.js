@@ -1,15 +1,4 @@
-import {
-  Node,
-  CustomRenderCmd,
-  RendererConfig,
-  ShaderCache,
-  glUseProgram,
-  setProgramForNode,
-  SHADER_POSITION_TEXTURECOLORALPHATEST,
-  UNIFORM_ALPHA_TEST_VALUE_S,
-  UNIFORM_MVMATRIX_S,
-  log,
-} from "@aspect/core";
+import { Node, CustomRenderCmd, glUseProgram, setProgramForNode, SHADER_POSITION_TEXTURECOLORALPHATEST, UNIFORM_ALPHA_TEST_VALUE_S, UNIFORM_MVMATRIX_S, log, ServiceLocator } from "@aspect/core";
 import { ClippingNode } from "./clipping-node";
 
 function setProgram(node, program) {
@@ -36,7 +25,7 @@ export class ClippingNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
   initStencilBits() {
     ClippingNodeWebGLRenderCmd._init_once = true;
     if (ClippingNodeWebGLRenderCmd._init_once) {
-        const bits = RendererConfig.getInstance().renderContext.getParameter(RendererConfig.getInstance().renderContext.STENCIL_BITS);
+        const bits = ServiceLocator.rendererConfig.renderContext.getParameter(ServiceLocator.rendererConfig.renderContext.STENCIL_BITS);
       ClippingNode.stencilBits = bits;
       if (bits <= 0)
         log("Stencil buffer is not enabled.");
@@ -79,9 +68,9 @@ export class ClippingNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
       return;
     }
 
-      RendererConfig.getInstance().renderer.pushRenderCommand(this._beforeVisitCmd);
+      ServiceLocator.rendererConfig.renderer.pushRenderCommand(this._beforeVisitCmd);
       node._stencil.visit(node);
-      RendererConfig.getInstance().renderer.pushRenderCommand(this._afterDrawStencilCmd);
+      ServiceLocator.rendererConfig.renderer.pushRenderCommand(this._afterDrawStencilCmd);
 
     const locChildren = node._children;
     if (locChildren && locChildren.length > 0) {
@@ -92,7 +81,7 @@ export class ClippingNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
       }
     }
 
-      RendererConfig.getInstance().renderer.pushRenderCommand(this._afterVisitCmd);
+      ServiceLocator.rendererConfig.renderer.pushRenderCommand(this._afterVisitCmd);
     this._dirtyFlag = 0;
   }
 
@@ -114,7 +103,7 @@ export class ClippingNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
   }
 
   _onBeforeVisit(ctx) {
-      const gl = ctx || RendererConfig.getInstance().renderContext, node = this._node;
+      const gl = ctx || ServiceLocator.rendererConfig.renderContext, node = this._node;
       ClippingNodeWebGLRenderCmd._layer++;
 
       const mask_layer = 0x1 << ClippingNodeWebGLRenderCmd._layer;
@@ -131,23 +120,23 @@ export class ClippingNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
     gl.clear(gl.STENCIL_BUFFER_BIT);
 
     if (node.alphaThreshold < 1) {
-      const program = ShaderCache.getInstance().programForKey(SHADER_POSITION_TEXTURECOLORALPHATEST);
+      const program = ServiceLocator.shaderCache.programForKey(SHADER_POSITION_TEXTURECOLORALPHATEST);
       glUseProgram(program.getProgram());
       program.setUniformLocationWith1f(UNIFORM_ALPHA_TEST_VALUE_S, node.alphaThreshold);
-        program.setUniformLocationWithMatrix4fv(UNIFORM_MVMATRIX_S, RendererConfig.getInstance().renderer.mat4Identity.mat);
+        program.setUniformLocationWithMatrix4fv(UNIFORM_MVMATRIX_S, ServiceLocator.rendererConfig.renderer.mat4Identity.mat);
       setProgramForNode(node._stencil, program);
     }
   }
 
   _onAfterDrawStencil(ctx) {
-    const gl = ctx || RendererConfig.getInstance().renderContext;
+    const gl = ctx || ServiceLocator.rendererConfig.renderContext;
     gl.depthMask(true);
     gl.stencilFunc(!this._node.inverted ? gl.EQUAL : gl.NOTEQUAL, this._mask_layer_le, this._mask_layer_le);
     gl.stencilOp(gl.KEEP, gl.KEEP, gl.KEEP);
   }
 
   _onAfterVisit(ctx) {
-      const gl = ctx || RendererConfig.getInstance().renderContext;
+      const gl = ctx || ServiceLocator.rendererConfig.renderContext;
       ClippingNodeWebGLRenderCmd._layer--;
 
       if (this._currentStencilEnabled) {

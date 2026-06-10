@@ -31,7 +31,7 @@
 import { RenderTextureBaseLayer } from "./render-texture-base-layer";
 import { s_grossini, s_simpleFont_fnt } from "../resources";
 import { winSize } from "../constants";
-import { Sprite, Sys } from "@aspect/core";
+import { Sprite, ServiceLocator } from "@aspect/core";
 import { DelayTime, FadeOut, Sequence } from "@aspect/actions";
 import { TextBMFont } from "@aspect/ccui";
 
@@ -73,8 +73,8 @@ export class Issue1464 extends RenderTextureBaseLayer {
     rend.getSprite().runAction(fe);
 
     if (
-      !Sys.getInstance().isNative &&
-      !("opengl" in Sys.getInstance().capabilities)
+      !ServiceLocator.sys.isNative &&
+      !("opengl" in ServiceLocator.sys.capabilities)
     ) {
       var label = new TextBMFont(
         "Not support Actions on HTML5-canvas",

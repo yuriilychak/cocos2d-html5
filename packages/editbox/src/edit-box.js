@@ -1,13 +1,4 @@
-import {
-  Node,
-  Color,
-  Point,
-  Rect,
-  EventListener,
-  EventManager,
-  Sys,
-  warn
-} from "@aspect/core";
+import { Node, Color, Point, Rect, EventListener, warn, ServiceLocator } from "@aspect/core";
 import {
   EDITBOX_INPUT_MODE_ANY,
   EDITBOX_INPUT_FLAG_SENSITIVE,
@@ -51,7 +42,7 @@ export class EditBox extends Node {
     this._textColor = Color.WHITE;
     this._placeholderColor = Color.GRAY;
 
-    this._input = Sys.getInstance().isMobile
+    this._input = ServiceLocator.sys.isMobile
       ? new MobileEditBoxInput(this)
       : new DesktopEditBoxInput(this);
 
@@ -65,7 +56,7 @@ export class EditBox extends Node {
       onTouchBegan: this._onTouchBegan.bind(this),
       onTouchEnded: this._onTouchEnded.bind(this)
     });
-    EventManager.getInstance().addListener(this._touchListener, this);
+    ServiceLocator.eventManager.addListener(this._touchListener, this);
 
     this.inputFlag = this._editBoxInputFlag;
   }
@@ -203,9 +194,9 @@ export class EditBox extends Node {
     if (this._touchEnabled === enable) return;
     this._touchEnabled = enable;
     if (this._touchEnabled) {
-      EventManager.getInstance().addListener(this._touchListener, this);
+      ServiceLocator.eventManager.addListener(this._touchListener, this);
     } else {
-      EventManager.getInstance().removeListener(this._touchListener);
+      ServiceLocator.eventManager.removeListener(this._touchListener);
     }
   }
 

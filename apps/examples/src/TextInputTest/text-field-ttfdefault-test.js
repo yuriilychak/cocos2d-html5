@@ -33,7 +33,7 @@ import {
   TEXT_INPUT_FONT_NAME,
   TEXT_INPUT_FONT_SIZE
 } from "./text-input-test-constants";
-import { Director, log } from "@aspect/core";
+import { log, ServiceLocator } from "@aspect/core";
 
 import { TextFieldTTF } from "@aspect/text-input";
 export class TextFieldTTFDefaultTest extends KeyboardNotificationLayer {
@@ -57,7 +57,7 @@ export class TextFieldTTFDefaultTest extends KeyboardNotificationLayer {
     super.onEnter();
 
     // add CCTextFieldTTF
-    var winSize = Director.getInstance().getWinSize();
+    var winSize = ServiceLocator.director.getWinSize();
 
     var textField = new TextFieldTTF(
       "<click here for input>",

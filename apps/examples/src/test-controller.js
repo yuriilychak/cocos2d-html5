@@ -36,7 +36,7 @@ import {
   _setAutoTestCurrentTestName
 } from "./constants";
 import { testNames } from "./tests-main-helpers";
-import { LoaderScene, RendererConfig, Sys } from "@aspect/core";
+import { LoaderScene, ServiceLocator } from "@aspect/core";
 import { MenuTestLayer } from "./menu-test-layer";
 
 export class TestController extends MenuTestLayer {
@@ -80,8 +80,8 @@ export class TestController extends MenuTestLayer {
   }
 
   static _isTestEnabled(testCase) {
-    if (!Sys.getInstance().isNative) {
-      if (!RendererConfig.getInstance().isCanvas) {
+    if (!ServiceLocator.sys.isNative) {
+      if (!ServiceLocator.rendererConfig.isCanvas) {
         return !!(
           (testCase.platforms & PLATFORM_HTML5) |
           (testCase.platforms & PLATFORM_HTML5_WEBGL)
@@ -89,13 +89,13 @@ export class TestController extends MenuTestLayer {
       }
       return !!(testCase.platforms & PLATFORM_HTML5);
     }
-    if (Sys.getInstance().os == Sys.getInstance().OS_ANDROID) {
+    if (ServiceLocator.sys.os == ServiceLocator.sys.OS_ANDROID) {
       return !!(testCase.platforms & (PLATFORM_JSB | PLATFROM_ANDROID));
     }
-    if (Sys.getInstance().os == Sys.getInstance().OS_IOS) {
+    if (ServiceLocator.sys.os == ServiceLocator.sys.OS_IOS) {
       return !!(testCase.platforms & (PLATFORM_JSB | PLATFROM_IOS));
     }
-    if (Sys.getInstance().os == Sys.getInstance().OS_OSX) {
+    if (ServiceLocator.sys.os == ServiceLocator.sys.OS_OSX) {
       return !!(testCase.platforms & (PLATFORM_JSB | PLATFORM_MAC));
     }
     return !!(testCase.platforms & PLATFORM_JSB);

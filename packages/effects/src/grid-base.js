@@ -25,30 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import {
-  NewClass,
-  Sys,
-  Director,
-  Rect,
-  Point,
-  Size,
-  NextPOT,
-  log,
-  Texture2D,
-  RendererConfig,
-  GLProgramState,
-  ShaderCache,
-  SHADER_POSITION_TEXTURE,
-  glBindTexture2D,
-  setProjectionMatrixDirty,
-  kmGLMatrixMode,
-  kmGLLoadIdentity,
-  kmGLMultMatrix,
-  KM_GL_PROJECTION,
-  KM_GL_MODELVIEW,
-  Matrix4,
-  PIXEL_FORMAT_RGBA8888
-} from "@aspect/core";
+import { NewClass, Rect, Point, Size, NextPOT, log, Texture2D, GLProgramState, SHADER_POSITION_TEXTURE, glBindTexture2D, setProjectionMatrixDirty, kmGLMatrixMode, kmGLLoadIdentity, kmGLMultMatrix, KM_GL_PROJECTION, KM_GL_MODELVIEW, Matrix4, PIXEL_FORMAT_RGBA8888, ServiceLocator } from "@aspect/core";
 import { Grabber } from "./grabber.js";
 
 /**
@@ -64,7 +41,7 @@ export class GridBase extends NewClass {
    * @param {Rect} rect
    */
   constructor(gridSize, texture, flipped, rect) {
-    Sys.getInstance()._checkWebGLRenderMode();
+    ServiceLocator.sys._checkWebGLRenderMode();
     super();
     this._active = false;
     this._reuseGrid = 0;
@@ -97,7 +74,7 @@ export class GridBase extends NewClass {
   setActive(active) {
     this._active = active;
     if (!active) {
-      const director = Director.getInstance();
+      const director = ServiceLocator.director;
       const proj = director.getProjection();
       director.setProjection(proj);
     }
@@ -198,7 +175,7 @@ export class GridBase extends NewClass {
    */
   initWithSize(gridSize, texture, flipped, rect) {
     if (!texture) {
-      const director = Director.getInstance();
+      const director = ServiceLocator.director;
       const winSize = director.getWinSizeInPixels();
 
       const POTWide = NextPOT(winSize.width);
@@ -246,7 +223,7 @@ export class GridBase extends NewClass {
     if (!this._grabber) return false;
     this._grabber.grab(this._texture);
     this._glProgramState = GLProgramState.getOrCreateWithGLProgram(
-      ShaderCache.getInstance().programForKey(SHADER_POSITION_TEXTURE)
+      ServiceLocator.shaderCache.programForKey(SHADER_POSITION_TEXTURE)
     );
     this.calculateVertexPoints();
     return true;
@@ -254,10 +231,10 @@ export class GridBase extends NewClass {
 
   beforeDraw() {
     // save projection
-    this._directorProjection = Director.getInstance().getProjection();
+    this._directorProjection = ServiceLocator.director.getProjection();
 
     //this.set2DProjection();    //TODO why?
-    const size = Director.getInstance().getWinSizeInPixels();
+    const size = ServiceLocator.director.getWinSizeInPixels();
     gl.viewport(0, 0, size.width, size.height);
     this._grabber.beforeRender(this._texture);
   }
@@ -266,8 +243,8 @@ export class GridBase extends NewClass {
     this._grabber.afterRender(this._texture);
 
     // restore projection
-    //Director.getInstance().setProjection(this._directorProjection);
-    Director.getInstance().setViewport();
+    //ServiceLocator.director.setProjection(this._directorProjection);
+    ServiceLocator.director.setViewport();
 
     glBindTexture2D(this._texture);
     this.beforeBlit();
@@ -294,9 +271,9 @@ export class GridBase extends NewClass {
   }
 
   set2DProjection() {
-    const winSize = Director.getInstance().getWinSizeInPixels();
+    const winSize = ServiceLocator.director.getWinSizeInPixels();
 
-    const gl = RendererConfig.getInstance().renderContext;
+    const gl = ServiceLocator.rendererConfig.renderContext;
     gl.viewport(0, 0, winSize.width, winSize.height);
     kmGLMatrixMode(KM_GL_PROJECTION);
     kmGLLoadIdentity();

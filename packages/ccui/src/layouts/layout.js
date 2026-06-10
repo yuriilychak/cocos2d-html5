@@ -1,4 +1,4 @@
-import { Node, RendererConfig, Size, Rect, Color, Point, Sprite, LayerColor, LayerGradient, assert, log, FLT_MAX } from '@aspect/core';
+import { Node, Size, Rect, Color, Point, Sprite, LayerColor, LayerGradient, assert, log, FLT_MAX, ServiceLocator } from "@aspect/core";
 import { DrawNode } from '@aspect/shape-nodes';
 import { Widget } from '../base-classes/widget';
 import { Scale9Sprite } from '../base-classes/scale9-sprite';
@@ -92,7 +92,7 @@ export class Layout extends Widget {
         this._adaptRenderers();
         this._doLayout();
 
-        var renderer = RendererConfig.getInstance().renderer;
+        var renderer = ServiceLocator.rendererConfig.renderer;
         cmd.visit(parentCmd);
 
         var stencilClipping = this._clippingEnabled && this._clippingType === Layout.CLIPPING_STENCIL;
@@ -1120,7 +1120,7 @@ export class Layout extends Widget {
     }
 
     _createRenderCmd() {
-        if (RendererConfig.getInstance().isWebGL)
+        if (ServiceLocator.rendererConfig.isWebGL)
             return new LayoutWebGLRenderCmd(this);
         else
             return new LayoutCanvasRenderCmd(this);

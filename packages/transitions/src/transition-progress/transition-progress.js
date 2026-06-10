@@ -1,4 +1,4 @@
-import { Director, log } from "@aspect/core";
+import { log, ServiceLocator } from "@aspect/core";
 import { RenderTexture } from "@aspect/render-texture";
 import { ProgressFromTo } from "@aspect/progress-timer";
 import { Sequence, CallFunc } from "@aspect/actions";
@@ -29,7 +29,7 @@ export class TransitionProgress extends TransitionScene {
     super.onEnter();
     this._setupTransition();
 
-    var winSize = Director.getInstance().getWinSize();
+    var winSize = ServiceLocator.director.getWinSize();
 
     var texture = new RenderTexture(winSize.width, winSize.height);
     texture.sprite.anchorX = 0.5;

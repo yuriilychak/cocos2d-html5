@@ -1,15 +1,4 @@
-import {
-  Node,
-  RendererConfig,
-  ShaderCache,
-  glBlendFunc,
-  glBindTexture2D,
-  SHADER_POSITION_TEXTURECOLOR,
-  VERTEX_ATTRIB_POSITION,
-  VERTEX_ATTRIB_COLOR,
-  VERTEX_ATTRIB_TEX_COORDS,
-  Matrix4
-} from "@aspect/core";
+import { Node, glBlendFunc, glBindTexture2D, SHADER_POSITION_TEXTURECOLOR, VERTEX_ATTRIB_POSITION, VERTEX_ATTRIB_COLOR, VERTEX_ATTRIB_TEX_COORDS, Matrix4, ServiceLocator } from "@aspect/core";
 
 export class MotionStreakWebGLRenderCmd extends Node.WebGLRenderCmd {
   constructor(renderableObject) {
@@ -17,7 +6,7 @@ export class MotionStreakWebGLRenderCmd extends Node.WebGLRenderCmd {
     this._needDraw = true;
     this._matrix = new Matrix4();
     this._matrix.identity();
-    this._shaderProgram = ShaderCache.getInstance().programForKey(
+    this._shaderProgram = ServiceLocator.shaderCache.programForKey(
       SHADER_POSITION_TEXTURECOLOR
     );
   }
@@ -27,7 +16,7 @@ export class MotionStreakWebGLRenderCmd extends Node.WebGLRenderCmd {
     if (node._nuPoints <= 1) return;
 
     if (node.texture && node.texture.isLoaded()) {
-      ctx = ctx || RendererConfig.getInstance().renderContext;
+      ctx = ctx || ServiceLocator.rendererConfig.renderContext;
 
       const wt = this._worldTransform;
       this._matrix.mat[0] = wt.a;
@@ -82,7 +71,7 @@ export class MotionStreakWebGLRenderCmd extends Node.WebGLRenderCmd {
       );
 
       ctx.drawArrays(ctx.TRIANGLE_STRIP, 0, node._nuPoints * 2);
-      RendererConfig.getInstance().incrementDrawCount();
+      ServiceLocator.rendererConfig.incrementDrawCount();
     }
   }
 }

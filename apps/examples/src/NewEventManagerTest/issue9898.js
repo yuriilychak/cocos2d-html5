@@ -26,7 +26,7 @@
  ****************************************************************************/
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
-import { Color, EventCustom, EventListener, EventManager, Node } from "@aspect/core";
+import { Color, EventCustom, EventListener, Node, ServiceLocator } from "@aspect/core";
 import { ButtonLayout } from "../button-layout";
 
 export class Issue9898 extends EventDispatcherTestDemo {
@@ -49,12 +49,12 @@ export class Issue9898 extends EventDispatcherTestDemo {
       event: EventListener.CUSTOM,
       eventName: "Issue9898",
       callback: function (event) {
-        EventManager.getInstance().removeListener(_listener);
+        ServiceLocator.eventManager.removeListener(_listener);
         event = new EventCustom("Issue9898");
-        EventManager.getInstance().dispatchEvent(event);
+        ServiceLocator.eventManager.dispatchEvent(event);
       }
     });
-    EventManager.getInstance().addListener(_listener, 1);
+    ServiceLocator.eventManager.addListener(_listener, 1);
 
     const layout = new ButtonLayout(
       [{ label: "Dispatch Custom Event1", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) }],
@@ -62,7 +62,7 @@ export class Issue9898 extends EventDispatcherTestDemo {
       "Actions",
       () => {
         var event = new EventCustom("Issue9898");
-        EventManager.getInstance().dispatchEvent(event);
+        ServiceLocator.eventManager.dispatchEvent(event);
       }
     );
     this.addChild(layout);

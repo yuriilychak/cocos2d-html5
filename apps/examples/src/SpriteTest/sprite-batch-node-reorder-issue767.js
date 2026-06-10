@@ -34,7 +34,7 @@ import { TAG_SPRITE1, TAG_SPRITE2, TAG_SPRITE_LEFT, TAG_SPRITE_RIGHT } from "./s
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_ghosts, s_ghostsPlist } from "../resources";
 import { winSize } from "../constants";
-import { Sprite, SpriteBatchNode, SpriteFrameCache } from "@aspect/core";
+import { Sprite, SpriteBatchNode, ServiceLocator } from "@aspect/core";
 
 export class SpriteBatchNodeReorderIssue767 extends SpriteTestDemo {
 
@@ -63,7 +63,7 @@ export class SpriteBatchNodeReorderIssue767 extends SpriteTestDemo {
 
         this.curPixel2 = null;
 
-        SpriteFrameCache.getInstance().addSpriteFrames(s_ghostsPlist, s_ghosts);
+        ServiceLocator.spriteFrameCache.addSpriteFrames(s_ghostsPlist, s_ghosts);
         //
         // SpriteBatchNode: 3 levels of children
         //
@@ -71,14 +71,14 @@ export class SpriteBatchNodeReorderIssue767 extends SpriteTestDemo {
         this.addChild(aParent, 0, TAG_SPRITE1);
 
         // parent
-        var l1 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("father.gif"));
+        var l1 = new Sprite(ServiceLocator.spriteFrameCache.getSpriteFrame("father.gif"));
         l1.x = winSize.width / 2;
         l1.y = winSize.height / 2;
         aParent.addChild(l1, 0, TAG_SPRITE2);
         var l1W = l1.width, l1H = l1.height;
 
         // child left
-        var l2a = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("sister1.gif"));
+        var l2a = new Sprite(ServiceLocator.spriteFrameCache.getSpriteFrame("sister1.gif"));
         l2a.x = -25 + l1W / 2;
         l2a.y = 0 + l1H / 2;
         l1.addChild(l2a, -1, TAG_SPRITE_LEFT);
@@ -86,7 +86,7 @@ export class SpriteBatchNodeReorderIssue767 extends SpriteTestDemo {
 
 
         // child right
-        var l2b = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("sister2.gif"));
+        var l2b = new Sprite(ServiceLocator.spriteFrameCache.getSpriteFrame("sister2.gif"));
         l2b.x = 25 + l1W / 2;
         l2b.y = 0 + l1H / 2;
         l1.addChild(l2b, 1, TAG_SPRITE_RIGHT);
@@ -94,28 +94,28 @@ export class SpriteBatchNodeReorderIssue767 extends SpriteTestDemo {
 
 
         // child left bottom
-        var l3a1 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("child1.gif"));
+        var l3a1 = new Sprite(ServiceLocator.spriteFrameCache.getSpriteFrame("child1.gif"));
         l3a1.scale = 0.65;
         l3a1.x = 0 + l2aW / 2;
         l3a1.y = -50 + l2aH / 2;
         l2a.addChild(l3a1, -1);
 
         // child left top
-        var l3a2 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("child1.gif"));
+        var l3a2 = new Sprite(ServiceLocator.spriteFrameCache.getSpriteFrame("child1.gif"));
         l3a2.scale = 0.65;
         l3a2.x = 0 + l2aW / 2;
         l3a2.y = +50 + l2aH / 2;
         l2a.addChild(l3a2, 1);
 
         // child right bottom
-        var l3b1 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("child1.gif"));
+        var l3b1 = new Sprite(ServiceLocator.spriteFrameCache.getSpriteFrame("child1.gif"));
         l3b1.scale = 0.65;
         l3b1.x = 0 + l2bW / 2;
         l3b1.y = -50 + l2bH / 2;
         l2b.addChild(l3b1, -1);
 
         // child right top
-        var l3b2 = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("child1.gif"));
+        var l3b2 = new Sprite(ServiceLocator.spriteFrameCache.getSpriteFrame("child1.gif"));
         l3b2.scale = 0.65;
         l3b2.x = 0 + l2bW / 2;
         l3b2.y = +50 + l2bH / 2;

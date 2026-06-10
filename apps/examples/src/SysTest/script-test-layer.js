@@ -27,12 +27,12 @@
 import { ScriptTestTempLayer } from "./ScriptTestTempFile";
 import { SysTestBase } from "./sys-test-base";
 import { tempJSFileName } from "./sys-test-helpers";
-import { Color, EventManager, Sys, log } from "@aspect/core";
+import { Color, log, ServiceLocator } from "@aspect/core";
 import { ButtonLayout } from "../button-layout";
 
 export class ScriptTestLayer extends SysTestBase {
   startDownload() {
-    if (!Sys.getInstance().isNative) {
+    if (!ServiceLocator.sys.isNative) {
       return;
     }
     var that = this;
@@ -92,7 +92,7 @@ export class ScriptTestLayer extends SysTestBase {
             break;
         }
       });
-      EventManager.getInstance().addListener(listener, 1);
+      ServiceLocator.eventManager.addListener(listener, 1);
       this._am.update();
     }
   }
@@ -102,8 +102,8 @@ export class ScriptTestLayer extends SysTestBase {
     this.addChild(this._tempLayer, 0, 233);
   }
   clickMeReloadTempLayer() {
-    Sys.getInstance().cleanScript(tempJSFileName);
-    if (!Sys.getInstance().isNative) {
+    ServiceLocator.sys.cleanScript(tempJSFileName);
+    if (!ServiceLocator.sys.isNative) {
       this.clickMeShowTempLayer();
     } else {
       this.startDownload();

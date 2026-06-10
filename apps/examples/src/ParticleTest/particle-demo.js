@@ -37,15 +37,7 @@ import {
 import { ParticleTestScene } from "./particle-test-scene";
 import { s_back3 } from "../resources";
 import { director } from "../constants";
-import {
-  Color,
-  EventListener,
-  EventManager,
-  EventMouse,
-  Point,
-  Sprite,
-  Sys
-} from "@aspect/core";
+import { Color, EventListener, EventMouse, Point, Sprite, ServiceLocator } from "@aspect/core";
 import { MoveBy, Sequence } from "@aspect/actions";
 import { ParticleSystem } from "@aspect/particle";
 import { ButtonLayout } from "../button-layout";
@@ -63,8 +55,8 @@ export class ParticleDemo extends BaseTestLayer {
     this._movementIdx = 0;
     this._isTexture = true;
 
-    if ("touches" in Sys.getInstance().capabilities) {
-      EventManager.getInstance().addListener(
+    if ("touches" in ServiceLocator.sys.capabilities) {
+      ServiceLocator.eventManager.addListener(
         {
           event: EventListener.TOUCH_ALL_AT_ONCE,
           onTouchesBegan: function (touches, event) {
@@ -80,8 +72,8 @@ export class ParticleDemo extends BaseTestLayer {
         },
         this
       );
-    } else if ("mouse" in Sys.getInstance().capabilities)
-      EventManager.getInstance().addListener(
+    } else if ("mouse" in ServiceLocator.sys.capabilities)
+      ServiceLocator.eventManager.addListener(
         {
           event: EventListener.MOUSE,
           onMouseDown: function (event) {
@@ -113,7 +105,7 @@ export class ParticleDemo extends BaseTestLayer {
     );
     this.addChild(this._layout, 100);
 
-    if ("opengl" in Sys.getInstance().capabilities) {
+    if ("opengl" in ServiceLocator.sys.capabilities) {
       this._layout.getButton(2)?.setEnabled(false);
     }
 

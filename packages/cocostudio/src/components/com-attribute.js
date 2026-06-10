@@ -26,7 +26,7 @@
 /**
  * The attribute component for Cocostudio.
  */
-import { Loader, log, Component } from "@aspect/core";
+import { log, Component, ServiceLocator } from "@aspect/core";
 
 export class ComAttribute extends Component {
 
@@ -192,7 +192,7 @@ export class ComAttribute extends Component {
      * @param  filename
      */
     parse (filename) {
-        this._jsonDict = Loader.getInstance().getRes(filename);
+        this._jsonDict = ServiceLocator.loader.getRes(filename);
     }
 };
 

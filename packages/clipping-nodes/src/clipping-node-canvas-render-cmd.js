@@ -1,4 +1,4 @@
-import { Node, CustomRenderCmd, RendererConfig } from "@aspect/core";
+import { Node, CustomRenderCmd, ServiceLocator } from "@aspect/core";
 import { DrawNode } from "@aspect/shape-nodes";
 
 export class ClippingNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
@@ -45,7 +45,7 @@ export class ClippingNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
   }
 
   _saveCmdCallback(ctx, scaleX, scaleY) {
-    const wrapper = ctx || RendererConfig.getInstance().renderContext, context = wrapper.getContext();
+    const wrapper = ctx || ServiceLocator.rendererConfig.renderContext, context = wrapper.getContext();
 
     if (this._clipElemType) {
       const locCache = ClippingNodeCanvasRenderCmd._getSharedCache();
@@ -81,7 +81,7 @@ export class ClippingNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
 
   _clipCmdCallback(ctx) {
     const node = this._node;
-    const wrapper = ctx || RendererConfig.getInstance().renderContext, context = wrapper.getContext();
+    const wrapper = ctx || ServiceLocator.rendererConfig.renderContext, context = wrapper.getContext();
 
     if (this._clipElemType) {
       this._setStencilCompositionOperation(node._stencil);
@@ -105,7 +105,7 @@ export class ClippingNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
 
   _restoreCmdCallback(ctx) {
     const locCache = ClippingNodeCanvasRenderCmd._getSharedCache();
-    const wrapper = ctx || RendererConfig.getInstance().renderContext, context = wrapper.getContext();
+    const wrapper = ctx || ServiceLocator.rendererConfig.renderContext, context = wrapper.getContext();
     if (this._clipElemType) {
       context.save();
       context.setTransform(1, 0, 0, 1, 0, 0);
@@ -145,13 +145,13 @@ export class ClippingNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
       return;
     }
 
-    RendererConfig.getInstance().renderer.pushRenderCommand(this._rendererSaveCmd);
+    ServiceLocator.rendererConfig.renderer.pushRenderCommand(this._rendererSaveCmd);
     if (this._clipElemType) {
       node._visitChildren();
     } else {
       node._stencil.visit(node);
     }
-    RendererConfig.getInstance().renderer.pushRenderCommand(this._rendererClipCmd);
+    ServiceLocator.rendererConfig.renderer.pushRenderCommand(this._rendererClipCmd);
 
     if (this._clipElemType) {
       node._stencil.visit(node);
@@ -168,7 +168,7 @@ export class ClippingNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
       this._cangodhelpme(false);
     }
 
-    RendererConfig.getInstance().renderer.pushRenderCommand(this._rendererRestoreCmd);
+    ServiceLocator.rendererConfig.renderer.pushRenderCommand(this._rendererRestoreCmd);
     this._dirtyFlag = 0;
   }
 }

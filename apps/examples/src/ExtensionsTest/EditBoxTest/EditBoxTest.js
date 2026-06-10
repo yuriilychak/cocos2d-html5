@@ -26,7 +26,7 @@
  ****************************************************************************/
 
 import { TestScene } from "../../test-scene";
-import { Color, Director, Layer, Size, log, Rect } from "@aspect/core";
+import { Color, Layer, Size, log, Rect, ServiceLocator } from "@aspect/core";
 import { Scale9Sprite } from "@aspect/ccui";
 import { s_markerFelt_fnt } from "../../resources";
 
@@ -161,5 +161,5 @@ export function runEditBoxTest() {
   var pScene = new TestScene("Edit Box");
   var pLayer = new EditBoxTestLayer();
   pScene.addChild(pLayer);
-  Director.getInstance().runScene(pScene);
+  ServiceLocator.director.runScene(pScene);
 }

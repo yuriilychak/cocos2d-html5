@@ -25,15 +25,7 @@
 
 import { RenderTextureBaseLayer } from "./render-texture-base-layer";
 import { s_circle_plist, s_circle_png, s_simpleFont_fnt } from "../resources";
-import {
-  Color,
-  Director,
-  EventListener,
-  EventManager,
-  Sprite,
-  SpriteBatchNode,
-  SpriteFrameCache
-} from "@aspect/core";
+import { Color, EventListener, Sprite, SpriteBatchNode, ServiceLocator } from "@aspect/core";
 import { FadeTo, Hide, Sequence } from "@aspect/actions";
 import { TextBMFont } from "@aspect/ccui";
 
@@ -62,7 +54,7 @@ export class RenderTextureZbuffer extends RenderTextureBaseLayer {
 
     this.sp9 = null;
 
-    EventManager.getInstance().addListener(
+    ServiceLocator.eventManager.addListener(
       {
         event: EventListener.TOUCH_ALL_AT_ONCE,
         onTouchesBegan: this.onTouchesBegan.bind(this),
@@ -72,7 +64,7 @@ export class RenderTextureZbuffer extends RenderTextureBaseLayer {
       this
     );
 
-    var size = Director.getInstance().getWinSize();
+    var size = ServiceLocator.director.getWinSize();
     var label = new TextBMFont("vertexZ = 50", s_simpleFont_fnt);
     label.x = size.width / 2;
     label.y = size.height * 0.25;
@@ -92,7 +84,7 @@ export class RenderTextureZbuffer extends RenderTextureBaseLayer {
     label2.vertexZ = 0;
     label3.vertexZ = -50;
 
-    SpriteFrameCache.getInstance().addSpriteFrames(s_circle_plist);
+    ServiceLocator.spriteFrameCache.addSpriteFrames(s_circle_plist);
     this.mgr = new SpriteBatchNode(s_circle_png, 9);
     this.addChild(this.mgr);
     this.sp1 = new Sprite("#circle.png");
@@ -196,7 +188,7 @@ export class RenderTextureZbuffer extends RenderTextureBaseLayer {
   }
 
   renderScreenShot() {
-    var winSize = Director.getInstance().getWinSize();
+    var winSize = ServiceLocator.director.getWinSize();
     var texture = new RenderTexture(winSize.width, winSize.width);
     if (!texture) return;
 

@@ -25,16 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import {
-  log,
-  Vertex3F,
-  Point,
-  RendererConfig,
-  VERTEX_ATTRIB_POSITION,
-  VERTEX_ATTRIB_TEX_COORDS,
-  incrementGLDraws,
-  Matrix4
-} from "@aspect/core";
+import { log, Vertex3F, Point, VERTEX_ATTRIB_POSITION, VERTEX_ATTRIB_TEX_COORDS, incrementGLDraws, Matrix4, ServiceLocator } from "@aspect/core";
 import { GridBase } from "./grid-base.js";
 
 /**
@@ -115,7 +106,7 @@ export class Grid3D extends GridBase {
 
   beforeBlit() {
     if (this._needDepthTestForBlit) {
-      const gl = RendererConfig.getInstance().renderContext;
+      const gl = ServiceLocator.rendererConfig.renderContext;
       this._oldDepthTestValue = gl.isEnabled(gl.DEPTH_TEST);
       this._oldDepthWriteValue = gl.getParameter(gl.DEPTH_WRITEMASK);
       //CHECK_GL_ERROR_DEBUG();
@@ -126,7 +117,7 @@ export class Grid3D extends GridBase {
 
   afterBlit() {
     if (this._needDepthTestForBlit) {
-      const gl = RendererConfig.getInstance().renderContext;
+      const gl = ServiceLocator.rendererConfig.renderContext;
       if (this._oldDepthTestValue) gl.enable(gl.DEPTH_TEST);
       else gl.disable(gl.DEPTH_TEST);
       gl.depthMask(this._oldDepthWriteValue);
@@ -146,7 +137,7 @@ export class Grid3D extends GridBase {
 
     this._glProgramState.apply(this._matrix);
 
-    const gl = RendererConfig.getInstance().renderContext;
+    const gl = ServiceLocator.rendererConfig.renderContext;
     const locDirty = this._dirty;
 
     gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
@@ -185,7 +176,7 @@ export class Grid3D extends GridBase {
   }
 
   calculateVertexPoints() {
-    const gl = RendererConfig.getInstance().renderContext;
+    const gl = ServiceLocator.rendererConfig.renderContext;
 
     const width = this._texture.pixelsWidth;
     const height = this._texture.pixelsHeight;

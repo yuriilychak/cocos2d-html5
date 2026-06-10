@@ -25,7 +25,7 @@
 
 import { RenderTextureBaseLayer } from "./render-texture-base-layer";
 import { s_fire, s_simpleFont_fnt } from "../resources";
-import { Color, Director, EventListener, EventManager, Rect, RendererConfig, Sprite, Texture2D } from "@aspect/core";
+import { Color, EventListener, Rect, Sprite, Texture2D, ServiceLocator } from "@aspect/core";
 import { BMButton, Widget } from "@aspect/ccui";
 
 import { RenderTexture } from "@aspect/render-texture";
@@ -36,7 +36,7 @@ export class RenderTextureTestDepthStencil extends RenderTextureBaseLayer {
     this._spriteDraw = null;
 
     this._rend = null;
-    var winSize = Director.getInstance().getWinSize();
+    var winSize = ServiceLocator.director.getWinSize();
 
     this._spriteDraw = new Sprite(s_fire);
     this._spriteDraw.x = winSize.width * 0.25;
@@ -82,7 +82,7 @@ export class RenderTextureTestDepthStencil extends RenderTextureBaseLayer {
   }
 
   releaseMask() {
-    var gl = RendererConfig.getInstance().renderContext;
+    var gl = ServiceLocator.rendererConfig.renderContext;
     gl.stencilFunc(gl.NOTEQUAL, 1, 0xff);
     gl.stencilOp(gl.KEEP, gl.KEEP, gl.KEEP);
     gl.disable(gl.STENCIL_TEST);
@@ -90,13 +90,13 @@ export class RenderTextureTestDepthStencil extends RenderTextureBaseLayer {
   }
 
   maskTest(sender) {
-    var gl = RendererConfig.getInstance().renderContext;
+    var gl = ServiceLocator.rendererConfig.renderContext;
 
     gl.clear(gl.STENCIL_BUFFER_BIT);
     this._rend.beginWithClear(0, 0, 0, 0, 0, 0);
 
     gl.stencilMask(0xff);
-    EventManager.getInstance().removeListeners(EventListener.TOUCH_ONE_BY_ONE);
+    ServiceLocator.eventManager.removeListeners(EventListener.TOUCH_ONE_BY_ONE);
     gl.stencilFunc(gl.NEVER, 1, 0xff);
     gl.stencilOp(gl.REPLACE, gl.REPLACE, gl.REPLACE);
     gl.enable(gl.STENCIL_TEST);

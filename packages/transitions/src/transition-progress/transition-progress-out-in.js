@@ -1,4 +1,4 @@
-import { Director, RendererConfig, Point } from "@aspect/core";
+import { Point, ServiceLocator } from "@aspect/core";
 import { ProgressTimer } from "@aspect/progress-timer";
 import { TransitionProgress } from "./transition-progress";
 
@@ -9,9 +9,9 @@ export class TransitionProgressOutIn extends TransitionProgress {
   }
 
   _progressTimerNodeWithRenderTexture(texture) {
-    var size = Director.getInstance().getWinSize();
+    var size = ServiceLocator.director.getWinSize();
     var pNode = new ProgressTimer(texture.sprite);
-    if (RendererConfig.getInstance().isWebGL)
+    if (ServiceLocator.rendererConfig.isWebGL)
       pNode.sprite.flippedY = true;
     pNode.type = ProgressTimer.TYPE_BAR;
     pNode.midPoint = new Point(0.5, 0.5);

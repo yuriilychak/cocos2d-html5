@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { classManager, Director, Sys } from "@aspect/core";
+import { classManager, ServiceLocator } from "@aspect/core";
 
 /**
  * <p>
@@ -61,7 +61,7 @@ export class Pool {
 
   _autoRelease(obj) {
     const running = obj._running === undefined ? false : !obj._running;
-    Director.getInstance()
+    ServiceLocator.director
       .getScheduler()
       .schedule(this._releaseCB, obj, 0, 0, 0, running);
   }
@@ -136,7 +136,7 @@ export class Pool {
       // User implementation for re-enable the object
       obj.reuse && obj.reuse(...args);
       // JSB release to avoid memory leak
-      Sys.getInstance().isNative && obj.release && this._autoRelease(obj);
+      ServiceLocator.sys.isNative && obj.release && this._autoRelease(obj);
       return obj;
     }
   }

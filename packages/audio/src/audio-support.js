@@ -12,9 +12,9 @@
  * May be modifications for a few browser version
  */
 
-import { Sys } from "@aspect/core";
+import { ServiceLocator } from "@aspect/core";
 
-const sys = Sys.getInstance();
+const sys = ServiceLocator.sys;
 
 // check if browser supports Web Audio
 const supportWebAudio = !!(

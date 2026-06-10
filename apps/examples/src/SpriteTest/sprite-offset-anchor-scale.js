@@ -39,7 +39,7 @@ import {
 } from "../resources";
 import { winSize } from "../constants";
 import { Animate, DelayTime, ScaleBy, Sequence } from "@aspect/actions";
-import { Animation, Sprite, SpriteFrameCache } from "@aspect/core";
+import { Animation, Sprite, ServiceLocator } from "@aspect/core";
 export class SpriteOffsetAnchorScale extends SpriteTestDemo {
   constructor() {
     //----start8----ctor
@@ -50,8 +50,8 @@ export class SpriteOffsetAnchorScale extends SpriteTestDemo {
     this.testDuration = 2.1;
 
     this.pixel = { 0: 153, 1: 0, 2: 153, 3: 255 };
-    SpriteFrameCache.getInstance().addSpriteFrames(s_grossiniPlist);
-    SpriteFrameCache.getInstance().addSpriteFrames(
+    ServiceLocator.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+    ServiceLocator.spriteFrameCache.addSpriteFrames(
       s_grossini_grayPlist,
       s_grossini_gray
     );
@@ -61,7 +61,7 @@ export class SpriteOffsetAnchorScale extends SpriteTestDemo {
       // Animation using Sprite BatchNode
       //
       var sprite = new Sprite(
-        SpriteFrameCache.getInstance().getSpriteFrame("grossini_dance_01.png")
+        ServiceLocator.spriteFrameCache.getSpriteFrame("grossini_dance_01.png")
       );
       sprite.x = (winSize.width / 4) * (i + 1);
       sprite.y = winSize.height / 2;
@@ -95,7 +95,7 @@ export class SpriteOffsetAnchorScale extends SpriteTestDemo {
       var str = "";
       for (var k = 1; k <= 14; k++) {
         str = "grossini_dance_" + (k < 10 ? "0" + k : k) + ".png";
-        var frame = SpriteFrameCache.getInstance().getSpriteFrame(str);
+        var frame = ServiceLocator.spriteFrameCache.getSpriteFrame(str);
         animFrames.push(frame);
       }
 
@@ -115,8 +115,8 @@ export class SpriteOffsetAnchorScale extends SpriteTestDemo {
   onExit() {
     //----start8----onExit
     super.onExit();
-    SpriteFrameCache.getInstance().removeSpriteFramesFromFile(s_grossiniPlist);
-    SpriteFrameCache.getInstance().removeSpriteFramesFromFile(
+    ServiceLocator.spriteFrameCache.removeSpriteFramesFromFile(s_grossiniPlist);
+    ServiceLocator.spriteFrameCache.removeSpriteFramesFromFile(
       s_grossini_grayPlist
     );
     //----end8----

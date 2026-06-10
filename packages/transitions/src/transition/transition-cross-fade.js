@@ -1,4 +1,4 @@
-import { Director, LayerColor, Color, ONE, SRC_ALPHA, ONE_MINUS_SRC_ALPHA } from "@aspect/core";
+import { LayerColor, Color, ONE, SRC_ALPHA, ONE_MINUS_SRC_ALPHA, ServiceLocator } from "@aspect/core";
 import { RenderTexture } from "@aspect/render-texture";
 import { Sequence, FadeTo, CallFunc } from "@aspect/actions";
 import { SCENE_FADE } from "./constants";
@@ -14,7 +14,7 @@ export class TransitionCrossFade extends TransitionScene {
     super.onEnter();
 
     var color = new Color(0, 0, 0, 0);
-    var winSize = Director.getInstance().getWinSize();
+    var winSize = ServiceLocator.director.getWinSize();
     var layer = new LayerColor(color);
 
     var inTexture = new RenderTexture(winSize.width, winSize.height);

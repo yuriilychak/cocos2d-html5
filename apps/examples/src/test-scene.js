@@ -29,7 +29,7 @@
 import { TestController } from "./test-controller";
 import { s_simpleFont_fnt } from "./resources";
 import { director } from "./constants";
-import { Color, Director, Game, Rect, Scene, Sys } from "@aspect/core";
+import { Color, Rect, Scene, ServiceLocator } from "@aspect/core";
 import { TransitionFade } from "@aspect/transitions";
 import { BMButton, ImageView, TextBMFont, Widget } from "@aspect/ccui";
 
@@ -50,7 +50,7 @@ export class TestScene extends Scene {
     this._testInfoLabel = null;
     this.init();
 
-    const winSizeLocal = Director.getInstance().getWinSize();
+    const winSizeLocal = ServiceLocator.director.getWinSize();
     const winH = winSizeLocal.height;
     const winW = winSizeLocal.width;
     const centerY = winH - HEADER_HEIGHT / 2;
@@ -167,8 +167,8 @@ export class TestScene extends Scene {
     this._mainMenu.setEnabled(false);
     const scene = new TestScene("Examples", "Close");
     scene.onMainMenuCallback = () => {
-      if (Sys.getInstance().isNative) {
-        Game.getInstance().end();
+      if (ServiceLocator.sys.isNative) {
+        ServiceLocator.game.end();
       } else {
         window.history && window.history.go(-1);
       }

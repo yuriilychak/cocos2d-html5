@@ -1,4 +1,4 @@
-import { RendererConfig } from '@aspect/core';
+import { ServiceLocator } from "@aspect/core";
 import { ProtectedNodeCanvasRenderCmd } from './protected-node-canvas-render-cmd.js';
 import { ProtectedNodeWebGLRenderCmd } from './protected-node-webgl-render-cmd.js';
 
@@ -9,7 +9,7 @@ export class WidgetCanvasRenderCmd extends ProtectedNodeCanvasRenderCmd {
     }
 
     visit(parentCmd) {
-        var node = this._node, renderer = RendererConfig.getInstance().renderer;
+        var node = this._node, renderer = ServiceLocator.rendererConfig.renderer;
 
         parentCmd = parentCmd || this.getParentRenderCmd();
         if (parentCmd)
@@ -57,7 +57,7 @@ export class WidgetWebGLRenderCmd extends ProtectedNodeWebGLRenderCmd {
     }
 
     visit(parentCmd) {
-        var node = this._node, renderer = RendererConfig.getInstance().renderer;
+        var node = this._node, renderer = ServiceLocator.rendererConfig.renderer;
 
         parentCmd = parentCmd || this.getParentRenderCmd();
         if (parentCmd)

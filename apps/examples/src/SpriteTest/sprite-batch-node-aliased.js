@@ -38,7 +38,7 @@ import {
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_dance_atlas, s_simpleFont_fnt } from "../resources";
 import { winSize } from "../constants";
-import { Rect, RendererConfig, Sprite, SpriteBatchNode, Sys } from "@aspect/core";
+import { Rect, Sprite, SpriteBatchNode, ServiceLocator } from "@aspect/core";
 import { ScaleBy, Sequence } from "@aspect/actions";
 import { TextBMFont } from "@aspect/ccui";
 
@@ -86,10 +86,10 @@ export class SpriteBatchNodeAliased extends SpriteTestDemo {
     // So sprite1 and sprite2 will be affected by this change
     //
     if (
-      !Sys.getInstance().isNative &&
+      !ServiceLocator.sys.isNative &&
       !(
-        "opengl" in Sys.getInstance().capabilities &&
-        RendererConfig.getInstance().isWebGL
+        "opengl" in ServiceLocator.sys.capabilities &&
+        ServiceLocator.rendererConfig.isWebGL
       )
     ) {
       var label = new TextBMFont("Not supported on HTML5-canvas", s_simpleFont_fnt);
@@ -105,9 +105,9 @@ export class SpriteBatchNodeAliased extends SpriteTestDemo {
   onExit() {
     //----start25----onExit
     if (
-      Sys.getInstance().isNative ||
-      ("opengl" in Sys.getInstance().capabilities &&
-        RendererConfig.getInstance().isWebGL)
+      ServiceLocator.sys.isNative ||
+      ("opengl" in ServiceLocator.sys.capabilities &&
+        ServiceLocator.rendererConfig.isWebGL)
     ) {
       var sprite = this.getChildByTag(TAG_SPRITE_BATCH_NODE);
       sprite.texture.setAntiAliasTexParameters();

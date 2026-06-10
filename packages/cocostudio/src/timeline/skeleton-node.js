@@ -32,7 +32,7 @@
 
     
 
-import { AffineTransform, Point, Rect, RendererConfig, Size, arrayRemoveObject } from "@aspect/core";
+import { AffineTransform, Point, Rect, Size, arrayRemoveObject, ServiceLocator } from "@aspect/core";
 
 import { BoneNode } from "./bone-node.js";
     var type = {
@@ -174,7 +174,7 @@ import { BoneNode } from "./bone-node.js";
             if (cmd._debug)
                 for (i = 0; i < subOrderedAllBones.length; i++) {
                     subOrderedBoneCmd = subOrderedAllBones[i]._renderCmd;
-                    RendererConfig.getInstance().renderer.pushRenderCommand(subOrderedBoneCmd._drawNode._renderCmd);
+                    ServiceLocator.rendererConfig.renderer.pushRenderCommand(subOrderedBoneCmd._drawNode._renderCmd);
                 }
             cmd._dirtyFlag = 0;
         }

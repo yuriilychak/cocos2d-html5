@@ -25,7 +25,7 @@
  ****************************************************************************/
 
 
-import { NewClass, Node, Point, Rect, RendererConfig, Size, log } from "@aspect/core";
+import { NewClass, Node, Point, Rect, Size, log, ServiceLocator } from "@aspect/core";
 import { ParticleSystem } from "@aspect/particle";
 
 import { ENABLE_PHYSICS_CHIPMUNK_DETECT, ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX } from "../armature-define.js";
@@ -318,7 +318,7 @@ export class DisplayManager extends NewClass {
       this._displayType = this._currentDecoDisplay.getDisplayData().displayType;
     } else this._displayType = DISPLAY_TYPE_MAX;
 
-    RendererConfig.getInstance().renderer.childrenOrderDirty = true;
+    ServiceLocator.rendererConfig.renderer.childrenOrderDirty = true;
   }
 
   /**

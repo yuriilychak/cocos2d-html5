@@ -1,5 +1,5 @@
 import { ActionInstant } from "@aspect/actions";
-import { RendererConfig } from "@aspect/core";
+import { ServiceLocator } from "@aspect/core";
 
 /**
  * ReuseGrid action
@@ -33,7 +33,7 @@ export default class ReuseGrid extends ActionInstant {
    */
   startWithTarget(target) {
     super.startWithTarget(target);
-    RendererConfig.getInstance().renderer.childrenOrderDirty = true;
+    ServiceLocator.rendererConfig.renderer.childrenOrderDirty = true;
     if (this.target.grid && this.target.grid.isActive())
       this.target.grid.setReuseGrid(
         this.target.grid.getReuseGrid() + this._times

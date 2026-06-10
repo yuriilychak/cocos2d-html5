@@ -27,7 +27,7 @@
 /**
  * The Cocostudio's action object.
  */
-import { Director, NewClass, REPEAT_FOREVER, arrayRemoveObject } from "@aspect/core";
+import { NewClass, REPEAT_FOREVER, arrayRemoveObject, ServiceLocator } from "@aspect/core";
 
 import { ActionNode } from "./action-node.js";
 export class ActionObject extends NewClass {
@@ -44,7 +44,7 @@ export class ActionObject extends NewClass {
     this._unitTime = 0.1;
     this._currentTime = 0;
     this._fTotalTime = 0;
-    this._scheduler = Director.getInstance().getScheduler();
+    this._scheduler = ServiceLocator.director.getScheduler();
   }
 
   /**

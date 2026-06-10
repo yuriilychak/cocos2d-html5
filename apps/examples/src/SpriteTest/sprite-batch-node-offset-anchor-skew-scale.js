@@ -38,12 +38,7 @@ import {
 } from "../resources";
 import { winSize } from "../constants";
 import { Animate, ScaleBy, SkewBy, Sequence } from "@aspect/actions";
-import {
-  Animation,
-  Sprite,
-  SpriteBatchNode,
-  SpriteFrameCache
-} from "@aspect/core";
+import { Animation, Sprite, SpriteBatchNode, ServiceLocator } from "@aspect/core";
 export class SpriteBatchNodeOffsetAnchorSkewScale extends SpriteTestDemo {
   constructor() {
     //----start44----ctor
@@ -55,8 +50,8 @@ export class SpriteBatchNodeOffsetAnchorSkewScale extends SpriteTestDemo {
 
     this.pixel = { 0: 255, 1: 204, 2: 153, 3: 255 };
 
-    SpriteFrameCache.getInstance().addSpriteFrames(s_grossiniPlist);
-    SpriteFrameCache.getInstance().addSpriteFrames(
+    ServiceLocator.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+    ServiceLocator.spriteFrameCache.addSpriteFrames(
       s_grossini_grayPlist,
       s_grossini_gray
     );
@@ -100,7 +95,7 @@ export class SpriteBatchNodeOffsetAnchorSkewScale extends SpriteTestDemo {
       var tmp = "";
       for (var j = 1; j <= 14; j++) {
         tmp = "grossini_dance_" + (j < 10 ? "0" + j : j) + ".png";
-        var frame = SpriteFrameCache.getInstance().getSpriteFrame(tmp);
+        var frame = ServiceLocator.spriteFrameCache.getSpriteFrame(tmp);
         animFrames.push(frame);
       }
 

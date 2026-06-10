@@ -26,13 +26,13 @@
 
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
-import { Point, Size, SpriteFrameCache } from "@aspect/core";
+import { Point, Size, ServiceLocator } from "@aspect/core";
 import { Button, ImageView, Widget } from "@aspect/ccui";
 
 export class UIImageViewFlipTest extends UIMainLayer {
   init() {
     if (super.init()) {
-      SpriteFrameCache.getInstance().addSpriteFrames("Images/blocks9ss.plist");
+      ServiceLocator.spriteFrameCache.addSpriteFrames("Images/blocks9ss.plist");
       var widgetSize = this._widget.getContentSize();
 
       this._bottomDisplayLabel.setString("ImageView flip test");

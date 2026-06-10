@@ -27,13 +27,7 @@
  ****************************************************************************/
 
 import { s_simpleFont_fnt } from "./resources";
-import {
-  Color,
-  Director,
-  EventManager,
-  Layer,
-  Rect,
-} from "@aspect/core";
+import { Color, Layer, Rect, ServiceLocator } from "@aspect/core";
 import {
   BMButton,
   ImageView,
@@ -60,7 +54,7 @@ export class MenuTestLayer extends Layer {
     this._resizeListener = null;
     this._bgLayout = null;
 
-    const winSizeLocal = Director.getInstance().getWinSize();
+    const winSizeLocal = ServiceLocator.director.getWinSize();
     const PADDING = 12;
     const ITEM_HEIGHT = 44;
     const ITEM_MARGIN = 6;
@@ -157,10 +151,10 @@ export class MenuTestLayer extends Layer {
   onEnter() {
     super.onEnter();
     helper.doLayout(this);
-    this._resizeListener = EventManager.getInstance().addCustomListener(
+    this._resizeListener = ServiceLocator.eventManager.addCustomListener(
       "canvas-resize",
       () => {
-        this.setContentSize(Director.getInstance().getWinSize());
+        this.setContentSize(ServiceLocator.director.getWinSize());
         helper.doLayout(this);
       },
       this
@@ -168,7 +162,7 @@ export class MenuTestLayer extends Layer {
   }
 
   onExit() {
-    EventManager.getInstance().removeListener(this._resizeListener);
+    ServiceLocator.eventManager.removeListener(this._resizeListener);
     this._resizeListener = null;
     super.onExit();
   }

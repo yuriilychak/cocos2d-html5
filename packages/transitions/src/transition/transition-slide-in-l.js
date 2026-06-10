@@ -1,4 +1,4 @@
-import { Director, Point } from "@aspect/core";
+import { Point, ServiceLocator } from "@aspect/core";
 import { EaseInOut, Sequence, MoveBy, CallFunc } from "@aspect/actions";
 import { ADJUST_FACTOR } from "./constants";
 import { TransitionScene } from "./transition-scene";
@@ -31,7 +31,7 @@ export class TransitionSlideInL extends TransitionScene {
 
   initScenes() {
     this._inScene.setPosition(
-      -Director.getInstance().getWinSize().width + ADJUST_FACTOR,
+      -ServiceLocator.director.getWinSize().width + ADJUST_FACTOR,
       0
     );
   }
@@ -39,7 +39,7 @@ export class TransitionSlideInL extends TransitionScene {
   action() {
     return new MoveBy(
       this._duration,
-      new Point(Director.getInstance().getWinSize().width - ADJUST_FACTOR, 0)
+      new Point(ServiceLocator.director.getWinSize().width - ADJUST_FACTOR, 0)
     );
   }
 

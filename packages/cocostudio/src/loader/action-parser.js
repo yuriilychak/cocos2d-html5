@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BlendFunc, Color, Loader, Point, SpriteFrameCache, log } from "@aspect/core";
+import { BlendFunc, Color, Point, log, ServiceLocator } from "@aspect/core";
 
 import { ActionTimeline } from "../timeline/action-timeline/action-timeline.js";
 import { AlphaFrame } from "../timeline/frame/alpha-frame.js";
@@ -216,11 +216,11 @@ import { _ccsLoad } from "./load/utils.js";
                 if(texture != null) {
                     plist = texture["Plist"];
                     path = texture["Path"];
-                    spriteFrame = SpriteFrameCache.getInstance().getSpriteFrame(path);
+                    spriteFrame = ServiceLocator.spriteFrameCache.getSpriteFrame(path);
                     if(!spriteFrame && plist){
-                        if(Loader.getInstance().getRes(resourcePath + plist)){
-                            SpriteFrameCache.getInstance().addSpriteFrames(resourcePath + plist);
-                            spriteFrame = SpriteFrameCache.getInstance().getSpriteFrame(path);
+                        if(ServiceLocator.loader.getRes(resourcePath + plist)){
+                            ServiceLocator.spriteFrameCache.addSpriteFrames(resourcePath + plist);
+                            spriteFrame = ServiceLocator.spriteFrameCache.getSpriteFrame(path);
                         }else{
                             log("%s need to be preloaded", resourcePath + plist);
                         }

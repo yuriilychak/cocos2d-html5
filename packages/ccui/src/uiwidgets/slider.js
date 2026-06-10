@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { RendererConfig, Rect, Size, Point, Node, Sprite } from "@aspect/core";
+import { Rect, Size, Point, Node, Sprite, ServiceLocator } from "@aspect/core";
 import { Widget } from "../base-classes/widget";
 import { Scale9Sprite } from "../base-classes/scale9-sprite";
 
@@ -689,7 +689,7 @@ export class Slider extends Widget {
       this._sliderBallNormalTextureScaleX,
       this._sliderBallNormalTextureScaleY
     );
-    if (RendererConfig.getInstance().isWebGL) {
+    if (ServiceLocator.rendererConfig.isWebGL) {
       this._slidBallNormalRenderer._renderCmd._shaderProgram =
         this._getNormalGLProgram();
     } else {
@@ -708,7 +708,7 @@ export class Slider extends Widget {
       this._slidBallPressedRenderer.setVisible(true);
       this._slidBallDisabledRenderer.setVisible(false);
     }
-    if (RendererConfig.getInstance().isWebGL) {
+    if (ServiceLocator.rendererConfig.isWebGL) {
       this._slidBallNormalRenderer._renderCmd._shaderProgram =
         this._getNormalGLProgram();
     } else {
@@ -722,7 +722,7 @@ export class Slider extends Widget {
       this._slidBallDisabledRenderer.setVisible(true);
     } else {
       this._slidBallNormalRenderer.setVisible(true);
-      if (RendererConfig.getInstance().isWebGL) {
+      if (ServiceLocator.rendererConfig.isWebGL) {
         this._slidBallNormalRenderer._renderCmd._shaderProgram =
           this._getGrayGLProgram();
       } else {

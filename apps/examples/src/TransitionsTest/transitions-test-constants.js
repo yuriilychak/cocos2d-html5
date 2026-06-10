@@ -54,7 +54,7 @@ import {
 } from "./transitions-test-helpers";
 import { TransitionProgressHorizontal, TransitionProgressInOut, TransitionProgressOutIn, TransitionProgressRadialCCW, TransitionProgressRadialCW, TransitionProgressVertical } from "@aspect/transitions";
 
-import { RendererConfig } from "@aspect/core";
+import { ServiceLocator } from "@aspect/core";
 export var TRANSITION_DURATION = 1.2;
 
 export var arrayOfTransitionsTest = [
@@ -195,7 +195,7 @@ export var arrayOfTransitionsTest = [
   }
 ];
 
-if (!RendererConfig.getInstance().isCanvas) {
+if (!ServiceLocator.rendererConfig.isCanvas) {
   arrayOfTransitionsTest = arrayOfTransitionsTest.concat([
     {
       title: "PageTransitionForward",

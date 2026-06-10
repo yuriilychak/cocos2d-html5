@@ -1,4 +1,4 @@
-import { Director } from "@aspect/core";
+import { ServiceLocator } from "@aspect/core";
 import { TransitionMoveInL } from "./transition-move-in-l";
 
 export class TransitionMoveInT extends TransitionMoveInL {
@@ -8,6 +8,6 @@ export class TransitionMoveInT extends TransitionMoveInL {
   }
 
   initScenes() {
-    this._inScene.setPosition(0, Director.getInstance().getWinSize().height);
+    this._inScene.setPosition(0, ServiceLocator.director.getWinSize().height);
   }
 }

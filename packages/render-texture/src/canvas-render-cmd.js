@@ -22,18 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import {
-  Color,
-  Node,
-  CanvasContextWrapper,
-  contentScaleFactor,
-  Texture2D,
-  Sprite,
-  ONE,
-  ONE_MINUS_SRC_ALPHA,
-  RendererConfig,
-  log
-} from "@aspect/core";
+import { Color, Node, CanvasContextWrapper, contentScaleFactor, Texture2D, Sprite, ONE, ONE_MINUS_SRC_ALPHA, log, ServiceLocator } from "@aspect/core";
 
 export class RenderTextureCanvasRenderCmd extends Node.CanvasRenderCmd {
   constructor(renderableObject) {
@@ -100,7 +89,7 @@ export class RenderTextureCanvasRenderCmd extends Node.CanvasRenderCmd {
     const node = this._node;
 
     const scale = contentScaleFactor();
-    RendererConfig.getInstance().renderer._renderingToCacheCanvas(
+    ServiceLocator.rendererConfig.renderer._renderingToCacheCanvas(
       this._cacheContext,
       node.__instanceId,
       scale,

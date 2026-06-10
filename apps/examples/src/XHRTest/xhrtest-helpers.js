@@ -26,11 +26,11 @@
  ****************************************************************************/
 
 import { XHRTestLayer } from "./xhrtest-layer";
-import { Director, Scene } from "@aspect/core";
+import { Scene, ServiceLocator } from "@aspect/core";
 
 export function runXHRTest() {
   var pScene = new Scene();
   var pLayer = new XHRTestLayer();
   pScene.addChild(pLayer);
-  Director.getInstance().runScene(pScene);
+  ServiceLocator.director.runScene(pScene);
 }

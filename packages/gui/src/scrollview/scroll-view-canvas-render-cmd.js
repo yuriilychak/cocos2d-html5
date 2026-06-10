@@ -1,4 +1,4 @@
-import { Layer, CustomRenderCmd, RendererConfig } from "@aspect/core";
+import { Layer, CustomRenderCmd, ServiceLocator } from "@aspect/core";
 
 export class GuiScrollViewCanvasRenderCmd extends Layer.CanvasRenderCmd {
     constructor(renderable) {
@@ -13,7 +13,7 @@ export class GuiScrollViewCanvasRenderCmd extends Layer.CanvasRenderCmd {
 
     _startCmd(ctx, scaleX, scaleY) {
         var node = this._node;
-        var wrapper = ctx || RendererConfig.getInstance().renderContext, context = wrapper.getContext();
+        var wrapper = ctx || ServiceLocator.rendererConfig.renderContext, context = wrapper.getContext();
         wrapper.save();
 
         if (node._clippingToBounds) {
@@ -32,7 +32,7 @@ export class GuiScrollViewCanvasRenderCmd extends Layer.CanvasRenderCmd {
     }
 
     _endCmd(wrapper) {
-        wrapper = wrapper || RendererConfig.getInstance().renderContext;
+        wrapper = wrapper || ServiceLocator.rendererConfig.renderContext;
         wrapper.restore();
     }
 }

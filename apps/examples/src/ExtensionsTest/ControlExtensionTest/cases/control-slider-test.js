@@ -1,4 +1,4 @@
-import { Color, Node, Rect, SpriteFrameCache } from "@aspect/core";
+import { Color, Node, Rect, ServiceLocator } from "@aspect/core";
 import { Scale9Sprite, TextBMFont } from "@aspect/ccui";
 import { CONTROL_EVENT_VALUE_CHANGED, ControlSlider } from "@aspect/gui";
 import { s_simpleFont_fnt, s_simpleTheme_plist } from "../../../resources";
@@ -40,7 +40,7 @@ export default class ControlSliderTest extends Node {
   constructor() {
     super();
 
-    SpriteFrameCache.getInstance().addSpriteFrames(s_simpleTheme_plist);
+    ServiceLocator.spriteFrameCache.addSpriteFrames(s_simpleTheme_plist);
 
     this._displayValueLabel = new TextBMFont(
       "Move the slider thumb!\nThe lower slider is restricted.",

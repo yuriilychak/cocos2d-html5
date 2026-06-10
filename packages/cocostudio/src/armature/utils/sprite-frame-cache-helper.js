@@ -28,7 +28,7 @@
  * spriteFrameCacheHelper is a singleton object, it's a sprite frame cache helper
  * @name spriteFrameCacheHelper
  */
-import { SpriteFrameCache, TextureAtlas } from "@aspect/core";
+import { TextureAtlas, ServiceLocator } from "@aspect/core";
 
 export const spriteFrameCacheHelper = {
     _textureAtlasDic:{},
@@ -40,7 +40,7 @@ export const spriteFrameCacheHelper = {
      * @param imagePath
      */
     addSpriteFrameFromFile:function (plistPath, imagePath) {
-        SpriteFrameCache.getInstance().addSpriteFrames(plistPath, imagePath);
+        ServiceLocator.spriteFrameCache.addSpriteFrames(plistPath, imagePath);
     },
 
     /**

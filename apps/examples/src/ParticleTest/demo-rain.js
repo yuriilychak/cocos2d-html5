@@ -29,7 +29,7 @@ import { ParticleDemo } from "./particle-demo";
 import { s_fire } from "../resources";
 import { ParticleRain } from "./ParticleExamples";
 import { ParticleSystem } from "@aspect/particle";
-import { textureCache } from "@aspect/core";
+import { ServiceLocator } from "@aspect/core";
 
 export class DemoRain extends ParticleDemo {
   onEnter() {
@@ -40,7 +40,7 @@ export class DemoRain extends ParticleDemo {
 
     this._emitter.life = 4;
 
-    this._emitter.texture = textureCache.addImage(s_fire);
+    this._emitter.texture = ServiceLocator.textureCache.addImage(s_fire);
     this._emitter.shapeType = ParticleSystem.BALL_SHAPE;
 
     this.setEmitterPosition();

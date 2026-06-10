@@ -1,18 +1,4 @@
-import {
-    Node,
-    RendererConfig,
-    glBlendFunc,
-    glBindTexture2D,
-    incrementGLDraws,
-    VERTEX_ATTRIB_POSITION,
-    VERTEX_ATTRIB_COLOR,
-    VERTEX_ATTRIB_TEX_COORDS,
-    V3F_C4B_T2F,
-    ShaderCache,
-    SHADER_SPRITE_POSITION_TEXTURECOLOR,
-    FLT_MAX,
-    Point
-} from "@aspect/core";
+import { Node, glBlendFunc, glBindTexture2D, incrementGLDraws, VERTEX_ATTRIB_POSITION, VERTEX_ATTRIB_COLOR, VERTEX_ATTRIB_TEX_COORDS, V3F_C4B_T2F, SHADER_SPRITE_POSITION_TEXTURECOLOR, FLT_MAX, Point, ServiceLocator } from "@aspect/core";
 import { TYPE_RADIAL, TYPE_BAR, TEXTURE_COORDS_COUNT, TEXTURE_COORDS } from "./constants";
 
 const MAX_VERTEX_COUNT = 8;
@@ -53,7 +39,7 @@ export class ProgressTimerWebGLRenderCmd extends Node.WebGLRenderCmd {
 
     rendering(ctx) {
         const node = this._node;
-        const context = ctx || RendererConfig.getInstance().renderContext;
+        const context = ctx || ServiceLocator.rendererConfig.renderContext;
         if (this._vertexDataCount === 0 || !node._sprite)
             return;
 
@@ -188,7 +174,7 @@ export class ProgressTimerWebGLRenderCmd extends Node.WebGLRenderCmd {
         if (this._vertexData) {
             const webglBuffer = this._vertexWebGLBuffer;
             setTimeout(function () {
-                RendererConfig.getInstance().renderContext.deleteBuffer(webglBuffer);
+                ServiceLocator.rendererConfig.renderContext.deleteBuffer(webglBuffer);
             }, 0.1);
             this._vertexWebGLBuffer = null;
             this._vertexData = null;
@@ -200,7 +186,7 @@ export class ProgressTimerWebGLRenderCmd extends Node.WebGLRenderCmd {
 
     initCmd() {
         if (!this._vertexData) {
-            const gl = RendererConfig.getInstance().renderContext;
+            const gl = ServiceLocator.rendererConfig.renderContext;
             this._vertexWebGLBuffer = gl.createBuffer();
 
             const vertexDataLen = V3F_C4B_T2F.BYTES_PER_ELEMENT;
@@ -217,7 +203,7 @@ export class ProgressTimerWebGLRenderCmd extends Node.WebGLRenderCmd {
             this._vertexDataCount = 0;
             this._vertexDataDirty = true;
 
-            this._shaderProgram = ShaderCache.getInstance().programForKey(SHADER_SPRITE_POSITION_TEXTURECOLOR);
+            this._shaderProgram = ServiceLocator.shaderCache.programForKey(SHADER_SPRITE_POSITION_TEXTURECOLOR);
         }
     }
 

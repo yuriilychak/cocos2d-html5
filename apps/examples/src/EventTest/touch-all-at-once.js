@@ -30,7 +30,7 @@
 //------------------------------------------------------------------
 import { EventTest } from "./event-test";
 import { s_pathR2 } from "../resources";
-import { Color, EventListener, EventManager, Sprite, Sys, log } from "@aspect/core";
+import { Color, EventListener, Sprite, log, ServiceLocator } from "@aspect/core";
 
 export class TouchAllAtOnce extends EventTest {
   init() {
@@ -39,9 +39,9 @@ export class TouchAllAtOnce extends EventTest {
     this.ids = {};
     this.unused_sprites = [];
 
-    if ("touches" in Sys.getInstance().capabilities) {
+    if ("touches" in ServiceLocator.sys.capabilities) {
       // this is the default behavior. No need to set it explicitly.
-      EventManager.getInstance().addListener(
+      ServiceLocator.eventManager.addListener(
         {
           event: EventListener.TOUCH_ALL_AT_ONCE,
           onTouchesBegan: this.onTouchesBegan,

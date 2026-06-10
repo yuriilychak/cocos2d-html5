@@ -41,7 +41,7 @@ import { NodeToWorld } from "./node-to-world";
 import { SchedulerTest1 } from "./scheduler-test1";
 import { StressTest1 } from "./stress-test1";
 import { StressTest2 } from "./stress-test2";
-import { Sys } from "@aspect/core";
+import { ServiceLocator } from "@aspect/core";
 
 export var SID_DELAY2 = 1;
 
@@ -63,7 +63,7 @@ export var arrayOfNodeTest = [
   ConvertToNode
 ];
 
-if ("opengl" in Sys.getInstance().capabilities) {
+if ("opengl" in ServiceLocator.sys.capabilities) {
   arrayOfNodeTest.push(NodeOpaqueTest);
   arrayOfNodeTest.push(NodeNonOpaqueTest);
 }

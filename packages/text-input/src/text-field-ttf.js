@@ -1,4 +1,4 @@
-import { LabelTTF, Color, isUndefined, RendererConfig } from "@aspect/core";
+import { LabelTTF, Color, isUndefined, ServiceLocator } from "@aspect/core";
 import { IMEDispatcher } from "./ime-dispatcher";
 
 export class TextFieldTTF extends LabelTTF {
@@ -162,7 +162,7 @@ export class TextFieldTTF extends LabelTTF {
       super.setString(this._inputText);
       if (this._colorText) this.setColor(this._colorText);
     }
-    if (RendererConfig.getInstance().isCanvas) this._renderCmd._updateTexture();
+    if (ServiceLocator.rendererConfig.isCanvas) this._renderCmd._updateTexture();
     this._charCount = this._inputText.length;
   }
 
@@ -201,7 +201,7 @@ export class TextFieldTTF extends LabelTTF {
    * @param {CanvasRenderingContext2D | WebGLRenderingContext} ctx The render context
    */
   draw(ctx) {
-    var context = ctx || RendererConfig.getInstance().renderContext;
+    var context = ctx || ServiceLocator.rendererConfig.renderContext;
     if (this.delegate && this.delegate.onDraw(this)) return;
 
     super.draw(context);

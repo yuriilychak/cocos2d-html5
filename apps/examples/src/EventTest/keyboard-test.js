@@ -30,18 +30,18 @@
 //------------------------------------------------------------------
 import { EventTest } from "./event-test";
 import { s_simpleFont_fnt } from "../resources";
-import { Director, EventListener, EventManager, KEY, Sys, log } from "@aspect/core";
+import { EventListener, KEY, log, ServiceLocator } from "@aspect/core";
 import { TextBMFont } from "@aspect/ccui";
 export class KeyboardTest extends EventTest {
   init() {
     super.init();
     var self = this;
     var label = new TextBMFont("show key Code", s_simpleFont_fnt);
-    var size = Director.getInstance().getWinSize();
+    var size = ServiceLocator.director.getWinSize();
     label.setPosition(size.width / 2, size.height / 2);
     this.addChild(label);
-    if ("keyboard" in Sys.getInstance().capabilities) {
-      EventManager.getInstance().addListener(
+    if ("keyboard" in ServiceLocator.sys.capabilities) {
+      ServiceLocator.eventManager.addListener(
         {
           event: EventListener.KEYBOARD,
           onKeyPressed: function (key, event) {

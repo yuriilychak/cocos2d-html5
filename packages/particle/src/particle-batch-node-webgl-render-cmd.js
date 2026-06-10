@@ -22,13 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import {
-  Node,
-  Matrix4,
-  ShaderCache,
-  glBlendFuncForParticle,
-  SHADER_POSITION_TEXTURECOLOR
-} from "@aspect/core";
+import { Node, Matrix4, glBlendFuncForParticle, SHADER_POSITION_TEXTURECOLOR, ServiceLocator } from "@aspect/core";
 
 export class ParticleBatchNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
   constructor(renderable) {
@@ -56,7 +50,7 @@ export class ParticleBatchNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
   }
 
   _initWithTexture() {
-    this._shaderProgram = ShaderCache.getInstance().programForKey(
+    this._shaderProgram = ServiceLocator.shaderCache.programForKey(
       SHADER_POSITION_TEXTURECOLOR
     );
   }

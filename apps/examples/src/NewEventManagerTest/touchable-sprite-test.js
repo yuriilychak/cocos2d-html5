@@ -28,7 +28,7 @@
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { createColoredView } from "./touchable-sprite";
 import { director } from "../constants";
-import { Color, EventListener, EventManager, Node, Rect, log } from "@aspect/core";
+import { Color, EventListener, Node, Rect, log, ServiceLocator } from "@aspect/core";
 import { ButtonLayout } from "../button-layout";
 
 export class TouchableSpriteTest extends EventDispatcherTestDemo {
@@ -97,9 +97,9 @@ export class TouchableSpriteTest extends EventDispatcherTestDemo {
       }
     });
 
-    EventManager.getInstance().addListener(listener1, sprite1);
-    EventManager.getInstance().addListener(listener1.clone(), sprite2);
-    EventManager.getInstance().addListener(listener1.clone(), sprite3);
+    ServiceLocator.eventManager.addListener(listener1, sprite1);
+    ServiceLocator.eventManager.addListener(listener1.clone(), sprite2);
+    ServiceLocator.eventManager.addListener(listener1.clone(), sprite3);
 
     const layout = new ButtonLayout(
       [
@@ -112,7 +112,7 @@ export class TouchableSpriteTest extends EventDispatcherTestDemo {
         switch (i) {
           case 0:
             layout.setLabelText(0, "Only Next item could be clicked");
-            EventManager.getInstance().removeListeners(EventListener.TOUCH_ONE_BY_ONE);
+            ServiceLocator.eventManager.removeListeners(EventListener.TOUCH_ONE_BY_ONE);
             layout.showButton(1);
             break;
           case 1:

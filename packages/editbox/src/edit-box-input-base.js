@@ -1,9 +1,4 @@
-import {
-    Size,
-    Color,
-    KEY,
-    Game
-} from '@aspect/core';
+import { Size, Color, KEY, ServiceLocator } from "@aspect/core";
 import { LabelBMFont } from '@aspect/labels';
 import {
     EDITBOX_INPUT_MODE_ANY,
@@ -165,7 +160,7 @@ export class EditBoxInputBase {
                 if (editBox._delegate && editBox._delegate.editBoxReturn) {
                     editBox._delegate.editBoxReturn(editBox);
                 }
-                Game.getInstance().canvas.focus();
+                ServiceLocator.game.canvas.focus();
             }
         });
 
@@ -467,13 +462,13 @@ export class EditBoxInputBase {
     }
 
     _addDomToGameContainer() {
-        Game.getInstance().container.appendChild(this._edTxt);
+        ServiceLocator.game.container.appendChild(this._edTxt);
     }
 
     _removeDomFromGameContainer() {
         var dom = this._edTxt;
         if (dom) {
-            var container = Game.getInstance().container;
+            var container = ServiceLocator.game.container;
             var hasChild = 'contains' in container
                 ? container.contains(dom)
                 : container.compareDocumentPosition(dom) % 16;

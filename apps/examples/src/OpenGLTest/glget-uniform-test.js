@@ -30,13 +30,13 @@
 //------------------------------------------------------------------
 import { OpenGLTestLayer } from "./open-gltest-layer";
 import { autoTestEnabled } from "../constants";
-import { ShaderCache, Sys, log } from "@aspect/core";
+import { log, ServiceLocator } from "@aspect/core";
 
 export class GLGetUniformTest extends OpenGLTestLayer {
   constructor() {
     super();
 
-    if ("opengl" in Sys.getInstance().capabilities) {
+    if ("opengl" in ServiceLocator.sys.capabilities) {
       if (!autoTestEnabled) {
         log(JSON.stringify(this.runTest()));
       }
@@ -50,11 +50,11 @@ export class GLGetUniformTest extends OpenGLTestLayer {
     return "tests texParameter()\n See the Console";
   }
   runTest() {
-    var shader = ShaderCache.getInstance().getProgram("ShaderPositionTextureColor");
+    var shader = ServiceLocator.shaderCache.getProgram("ShaderPositionTextureColor");
     var program = shader.getProgram();
     shader.use();
 
-    var loc = Sys.getInstance().isNative
+    var loc = ServiceLocator.sys.isNative
       ? gl.getUniformLocation(program, "CC_MVPMatrix")
       : gl.getUniformLocation(program, "CC_MVMatrix");
 

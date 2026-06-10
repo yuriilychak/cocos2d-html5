@@ -1,4 +1,4 @@
-import { Node, RendererConfig, Point } from "@aspect/core";
+import { Node, Point, ServiceLocator } from "@aspect/core";
 import { TYPE_RADIAL } from "./constants";
 
 /**
@@ -62,14 +62,14 @@ export class ProgressTimer extends Node {
 
     onEnter() {
         super.onEnter();
-        if (RendererConfig.getInstance().isWebGL) {
+        if (ServiceLocator.rendererConfig.isWebGL) {
             this._renderCmd.initCmd();
             this._renderCmd._updateProgress();
         }
     }
 
     cleanup() {
-        if (RendererConfig.getInstance().isWebGL) {
+        if (ServiceLocator.rendererConfig.isWebGL) {
             this._renderCmd.releaseData();
         }
         super.cleanup();
@@ -277,7 +277,7 @@ export class ProgressTimer extends Node {
     }
 
     _createRenderCmd() {
-        if (RendererConfig.getInstance().isCanvas)
+        if (ServiceLocator.rendererConfig.isCanvas)
             return new this.constructor.CanvasRenderCmd(this);
         else
             return new this.constructor.WebGLRenderCmd(this);

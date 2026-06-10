@@ -28,14 +28,7 @@
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { createColoredView } from "./touchable-sprite";
 import { director } from "../constants";
-import {
-  Color,
-  EventListener,
-  EventManager,
-  Rect,
-  Sys,
-  log
-} from "@aspect/core";
+import { Color, EventListener, Rect, log, ServiceLocator } from "@aspect/core";
 import { CallFunc, DelayTime, Sequence } from "@aspect/actions";
 
 export class RemoveAndRetainNodeTest extends EventDispatcherTestDemo {
@@ -94,7 +87,7 @@ export class RemoveAndRetainNodeTest extends EventDispatcherTestDemo {
         target.opacity = 255;
       }
     });
-    EventManager.getInstance().addListener(listener1, this._sprite);
+    ServiceLocator.eventManager.addListener(listener1, this._sprite);
 
     this.runAction(
       new Sequence(
@@ -107,8 +100,8 @@ export class RemoveAndRetainNodeTest extends EventDispatcherTestDemo {
         new CallFunc(function () {
           this._spriteSaved = false;
           this.addChild(this._sprite);
-          if (!Sys.getInstance().isNative)
-            EventManager.getInstance().addListener(listener1, this._sprite);
+          if (!ServiceLocator.sys.isNative)
+            ServiceLocator.eventManager.addListener(listener1, this._sprite);
         }, this)
       )
     );

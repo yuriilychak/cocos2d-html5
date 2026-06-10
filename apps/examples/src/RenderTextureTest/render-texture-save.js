@@ -31,7 +31,7 @@
 import { RenderTextureBaseLayer } from "./render-texture-base-layer";
 import { s_fire, s_simpleFont_fnt } from "../resources";
 import { winSize } from "../constants";
-import { Color, EventListener, EventManager, EventMouse, Point, Rect, Sprite, Sys, log } from "@aspect/core";
+import { Color, EventListener, EventMouse, Point, Rect, Sprite, log, ServiceLocator } from "@aspect/core";
 import { BMButton, Widget } from "@aspect/ccui";
 
 import { RenderTexture, IMAGE_FORMAT_JPEG } from "@aspect/render-texture";
@@ -48,15 +48,15 @@ export class RenderTextureSave extends RenderTextureBaseLayer {
     onEnter() {
         super.onEnter();
 
-        if ('touches' in Sys.getInstance().capabilities){
-            EventManager.getInstance().addListener({
+        if ('touches' in ServiceLocator.sys.capabilities){
+            ServiceLocator.eventManager.addListener({
                 event: EventListener.TOUCH_ALL_AT_ONCE,
                 onTouchesMoved:function (touches, event) {
                     event.getCurrentTarget().drawInLocation(touches[0].getLocation());
                 }
             }, this);
-        } else if ('mouse' in Sys.getInstance().capabilities)
-            EventManager.getInstance().addListener({
+        } else if ('mouse' in ServiceLocator.sys.capabilities)
+            ServiceLocator.eventManager.addListener({
                 event: EventListener.MOUSE,
                 onMouseDown: function(event){
                     event.getCurrentTarget()._lastLocation = event.getLocation();
@@ -117,7 +117,7 @@ export class RenderTextureSave extends RenderTextureBaseLayer {
     }
 
     saveCB(sender) {
-        if(!Sys.getInstance().isNative){
+        if(!ServiceLocator.sys.isNative){
             log("RenderTexture's saveToFile doesn't support on HTML5");
             return;
         }

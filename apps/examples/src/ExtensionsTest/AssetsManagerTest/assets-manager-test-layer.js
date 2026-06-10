@@ -32,7 +32,7 @@ import {
   sceneManifests,
   _setcurrentScene
 } from "./assets-manager-test-constants";
-import { Loader, Sprite } from "@aspect/core";
+import { Sprite, ServiceLocator } from "@aspect/core";
 import { winSize } from "../../constants";
 
 export class AssetsManagerTestLayer extends BaseTestLayer {
@@ -43,7 +43,7 @@ export class AssetsManagerTestLayer extends BaseTestLayer {
 
     this._spritePath = "";
     this._spritePath = spritePath;
-    Loader.getInstance().resPath = "res/";
+    ServiceLocator.loader.resPath = "res/";
   }
 
   getTitle() {
@@ -59,7 +59,7 @@ export class AssetsManagerTestLayer extends BaseTestLayer {
   }
 
   onExit() {
-    Loader.getInstance().resPath = "";
+    ServiceLocator.loader.resPath = "";
     super.onExit();
   }
 

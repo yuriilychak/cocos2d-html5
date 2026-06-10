@@ -37,12 +37,12 @@ import { OpenGLTestLayer } from "./open-gltest-layer";
 import { ccbjs } from "../resources";
 import { winSize } from "../constants";
 import { LabelBMFont } from "@aspect/labels";
-import { GLProgram, Sys, VERTEX_ATTRIB_POSITION, VERTEX_ATTRIB_TEX_COORDS, ATTRIBUTE_NAME_POSITION, ATTRIBUTE_NAME_TEX_COORD } from "@aspect/core";
+import { GLProgram, VERTEX_ATTRIB_POSITION, VERTEX_ATTRIB_TEX_COORDS, ATTRIBUTE_NAME_POSITION, ATTRIBUTE_NAME_TEX_COORD, ServiceLocator } from "@aspect/core";
 export class ShaderRetroEffect extends OpenGLTestLayer {
     constructor() {
         super();
 
-        if( 'opengl' in Sys.getInstance().capabilities ) {
+        if( 'opengl' in ServiceLocator.sys.capabilities ) {
             var program = new GLProgram(ccbjs + "Shaders/example_ColorBars.vsh", ccbjs + "Shaders/example_ColorBars.fsh");
             program.addAttribute(ATTRIBUTE_NAME_POSITION, VERTEX_ATTRIB_POSITION);
             program.addAttribute(ATTRIBUTE_NAME_TEX_COORD, VERTEX_ATTRIB_TEX_COORDS);
@@ -51,7 +51,7 @@ export class ShaderRetroEffect extends OpenGLTestLayer {
 
             var label = new LabelBMFont("RETRO EFFECT","fonts/west_england-64.fnt");
             
-            if(Sys.getInstance().isNative)
+            if(ServiceLocator.sys.isNative)
                 label.children[0].shaderProgram = program;
             else
                 label.shaderProgram = program;
@@ -70,7 +70,7 @@ export class ShaderRetroEffect extends OpenGLTestLayer {
     update(dt) {
         this.accum += dt;
 
-        if(Sys.getInstance().isNative){
+        if(ServiceLocator.sys.isNative){
             var letters = this.label.children[0];
             for(var i = 0; i< letters.getStringLength(); ++i){
                 var sprite = letters.getLetter(i);

@@ -22,27 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import {
-  Node,
-  RendererConfig,
-  Director,
-  Texture2D,
-  Size,
-  Rect,
-  Sprite,
-  log,
-  NextPOT,
-  contentScaleFactor,
-  Configuration,
-  Matrix4,
-  kmGLMatrixMode,
-  kmGLPushMatrix,
-  kmGLPopMatrix,
-  kmGLMultMatrix,
-  KM_GL_PROJECTION,
-  KM_GL_MODELVIEW,
-  PIXEL_FORMAT_A8
-} from "@aspect/core";
+import { Node, Texture2D, Size, Rect, Sprite, log, NextPOT, contentScaleFactor, Matrix4, kmGLMatrixMode, kmGLPushMatrix, kmGLPopMatrix, kmGLMultMatrix, KM_GL_PROJECTION, KM_GL_MODELVIEW, PIXEL_FORMAT_A8, ServiceLocator } from "@aspect/core";
 
 const NodeWebGLRenderCmd = Node.WebGLRenderCmd;
 
@@ -74,7 +54,7 @@ export class RenderTextureWebGLRenderCmd extends NodeWebGLRenderCmd {
   }
 
   rendering(ctx) {
-    const gl = ctx || RendererConfig.getInstance().renderContext;
+    const gl = ctx || ServiceLocator.rendererConfig.renderContext;
     const node = this._node;
     if (node.autoDraw) {
       node.begin();
@@ -139,7 +119,7 @@ export class RenderTextureWebGLRenderCmd extends NodeWebGLRenderCmd {
   }
 
   clearStencil(stencilValue) {
-    const gl = RendererConfig.getInstance().renderContext;
+    const gl = ServiceLocator.rendererConfig.renderContext;
     // save old stencil value
     const stencilClearValue = gl.getParameter(gl.STENCIL_CLEAR_VALUE);
 
@@ -153,7 +133,7 @@ export class RenderTextureWebGLRenderCmd extends NodeWebGLRenderCmd {
   cleanup() {
     this._textureCopy = null;
 
-    const gl = RendererConfig.getInstance().renderContext;
+    const gl = ServiceLocator.rendererConfig.renderContext;
     gl.deleteFramebuffer(this._fBO);
     if (this._depthRenderBuffer) gl.deleteRenderbuffer(this._depthRenderBuffer);
   }
@@ -167,7 +147,7 @@ export class RenderTextureWebGLRenderCmd extends NodeWebGLRenderCmd {
         "RenderTexture._initWithWidthAndHeightForWebGL() : only RGB and RGBA formats are valid for a render texture;"
       );
 
-    const gl = RendererConfig.getInstance().renderContext,
+    const gl = ServiceLocator.rendererConfig.renderContext,
       locScaleFactor = contentScaleFactor();
     this._fullRect = new Rect(0, 0, width, height);
     this._fullViewport = new Rect(0, 0, width, height);
@@ -180,7 +160,7 @@ export class RenderTextureWebGLRenderCmd extends NodeWebGLRenderCmd {
     // textures must be power of two squared
     let powW, powH;
 
-    if (Configuration.getInstance().supportsNPOT()) {
+    if (ServiceLocator.configuration.supportsNPOT()) {
       powW = width;
       powH = height;
     } else {
@@ -207,7 +187,7 @@ export class RenderTextureWebGLRenderCmd extends NodeWebGLRenderCmd {
 
     const oldRBO = gl.getParameter(gl.RENDERBUFFER_BINDING);
 
-    if (Configuration.getInstance().checkForGLExtension("GL_QCOM")) {
+    if (ServiceLocator.configuration.checkForGLExtension("GL_QCOM")) {
       this._textureCopy = new Texture2D();
       if (!this._textureCopy) return false;
       this._textureCopy.initWithData(
@@ -292,15 +272,15 @@ export class RenderTextureWebGLRenderCmd extends NodeWebGLRenderCmd {
     kmGLMatrixMode(KM_GL_MODELVIEW);
     kmGLPushMatrix();
 
-    const gl = RendererConfig.getInstance().renderContext;
+    const gl = ServiceLocator.rendererConfig.renderContext;
 
-    const director = Director.getInstance();
+    const director = ServiceLocator.director;
     director.setProjection(director.getProjection());
 
     const texSize = node._texture.getContentSizeInPixels();
 
     // Calculate the adjustment ratios based on the old and new projections
-    const size = Director.getInstance().getWinSizeInPixels();
+    const size = ServiceLocator.director.getWinSizeInPixels();
     const widthRatio = size.width / texSize.width;
     const heightRatio = size.height / texSize.height;
 
@@ -334,7 +314,7 @@ export class RenderTextureWebGLRenderCmd extends NodeWebGLRenderCmd {
      *   Create a temporary texture to overcome this. At the end of RenderTexture::begin(), switch the attached texture to the second one, call glClear,
      *   and then switch back to the original texture. This solution is unnecessary for other devices as they don't have the same issue with switching frame buffers.
      */
-    if (Configuration.getInstance().checkForGLExtension("GL_QCOM")) {
+    if (ServiceLocator.configuration.checkForGLExtension("GL_QCOM")) {
       // -- bind a temporary texture so we can clear the render buffer without losing our texture
       gl.framebufferTexture2D(
         gl.FRAMEBUFFER,
@@ -361,7 +341,7 @@ export class RenderTextureWebGLRenderCmd extends NodeWebGLRenderCmd {
     b = b / 255;
     a = a / 255;
 
-    const gl = RendererConfig.getInstance().renderContext;
+    const gl = ServiceLocator.rendererConfig.renderContext;
 
     // save clear color
     let clearColor = [0.0, 0.0, 0.0, 0.0];
@@ -396,10 +376,10 @@ export class RenderTextureWebGLRenderCmd extends NodeWebGLRenderCmd {
 
   end() {
     const node = this._node;
-    RendererConfig.getInstance().renderer._renderingToBuffer(node.__instanceId);
+    ServiceLocator.rendererConfig.renderer._renderingToBuffer(node.__instanceId);
 
-    const gl = RendererConfig.getInstance().renderContext;
-    const director = Director.getInstance();
+    const gl = ServiceLocator.rendererConfig.renderContext;
+    const director = ServiceLocator.director;
     gl.bindFramebuffer(gl.FRAMEBUFFER, this._oldFBO);
 
     //restore viewport
@@ -418,7 +398,7 @@ export class RenderTextureWebGLRenderCmd extends NodeWebGLRenderCmd {
     const node = this._node;
     node.begin();
 
-    const gl = RendererConfig.getInstance().renderContext;
+    const gl = ServiceLocator.rendererConfig.renderContext;
     //! save old depth value
     const depthClearValue = gl.getParameter(gl.DEPTH_CLEAR_VALUE);
 

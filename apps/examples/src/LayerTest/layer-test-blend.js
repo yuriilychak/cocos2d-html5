@@ -33,7 +33,7 @@
 import { LayerTest } from "./layer-test";
 import { s_pathSister1, s_pathSister2, s_simpleFont_fnt } from "../resources";
 import { winSize } from "../constants";
-import { Color, LayerColor, ONE_MINUS_DST_COLOR, ONE_MINUS_SRC_ALPHA, SRC_ALPHA, Sprite, Sys, ZERO } from "@aspect/core";
+import { Color, LayerColor, ONE_MINUS_DST_COLOR, ONE_MINUS_SRC_ALPHA, SRC_ALPHA, Sprite, ZERO, ServiceLocator } from "@aspect/core";
 import { TAG_LAYER } from "./layer-test-constants";
 import { TextBMFont } from "@aspect/ccui";
 export class LayerTestBlend extends LayerTest {
@@ -59,7 +59,7 @@ export class LayerTestBlend extends LayerTest {
         sister2.x = winSize.width/3 * 2;
         sister2.y = winSize.height / 2;
 
-        if (!Sys.getInstance().isNative && !("opengl" in Sys.getInstance().capabilities)) {
+        if (!ServiceLocator.sys.isNative && !("opengl" in ServiceLocator.sys.capabilities)) {
             var label = new TextBMFont("Not supported on HTML5-canvas", s_simpleFont_fnt);
             this.addChild(label);
             label.x = winSize.width / 2;

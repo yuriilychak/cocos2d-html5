@@ -26,7 +26,7 @@
 
 import { UIMainLayer } from "./uimain-layer";
 import { TestScene } from "../test-scene";
-import { Director } from "@aspect/core";
+import { ServiceLocator } from "@aspect/core";
 
 export class UIScene extends TestScene {
   constructor() {
@@ -36,6 +36,6 @@ export class UIScene extends TestScene {
   runThisTest() {
     var layer = new UIMainLayer();
     this.addChild(layer);
-    Director.getInstance().runScene(this);
+    ServiceLocator.director.runScene(this);
   }
 }

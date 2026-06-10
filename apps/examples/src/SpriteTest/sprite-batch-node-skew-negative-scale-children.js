@@ -34,7 +34,7 @@ import {
 } from "../resources";
 import { winSize } from "../constants";
 import { SkewBy, Sequence } from "@aspect/actions";
-import { Sprite, SpriteBatchNode, SpriteFrameCache } from "@aspect/core";
+import { Sprite, SpriteBatchNode, ServiceLocator } from "@aspect/core";
 
 export class SpriteBatchNodeSkewNegativeScaleChildren extends SpriteTestDemo {
   constructor() {
@@ -51,7 +51,7 @@ export class SpriteBatchNodeSkewNegativeScaleChildren extends SpriteTestDemo {
 
     this.pixel2 = { 0: 0, 1: 0, 2: 0, 3: 255 };
 
-    var cache = SpriteFrameCache.getInstance();
+    var cache = ServiceLocator.spriteFrameCache;
     cache.addSpriteFrames(s_grossiniPlist);
     cache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
 

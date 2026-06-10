@@ -1,4 +1,4 @@
-import { CustomRenderCmd, RendererConfig, Node, Rect, log, EGLView } from '@aspect/core';
+import { CustomRenderCmd, Node, Rect, log, ServiceLocator } from "@aspect/core";
 import { ClippingNode } from '@aspect/clipping-nodes';
 import { ProtectedNodeWebGLRenderCmd } from '../base-classes/protected-node-webgl-render-cmd';
 
@@ -28,7 +28,7 @@ export class LayoutWebGLRenderCmd extends ProtectedNodeWebGLRenderCmd {
     }
 
     _onBeforeVisitStencil(ctx) {
-        var gl = ctx || RendererConfig.getInstance().renderContext;
+        var gl = ctx || ServiceLocator.rendererConfig.renderContext;
 
         LayoutWebGLRenderCmd._layer++;
 
@@ -52,14 +52,14 @@ export class LayoutWebGLRenderCmd extends ProtectedNodeWebGLRenderCmd {
     }
 
     _onAfterDrawStencil(ctx) {
-        var gl = ctx || RendererConfig.getInstance().renderContext;
+        var gl = ctx || ServiceLocator.rendererConfig.renderContext;
         gl.depthMask(true);
         gl.stencilFunc(gl.EQUAL, this._mask_layer_le, this._mask_layer_le);
         gl.stencilOp(gl.KEEP, gl.KEEP, gl.KEEP);
     }
 
     _onAfterVisitStencil(ctx) {
-        var gl = ctx || RendererConfig.getInstance().renderContext;
+        var gl = ctx || ServiceLocator.rendererConfig.renderContext;
 
         LayoutWebGLRenderCmd._layer--;
 
@@ -79,26 +79,26 @@ export class LayoutWebGLRenderCmd extends ProtectedNodeWebGLRenderCmd {
     _onBeforeVisitScissor(ctx) {
         this._node._clippingRectDirty = true;
         var clippingRect = this._node._getClippingRect();
-        var gl = ctx || RendererConfig.getInstance().renderContext;
+        var gl = ctx || ServiceLocator.rendererConfig.renderContext;
 
         this._scissorOldState = gl.isEnabled(gl.SCISSOR_TEST);
 
         if (!this._scissorOldState) {
             gl.enable(gl.SCISSOR_TEST);
-            EGLView.getInstance().setScissorInPoints(clippingRect.x, clippingRect.y, clippingRect.width, clippingRect.height);
+            ServiceLocator.eglView.setScissorInPoints(clippingRect.x, clippingRect.y, clippingRect.width, clippingRect.height);
         }
         else {
-            this._clippingOldRect = EGLView.getInstance().getScissorRect();
+            this._clippingOldRect = ServiceLocator.eglView.getScissorRect();
             if (!Rect.equalTo(this._clippingOldRect, clippingRect))
-                EGLView.getInstance().setScissorInPoints(clippingRect.x, clippingRect.y, clippingRect.width, clippingRect.height);
+                ServiceLocator.eglView.setScissorInPoints(clippingRect.x, clippingRect.y, clippingRect.width, clippingRect.height);
         }
     }
 
     _onAfterVisitScissor(ctx) {
-        var gl = ctx || RendererConfig.getInstance().renderContext;
+        var gl = ctx || ServiceLocator.rendererConfig.renderContext;
         if (this._scissorOldState) {
             if (!Rect.equalTo(this._clippingOldRect, this._node._clippingRect)) {
-                EGLView.getInstance().setScissorInPoints(this._clippingOldRect.x,
+                ServiceLocator.eglView.setScissorInPoints(this._clippingOldRect.x,
                     this._clippingOldRect.y,
                     this._clippingOldRect.width,
                     this._clippingOldRect.height);
@@ -139,15 +139,15 @@ export class LayoutWebGLRenderCmd extends ProtectedNodeWebGLRenderCmd {
             this._afterVisitCmdStencil = new CustomRenderCmd(this, this._onAfterVisitStencil);
         }
 
-        RendererConfig.getInstance().renderer.pushRenderCommand(this._beforeVisitCmdStencil);
+        ServiceLocator.rendererConfig.renderer.pushRenderCommand(this._beforeVisitCmdStencil);
 
         node._clippingStencil.visit(node);
 
-        RendererConfig.getInstance().renderer.pushRenderCommand(this._afterDrawStencilCmd);
+        ServiceLocator.rendererConfig.renderer.pushRenderCommand(this._afterDrawStencilCmd);
     }
 
     postStencilVisit() {
-        RendererConfig.getInstance().renderer.pushRenderCommand(this._afterVisitCmdStencil);
+        ServiceLocator.rendererConfig.renderer.pushRenderCommand(this._afterVisitCmdStencil);
     }
 
     scissorClippingVisit(parentCmd) {
@@ -155,11 +155,11 @@ export class LayoutWebGLRenderCmd extends ProtectedNodeWebGLRenderCmd {
             this._beforeVisitCmdScissor = new CustomRenderCmd(this, this._onBeforeVisitScissor);
             this._afterVisitCmdScissor = new CustomRenderCmd(this, this._onAfterVisitScissor);
         }
-        RendererConfig.getInstance().renderer.pushRenderCommand(this._beforeVisitCmdScissor);
+        ServiceLocator.rendererConfig.renderer.pushRenderCommand(this._beforeVisitCmdScissor);
     }
 
     postScissorVisit() {
-        RendererConfig.getInstance().renderer.pushRenderCommand(this._afterVisitCmdScissor);
+        ServiceLocator.rendererConfig.renderer.pushRenderCommand(this._afterVisitCmdScissor);
     }
 }
 

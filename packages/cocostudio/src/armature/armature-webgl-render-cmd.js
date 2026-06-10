@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BlendFunc, GLProgramState, Node, Point, RendererConfig, SHADER_SPRITE_POSITION_TEXTURECOLOR, ShaderCache } from "@aspect/core";
+import { BlendFunc, GLProgramState, Node, Point, SHADER_SPRITE_POSITION_TEXTURECOLOR, ServiceLocator } from "@aspect/core";
 
 import { Skin } from "./display/skin.js";
 import { DISPLAY_TYPE_ARMATURE, DISPLAY_TYPE_SPRITE } from "./utils/datas/constants.js";
@@ -88,7 +88,7 @@ import { DISPLAY_TYPE_ARMATURE, DISPLAY_TYPE_SPRITE } from "./utils/datas/consta
                                         selNode.setBlendFunc(node._blendFunc);
                                     }
                                 }
-                                RendererConfig.getInstance().renderer._uploadBufferData(cmd);
+                                ServiceLocator.rendererConfig.renderer._uploadBufferData(cmd);
                             }
                             break;
                         case DISPLAY_TYPE_ARMATURE:
@@ -100,11 +100,11 @@ import { DISPLAY_TYPE_ARMATURE, DISPLAY_TYPE_SPRITE } from "./utils/datas/consta
                             boneCmd._syncStatus(parentCmd);
                             cmd._syncStatus(boneCmd);
                             if (cmd.uploadData) {
-                                RendererConfig.getInstance().renderer._uploadBufferData(cmd);
+                                ServiceLocator.rendererConfig.renderer._uploadBufferData(cmd);
                             }
                             else if (cmd.rendering) {
-                                RendererConfig.getInstance().renderer._batchRendering();
-                                cmd.rendering(RendererConfig.getInstance().renderContext);
+                                ServiceLocator.rendererConfig.renderer._batchRendering();
+                                cmd.rendering(ServiceLocator.rendererConfig.renderContext);
                             }
                             break;
                     }
@@ -112,11 +112,11 @@ import { DISPLAY_TYPE_ARMATURE, DISPLAY_TYPE_SPRITE } from "./utils/datas/consta
                     selBone.setShaderProgram(this._shaderProgram);
                     boneCmd._syncStatus(parentCmd);
                     if (boneCmd.uploadData) {
-                        RendererConfig.getInstance().renderer._uploadBufferData(boneCmd);
+                        ServiceLocator.rendererConfig.renderer._uploadBufferData(boneCmd);
                     }
                     else if (boneCmd.rendering) {
-                        RendererConfig.getInstance().renderer._batchRendering();
-                        boneCmd.rendering(RendererConfig.getInstance().renderContext);
+                        ServiceLocator.rendererConfig.renderer._batchRendering();
+                        boneCmd.rendering(ServiceLocator.rendererConfig.renderContext);
                     }
                 }
             }
@@ -125,7 +125,7 @@ import { DISPLAY_TYPE_ARMATURE, DISPLAY_TYPE_SPRITE } from "./utils/datas/consta
         }
 
         initShaderCache() {
-            this._shaderProgram = ShaderCache.getInstance().programForKey(SHADER_SPRITE_POSITION_TEXTURECOLOR);
+            this._shaderProgram = ServiceLocator.shaderCache.programForKey(SHADER_SPRITE_POSITION_TEXTURECOLOR);
         }
 
         setShaderProgram(shaderProgram) {
@@ -158,7 +158,7 @@ import { DISPLAY_TYPE_ARMATURE, DISPLAY_TYPE_SPRITE } from "./utils/datas/consta
             this._syncStatus(parentCmd);
 
             node.sortAllChildren();
-            var renderer = RendererConfig.getInstance().renderer,
+            var renderer = ServiceLocator.rendererConfig.renderer,
                 children = node._children, child,
                 i, len = children.length;
 

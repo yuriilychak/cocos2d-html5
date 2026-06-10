@@ -30,7 +30,7 @@
 //
 //------------------------------------------------------------------
 import { SysTestBase } from "./sys-test-base";
-import { Color, Game } from "@aspect/core";
+import { Color, Game, ServiceLocator } from "@aspect/core";
 import { ButtonLayout } from "../button-layout";
 
 export class RestartGameLayerTest extends SysTestBase {
@@ -38,7 +38,7 @@ export class RestartGameLayerTest extends SysTestBase {
     return "RestartGameTest only used in native";
   }
   restartGame() {
-    Game.getInstance().restart();
+    ServiceLocator.game.restart();
   }
   constructor() {
     super();

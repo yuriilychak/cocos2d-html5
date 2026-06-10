@@ -26,7 +26,7 @@
 import { ExtensionsTestScene } from "../extensions-test-scene";
 import { pluginXSceneManager } from "./PluginXTestsManager";
 import { s_extensions_background, s_extensions_ribbon, s_simpleFont_fnt } from "../../resources";
-import { Color, Director, Layer, Rect, Sprite } from "@aspect/core";
+import { Color, Layer, Rect, Sprite, ServiceLocator } from "@aspect/core";
 import { Scale9Sprite, TextBMFont } from "@aspect/ccui";
 import { ButtonLayout } from "../../button-layout";
 import { winSize } from "../../constants";
@@ -97,12 +97,12 @@ export class PluginXTest extends Layer {
   }
 
   previousCallback(sender) {
-    Director.getInstance().runScene(pluginXSceneManager.previousPluginXScene());
+    ServiceLocator.director.runScene(pluginXSceneManager.previousPluginXScene());
   }
   restartCallback(sender) {
-    Director.getInstance().runScene(pluginXSceneManager.currentPluginXScene());
+    ServiceLocator.director.runScene(pluginXSceneManager.currentPluginXScene());
   }
   nextCallback(sender) {
-    Director.getInstance().runScene(pluginXSceneManager.nextPluginXScene());
+    ServiceLocator.director.runScene(pluginXSceneManager.nextPluginXScene());
   }
 }

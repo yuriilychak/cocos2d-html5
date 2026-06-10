@@ -27,14 +27,7 @@
 
 import { s_fire, s_pathGrossini, s_simpleFont_fnt } from "../resources";
 import { director } from "../constants";
-import {
-  Color,
-  LayerGradient,
-  Point,
-  Rect,
-  Sprite,
-  textureCache
-} from "@aspect/core";
+import { Color, LayerGradient, Point, Rect, Sprite, ServiceLocator } from "@aspect/core";
 import { JumpBy, Sequence } from "@aspect/actions";
 import { BMButton, Widget } from "@aspect/ccui";
 import { Label } from "@aspect/labels";
@@ -69,7 +62,7 @@ export class IntervalLayer extends LayerGradient {
     var s = director.getWinSize();
     // sun
     var sun = new ParticleSun();
-    sun.texture = textureCache.addImage(s_fire);
+    sun.texture = ServiceLocator.textureCache.addImage(s_fire);
     sun.x = s.width - 32;
     sun.y = s.height - 32;
 

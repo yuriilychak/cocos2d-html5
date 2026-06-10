@@ -29,7 +29,7 @@ import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { createColoredView } from "./touchable-sprite";
 import { s_simpleFont_fnt } from "../resources";
 import { director } from "../constants";
-import { Color, EventListener, EventManager, Rect } from "@aspect/core";
+import { Color, EventListener, Rect, ServiceLocator } from "@aspect/core";
 import { TextBMFont } from "@aspect/ccui";
 import { ButtonLayout } from "../button-layout";
 
@@ -66,7 +66,7 @@ export class RemoveListenerWhenDispatching extends EventDispatcherTestDemo {
     });
     this.setUserObject(listener1);
 
-    EventManager.getInstance().addListener(listener1, sprite1);
+    ServiceLocator.eventManager.addListener(listener1, sprite1);
 
     var statusLabel = new TextBMFont("The sprite could be touched!", s_simpleFont_fnt);
     statusLabel.setPosition(
@@ -83,12 +83,12 @@ export class RemoveListenerWhenDispatching extends EventDispatcherTestDemo {
       "Touch",
       () => {
         if (enable) {
-          EventManager.getInstance().removeListener(listener1);
+          ServiceLocator.eventManager.removeListener(listener1);
           statusLabel.setString("The sprite could not be touched!");
           layout.setLabelText(0, "Disabled");
           enable = false;
         } else {
-          EventManager.getInstance().addListener(listener1, sprite1);
+          ServiceLocator.eventManager.addListener(listener1, sprite1);
           statusLabel.setString("The sprite could be touched!");
           layout.setLabelText(0, "Enabled");
           enable = true;

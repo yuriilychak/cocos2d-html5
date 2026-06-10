@@ -31,7 +31,7 @@
 import { TestNodeDemo } from "./test-node-demo";
 import { s_pathGrossini, s_pathR1 } from "../resources";
 import { winSize } from "../constants";
-import { EventListener, EventManager, Point, Sprite, Sys, log } from "@aspect/core";
+import { EventListener, Point, Sprite, log, ServiceLocator } from "@aspect/core";
 import { RotateBy } from "@aspect/actions";
 
 export class ConvertToNode extends TestNodeDemo {
@@ -48,8 +48,8 @@ export class ConvertToNode extends TestNodeDemo {
         this.testP2 = [];
 
         this.expectedP2 = [];
-        if ('touches' in Sys.getInstance().capabilities){
-            EventManager.getInstance().addListener(EventListener.create({
+        if ('touches' in ServiceLocator.sys.capabilities){
+            ServiceLocator.eventManager.addListener(EventListener.create({
                 event: EventListener.TOUCH_ALL_AT_ONCE,
                 onTouchesEnded:function (touches, event) {
                     var target = event.getCurrentTarget();
@@ -60,8 +60,8 @@ export class ConvertToNode extends TestNodeDemo {
                     }
                 }
             }), this);
-        } else if ('mouse' in Sys.getInstance().capabilities)
-            EventManager.getInstance().addListener({
+        } else if ('mouse' in ServiceLocator.sys.capabilities)
+            ServiceLocator.eventManager.addListener({
                 event: EventListener.MOUSE,
                 onMouseUp: function(event){
                     event.getCurrentTarget().processEvent(event.getLocation());

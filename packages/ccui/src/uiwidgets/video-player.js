@@ -22,18 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import {
-  EventManager,
-  RendererConfig,
-  Node,
-  EGLView,
-  log,
-  screen,
-  Sys,
-  Game,
-  Loader,
-  Path
-} from "@aspect/core";
+import { Node, log, screen, Sys, Game, Path, ServiceLocator } from "@aspect/core";
 import { Widget } from "../base-classes/widget";
 
 /**
@@ -61,12 +50,12 @@ export class VideoPlayer extends Widget {
   visit() {
     var cmd = this._renderCmd,
       div = cmd._div,
-      container = Game.getInstance().container,
-      eventManager = EventManager.getInstance();
+      container = ServiceLocator.game.container,
+      eventManager = ServiceLocator.eventManager;
     if (this._visible) {
       container.appendChild(cmd._video);
       if (this._listener === null)
-        this._listener = EventManager.getInstance().addCustomListener(
+        this._listener = ServiceLocator.eventManager.addCustomListener(
           Game.EVENT_RESIZE,
           function () {
             cmd.resize();
@@ -299,7 +288,7 @@ export class VideoPlayer extends Widget {
 VideoPlayer.elements = [];
 VideoPlayer.pauseElements = [];
 
-EventManager.getInstance().addCustomListener(Game.EVENT_HIDE, function () {
+ServiceLocator.eventManager.addCustomListener(Game.EVENT_HIDE, function () {
   var list = VideoPlayer.elements;
   for (var node, i = 0; i < list.length; i++) {
     node = list[i];
@@ -309,7 +298,7 @@ EventManager.getInstance().addCustomListener(Game.EVENT_HIDE, function () {
     }
   }
 });
-EventManager.getInstance().addCustomListener(Game.EVENT_SHOW, function () {
+ServiceLocator.eventManager.addCustomListener(Game.EVENT_SHOW, function () {
   var list = VideoPlayer.pauseElements;
   var node = list.pop();
   while (node) {
@@ -374,7 +363,7 @@ document.head.appendChild(style);
 
 {
   const polyfill = VideoPlayer._polyfill;
-  const RenderCmd = RendererConfig.getInstance().isWebGL
+  const RenderCmd = ServiceLocator.rendererConfig.isWebGL
     ? Node.WebGLRenderCmd
     : Node.CanvasRenderCmd;
   VideoPlayer.RenderCmd = class extends RenderCmd {
@@ -389,21 +378,21 @@ document.head.appendChild(style);
       this.originTransform(parentCmd, recursive);
       this.updateMatrix(
         this._worldTransform,
-        EGLView.getInstance()._scaleX,
-        EGLView.getInstance()._scaleY
+        ServiceLocator.eglView._scaleX,
+        ServiceLocator.eglView._scaleY
       );
     }
 
     updateStatus() {
-      polyfill.devicePixelRatio = EGLView.getInstance().isRetinaEnabled();
+      polyfill.devicePixelRatio = ServiceLocator.eglView.isRetinaEnabled();
       var flags = Node._dirtyFlags,
         locFlag = this._dirtyFlag;
       if (locFlag & flags.transformDirty) {
         this.transform(this.getParentRenderCmd(), true);
         this.updateMatrix(
           this._worldTransform,
-          EGLView.getInstance()._scaleX,
-          EGLView.getInstance()._scaleY
+          ServiceLocator.eglView._scaleX,
+          ServiceLocator.eglView._scaleY
         );
         this._dirtyFlag =
           (this._dirtyFlag & Node._dirtyFlags.transformDirty) ^ this._dirtyFlag;
@@ -416,9 +405,9 @@ document.head.appendChild(style);
     }
 
     resize(view) {
-      view = view || EGLView.getInstance();
+      view = view || ServiceLocator.eglView;
       var node = this._node,
-        eventManager = EventManager.getInstance();
+        eventManager = ServiceLocator.eventManager;
       if (node._parent && node._visible)
         this.updateMatrix(this._worldTransform, view._scaleX, view._scaleY);
       else {
@@ -430,12 +419,12 @@ document.head.appendChild(style);
     updateMatrix(t, scaleX, scaleY) {
       var node = this._node;
       if (polyfill.devicePixelRatio) {
-        var dpr = EGLView.getInstance().getDevicePixelRatio();
+        var dpr = ServiceLocator.eglView.getDevicePixelRatio();
         scaleX = scaleX / dpr;
         scaleY = scaleY / dpr;
       }
       if (this._loaded === false) return;
-      var containerStyle = Game.getInstance().container.style,
+      var containerStyle = ServiceLocator.game.container.style,
         offsetX = parseInt(containerStyle.paddingLeft),
         offsetY = parseInt(containerStyle.paddingBottom),
         cw = node._contentSize.width,
@@ -474,11 +463,11 @@ document.head.appendChild(style);
 
       this._url = path;
 
-      if (Loader.getInstance().resPath && !/^http/.test(path))
-        path = Path.join(Loader.getInstance().resPath, path);
+      if (ServiceLocator.loader.resPath && !/^http/.test(path))
+        path = Path.join(ServiceLocator.loader.resPath, path);
 
       hasChild = false;
-      container = Game.getInstance().container;
+      container = ServiceLocator.game.container;
       if ("contains" in container) {
         hasChild = container.contains(this._video);
       } else {
@@ -535,8 +524,8 @@ document.head.appendChild(style);
       video.addEventListener("ended", () => {
         node._renderCmd.updateMatrix(
           this._worldTransform,
-          EGLView.getInstance()._scaleX,
-          EGLView.getInstance()._scaleY
+          ServiceLocator.eglView._scaleX,
+          ServiceLocator.eglView._scaleY
         );
         node._playing = false;
         node._dispatchEvent(VideoPlayer.EventType.COMPLETED);
@@ -573,13 +562,13 @@ document.head.appendChild(style);
       var video = this._video;
       if (video) {
         var hasChild = false;
-        if ("contains" in Game.getInstance().container) {
-          hasChild = Game.getInstance().container.contains(video);
+        if ("contains" in ServiceLocator.game.container) {
+          hasChild = ServiceLocator.game.container.contains(video);
         } else {
           hasChild =
-            Game.getInstance().container.compareDocumentPosition(video) % 16;
+            ServiceLocator.game.container.compareDocumentPosition(video) % 16;
         }
-        if (hasChild) Game.getInstance().container.removeChild(video);
+        if (hasChild) ServiceLocator.game.container.removeChild(video);
       }
     }
   };

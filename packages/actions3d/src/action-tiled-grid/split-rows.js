@@ -1,5 +1,5 @@
 import TiledGrid3DAction from "../action-grid/tiled-grid3d-action";
-import { Size, Point, Director } from "@aspect/core";
+import { Size, Point, ServiceLocator } from "@aspect/core";
 
 /**
  * SplitRows action.
@@ -49,6 +49,6 @@ export default class SplitRows extends TiledGrid3DAction {
 
   startWithTarget(target) {
     super.startWithTarget(target);
-    this._winSize = Director.getInstance().getWinSizeInPixels();
+    this._winSize = ServiceLocator.director.getWinSizeInPixels();
   }
 }

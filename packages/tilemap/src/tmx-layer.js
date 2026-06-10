@@ -1,19 +1,4 @@
-import {
-  Node,
-  SpriteBatchNode,
-  Sprite,
-  Size,
-  Point,
-  RendererConfig,
-  TextureCache,
-  ShaderCache,
-  log,
-  pointPixelsToPoints,
-  sizePixelsToPoints,
-  rectPixelsToPoints,
-  SHADER_SPRITE_POSITION_TEXTURECOLORALPHATEST,
-  UNIFORM_ALPHA_TEST_VALUE_S
-} from "@aspect/core";
+import { Node, SpriteBatchNode, Sprite, Size, Point, log, pointPixelsToPoints, sizePixelsToPoints, rectPixelsToPoints, SHADER_SPRITE_POSITION_TEXTURECOLORALPHATEST, UNIFORM_ALPHA_TEST_VALUE_S, ServiceLocator } from "@aspect/core";
 import {
   TMX_ORIENTATION_ORTHO,
   TMX_ORIENTATION_HEX,
@@ -87,7 +72,7 @@ export class TMXLayer extends SpriteBatchNode {
   }
 
   _createRenderCmd() {
-    if (RendererConfig.getInstance().isCanvas)
+    if (ServiceLocator.rendererConfig.isCanvas)
       return new TMXLayer.CanvasRenderCmd(this);
     else return new TMXLayer.WebGLRenderCmd(this);
   }
@@ -177,7 +162,7 @@ export class TMXLayer extends SpriteBatchNode {
         tex;
       for (i = 0; i < len; ++i) {
         tileset = tilesets[i];
-        tex = TextureCache.getInstance().addImage(tileset.sourceImage);
+        tex = ServiceLocator.textureCache.addImage(tileset.sourceImage);
         this._textures.push(tex);
         this._fillTextureGrids(tileset, i);
         if (tileset === tilesetInfo) {
@@ -434,7 +419,7 @@ export class TMXLayer extends SpriteBatchNode {
       this._spriteTiles[tag] = child;
       child._vertexZ =
         this._vertexZ +
-        (RendererConfig.getInstance().renderer.assignedZStep * tag) /
+        (ServiceLocator.rendererConfig.renderer.assignedZStep * tag) /
           this.tiles.length;
     }
   }
@@ -586,8 +571,8 @@ export class TMXLayer extends SpriteBatchNode {
         var alphaFuncValue = 0;
         if (alphaFuncVal) alphaFuncValue = parseFloat(alphaFuncVal);
 
-        if (RendererConfig.getInstance().isWebGL) {
-          this.shaderProgram = ShaderCache.getInstance().programForKey(
+        if (ServiceLocator.rendererConfig.isWebGL) {
+          this.shaderProgram = ServiceLocator.shaderCache.programForKey(
             SHADER_SPRITE_POSITION_TEXTURECOLORALPHATEST
           );
           this.shaderProgram.use();

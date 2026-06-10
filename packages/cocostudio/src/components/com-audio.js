@@ -26,7 +26,7 @@
 /**
  * The audio component for Cocostudio.
  */
-import { Loader, Component } from "@aspect/core";
+import { Component, ServiceLocator } from "@aspect/core";
 import { audioEngine } from "@aspect/audio";
 
 export class ComAudio extends Component {
@@ -71,7 +71,7 @@ export class ComAudio extends Component {
      * @param {String} pszFilePath
      */
     preloadBackgroundMusic (pszFilePath) {
-        Loader.getInstance().load(pszFilePath);
+        ServiceLocator.loader.load(pszFilePath);
     }
 
     /**
@@ -227,7 +227,7 @@ export class ComAudio extends Component {
      * @param {String} pszFilePath
      */
     preloadEffect (pszFilePath) {
-        Loader.getInstance().getRes(pszFilePath);
+        ServiceLocator.loader.getRes(pszFilePath);
         this.setFile(pszFilePath);
         this.setLoop(false);
     }

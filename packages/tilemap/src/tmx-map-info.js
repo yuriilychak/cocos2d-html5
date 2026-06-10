@@ -1,13 +1,4 @@
-import {
-  SAXParser,
-  Size,
-  Point,
-  Loader,
-  Path,
-  Director,
-  log,
-  _txtLoader
-} from "@aspect/core";
+import { SAXParser, Size, Point, Path, log, _txtLoader, ServiceLocator } from "@aspect/core";
 import {
   unzipBase64AsArray,
   inflate,
@@ -214,7 +205,7 @@ export class TMXMapInfo extends SAXParser {
 
   parseXMLFile(tmxFile, isXmlString) {
     isXmlString = isXmlString || false;
-    var xmlStr = isXmlString ? tmxFile : Loader.getInstance().getRes(tmxFile);
+    var xmlStr = isXmlString ? tmxFile : ServiceLocator.loader.getRes(tmxFile);
     if (!xmlStr) throw new Error("Please load the resource first : " + tmxFile);
 
     var mapXML = this._parseXML(xmlStr);
@@ -439,7 +430,7 @@ export class TMXMapInfo extends SAXParser {
         }
 
         var objects = selGroup.querySelectorAll("object");
-        var getContentScaleFactor = Director.getInstance().getContentScaleFactor();
+        var getContentScaleFactor = ServiceLocator.director.getContentScaleFactor();
         if (objects) {
           for (j = 0; j < objects.length; j++) {
             var selObj = objects[j];
@@ -463,7 +454,7 @@ export class TMXMapInfo extends SAXParser {
               (parseInt(this.getMapSize().height * this.getTileSize().height) -
                 y -
                 objectProp["height"]) /
-              Director.getInstance().getContentScaleFactor();
+              ServiceLocator.director.getContentScaleFactor();
 
             objectProp["rotation"] =
               parseInt(selObj.getAttribute("rotation")) || 0;
@@ -559,4 +550,4 @@ export class TMXMapInfo extends SAXParser {
   }
 }
 
-Loader.getInstance().register(["tmx", "tsx"], _txtLoader);
+ServiceLocator.loader.register(["tmx", "tsx"], _txtLoader);

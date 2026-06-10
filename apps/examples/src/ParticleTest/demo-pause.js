@@ -29,7 +29,7 @@ import { ParticleDemo } from "./particle-demo";
 import { s_fire } from "../resources";
 import { ParticleSmoke } from "./ParticleExamples";
 import { ParticleSystem } from "@aspect/particle";
-import { textureCache } from "@aspect/core";
+import { ServiceLocator } from "@aspect/core";
 
 export class DemoPause extends ParticleDemo {
   onEnter() {
@@ -37,7 +37,7 @@ export class DemoPause extends ParticleDemo {
 
     this._emitter = new ParticleSmoke();
     this._background.addChild(this._emitter, 10);
-    this._emitter.texture = textureCache.addImage(s_fire);
+    this._emitter.texture = ServiceLocator.textureCache.addImage(s_fire);
     if (this._emitter.setShapeType)
       this._emitter.setShapeType(ParticleSystem.BALL_SHAPE);
 

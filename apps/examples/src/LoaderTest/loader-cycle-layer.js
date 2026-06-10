@@ -26,7 +26,7 @@
 import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
 import { s_simpleFont_fnt } from "../resources";
 import { LoaderTestLayer } from "./loader-test-layer";
-import { Color, Director, Loader } from "@aspect/core";
+import { Color, ServiceLocator } from "@aspect/core";
 import { TextBMFont } from "@aspect/ccui";
 export class LoaderCycleLayer extends BaseTestLayer {
   constructor() {
@@ -36,7 +36,7 @@ export class LoaderCycleLayer extends BaseTestLayer {
 
     this._subtitle = "";
 
-    var winSize = Director.getInstance().getWinSize();
+    var winSize = ServiceLocator.director.getWinSize();
 
     var resultTTF = new TextBMFont("result: unknown", s_simpleFont_fnt);
     resultTTF.x = winSize.width / 2;
@@ -58,16 +58,16 @@ export class LoaderCycleLayer extends BaseTestLayer {
   }
 
   regLoad() {
-    Loader.getInstance().register(["_test1"], {
+    ServiceLocator.loader.register(["_test1"], {
       load: function (realUrl, url, res, cb) {
-        Loader.getInstance().cache[url] = {};
+        ServiceLocator.loader.cache[url] = {};
         setTimeout(function () {
-          cb && cb(null, Loader.getInstance().cache[url]);
-          return Loader.getInstance().cache[url];
+          cb && cb(null, ServiceLocator.loader.cache[url]);
+          return ServiceLocator.loader.cache[url];
         }, Math.random() * 1000);
       }
     });
-    Loader.getInstance().register(["_test2"], {
+    ServiceLocator.loader.register(["_test2"], {
       load: function (realUrl, url, res, cb) {
         cb && cb({}, null);
         return null;
@@ -80,7 +80,7 @@ export class LoaderCycleLayer extends BaseTestLayer {
   }
 
   createInfo() {
-    var winSize = Director.getInstance().getWinSize();
+    var winSize = ServiceLocator.director.getWinSize();
     var info1 = new TextBMFont("Load 5 files", s_simpleFont_fnt);
     info1.x = winSize.width / 2;
     info1.y = winSize.height / 2 + 80;
@@ -99,10 +99,10 @@ export class LoaderCycleLayer extends BaseTestLayer {
   test(cb) {
     this.clearRes();
     var layer = this;
-    Loader.getInstance().load(layer.list, function () {
+    ServiceLocator.loader.load(layer.list, function () {
       var num = 0;
       layer.list.forEach(function (item) {
-        if (!Loader.getInstance().getRes(item)) {
+        if (!ServiceLocator.loader.getRes(item)) {
           num++;
         }
       });
@@ -112,7 +112,7 @@ export class LoaderCycleLayer extends BaseTestLayer {
 
   clearRes() {
     this.list.forEach(function (item) {
-      Loader.getInstance().release(item);
+      ServiceLocator.loader.release(item);
     });
   }
 

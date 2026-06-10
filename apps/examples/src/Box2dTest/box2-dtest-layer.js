@@ -26,7 +26,7 @@
  ****************************************************************************/
 
 import { PTM_RATIO } from "./box2d-test-constants";
-import { Color, Director, EventListener, EventManager, LayerColor, Point, Rect, radiansToDegrees } from "@aspect/core";
+import { Color, EventListener, LayerColor, Point, Rect, radiansToDegrees, ServiceLocator } from "@aspect/core";
 import { BMButton, TextBMFont, Widget } from "@aspect/ccui";
 import { s_simpleFont_fnt } from "../resources";
 
@@ -51,7 +51,7 @@ export class Box2DTestLayer extends LayerColor {
     // External map from body pointer -> node (box2d-wasm doesn't support userData)
     this._bodyToSprite = {};
 
-    EventManager.getInstance().addListener(
+    ServiceLocator.eventManager.addListener(
       EventListener.create({
         event: EventListener.TOUCH_ALL_AT_ONCE,
         onTouchesEnded: function (touches, event) {
@@ -63,7 +63,7 @@ export class Box2DTestLayer extends LayerColor {
       this
     );
 
-    var winSize = Director.getInstance().getWinSize();
+    var winSize = ServiceLocator.director.getWinSize();
     var label = new TextBMFont("Tap screen", s_simpleFont_fnt);
     label.color = new Color(0, 0, 255);
     label.x = winSize.width / 2;
@@ -90,7 +90,7 @@ export class Box2DTestLayer extends LayerColor {
     var b2PolygonShape = box2D.b2PolygonShape;
     this._box2D = box2D;
 
-    var screenSize = Director.getInstance().getWinSize();
+    var screenSize = ServiceLocator.director.getWinSize();
 
     // Construct a world object
     var gravity = new b2Vec2(0, -10);

@@ -27,7 +27,7 @@
 
 import { ParticleDemo } from "./particle-demo";
 import { s_snow } from "../resources";
-import { Point, textureCache } from "@aspect/core";
+import { Point, ServiceLocator } from "@aspect/core";
 import { ParticleSnow } from "./ParticleExamples";
 import { ParticleSystem } from "@aspect/particle";
 
@@ -61,7 +61,7 @@ export class DemoSnow extends ParticleDemo {
     this._emitter.emissionRate =
       this._emitter.totalParticles / this._emitter.life;
 
-    this._emitter.texture = textureCache.addImage(s_snow);
+    this._emitter.texture = ServiceLocator.textureCache.addImage(s_snow);
     this._emitter.shapeType = ParticleSystem.STAR_SHAPE;
 
     this.setEmitterPosition();

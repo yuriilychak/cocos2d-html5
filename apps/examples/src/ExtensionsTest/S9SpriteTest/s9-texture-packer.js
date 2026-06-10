@@ -30,7 +30,7 @@
 import { S9SpriteTestDemo } from "./s9-sprite-test-demo";
 import { s_s9s_ui_plist } from "../../resources";
 import { winSize } from "../../constants";
-import { SpriteFrameCache, log } from "@aspect/core";
+import { log, ServiceLocator } from "@aspect/core";
 import { Scale9Sprite } from "@aspect/ccui";
 
 export class S9_TexturePacker extends S9SpriteTestDemo {
@@ -46,7 +46,7 @@ export class S9_TexturePacker extends S9SpriteTestDemo {
 
 
         this._subtitle = "createWithSpriteFrameName('button_normal.png');createWithSpriteFrameName('button_actived.png');";
-        SpriteFrameCache.getInstance().addSpriteFrames(s_s9s_ui_plist);
+        ServiceLocator.spriteFrameCache.addSpriteFrames(s_s9s_ui_plist);
 
         var x = winSize.width / 4;
         var y = 0 + (winSize.height / 2);

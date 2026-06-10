@@ -33,7 +33,7 @@ import {
   TEXT_INPUT_FONT_NAME,
   TEXT_INPUT_FONT_SIZE
 } from "./text-input-test-constants";
-import { Color, Director, Point, log } from "@aspect/core";
+import { Color, Point, log, ServiceLocator } from "@aspect/core";
 import { CallFunc, FadeIn, FadeOut, MoveTo, RotateBy, ScaleTo, Sequence, Spawn } from "@aspect/actions";
 
 import { TextFieldTTF } from "@aspect/text-input";
@@ -83,7 +83,7 @@ export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
     this._action = false;
 
     // add CCTextFieldTTF
-    var winSize = Director.getInstance().getWinSize();
+    var winSize = ServiceLocator.director.getWinSize();
 
     this._textField = new TextFieldTTF(
       "<click here for input>",
@@ -140,7 +140,7 @@ export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
 
     var duration = 0.5;
     label.x = endX;
-    label.y = Director.getInstance().getWinSize().height - label.height * 2;
+    label.y = ServiceLocator.director.getWinSize().height - label.height * 2;
     label.scale = 8;
 
     var seq = new Sequence(
@@ -165,7 +165,7 @@ export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
       beginY = sender.y;
     beginX += (sender.width - label.width) / 2.0;
 
-    var winSize = Director.getInstance().getWinSize();
+    var winSize = ServiceLocator.director.getWinSize();
     var endPos = new Point(
       -winSize.width / 4.0,
       winSize.height * (0.5 + Math.random() / 2.0)

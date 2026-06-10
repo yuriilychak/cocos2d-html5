@@ -26,7 +26,7 @@
  ****************************************************************************/
 
 import { SpriteTestDemo } from "./sprite-test-demo";
-import { ONE, ONE_MINUS_SRC_ALPHA, RendererConfig, SRC_ALPHA, Size, Sprite, ZERO, textureCache, DST_COLOR, ONE_MINUS_DST_COLOR, DST_ALPHA, ONE_MINUS_DST_ALPHA, SRC_COLOR, ONE_MINUS_SRC_COLOR } from "@aspect/core";
+import { ONE, ONE_MINUS_SRC_ALPHA, SRC_ALPHA, Size, Sprite, ZERO, DST_COLOR, ONE_MINUS_DST_COLOR, DST_ALPHA, ONE_MINUS_DST_ALPHA, SRC_COLOR, ONE_MINUS_SRC_COLOR, ServiceLocator } from "@aspect/core";
 import { TextBMFont } from "@aspect/ccui";
 import { s_simpleFont_fnt } from "../resources";
 export class SpriteBlendFuncTest extends SpriteTestDemo {
@@ -74,7 +74,7 @@ export class SpriteBlendFuncTest extends SpriteTestDemo {
 
     var sourceImg = "Images/dot.png",
       destImg = "Images/wood.jpg";
-    var sourceTexture = textureCache.addImage(sourceImg);
+    var sourceTexture = ServiceLocator.textureCache.addImage(sourceImg);
     sourceTexture.handleLoadedTexture(true);
     var sourceSprite = new Sprite(sourceImg);
     var destSprite = new Sprite(destImg);
@@ -85,7 +85,7 @@ export class SpriteBlendFuncTest extends SpriteTestDemo {
     this.addChild(sourceSprite);
     this.addChild(destSprite);
 
-    if (RendererConfig.getInstance().isCanvas) {
+    if (ServiceLocator.rendererConfig.isCanvas) {
       var info = new TextBMFont("support is not complete on canvas", s_simpleFont_fnt);
       info.x = 680;
       info.y = 250;

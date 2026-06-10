@@ -31,17 +31,17 @@
 import { OpenGLTestLayer } from "./open-gltest-layer";
 import { GLNode } from "./glnode-polyfill";
 import { winSize } from "../constants";
-import { ShaderCache, Sys, VERTEX_ATTRIB_COLOR, VERTEX_ATTRIB_POSITION } from "@aspect/core";
+import { VERTEX_ATTRIB_COLOR, VERTEX_ATTRIB_POSITION, ServiceLocator } from "@aspect/core";
 export class GLNodeCCAPITest extends OpenGLTestLayer {
   constructor() {
     super();
 
-    if ("opengl" in Sys.getInstance().capabilities) {
+    if ("opengl" in ServiceLocator.sys.capabilities) {
       var glnode = new GLNode();
       this.addChild(glnode, 10);
       this.glnode = glnode;
 
-      this.shader = ShaderCache.getInstance().getProgram("ShaderPositionColor");
+      this.shader = ServiceLocator.shaderCache.getProgram("ShaderPositionColor");
       this.initBuffers();
 
       glnode.draw = function () {

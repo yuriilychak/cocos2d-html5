@@ -1,5 +1,5 @@
 import { Texture } from "@esotericsoftware/spine-core";
-import { RendererConfig, glBindTexture2D } from "@aspect/core";
+import { glBindTexture2D, ServiceLocator } from "@aspect/core";
 
 export class SkeletonTexture extends Texture {
     name = 'SkeletonTexture';
@@ -18,8 +18,8 @@ export class SkeletonTexture extends Texture {
     }
 
     setFilters(minFilter, magFilter) {
-        if (RendererConfig.getInstance().isWebGL) {
-            const gl = RendererConfig.getInstance().renderContext;
+        if (ServiceLocator.rendererConfig.isWebGL) {
+            const gl = ServiceLocator.rendererConfig.renderContext;
             this.bind();
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, minFilter);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, magFilter);
@@ -27,8 +27,8 @@ export class SkeletonTexture extends Texture {
     }
 
     setWraps(uWrap, vWrap) {
-        if (RendererConfig.getInstance().isWebGL) {
-            const gl = RendererConfig.getInstance().renderContext;
+        if (ServiceLocator.rendererConfig.isWebGL) {
+            const gl = ServiceLocator.rendererConfig.renderContext;
             this.bind();
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, uWrap);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, vWrap);
@@ -38,7 +38,7 @@ export class SkeletonTexture extends Texture {
     dispose() {}
 
     bind() {
-        if (RendererConfig.getInstance().isWebGL) {
+        if (ServiceLocator.rendererConfig.isWebGL) {
             glBindTexture2D(this._texture);
         }
     }

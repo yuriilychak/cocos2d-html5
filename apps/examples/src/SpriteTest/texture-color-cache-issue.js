@@ -28,7 +28,7 @@
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_tcc_issue_1, s_tcc_issue_1_plist, s_tcc_issue_2, s_tcc_issue_2_plist } from "../resources";
 import { winSize } from "../constants";
-import { Color, Sprite, SpriteFrameCache } from "@aspect/core";
+import { Color, Sprite, ServiceLocator } from "@aspect/core";
 
 export class TextureColorCacheIssue extends SpriteTestDemo {
 
@@ -53,8 +53,8 @@ export class TextureColorCacheIssue extends SpriteTestDemo {
 
         this.pixel2 = {"0":0, "1":0, "2":153, "3":255};
 
-        SpriteFrameCache.getInstance().addSpriteFrames(s_tcc_issue_1_plist, s_tcc_issue_1);
-        SpriteFrameCache.getInstance().addSpriteFrames(s_tcc_issue_2_plist, s_tcc_issue_2);
+        ServiceLocator.spriteFrameCache.addSpriteFrames(s_tcc_issue_1_plist, s_tcc_issue_1);
+        ServiceLocator.spriteFrameCache.addSpriteFrames(s_tcc_issue_2_plist, s_tcc_issue_2);
 
         var grossini = new Sprite('#tcc_grossini_dance_01.png');
         grossini.x = winSize.width / 3;
@@ -73,8 +73,8 @@ export class TextureColorCacheIssue extends SpriteTestDemo {
     }
     onExit() {
         //----start55----onExit
-        SpriteFrameCache.getInstance().removeSpriteFramesFromFile(s_tcc_issue_1_plist);
-        SpriteFrameCache.getInstance().removeSpriteFramesFromFile(s_tcc_issue_2_plist);
+        ServiceLocator.spriteFrameCache.removeSpriteFramesFromFile(s_tcc_issue_1_plist);
+        ServiceLocator.spriteFrameCache.removeSpriteFramesFromFile(s_tcc_issue_2_plist);
         super.onExit();
         //----end55----
     }

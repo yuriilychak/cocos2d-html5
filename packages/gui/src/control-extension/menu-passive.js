@@ -1,4 +1,4 @@
-import { Layer, Color, Director, log } from "@aspect/core";
+import { Layer, Color, log, ServiceLocator } from "@aspect/core";
 
 const MENU_PASSIVE_DEFAULT_PADDING = 5;
 
@@ -67,7 +67,7 @@ export class MenuPassive extends Layer {
 
     initWithItems(item, args) {
         if (this.init()) {
-            var winSize = Director.getInstance().getWinSize();
+            var winSize = ServiceLocator.director.getWinSize();
             this.ignoreAnchorPointForPosition(true);
             this.setAnchorPoint(0.5, 0.5);
             this.setContentSize(winSize);
@@ -179,7 +179,7 @@ export class MenuPassive extends Layer {
                 }
             }
         }
-        var winSize = Director.getInstance().getWinSize();
+        var winSize = ServiceLocator.director.getWinSize();
         row = 0; rowHeight = 0; rowColumns = 0;
         var w = 0.0, x = 0.0, y = (height / 2);
         if (this._children && this._children.length > 0) {
@@ -244,7 +244,7 @@ export class MenuPassive extends Layer {
                 }
             }
         }
-        var winSize = Director.getInstance().getWinSize();
+        var winSize = ServiceLocator.director.getWinSize();
         column = 0; columnWidth = 0; columnRows = null;
         var x = (-width / 2), y = 0.0;
         if (this._children && this._children.length > 0) {

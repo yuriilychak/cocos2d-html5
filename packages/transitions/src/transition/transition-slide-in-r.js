@@ -1,4 +1,4 @@
-import { Director, Point } from "@aspect/core";
+import { Point, ServiceLocator } from "@aspect/core";
 import { MoveBy } from "@aspect/actions";
 import { ADJUST_FACTOR } from "./constants";
 import { TransitionSlideInL } from "./transition-slide-in-l";
@@ -15,7 +15,7 @@ export class TransitionSlideInR extends TransitionSlideInL {
 
   initScenes() {
     this._inScene.setPosition(
-      Director.getInstance().getWinSize().width - ADJUST_FACTOR,
+      ServiceLocator.director.getWinSize().width - ADJUST_FACTOR,
       0
     );
   }
@@ -24,7 +24,7 @@ export class TransitionSlideInR extends TransitionSlideInL {
     return new MoveBy(
       this._duration,
       new Point(
-        -(Director.getInstance().getWinSize().width - ADJUST_FACTOR),
+        -(ServiceLocator.director.getWinSize().width - ADJUST_FACTOR),
         0
       )
     );

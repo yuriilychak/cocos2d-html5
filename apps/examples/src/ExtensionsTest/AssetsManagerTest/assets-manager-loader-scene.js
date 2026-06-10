@@ -35,7 +35,7 @@ import { __failCount, _set__failCount } from "./assets-manager-test-helpers";
 import { AssetsManagerTestScene } from "./assets-manager-test-scene";
 import { TestScene } from "../../test-scene";
 import { s_image_icon } from "../../resources";
-import { Director, EventManager, Game, Layer, Sprite, Sys, log, visibleRect } from "@aspect/core";
+import { Layer, Sprite, log, visibleRect, ServiceLocator } from "@aspect/core";
 import { winSize } from "../../constants";
 import { LoadingBar } from "@aspect/ccui";
 
@@ -57,7 +57,7 @@ export class AssetsManagerLoaderScene extends TestScene {
       case jsb.EventAssetsManager.ERROR_NO_LOCAL_MANIFEST:
         log("No local manifest file found, skip assets update.");
         scene = new AssetsManagerTestScene(backgroundPaths[currentScene]);
-        Director.getInstance().runScene(scene);
+        ServiceLocator.director.runScene(scene);
         break;
       case jsb.EventAssetsManager.UPDATE_PROGRESSION:
         this._percent = event.getPercent();
@@ -73,7 +73,7 @@ export class AssetsManagerLoaderScene extends TestScene {
       case jsb.EventAssetsManager.ERROR_PARSE_MANIFEST:
         log("Fail to download manifest file, update skipped.");
         scene = new AssetsManagerTestScene(backgroundPaths[currentScene]);
-        Director.getInstance().runScene(scene);
+        ServiceLocator.director.runScene(scene);
         break;
       case jsb.EventAssetsManager.ALREADY_UP_TO_DATE:
       case jsb.EventAssetsManager.UPDATE_FINISHED:
@@ -86,15 +86,15 @@ export class AssetsManagerLoaderScene extends TestScene {
           // This value will be retrieved and appended to the default search path during game startup,
           // please refer to samples/js-tests/main.js for detailed usage.
           // !!! Re-add the search paths in main.js is very important, otherwise, new scripts won't take effect.
-          Sys.getInstance().localStorage.setItem(
+          ServiceLocator.sys.localStorage.setItem(
             "Scene3SearchPaths",
             JSON.stringify(searchPaths)
           );
           // Restart the game to make all scripts take effect.
-          Game.getInstance().restart();
+          ServiceLocator.game.restart();
         } else {
           scene = new AssetsManagerTestScene(backgroundPaths[currentScene]);
-          Director.getInstance().runScene(scene);
+          ServiceLocator.director.runScene(scene);
         }
         break;
       case jsb.EventAssetsManager.UPDATE_FAILED:
@@ -107,7 +107,7 @@ export class AssetsManagerLoaderScene extends TestScene {
           log("Reach maximum fail count, exit update process");
           _set__failCount(0);
           scene = new AssetsManagerTestScene(backgroundPaths[currentScene]);
-          Director.getInstance().runScene(scene);
+          ServiceLocator.director.runScene(scene);
         }
         break;
       case jsb.EventAssetsManager.ERROR_UPDATING:
@@ -160,7 +160,7 @@ export class AssetsManagerLoaderScene extends TestScene {
     if (!this._am.getLocalManifest().isLoaded()) {
       log("Fail to update assets, step skipped.");
       var scene = new AssetsManagerTestScene(backgroundPaths[currentScene]);
-      Director.getInstance().runScene(scene);
+      ServiceLocator.director.runScene(scene);
     } else {
       this._callback = this.cb.bind(this);
       var listener = new jsb.EventListenerAssetsManager(
@@ -168,11 +168,11 @@ export class AssetsManagerLoaderScene extends TestScene {
         this._callback
       );
 
-      EventManager.getInstance().addListener(listener, 1);
+      ServiceLocator.eventManager.addListener(listener, 1);
 
       this._am.update();
 
-      Director.getInstance().runScene(this);
+      ServiceLocator.director.runScene(this);
     }
 
     this.schedule(this.updateProgress, 0.5);

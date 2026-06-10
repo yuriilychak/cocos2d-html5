@@ -1,4 +1,4 @@
-import { Loader, Path, log } from "@aspect/core";
+import { Path, log, ServiceLocator } from "@aspect/core";
 import { Audio } from "./audio.js";
 import { audioSupport } from "./audio-support.js";
 
@@ -63,7 +63,7 @@ class AudioLoader {
   loadBuffer(url, cb) {
     if (!audioSupport.WEB_AUDIO) return; // WebAudio Buffer
 
-    const request = Loader.getInstance().getXMLHttpRequest();
+    const request = ServiceLocator.loader.getXMLHttpRequest();
     request.open("GET", url, true);
     request.responseType = "arraybuffer";
 
@@ -99,11 +99,11 @@ class AudioLoader {
   load(realUrl, url, res, cb) {
     if (supportedFormats.length === 0) return cb("can not support audio!");
 
-    let audio = Loader.getInstance().getRes(url);
+    let audio = ServiceLocator.loader.getRes(url);
     if (audio) return cb(null, audio);
 
-    if (Loader.getInstance().audioPath)
-      realUrl = Path.join(Loader.getInstance().audioPath, realUrl);
+    if (ServiceLocator.loader.audioPath)
+      realUrl = Path.join(ServiceLocator.loader.audioPath, realUrl);
 
     const extname = Path.extname(realUrl);
 
@@ -115,7 +115,7 @@ class AudioLoader {
     }
 
     audio = new Audio(realUrl);
-    Loader.getInstance().cache[url] = audio;
+    ServiceLocator.loader.cache[url] = audio;
     this.loadAudioFromExtList(realUrl, typeList, audio, cb);
     return audio;
   }
@@ -183,4 +183,4 @@ class AudioLoader {
 }
 
 export const loader = new AudioLoader();
-Loader.getInstance().register(["mp3", "ogg", "wav", "mp4", "m4a"], loader);
+ServiceLocator.loader.register(["mp3", "ogg", "wav", "mp4", "m4a"], loader);

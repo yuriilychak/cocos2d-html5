@@ -1,22 +1,4 @@
-import {
-  Game,
-  Node,
-  Point,
-  RendererConfig,
-  Matrix4,
-  KM_GL_MODELVIEW,
-  kmGLMatrixMode,
-  kmGLPopMatrix,
-  KMGLMatrix,
-  ONE,
-  ONE_MINUS_SRC_ALPHA,
-  SRC_ALPHA,
-  DST_COLOR,
-  ONE_MINUS_SRC_COLOR,
-  SHADER_SPRITE_POSITION_TEXTURECOLOR,
-  ShaderCache,
-  BATCH_VERTEX_COUNT
-} from "@aspect/core";
+import { Node, Point, Matrix4, KM_GL_MODELVIEW, kmGLMatrixMode, kmGLPopMatrix, ONE, ONE_MINUS_SRC_ALPHA, SRC_ALPHA, DST_COLOR, ONE_MINUS_SRC_COLOR, SHADER_SPRITE_POSITION_TEXTURECOLOR, BATCH_VERTEX_COUNT, ServiceLocator } from "@aspect/core";
 import {
   RegionAttachment,
   MeshAttachment,
@@ -35,9 +17,9 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
     this._matrix.identity();
     this._currTexture = null;
     this._currBlendFunc = {};
-    this.vertexType = RendererConfig.getInstance().renderer.VertexType.CUSTOM;
+    this.vertexType = ServiceLocator.rendererConfig.renderer.VertexType.CUSTOM;
     this.setShaderProgram(
-      ShaderCache.getInstance().programForKey(
+      ServiceLocator.shaderCache.programForKey(
         SHADER_SPRITE_POSITION_TEXTURECOLOR
       )
     );
@@ -49,8 +31,8 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
   // legacy single-texture self-batch path. This is evaluated per frame because
   // animations/skins can swap region and mesh attachments.
   _canMultiBatch(locSkeleton) {
-    const renderer = RendererConfig.getInstance().renderer;
-    if (!RendererConfig.getInstance().isWebGL2) return false;
+    const renderer = ServiceLocator.rendererConfig.renderer;
+    if (!ServiceLocator.rendererConfig.isWebGL2) return false;
     if (!renderer._getMultiProgramState || !renderer._appendMultiBatch) {
       return false;
     }
@@ -83,7 +65,7 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
     let debugSlotsInfo = null;
     if (node._debugSlots) debugSlotsInfo = [];
 
-    const renderer = RendererConfig.getInstance().renderer;
+    const renderer = ServiceLocator.rendererConfig.renderer;
     const stride = renderer.getSizePerVertex();
     const multiBatch = !node._debugSlots && this._canMultiBatch(locSkeleton);
     const multiProgramState = multiBatch
@@ -201,9 +183,9 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
       mat[5] = wt.d;
       mat[13] = wt.ty;
       kmGLMatrixMode(KM_GL_MODELVIEW);
-      KMGLMatrix.getInstance().currentStack.stack.push(KMGLMatrix.getInstance().currentStack.top);
-      KMGLMatrix.getInstance().currentStack.top = this._matrix;
-      const drawingUtil = Game.getInstance().drawingUtil;
+      ServiceLocator.kmglMatrix.currentStack.stack.push(ServiceLocator.kmglMatrix.currentStack.top);
+      ServiceLocator.kmglMatrix.currentStack.top = this._matrix;
+      const drawingUtil = ServiceLocator.game.drawingUtil;
 
       if (node._debugSlots && debugSlotsInfo && debugSlotsInfo.length > 0) {
         drawingUtil.setDrawColor(0, 0, 255, 255);
@@ -311,7 +293,7 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
     const z = this._node.vertexZ;
 
     let offset = vertexDataOffset;
-    const stride = RendererConfig.getInstance().renderer.getSizePerVertex();
+    const stride = ServiceLocator.rendererConfig.renderer.getSizePerVertex();
     for (let i = 0; i < 6; i++) {
       const srcIdx = i < 4 ? i % 3 : i - 2;
       const vx = vertices[srcIdx * 2],
@@ -380,7 +362,7 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
     );
 
     let offset = vertexDataOffset;
-    const stride = RendererConfig.getInstance().renderer.getSizePerVertex();
+    const stride = ServiceLocator.rendererConfig.renderer.getSizePerVertex();
     const nodeColor = this._displayedColor;
     const nodeR = nodeColor.r,
       nodeG = nodeColor.g,

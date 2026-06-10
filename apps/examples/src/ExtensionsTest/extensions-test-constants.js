@@ -31,7 +31,7 @@ import { runEditBoxTest } from "./EditBoxTest/EditBoxTest";
 import { runSocketIOTest } from "./NetworkTest/SocketIOTest";
 import { runWebSocketTest } from "./NetworkTest/WebSocketTest";
 import { runTableViewTest } from "./TableViewTest/table-view-test-scene-helpers";
-import { Director, Sys } from "@aspect/core";
+import { Director, ServiceLocator } from "@aspect/core";
 
 export const extensionsTestItems = [
   {
@@ -66,7 +66,7 @@ export const extensionsTestItems = [
   }
 ];
 
-if (!Sys.getInstance().isNative || Sys.getInstance().OS_LINUX !== Sys.getInstance().os) {
+if (!ServiceLocator.sys.isNative || ServiceLocator.sys.OS_LINUX !== ServiceLocator.sys.os) {
   extensionsTestItems.push({
     title: "EditBoxTest",
     testScene: function () {

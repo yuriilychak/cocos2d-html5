@@ -34,7 +34,7 @@ import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini, s_grossiniPlist, s_grossini_gray, s_grossini_grayPlist, s_pathR1 } from "../resources";
 import { winSize } from "../constants";
 import { Animate, RotateBy } from "@aspect/actions";
-import { Animation, Sprite, SpriteBatchNode, SpriteFrameCache } from "@aspect/core";
+import { Animation, Sprite, SpriteBatchNode, ServiceLocator } from "@aspect/core";
 export class SpriteBatchNodeOffsetAnchorRotation extends SpriteTestDemo {
 
     constructor() {
@@ -50,8 +50,8 @@ export class SpriteBatchNodeOffsetAnchorRotation extends SpriteTestDemo {
 
         this.pixel = {"0":255, "1":204, "2":153, "3":255};
 
-        SpriteFrameCache.getInstance().addSpriteFrames(s_grossiniPlist);
-        SpriteFrameCache.getInstance().addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
+        ServiceLocator.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+        ServiceLocator.spriteFrameCache.addSpriteFrames(s_grossini_grayPlist, s_grossini_gray);
 
         var spritebatch = new SpriteBatchNode(s_grossini);
         this.addChild(spritebatch);
@@ -60,7 +60,7 @@ export class SpriteBatchNodeOffsetAnchorRotation extends SpriteTestDemo {
             //
             // Animation using Sprite BatchNode
             //
-            var sprite = new Sprite(SpriteFrameCache.getInstance().getSpriteFrame("grossini_dance_01.png"));
+            var sprite = new Sprite(ServiceLocator.spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
             sprite.x = winSize.width / 4 * (i + 1);
             sprite.y = winSize.height / 2;
 
@@ -91,7 +91,7 @@ export class SpriteBatchNodeOffsetAnchorRotation extends SpriteTestDemo {
             var str = "";
             for (var k = 1; k < 15; k++) {
                 str = "grossini_dance_" + (k < 10 ? ("0" + k) : k) + ".png";
-                var frame = SpriteFrameCache.getInstance().getSpriteFrame(str);
+                var frame = ServiceLocator.spriteFrameCache.getSpriteFrame(str);
                 animFrames.push(frame);
             }
 
@@ -105,8 +105,8 @@ export class SpriteBatchNodeOffsetAnchorRotation extends SpriteTestDemo {
     }
     onExit() {
         super.onExit();
-        SpriteFrameCache.getInstance().removeSpriteFramesFromFile(s_grossiniPlist);
-        SpriteFrameCache.getInstance().removeSpriteFramesFromFile(s_grossini_grayPlist);
+        ServiceLocator.spriteFrameCache.removeSpriteFramesFromFile(s_grossiniPlist);
+        ServiceLocator.spriteFrameCache.removeSpriteFramesFromFile(s_grossini_grayPlist);
     }
     //
     // Automation

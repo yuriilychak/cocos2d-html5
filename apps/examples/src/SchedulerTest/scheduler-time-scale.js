@@ -28,7 +28,7 @@
 // SchedulerTimeScale
 import { SchedulerTestLayer } from "./scheduler-test-layer";
 import { s_stars1, s_simpleFont_fnt } from "../resources";
-import { Director, Point, Scheduler, ActionManager, Sprite, textureCache } from "@aspect/core";
+import { Point, Scheduler, ActionManager, Sprite, ServiceLocator } from "@aspect/core";
 import { JumpBy, Repeat, RotateBy, Sequence, Spawn, Speed } from "@aspect/actions";
 import { ParticleFireworks } from "../ParticleTest/ParticleExamples";
 import { winSize } from "../constants";
@@ -82,12 +82,12 @@ export class SchedulerTimeScale extends SchedulerTestLayer {
     tamara.runAction(new Speed(action2, 1.5));
     kathia.runAction(new Speed(action3, 1.0));
 
-    Director.getInstance().getScheduler().scheduleUpdate(this._newScheduler, 0, false);
+    ServiceLocator.director.getScheduler().scheduleUpdate(this._newScheduler, 0, false);
 
     this._newScheduler.scheduleUpdate(this._newActionManager, 0, false);
 
     var emitter = new ParticleFireworks();
-    emitter.setTexture(textureCache.addImage(s_stars1));
+    emitter.setTexture(ServiceLocator.textureCache.addImage(s_stars1));
     this.addChild(emitter);
 
     var slider = null;
@@ -150,7 +150,7 @@ export class SchedulerTimeScale extends SchedulerTestLayer {
       case Slider.EVENT_PERCENT_CHANGED:
         var slider = sender;
         var percent = (slider.getPercent() / 100.0) * 5;
-        Director.getInstance().getScheduler().setTimeScale(percent);
+        ServiceLocator.director.getScheduler().setTimeScale(percent);
         break;
       default:
         break;
@@ -158,9 +158,9 @@ export class SchedulerTimeScale extends SchedulerTestLayer {
   }
 
   onExit() {
-    Director.getInstance().getScheduler().setTimeScale(1);
+    ServiceLocator.director.getScheduler().setTimeScale(1);
     // restore scale
-    Director.getInstance().getScheduler().unscheduleUpdate(this._newScheduler);
+    ServiceLocator.director.getScheduler().unscheduleUpdate(this._newScheduler);
     super.onExit();
   }
 

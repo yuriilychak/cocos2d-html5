@@ -1,29 +1,4 @@
-import {
-  EventHelper,
-  SpriteBatchNode,
-  RendererConfig,
-  Node,
-  Point,
-  Rect,
-  Size,
-  Sprite,
-  Texture2D,
-  Color,
-  log,
-  contentScaleFactor,
-  rectPixelsToPoints,
-  pointPixelsToPoints,
-  sizePixelsToPoints,
-  TEXT_ALIGNMENT_LEFT,
-  TEXT_ALIGNMENT_CENTER,
-  TEXT_ALIGNMENT_RIGHT,
-  LabelTTF,
-  Loader,
-  Path,
-  SpriteFrameCache,
-  textureCache,
-  Configuration
-} from "@aspect/core";
+import { EventHelper, SpriteBatchNode, RendererConfig, Node, Point, Rect, Size, Sprite, Texture2D, Color, log, contentScaleFactor, rectPixelsToPoints, pointPixelsToPoints, sizePixelsToPoints, TEXT_ALIGNMENT_LEFT, TEXT_ALIGNMENT_CENTER, TEXT_ALIGNMENT_RIGHT, LabelTTF, Path, ServiceLocator } from "@aspect/core";
 
 export class LabelBMFont extends EventHelper(SpriteBatchNode) {
   //property string is Getter and Setter.
@@ -187,7 +162,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
 
     var texture;
     if (fntFile) {
-      var newConf = Loader.getInstance().getRes(fntFile);
+      var newConf = ServiceLocator.loader.getRes(fntFile);
       if (!newConf) {
         newConf =
           FntFrameCache[fntFile] || FntFrameCache[Path.basename(fntFile)];
@@ -203,15 +178,15 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
       self._fntFile = fntFile;
       var spriteFrameBaseName = newConf.atlasName;
       var spriteFrame =
-        SpriteFrameCache.getInstance().getSpriteFrame(spriteFrameBaseName) ||
-        SpriteFrameCache.getInstance().getSpriteFrame(
+        ServiceLocator.spriteFrameCache.getSpriteFrame(spriteFrameBaseName) ||
+        ServiceLocator.spriteFrameCache.getSpriteFrame(
           Path.basename(spriteFrameBaseName)
         );
       if (spriteFrame) {
         texture = spriteFrame.getTexture();
         this._spriteFrame = spriteFrame;
       } else {
-        texture = textureCache.addImage(newConf.atlasName);
+        texture = ServiceLocator.textureCache.addImage(newConf.atlasName);
       }
       var locIsLoaded = texture.isLoaded();
       self._textureLoaded = locIsLoaded;
@@ -746,7 +721,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
   setFntFile(fntFile) {
     var self = this;
     if (fntFile != null && fntFile !== self._fntFile) {
-      var newConf = Loader.getInstance().getRes(fntFile);
+      var newConf = ServiceLocator.loader.getRes(fntFile);
 
       if (!newConf) {
         log(
@@ -758,7 +733,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
       self._fntFile = fntFile;
       self._config = newConf;
 
-      var texture = textureCache.addImage(newConf.atlasName);
+      var texture = ServiceLocator.textureCache.addImage(newConf.atlasName);
       var locIsLoaded = texture.isLoaded();
       self._textureLoaded = locIsLoaded;
       if (!locIsLoaded) {
@@ -936,7 +911,7 @@ const _fntLoader = {
     var commonObj = self._parseStrToObj(fntStr.match(self.COMMON_EXP)[0]);
     fnt.commonHeight = commonObj["lineHeight"];
     if (RendererConfig.isWebGL) {
-      var texSize = Configuration.getInstance().getMaxTextureSize();
+      var texSize = ServiceLocator.configuration.getMaxTextureSize();
       if (
         commonObj["scaleW"] > texSize.width ||
         commonObj["scaleH"] > texSize.height
@@ -1045,13 +1020,13 @@ const _fntLoader = {
    */
   load: function (realUrl, url, res, cb) {
     var self = this;
-    Loader.getInstance().loadTxt(realUrl, function (err, txt) {
+    ServiceLocator.loader.loadTxt(realUrl, function (err, txt) {
       if (err) return cb(err);
       cb(null, self.parseFnt(txt, url));
     });
   }
 };
-Loader.getInstance().register(["fnt"], _fntLoader);
+ServiceLocator.loader.register(["fnt"], _fntLoader);
 
 /**
  * Label compatibility shim (matches cocos2d-x v3 API)

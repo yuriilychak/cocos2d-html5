@@ -36,7 +36,7 @@
  * @property {Object}                   body            - The body of the armature
  * @property {ColliderFilter}       colliderFilter  - <@writeonly> The collider filter of the armature
  */
-import { AffineTransform, BLEND_DST, BLEND_SRC, BlendFunc, Game, Node, Point, Rect, RendererConfig, arrayRemoveObject, assert, log } from "@aspect/core";
+import { AffineTransform, BLEND_DST, BLEND_SRC, BlendFunc, Node, Point, Rect, arrayRemoveObject, assert, log, ServiceLocator } from "@aspect/core";
 import { Widget } from "@aspect/ccui";
 
 import { ArmatureAnimation } from "./animation/armature-animation/armature-animation.js";
@@ -463,8 +463,8 @@ export class Armature extends Node {
    * draw contour
    */
   drawContour() {
-    Game.getInstance().drawingUtil.setDrawColor(255, 255, 255, 255);
-    Game.getInstance().drawingUtil.setLineWidth(1);
+    ServiceLocator.game.drawingUtil.setDrawColor(255, 255, 255, 255);
+    ServiceLocator.game.drawingUtil.setLineWidth(1);
     var locBoneDic = this._boneDic;
     for (var key in locBoneDic) {
       var bone = locBoneDic[key];
@@ -474,7 +474,7 @@ export class Armature extends Node {
       for (var i = 0; i < bodyList.length; i++) {
         var body = bodyList[i];
         var vertexList = body.getCalculatedVertexList();
-        Game.getInstance().drawingUtil.drawPoly(vertexList, vertexList.length, true);
+        ServiceLocator.game.drawingUtil.drawPoly(vertexList, vertexList.length, true);
       }
     }
   }
@@ -582,7 +582,7 @@ export class Armature extends Node {
   }
 
   _createRenderCmd() {
-    if (RendererConfig.getInstance().isCanvas)
+    if (ServiceLocator.rendererConfig.isCanvas)
       return new this.constructor.CanvasRenderCmd(this);
     else return new this.constructor.WebGLRenderCmd(this);
   }

@@ -1,5 +1,5 @@
 import { ActionInstant } from "@aspect/actions";
-import { RendererConfig } from "@aspect/core";
+import { ServiceLocator } from "@aspect/core";
 
 /**
  * StopGrid action.
@@ -14,7 +14,7 @@ export default class StopGrid extends ActionInstant {
    */
   startWithTarget(target) {
     super.startWithTarget(target);
-    RendererConfig.getInstance().renderer.childrenOrderDirty = true;
+    ServiceLocator.rendererConfig.renderer.childrenOrderDirty = true;
     const grid = this.target.grid;
     if (grid && grid.isActive()) grid.setActive(false);
   }

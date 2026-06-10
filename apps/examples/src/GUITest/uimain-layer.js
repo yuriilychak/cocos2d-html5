@@ -1,5 +1,5 @@
 import { UISceneManager, GUITestScene } from "./UISceneManager";
-import { Color, Director, Layer, Node } from "@aspect/core";
+import { Color, Layer, Node, ServiceLocator } from "@aspect/core";
 import { Text } from "@aspect/ccui";
 import { winSize } from "../constants";
 
@@ -75,9 +75,9 @@ export class UIMainLayer extends Layer {
     if (scene) {
       scene.setTestInfo(this._title || "", "");
       scene.setNavCallbacks(
-        () => Director.getInstance().runScene(UISceneManager.getInstance().previousUIScene()),
-        () => Director.getInstance().runScene(UISceneManager.getInstance().currentUIScene()),
-        () => Director.getInstance().runScene(UISceneManager.getInstance().nextUIScene())
+        () => ServiceLocator.director.runScene(UISceneManager.getInstance().previousUIScene()),
+        () => ServiceLocator.director.runScene(UISceneManager.getInstance().currentUIScene()),
+        () => ServiceLocator.director.runScene(UISceneManager.getInstance().nextUIScene())
       );
       scene.onMainMenuCallback = () => {
         UISceneManager.purge();

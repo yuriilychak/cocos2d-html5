@@ -1,21 +1,4 @@
-import {
-  Point,
-  BlendFunc,
-  SRC_ALPHA,
-  ONE_MINUS_SRC_ALPHA,
-  Color,
-  RendererConfig,
-  GlobalVertexBuffer,
-  DRAWNODE_TOTAL_VERTICES,
-  ShaderCache,
-  SHADER_POSITION_LENGTHTEXTURECOLOR,
-  VERTEX_ATTRIB_POSITION,
-  VERTEX_ATTRIB_COLOR,
-  VERTEX_ATTRIB_TEX_COORDS,
-  incrementGLDraws,
-  warn,
-  Node
-} from "@aspect/core";
+import { Point, BlendFunc, SRC_ALPHA, ONE_MINUS_SRC_ALPHA, Color, GlobalVertexBuffer, DRAWNODE_TOTAL_VERTICES, SHADER_POSITION_LENGTHTEXTURECOLOR, VERTEX_ATTRIB_POSITION, VERTEX_ATTRIB_COLOR, VERTEX_ATTRIB_TEX_COORDS, incrementGLDraws, warn, Node, ServiceLocator } from "@aspect/core";
 import { cardinalSplineAt, getControlPointAt } from "@aspect/core";
 // 9600 vertices by default configurable in ccConfig
 // 5 floats per vertex: 2 position + 1 color (uint32) + 2 uv
@@ -70,12 +53,12 @@ export class DrawNodeWebGL {
 
     if (!_sharedBuffer) {
       _sharedBuffer = new GlobalVertexBuffer(
-        RendererConfig.getInstance().renderContext,
+        ServiceLocator.rendererConfig.renderContext,
         DRAWNODE_TOTAL_VERTICES * VERTEX_BYTE
       );
     }
 
-    this._renderCmd._shaderProgram = ShaderCache.getInstance().programForKey(
+    this._renderCmd._shaderProgram = ServiceLocator.shaderCache.programForKey(
       SHADER_POSITION_LENGTHTEXTURECOLOR
     );
     this._blendFunc = new BlendFunc(SRC_ALPHA, ONE_MINUS_SRC_ALPHA);
@@ -329,7 +312,7 @@ export class DrawNodeWebGL {
   }
 
   _render() {
-    var gl = RendererConfig.getInstance().renderContext;
+    var gl = ServiceLocator.rendererConfig.renderContext;
     if (this._offset < 0 || this._vertexCount <= 0) return;
 
     if (this._dirty) {

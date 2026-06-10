@@ -31,7 +31,7 @@ import {
   s_hole_stencil_png,
   s_pathBlock
 } from "../resources";
-import { AffineTransform, Color, EventListener, EventManager, Node, Point, Rect, Size, Sprite } from "@aspect/core";
+import { AffineTransform, Color, EventListener, Node, Point, Rect, Size, Sprite, ServiceLocator } from "@aspect/core";
 import { RotateBy, ScaleBy, ScaleTo, sequence } from "@aspect/actions";
 import { DrawNode } from "@aspect/shape-nodes";
 
@@ -97,7 +97,7 @@ export class HoleDemo extends BaseClippingNodeTest {
     this._outerClipper.addChild(holesClipper);
     this.addChild(this._outerClipper);
 
-    EventManager.getInstance().addListener(
+    ServiceLocator.eventManager.addListener(
       EventListener.create({
         event: EventListener.TOUCH_ALL_AT_ONCE,
         onTouchesBegan: function (touches, event) {

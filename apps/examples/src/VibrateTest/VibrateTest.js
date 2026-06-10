@@ -26,7 +26,7 @@
 
 import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
 import { TestScene } from "../test-scene";
-import { Color, Device, Director } from "@aspect/core";
+import { Color, Device, ServiceLocator } from "@aspect/core";
 import { Slider, TextBMFont } from "@aspect/ccui";
 import { ButtonLayout } from "../button-layout";
 import { s_simpleFont_fnt } from "../resources";
@@ -38,7 +38,7 @@ export class VibrateTest extends BaseTestLayer {
     this._duration = 0.1;
 
     this._durationLabel = null;
-    var s = Director.getInstance().getWinSize();
+    var s = ServiceLocator.director.getWinSize();
     var label = new TextBMFont("vibrate control test", s_simpleFont_fnt);
     this.addChild(label, 0);
     label.x = s.width / 2;
@@ -104,7 +104,7 @@ export class VibrateTestScene extends TestScene {
     var layer = new VibrateTest();
     this.addChild(layer);
 
-    Director.getInstance().runScene(this);
+    ServiceLocator.director.runScene(this);
   }
 }
 

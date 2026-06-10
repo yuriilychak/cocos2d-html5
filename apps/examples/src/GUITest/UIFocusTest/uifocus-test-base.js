@@ -24,7 +24,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
-import { Color, Director, EventKeyboard, EventListener, EventManager, KEY, log } from "@aspect/core";
+import { Color, EventKeyboard, EventListener, KEY, log, ServiceLocator } from "@aspect/core";
 import { Button, Widget } from "@aspect/ccui";
 import { ButtonLayout } from "../../button-layout";
 
@@ -40,7 +40,7 @@ export class UIFocusTestBase extends UIMainLayer {
   init() {
     if (super.init()) {
 
-      var winSize = Director.getInstance().getVisibleSize();
+      var winSize = ServiceLocator.director.getVisibleSize();
       this._dpadMenu = new ButtonLayout(
         [
           { label: "Left", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
@@ -75,7 +75,7 @@ export class UIFocusTestBase extends UIMainLayer {
         event: EventListener.FOCUS, //TODO Need add focus event in JSB
         onFocusChanged: this.onFocusChanged.bind(this)
       });
-      EventManager.getInstance().addListener(this._eventListener, 1);
+      ServiceLocator.eventManager.addListener(this._eventListener, 1);
       return true;
     }
     return false;
@@ -83,19 +83,19 @@ export class UIFocusTestBase extends UIMainLayer {
 
   onLeftKeyPressed() {
     var event = new EventKeyboard(KEY.dpadLeft, false);
-    EventManager.getInstance().dispatchEvent(event);
+    ServiceLocator.eventManager.dispatchEvent(event);
   }
   onRightKeyPressed() {
     var event = new EventKeyboard(KEY.dpadRight, false);
-    EventManager.getInstance().dispatchEvent(event);
+    ServiceLocator.eventManager.dispatchEvent(event);
   }
   onUpKeyPressed() {
     var event = new EventKeyboard(KEY.dpadUp, false);
-    EventManager.getInstance().dispatchEvent(event);
+    ServiceLocator.eventManager.dispatchEvent(event);
   }
   onDownKeyPressed() {
     var event = new EventKeyboard(KEY.dpadDown, false);
-    EventManager.getInstance().dispatchEvent(event);
+    ServiceLocator.eventManager.dispatchEvent(event);
   }
   onFocusChanged(widgetLostFocus, widgetGetFocus) {
     if (widgetGetFocus && widgetGetFocus.isFocusEnabled())
@@ -124,7 +124,7 @@ export class UIFocusTestBase extends UIMainLayer {
     }
   }
   onExit() {
-    EventManager.getInstance().removeListener(this._eventListener);
+    ServiceLocator.eventManager.removeListener(this._eventListener);
     super.onExit();
   }
 }

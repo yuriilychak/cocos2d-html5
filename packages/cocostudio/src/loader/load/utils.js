@@ -1,4 +1,4 @@
-import { Director, Loader, Node, Path, log, warn } from "@aspect/core";
+import { Node, Path, log, warn, ServiceLocator } from "@aspect/core";
 import { helper, Widget } from "@aspect/ccui";
 
 export const _ccsLoad = (function () {
@@ -12,7 +12,7 @@ export const _ccsLoad = (function () {
      */
     var load = function (file, type, path) {
 
-        var json = Loader.getInstance().getRes(file);
+        var json = ServiceLocator.loader.getRes(file);
 
         if (!json)
             return log("%s does not exist", file);
@@ -129,7 +129,7 @@ load.preload = true;
  */
 export function loadWithVisibleSize (file, path) {
     var object = load(file, path);
-    var size = Director.getInstance().getVisibleSize();
+    var size = ServiceLocator.director.getVisibleSize();
     if (object.node && size) {
         object.node.setContentSize(size.width, size.height);
         helper.doLayout(object.node);
@@ -137,9 +137,9 @@ export function loadWithVisibleSize (file, path) {
     return object;
 };
 
-Loader.getInstance().register(["json"], {
+ServiceLocator.loader.register(["json"], {
     load: function (realUrl, url, res, cb) {
-        Loader.getInstance().loadJson(realUrl, function (error, data) {
+        ServiceLocator.loader.loadJson(realUrl, function (error, data) {
             var path = Path;
             if (data && data["Content"] && data["Content"]["Content"]["UsedResources"]) {
                 var UsedResources = data["Content"]["Content"]["UsedResources"],
@@ -156,7 +156,7 @@ Loader.getInstance().register(["json"], {
                         list.push(normalUrl);
                     }
                 }
-                Loader.getInstance().load(list, function () {
+                ServiceLocator.loader.load(list, function () {
                     cb(error, data);
                 });
             } else {

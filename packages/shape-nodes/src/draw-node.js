@@ -1,4 +1,4 @@
-import { Node, Color, RendererConfig } from "@aspect/core";
+import { Node, Color, ServiceLocator } from "@aspect/core";
 import { DrawNodeCanvas } from "./draw-node-canvas";
 import { DrawNodeWebGL } from "./draw-node-webgl";
 
@@ -24,7 +24,7 @@ export class DrawNode extends Node {
   }
 
   _initDrawNode() {
-    const Renderer = RendererConfig.getInstance().isCanvas
+    const Renderer = ServiceLocator.rendererConfig.isCanvas
       ? DrawNodeCanvas
       : DrawNodeWebGL;
     const proto = Renderer.prototype;

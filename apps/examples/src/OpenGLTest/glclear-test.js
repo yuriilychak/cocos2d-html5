@@ -31,13 +31,13 @@
 import { OpenGLTestLayer } from "./open-gltest-layer";
 import { GLNode } from "./glnode-polyfill";
 import { winSize } from "../constants";
-import { Color, LayerColor, Sys } from "@aspect/core";
+import { Color, LayerColor, ServiceLocator } from "@aspect/core";
 
 export class GLClearTest extends OpenGLTestLayer {
   constructor() {
     super();
 
-    if ("opengl" in Sys.getInstance().capabilities) {
+    if ("opengl" in ServiceLocator.sys.capabilities) {
       var blue = new LayerColor(new Color(0, 0, 255, 255));
       this.addChild(blue, 1);
 

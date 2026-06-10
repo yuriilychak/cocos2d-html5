@@ -27,14 +27,14 @@
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { TouchableSprite } from "./touchable-sprite";
-import { Color, Director } from "@aspect/core";
+import { Color, ServiceLocator } from "@aspect/core";
 
 export class Issue4160 extends EventDispatcherTestDemo {
   constructor() {
     //----start10----ctor
     super();
-    var origin = Director.getInstance().getVisibleOrigin();
-    var size = Director.getInstance().getVisibleSize();
+    var origin = ServiceLocator.director.getVisibleOrigin();
+    var size = ServiceLocator.director.getVisibleSize();
 
     var sprite1 = TouchableSprite.create(-30);
     sprite1.setColor(new Color(0, 255, 255));

@@ -27,7 +27,7 @@
  * RelativeData uses to save plist files, armature files, animations and textures for armature data manager.
  * @constructor
  */
-import { SpriteFrameCache } from "@aspect/core";
+import { SpriteFrameCache, ServiceLocator } from "@aspect/core";
 
 import { dataReaderHelper } from "./data-reader-helper/data-reader-helper.js";
 import { spriteFrameCacheHelper } from "./sprite-frame-cache-helper.js";
@@ -72,7 +72,7 @@ export const armatureDataManager = {
             }
             for (i = 0; i < data.plistFiles.length; i++) {
                 obj = data.plistFiles[i];
-                SpriteFrameCache.getInstance().removeSpriteFramesFromFile(obj);
+                ServiceLocator.spriteFrameCache.removeSpriteFramesFromFile(obj);
             }
             delete this._relativeDatas[configFilePath];
             dataReaderHelper.removeConfigFile(configFilePath);
