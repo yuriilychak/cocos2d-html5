@@ -1,5 +1,4 @@
 import { NewClass } from "../platform/class";
-import { inputManager } from "../platform/input-manager";
 import EventHelper from "../event-manager/event-helper";
 import EventCustom from "../event-manager/event/event-custom";
 import { DrawingPrimitiveCanvas } from "../drawing-primitives-canvas";
@@ -60,6 +59,7 @@ export default class Game extends EventHelper(NewClass) {
   _eglView = null;
   _engine = null;
   _eventManager = null;
+  _inputManager = null;
   _loader = null;
   _rendererConfig = null;
   _textureCache = null;
@@ -69,6 +69,7 @@ export default class Game extends EventHelper(NewClass) {
     eglView,
     engine,
     eventManager,
+    inputManager,
     loader,
     rendererConfig,
     textureCache
@@ -77,6 +78,7 @@ export default class Game extends EventHelper(NewClass) {
     this._eglView = eglView;
     this._engine = engine;
     this._eventManager = eventManager;
+    this._inputManager = inputManager;
     this._loader = loader;
     this._rendererConfig = rendererConfig;
     this._textureCache = textureCache;
@@ -564,7 +566,7 @@ export default class Game extends EventHelper(NewClass) {
     this._eventShow.setUserData(this);
 
     if (this.config[Game.CONFIG_KEY.registerSystemEvent])
-      inputManager.registerSystemEvent(this.canvas);
+      this._inputManager.registerSystemEvent(this.canvas);
 
     if (!isUndefined(document.hidden)) {
       hidden = "hidden";

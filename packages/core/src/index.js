@@ -4,13 +4,10 @@ import "./boot";
 // ======================================================================
 // Platform — Foundation
 // ======================================================================
-import { inputManager } from "./platform/input-manager";
-import { initInputExtension } from "./platform/input-extension";
 
 // ======================================================================
 // Renderer & Utils
 // ======================================================================
-import { initBinaryLoader } from "./utils/binary-loader";
 import { ServiceLocator } from "./service-locator";
 
 // ======================================================================
@@ -87,12 +84,6 @@ LabelTTF._firsrEnglish = LabelTTFFirsrEnglish;
 LabelTTF.CacheCanvasRenderCmd = LabelTTFCacheCanvasRenderCmd;
 LabelTTF.CanvasRenderCmd = LabelTTFCanvasRenderCmd;
 LabelTTF.WebGLRenderCmd = LabelTTFWebGLRenderCmd;
-
-// ======================================================================
-// Init functions (must run AFTER class assignments)
-// ======================================================================
-initInputExtension(inputManager);
-initBinaryLoader();
 
 // ======================================================================
 // Named re-exports for direct imports from other packages
@@ -278,7 +269,7 @@ export { default as EventKeyboard } from "./event-manager/event-extension/event-
 export { ZERO, REPEAT, LINEAR } from "./platform/macro/constants";
 export { GLProgram } from "./shaders";
 export { default as AnimationCache } from "./sprites/animation-cache";
-export { inputManager } from "./platform/input-manager";
+export { InputManager } from "./platform/input-manager";
 export { Scheduler } from "./scheduler";
 export { ActionManager } from "./action-manager";
 export { LayerMultiplex } from "./layers/layer-multiplex";

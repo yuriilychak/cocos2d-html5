@@ -135,9 +135,9 @@ export function loadBinarySync(url) {
  * Initialize binary loader by attaching methods to loader and
  * injecting IE VBScript compatibility if needed.
  * @function
+ * @param {Object} loader - The loader service to attach binary methods to
  */
-export function initBinaryLoader() {
-    var loader = ServiceLocator.loader;
+export function initBinaryLoader(loader) {
     loader.loadBinary = loadBinary;
     loader.loadBinary._IEFilter = _IEFilter;
     loader._str2Uint8Array = _str2Uint8Array;

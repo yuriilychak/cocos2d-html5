@@ -29,33 +29,10 @@ import { log, _LogInfos } from "../boot/debugger";
 import Touch from "../event-manager/touch";
 import { EventTouch, EventMouse } from "../event-manager/event/index";
 import { EventAcceleration } from "../event-manager/event-extension/index";
+import EventKeyboard from "../event-manager/event-extension/event-keyboard";
+import { Acceleration } from "../platform/types/color";
 import { isFunction } from "../boot/utils";
-import { ServiceLocator } from "../service-locator";
 
-/**
- * ignore
- */
-
-/**
- * @constant
- * @type {number}
- */
-export const UIInterfaceOrientationLandscapeLeft = -90;
-/**
- * @constant
- * @type {number}
- */
-export const UIInterfaceOrientationLandscapeRight = 90;
-/**
- * @constant
- * @type {number}
- */
-export const UIInterfaceOrientationPortraitUpsideDown = 180;
-/**
- * @constant
- * @type {number}
- */
-export const UIInterfaceOrientationPortrait = 0;
 
 /**
  * <p>
@@ -63,35 +40,57 @@ export const UIInterfaceOrientationPortrait = 0;
  * </p>
  * @name inputManager
  */
-export const inputManager = {
-  TOUCH_TIMEOUT: 5000,
+export class InputManager {
+  /**
+   * @constant
+   * @type {number}
+   */
+  static UIInterfaceOrientationLandscapeLeft = -90;
+  /**
+   * @constant
+   * @type {number}
+   */
+  static UIInterfaceOrientationLandscapeRight = 90;
+  /**
+   * @constant
+   * @type {number}
+   */
+  static UIInterfaceOrientationPortraitUpsideDown = 180;
+  /**
+   * @constant
+   * @type {number}
+   */
+  static UIInterfaceOrientationPortrait = 0;
 
-  _mousePressed: false,
+  TOUCH_TIMEOUT = 5000;
 
-  _isRegisterEvent: false,
+  _mousePressed = false;
 
-  _preTouchPoint: new Point(0, 0),
-  _prevMousePoint: new Point(0, 0),
+  _isRegisterEvent = false;
 
-  _preTouchPool: [],
-  _preTouchPoolPointer: 0,
+  _preTouchPoint = new Point(0, 0);
+  _prevMousePoint = new Point(0, 0);
 
-  _touches: [],
-  _touchesIntegerDict: {},
+  _preTouchPool = [];
+  _preTouchPoolPointer = 0;
 
-  _indexBitsUsed: 0,
-  _maxTouches: 5,
+  _touches = [];
+  _touchesIntegerDict = {};
 
-  _accelEnabled: false,
-  _accelInterval: 1 / 30,
-  _accelMinus: 1,
-  _accelCurTime: 0,
-  _acceleration: null,
-  _accelDeviceEvent: null,
+  _indexBitsUsed = 0;
+  _maxTouches = 5;
 
-  _getUnUsedIndex: function () {
+  _accelEnabled = false;
+  _accelInterval = 1 / 30;
+  _accelMinus = 1;
+  _accelCurTime = 0;
+  _acceleration = null;
+  _accelDeviceEvent = null;
+  didAccelerateCallback = null;
+
+  _getUnUsedIndex() {
     var temp = this._indexBitsUsed;
-    var now = ServiceLocator.sys.now();
+    var now = this._sys.now();
 
     for (var i = 0; i < this._maxTouches; i++) {
       if (!(temp & 0x00000001)) {
@@ -110,30 +109,44 @@ export const inputManager = {
 
     // all bits are used
     return -1;
-  },
+  }
 
-  _removeUsedIndexBit: function (index) {
+  _removeUsedIndexBit(index) {
     if (index < 0 || index >= this._maxTouches) return;
 
     var temp = 1 << index;
     temp = ~temp;
     this._indexBitsUsed &= temp;
-  },
+  }
 
-  _glView: null,
+  _glView = null;
+
+  _director = null;
+  _eglView = null;
+  _eventManager = null;
+  _game = null;
+  _sys = null;
+
+  injectServices({ director, eglView, eventManager, game, sys }) {
+    this._director = director;
+    this._eglView = eglView;
+    this._eventManager = eventManager;
+    this._game = game;
+    this._sys = sys;
+  }
 
   /**
    * @function
    * @param {Array} touches
    */
-  handleTouchesBegin: function (touches) {
+  handleTouchesBegin(touches) {
     var selTouch,
       index,
       curTouch,
       touchID,
       handleTouches = [],
       locTouchIntDict = this._touchesIntegerDict,
-      now = ServiceLocator.sys.now();
+      now = this._sys.now();
     for (var i = 0, len = touches.length; i < len; i++) {
       selTouch = touches[i];
       touchID = selTouch.getID();
@@ -161,21 +174,21 @@ export const inputManager = {
       this._glView._convertTouchesWithScale(handleTouches);
       var touchEvent = new EventTouch(handleTouches);
       touchEvent._eventCode = EventTouch.EventCode.BEGAN;
-      ServiceLocator.eventManager.dispatchEvent(touchEvent);
+      this._eventManager.dispatchEvent(touchEvent);
     }
-  },
+  }
 
   /**
    * @function
    * @param {Array} touches
    */
-  handleTouchesMove: function (touches) {
+  handleTouchesMove(touches) {
     var selTouch,
       index,
       touchID,
       handleTouches = [],
       locTouches = this._touches,
-      now = ServiceLocator.sys.now();
+      now = this._sys.now();
     for (var i = 0, len = touches.length; i < len; i++) {
       selTouch = touches[i];
       touchID = selTouch.getID();
@@ -196,44 +209,44 @@ export const inputManager = {
       this._glView._convertTouchesWithScale(handleTouches);
       var touchEvent = new EventTouch(handleTouches);
       touchEvent._eventCode = EventTouch.EventCode.MOVED;
-      ServiceLocator.eventManager.dispatchEvent(touchEvent);
+      this._eventManager.dispatchEvent(touchEvent);
     }
-  },
+  }
 
   /**
    * @function
    * @param {Array} touches
    */
-  handleTouchesEnd: function (touches) {
+  handleTouchesEnd(touches) {
     var handleTouches = this.getSetOfTouchesEndOrCancel(touches);
     if (handleTouches.length > 0) {
       this._glView._convertTouchesWithScale(handleTouches);
       var touchEvent = new EventTouch(handleTouches);
       touchEvent._eventCode = EventTouch.EventCode.ENDED;
-      ServiceLocator.eventManager.dispatchEvent(touchEvent);
+      this._eventManager.dispatchEvent(touchEvent);
     }
-  },
+  }
 
   /**
    * @function
    * @param {Array} touches
    */
-  handleTouchesCancel: function (touches) {
+  handleTouchesCancel(touches) {
     var handleTouches = this.getSetOfTouchesEndOrCancel(touches);
     if (handleTouches.length > 0) {
       this._glView._convertTouchesWithScale(handleTouches);
       var touchEvent = new EventTouch(handleTouches);
       touchEvent._eventCode = EventTouch.EventCode.CANCELLED;
-      ServiceLocator.eventManager.dispatchEvent(touchEvent);
+      this._eventManager.dispatchEvent(touchEvent);
     }
-  },
+  }
 
   /**
    * @function
    * @param {Array} touches
    * @returns {Array}
    */
-  getSetOfTouchesEndOrCancel: function (touches) {
+  getSetOfTouchesEndOrCancel(touches) {
     var selTouch,
       index,
       touchID,
@@ -257,14 +270,14 @@ export const inputManager = {
       }
     }
     return handleTouches;
-  },
+  }
 
   /**
    * @function
    * @param {HTMLElement} element
    * @return {Object}
    */
-  getHTMLElementPosition: function (element) {
+  getHTMLElementPosition(element) {
     var docElem = document.documentElement;
     var win = window;
     var box = null;
@@ -284,14 +297,14 @@ export const inputManager = {
       width: box.width,
       height: box.height
     };
-  },
+  }
 
   /**
    * @function
    * @param {Touch} touch
    * @return {Touch}
    */
-  getPreTouch: function (touch) {
+  getPreTouch(touch) {
     var preTouch = null;
     var locPreTouchPool = this._preTouchPool;
     var id = touch.getID();
@@ -303,13 +316,13 @@ export const inputManager = {
     }
     if (!preTouch) preTouch = touch;
     return preTouch;
-  },
+  }
 
   /**
    * @function
    * @param {Touch} touch
    */
-  setPreTouch: function (touch) {
+  setPreTouch(touch) {
     var find = false;
     var locPreTouchPool = this._preTouchPool;
     var id = touch.getID();
@@ -328,7 +341,7 @@ export const inputManager = {
         this._preTouchPoolPointer = (this._preTouchPoolPointer + 1) % 50;
       }
     }
-  },
+  }
 
   /**
    * @function
@@ -337,7 +350,7 @@ export const inputManager = {
    * @param {Point} pos
    * @return {Touch}
    */
-  getTouchByXY: function (tx, ty, pos) {
+  getTouchByXY(tx, ty, pos) {
     var locPreTouch = this._preTouchPoint;
     var location = this._glView.convertToLocationInView(tx, ty, pos);
     var touch = new Touch(location.x, location.y);
@@ -345,7 +358,7 @@ export const inputManager = {
     locPreTouch.x = location.x;
     locPreTouch.y = location.y;
     return touch;
-  },
+  }
 
   /**
    * @function
@@ -354,7 +367,7 @@ export const inputManager = {
    * @param {Number} eventType
    * @returns {EventMouse}
    */
-  getMouseEvent: function (location, pos, eventType) {
+  getMouseEvent(location, pos, eventType) {
     var locPreMouse = this._prevMousePoint;
     this._glView._convertMouseToLocationInView(location, pos);
     var mouseEvent = new EventMouse(eventType);
@@ -363,7 +376,7 @@ export const inputManager = {
     locPreMouse.x = location.x;
     locPreMouse.y = location.y;
     return mouseEvent;
-  },
+  }
 
   /**
    * @function
@@ -371,7 +384,7 @@ export const inputManager = {
    * @param {Point} pos
    * @return {Point}
    */
-  getPointByEvent: function (event, pos) {
+  getPointByEvent(event, pos) {
     if (event.pageX != null)
       //not available in <= IE8
       return { x: event.pageX, y: event.pageY };
@@ -379,7 +392,7 @@ export const inputManager = {
     pos.left -= document.body.scrollLeft;
     pos.top -= document.body.scrollTop;
     return { x: event.clientX, y: event.clientY };
-  },
+  }
 
   /**
    * @function
@@ -387,7 +400,7 @@ export const inputManager = {
    * @param {Point} pos
    * @returns {Array}
    */
-  getTouchesByEvent: function (event, pos) {
+  getTouchesByEvent(event, pos) {
     var touchArr = [],
       locView = this._glView;
     var touch_event, touch, preLocation;
@@ -399,8 +412,8 @@ export const inputManager = {
       if (touch_event) {
         var location;
         if (
-          ServiceLocator.sys.BROWSER_TYPE_FIREFOX ===
-          ServiceLocator.sys.browserType
+          this._sys.BROWSER_TYPE_FIREFOX ===
+          this._sys.browserType
         )
           location = locView.convertToLocationInView(
             touch_event.pageX,
@@ -429,19 +442,19 @@ export const inputManager = {
       }
     }
     return touchArr;
-  },
+  }
 
   /**
    * @function
    * @param {HTMLElement} element
    */
-  registerSystemEvent: function (element) {
+  registerSystemEvent(element) {
     if (this._isRegisterEvent) return;
 
-    var locView = (this._glView = ServiceLocator.eglView);
+    var locView = (this._glView = this._eglView);
     var selfPointer = this;
-    var supportMouse = "mouse" in ServiceLocator.sys.capabilities,
-      supportTouches = "touches" in ServiceLocator.sys.capabilities;
+    var supportMouse = "mouse" in this._sys.capabilities,
+      supportTouches = "touches" in this._sys.capabilities;
 
     //HACK
     //  - At the same time to trigger the ontouch event and onmouse event
@@ -451,7 +464,7 @@ export const inputManager = {
     //  miui
     //  WECHAT
     var prohibition = false;
-    if (ServiceLocator.sys.isMobile) prohibition = true;
+    if (this._sys.isMobile) prohibition = true;
 
     //register touch event
     if (supportMouse) {
@@ -490,7 +503,7 @@ export const inputManager = {
               EventMouse.UP
             );
             mouseEvent.setButton(event.button);
-            ServiceLocator.eventManager.dispatchEvent(mouseEvent);
+            selfPointer._eventManager.dispatchEvent(mouseEvent);
           }
         },
         false
@@ -516,7 +529,7 @@ export const inputManager = {
             EventMouse.DOWN
           );
           mouseEvent.setButton(event.button);
-          ServiceLocator.eventManager.dispatchEvent(mouseEvent);
+          selfPointer._eventManager.dispatchEvent(mouseEvent);
 
           event.stopPropagation();
           event.preventDefault();
@@ -544,7 +557,7 @@ export const inputManager = {
             EventMouse.UP
           );
           mouseEvent.setButton(event.button);
-          ServiceLocator.eventManager.dispatchEvent(mouseEvent);
+          selfPointer._eventManager.dispatchEvent(mouseEvent);
 
           event.stopPropagation();
           event.preventDefault();
@@ -571,7 +584,7 @@ export const inputManager = {
           );
           if (selfPointer._mousePressed) mouseEvent.setButton(event.button);
           else mouseEvent.setButton(null);
-          ServiceLocator.eventManager.dispatchEvent(mouseEvent);
+          selfPointer._eventManager.dispatchEvent(mouseEvent);
 
           event.stopPropagation();
           event.preventDefault();
@@ -592,7 +605,7 @@ export const inputManager = {
           );
           mouseEvent.setButton(event.button);
           mouseEvent.setScrollData(0, event.wheelDelta);
-          ServiceLocator.eventManager.dispatchEvent(mouseEvent);
+          selfPointer._eventManager.dispatchEvent(mouseEvent);
 
           event.stopPropagation();
           event.preventDefault();
@@ -614,7 +627,7 @@ export const inputManager = {
           );
           mouseEvent.setButton(event.button);
           mouseEvent.setScrollData(0, event.detail * -120);
-          ServiceLocator.eventManager.dispatchEvent(mouseEvent);
+          selfPointer._eventManager.dispatchEvent(mouseEvent);
 
           event.stopPropagation();
           event.preventDefault();
@@ -730,27 +743,163 @@ export const inputManager = {
     // this._registerAccelerometerEvent();
 
     this._isRegisterEvent = true;
-  },
+  }
 
-  _registerKeyboardEvent: function () {},
+  /**
+   * whether enable accelerometer event
+   * @function
+   * @param {Boolean} isEnable
+   */
+  setAccelerometerEnabled(isEnable) {
+    var _t = this;
+    if (_t._accelEnabled === isEnable) return;
+
+    _t._accelEnabled = isEnable;
+    var scheduler = this._director.getScheduler();
+    if (_t._accelEnabled) {
+      _t._accelCurTime = 0;
+      _t._registerAccelerometerEvent();
+      scheduler.scheduleUpdate(_t);
+    } else {
+      _t._accelCurTime = 0;
+      _t._unregisterAccelerometerEvent();
+      scheduler.unscheduleUpdate(_t);
+    }
+  }
+
+  /**
+   * set accelerometer interval value
+   * @function
+   * @param {Number} interval
+   */
+  setAccelerometerInterval(interval) {
+    if (this._accelInterval !== interval) {
+      this._accelInterval = interval;
+    }
+  }
+
+  _registerKeyboardEvent() {
+    var self = this;
+    self._game.canvas.addEventListener(
+      "keydown",
+      function (e) {
+        self._eventManager.dispatchEvent(
+          new EventKeyboard(e.keyCode, true)
+        );
+        e.stopPropagation();
+        e.preventDefault();
+      },
+      false
+    );
+    self._game.canvas.addEventListener(
+      "keyup",
+      function (e) {
+        self._eventManager.dispatchEvent(
+          new EventKeyboard(e.keyCode, false)
+        );
+        e.stopPropagation();
+        e.preventDefault();
+      },
+      false
+    );
+  }
 
   /**
    * Register Accelerometer event
    * @function
    */
-  _registerAccelerometerEvent: function () {},
+  _registerAccelerometerEvent() {
+    var w = window,
+      _t = this;
+    _t._acceleration = new Acceleration();
+    _t._accelDeviceEvent = w.DeviceMotionEvent || w.DeviceOrientationEvent;
+
+    //TODO fix DeviceMotionEvent bug on QQ Browser version 4.1 and below.
+    if (
+      this._sys.browserType === this._sys.BROWSER_TYPE_MOBILE_QQ
+    )
+      _t._accelDeviceEvent = window.DeviceOrientationEvent;
+
+    var _deviceEventType =
+      _t._accelDeviceEvent === w.DeviceMotionEvent
+        ? "devicemotion"
+        : "deviceorientation";
+    var ua = navigator.userAgent;
+    if (
+      /Android/.test(ua) ||
+      (/Adr/.test(ua) &&
+        this._sys.browserType === this._sys.BROWSER_TYPE_UC)
+    ) {
+      _t._minus = -1;
+    }
+
+    _t.didAccelerateCallback = _t.didAccelerate.bind(_t);
+    w.addEventListener(_deviceEventType, _t.didAccelerateCallback, false);
+  }
+
+  _unregisterAccelerometerEvent() {
+    this._acceleration = null;
+    var _deviceEventType =
+      this._accelDeviceEvent === window.DeviceMotionEvent
+        ? "devicemotion"
+        : "deviceorientation";
+    window.removeEventListener(
+      _deviceEventType,
+      this.didAccelerateCallback,
+      false
+    );
+  }
+
+  didAccelerate(eventData) {
+    var _t = this,
+      w = window;
+    if (!_t._accelEnabled) return;
+
+    var mAcceleration = _t._acceleration;
+
+    var x, y, z;
+
+    if (_t._accelDeviceEvent === window.DeviceMotionEvent) {
+      var eventAcceleration = eventData["accelerationIncludingGravity"];
+      x = _t._accelMinus * eventAcceleration.x * 0.1;
+      y = _t._accelMinus * eventAcceleration.y * 0.1;
+      z = eventAcceleration.z * 0.1;
+    } else {
+      x = (eventData["gamma"] / 90) * 0.981;
+      y = -(eventData["beta"] / 90) * 0.981;
+      z = (eventData["alpha"] / 90) * 0.981;
+    }
+
+    mAcceleration.x = x;
+    mAcceleration.y = y;
+    mAcceleration.z = z;
+
+    mAcceleration.timestamp = eventData.timeStamp || Date.now();
+
+    var tmpX = mAcceleration.x;
+    if (w.orientation === InputManager.UIInterfaceOrientationLandscapeRight) {
+      mAcceleration.x = -mAcceleration.y;
+      mAcceleration.y = tmpX;
+    } else if (w.orientation === InputManager.UIInterfaceOrientationLandscapeLeft) {
+      mAcceleration.x = mAcceleration.y;
+      mAcceleration.y = -tmpX;
+    } else if (w.orientation === InputManager.UIInterfaceOrientationPortraitUpsideDown) {
+      mAcceleration.x = -mAcceleration.x;
+      mAcceleration.y = -mAcceleration.y;
+    }
+  }
 
   /**
    * @function
    * @param {Number} dt
    */
-  update: function (dt) {
+  update(dt) {
     if (this._accelCurTime > this._accelInterval) {
       this._accelCurTime -= this._accelInterval;
-      ServiceLocator.eventManager.dispatchEvent(
+      this._eventManager.dispatchEvent(
         new EventAcceleration(this._acceleration)
       );
     }
     this._accelCurTime += dt;
   }
-};
+}

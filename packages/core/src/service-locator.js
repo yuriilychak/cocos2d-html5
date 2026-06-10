@@ -35,6 +35,7 @@ import { GLStateCache } from "./shaders/CCGLStateCache";
 import { KMGLMatrix } from "./kazmath/gl/km-gl-matrix";
 import { Configuration } from "./configuration";
 import { Profiler } from "./utils/profiler";
+import { InputManager } from "./platform/input-manager";
 
 // Service configuration data: loader handlers and base64 boot images. Imported
 // here (not in index.js) so all service wiring lives in the locator. These are
@@ -56,6 +57,7 @@ import {
   _fpsImage,
   _loaderImage
 } from "./boot";
+import { initBinaryLoader } from "./utils/binary-loader";
 
 export class ServiceLocator {
   static #director;
@@ -74,6 +76,7 @@ export class ServiceLocator {
   static #kmglMatrix;
   static #configuration;
   static #profiler;
+  static #inputManager;
 
   static #constructed = false;
 
@@ -118,6 +121,7 @@ export class ServiceLocator {
     ServiceLocator.#kmglMatrix = new KMGLMatrix();
     ServiceLocator.#configuration = new Configuration();
     ServiceLocator.#profiler = new Profiler();
+    ServiceLocator.#inputManager = new InputManager();
 
     // Wire dependencies (assignment-only). Every instance already exists,
     // so the cyclic service graph resolves to the constructed singletons.
@@ -151,6 +155,7 @@ export class ServiceLocator {
       eglView: ServiceLocator.#eglView,
       engine: ServiceLocator.#engine,
       eventManager: ServiceLocator.#eventManager,
+      inputManager: ServiceLocator.#inputManager,
       loader: ServiceLocator.#loader,
       rendererConfig: ServiceLocator.#rendererConfig,
       textureCache: ServiceLocator.#textureCache,
@@ -216,6 +221,14 @@ export class ServiceLocator {
       rendererConfig: ServiceLocator.#rendererConfig,
     });
 
+    ServiceLocator.#inputManager.injectServices({
+      director: ServiceLocator.#director,
+      eglView: ServiceLocator.#eglView,
+      eventManager: ServiceLocator.#eventManager,
+      game: ServiceLocator.#game,
+      sys: ServiceLocator.#sys,
+    });
+
     // Configure services: register the loader's file-type handlers and boot
     // images and initialise the matrix stacks. Kept here so index.js never
     // manipulates service instances directly.
@@ -236,6 +249,9 @@ export class ServiceLocator {
     loader.register(["plist"], _plistLoader);
     loader.register(["font", "eot", "ttf", "woff", "svg", "ttc"], _fontLoader);
     loader.register(["csb"], _csbLoader);
+
+    // Attach binary-loading methods to the loader (+ IE VBScript shim).
+    initBinaryLoader(loader);
 
     ServiceLocator.#kmglMatrix.lazyInitialize();
   }
@@ -302,6 +318,10 @@ export class ServiceLocator {
 
   static get profiler() {
     return ServiceLocator.#profiler;
+  }
+
+  static get inputManager() {
+    return ServiceLocator.#inputManager;
   }
 }
 
