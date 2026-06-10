@@ -1,6 +1,5 @@
 // Boot (barrel — re-exports boot modules; init side-effect runs on import)
 import {
-  Loader,
   _LogInfos,
   _loadingImage,
   _fpsImage,
@@ -26,8 +25,8 @@ import { initInputExtension } from "./platform/input-extension";
 // ======================================================================
 // Renderer & Utils
 // ======================================================================
-import { RendererConfig } from "./renderer/renderer-config";
 import { initBinaryLoader } from "./utils/binary-loader";
+import { ServiceLocator } from "./service-locator";
 
 // ======================================================================
 // Base Nodes
@@ -48,7 +47,6 @@ import { LayerCanvasRenderer, LayerWebGLRenderer } from "./layers/renderer";
 // ======================================================================
 // Textures
 // ======================================================================
-import TextureCache from "./textures/texture-cache";
 
 // ======================================================================
 // Sprites
@@ -76,38 +74,37 @@ import { WebGLRenderCmd as LabelTTFWebGLRenderCmd } from "./labelttf/label-ttf-w
 // ======================================================================
 // Kazmath
 // ======================================================================
-import { KMGLMatrix } from "./kazmath";
 
 // ======================================================================
 // Namespace assignments
 // ======================================================================
 
 // Boot — Debugger (used internally)
-Loader.getInstance()._LogInfos = _LogInfos;
+ServiceLocator.loader._LogInfos = _LogInfos;
 
 // Boot — Base64 images (used internally)
-Loader.getInstance()._loadingImage = _loadingImage;
-Loader.getInstance()._fpsImage = _fpsImage;
-Loader.getInstance()._loaderImage = _loaderImage;
+ServiceLocator.loader._loadingImage = _loadingImage;
+ServiceLocator.loader._fpsImage = _fpsImage;
+ServiceLocator.loader._loaderImage = _loaderImage;
 
 // Platform — Loaders
-Loader.getInstance().register(
+ServiceLocator.loader.register(
   ["txt", "xml", "vsh", "fsh", "atlas"],
   _txtLoader
 );
-Loader.getInstance().register(["json", "ExportJson"], _jsonLoader);
-Loader.getInstance().register(["js"], _jsLoader);
-Loader.getInstance().register(
+ServiceLocator.loader.register(["json", "ExportJson"], _jsonLoader);
+ServiceLocator.loader.register(["js"], _jsLoader);
+ServiceLocator.loader.register(
   ["png", "jpg", "bmp", "jpeg", "gif", "ico", "tiff", "webp"],
   _imgLoader
 );
-Loader.getInstance().register(["serverImg"], _serverImgLoader);
-Loader.getInstance().register(["plist"], _plistLoader);
-Loader.getInstance().register(
+ServiceLocator.loader.register(["serverImg"], _serverImgLoader);
+ServiceLocator.loader.register(["plist"], _plistLoader);
+ServiceLocator.loader.register(
   ["font", "eot", "ttf", "woff", "svg", "ttc"],
   _fontLoader
 );
-Loader.getInstance().register(["csb"], _csbLoader);
+ServiceLocator.loader.register(["csb"], _csbLoader);
 
 // Render command wiring
 Node.CanvasRenderCmd = NodeCanvasRenderCmd;
@@ -133,7 +130,7 @@ LabelTTF.WebGLRenderCmd = LabelTTFWebGLRenderCmd;
 // ======================================================================
 initInputExtension(inputManager);
 initBinaryLoader();
-KMGLMatrix.getInstance().lazyInitialize();
+ServiceLocator.kmglMatrix.lazyInitialize();
 
 // ======================================================================
 // Named re-exports for direct imports from other packages
@@ -152,7 +149,7 @@ export {
 export { log, warn } from "./boot/debugger";
 export { RendererConfig } from "./renderer/renderer-config";
 // Export rendererConfig singleton instance
-export const rendererConfig = RendererConfig.getInstance();
+export const rendererConfig = ServiceLocator.rendererConfig;
 export { Director, DisplayLinkDirector } from "./director/director";
 export { Sys } from "./boot";
 export { NewClass, classManager } from "./platform/class";
@@ -184,7 +181,7 @@ export {
 } from "./textures/constants";
 // Export TextureCache class and singleton instance
 export { default as TextureCache } from "./textures/texture-cache";
-export const textureCache = TextureCache.getInstance();
+export const textureCache = ServiceLocator.textureCache;
 export { GLProgramState, ShaderCache } from "./shaders";
 export { GLStateCache } from "./shaders/CCGLStateCache";
 export {

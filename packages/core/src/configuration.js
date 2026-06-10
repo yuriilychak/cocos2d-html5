@@ -35,16 +35,6 @@ import { ServiceLocator } from "./service-locator";
  * var textureSize = configuration.getMaxTextureSize();
  */
 export class Configuration {
-  static _instance = null;
-
-  static getInstance() {
-    if (!Configuration._instance) {
-      Configuration._instance = new Configuration();
-    }
-
-    return Configuration._instance;
-  }
-
   ERROR = 0;
   STRING = 1;
   INT = 2;

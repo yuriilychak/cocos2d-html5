@@ -28,7 +28,6 @@ import { NewClass } from "../class";
 import { Point } from "../../cocoa/geometry/point";
 import { Rect } from "../../cocoa/geometry/rect";
 import { Size } from "../../cocoa/geometry/size";
-import Sys from "../../boot/sys";
 import { contentScaleFactor } from "../macro/utils";
 import { screen } from "../screen";
 import { visibleRect } from "../visible-rect";
@@ -44,7 +43,7 @@ import {
 } from "../macro/constants";
 import { ServiceLocator } from "../../service-locator";
 
-var __sys = Sys.getInstance();
+var __sys = null;
 
 var __BrowserGetter = {
   init: function () {
@@ -61,38 +60,47 @@ var __BrowserGetter = {
   meta: {
     width: "device-width"
   },
-  adaptationType: __sys.browserType
+  adaptationType: null
 };
 
-if (window.navigator.userAgent.indexOf("OS 8_1_") > -1)
-  __BrowserGetter.adaptationType = __sys.BROWSER_TYPE_MIUI;
+// Sys-dependent configuration is deferred to first EGLView construction so it
+// runs at runtime (when ServiceLocator is fully defined), never at module load
+// time (when the ServiceLocator class is still in its temporal dead zone).
+function __initBrowserGetter() {
+  if (__sys) return;
+  __sys = ServiceLocator.sys;
+  __BrowserGetter.adaptationType = __sys.browserType;
 
-if (__sys.os === __sys.OS_IOS)
-  __BrowserGetter.adaptationType = __sys.BROWSER_TYPE_SAFARI;
+  if (window.navigator.userAgent.indexOf("OS 8_1_") > -1)
+    __BrowserGetter.adaptationType = __sys.BROWSER_TYPE_MIUI;
 
-switch (__BrowserGetter.adaptationType) {
-  case __sys.BROWSER_TYPE_SAFARI:
-    __BrowserGetter.meta["minimal-ui"] = "true";
-    break;
-  case __sys.BROWSER_TYPE_CHROME:
-    __BrowserGetter.__defineGetter__("target-densitydpi", function () {
-      return ServiceLocator.eglView._targetDensityDPI;
-    });
-    break;
-  case __sys.BROWSER_TYPE_MIUI:
-    __BrowserGetter.init = function (view) {
-      if (view.__resizeWithBrowserSize) return;
-      var resize = function () {
-        view.setDesignResolutionSize(
-          view._designResolutionSize.width,
-          view._designResolutionSize.height,
-          view._resolutionPolicy
-        );
-        window.removeEventListener("resize", resize, false);
+  if (__sys.os === __sys.OS_IOS)
+    __BrowserGetter.adaptationType = __sys.BROWSER_TYPE_SAFARI;
+
+  switch (__BrowserGetter.adaptationType) {
+    case __sys.BROWSER_TYPE_SAFARI:
+      __BrowserGetter.meta["minimal-ui"] = "true";
+      break;
+    case __sys.BROWSER_TYPE_CHROME:
+      __BrowserGetter.__defineGetter__("target-densitydpi", function () {
+        return ServiceLocator.eglView._targetDensityDPI;
+      });
+      break;
+    case __sys.BROWSER_TYPE_MIUI:
+      __BrowserGetter.init = function (view) {
+        if (view.__resizeWithBrowserSize) return;
+        var resize = function () {
+          view.setDesignResolutionSize(
+            view._designResolutionSize.width,
+            view._designResolutionSize.height,
+            view._resolutionPolicy
+          );
+          window.removeEventListener("resize", resize, false);
+        };
+        window.addEventListener("resize", resize, false);
       };
-      window.addEventListener("resize", resize, false);
-    };
-    break;
+      break;
+  }
 }
 
 var _scissorRect = null;
@@ -111,21 +119,14 @@ var _scissorRect = null;
  * @name EGLView
  */
 export class EGLView extends NewClass {
-  static _instance = null;
-
-  static getInstance() {
-    if (!EGLView._instance) {
-      EGLView._instance = new EGLView();
-      EGLView._instance.initialize();
-    }
-    return EGLView._instance;
-  }
 
   /**
    * Constructor of EGLView
    */
   constructor() {
     super();
+
+    __initBrowserGetter();
 
     this._delegate = null;
     // Size of parent node that contains container and _canvas

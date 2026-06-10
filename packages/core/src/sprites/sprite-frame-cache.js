@@ -42,19 +42,10 @@ import { ServiceLocator } from "../service-locator";
  * <br/>
  * example<br/>
  * // add SpriteFrames to spriteFrameCache With File<br/>
- * SpriteFrameCache.getInstance().addSpriteFrames(s_grossiniPlist);<br/>
+ * ServiceLocator.spriteFrameCache.addSpriteFrames(s_grossiniPlist);<br/>
  * </p>
  */
 export default class SpriteFrameCache {
-  static _instance = null;
-
-  static getInstance() {
-    if (!SpriteFrameCache._instance) {
-      SpriteFrameCache._instance = new SpriteFrameCache();
-    }
-    return SpriteFrameCache._instance;
-  }
-
   constructor() {
     this._CCNS_REG1 =
       /^\s*\{\s*([\-]?\d+[.]?\d*)\s*,\s*([\-]?\d+[.]?\d*)\s*\}\s*$/;
@@ -345,8 +336,8 @@ export default class SpriteFrameCache {
    * @param {HTMLImageElement|Texture2D|string} [texture]
    * @example
    * // add SpriteFrames to SpriteFrameCache With File
-   * SpriteFrameCache.getInstance().addSpriteFrames(s_grossiniPlist);
-   * SpriteFrameCache.getInstance().addSpriteFrames(s_grossiniJson);
+   * ServiceLocator.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
+   * ServiceLocator.spriteFrameCache.addSpriteFrames(s_grossiniJson);
    */
   addSpriteFrames(url, texture) {
     assert(url, _LogInfos.spriteFrameCache_addSpriteFrames_2);

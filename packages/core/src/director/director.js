@@ -63,16 +63,6 @@ export class Director extends NewClass {
   static PROJECTION_CUSTOM = PROJECTION_CUSTOM;
   static PROJECTION_DEFAULT = PROJECTION_DEFAULT;
 
-  static _instance = null;
-
-  static getInstance() {
-    if (!Director._instance) {
-      Director._instance = new DisplayLinkDirector();
-      Director._instance.init();
-    }
-    return Director._instance;
-  }
-
   constructor() {
     super();
     this.TransitionSceneClass = null;

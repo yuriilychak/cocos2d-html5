@@ -19,15 +19,6 @@ export function create3DContext(canvas, opt_attribs) {
  * System variables singleton.
  */
 export default class Sys {
-  static _instance = null;
-
-  static getInstance() {
-    if (!Sys._instance) {
-      Sys._instance = new Sys();
-    }
-    return Sys._instance;
-  }
-
   constructor() {
     this.LANGUAGE_ENGLISH = "en";
     this.LANGUAGE_CHINESE = "zh";

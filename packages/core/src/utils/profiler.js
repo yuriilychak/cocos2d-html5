@@ -6,16 +6,8 @@ import { Director } from "../director/director";
 import { ServiceLocator } from "../service-locator";
 
 export class Profiler {
-  static _instance = null;
   static LEVEL_DET_FACTOR = 0.6;
   static LEVELS = [0, 10, 20, 30];
-
-  static getInstance() {
-    if (!Profiler._instance) {
-      Profiler._instance = new Profiler();
-    }
-    return Profiler._instance;
-  }
 
   constructor() {
     this.onFrameRateChange = null;

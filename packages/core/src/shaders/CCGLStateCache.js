@@ -30,7 +30,6 @@ import { ServiceLocator } from "../service-locator";
 export class GLStateCache {
   static MAX_ACTIVE_TEXTURE = 16;
 
-  static #instance = null;
 
   constructor() {
     this._currentProjectionMatrix = -1;
@@ -40,13 +39,6 @@ export class GLStateCache {
     this._blendingDest = -1;
     this._GLServerState = 0;
     this._uVAO = TEXTURE_ATLAS_USE_VAO ? 0 : undefined;
-  }
-
-  static getInstance() {
-    if (!GLStateCache.#instance) {
-      GLStateCache.#instance = new GLStateCache();
-    }
-    return GLStateCache.#instance;
   }
 
   invalidateStateCache() {

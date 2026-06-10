@@ -5,19 +5,10 @@ import { ENGINE_VERSION } from "../platform/config";
 import { ServiceLocator } from "../service-locator";
 
 export class Engine {
-  static #instance = null;
-
   #jsAddedCache = {};
   #engineInitCalled = false;
   #engineLoadedCallback = null;
   loaded = false;
-
-  static getInstance() {
-    if (!Engine.#instance) {
-      Engine.#instance = new Engine();
-    }
-    return Engine.#instance;
-  }
 
   #getJsListOfModule(moduleMap, moduleName, dir) {
     if (this.#jsAddedCache[moduleName]) return null;

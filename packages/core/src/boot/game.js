@@ -19,18 +19,9 @@ import { ServiceLocator } from "../service-locator";
  * An object to boot the game.
  */
 export default class Game extends EventHelper(NewClass) {
-  static _instance = null;
-
   /**
    * @returns {Game}
    */
-  static getInstance() {
-    if (!Game._instance) {
-      Game._instance = new Game();
-    }
-    return Game._instance;
-  }
-
   static DEBUG_MODE_NONE = 0;
   static DEBUG_MODE_INFO = 1;
   static DEBUG_MODE_WARN = 2;
@@ -239,9 +230,10 @@ export default class Game extends EventHelper(NewClass) {
       this._initRenderer(config[CONFIG_KEY.width], config[CONFIG_KEY.height]);
 
       ServiceLocator.eglView;
-      // @deprecated use Director.getInstance() instead
-      ServiceLocator.director;
-      if (ServiceLocator.director.setOpenGLView) ServiceLocator.director.setOpenGLView(ServiceLocator.eglView);
+      // Director is created lazily; this is its first access, so initialize it here.
+      const director = ServiceLocator.director;
+      director.init();
+      if (director.setOpenGLView) director.setOpenGLView(ServiceLocator.eglView);
 
       this._initEvents();
 

@@ -63,7 +63,7 @@ export class TextureAtlas extends NewClass {
    * var textureAtlas = new TextureAtlas("res/hello.png", 3);
    * 2.
    * //creates a TextureAtlas with texture
-   * var texture = TextureCache.getInstance().addImage("hello.png");
+   * var texture = ServiceLocator.textureCache.addImage("hello.png");
    * var textureAtlas = new TextureAtlas(texture, 3);
    */
   constructor(fileName, capacity) {
@@ -255,7 +255,7 @@ export class TextureAtlas extends NewClass {
    * @return {Boolean}
    * @example
    * //example
-   * var texture = TextureCache.getInstance().addImage("hello.png");
+   * var texture = ServiceLocator.textureCache.addImage("hello.png");
    * var textureAtlas = new TextureAtlas();
    * textureAtlas.initWithTexture(texture, 3);
    */

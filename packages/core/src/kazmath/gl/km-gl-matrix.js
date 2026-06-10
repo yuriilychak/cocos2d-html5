@@ -9,14 +9,6 @@ export class KMGLMatrix {
   static KM_GL_PROJECTION = 0x1701;
   static KM_GL_TEXTURE = 0x1702;
 
-  static _instance = null;
-
-  static getInstance() {
-    if (!KMGLMatrix._instance) {
-      KMGLMatrix._instance = new KMGLMatrix();
-    }
-    return KMGLMatrix._instance;
-  }
 
   modelViewStack = new Matrix4Stack();
   projectionStack = new Matrix4Stack();

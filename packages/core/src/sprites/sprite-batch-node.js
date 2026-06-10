@@ -56,7 +56,7 @@ import { ServiceLocator } from "../service-locator";
  * var spriteBatchNode = new SpriteBatchNode("res/animations/grossini.png");
  *
  * // 2. create a SpriteBatchNode with texture
- * var texture = TextureCache.getInstance().addImage("res/animations/grossini.png");
+ * var texture = ServiceLocator.textureCache.addImage("res/animations/grossini.png");
  * var spriteBatchNode = new SpriteBatchNode(texture);
  *
  * @property {TextureAtlas}  textureAtlas    - The texture atlas

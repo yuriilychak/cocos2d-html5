@@ -57,7 +57,7 @@ import { ServiceLocator } from "../service-locator";
  * var frame2 = new SpriteFrame("res/grossini_dance.png",rect(0,0,90,128),false,0,size(90,128));
  *
  * // 2. Create a SpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
- * var texture = TextureCache.getInstance().addImage("res/grossini_dance.png");
+ * var texture = ServiceLocator.textureCache.addImage("res/grossini_dance.png");
  * var frame1 = new SpriteFrame(texture, rect(0,0,90,128));
  * var frame2 = new SpriteFrame(texture, rect(0,0,90,128),false,0,size(90,128));
  */

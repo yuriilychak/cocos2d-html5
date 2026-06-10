@@ -1,16 +1,18 @@
 // Service Locator
 // ---------------------------------------------------------------------------
-// Central access point for the engine's singleton services. Instead of each
-// consumer importing a concrete service class and calling `getInstance()`
-// directly (which couples modules together and encourages circular
-// dependencies), code can read the corresponding static getter on
-// `ServiceLocator`.
+// Central access point and owner of the engine's core services. Each service
+// is a plain class; the locator lazily constructs a single instance on first
+// access and caches it for subsequent gets. This replaces the per-class
+// singleton (`static getInstance()` / `static _instance`) pattern and keeps
+// service lifetime ownership in one place, reducing circular dependencies.
 //
-// As a first migration step every getter simply forwards to the existing
-// `getInstance()` of the underlying service, so behaviour is unchanged. Later
-// the locator can become the single owner of service construction/lifetime.
+// IMPORTANT: getters are lazy — they only construct on first runtime access,
+// never at module-evaluation time. No module imported by this file may read a
+// `ServiceLocator.*` getter at module top level (it would observe the
+// `ServiceLocator` class in its temporal dead zone). Lazy access from inside
+// methods/constructors is safe.
 
-import { Director } from "./director/director";
+import { DisplayLinkDirector } from "./director/director";
 import { RendererConfig } from "./renderer/renderer-config";
 import Sys from "./boot/sys";
 import Loader from "./boot/loader";
@@ -28,68 +30,135 @@ import { Configuration } from "./configuration";
 import { Profiler } from "./utils/profiler";
 
 export class ServiceLocator {
+  static #director;
+  static #rendererConfig;
+  static #sys;
+  static #loader;
+  static #game;
+  static #engine;
+  static #eventManager;
+  static #eglView;
+  static #textureCache;
+  static #spriteFrameCache;
+  static #animationCache;
+  static #shaderCache;
+  static #glStateCache;
+  static #kmglMatrix;
+  static #configuration;
+  static #profiler;
+
   static get director() {
-    return Director.getInstance();
+    if (!ServiceLocator.#director) {
+      ServiceLocator.#director = new DisplayLinkDirector();
+    }
+    return ServiceLocator.#director;
   }
 
   static get rendererConfig() {
-    return RendererConfig.getInstance();
+    if (!ServiceLocator.#rendererConfig) {
+      ServiceLocator.#rendererConfig = new RendererConfig();
+    }
+    return ServiceLocator.#rendererConfig;
   }
 
   static get sys() {
-    return Sys.getInstance();
+    if (!ServiceLocator.#sys) {
+      ServiceLocator.#sys = new Sys();
+    }
+    return ServiceLocator.#sys;
   }
 
   static get loader() {
-    return Loader.getInstance();
+    if (!ServiceLocator.#loader) {
+      ServiceLocator.#loader = new Loader();
+    }
+    return ServiceLocator.#loader;
   }
 
   static get game() {
-    return Game.getInstance();
+    if (!ServiceLocator.#game) {
+      ServiceLocator.#game = new Game();
+    }
+    return ServiceLocator.#game;
   }
 
   static get engine() {
-    return Engine.getInstance();
+    if (!ServiceLocator.#engine) {
+      ServiceLocator.#engine = new Engine();
+    }
+    return ServiceLocator.#engine;
   }
 
   static get eventManager() {
-    return EventManager.getInstance();
+    if (!ServiceLocator.#eventManager) {
+      ServiceLocator.#eventManager = new EventManager();
+    }
+    return ServiceLocator.#eventManager;
   }
 
   static get eglView() {
-    return EGLView.getInstance();
+    if (!ServiceLocator.#eglView) {
+      // Assign before initialize() for re-entrancy safety (see director).
+      ServiceLocator.#eglView = new EGLView();
+      ServiceLocator.#eglView.initialize();
+    }
+    return ServiceLocator.#eglView;
   }
 
   static get textureCache() {
-    return TextureCache.getInstance();
+    if (!ServiceLocator.#textureCache) {
+      ServiceLocator.#textureCache = new TextureCache();
+    }
+    return ServiceLocator.#textureCache;
   }
 
   static get spriteFrameCache() {
-    return SpriteFrameCache.getInstance();
+    if (!ServiceLocator.#spriteFrameCache) {
+      ServiceLocator.#spriteFrameCache = new SpriteFrameCache();
+    }
+    return ServiceLocator.#spriteFrameCache;
   }
 
   static get animationCache() {
-    return AnimationCache.getInstance();
+    if (!ServiceLocator.#animationCache) {
+      ServiceLocator.#animationCache = new AnimationCache();
+    }
+    return ServiceLocator.#animationCache;
   }
 
   static get shaderCache() {
-    return ShaderCache.getInstance();
+    if (!ServiceLocator.#shaderCache) {
+      ServiceLocator.#shaderCache = new ShaderCache();
+    }
+    return ServiceLocator.#shaderCache;
   }
 
   static get glStateCache() {
-    return GLStateCache.getInstance();
+    if (!ServiceLocator.#glStateCache) {
+      ServiceLocator.#glStateCache = new GLStateCache();
+    }
+    return ServiceLocator.#glStateCache;
   }
 
   static get kmglMatrix() {
-    return KMGLMatrix.getInstance();
+    if (!ServiceLocator.#kmglMatrix) {
+      ServiceLocator.#kmglMatrix = new KMGLMatrix();
+    }
+    return ServiceLocator.#kmglMatrix;
   }
 
   static get configuration() {
-    return Configuration.getInstance();
+    if (!ServiceLocator.#configuration) {
+      ServiceLocator.#configuration = new Configuration();
+    }
+    return ServiceLocator.#configuration;
   }
 
   static get profiler() {
-    return Profiler.getInstance();
+    if (!ServiceLocator.#profiler) {
+      ServiceLocator.#profiler = new Profiler();
+    }
+    return ServiceLocator.#profiler;
   }
 }
 

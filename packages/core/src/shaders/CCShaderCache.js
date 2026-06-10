@@ -78,8 +78,6 @@ import { ServiceLocator } from "../service-locator";
  * ShaderCache is a singleton object that stores manages GL shaders
  */
 export default class ShaderCache {
-    static _instance = null;
-
     /**
      * @public
      * @constant
@@ -175,13 +173,6 @@ export default class ShaderCache {
             SHADER_SPRITE_POSITION_TEXTURECOLOR_GRAY
         ];
         this._programs = {};
-    }
-
-    static getInstance() {
-        if (!ShaderCache._instance) {
-            ShaderCache._instance = new ShaderCache();
-        }
-        return ShaderCache._instance;
     }
 
     _init() {

@@ -2,15 +2,6 @@ import Game from "../boot/game";
 import { ServiceLocator } from "../service-locator";
 
 export class RendererConfig {
-  static _instance = null;
-
-  static getInstance() {
-    if (!RendererConfig._instance) {
-      RendererConfig._instance = new RendererConfig();
-    }
-    return RendererConfig._instance;
-  }
-
   _renderType = Game.RENDER_TYPE_CANVAS;
   _supportRender = false;
   _renderContext = null;

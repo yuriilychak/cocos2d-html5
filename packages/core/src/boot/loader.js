@@ -12,19 +12,10 @@ const _isNodeJs = typeof process !== "undefined" && process.versions != null && 
 var imagePool = new ImagePool();
 
 /**
- * Resource loading management. Singleton accessed via Loader.getInstance().
+ * Resource loading management. Singleton accessed via ServiceLocator.loader.
  * @name Loader
  */
 export default class Loader {
-  static _instance = null;
-
-  static getInstance() {
-    if (!Loader._instance) {
-      Loader._instance = new Loader();
-    }
-    return Loader._instance;
-  }
-
   _jsCache = {};
   _register = {};
   _langPathCache = {};

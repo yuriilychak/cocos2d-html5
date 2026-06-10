@@ -126,14 +126,6 @@ export default class EventManager {
   static DIRTY_SCENE_GRAPH_PRIORITY = 1 << 1;
   static DIRTY_ALL = 3;
 
-  static _instance = null;
-
-  static getInstance() {
-    if (!EventManager._instance) {
-      EventManager._instance = new EventManager();
-    }
-    return EventManager._instance;
-  }
 
   constructor() {
     this._listenersMap = {};

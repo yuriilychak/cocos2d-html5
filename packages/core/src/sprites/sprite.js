@@ -78,7 +78,7 @@ import { ServiceLocator } from "../service-locator";
  *
  * 4.Create a sprite with an existing texture contained in a Texture2D object
  *      After creation, the rect will be the size of the texture, and the offset will be (0,0).
- * var texture = TextureCache.getInstance().addImage("HelloHTML5World.png");
+ * var texture = ServiceLocator.textureCache.addImage("HelloHTML5World.png");
  * var sprite1 = new Sprite(texture);
  * var sprite2 = new Sprite(texture, rect(0,0,480,320));
  *

@@ -35,27 +35,12 @@ import { ServiceLocator } from "../service-locator";
  * TextureCache is a singleton class, it's the global cache for Texture2D
  */
 export default class TextureCache {
-  static _instance = null;
-
-  static getInstance() {
-    if (!TextureCache._instance) {
-      TextureCache._instance = new TextureCache();
-    }
-    return TextureCache._instance;
-  }
-
   constructor() {
-    if (TextureCache._instance) {
-      return TextureCache._instance;
-    }
-
     this._textures = {};
     this._textureColorsCache = {};
     this._textureKeySeq = 0 | (Math.random() * 1000);
     this._loadedTexturesBefore = {};
     this._renderer = null; // Will be set by initRenderer()
-
-    TextureCache._instance = this;
   }
 
   /**

@@ -39,19 +39,10 @@ import { ServiceLocator } from "../service-locator";
  *     It saves in a cache the animations. You should use this class if you want to save your animations in a cache.<br/>
  * <br/>
  * example<br/>
- * AnimationCache.getInstance().addAnimation(animation,"animation1");<br/>
+ * ServiceLocator.animationCache.addAnimation(animation,"animation1");<br/>
  * </p>
  */
 export default class AnimationCache {
-  static _instance = null;
-
-  static getInstance() {
-    if (!AnimationCache._instance) {
-      AnimationCache._instance = new AnimationCache();
-    }
-    return AnimationCache._instance;
-  }
-
   constructor() {
     this._animations = {};
   }
