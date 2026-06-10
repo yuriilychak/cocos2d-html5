@@ -22,7 +22,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { RendererConfig } from "../../renderer/renderer-config";
 import LayerColorWebGLRenderer from "./layer-color-webgl-renderer";
 import { Node } from "../../base-nodes/node";
 import { Point } from "../../cocoa/geometry/point";
@@ -34,8 +33,7 @@ import {
 import { AffineTransform } from "../../cocoa/affine-transform";
 import { radiansToDegrees } from "../../platform/macro/utils";
 import Matrix4 from "../../kazmath/mat4";
-import { EGLView } from "../../platform/egl-view/egl-view";
-import { GLStateCache } from "../../shaders/CCGLStateCache";
+import { ServiceLocator } from "../../service-locator";
 
 /**
  * LayerGradient's WebGL render command
@@ -172,7 +170,7 @@ export default class LayerGradientWebGLRenderer extends LayerColorWebGLRenderer 
   }
 
   rendering(ctx) {
-    const context = ctx || RendererConfig.getInstance().renderContext,
+    const context = ctx || ServiceLocator.rendererConfig.renderContext,
       node = this._node;
 
     if (!this._matrix) {
@@ -182,7 +180,7 @@ export default class LayerGradientWebGLRenderer extends LayerColorWebGLRenderer 
 
     const clippingRect = this._getClippingRect();
     context.enable(context.SCISSOR_TEST);
-    EGLView.getInstance().setScissorInPoints(
+    ServiceLocator.eglView.setScissorInPoints(
       clippingRect.x,
       clippingRect.y,
       clippingRect.width,
@@ -207,7 +205,7 @@ export default class LayerGradientWebGLRenderer extends LayerColorWebGLRenderer 
     }
 
     this._glProgramState.apply(this._matrix);
-    GLStateCache.getInstance().blendFunc(node._blendFunc.src, node._blendFunc.dst);
+    ServiceLocator.glStateCache.blendFunc(node._blendFunc.src, node._blendFunc.dst);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, this._vertexBuffer);
     gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);

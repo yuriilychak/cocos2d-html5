@@ -27,10 +27,7 @@ import { Color } from "../platform/types/color";
 import { log, _LogInfos } from "../boot/debugger";
 import { Node } from "./node";
 import Matrix4 from "../kazmath/mat4";
-import ShaderCache from "../shaders/CCShaderCache";
 import { TextureAtlas } from "../textures/texture-atlas";
-import { GLStateCache } from "../shaders/CCGLStateCache";
-import { RendererConfig } from "../renderer/renderer-config";
 import {
   SHADER_POSITION_TEXTURE_UCOLOR,
   SRC_ALPHA,
@@ -38,6 +35,7 @@ import {
   BLEND_SRC,
   BLEND_DST
 } from "../platform/macro/constants";
+import { ServiceLocator } from "../service-locator";
 
 /**
  * AtlasNode's rendering objects of WebGL
@@ -55,11 +53,11 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
     this._matrix.identity();
 
     //shader stuff
-    this._shaderProgram = ShaderCache.getInstance().programForKey(
+    this._shaderProgram = ServiceLocator.shaderCache.programForKey(
       SHADER_POSITION_TEXTURE_UCOLOR
     );
     this._uniformColor =
-      RendererConfig.getInstance().renderContext.getUniformLocation(
+      ServiceLocator.rendererConfig.renderContext.getUniformLocation(
         this._shaderProgram.getProgram(),
         "u_color"
       );
@@ -79,7 +77,7 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
   }
 
   rendering(ctx) {
-    const context = ctx || RendererConfig.getInstance().renderContext,
+    const context = ctx || ServiceLocator.rendererConfig.renderContext,
       node = this._node;
 
     const wt = this._worldTransform;
@@ -92,7 +90,7 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
 
     this._glProgramState.apply(this._matrix);
 
-    GLStateCache.getInstance().blendFunc(node._blendFunc.src, node._blendFunc.dst);
+    ServiceLocator.glStateCache.blendFunc(node._blendFunc.src, node._blendFunc.dst);
     if (this._uniformColor && this._colorF32Array) {
       context.uniform4fv(this._uniformColor, this._colorF32Array);
       this._textureAtlas.drawNumberOfQuads(node.quadsToDraw, 0);

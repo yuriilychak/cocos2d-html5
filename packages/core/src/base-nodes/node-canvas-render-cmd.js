@@ -25,7 +25,6 @@
 import { Point } from "../cocoa/geometry/point";
 import { Rect } from "../cocoa/geometry/rect";
 import { Color } from "../platform/types/color";
-import { RendererConfig } from "../renderer/renderer-config";
 import { AffineTransform } from "../cocoa/affine-transform";
 import { Region } from "../renderer/dirty-region";
 import { Node } from "./node";
@@ -35,6 +34,7 @@ import {
   SRC_ALPHA,
   ZERO
 } from "../platform/macro/constants";
+import { ServiceLocator } from "../service-locator";
 
 //---------------------- Customer render cmd --------------------
 export class CustomRenderCmd {
@@ -142,7 +142,7 @@ export class RenderCmd {
 
   setDirtyFlag(dirtyFlag) {
     if (this._dirtyFlag === 0 && dirtyFlag !== 0)
-      RendererConfig.getInstance().renderer.pushDirtyNode(this);
+      ServiceLocator.rendererConfig.renderer.pushDirtyNode(this);
     this._dirtyFlag |= dirtyFlag;
   }
 
@@ -309,7 +309,7 @@ export class RenderCmd {
 
   visit(parentCmd) {
     const node = this._node,
-      renderer = RendererConfig.getInstance().renderer;
+      renderer = ServiceLocator.rendererConfig.renderer;
 
     parentCmd = parentCmd || this.getParentRenderCmd();
     if (parentCmd) this._curLevel = parentCmd._curLevel + 1;

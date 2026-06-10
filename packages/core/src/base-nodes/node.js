@@ -26,14 +26,11 @@
 
 import { NewClass } from "../platform/class";
 import { dirtyFlags } from "./node-canvas-render-cmd";
-import Game from "../boot/game";
-import EventManager from "../event-manager/event-manager";
 import { Point } from "../cocoa/geometry/point";
 import { Color } from "../platform/types/color";
 import { Rect } from "../cocoa/geometry/rect";
 import { Size } from "../cocoa/geometry/size";
 import { log, assert, _LogInfos } from "../boot/debugger";
-import { RendererConfig } from "../renderer/renderer-config";
 import {
   REPEAT_FOREVER,
   ACTION_TAG_INVALID
@@ -42,10 +39,10 @@ import { AffineTransform } from "../cocoa/affine-transform";
 
 import { arrayRemoveObject } from "../platform/macro/utils";
 import { ComponentContainer } from "../components/component-container";
-import { Director } from "../director/index";
 import Touch from "../event-manager/touch";
 import { CanvasRenderCmd as NodeCanvasRenderCmd } from "./node-canvas-render-cmd";
 import { WebGLRenderCmd as NodeWebGLRenderCmd } from "./node-webgl-render-cmd";
+import { ServiceLocator } from "../service-locator";
 
 /**
  * Default Node tag
@@ -519,7 +516,7 @@ export class Node extends NewClass {
     if (localZOrder === this._localZOrder) return;
     if (this._parent) this._parent.reorderChild(this, localZOrder);
     else this._localZOrder = localZOrder;
-    EventManager.getInstance()._setDirtyForNode(this);
+    ServiceLocator.eventManager._setDirtyForNode(this);
   }
 
   //Helper function used by `setLocalZOrder`. Don't use it unless you know what you are doing.
@@ -555,7 +552,7 @@ export class Node extends NewClass {
   setGlobalZOrder(globalZOrder) {
     if (this._globalZOrder !== globalZOrder) {
       this._globalZOrder = globalZOrder;
-      EventManager.getInstance()._setDirtyForNode(this);
+      ServiceLocator.eventManager._setDirtyForNode(this);
     }
   }
 
@@ -893,7 +890,7 @@ export class Node extends NewClass {
       this._visible = visible;
       //if(visible)
       this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
-      RendererConfig.getInstance().renderer.childrenOrderDirty = true;
+      ServiceLocator.rendererConfig.renderer.childrenOrderDirty = true;
     }
   }
 
@@ -1220,7 +1217,7 @@ export class Node extends NewClass {
    * @return {ActionManager} A ActionManager object.
    */
   getActionManager() {
-    return this._actionManager || Director.getInstance().getActionManager();
+    return this._actionManager || ServiceLocator.director.getActionManager();
   }
 
   /**
@@ -1244,7 +1241,7 @@ export class Node extends NewClass {
    * @return {Scheduler} A Scheduler object.
    */
   getScheduler() {
-    return this._scheduler || Director.getInstance().getScheduler();
+    return this._scheduler || ServiceLocator.director.getScheduler();
   }
 
   /**
@@ -1292,7 +1289,7 @@ export class Node extends NewClass {
     this.unscheduleAllCallbacks();
 
     // event
-    EventManager.getInstance().removeListeners(this);
+    ServiceLocator.eventManager.removeListeners(this);
   }
 
   // composition: GET
@@ -1424,7 +1421,7 @@ export class Node extends NewClass {
     if (this._children.indexOf(child) > -1) this._detachChild(child, cleanup);
 
     //this._renderCmd.setDirtyFlag(dirtyFlags.visibleDirty);
-    RendererConfig.getInstance().renderer.childrenOrderDirty = true;
+    ServiceLocator.rendererConfig.renderer.childrenOrderDirty = true;
   }
 
   /**
@@ -1481,7 +1478,7 @@ export class Node extends NewClass {
         }
       }
       this._children.length = 0;
-      RendererConfig.getInstance().renderer.childrenOrderDirty = true;
+      ServiceLocator.rendererConfig.renderer.childrenOrderDirty = true;
     }
   }
 
@@ -1504,7 +1501,7 @@ export class Node extends NewClass {
   }
 
   _insertChild(child, z) {
-    RendererConfig.getInstance().renderer.childrenOrderDirty =
+    ServiceLocator.rendererConfig.renderer.childrenOrderDirty =
       this._reorderChildDirty = true;
     this._children.push(child);
     child._setLocalZOrder(z);
@@ -1526,7 +1523,7 @@ export class Node extends NewClass {
       log(_LogInfos.Node_reorderChild_2);
       return;
     }
-    RendererConfig.getInstance().renderer.childrenOrderDirty =
+    ServiceLocator.rendererConfig.renderer.childrenOrderDirty =
       this._reorderChildDirty = true;
     child.arrivalOrder = s_globalOrderOfArrival;
     setGlobalOrderOfArrival(s_globalOrderOfArrival + 1);
@@ -1941,7 +1938,7 @@ export class Node extends NewClass {
   resume() {
     this.scheduler.resumeTarget(this);
     this.actionManager && this.actionManager.resumeTarget(this);
-    EventManager.getInstance().resumeTarget(this);
+    ServiceLocator.eventManager.resumeTarget(this);
   }
 
   /**
@@ -1952,7 +1949,7 @@ export class Node extends NewClass {
   pause() {
     this.scheduler.pauseTarget(this);
     this.actionManager && this.actionManager.pauseTarget(this);
-    EventManager.getInstance().pauseTarget(this);
+    ServiceLocator.eventManager.pauseTarget(this);
   }
 
   /**
@@ -2099,7 +2096,7 @@ export class Node extends NewClass {
 
   _convertToWindowSpace(nodePoint) {
     var worldPoint = this.convertToWorldSpace(nodePoint);
-    return Director.getInstance().convertToUI(worldPoint);
+    return ServiceLocator.director.convertToUI(worldPoint);
   }
 
   /** convenience methods which take a Touch instead of Point
@@ -2119,7 +2116,7 @@ export class Node extends NewClass {
    * @return {Point}
    */
   convertTouchToNodeSpaceAR(touch) {
-    var point = Director.getInstance().convertToGL(touch.getLocation());
+    var point = ServiceLocator.director.convertToGL(touch.getLocation());
     return this.convertToNodeSpaceAR(point);
   }
 
@@ -2209,7 +2206,7 @@ export class Node extends NewClass {
       return;
     }
 
-    var renderer = RendererConfig.getInstance().renderer;
+    var renderer = ServiceLocator.rendererConfig.renderer;
     cmd.visit(parentCmd);
 
     var i,
@@ -2515,7 +2512,7 @@ export class Node extends NewClass {
   }
 
   _createRenderCmd() {
-    if (RendererConfig.getInstance().isCanvas)
+    if (ServiceLocator.rendererConfig.isCanvas)
       return new NodeCanvasRenderCmd(this);
     else return new NodeWebGLRenderCmd(this);
   }

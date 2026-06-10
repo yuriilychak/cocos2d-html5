@@ -1,4 +1,3 @@
-import { RendererConfig } from "../renderer/renderer-config";
 import { NewClass } from "../platform/class";
 import { Node } from "../base-nodes/node";
 import Matrix4 from "../kazmath/mat4";
@@ -17,17 +16,12 @@ import {
   PROJECTION_3D,
   PROJECTION_CUSTOM
 } from "./constants";
-import EventManager from "../event-manager/event-manager";
 import { log, _LogInfos } from "../boot/debugger";
 import {
   BLEND_DST,
   BLEND_SRC
 } from "../platform/macro/constants";
-import Game from "../boot/game";
-import { EGLView } from "../platform/egl-view/egl-view";
-import { GLStateCache } from "../shaders/CCGLStateCache";
-import { Configuration } from "../configuration";
-import { Loader } from "../boot";
+import { ServiceLocator } from "../service-locator";
 
 /**
  * OpenGL projection protocol
@@ -54,11 +48,11 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
     director._fpsImage.addEventListener("load", () => {
       director._fpsImageLoaded = true;
     });
-    if (Loader.getInstance()._fpsImage) {
-      director._fpsImage.src = Loader.getInstance()._fpsImage;
+    if (ServiceLocator.loader._fpsImage) {
+      director._fpsImage.src = ServiceLocator.loader._fpsImage;
     }
 
-    EventManager.getInstance().addCustomListener(
+    ServiceLocator.eventManager.addCustomListener(
       EVENT_PROJECTION_CHANGED,
       () => {
         var stack = this._director._scenesStack;
@@ -127,32 +121,32 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
         break;
     }
     director._projection = projection;
-    EventManager.getInstance().dispatchEvent(director._eventProjectionChanged);
-    GLStateCache.getInstance().setProjectionMatrixDirty();
-    RendererConfig.getInstance().renderer.childrenOrderDirty = true;
+    ServiceLocator.eventManager.dispatchEvent(director._eventProjectionChanged);
+    ServiceLocator.glStateCache.setProjectionMatrixDirty();
+    ServiceLocator.rendererConfig.renderer.childrenOrderDirty = true;
   }
 
   setDepthTest(on) {
-    RendererConfig.getInstance().renderer.setDepthTest(on);
+    ServiceLocator.rendererConfig.renderer.setDepthTest(on);
   }
 
   setClearColor(clearColor) {
-    RendererConfig.getInstance().renderer._clearColor = clearColor;
+    ServiceLocator.rendererConfig.renderer._clearColor = clearColor;
   }
 
   setOpenGLView(openGLView) {
     var director = this._director;
-    director._winSizeInPoints.width = Game.getInstance().canvas.width;
-    director._winSizeInPoints.height = Game.getInstance().canvas.height;
-    director._openGLView = openGLView || EGLView.getInstance();
+    director._winSizeInPoints.width = ServiceLocator.game.canvas.width;
+    director._winSizeInPoints.height = ServiceLocator.game.canvas.height;
+    director._openGLView = openGLView || ServiceLocator.eglView;
 
-    var conf = Configuration.getInstance();
+    var conf = ServiceLocator.configuration;
     conf.gatherGPUInfo();
     conf.dumpInfo();
 
     this.setGLDefaultValues();
 
-    if (EventManager.getInstance()) EventManager.getInstance().setEnabled(true);
+    if (ServiceLocator.eventManager) ServiceLocator.eventManager.setEnabled(true);
   }
 
   getVisibleSize() {
@@ -181,17 +175,17 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
   }
 
   setAlphaBlending(on) {
-    if (on) GLStateCache.getInstance().blendFunc(BLEND_SRC, BLEND_DST);
+    if (on) ServiceLocator.glStateCache.blendFunc(BLEND_SRC, BLEND_DST);
     else
-      GLStateCache.getInstance().blendFunc(
-        RendererConfig.getInstance().renderContext.ONE,
-        RendererConfig.getInstance().renderContext.ZERO
+      ServiceLocator.glStateCache.blendFunc(
+        ServiceLocator.rendererConfig.renderContext.ONE,
+        ServiceLocator.rendererConfig.renderContext.ZERO
       );
   }
 
   setGLDefaultValues() {
     this.setAlphaBlending(true);
     this.setProjection(this._director._projection);
-    RendererConfig.getInstance().renderContext.clearColor(0.0, 0.0, 0.0, 0.0);
+    ServiceLocator.rendererConfig.renderContext.clearColor(0.0, 0.0, 0.0, 0.0);
   }
 }

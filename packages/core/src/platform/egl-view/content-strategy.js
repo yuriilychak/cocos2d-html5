@@ -26,9 +26,7 @@
 
 import { NewClass } from "../class";
 import { Rect } from "../../cocoa/geometry/rect";
-import Game from "../../boot/game";
-import { RendererConfig } from "../../renderer/renderer-config";
-import { Director } from "../../director/director";
+import { ServiceLocator } from "../../service-locator";
 
 /**
  * <p>ContentStrategy class is the root strategy class of content's scale strategy,
@@ -57,7 +55,7 @@ export class ContentStrategy extends NewClass {
     );
 
     // Translate the content
-    if (RendererConfig.getInstance().isCanvas) {
+    if (ServiceLocator.rendererConfig.isCanvas) {
       //TODO: modify something for setTransform
       //_renderContext.translate(viewport.x, viewport.y + contentH);
     }
@@ -96,8 +94,8 @@ export class ContentStrategy extends NewClass {
 
 class ExactFit extends ContentStrategy {
   apply(view, designedResolution) {
-    var containerW = Game.getInstance().canvas.width,
-      containerH = Game.getInstance().canvas.height,
+    var containerW = ServiceLocator.game.canvas.width,
+      containerH = ServiceLocator.game.canvas.height,
       scaleX = containerW / designedResolution.width,
       scaleY = containerH / designedResolution.height;
 
@@ -114,8 +112,8 @@ class ExactFit extends ContentStrategy {
 
 class ShowAll extends ContentStrategy {
   apply(view, designedResolution) {
-    var containerW = Game.getInstance().canvas.width,
-      containerH = Game.getInstance().canvas.height,
+    var containerW = ServiceLocator.game.canvas.width,
+      containerH = ServiceLocator.game.canvas.height,
       designW = designedResolution.width,
       designH = designedResolution.height,
       scaleX = containerW / designW,
@@ -145,8 +143,8 @@ class ShowAll extends ContentStrategy {
 
 class NoBorder extends ContentStrategy {
   apply(view, designedResolution) {
-    var containerW = Game.getInstance().canvas.width,
-      containerH = Game.getInstance().canvas.height,
+    var containerW = ServiceLocator.game.canvas.width,
+      containerH = ServiceLocator.game.canvas.height,
       designW = designedResolution.width,
       designH = designedResolution.height,
       scaleX = containerW / designW,
@@ -176,8 +174,8 @@ class NoBorder extends ContentStrategy {
 
 class FixedHeight extends ContentStrategy {
   apply(view, designedResolution) {
-    var containerW = Game.getInstance().canvas.width,
-      containerH = Game.getInstance().canvas.height,
+    var containerW = ServiceLocator.game.canvas.width,
+      containerH = ServiceLocator.game.canvas.height,
       designH = designedResolution.height,
       scale = containerH / designH,
       contentW = containerW,
@@ -194,14 +192,14 @@ class FixedHeight extends ContentStrategy {
   }
 
   postApply(view) {
-    Director.getInstance()._winSizeInPoints = view.getVisibleSize();
+    ServiceLocator.director._winSizeInPoints = view.getVisibleSize();
   }
 }
 
 class FixedWidth extends ContentStrategy {
   apply(view, designedResolution) {
-    var containerW = Game.getInstance().canvas.width,
-      containerH = Game.getInstance().canvas.height,
+    var containerW = ServiceLocator.game.canvas.width,
+      containerH = ServiceLocator.game.canvas.height,
       designW = designedResolution.width,
       scale = containerW / designW,
       contentW = containerW,
@@ -218,7 +216,7 @@ class FixedWidth extends ContentStrategy {
   }
 
   postApply(view) {
-    Director.getInstance()._winSizeInPoints = view.getVisibleSize();
+    ServiceLocator.director._winSizeInPoints = view.getVisibleSize();
   }
 }
 

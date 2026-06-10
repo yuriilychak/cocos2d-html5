@@ -1,5 +1,5 @@
 import Game from "../boot/game";
-import Sys from "../boot/sys";
+import { ServiceLocator } from "../service-locator";
 
 export class RendererConfig {
   static _instance = null;
@@ -112,22 +112,22 @@ export class RendererConfig {
     this._supportRender = false;
 
     if (userRenderMode === 0) {
-      if (Sys.getInstance().capabilities["opengl"]) {
+      if (ServiceLocator.sys.capabilities["opengl"]) {
         this._renderType = Game.RENDER_TYPE_WEBGL;
         this._supportRender = true;
-      } else if (Sys.getInstance().capabilities["canvas"]) {
+      } else if (ServiceLocator.sys.capabilities["canvas"]) {
         this._renderType = Game.RENDER_TYPE_CANVAS;
         this._supportRender = true;
       }
     } else if (
       userRenderMode === 1 &&
-      Sys.getInstance().capabilities["canvas"]
+      ServiceLocator.sys.capabilities["canvas"]
     ) {
       this._renderType = Game.RENDER_TYPE_CANVAS;
       this._supportRender = true;
     } else if (
       userRenderMode === 2 &&
-      Sys.getInstance().capabilities["opengl"]
+      ServiceLocator.sys.capabilities["opengl"]
     ) {
       this._renderType = Game.RENDER_TYPE_WEBGL;
       this._supportRender = true;

@@ -1,3 +1,4 @@
+import { ServiceLocator } from "../service-locator";
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
@@ -24,7 +25,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import Game from '../boot/game';
 
 /**
  * The fullscreen API provides an easy way for web content to be presented using the user's entire screen.
@@ -148,7 +148,7 @@ export const screen = {
      */
     autoFullScreen: function (element, onFullScreenChange) {
         element = element || document.body;
-        var touchTarget = Game.getInstance().canvas || element;
+        var touchTarget = ServiceLocator.game.canvas || element;
         var theScreen = this;
         // Function bind will be too complicated here because we need the callback function's reference to remove the listener
         function callback() {

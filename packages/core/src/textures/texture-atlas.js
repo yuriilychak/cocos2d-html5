@@ -25,16 +25,14 @@
  ****************************************************************************/
 
 import { NewClass } from "../platform/class";
-import Game from "../boot/game";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import { isString } from "../boot/utils";
 import { TEXTURE_ATLAS_USE_TRIANGLE_STRIP } from "../platform/config";
 import { V3F_C4B_T2F_Quad } from "../platform/types";
 import { Texture2D } from "./texture-2d";
-import TextureCache from "./texture-cache";
 import TextureAtlasCanvasRenderer from "./texture-atlas-canvas-renderer";
 import TextureAtlasWebGLRenderer from "./texture-atlas-webgl-renderer";
-import { RendererConfig } from "../renderer/renderer-config";
+import { ServiceLocator } from "../service-locator";
 
 /**
  * <p>A class that implements a Texture Atlas. <br />
@@ -83,7 +81,7 @@ export class TextureAtlas extends NewClass {
     this._quadsReader = null;
 
     // Initialize renderer based on render type
-    this._renderer = RendererConfig.getInstance().isCanvas
+    this._renderer = ServiceLocator.rendererConfig.isCanvas
       ? new TextureAtlasCanvasRenderer(this)
       : new TextureAtlasWebGLRenderer(this);
 
@@ -239,7 +237,7 @@ export class TextureAtlas extends NewClass {
    */
   initWithFile(file, capacity) {
     // retained in property
-    var texture = TextureCache.getInstance().addImage(file);
+    var texture = ServiceLocator.textureCache.addImage(file);
     if (texture) return this.initWithTexture(texture, capacity);
     else {
       log(_LogInfos.TextureAtlas_initWithFile, file);

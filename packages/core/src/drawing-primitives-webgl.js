@@ -33,8 +33,7 @@ import {
 } from "./platform/macro/constants";
 import { incrementGLDraws, contentScaleFactor } from "./platform/macro/utils";
 import { GLProgramState } from "./shaders/CCGLProgramState";
-import ShaderCache from "./shaders/CCShaderCache";
-import { RendererConfig } from "./renderer/renderer-config";
+import { ServiceLocator } from "./service-locator";
 
 /**
  * Canvas of DrawingPrimitive implement version use for WebGlMode
@@ -51,7 +50,7 @@ export class DrawingPrimitiveWebGL extends NewClass {
     this._pointSizeLocation = "u_pointSize";
     this._pointSize = -1;
 
-    if (ctx == null) ctx = RendererConfig.getInstance().renderContext;
+    if (ctx == null) ctx = ServiceLocator.rendererConfig.renderContext;
 
     if ((!ctx) instanceof WebGLRenderingContext)
       throw new Error(
@@ -65,7 +64,7 @@ export class DrawingPrimitiveWebGL extends NewClass {
   lazy_init() {
     var _t = this;
     if (!_t._initialized) {
-      _t._shader = ShaderCache.getInstance().programForKey(
+      _t._shader = ServiceLocator.shaderCache.programForKey(
         SHADER_POSITION_UCOLOR
       );
       _t._shader._addUniformLocation(this._colorLocation);

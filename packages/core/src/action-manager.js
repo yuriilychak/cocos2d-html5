@@ -27,7 +27,7 @@
 import { NewClass } from './platform/class';
 import { log, assert, _LogInfos } from './boot/debugger';
 import { ACTION_TAG_INVALID } from "./platform/macro/constants";
-import { Director } from "./director/director";
+import { ServiceLocator } from "./service-locator";
 
 /**
  * @example
@@ -230,7 +230,7 @@ export class ActionManager extends NewClass {
     }
 
     purgeSharedManager() {
-        Director.getInstance().getScheduler().unscheduleUpdate(this);
+        ServiceLocator.director.getScheduler().unscheduleUpdate(this);
     }
 
     _removeActionAtIndex(index, element) {

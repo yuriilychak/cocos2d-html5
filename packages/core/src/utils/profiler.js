@@ -2,10 +2,8 @@ import {
   DIRECTOR_STATS_POSITION,
   DIRECTOR_FPS_INTERVAL
 } from "../platform/config";
-import Game from "../boot/game";
 import { Director } from "../director/director";
-import EventManager from "../event-manager/event-manager";
-import { RendererConfig } from "../renderer/renderer-config";
+import { ServiceLocator } from "../service-locator";
 
 export class Profiler {
   static _instance = null;
@@ -98,9 +96,9 @@ export class Profiler {
   };
 
   _afterVisit = () => {
-    this._lastSPF = Director.getInstance().getSecondsPerFrame();
+    this._lastSPF = ServiceLocator.director.getSecondsPerFrame();
     this._frames++;
-    this._accumDt += Director.getInstance().getDeltaTime();
+    this._accumDt += ServiceLocator.director.getDeltaTime();
 
     if (this._accumDt > DIRECTOR_FPS_INTERVAL) {
       this._frameRate = this._frames / this._accumDt;
@@ -112,7 +110,7 @@ export class Profiler {
       }
 
       if (this._showFPS) {
-        const rendererConfig = RendererConfig.getInstance();
+        const rendererConfig = ServiceLocator.rendererConfig;
         const mode = rendererConfig.isCanvas ? "\n canvas" : "\n webgl";
         this._SPFLabel.innerHTML = this._lastSPF.toFixed(3);
         this._FPSLabel.innerHTML = this._frameRate.toFixed(1).toString() + mode;
@@ -136,11 +134,11 @@ export class Profiler {
   }
 
   resumeProfiling() {
-    EventManager.getInstance().addListener(this._afterVisitListener, 1);
+    ServiceLocator.eventManager.addListener(this._afterVisitListener, 1);
   }
 
   stopProfiling() {
-    EventManager.getInstance().removeListener(this._afterVisitListener);
+    ServiceLocator.eventManager.removeListener(this._afterVisitListener);
   }
 
   isShowingStats() {
@@ -153,21 +151,21 @@ export class Profiler {
     }
 
     if (this._fps.parentElement === null) {
-      Game.getInstance().container.appendChild(this._fps);
+      ServiceLocator.game.container.appendChild(this._fps);
     }
     this._showFPS = true;
   }
 
   hideStats() {
     this._showFPS = false;
-    if (this._fps.parentElement === Game.getInstance().container) {
-      Game.getInstance().container.removeChild(this._fps);
+    if (this._fps.parentElement === ServiceLocator.game.container) {
+      ServiceLocator.game.container.removeChild(this._fps);
     }
   }
 
   init() {
     if (!this._inited) {
-      this._afterVisitListener = EventManager.getInstance().addCustomListener(
+      this._afterVisitListener = ServiceLocator.eventManager.addCustomListener(
         Director.EVENT_AFTER_VISIT,
         this._afterVisit
       );

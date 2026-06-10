@@ -25,14 +25,12 @@
 
 import { Point } from "../cocoa/geometry/point";
 import { Rect } from "../cocoa/geometry/rect";
-import EventManager from "../event-manager/event-manager";
-import Sys from "../boot/sys";
 import { log, _LogInfos } from "../boot/debugger";
 import Touch from "../event-manager/touch";
 import { EventTouch, EventMouse } from "../event-manager/event/index";
 import { EventAcceleration } from "../event-manager/event-extension/index";
 import { isFunction } from "../boot/utils";
-import { EGLView } from "./egl-view/index";
+import { ServiceLocator } from "../service-locator";
 
 /**
  * ignore
@@ -93,7 +91,7 @@ export const inputManager = {
 
   _getUnUsedIndex: function () {
     var temp = this._indexBitsUsed;
-    var now = Sys.getInstance().now();
+    var now = ServiceLocator.sys.now();
 
     for (var i = 0; i < this._maxTouches; i++) {
       if (!(temp & 0x00000001)) {
@@ -135,7 +133,7 @@ export const inputManager = {
       touchID,
       handleTouches = [],
       locTouchIntDict = this._touchesIntegerDict,
-      now = Sys.getInstance().now();
+      now = ServiceLocator.sys.now();
     for (var i = 0, len = touches.length; i < len; i++) {
       selTouch = touches[i];
       touchID = selTouch.getID();
@@ -163,7 +161,7 @@ export const inputManager = {
       this._glView._convertTouchesWithScale(handleTouches);
       var touchEvent = new EventTouch(handleTouches);
       touchEvent._eventCode = EventTouch.EventCode.BEGAN;
-      EventManager.getInstance().dispatchEvent(touchEvent);
+      ServiceLocator.eventManager.dispatchEvent(touchEvent);
     }
   },
 
@@ -177,7 +175,7 @@ export const inputManager = {
       touchID,
       handleTouches = [],
       locTouches = this._touches,
-      now = Sys.getInstance().now();
+      now = ServiceLocator.sys.now();
     for (var i = 0, len = touches.length; i < len; i++) {
       selTouch = touches[i];
       touchID = selTouch.getID();
@@ -198,7 +196,7 @@ export const inputManager = {
       this._glView._convertTouchesWithScale(handleTouches);
       var touchEvent = new EventTouch(handleTouches);
       touchEvent._eventCode = EventTouch.EventCode.MOVED;
-      EventManager.getInstance().dispatchEvent(touchEvent);
+      ServiceLocator.eventManager.dispatchEvent(touchEvent);
     }
   },
 
@@ -212,7 +210,7 @@ export const inputManager = {
       this._glView._convertTouchesWithScale(handleTouches);
       var touchEvent = new EventTouch(handleTouches);
       touchEvent._eventCode = EventTouch.EventCode.ENDED;
-      EventManager.getInstance().dispatchEvent(touchEvent);
+      ServiceLocator.eventManager.dispatchEvent(touchEvent);
     }
   },
 
@@ -226,7 +224,7 @@ export const inputManager = {
       this._glView._convertTouchesWithScale(handleTouches);
       var touchEvent = new EventTouch(handleTouches);
       touchEvent._eventCode = EventTouch.EventCode.CANCELLED;
-      EventManager.getInstance().dispatchEvent(touchEvent);
+      ServiceLocator.eventManager.dispatchEvent(touchEvent);
     }
   },
 
@@ -401,8 +399,8 @@ export const inputManager = {
       if (touch_event) {
         var location;
         if (
-          Sys.getInstance().BROWSER_TYPE_FIREFOX ===
-          Sys.getInstance().browserType
+          ServiceLocator.sys.BROWSER_TYPE_FIREFOX ===
+          ServiceLocator.sys.browserType
         )
           location = locView.convertToLocationInView(
             touch_event.pageX,
@@ -440,10 +438,10 @@ export const inputManager = {
   registerSystemEvent: function (element) {
     if (this._isRegisterEvent) return;
 
-    var locView = (this._glView = EGLView.getInstance());
+    var locView = (this._glView = ServiceLocator.eglView);
     var selfPointer = this;
-    var supportMouse = "mouse" in Sys.getInstance().capabilities,
-      supportTouches = "touches" in Sys.getInstance().capabilities;
+    var supportMouse = "mouse" in ServiceLocator.sys.capabilities,
+      supportTouches = "touches" in ServiceLocator.sys.capabilities;
 
     //HACK
     //  - At the same time to trigger the ontouch event and onmouse event
@@ -453,7 +451,7 @@ export const inputManager = {
     //  miui
     //  WECHAT
     var prohibition = false;
-    if (Sys.getInstance().isMobile) prohibition = true;
+    if (ServiceLocator.sys.isMobile) prohibition = true;
 
     //register touch event
     if (supportMouse) {
@@ -492,7 +490,7 @@ export const inputManager = {
               EventMouse.UP
             );
             mouseEvent.setButton(event.button);
-            EventManager.getInstance().dispatchEvent(mouseEvent);
+            ServiceLocator.eventManager.dispatchEvent(mouseEvent);
           }
         },
         false
@@ -518,7 +516,7 @@ export const inputManager = {
             EventMouse.DOWN
           );
           mouseEvent.setButton(event.button);
-          EventManager.getInstance().dispatchEvent(mouseEvent);
+          ServiceLocator.eventManager.dispatchEvent(mouseEvent);
 
           event.stopPropagation();
           event.preventDefault();
@@ -546,7 +544,7 @@ export const inputManager = {
             EventMouse.UP
           );
           mouseEvent.setButton(event.button);
-          EventManager.getInstance().dispatchEvent(mouseEvent);
+          ServiceLocator.eventManager.dispatchEvent(mouseEvent);
 
           event.stopPropagation();
           event.preventDefault();
@@ -573,7 +571,7 @@ export const inputManager = {
           );
           if (selfPointer._mousePressed) mouseEvent.setButton(event.button);
           else mouseEvent.setButton(null);
-          EventManager.getInstance().dispatchEvent(mouseEvent);
+          ServiceLocator.eventManager.dispatchEvent(mouseEvent);
 
           event.stopPropagation();
           event.preventDefault();
@@ -594,7 +592,7 @@ export const inputManager = {
           );
           mouseEvent.setButton(event.button);
           mouseEvent.setScrollData(0, event.wheelDelta);
-          EventManager.getInstance().dispatchEvent(mouseEvent);
+          ServiceLocator.eventManager.dispatchEvent(mouseEvent);
 
           event.stopPropagation();
           event.preventDefault();
@@ -616,7 +614,7 @@ export const inputManager = {
           );
           mouseEvent.setButton(event.button);
           mouseEvent.setScrollData(0, event.detail * -120);
-          EventManager.getInstance().dispatchEvent(mouseEvent);
+          ServiceLocator.eventManager.dispatchEvent(mouseEvent);
 
           event.stopPropagation();
           event.preventDefault();
@@ -749,7 +747,7 @@ export const inputManager = {
   update: function (dt) {
     if (this._accelCurTime > this._accelInterval) {
       this._accelCurTime -= this._accelInterval;
-      EventManager.getInstance().dispatchEvent(
+      ServiceLocator.eventManager.dispatchEvent(
         new EventAcceleration(this._acceleration)
       );
     }

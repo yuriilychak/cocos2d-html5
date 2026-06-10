@@ -22,7 +22,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { RendererConfig } from "../renderer/renderer-config";
 import { CanvasRenderCmd as NodeCanvasRenderCmd } from "../base-nodes/node-canvas-render-cmd";
 import { Node } from "../base-nodes/node";
 import { Rect } from "../cocoa/geometry/rect";
@@ -30,6 +29,7 @@ import { error, _LogInfos } from "../boot/debugger";
 import { Texture2D } from "../textures/texture-2d";
 import { Color } from "../platform/types/color";
 import { contentScaleFactor } from "../platform/macro/utils";
+import { ServiceLocator } from "../service-locator";
 
 export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
   constructor(renderable) {
@@ -160,7 +160,7 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
     )
       return;
 
-    const wrapper = ctx || RendererConfig.getInstance().renderContext,
+    const wrapper = ctx || ServiceLocator.rendererConfig.renderContext,
       context = wrapper.getContext();
     let locX = node._offsetPosition.x;
     const locHeight = node._rect.height,
@@ -234,7 +234,7 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
       }
     }
     if (node._flippedX || node._flippedY) wrapper.restore();
-    RendererConfig.getInstance().incrementDrawCount();
+    ServiceLocator.rendererConfig.incrementDrawCount();
   }
 
   _tracePolygonPath(context, x, y, w, h, polyInfo) {

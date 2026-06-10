@@ -24,15 +24,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import Loader from '../boot/loader';
 import Path from '../boot/path';
 import { log, assert, _LogInfos } from '../boot/debugger';
-import SpriteFrameCache from './sprite-frame-cache';
 import {
   REPEAT_FOREVER
 } from "../platform/macro/constants";
 import { AnimationFrame } from "./animation/animation-frame";
 import { Animation } from "./animation/animation";
+import { ServiceLocator } from "../service-locator";
 
 /**
  * <p>
@@ -106,7 +105,7 @@ export default class AnimationCache {
       version =
         properties["format"] != null ? parseInt(properties["format"]) : version;
       var spritesheets = properties["spritesheets"];
-      var spriteFrameCache = SpriteFrameCache.getInstance();
+      var spriteFrameCache = ServiceLocator.spriteFrameCache;
       for (var i = 0; i < spritesheets.length; i++) {
         spriteFrameCache.addSpriteFrames(
           Path.changeBasename(plist, spritesheets[i])
@@ -137,7 +136,7 @@ export default class AnimationCache {
   addAnimations(plist) {
     assert(plist, _LogInfos.animationCache_addAnimations_2);
 
-    var dict = Loader.getInstance().getRes(plist);
+    var dict = ServiceLocator.loader.getRes(plist);
 
     if (!dict) {
       log(_LogInfos.animationCache_addAnimations);
@@ -148,7 +147,7 @@ export default class AnimationCache {
   }
 
   _parseVersion1(animations) {
-    var frameCache = SpriteFrameCache.getInstance();
+    var frameCache = ServiceLocator.spriteFrameCache;
 
     for (var key in animations) {
       var animationDict = animations[key];
@@ -188,7 +187,7 @@ export default class AnimationCache {
   }
 
   _parseVersion2(animations) {
-    var frameCache = SpriteFrameCache.getInstance();
+    var frameCache = ServiceLocator.spriteFrameCache;
 
     for (var key in animations) {
       var animationDict = animations[key];

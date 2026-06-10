@@ -1,11 +1,10 @@
-import { RendererConfig } from "../renderer/renderer-config";
 import { TEXTURE_ATLAS_USE_TRIANGLE_STRIP } from "../platform/config";
-import { GLStateCache } from "../shaders/CCGLStateCache";
 import {
   VERTEX_ATTRIB_COLOR,
   VERTEX_ATTRIB_POSITION,
   VERTEX_ATTRIB_TEX_COORDS
 } from "../platform/macro/constants";
+import { ServiceLocator } from "../service-locator";
 
 export default class TextureAtlasWebGLRenderer {
   constructor(textureAtlas) {
@@ -14,7 +13,7 @@ export default class TextureAtlasWebGLRenderer {
 
   setupVBO() {
     var textureAtlas = this._textureAtlas;
-    var gl = RendererConfig.getInstance().renderContext;
+    var gl = ServiceLocator.rendererConfig.renderContext;
     //create WebGLBuffer
     textureAtlas._buffersVBO[0] = gl.createBuffer();
     textureAtlas._buffersVBO[1] = gl.createBuffer();
@@ -25,7 +24,7 @@ export default class TextureAtlasWebGLRenderer {
 
   mapBuffers() {
     var textureAtlas = this._textureAtlas;
-    var gl = RendererConfig.getInstance().renderContext;
+    var gl = ServiceLocator.rendererConfig.renderContext;
 
     gl.bindBuffer(gl.ARRAY_BUFFER, textureAtlas._quadsWebBuffer);
     gl.bufferData(
@@ -56,8 +55,8 @@ export default class TextureAtlasWebGLRenderer {
     if (0 === n || !textureAtlas.texture || !textureAtlas.texture.isLoaded())
       return;
 
-    var gl = RendererConfig.getInstance().renderContext;
-    GLStateCache.getInstance().bindTexture2D(textureAtlas.texture);
+    var gl = ServiceLocator.rendererConfig.renderContext;
+    ServiceLocator.glStateCache.bindTexture2D(textureAtlas.texture);
 
     //
     // Using VBO without VAO
@@ -115,13 +114,13 @@ export default class TextureAtlasWebGLRenderer {
         start * 6 * textureAtlas._indices.BYTES_PER_ELEMENT
       );
 
-    RendererConfig.getInstance().incrementDrawCount();
+    ServiceLocator.rendererConfig.incrementDrawCount();
     //checkGLErrorDebug();
   }
 
   releaseBuffer() {
     var textureAtlas = this._textureAtlas;
-    var gl = RendererConfig.getInstance().renderContext;
+    var gl = ServiceLocator.rendererConfig.renderContext;
     if (textureAtlas._buffersVBO) {
       if (textureAtlas._buffersVBO[0])
         gl.deleteBuffer(textureAtlas._buffersVBO[0]);

@@ -1,9 +1,8 @@
 import Game from "./game";
-import Loader from "./loader";
 import Path from "./path";
 import { initDebugSetting } from "./debugger";
 import { ENGINE_VERSION } from "../platform/config";
-import { RendererConfig } from "../renderer/renderer-config";
+import { ServiceLocator } from "../service-locator";
 
 export class Engine {
   static #instance = null;
@@ -53,11 +52,11 @@ export class Engine {
 
   #boundWindowLoaded = () => {
     window.removeEventListener("load", this.#boundWindowLoaded, false);
-    this.#load(Game.getInstance().config);
+    this.#load(ServiceLocator.game.config);
   };
 
   init(config, cb) {
-    var game = Game.getInstance();
+    var game = ServiceLocator.game;
 
     if (this.#engineInitCalled) {
       var previousCallback = this.#engineLoadedCallback;
@@ -77,7 +76,7 @@ export class Engine {
     }
     config = game.config;
 
-    RendererConfig.getInstance().determineRenderType(config);
+    ServiceLocator.rendererConfig.determineRenderType(config);
 
     document.body
       ? this.#load(config)

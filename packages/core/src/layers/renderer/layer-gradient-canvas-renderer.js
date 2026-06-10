@@ -22,11 +22,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { RendererConfig } from "../../renderer/renderer-config";
 import LayerColorCanvasRenderer from "./layer-color-canvas-renderer";
 import { Node } from "../../base-nodes/node";
 import { Point } from "../../cocoa/geometry/point";
 import { Color } from "../../platform/types/color";
+import { ServiceLocator } from "../../service-locator";
 
 /**
  * LayerGradient's Canvas render command
@@ -42,7 +42,7 @@ export default class LayerGradientCanvasRenderer extends LayerColorCanvasRendere
   }
 
   rendering(ctx, scaleX, scaleY) {
-    const wrapper = ctx || RendererConfig.getInstance().renderContext,
+    const wrapper = ctx || ServiceLocator.rendererConfig.renderContext,
       context = wrapper.getContext(),
       node = this._node,
       opacity = this._displayedOpacity / 255;
@@ -74,7 +74,7 @@ export default class LayerGradientCanvasRenderer extends LayerColorCanvasRendere
 
     wrapper.setTransform(this._worldTransform, scaleX, scaleY);
     context.fillRect(0, 0, locWidth, -locHeight);
-    RendererConfig.getInstance().incrementDrawCount();
+    ServiceLocator.rendererConfig.incrementDrawCount();
   }
 
   updateStatus() {

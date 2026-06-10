@@ -24,11 +24,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { RendererConfig } from "./renderer/renderer-config";
 import { NewClass } from "./platform/class";
 import { Point } from "./cocoa/geometry/point";
 import { cardinalSplineAt, getControlPointAt } from "./cocoa/geometry/spline-utils";
 import { Color } from "./platform/types/color";
+import { ServiceLocator } from "./service-locator";
 
 export const PI2 = Math.PI * 2;
 
@@ -205,7 +205,7 @@ export class DrawingPrimitiveCanvas extends NewClass {
   }
 
   drawCardinalSpline(config, tension, segments) {
-    RendererConfig.getInstance().renderContext.setStrokeStyle(
+    ServiceLocator.rendererConfig.renderContext.setStrokeStyle(
       Color.toRgba()
     );
     var points = this._cacheArray;

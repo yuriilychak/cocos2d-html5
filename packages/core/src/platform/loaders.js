@@ -23,38 +23,37 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import Loader from '../boot/loader';
 import Path from '../boot/path';
-import TextureCache from '../textures/texture-cache';
 import { isString } from '../boot/utils';
 import { plistParser } from './sax-parser';
+import { ServiceLocator } from "../service-locator";
 
 export const _txtLoader = {
     load: function (realUrl, url, res, cb) {
-        Loader.getInstance().loadTxt(realUrl, cb);
+        ServiceLocator.loader.loadTxt(realUrl, cb);
     }
 };
 
 export const _jsonLoader = {
     load: function (realUrl, url, res, cb) {
-        Loader.getInstance().loadJson(realUrl, cb);
+        ServiceLocator.loader.loadJson(realUrl, cb);
     }
 };
 
 export const _jsLoader = {
     load: function (realUrl, url, res, cb) {
-        Loader.getInstance().loadJs(realUrl, cb);
+        ServiceLocator.loader.loadJs(realUrl, cb);
     }
 };
 
 export const _imgLoader = {
     load: function (realUrl, url, res, cb) {
         var callback;
-        if (Loader.getInstance().isLoading(realUrl)) {
+        if (ServiceLocator.loader.isLoading(realUrl)) {
             callback = function (err, img) {
                 if (err)
                     return cb(err);
-                var tex = TextureCache.getInstance().getTextureForKey(url) || TextureCache.getInstance().handleLoadedTexture(url, img);
+                var tex = ServiceLocator.textureCache.getTextureForKey(url) || ServiceLocator.textureCache.handleLoadedTexture(url, img);
                 cb(null, tex);
             };
         }
@@ -62,11 +61,11 @@ export const _imgLoader = {
             callback = function (err, img) {
                 if (err)
                     return cb(err);
-                var tex = TextureCache.getInstance().handleLoadedTexture(url, img);
+                var tex = ServiceLocator.textureCache.handleLoadedTexture(url, img);
                 cb(null, tex);
             };
         }
-        Loader.getInstance().loadImg(realUrl, callback);
+        ServiceLocator.loader.loadImg(realUrl, callback);
     }
 };
 
@@ -78,7 +77,7 @@ export const _serverImgLoader = {
 
 export const _plistLoader = {
     load: function (realUrl, url, res, cb) {
-        Loader.getInstance().loadTxt(realUrl, function (err, txt) {
+        ServiceLocator.loader.loadTxt(realUrl, function (err, txt) {
             if (err)
                 return cb(err);
             cb(null, plistParser.parse(txt));
@@ -151,12 +150,12 @@ export const _fontLoader = {
 
 export const _binaryLoader = {
     load: function (realUrl, url, res, cb) {
-        Loader.getInstance().loadBinary(realUrl, cb);
+        ServiceLocator.loader.loadBinary(realUrl, cb);
     }
 };
 
 export const _csbLoader = {
     load: function(realUrl, url, res, cb){
-        Loader.getInstance().loadCsb(realUrl, cb);
+        ServiceLocator.loader.loadCsb(realUrl, cb);
     }
 };

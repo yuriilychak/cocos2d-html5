@@ -27,12 +27,9 @@
 import { NewClass } from "../platform/class";
 import EventHelper from "../event-manager/event-helper";
 import { Size } from "../cocoa/geometry/size";
-import Game from "../boot/game";
-import Loader from "../boot/loader";
 import CanvasTextureRenderer from "./texture-2d-canvas-renderer";
 import WebGLTextureRenderer from "./texture-2d-webgl-renderer";
 import { log, _LogInfos } from "../boot/debugger";
-import { RendererConfig } from "../renderer/renderer-config";
 import { contentScaleFactor } from "../platform/macro/utils";
 
 export {
@@ -77,6 +74,7 @@ import {
   PIXEL_FORMAT_NAMES,
   PIXEL_FORMAT_BITS
 } from "./constants";
+import { ServiceLocator } from "../service-locator";
 
 // By default PVR images are treated as if they don't have the alpha channel premultiplied
 export let PVRHaveAlphaPremultiplied_ = false;
@@ -111,7 +109,7 @@ export class Texture2D extends EventHelper(NewClass) {
     this._pixelsWide = 0;
     this._pixelsHigh = 0;
 
-    this._renderer = RendererConfig.getInstance().isCanvas
+    this._renderer = ServiceLocator.rendererConfig.isCanvas
       ? new CanvasTextureRenderer(this)
       : new WebGLTextureRenderer(this);
   }
@@ -191,7 +189,7 @@ export class Texture2D extends EventHelper(NewClass) {
 
   releaseTexture() {
     this._renderer.releaseTexture();
-    Loader.getInstance().release(this.url);
+    ServiceLocator.loader.release(this.url);
   }
 
   getName() {

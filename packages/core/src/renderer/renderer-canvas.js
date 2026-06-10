@@ -22,15 +22,13 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { RendererConfig } from "./renderer-config";
 import { DirtyRegion } from "./dirty-region";
 import { Color } from "../platform/types/color";
 import { log } from "../boot/debugger";
-import Game from "../boot/game";
-import { EGLView } from "../platform/egl-view/egl-view";
 import { arrayRemoveObject } from "../platform/macro/utils";
 import { isUndefined } from "../boot/utils";
 import { CanvasRenderCmd as NodeCanvasRenderCmd } from "../base-nodes/node-canvas-render-cmd";
+import { ServiceLocator } from "../service-locator";
 
 var rendererCanvas = {
   childrenOrderDirty: true,
@@ -158,12 +156,12 @@ var rendererCanvas = {
   rendering: function (ctxWrapper) {
     var dirtyRegion = (this._dirtyRegion =
       this._dirtyRegion || new DirtyRegion());
-    var viewport = Game.getInstance().canvas;
-    var wrapper = ctxWrapper || RendererConfig.getInstance().renderContext;
+    var viewport = ServiceLocator.game.canvas;
+    var wrapper = ctxWrapper || ServiceLocator.rendererConfig.renderContext;
     var ctx = wrapper.getContext();
 
-    var scaleX = EGLView.getInstance().getScaleX(),
-      scaleY = EGLView.getInstance().getScaleY();
+    var scaleX = ServiceLocator.eglView.getScaleX(),
+      scaleY = ServiceLocator.eglView.getScaleY();
     wrapper.setViewScale(scaleX, scaleY);
     wrapper.computeRealOffsetY();
     var dirtyList = this._dirtyRegion.getDirtyRegions();

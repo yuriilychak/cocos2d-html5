@@ -26,12 +26,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { RendererConfig } from "../renderer/renderer-config";
 import { NewClass } from "../platform/class";
 import { log } from "../boot/debugger";
-import { Director } from "../director/director";
-import Game from "../boot/game";
-import Loader from "../boot/loader";
 import {
   UNIFORM_PMATRIX_S,
   UNIFORM_MVPMATRIX_S,
@@ -47,10 +43,9 @@ import {
   KM_GL_PROJECTION,
   kmGLGetMatrix
 } from "../kazmath/gl/matrix";
-import { KMGLMatrix } from "../kazmath/gl/km-gl-matrix";
 import Matrix4, { kmMat4Multiply, getMat4MultiplyValue } from "../kazmath/mat4";
 import { checkGLErrorDebug } from "../platform/macro/utils";
-import { GLStateCache } from "./CCGLStateCache";
+import { ServiceLocator } from "../service-locator";
 
 /**
  * Class that implements a WebGL program
@@ -174,7 +169,7 @@ export default class GLProgram extends NewClass {
     super();
     this._uniforms = {};
     this._hashForUniforms = {};
-    this._glContext = glContext || RendererConfig.getInstance().renderContext;
+    this._glContext = glContext || ServiceLocator.rendererConfig.renderContext;
 
     vShaderFileName &&
       fShaderFileName &&
@@ -265,10 +260,10 @@ export default class GLProgram extends NewClass {
    * @return {Boolean}
    */
   initWithVertexShaderFilename(vShaderFilename, fShaderFileName) {
-    let vertexSource = Loader.getInstance().getRes(vShaderFilename);
+    let vertexSource = ServiceLocator.loader.getRes(vShaderFilename);
     if (!vertexSource)
       throw new Error("Please load the resource firset : " + vShaderFilename);
-    let fragmentSource = Loader.getInstance().getRes(fShaderFileName);
+    let fragmentSource = ServiceLocator.loader.getRes(fShaderFileName);
     if (!fragmentSource)
       throw new Error("Please load the resource firset : " + fShaderFileName);
     return this.initWithVertexShaderByteArray(vertexSource, fragmentSource);
@@ -311,7 +306,7 @@ export default class GLProgram extends NewClass {
     this._vertShader = null;
     this._fragShader = null;
 
-    if (Game.getInstance().config[Game.getInstance().CONFIG_KEY.debugMode]) {
+    if (ServiceLocator.game.config[ServiceLocator.game.CONFIG_KEY.debugMode]) {
       let status = this._glContext.getProgramParameter(
         this._programObj,
         this._glContext.LINK_STATUS
@@ -321,7 +316,7 @@ export default class GLProgram extends NewClass {
           "cocos2d: ERROR: Failed to link program: " +
             this._glContext.getProgramInfoLog(this._programObj)
         );
-        GLStateCache.getInstance().deleteProgram(this._programObj);
+        ServiceLocator.glStateCache.deleteProgram(this._programObj);
         this._programObj = null;
         return false;
       }
@@ -334,7 +329,7 @@ export default class GLProgram extends NewClass {
    * it will call glUseProgram()
    */
   use() {
-    GLStateCache.getInstance().useProgram(this._programObj);
+    ServiceLocator.glStateCache.useProgram(this._programObj);
   }
 
   /**
@@ -817,8 +812,8 @@ export default class GLProgram extends NewClass {
       // Cocos2D doesn't store a high precision time value, so this will have to do.
       // Getting Mach time per frame per shader using time could be extremely expensive.
       let time =
-        Director.getInstance().getTotalFrames() *
-        Director.getInstance().getAnimationInterval();
+        ServiceLocator.director.getTotalFrames() *
+        ServiceLocator.director.getAnimationInterval();
 
       this.setUniformLocationWith4f(
         this._uniforms[UNIFORM_TIME_S],
@@ -882,7 +877,7 @@ export default class GLProgram extends NewClass {
     );
 
     if (this._usesTime) {
-      let director = Director.getInstance();
+      let director = ServiceLocator.director;
       // This doesn't give the most accurate global time value.
       // Cocos2D doesn't store a high precision time value, so this will have to do.
       // Getting Mach time per frame per shader using time could be extremely expensive.
@@ -928,8 +923,8 @@ export default class GLProgram extends NewClass {
     this.setUniformLocationWithMatrix4fv(
       this._uniforms[UNIFORM_MVPMATRIX_S],
       getMat4MultiplyValue(
-        KMGLMatrix.getInstance().projectionStack.top,
-        KMGLMatrix.getInstance().modelViewStack.top
+        ServiceLocator.kmglMatrix.projectionStack.top,
+        ServiceLocator.kmglMatrix.modelViewStack.top
       )
     );
   }
@@ -937,8 +932,8 @@ export default class GLProgram extends NewClass {
   setUniformForModelViewProjectionMatrixWithMat4(swapMat4) {
     kmMat4Multiply(
       swapMat4,
-      KMGLMatrix.getInstance().projectionStack.top,
-      KMGLMatrix.getInstance().modelViewStack.top
+      ServiceLocator.kmglMatrix.projectionStack.top,
+      ServiceLocator.kmglMatrix.modelViewStack.top
     );
     this.setUniformLocationWithMatrix4fv(
       this._uniforms[UNIFORM_MVPMATRIX_S],
@@ -949,11 +944,11 @@ export default class GLProgram extends NewClass {
   setUniformForModelViewAndProjectionMatrixWithMat4() {
     this.setUniformLocationWithMatrix4fv(
       this._uniforms[UNIFORM_MVMATRIX_S],
-      KMGLMatrix.getInstance().modelViewStack.top.mat
+      ServiceLocator.kmglMatrix.modelViewStack.top.mat
     );
     this.setUniformLocationWithMatrix4fv(
       this._uniforms[UNIFORM_PMATRIX_S],
-      KMGLMatrix.getInstance().projectionStack.top.mat
+      ServiceLocator.kmglMatrix.projectionStack.top.mat
     );
   }
 
@@ -965,12 +960,12 @@ export default class GLProgram extends NewClass {
     );
     this.setUniformLocationWithMatrix4fv(
       this._uniforms[UNIFORM_PMATRIX_S],
-      KMGLMatrix.getInstance().projectionStack.top.mat
+      ServiceLocator.kmglMatrix.projectionStack.top.mat
     );
   }
 
   _updateProjectionUniform() {
-    const stack = KMGLMatrix.getInstance().projectionStack;
+    const stack = ServiceLocator.kmglMatrix.projectionStack;
     if (stack.lastUpdated !== this._projectionUpdated) {
       this._glContext.uniformMatrix4fv(
         this._uniforms[UNIFORM_PMATRIX_S],
@@ -1057,7 +1052,7 @@ export default class GLProgram extends NewClass {
   }
 
   static _isHighpSupported() {
-    let ctx = RendererConfig.getInstance().renderContext;
+    let ctx = ServiceLocator.rendererConfig.renderContext;
     if (ctx.getShaderPrecisionFormat && GLProgram._highpSupported == null) {
       let highp = ctx.getShaderPrecisionFormat(
         ctx.FRAGMENT_SHADER,

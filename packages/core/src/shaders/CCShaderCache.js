@@ -72,7 +72,7 @@ import {
 } from './CCShaders';
 import GLProgram from './CCGLProgram';
 import { checkGLErrorDebug } from "../platform/macro/utils";
-import { RendererConfig } from "../renderer/renderer-config";
+import { ServiceLocator } from "../service-locator";
 
 /**
  * ShaderCache is a singleton object that stores manages GL shaders
@@ -243,7 +243,7 @@ export default class ShaderCache {
             case SHADER_SPRITE_POSITION_TEXTURECOLOR_MULTI:
                 program.initWithVertexShaderByteArray(
                     buildSpriteMultiTextureVert(),
-                    buildSpriteMultiTextureFrag(RendererConfig.getInstance().getMaxBatchTextures())
+                    buildSpriteMultiTextureFrag(ServiceLocator.rendererConfig.getMaxBatchTextures())
                 );
                 program.addAttribute(ATTRIBUTE_NAME_POSITION, VERTEX_ATTRIB_POSITION);
                 program.addAttribute(ATTRIBUTE_NAME_COLOR, VERTEX_ATTRIB_COLOR);
@@ -287,7 +287,7 @@ export default class ShaderCache {
         this.programForKey(SHADER_POSITION_LENGTHTEXTURECOLOR);
 
         this.programForKey(SHADER_SPRITE_POSITION_TEXTURECOLOR);
-        if (RendererConfig.getInstance().isWebGL2) {
+        if (ServiceLocator.rendererConfig.isWebGL2) {
             this.programForKey(SHADER_SPRITE_POSITION_TEXTURECOLOR_MULTI);
         }
         this.programForKey(SHADER_SPRITE_POSITION_TEXTURECOLORALPHATEST);

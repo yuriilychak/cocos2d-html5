@@ -26,14 +26,12 @@
 
 import { Node } from "./node";
 import EventHelper from "../event-manager/event-helper";
-import Game from "../boot/game";
 import { log, _LogInfos } from "../boot/debugger";
-import TextureCache from "../textures/texture-cache";
-import { RendererConfig } from "../renderer/renderer-config";
 import {
   BLEND_DST,
   BLEND_SRC
 } from "../platform/macro/constants";
+import { ServiceLocator } from "../service-locator";
 
 /**
  * <p>AtlasNode is a subclass of Node, it knows how to render a TextureAtlas object. </p>
@@ -95,7 +93,7 @@ export class AtlasNode extends EventHelper(Node) {
   }
 
   _createRenderCmd() {
-    if (RendererConfig.getInstance().isCanvas)
+    if (ServiceLocator.rendererConfig.isCanvas)
       this._renderCmd = new AtlasNode.CanvasRenderCmd(this);
     else this._renderCmd = new AtlasNode.WebGLRenderCmd(this);
   }
@@ -209,7 +207,7 @@ export class AtlasNode extends EventHelper(Node) {
   initWithTileFile(tile, tileWidth, tileHeight, itemsToRender) {
     if (!tile)
       throw new Error("AtlasNode.initWithTileFile(): title should not be null");
-    var texture = TextureCache.getInstance().addImage(tile);
+    var texture = ServiceLocator.textureCache.addImage(tile);
     return this.initWithTexture(texture, tileWidth, tileHeight, itemsToRender);
   }
 

@@ -24,10 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { RendererConfig } from "../../renderer/renderer-config";
 import { NewClass } from "../class";
-import Game from "../../boot/game";
-import Sys from "../../boot/sys";
+import { ServiceLocator } from "../../service-locator";
 
 /**
  * <p>ContainerStrategy class is the root strategy class of container's scale strategy,
@@ -55,9 +53,9 @@ export class ContainerStrategy extends NewClass {
   postApply(view) {}
 
   _setupContainer(view, w, h) {
-    var locCanvas = Game.getInstance().canvas,
-      locContainer = Game.getInstance().container;
-    if (Sys.getInstance().os === Sys.getInstance().OS_ANDROID) {
+    var locCanvas = ServiceLocator.game.canvas,
+      locContainer = ServiceLocator.game.container;
+    if (ServiceLocator.sys.os === ServiceLocator.sys.OS_ANDROID) {
       document.body.style.width = (view._isRotated ? h : w) + "px";
       document.body.style.height = (view._isRotated ? w : h) + "px";
     }
@@ -75,20 +73,20 @@ export class ContainerStrategy extends NewClass {
     // Setup canvas
     locCanvas.width = w * devicePixelRatio;
     locCanvas.height = h * devicePixelRatio;
-    RendererConfig.getInstance().renderContext.resetCache &&
-      RendererConfig.getInstance().renderContext.resetCache();
+    ServiceLocator.rendererConfig.renderContext.resetCache &&
+      ServiceLocator.rendererConfig.renderContext.resetCache();
   }
 
   _fixContainer() {
     // Add container to document body
-    document.body.insertBefore(Game.getInstance().container, document.body.firstChild);
+    document.body.insertBefore(ServiceLocator.game.container, document.body.firstChild);
     // Set body's width height to window's size, and forbid overflow, so that game will be centered
     var bs = document.body.style;
     bs.width = window.innerWidth + "px";
     bs.height = window.innerHeight + "px";
     bs.overflow = "hidden";
     // Body size solution doesn't work on all mobile browser so this is the aleternative: fixed container
-    var contStyle = Game.getInstance().container.style;
+    var contStyle = ServiceLocator.game.container.style;
     contStyle.position = "fixed";
     contStyle.left = contStyle.top = "0px";
     // Reposition body
@@ -103,7 +101,7 @@ export class ContainerStrategy extends NewClass {
 class EqualToFrame extends ContainerStrategy {
   apply(view) {
     var frameH = view._frameSize.height,
-      containerStyle = Game.getInstance().container.style;
+      containerStyle = ServiceLocator.game.container.style;
     this._setupContainer(view, view._frameSize.width, view._frameSize.height);
     // Setup container's margin and padding
     if (view._isRotated) {
@@ -120,7 +118,7 @@ class ProportionalToFrame extends ContainerStrategy {
   apply(view, designedResolution) {
     var frameW = view._frameSize.width,
       frameH = view._frameSize.height,
-      containerStyle = Game.getInstance().container.style,
+      containerStyle = ServiceLocator.game.container.style,
       designW = designedResolution.width,
       designH = designedResolution.height,
       scaleX = frameW / designW,
@@ -184,7 +182,7 @@ class ProportionalToWindow extends ProportionalToFrame {
  */
 class OriginalContainer extends ContainerStrategy {
   apply(view) {
-    this._setupContainer(view, Game.getInstance().canvas.width, Game.getInstance().canvas.height);
+    this._setupContainer(view, ServiceLocator.game.canvas.width, ServiceLocator.game.canvas.height);
   }
 }
 

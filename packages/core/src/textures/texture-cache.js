@@ -24,14 +24,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import Game from "../boot/game";
-import Loader from "../boot/loader";
 import Path from "../boot/path";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import TextureCacheCanvasRenderer from "./texture-cache-canvas-renderer";
 import TextureCacheWebGLRenderer from "./texture-cache-webgl-renderer";
 import { Texture2D } from "./texture-2d";
-import { RendererConfig } from "../renderer/renderer-config";
+import { ServiceLocator } from "../service-locator";
 
 /**
  * TextureCache is a singleton class, it's the global cache for Texture2D
@@ -65,7 +63,7 @@ export default class TextureCache {
    * from Game._initRenderer() after the renderer type is determined.
    */
   initRenderer() {
-    if (RendererConfig.getInstance().isCanvas) {
+    if (ServiceLocator.rendererConfig.isCanvas) {
       this._renderer = new TextureCacheCanvasRenderer(this);
     } else {
       this._renderer = new TextureCacheWebGLRenderer(this);
@@ -139,7 +137,7 @@ export default class TextureCache {
   getTextureForKey(textureKeyName) {
     return (
       this._textures[textureKeyName] ||
-      this._textures[Loader.getInstance()._getAliase(textureKeyName)]
+      this._textures[ServiceLocator.loader._getAliase(textureKeyName)]
     );
   }
 
@@ -374,7 +372,7 @@ export default class TextureCache {
       // If renderer is not yet initialized, create texture in _loadedTexturesBefore
       var tex =
         this._loadedTexturesBefore[url] ||
-        this._loadedTexturesBefore[Loader.getInstance()._getAliase(url)];
+        this._loadedTexturesBefore[ServiceLocator.loader._getAliase(url)];
       if (tex) {
         if (tex.isLoaded()) {
           cb && cb.call(target, tex);
@@ -393,11 +391,11 @@ export default class TextureCache {
 
       tex = this._loadedTexturesBefore[url] = new Texture2D();
       tex.url = url;
-      var basePath = Loader.getInstance().getBasePath
-        ? Loader.getInstance().getBasePath()
-        : Loader.getInstance().resPath;
+      var basePath = ServiceLocator.loader.getBasePath
+        ? ServiceLocator.loader.getBasePath()
+        : ServiceLocator.loader.resPath;
       var textureCache = this;
-      Loader.getInstance().loadImg(
+      ServiceLocator.loader.loadImg(
         Path.join(basePath || "", url),
         function (err, img) {
           if (err) return cb && cb.call(target, err);

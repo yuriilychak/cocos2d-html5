@@ -26,20 +26,16 @@
 
 import EventHelper from "../event-manager/event-helper";
 import { Node } from "../base-nodes/node";
-import Game from "../boot/game";
 import { Point } from "../cocoa/geometry/point";
 import { Rect } from "../cocoa/geometry/rect";
 import { Size } from "../cocoa/geometry/size";
 import { log, assert, _LogInfos } from "../boot/debugger";
-import TextureCache from "../textures/texture-cache";
 import { Texture2D } from "../textures/texture-2d";
 import { SpriteFrame } from "./sprite-frame";
-import SpriteFrameCache from "./sprite-frame-cache";
-import AnimationCache from "./animation-cache";
 import { PolygonInfo } from "./polygon-info";
-import { RendererConfig } from "../renderer/renderer-config";
 import { BLEND_DST, BLEND_SRC } from "../platform/macro/constants";
 import { sizePointsToPixels, rectPointsToPixels, pointPointsToPixels } from "../platform/macro/utils.js";
+import { ServiceLocator } from "../service-locator";
 
 /**
  * <p>Sprite is a 2d image ( http://en.wikipedia.org/wiki/Sprite_(computer_graphics) )  <br/>
@@ -270,7 +266,7 @@ export class Sprite extends EventHelper(Node) {
    */
   initWithSpriteFrameName(spriteFrameName) {
     assert(spriteFrameName, _LogInfos.Sprite_initWithSpriteFrameName);
-    var frame = SpriteFrameCache.getInstance().getSpriteFrame(spriteFrameName);
+    var frame = ServiceLocator.spriteFrameCache.getSpriteFrame(spriteFrameName);
     assert(frame, spriteFrameName + _LogInfos.Sprite_initWithSpriteFrameName1);
     return this.initWithSpriteFrame(frame);
   }
@@ -395,7 +391,7 @@ export class Sprite extends EventHelper(Node) {
   setDisplayFrameWithAnimationName(animationName, frameIndex) {
     assert(animationName, _LogInfos.Sprite_setDisplayFrameWithAnimationName_3);
 
-    var cache = AnimationCache.getInstance().getAnimation(animationName);
+    var cache = ServiceLocator.animationCache.getAnimation(animationName);
     if (!cache) {
       log(_LogInfos.Sprite_setDisplayFrameWithAnimationName);
       return;
@@ -497,8 +493,8 @@ export class Sprite extends EventHelper(Node) {
     }
 
     if (typeof texture === "string") {
-      var tex = TextureCache.getInstance().getTextureForKey(texture);
-      if (!tex) tex = TextureCache.getInstance().addImage(texture);
+      var tex = ServiceLocator.textureCache.getTextureForKey(texture);
+      if (!tex) tex = ServiceLocator.textureCache.addImage(texture);
       texture = tex;
     }
 
@@ -514,7 +510,7 @@ export class Sprite extends EventHelper(Node) {
         // Init with a sprite frame name
         var frameName = fileName.substr(1, fileName.length - 1);
         var spriteFrame =
-          SpriteFrameCache.getInstance().getSpriteFrame(frameName);
+          ServiceLocator.spriteFrameCache.getSpriteFrame(frameName);
         if (spriteFrame) this.initWithSpriteFrame(spriteFrame);
         else log("%s does not exist", fileName);
       } else {
@@ -618,9 +614,9 @@ export class Sprite extends EventHelper(Node) {
   initWithFile(filename, rect) {
     assert(filename, _LogInfos.Sprite_initWithFile);
 
-    var tex = TextureCache.getInstance().getTextureForKey(filename);
+    var tex = ServiceLocator.textureCache.getTextureForKey(filename);
     if (!tex) {
-      tex = TextureCache.getInstance().addImage(filename);
+      tex = ServiceLocator.textureCache.addImage(filename);
     }
 
     if (!tex.isLoaded()) {
@@ -777,7 +773,7 @@ export class Sprite extends EventHelper(Node) {
   setSpriteFrame(newFrame) {
     var _t = this;
     if (typeof newFrame === "string") {
-      newFrame = SpriteFrameCache.getInstance().getSpriteFrame(newFrame);
+      newFrame = ServiceLocator.spriteFrameCache.getSpriteFrame(newFrame);
       assert(newFrame, _LogInfos.Sprite_setSpriteFrame);
     }
     this._loader.clear();
@@ -872,7 +868,7 @@ export class Sprite extends EventHelper(Node) {
     //Sprite.cpp 327 and 338
     var isFileName = typeof texture === "string";
 
-    if (isFileName) texture = TextureCache.getInstance().addImage(texture);
+    if (isFileName) texture = ServiceLocator.textureCache.addImage(texture);
 
     this._loader.clear();
     if (!texture._textureLoaded) {
@@ -973,7 +969,7 @@ export class Sprite extends EventHelper(Node) {
   }
 
   _createRenderCmd() {
-    if (RendererConfig.getInstance().isCanvas)
+    if (ServiceLocator.rendererConfig.isCanvas)
       return new Sprite.CanvasRenderCmd(this);
     else return new Sprite.WebGLRenderCmd(this);
   }

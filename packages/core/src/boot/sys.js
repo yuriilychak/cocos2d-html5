@@ -1,6 +1,5 @@
-import Game from "./game";
 import { log, warn } from "./debugger";
-import { RendererConfig } from "../renderer/renderer-config";
+import { ServiceLocator } from "../service-locator";
 
 export function create3DContext(canvas, opt_attribs) {
   var names = ["webgl2", "webgl", "experimental-webgl", "webkit-3d", "moz-webgl"];
@@ -202,7 +201,7 @@ export default class Sys {
     };
 
     this._checkWebGLRenderMode = function () {
-      if (!RendererConfig.getInstance().isWebGL)
+      if (!ServiceLocator.rendererConfig.isWebGL)
         throw new Error("This feature supports WebGL render mode only.");
     };
 
@@ -364,7 +363,7 @@ export default class Sys {
     str += "platform : " + this.platform + "\r\n";
     str +=
       "Using " +
-      (RendererConfig.getInstance().isWebGL ? "WEBGL" : "CANVAS") +
+      (ServiceLocator.rendererConfig.isWebGL ? "WEBGL" : "CANVAS") +
       " renderer." +
       "\r\n";
     log(str);

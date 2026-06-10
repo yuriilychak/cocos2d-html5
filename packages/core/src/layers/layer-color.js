@@ -27,11 +27,9 @@
 import { Layer } from "./layer";
 import { Node } from "../base-nodes/node";
 import { Color } from "../platform/types/color";
-import Game from "../boot/game";
 import { LayerColorCanvasRenderer, LayerColorWebGLRenderer } from "./renderer";
-import { RendererConfig } from "../renderer/renderer-config";
-import { Director } from "../director/director";
 import { BlendFunc } from "../platform/types/blend-func";
+import { ServiceLocator } from "../service-locator";
 
 /**
  * LayerColor is a subclass of Layer that implements the RGBAProtocol protocol.
@@ -57,7 +55,7 @@ export class LayerColor extends Layer {
   }
 
   init(color, width, height) {
-    var winSize = Director.getInstance().getWinSize();
+    var winSize = ServiceLocator.director.getWinSize();
     color = color || new Color(0, 0, 0, 255);
     width = width === undefined ? winSize.width : width;
     height = height === undefined ? winSize.height : height;
@@ -84,7 +82,7 @@ export class LayerColor extends Layer {
       return;
     }
 
-    var renderer = RendererConfig.getInstance().renderer;
+    var renderer = ServiceLocator.rendererConfig.renderer;
     cmd.visit(parentCmd);
 
     if (cmd._isBaked) {
@@ -150,7 +148,7 @@ export class LayerColor extends Layer {
   }
 
   _createRenderCmd() {
-    if (RendererConfig.getInstance().isCanvas)
+    if (ServiceLocator.rendererConfig.isCanvas)
       return new LayerColorCanvasRenderer(this);
     else return new LayerColorWebGLRenderer(this);
   }

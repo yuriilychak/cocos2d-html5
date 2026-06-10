@@ -2,7 +2,7 @@ import Matrix4 from "../mat4";
 import Vec3 from "../vec3";
 import Matrix4Stack from "./mat4-stack";
 import { degreesToRadians } from "../../platform/macro/utils";
-import { Director } from "../../director/director";
+import { ServiceLocator } from "../../service-locator";
 
 export class KMGLMatrix {
   static KM_GL_MODELVIEW = 0x1700;
@@ -80,7 +80,7 @@ export class KMGLMatrix {
       default:
         throw new Error("Invalid matrix mode specified");
     }
-    this.currentStack.lastUpdated = Director.getInstance().getTotalFrames();
+    this.currentStack.lastUpdated = ServiceLocator.director.getTotalFrames();
   }
 
   loadIdentity() {

@@ -26,7 +26,6 @@
 
 import { Node } from "../base-nodes/node";
 import { log, assert, _LogInfos } from "../boot/debugger";
-import TextureCache from "../textures/texture-cache";
 import { Texture2D } from "../textures/texture-2d";
 import {
   BLEND_DST,
@@ -34,6 +33,7 @@ import {
 } from "../platform/macro/constants";
 import { BlendFunc } from "../platform/types/blend-func";
 import { isString } from "../boot/utils";
+import { ServiceLocator } from "../service-locator";
 
 /**
  * <p>
@@ -73,8 +73,8 @@ export class SpriteBatchNode extends Node {
 
     var texture2D;
     if (isString(fileImage)) {
-      texture2D = TextureCache.getInstance().getTextureForKey(fileImage);
-      if (!texture2D) texture2D = TextureCache.getInstance().addImage(fileImage);
+      texture2D = ServiceLocator.textureCache.getTextureForKey(fileImage);
+      if (!texture2D) texture2D = ServiceLocator.textureCache.addImage(fileImage);
     } else if (fileImage instanceof Texture2D) texture2D = fileImage;
 
     texture2D && this.initWithTexture(texture2D);
@@ -92,8 +92,8 @@ export class SpriteBatchNode extends Node {
    * @return {Boolean}
    */
   initWithFile(fileImage, capacity) {
-    var texture2D = TextureCache.getInstance().getTextureForKey(fileImage);
-    if (!texture2D) texture2D = TextureCache.getInstance().addImage(fileImage);
+    var texture2D = ServiceLocator.textureCache.getTextureForKey(fileImage);
+    if (!texture2D) texture2D = ServiceLocator.textureCache.addImage(fileImage);
     return this.initWithTexture(texture2D, capacity);
   }
 
@@ -109,8 +109,8 @@ export class SpriteBatchNode extends Node {
    * @return {Boolean}
    */
   init(fileImage, capacity) {
-    var texture2D = TextureCache.getInstance().getTextureForKey(fileImage);
-    if (!texture2D) texture2D = TextureCache.getInstance().addImage(fileImage);
+    var texture2D = ServiceLocator.textureCache.getTextureForKey(fileImage);
+    if (!texture2D) texture2D = ServiceLocator.textureCache.addImage(fileImage);
     return this.initWithTexture(texture2D, capacity);
   }
 

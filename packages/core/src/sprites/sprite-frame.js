@@ -26,17 +26,15 @@
 
 import { NewClass } from "../platform/class";
 import EventHelper from "../event-manager/event-helper";
-import Game from "../boot/game";
 import { Point } from "../cocoa/geometry/point";
 import { Rect } from "../cocoa/geometry/rect";
 import { Size } from "../cocoa/geometry/size";
 import { error, _LogInfos } from "../boot/debugger";
-import TextureCache from "../textures/texture-cache";
 import { Texture2D } from "../textures/texture-2d";
-import { RendererConfig } from "../renderer/renderer-config";
 import { rectPixelsToPoints, rectPointsToPixels, _pointPixelsToPointsOut, _sizePixelsToPointsOut } from "../platform/macro/utils";
 import { SpriteCanvasRenderCmd } from "./sprite-canvas-render-cmd";
 import { PolygonInfo } from "./polygon-info";
+import { ServiceLocator } from "../service-locator";
 
 /**
  * <p>
@@ -233,7 +231,7 @@ export class SpriteFrame extends EventHelper(NewClass) {
   getTexture() {
     if (this._texture) return this._texture;
     if (this._textureFilename !== "") {
-      var locTexture = TextureCache.getInstance().addImage(
+      var locTexture = ServiceLocator.textureCache.addImage(
         this._textureFilename
       );
       if (locTexture) this._textureLoaded = locTexture.isLoaded();
@@ -256,7 +254,7 @@ export class SpriteFrame extends EventHelper(NewClass) {
           "load",
           function (sender) {
             this._textureLoaded = true;
-            if (this._rotated && RendererConfig.getInstance().isCanvas) {
+            if (this._rotated && ServiceLocator.rendererConfig.isCanvas) {
               var tempElement = sender.getHtmlElementObj();
               tempElement = SpriteCanvasRenderCmd._cutRotateImageToCanvas(
                 tempElement,

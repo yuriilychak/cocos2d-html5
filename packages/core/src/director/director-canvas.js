@@ -1,29 +1,26 @@
 import { DirectorRenderer } from './director-renderer';
 import { Point } from '../cocoa/geometry/point';
-import EventManager from '../event-manager/event-manager';
-import { RendererConfig } from '../renderer/renderer-config';
-import Game from '../boot/game';
-import { EGLView } from '../platform/egl-view/egl-view';
+import { ServiceLocator } from "../service-locator";
 
 export class DirectorCanvasRenderer extends DirectorRenderer {
     setProjection(projection) {
         this._director._projection = projection;
-        EventManager.getInstance().dispatchEvent(this._director._eventProjectionChanged);
+        ServiceLocator.eventManager.dispatchEvent(this._director._eventProjectionChanged);
     }
 
     setClearColor(clearColor) {
-        const renderer = RendererConfig.getInstance().renderer;
+        const renderer = ServiceLocator.rendererConfig.renderer;
         renderer._clearColor = clearColor;
         renderer._clearFillStyle = 'rgb(' + clearColor.r + ',' + clearColor.g + ',' + clearColor.b + ')';
     }
 
     setOpenGLView(openGLView) {
         var director = this._director;
-        director._winSizeInPoints.width = Game.getInstance().canvas.width;
-        director._winSizeInPoints.height = Game.getInstance().canvas.height;
-        director._openGLView = openGLView || EGLView.getInstance();
-        if (EventManager.getInstance())
-            EventManager.getInstance().setEnabled(true);
+        director._winSizeInPoints.width = ServiceLocator.game.canvas.width;
+        director._winSizeInPoints.height = ServiceLocator.game.canvas.height;
+        director._openGLView = openGLView || ServiceLocator.eglView;
+        if (ServiceLocator.eventManager)
+            ServiceLocator.eventManager.setEnabled(true);
     }
 
     getVisibleSize() {

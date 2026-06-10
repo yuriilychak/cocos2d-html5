@@ -29,14 +29,13 @@ import { Point } from "../cocoa/geometry/point";
 import { Color } from "../platform/types/color";
 import { visibleRect } from "../platform/visible-rect";
 import { contentScaleFactor } from "../platform/macro/utils";
-import EventManager from "../event-manager/event-manager";
 import { Director } from "../director/director";
-import Loader from "../boot/loader";
 import { isString } from "../boot/utils";
 import { LayerColor } from "../layers/layer-color";
 import { LabelTTF } from "../labelttf/label-ttf";
 import { Texture2D } from "../textures/texture-2d";
 import { Sprite } from "../sprites/sprite";
+import { ServiceLocator } from "../service-locator";
 
 /**
  * LoaderScene is a scene that you can load it when you loading files
@@ -60,7 +59,7 @@ export class LoaderScene extends Scene {
     if (!LoaderScene.#instance) {
       LoaderScene.#instance = new LoaderScene();
       LoaderScene.#instance.init();
-      EventManager.getInstance().addCustomListener(
+      ServiceLocator.eventManager.addCustomListener(
         Director.EVENT_PROJECTION_CHANGED,
         function () {
           LoaderScene.#instance._updateTransform();
@@ -81,9 +80,9 @@ export class LoaderScene extends Scene {
 
     var fontSize = 24,
       lblHeight = -logoHeight / 2 + 100;
-    if (Loader.getInstance()._loaderImage) {
-      Loader.getInstance().loadImg(
-        Loader.getInstance()._loaderImage,
+    if (ServiceLocator.loader._loaderImage) {
+      ServiceLocator.loader.loadImg(
+        ServiceLocator.loader._loaderImage,
         { isCrossOrigin: false },
         function (err, img) {
           logoWidth = img.width;
@@ -140,7 +139,7 @@ export class LoaderScene extends Scene {
     var self = this;
     self.unschedule(self._startLoading);
     var res = self.resources;
-    Loader.getInstance().load(
+    ServiceLocator.loader.load(
       res,
       function (result, count, loadedCount) {
         var percent = ((loadedCount / count) * 100) | 0;
@@ -163,7 +162,7 @@ export class LoaderScene extends Scene {
 
   preload(resources, cb, target) {
     this.initWithResources(resources, cb, target);
-    Director.getInstance().runScene(this);
+    ServiceLocator.director.runScene(this);
     return this;
   }
 }

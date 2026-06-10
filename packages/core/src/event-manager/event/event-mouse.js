@@ -24,7 +24,7 @@
  ****************************************************************************/
 
 import Event from "./event";
-import { EGLView } from "../../platform/egl-view/egl-view";
+import { ServiceLocator } from "../../service-locator";
 
 /**
  * The mouse event
@@ -93,7 +93,7 @@ export default class EventMouse extends Event {
    * @return {Point}
    */
   getLocationInView() {
-    return { x: this._x, y: EGLView.getInstance()._designResolutionSize.height - this._y };
+    return { x: this._x, y: ServiceLocator.eglView._designResolutionSize.height - this._y };
   }
 
   _setPrevCursor(x, y) {

@@ -25,10 +25,8 @@
  ****************************************************************************/
 
 import { Node } from "../base-nodes/node";
-import { Director } from "../director/director";
-import Game from "../boot/game";
-import { RendererConfig } from "../renderer/renderer-config";
 import { LayerCanvasRenderer, LayerWebGLRenderer } from "./renderer";
+import { ServiceLocator } from "../service-locator";
 
 /**
  * Layer is a subclass of Node that implements the TouchEventsDelegate protocol.
@@ -41,7 +39,7 @@ export class Layer extends Node {
 
     this._ignoreAnchorPointForPosition = true;
     this.setAnchorPoint(0.5, 0.5);
-    this.setContentSize(Director.getInstance().getWinSize());
+    this.setContentSize(ServiceLocator.director.getWinSize());
     this._cascadeColorEnabled = false;
     this._cascadeOpacityEnabled = false;
   }
@@ -67,7 +65,7 @@ export class Layer extends Node {
       return;
     }
 
-    var renderer = RendererConfig.getInstance().renderer;
+    var renderer = ServiceLocator.rendererConfig.renderer;
     cmd.visit(parentCmd);
 
     if (cmd._isBaked) {
@@ -108,7 +106,7 @@ export class Layer extends Node {
   }
 
   _createRenderCmd() {
-    if (RendererConfig.getInstance().isCanvas)
+    if (ServiceLocator.rendererConfig.isCanvas)
       return new LayerCanvasRenderer(this);
     else return new LayerWebGLRenderer(this);
   }

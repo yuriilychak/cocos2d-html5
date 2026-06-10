@@ -22,16 +22,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { RendererConfig } from "../../renderer/renderer-config";
 import LayerWebGLRenderer from "./layer-webgl-renderer";
 import {
   SHADER_POSITION_COLOR,
   VERTEX_ATTRIB_COLOR,
   VERTEX_ATTRIB_POSITION
 } from "../../platform/macro/constants";
-import ShaderCache from "../../shaders/CCShaderCache";
 import Matrix4 from "../../kazmath/mat4";
-import { GLStateCache } from "../../shaders/CCGLStateCache";
+import { ServiceLocator } from "../../service-locator";
 
 /**
  * LayerColor's WebGL render command
@@ -49,7 +47,7 @@ export default class LayerColorWebGLRenderer extends LayerWebGLRenderer {
     this._color = new Uint32Array(1);
     this._vertexBuffer = null;
 
-    this._shaderProgram = ShaderCache.getInstance().programForKey(
+    this._shaderProgram = ServiceLocator.shaderCache.programForKey(
       SHADER_POSITION_COLOR
     );
   }
@@ -98,7 +96,7 @@ export default class LayerColorWebGLRenderer extends LayerWebGLRenderer {
   }
 
   rendering(ctx) {
-    const gl = ctx || RendererConfig.getInstance().renderContext;
+    const gl = ctx || ServiceLocator.rendererConfig.renderContext;
     const node = this._node;
 
     if (!this._matrix) {
@@ -124,7 +122,7 @@ export default class LayerColorWebGLRenderer extends LayerWebGLRenderer {
     }
 
     this._glProgramState.apply(this._matrix);
-    GLStateCache.getInstance().blendFunc(node._blendFunc.src, node._blendFunc.dst);
+    ServiceLocator.glStateCache.blendFunc(node._blendFunc.src, node._blendFunc.dst);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, this._vertexBuffer);
     gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);

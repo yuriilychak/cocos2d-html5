@@ -1,11 +1,11 @@
 import ImagePool from "./image-pool";
-import Game from "./game";
 import Async from "./async";
 import AsyncPool from "./async-pool";
 import Path from "./path";
 import Sys from "./sys";
 import { error, log } from "./debugger";
 import { RendererConfig } from "../renderer/renderer-config";
+import { ServiceLocator } from "../service-locator";
 
 const _isNodeJs = typeof process !== "undefined" && process.versions != null && process.versions.node != null;
 
@@ -156,7 +156,7 @@ export default class Loader {
       s = document.createElement("script");
     s.async = isAsync;
     this._jsCache[jsPath] = true;
-    if (Game.getInstance().config["noCache"] && typeof jsPath === "string") {
+    if (ServiceLocator.game.config["noCache"] && typeof jsPath === "string") {
       if (this._noCacheRex.test(jsPath))
         s.src = jsPath + "&_t=" + (new Date() - 0);
       else s.src = jsPath + "?_t=" + (new Date() - 0);
@@ -199,7 +199,7 @@ export default class Loader {
 
       if (this._loadingImage) jsLoadingImg.src = this._loadingImage;
 
-      var canvasNode = d.getElementById(Game.getInstance().config["id"]);
+      var canvasNode = d.getElementById(ServiceLocator.game.config["id"]);
       canvasNode.style.backgroundColor = "transparent";
       canvasNode.parentNode.appendChild(jsLoadingImg);
 
@@ -442,7 +442,7 @@ export default class Loader {
 
       if (
         RendererConfig.ENABLE_IMAGE_POOL &&
-        RendererConfig.getInstance().isWebGL
+        ServiceLocator.rendererConfig.isWebGL
       ) {
         imagePool.put(img);
       }
@@ -459,7 +459,7 @@ export default class Loader {
       ) {
         opt.isCrossOrigin = false;
         this.release(url);
-        Loader.getInstance().loadImg(url, opt, callback, img);
+        ServiceLocator.loader.loadImg(url, opt, callback, img);
       } else {
         var queue = this._queue[url];
         if (queue) {
@@ -474,7 +474,7 @@ export default class Loader {
           delete this._queue[url];
         }
 
-        if (RendererConfig.getInstance().isWebGL) {
+        if (ServiceLocator.rendererConfig.isWebGL) {
           imagePool.put(img);
         }
       }
@@ -526,7 +526,7 @@ export default class Loader {
       realUrl = this.getUrl(basePath, url);
     }
 
-    if (Game.getInstance().config["noCache"] && typeof realUrl === "string") {
+    if (ServiceLocator.game.config["noCache"] && typeof realUrl === "string") {
       if (this._noCacheRex.test(realUrl)) realUrl += "&_t=" + (new Date() - 0);
       else realUrl += "?_t=" + (new Date() - 0);
     }
@@ -565,7 +565,7 @@ export default class Loader {
       url = this._langPathCache[url] =
         url.substring(0, url.length - extname.length) +
         "_" +
-        Sys.getInstance().language +
+        ServiceLocator.sys.language +
         extname;
     }
     return url;

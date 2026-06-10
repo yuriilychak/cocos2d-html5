@@ -30,10 +30,6 @@
  * @function
  * @param {Object} _p - The inputManager object to extend
  */
-import EventManager from '../event-manager/event-manager';
-import Sys from '../boot/sys';
-import Game from '../boot/game';
-import { Director } from '../director/director';
 import EventKeyboard from '../event-manager/event-extension/event-keyboard';
 import { Acceleration } from '../platform/types/color';
 import {
@@ -41,6 +37,7 @@ import {
   UIInterfaceOrientationLandscapeLeft,
   UIInterfaceOrientationPortraitUpsideDown
 } from '../platform/input-manager';
+import { ServiceLocator } from "../service-locator";
 
 export function initInputExtension(_p) {
 
@@ -55,7 +52,7 @@ export function initInputExtension(_p) {
             return;
 
         _t._accelEnabled = isEnable;
-        var scheduler = Director.getInstance().getScheduler();
+        var scheduler = ServiceLocator.director.getScheduler();
         if(_t._accelEnabled){
             _t._accelCurTime = 0;
             _t._registerAccelerometerEvent();
@@ -79,13 +76,13 @@ export function initInputExtension(_p) {
     };
 
     _p._registerKeyboardEvent = function(){
-        Game.getInstance().canvas.addEventListener("keydown", function (e) {
-            EventManager.getInstance().dispatchEvent(new EventKeyboard(e.keyCode, true));
+        ServiceLocator.game.canvas.addEventListener("keydown", function (e) {
+            ServiceLocator.eventManager.dispatchEvent(new EventKeyboard(e.keyCode, true));
             e.stopPropagation();
             e.preventDefault();
         }, false);
-        Game.getInstance().canvas.addEventListener("keyup", function (e) {
-            EventManager.getInstance().dispatchEvent(new EventKeyboard(e.keyCode, false));
+        ServiceLocator.game.canvas.addEventListener("keyup", function (e) {
+            ServiceLocator.eventManager.dispatchEvent(new EventKeyboard(e.keyCode, false));
             e.stopPropagation();
             e.preventDefault();
         }, false);
@@ -97,12 +94,12 @@ export function initInputExtension(_p) {
         _t._accelDeviceEvent = w.DeviceMotionEvent || w.DeviceOrientationEvent;
 
         //TODO fix DeviceMotionEvent bug on QQ Browser version 4.1 and below.
-        if (Sys.getInstance().browserType === Sys.getInstance().BROWSER_TYPE_MOBILE_QQ)
+        if (ServiceLocator.sys.browserType === ServiceLocator.sys.BROWSER_TYPE_MOBILE_QQ)
             _t._accelDeviceEvent = window.DeviceOrientationEvent;
 
         var _deviceEventType = (_t._accelDeviceEvent === w.DeviceMotionEvent) ? "devicemotion" : "deviceorientation";
         var ua = navigator.userAgent;
-        if (/Android/.test(ua) || (/Adr/.test(ua) && Sys.getInstance().browserType === Sys.getInstance().BROWSER_TYPE_UC)) {
+        if (/Android/.test(ua) || (/Adr/.test(ua) && ServiceLocator.sys.browserType === ServiceLocator.sys.BROWSER_TYPE_UC)) {
             _t._minus = -1;
         }
 

@@ -24,11 +24,8 @@ import { SpriteCanvasRenderCmd } from "../sprites/sprite-canvas-render-cmd";
 import { Point } from "../cocoa/geometry/point";
 import { Rect } from "../cocoa/geometry/rect";
 import { Size } from "../cocoa/geometry/size";
-import Game from "../boot/game";
 import { FontDefinition } from "../platform/types/font-definition";
 import { Texture2D } from "../textures/texture-2d";
-import { RendererConfig } from "../renderer/renderer-config";
-import { EGLView } from "../platform/egl-view/egl-view";
 import {
   Color,
   TEXT_ALIGNMENT_CENTER,
@@ -37,6 +34,7 @@ import {
   VERTICAL_TEXT_ALIGNMENT_CENTER,
   VERTICAL_TEXT_ALIGNMENT_BOTTOM
 } from "../platform/types/color";
+import { ServiceLocator } from "../service-locator";
 
 export const _textAlign = ["left", "center", "right"];
 export const _textBaseline = ["top", "middle", "bottom"];
@@ -98,7 +96,7 @@ export const LabelRenderMixin = (Base) =>
         this._fontClientHeight =
           LabelTTF.__getFontHeightByDiv(fontNameOrFontDef);
       } else {
-        const deviceFontSize = fontSize * EGLView.getInstance().getDevicePixelRatio();
+        const deviceFontSize = fontSize * ServiceLocator.eglView.getDevicePixelRatio();
         this._fontStyleStr =
           fontStyle +
           " " +
@@ -159,7 +157,7 @@ export const LabelRenderMixin = (Base) =>
     getLocalBB() {
       const node = this._node;
       localBB.x = localBB.y = 0;
-      const pixelRatio = EGLView.getInstance().getDevicePixelRatio();
+      const pixelRatio = ServiceLocator.eglView.getDevicePixelRatio();
       localBB.width = node._getWidth() * pixelRatio;
       localBB.height = node._getHeight() * pixelRatio;
       return localBB;
@@ -167,7 +165,7 @@ export const LabelRenderMixin = (Base) =>
 
     _updateTTF() {
       const node = this._node;
-      const pixelRatio = EGLView.getInstance().getDevicePixelRatio();
+      const pixelRatio = ServiceLocator.eglView.getDevicePixelRatio();
       const locDimensionsWidth = node._dimensions.width * pixelRatio;
       let i, strLength;
       const locLineWidth = this._lineWidths;
@@ -282,7 +280,7 @@ export const LabelRenderMixin = (Base) =>
 
     _saveStatus() {
       const node = this._node;
-      const scale = EGLView.getInstance().getDevicePixelRatio();
+      const scale = ServiceLocator.eglView.getDevicePixelRatio();
       const locStrokeShadowOffsetX = node._strokeShadowOffsetX,
         locStrokeShadowOffsetY = node._strokeShadowOffsetY;
       const locContentSizeHeight =
@@ -447,7 +445,7 @@ export const LabelRenderMixin = (Base) =>
       this._originSyncStatus(parentCmd);
 
       if (
-        RendererConfig.getInstance().isWebGL ||
+        ServiceLocator.rendererConfig.isWebGL ||
         locFlag & flags.transformDirty
       )
         this.transform(parentCmd);
@@ -492,7 +490,7 @@ export const LabelRenderMixin = (Base) =>
         }
         context.fillText(line, xOffset, yOffsetArray[i]);
       }
-      RendererConfig.getInstance().incrementDrawCount();
+      ServiceLocator.rendererConfig.incrementDrawCount();
     }
   };
 
@@ -577,7 +575,7 @@ export class CanvasRenderCmd extends LabelRenderMixin(SpriteCanvasRenderCmd) {
 
   _measure(text) {
     if (text) {
-      const context = RendererConfig.getInstance().renderContext.getContext();
+      const context = ServiceLocator.rendererConfig.renderContext.getContext();
       context.font = this._fontStyleStr;
       return context.measureText(text).width;
     } else {
@@ -603,9 +601,9 @@ export class CanvasRenderCmd extends LabelRenderMixin(SpriteCanvasRenderCmd) {
   }
 
   rendering(ctx) {
-    const scaleX = EGLView.getInstance().getScaleX(),
-      scaleY = EGLView.getInstance().getScaleY();
-    const wrapper = ctx || RendererConfig.getInstance().renderContext,
+    const scaleX = ServiceLocator.eglView.getScaleX(),
+      scaleY = ServiceLocator.eglView.getScaleY();
+    const wrapper = ctx || ServiceLocator.rendererConfig.renderContext,
       context = wrapper.getContext();
     if (!context) return;
     const node = this._node;

@@ -22,12 +22,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { RendererConfig } from "../../renderer/renderer-config";
 import LayerCanvasRenderer from "./layer-canvas-renderer";
 import { Rect } from "../../cocoa/geometry/rect";
 import { AffineTransform } from "../../cocoa/affine-transform";
 import { Color } from "../../platform/types/color";
 import { CustomRenderCmd, CanvasRenderCmd as NodeCanvasRenderCmd } from "../../base-nodes/node-canvas-render-cmd";
+import { ServiceLocator } from "../../service-locator";
 
 /**
  * LayerColor's Canvas render command
@@ -46,7 +46,7 @@ export default class LayerColorCanvasRenderer extends LayerCanvasRenderer {
   }
 
   rendering(ctx, scaleX, scaleY) {
-    const wrapper = ctx || RendererConfig.getInstance().renderContext,
+    const wrapper = ctx || ServiceLocator.rendererConfig.renderContext,
       context = wrapper.getContext(),
       node = this._node,
       curColor = this._displayedColor,
@@ -65,7 +65,7 @@ export default class LayerColorCanvasRenderer extends LayerCanvasRenderer {
     wrapper.setTransform(this._worldTransform, scaleX, scaleY);
     context.fillRect(0, 0, locWidth, -locHeight);
 
-    RendererConfig.getInstance().incrementDrawCount();
+    ServiceLocator.rendererConfig.incrementDrawCount();
   }
 
   updateBlendFunc(blendFunc) {
@@ -104,7 +104,7 @@ export default class LayerColorCanvasRenderer extends LayerCanvasRenderer {
         );
 
         let child;
-        const _r = RendererConfig.getInstance().renderer;
+        const _r = ServiceLocator.rendererConfig.renderer;
         _r._turnToCacheMode(this.__instanceId);
         if (len > 0) {
           node.sortAllChildren();

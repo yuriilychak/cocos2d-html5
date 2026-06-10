@@ -28,12 +28,11 @@ import { LayerColor } from "./layer-color";
 import { Node } from "../base-nodes/node";
 import { Point } from "../cocoa/geometry/point";
 import { Color } from "../platform/types/color";
-import Game from "../boot/game";
-import { RendererConfig } from "../renderer/renderer-config";
 import {
   LayerGradientCanvasRenderer,
   LayerGradientWebGLRenderer
 } from "./renderer";
+import { ServiceLocator } from "../service-locator";
 
 /**
  * LayerGradient is a subclass of LayerColor that draws gradients across the background.
@@ -245,7 +244,7 @@ export class LayerGradient extends LayerColor {
   }
 
   _createRenderCmd() {
-    if (RendererConfig.getInstance().isCanvas)
+    if (ServiceLocator.rendererConfig.isCanvas)
       return new LayerGradientCanvasRenderer(this);
     else return new LayerGradientWebGLRenderer(this);
   }

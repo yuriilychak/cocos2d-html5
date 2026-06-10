@@ -26,8 +26,6 @@ import { WebGLRenderCmd as NodeWebGLRenderCmd } from "../base-nodes/node-webgl-r
 import { Rect } from "../cocoa/geometry/rect";
 import { Point } from "../cocoa/geometry/point";
 import { log, error, _LogInfos } from "../boot/debugger";
-import ShaderCache from "../shaders/CCShaderCache";
-import { RendererConfig } from "../renderer/renderer-config";
 import { rectPointsToPixels, contentScaleFactor } from "../platform/macro/utils";
 import {
   BLEND_DST,
@@ -37,6 +35,7 @@ import {
   SRC_ALPHA
 } from "../platform/macro/constants";
 import { FIX_ARTIFACTS_BY_STRECHING_TEXEL } from "../platform/config";
+import { ServiceLocator } from "../service-locator";
 
 //Sprite's WebGL render command
 export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
@@ -60,8 +59,8 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
     this._indices = null;
     this._polyUVDirty = true;
 
-    this._shaderProgram = ShaderCache.getInstance().programForKey(
-      RendererConfig.getInstance().isWebGL2
+    this._shaderProgram = ServiceLocator.shaderCache.programForKey(
+      ServiceLocator.rendererConfig.isWebGL2
         ? SHADER_SPRITE_POSITION_TEXTURECOLOR_MULTI
         : SHADER_SPRITE_POSITION_TEXTURECOLOR
     );
@@ -69,7 +68,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
 
   _onPolygonInfoChanged() {
     const node = this._node;
-    const renderer = RendererConfig.getInstance().renderer;
+    const renderer = ServiceLocator.rendererConfig.renderer;
     if (node && node._polygonInfo && node.hasPolygonInfo && node.hasPolygonInfo()) {
       this.vertexType = renderer.VertexType.CUSTOM;
       const tris = node._polygonInfo.triangles;
@@ -163,7 +162,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
     this.dispatchEvent("load");
 
     // Force refresh the render command list
-    RendererConfig.getInstance().renderer.childrenOrderDirty = true;
+    ServiceLocator.rendererConfig.renderer.childrenOrderDirty = true;
   }
 
   _setTextureCoords(rect, needConvert) {
@@ -281,7 +280,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
       this._updateBlendFunc();
 
       if (node._textureLoaded) {
-        RendererConfig.getInstance().renderer.childrenOrderDirty = true;
+        ServiceLocator.rendererConfig.renderer.childrenOrderDirty = true;
       }
     }
   }
@@ -415,7 +414,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
       );
     }
 
-    const stride = RendererConfig.getInstance().renderer.getSizePerVertex();
+    const stride = ServiceLocator.rendererConfig.renderer.getSizePerVertex();
     const vertices = this._vertices;
     const len = vertices.length;
     const ti = texIndex || 0;
@@ -488,7 +487,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
 
     let offset = vertexDataOffset;
     const color = this._color[0];
-    const stride = RendererConfig.getInstance().renderer.getSizePerVertex();
+    const stride = ServiceLocator.rendererConfig.renderer.getSizePerVertex();
     const ti = texIndex || 0;
 
     for (let i = 0; i < vertCount; i++) {

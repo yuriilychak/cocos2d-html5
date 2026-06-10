@@ -27,17 +27,14 @@ import { Node } from "../base-nodes/node";
 import { Point } from "../cocoa/geometry/point";
 import { Rect } from "../cocoa/geometry/rect";
 import Matrix4 from "../kazmath/mat4";
-import { RendererConfig } from "../renderer/renderer-config";
 import {
   SHADER_POSITION_COLOR,
   VERTEX_ATTRIB_COLOR,
   VERTEX_ATTRIB_POSITION
 } from "../platform/macro/constants";
 import { AffineTransform } from "../cocoa/affine-transform";
-import ShaderCache from "../shaders/CCShaderCache";
-import { EGLView } from "../platform/egl-view/egl-view";
 import { radiansToDegrees } from "../platform/macro/utils";
-import { GLStateCache } from "../shaders/CCGLStateCache";
+import { ServiceLocator } from "../service-locator";
 
 /**
  * Layer's WebGL render command
@@ -71,7 +68,7 @@ export class LayerColorWebGLRenderCmd extends LayerWebGLRenderCmd {
     this._color = new Uint32Array(1);
     this._vertexBuffer = null;
 
-    this._shaderProgram = ShaderCache.getInstance().programForKey(
+    this._shaderProgram = ServiceLocator.shaderCache.programForKey(
       SHADER_POSITION_COLOR
     );
   }
@@ -120,7 +117,7 @@ export class LayerColorWebGLRenderCmd extends LayerWebGLRenderCmd {
   }
 
   rendering(ctx) {
-    const gl = ctx || RendererConfig.getInstance().renderContext;
+    const gl = ctx || ServiceLocator.rendererConfig.renderContext;
     const node = this._node;
 
     if (!this._matrix) {
@@ -146,7 +143,7 @@ export class LayerColorWebGLRenderCmd extends LayerWebGLRenderCmd {
     }
 
     this._glProgramState.apply(this._matrix);
-    GLStateCache.getInstance().blendFunc(node._blendFunc.src, node._blendFunc.dst);
+    ServiceLocator.glStateCache.blendFunc(node._blendFunc.src, node._blendFunc.dst);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, this._vertexBuffer);
     gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
@@ -303,7 +300,7 @@ export class LayerGradientWebGLRenderCmd extends LayerColorWebGLRenderCmd {
   }
 
   rendering(ctx) {
-    const context = ctx || RendererConfig.getInstance().renderContext,
+    const context = ctx || ServiceLocator.rendererConfig.renderContext,
       node = this._node;
 
     if (!this._matrix) {
@@ -313,7 +310,7 @@ export class LayerGradientWebGLRenderCmd extends LayerColorWebGLRenderCmd {
 
     const clippingRect = this._getClippingRect();
     context.enable(context.SCISSOR_TEST);
-    EGLView.getInstance().setScissorInPoints(
+    ServiceLocator.eglView.setScissorInPoints(
       clippingRect.x,
       clippingRect.y,
       clippingRect.width,
@@ -338,7 +335,7 @@ export class LayerGradientWebGLRenderCmd extends LayerColorWebGLRenderCmd {
     }
 
     this._glProgramState.apply(this._matrix);
-    GLStateCache.getInstance().blendFunc(node._blendFunc.src, node._blendFunc.dst);
+    ServiceLocator.glStateCache.blendFunc(node._blendFunc.src, node._blendFunc.dst);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, this._vertexBuffer);
     gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);

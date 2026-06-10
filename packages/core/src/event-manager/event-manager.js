@@ -27,7 +27,6 @@ import { NewClass } from "../platform/class";
 import { Node } from "../base-nodes/node";
 import { Event, EventCustom, EventTouch } from "./event";
 import Game from "../boot/game";
-import { Director } from "../director/director";
 import { arrayRemoveObject, copyArray } from "../platform/macro/utils";
 import { isNumber } from "../boot/utils";
 import {
@@ -43,6 +42,7 @@ import {
   _EventListenerKeyboard
 } from "./event-extension";
 import { log, assert, _LogInfos } from "../boot/debugger";
+import { ServiceLocator } from "../service-locator";
 
 /**
  * @ignore
@@ -320,7 +320,7 @@ export default class EventManager {
         this._sortListenersOfFixedPriority(listenerID);
 
       if (dirtyFlag & EventManager.DIRTY_SCENE_GRAPH_PRIORITY) {
-        var rootNode = Director.getInstance().getRunningScene();
+        var rootNode = ServiceLocator.director.getRunningScene();
         if (rootNode)
           this._sortListenersOfSceneGraphPriority(listenerID, rootNode);
         else locFlagMap[listenerID] = EventManager.DIRTY_SCENE_GRAPH_PRIORITY;
@@ -348,7 +348,7 @@ export default class EventManager {
   }
 
   _sortEventListenersOfSceneGraphPriorityDes(l1, l2) {
-    var locNodePriorityMap = EventManager.getInstance()._nodePriorityMap,
+    var locNodePriorityMap = ServiceLocator.eventManager._nodePriorityMap,
       node1 = l1._getSceneGraphPriority(),
       node2 = l2._getSceneGraphPriority();
     if (!l2 || !node2 || !locNodePriorityMap[node2.__instanceId]) return -1;
@@ -539,7 +539,7 @@ export default class EventManager {
 
     // If the event was stopped, return directly.
     if (event.isStopped()) {
-      EventManager.getInstance()._updateTouchListeners(event);
+      ServiceLocator.eventManager._updateTouchListeners(event);
       return true;
     }
 
@@ -622,7 +622,7 @@ export default class EventManager {
 
     // If the event was stopped, return directly.
     if (event.isStopped()) {
-      EventManager.getInstance()._updateTouchListeners(event);
+      ServiceLocator.eventManager._updateTouchListeners(event);
       return true;
     }
     return false;

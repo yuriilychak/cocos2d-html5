@@ -28,8 +28,8 @@ import { NewClass } from "../../platform/class";
 import { AnimationFrame } from "./animation-frame";
 import { SpriteFrame } from "../sprite-frame";
 import { Rect } from "../../cocoa/geometry/rect";
-import TextureCache from "../../textures/texture-cache";
 import { arrayVerifyType } from "../../platform/macro/utils";
+import { ServiceLocator } from "../../service-locator";
 
 /**
  * <p>
@@ -131,7 +131,7 @@ export class Animation extends NewClass {
    * @param {String} fileName
    */
   addSpriteFrameWithFile(fileName) {
-    var texture = TextureCache.getInstance().addImage(fileName);
+    var texture = ServiceLocator.textureCache.addImage(fileName);
     var rect = new Rect(0, 0, 0, 0);
     rect.width = texture.width;
     rect.height = texture.height;

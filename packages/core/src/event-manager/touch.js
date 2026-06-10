@@ -25,7 +25,7 @@
 
 import { NewClass } from "../platform/class";
 import { Point } from "../cocoa/geometry/point";
-import { EGLView } from "../platform/egl-view/egl-view";
+import { ServiceLocator } from "../service-locator";
 
 /**
  * The touch event class
@@ -145,7 +145,7 @@ export default class Touch extends NewClass {
     this._id = id;
     if (!this._startPointCaptured) {
       this._startPoint = new Point(this._point);
-      EGLView.getInstance()._convertPointWithScale(this._startPoint);
+      ServiceLocator.eglView._convertPointWithScale(this._startPoint);
       this._startPointCaptured = true;
     }
   }

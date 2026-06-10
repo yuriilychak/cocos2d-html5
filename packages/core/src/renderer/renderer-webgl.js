@@ -22,9 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { RendererConfig } from "./renderer-config";
 import { Color } from "../platform/types/color";
-import Sys from "../boot/sys";
 import { arrayRemoveObject } from "../platform/macro/utils";
 import {
   BATCH_VERTEX_COUNT,
@@ -34,10 +32,9 @@ import {
   VERTEX_ATTRIB_TEX_INDEX,
   SHADER_SPRITE_POSITION_TEXTURECOLOR_MULTI
 } from "../platform/macro/constants";
-import { GLStateCache } from "../shaders/CCGLStateCache";
-import ShaderCache from "../shaders/CCShaderCache";
 import { GLProgramState } from "../shaders/CCGLProgramState";
 import Matrix4 from "../kazmath/mat4";
+import { ServiceLocator } from "../service-locator";
 
 // Internal variables
 // Batching general informations
@@ -83,7 +80,7 @@ var _batchedInfo = {
 // Inspired from @Heishe's gotta-batch-them-all branch
 // https://github.com/Talisca/cocos2d-html5/commit/de731f16414eb9bcaa20480006897ca6576d362c
 function updateBuffer(numVertex) {
-  var gl = RendererConfig.getInstance().renderContext;
+  var gl = ServiceLocator.rendererConfig.renderContext;
   // Update index buffer size
   if (_indexBuffer) {
     var indexCount = Math.ceil(numVertex / 4) * 6;
@@ -119,7 +116,7 @@ function updateBuffer(numVertex) {
 // Inspired from @Heishe's gotta-batch-them-all branch
 // https://github.com/Talisca/cocos2d-html5/commit/de731f16414eb9bcaa20480006897ca6576d362c
 function initQuadBuffer(numVertex) {
-  var gl = RendererConfig.getInstance().renderContext;
+  var gl = ServiceLocator.rendererConfig.renderContext;
   if (_indexBuffer === null) {
     // TODO do user need to release the memory ?
     _vertexBuffer = gl.createBuffer();
@@ -153,15 +150,15 @@ var rendererWebGL = {
   _clearColor: new Color(0, 0, 0, 255), //background color,default BLACK
 
   init: function () {
-    var gl = RendererConfig.getInstance().renderContext;
+    var gl = ServiceLocator.rendererConfig.renderContext;
     gl.disable(gl.CULL_FACE);
     gl.disable(gl.DEPTH_TEST);
 
     // Enable the WebGL2 multi-texture batcher when available.
-    _multiTexture = RendererConfig.getInstance().isWebGL2;
+    _multiTexture = ServiceLocator.rendererConfig.isWebGL2;
     _sizePerVertex = _multiTexture ? 7 : 6;
     if (_multiTexture) {
-      _maxBatchTextures = RendererConfig.getInstance().getMaxBatchTextures();
+      _maxBatchTextures = ServiceLocator.rendererConfig.getMaxBatchTextures();
       _textureUnits = new Int32Array(_maxBatchTextures);
       for (var t = 0; t < _maxBatchTextures; ++t) {
         _textureUnits[t] = t;
@@ -175,7 +172,7 @@ var rendererWebGL = {
     this.mat4Identity = new Matrix4();
     this.mat4Identity.identity();
     initQuadBuffer(BATCH_VERTEX_COUNT);
-    if (Sys.getInstance().os === Sys.getInstance().OS_IOS) {
+    if (ServiceLocator.sys.os === ServiceLocator.sys.OS_IOS) {
       _IS_IOS = true;
     }
   },
@@ -191,7 +188,7 @@ var rendererWebGL = {
       return null;
     }
     if (!_multiProgramState) {
-      var program = ShaderCache.getInstance().programForKey(
+      var program = ServiceLocator.shaderCache.programForKey(
         SHADER_SPRITE_POSITION_TEXTURECOLOR_MULTI
       );
       _multiProgramState = GLProgramState.getOrCreateWithGLProgram(program);
@@ -301,7 +298,7 @@ var rendererWebGL = {
   _renderingToBuffer: function (renderTextureId) {
     renderTextureId = renderTextureId || this._currentID;
     var locCmds = this._cacheToBufferCmds[renderTextureId];
-    var ctx = RendererConfig.getInstance().renderContext;
+    var ctx = ServiceLocator.rendererConfig.renderContext;
     this.rendering(ctx, locCmds);
     this._removeCache(renderTextureId);
 
@@ -351,7 +348,7 @@ var rendererWebGL = {
   },
 
   clear: function () {
-    var gl = RendererConfig.getInstance().renderContext;
+    var gl = ServiceLocator.rendererConfig.renderContext;
     gl.clearColor(
       this._clearColor.r / 255,
       this._clearColor.g / 255,
@@ -362,7 +359,7 @@ var rendererWebGL = {
   },
 
   setDepthTest: function (enable) {
-    var gl = RendererConfig.getInstance().renderContext;
+    var gl = ServiceLocator.rendererConfig.renderContext;
     if (enable) {
       gl.clearDepth(1.0);
       gl.enable(gl.DEPTH_TEST);
@@ -545,7 +542,7 @@ var rendererWebGL = {
       return;
     }
 
-    var gl = RendererConfig.getInstance().renderContext;
+    var gl = ServiceLocator.rendererConfig.renderContext;
     var glProgramState = _batchedInfo.glProgramState;
     var uploadAll = _batchingSize > _maxVertexSize * 0.5;
 
@@ -554,7 +551,7 @@ var rendererWebGL = {
       glProgramState.getGLProgram()._updateProjectionUniform();
     }
 
-    GLStateCache.getInstance().blendFunc(_batchedInfo.blendSrc, _batchedInfo.blendDst);
+    ServiceLocator.glStateCache.blendFunc(_batchedInfo.blendSrc, _batchedInfo.blendDst);
 
     if (_batchedInfo.isMulti) {
       // Bind every accumulated texture to its own unit, then pad the remaining
@@ -562,16 +559,16 @@ var rendererWebGL = {
       // pointing at an incomplete texture.
       var u;
       for (u = 0; u < _batchTextureCount; ++u) {
-        GLStateCache.getInstance().bindTexture2DN(u, _batchTextures[u]);
+        ServiceLocator.glStateCache.bindTexture2DN(u, _batchTextures[u]);
       }
       for (u = _batchTextureCount; u < _maxBatchTextures; ++u) {
-        GLStateCache.getInstance().bindTexture2DN(u, _batchTextures[0]);
+        ServiceLocator.glStateCache.bindTexture2DN(u, _batchTextures[0]);
       }
       if (glProgramState) {
         glProgramState.getGLProgram().setTextureUnits(_textureUnits);
       }
     } else {
-      GLStateCache.getInstance().bindTexture2DN(0, _batchTextures[0]);
+      ServiceLocator.glStateCache.bindTexture2DN(0, _batchTextures[0]);
     }
 
     var stride = _sizePerVertex * 4;
@@ -631,7 +628,7 @@ var rendererWebGL = {
     }
     gl.drawElements(gl.TRIANGLES, _indexSize, gl.UNSIGNED_SHORT, 0);
 
-    RendererConfig.getInstance().incrementDrawCount();
+    ServiceLocator.rendererConfig.incrementDrawCount();
 
     if (_pureQuad) {
       _prevIndexSize = _indexSize;
@@ -652,7 +649,7 @@ var rendererWebGL = {
       i,
       len,
       cmd,
-      context = ctx || RendererConfig.getInstance().renderContext;
+      context = ctx || ServiceLocator.rendererConfig.renderContext;
 
     // Reset buffer for rendering
     context.bindBuffer(gl.ARRAY_BUFFER, null);

@@ -1,8 +1,7 @@
 import { assert, _LogInfos } from "../boot/debugger";
-import Game from "../boot/game";
-import Loader from "../boot/loader";
 import Path from "../boot/path";
 import { Texture2D } from "./texture-2d";
+import { ServiceLocator } from "../service-locator";
 
 export default class TextureCacheWebGLRenderer {
   constructor(textureCache) {
@@ -15,7 +14,7 @@ export default class TextureCacheWebGLRenderer {
       tex,
       ext;
     //remove judge(webgl)
-    if (!Game.getInstance()._rendererInitialized) {
+    if (!ServiceLocator.game._rendererInitialized) {
       locTexs = textureCache._loadedTexturesBefore;
     }
     tex = locTexs[url];
@@ -53,10 +52,10 @@ export default class TextureCacheWebGLRenderer {
 
     var locTexs = textureCache._textures;
     //remove judge(webgl)
-    if (!Game.getInstance()._rendererInitialized) {
+    if (!ServiceLocator.game._rendererInitialized) {
       locTexs = textureCache._loadedTexturesBefore;
     }
-    var tex = locTexs[url] || locTexs[Loader.getInstance()._getAliase(url)];
+    var tex = locTexs[url] || locTexs[ServiceLocator.loader._getAliase(url)];
     if (tex) {
       if (tex.isLoaded()) {
         cb && cb.call(target, tex);
@@ -75,11 +74,11 @@ export default class TextureCacheWebGLRenderer {
 
     tex = locTexs[url] = new Texture2D();
     tex.url = url;
-    var basePath = Loader.getInstance().getBasePath
-      ? Loader.getInstance().getBasePath()
-      : Loader.getInstance().resPath;
+    var basePath = ServiceLocator.loader.getBasePath
+      ? ServiceLocator.loader.getBasePath()
+      : ServiceLocator.loader.resPath;
     var textureCache = this._textureCache;
-    Loader.getInstance().loadImg(
+    ServiceLocator.loader.loadImg(
       Path.join(basePath || "", url),
       function (err, img) {
         if (err) return cb && cb.call(target, err);

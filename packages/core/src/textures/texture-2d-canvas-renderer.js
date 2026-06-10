@@ -1,10 +1,9 @@
 import { Rect } from "../cocoa/geometry/rect";
-import Sys from "../boot/sys";
-import TextureCache from "./texture-cache";
 import { Texture2D } from "./texture-2d";
 import {
   REPEAT
 } from "../platform/macro/constants";
+import { ServiceLocator } from "../service-locator";
 
 function renderToCache(image, cache) {
   var w = image.width;
@@ -136,7 +135,7 @@ function generateColorTextureFourChannel(texture, r, g, b, rect, canvas) {
   canvas.height = h;
 
   var context = canvas.getContext("2d");
-  var tintedImgCache = TextureCache.getInstance().getTextureColors(texture);
+  var tintedImgCache = ServiceLocator.textureCache.getTextureColors(texture);
   context.globalCompositeOperation = "lighter";
   context.drawImage(tintedImgCache[3], x, y, w, h, 0, 0, w, h);
   if (r > 0) {
@@ -297,7 +296,7 @@ export default class CanvasTextureRenderer {
   }
 
   _generateColorTexture(r, g, b, rect, canvas) {
-    if (Sys.getInstance()._supportCanvasNewBlendModes) {
+    if (ServiceLocator.sys._supportCanvasNewBlendModes) {
       return generateColorTextureMultiply(this._texture, r, g, b, rect, canvas);
     } else {
       return generateColorTextureFourChannel(

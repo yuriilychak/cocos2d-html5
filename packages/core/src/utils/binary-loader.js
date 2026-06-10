@@ -24,8 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import Loader from '../boot/loader';
 import { log } from '../boot/debugger';
+import { ServiceLocator } from "../service-locator";
 
 /**
  * Helper to convert from responseBody to a "responseText" like thing (IE compat).
@@ -56,7 +56,7 @@ export function _convertResponseBodyToText(binary) {
  * @param {Function} [cb]
  */
 export function loadBinary(url, cb) {
-    var self = Loader.getInstance();
+    var self = ServiceLocator.loader;
     var xhr = self.getXMLHttpRequest(),
         errInfo = "load " + url + " failed!";
     xhr.open("GET", url, true);
@@ -99,7 +99,7 @@ export function _str2Uint8Array(strData) {
  * @return {Uint8Array}
  */
 export function loadBinarySync(url) {
-    var self = Loader.getInstance();
+    var self = ServiceLocator.loader;
     var req = self.getXMLHttpRequest();
     req.timeout = 0;
     var errInfo = "load " + url + " failed!";
@@ -137,7 +137,7 @@ export function loadBinarySync(url) {
  * @function
  */
 export function initBinaryLoader() {
-    var loader = Loader.getInstance();
+    var loader = ServiceLocator.loader;
     loader.loadBinary = loadBinary;
     loader.loadBinary._IEFilter = _IEFilter;
     loader._str2Uint8Array = _str2Uint8Array;

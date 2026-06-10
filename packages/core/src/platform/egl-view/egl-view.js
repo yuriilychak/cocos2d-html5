@@ -28,8 +28,6 @@ import { NewClass } from "../class";
 import { Point } from "../../cocoa/geometry/point";
 import { Rect } from "../../cocoa/geometry/rect";
 import { Size } from "../../cocoa/geometry/size";
-import Game from "../../boot/game";
-import EventManager from "../../event-manager/event-manager";
 import Sys from "../../boot/sys";
 import { contentScaleFactor } from "../macro/utils";
 import { screen } from "../screen";
@@ -39,13 +37,12 @@ import { ContentStrategy } from "./content-strategy";
 import { ResolutionPolicy } from "./resolution-policy";
 import { DENSITYDPI_HIGH } from "./constants";
 import { log, _LogInfos } from "../../boot/debugger";
-import { RendererConfig } from "../../renderer/renderer-config";
-import { Director } from "../../director/director";
 import {
   ORIENTATION_AUTO,
   ORIENTATION_LANDSCAPE,
   ORIENTATION_PORTRAIT
 } from "../macro/constants";
+import { ServiceLocator } from "../../service-locator";
 
 var __sys = Sys.getInstance();
 
@@ -79,7 +76,7 @@ switch (__BrowserGetter.adaptationType) {
     break;
   case __sys.BROWSER_TYPE_CHROME:
     __BrowserGetter.__defineGetter__("target-densitydpi", function () {
-      return EGLView.getInstance()._targetDensityDPI;
+      return ServiceLocator.eglView._targetDensityDPI;
     });
     break;
   case __sys.BROWSER_TYPE_MIUI:
@@ -185,14 +182,14 @@ export class EGLView extends NewClass {
     __BrowserGetter.init(this);
 
     _t._frame =
-      Game.getInstance().container.parentNode === d.body
+      ServiceLocator.game.container.parentNode === d.body
         ? d.documentElement
-        : Game.getInstance().container.parentNode;
+        : ServiceLocator.game.container.parentNode;
     _t._frameSize = new Size(0, 0);
     _t._initFrameSize();
 
-    var w = Game.getInstance().canvas.width,
-      h = Game.getInstance().canvas.height;
+    var w = ServiceLocator.game.canvas.width,
+      h = ServiceLocator.game.canvas.height;
     _t._designResolutionSize = new Size(w, h);
     _t._originalDesignResolutionSize = new Size(w, h);
     _t._viewPortRect = new Rect(0, 0, w, h);
@@ -240,7 +237,7 @@ export class EGLView extends NewClass {
     if (this.setDesignResolutionSize) {
       view = this;
     } else {
-      view = EGLView.getInstance();
+      view = ServiceLocator.eglView;
     }
     if (view._orientationChanging) {
       return;
@@ -251,7 +248,7 @@ export class EGLView extends NewClass {
       prevFrameH = view._frameSize.height,
       prevRotated = view._isRotated;
     if (__sys.isMobile) {
-      var containerStyle = Game.getInstance().container.style,
+      var containerStyle = ServiceLocator.game.container.style,
         margin = containerStyle.margin;
       containerStyle.margin = "0";
       containerStyle.display = "none";
@@ -277,20 +274,20 @@ export class EGLView extends NewClass {
     }
     view._resizing = false;
 
-    EventManager.getInstance().dispatchCustomEvent("canvas-resize");
+    ServiceLocator.eventManager.dispatchCustomEvent("canvas-resize");
     if (view._resizeCallback) {
       view._resizeCallback.call();
     }
   }
 
   _orientationChange() {
-    EGLView.getInstance()._orientationChanging = true;
+    ServiceLocator.eglView._orientationChanging = true;
     if (__sys.isMobile) {
-      Game.getInstance().container.style.display = "none";
+      ServiceLocator.game.container.style.display = "none";
     }
     setTimeout(function () {
-      EGLView.getInstance()._orientationChanging = false;
-      EGLView.getInstance()._resizeEvent();
+      ServiceLocator.eglView._orientationChanging = false;
+      ServiceLocator.eglView._resizeEvent();
     }, 300);
   }
 
@@ -405,16 +402,16 @@ export class EGLView extends NewClass {
     ) {
       locFrameSize.width = w;
       locFrameSize.height = h;
-      Game.getInstance().container.style["-webkit-transform"] = "rotate(0deg)";
-      Game.getInstance().container.style.transform = "rotate(0deg)";
+      ServiceLocator.game.container.style["-webkit-transform"] = "rotate(0deg)";
+      ServiceLocator.game.container.style.transform = "rotate(0deg)";
       this._isRotated = false;
     } else {
       locFrameSize.width = h;
       locFrameSize.height = w;
-      Game.getInstance().container.style["-webkit-transform"] = "rotate(90deg)";
-      Game.getInstance().container.style.transform = "rotate(90deg)";
-      Game.getInstance().container.style["-webkit-transform-origin"] = "0px 0px 0px";
-      Game.getInstance().container.style.transformOrigin = "0px 0px 0px";
+      ServiceLocator.game.container.style["-webkit-transform"] = "rotate(90deg)";
+      ServiceLocator.game.container.style.transform = "rotate(90deg)";
+      ServiceLocator.game.container.style["-webkit-transform-origin"] = "0px 0px 0px";
+      ServiceLocator.game.container.style.transformOrigin = "0px 0px 0px";
       this._isRotated = true;
     }
   }
@@ -562,7 +559,7 @@ export class EGLView extends NewClass {
    */
   isOpenGLReady() {
     return (
-      Game.getInstance().canvas && RendererConfig.getInstance().renderContext
+      ServiceLocator.game.canvas && ServiceLocator.rendererConfig.renderContext
     );
   }
 
@@ -573,7 +570,7 @@ export class EGLView extends NewClass {
   setFrameZoomFactor(zoomFactor) {
     this._frameZoomFactor = zoomFactor;
     this.centerWindow();
-    Director.getInstance().setProjection(Director.getInstance().getProjection());
+    ServiceLocator.director.setProjection(ServiceLocator.director.getProjection());
   }
 
   /**
@@ -611,7 +608,7 @@ export class EGLView extends NewClass {
    * @return {Size}
    */
   getCanvasSize() {
-    return new Size(Game.getInstance().canvas.width, Game.getInstance().canvas.height);
+    return new Size(ServiceLocator.game.canvas.width, ServiceLocator.game.canvas.height);
   }
 
   /**
@@ -636,7 +633,7 @@ export class EGLView extends NewClass {
     this._frame.style.width = width + "px";
     this._frame.style.height = height + "px";
     this._resizeEvent();
-    Director.getInstance().setProjection(Director.getInstance().getProjection());
+    ServiceLocator.director.setProjection(ServiceLocator.director.getProjection());
   }
 
   /**
@@ -781,23 +778,23 @@ export class EGLView extends NewClass {
 
       vb.x = -vp.x / this._scaleX;
       vb.y = -vp.y / this._scaleY;
-      vb.width = Game.getInstance().canvas.width / this._scaleX;
-      vb.height = Game.getInstance().canvas.height / this._scaleY;
-      RendererConfig.getInstance().renderContext.setOffset &&
-        RendererConfig.getInstance().renderContext.setOffset(vp.x, -vp.y);
+      vb.width = ServiceLocator.game.canvas.width / this._scaleX;
+      vb.height = ServiceLocator.game.canvas.height / this._scaleY;
+      ServiceLocator.rendererConfig.renderContext.setOffset &&
+        ServiceLocator.rendererConfig.renderContext.setOffset(vp.x, -vp.y);
     }
 
     // reset director's member variables to fit visible rect
-    var director = Director.getInstance();
+    var director = ServiceLocator.director;
     director._winSizeInPoints.width = this._designResolutionSize.width;
     director._winSizeInPoints.height = this._designResolutionSize.height;
     policy.postApply(this);
 
-    if (RendererConfig.getInstance().isWebGL) {
+    if (ServiceLocator.rendererConfig.isWebGL) {
       // reset director's member variables to fit visible rect
       director.setGLDefaultValues();
-    } else if (RendererConfig.getInstance().isCanvas) {
-      RendererConfig.getInstance().renderer._allNeedDraw = true;
+    } else if (ServiceLocator.rendererConfig.isCanvas) {
+      ServiceLocator.rendererConfig.renderer._allNeedDraw = true;
     }
 
     this._originalScaleX = this._scaleX;
@@ -856,7 +853,7 @@ export class EGLView extends NewClass {
     var locFrameZoomFactor = this._frameZoomFactor,
       locScaleX = this._scaleX,
       locScaleY = this._scaleY;
-    RendererConfig.getInstance().renderContext.viewport(
+    ServiceLocator.rendererConfig.renderContext.viewport(
       x * locScaleX * locFrameZoomFactor +
         this._viewPortRect.x * locFrameZoomFactor,
       y * locScaleY * locFrameZoomFactor +
@@ -903,7 +900,7 @@ export class EGLView extends NewClass {
       _scissorRect.y = sy;
       _scissorRect.width = sw;
       _scissorRect.height = sh;
-      RendererConfig.getInstance().renderContext.scissor(sx, sy, sw, sh);
+      ServiceLocator.rendererConfig.renderContext.scissor(sx, sy, sw, sh);
     }
   }
 
@@ -912,7 +909,7 @@ export class EGLView extends NewClass {
    * @return {Boolean}
    */
   isScissorEnabled() {
-    return RendererConfig.getInstance().renderContext.isEnabled(
+    return ServiceLocator.rendererConfig.renderContext.isEnabled(
       gl.SCISSOR_TEST
     );
   }

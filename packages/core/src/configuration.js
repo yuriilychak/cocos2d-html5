@@ -24,11 +24,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import Loader from "./boot/loader";
 import { log, assert, _LogInfos } from "./boot/debugger";
-import { RendererConfig } from "./renderer/renderer-config";
 import { ENGINE_VERSION } from "./platform/config";
 import { checkGLErrorDebug } from "./platform/macro/utils";
+import { ServiceLocator } from "./service-locator";
 
 /**
  * Class that contains some openGL variables
@@ -135,10 +134,10 @@ export class Configuration {
   dumpInfo() {}
 
   gatherGPUInfo() {
-    if (RendererConfig.getInstance().isCanvas) return;
+    if (ServiceLocator.rendererConfig.isCanvas) return;
 
     if (!this._inited) this._init();
-    const gl = RendererConfig.getInstance().renderContext;
+    const gl = ServiceLocator.rendererConfig.renderContext;
     const locValueDict = this._valueDict;
     locValueDict["gl.vendor"] = gl.getParameter(gl.VENDOR);
     locValueDict["gl.renderer"] = gl.getParameter(gl.RENDERER);
@@ -186,7 +185,7 @@ export class Configuration {
 
   loadConfigFile(url) {
     if (!this._inited) this._init();
-    const dict = Loader.getInstance().getRes(url);
+    const dict = ServiceLocator.loader.getRes(url);
     if (!dict) throw new Error("Please load the resource first : " + url);
     assert(dict, _LogInfos.configuration_loadConfigFile_2, url);
 

@@ -25,7 +25,7 @@
  ****************************************************************************/
 
 import { log } from "../boot/debugger";
-import { GLStateCache } from "./CCGLStateCache";
+import { ServiceLocator } from "../service-locator";
 
 const types = {
   GL_FLOAT: 0,
@@ -152,7 +152,7 @@ export class UniformValue {
           this._uniform._location,
           this._value
         );
-        GLStateCache.getInstance().bindTexture2DN(this._value, this._textureId);
+        ServiceLocator.glStateCache.bindTexture2DN(this._value, this._textureId);
         break;
       default:
     }

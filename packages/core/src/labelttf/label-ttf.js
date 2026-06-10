@@ -26,20 +26,18 @@
 
 import { Sprite } from "../sprites/sprite";
 import { Node } from "../base-nodes/node";
-import Game from "../boot/game";
 import { Point } from "../cocoa/geometry/point";
 import { Color } from "../platform/types/color";
 import { FontDefinition } from "../platform/types/font-definition";
 import { Size } from "../cocoa/geometry/size";
 import { log, _LogInfos } from "../boot/debugger";
-import { RendererConfig } from "../renderer/renderer-config";
 import {
   TEXT_ALIGNMENT_LEFT,
   TEXT_ALIGNMENT_CENTER,
   VERTICAL_TEXT_ALIGNMENT_TOP
 } from "../platform/types/color";
-import { EGLView } from "../platform/egl-view/egl-view";
 import { contentScaleFactor } from "../platform/macro/utils";
+import { ServiceLocator } from "../service-locator";
 
 /**
  * <p>LabelTTF is a subclass of TextureNode that knows how to render text labels with system font or a ttf font file<br/>
@@ -129,7 +127,7 @@ export class LabelTTF extends Sprite {
     // In order to render it crisp, we request devicePixelRatio times the
     // font size and scale it down 1/devicePixelRatio.
     this._scaleX = this._scaleY =
-      1 / EGLView.getInstance().getDevicePixelRatio();
+      1 / ServiceLocator.eglView.getDevicePixelRatio();
     return true;
   }
   _setUpdateTextureDirty() {
@@ -616,7 +614,7 @@ export class LabelTTF extends Sprite {
    */
   getScale() {
     if (this._scaleX !== this._scaleY) log(_LogInfos.Node_getScale);
-    return this._scaleX * EGLView.getInstance().getDevicePixelRatio();
+    return this._scaleX * ServiceLocator.eglView.getDevicePixelRatio();
   }
   /**
    * Sets the scale factor of the node. 1.0 is the default scale factor. This function can modify the X and Y scale at the same time.
@@ -625,7 +623,7 @@ export class LabelTTF extends Sprite {
    * @param {Number} [scaleY=]
    */
   setScale(scale, scaleY) {
-    var ratio = EGLView.getInstance().getDevicePixelRatio();
+    var ratio = ServiceLocator.eglView.getDevicePixelRatio();
     this._scaleX = scale / ratio;
     this._scaleY = (scaleY || scaleY === 0 ? scaleY : scale) / ratio;
     this._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
@@ -636,7 +634,7 @@ export class LabelTTF extends Sprite {
    * @return {Number} The scale factor on X axis.
    */
   getScaleX() {
-    return this._scaleX * EGLView.getInstance().getDevicePixelRatio();
+    return this._scaleX * ServiceLocator.eglView.getDevicePixelRatio();
   }
   /**
    * <p>
@@ -647,7 +645,7 @@ export class LabelTTF extends Sprite {
    * @param {Number} newScaleX The scale factor on X axis.
    */
   setScaleX(newScaleX) {
-    this._scaleX = newScaleX / EGLView.getInstance().getDevicePixelRatio();
+    this._scaleX = newScaleX / ServiceLocator.eglView.getDevicePixelRatio();
     this._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
   }
   /**
@@ -656,7 +654,7 @@ export class LabelTTF extends Sprite {
    * @return {Number} The scale factor on Y axis.
    */
   getScaleY() {
-    return this._scaleY * EGLView.getInstance().getDevicePixelRatio();
+    return this._scaleY * ServiceLocator.eglView.getDevicePixelRatio();
   }
   /**
    * <p>
@@ -667,7 +665,7 @@ export class LabelTTF extends Sprite {
    * @param {Number} newScaleY The scale factor on Y axis.
    */
   setScaleY(newScaleY) {
-    this._scaleY = newScaleY / EGLView.getInstance().getDevicePixelRatio();
+    this._scaleY = newScaleY / ServiceLocator.eglView.getDevicePixelRatio();
     this._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
   }
   /*
@@ -696,7 +694,7 @@ export class LabelTTF extends Sprite {
       (!this._string || this._string === "") &&
       this._string !== this._originalText
     )
-      RendererConfig.getInstance().renderer.childrenOrderDirty = true;
+      ServiceLocator.rendererConfig.renderer.childrenOrderDirty = true;
     this._string = this._originalText;
   }
   /**
@@ -826,7 +824,7 @@ export class LabelTTF extends Sprite {
    */
   getContentSize() {
     if (this._needUpdateTexture) this._renderCmd._updateTTF();
-    var ratio = EGLView.getInstance().getDevicePixelRatio();
+    var ratio = ServiceLocator.eglView.getDevicePixelRatio();
     return new Size(
       this._contentSize.width / ratio,
       this._contentSize.height / ratio
@@ -835,13 +833,13 @@ export class LabelTTF extends Sprite {
   _getWidth() {
     if (this._needUpdateTexture) this._renderCmd._updateTTF();
     return (
-      this._contentSize.width / EGLView.getInstance().getDevicePixelRatio()
+      this._contentSize.width / ServiceLocator.eglView.getDevicePixelRatio()
     );
   }
   _getHeight() {
     if (this._needUpdateTexture) this._renderCmd._updateTTF();
     return (
-      this._contentSize.height / EGLView.getInstance().getDevicePixelRatio()
+      this._contentSize.height / ServiceLocator.eglView.getDevicePixelRatio()
     );
   }
   setTextureRect(rect, rotated, untrimmedSize) {
@@ -871,7 +869,7 @@ export class LabelTTF extends Sprite {
     this._onCacheCanvasMode = onCacheMode;
   }
   _createRenderCmd() {
-    if (RendererConfig.getInstance().isWebGL)
+    if (ServiceLocator.rendererConfig.isWebGL)
       return new LabelTTF.WebGLRenderCmd(this);
     else if (this._onCacheCanvasMode)
       return new LabelTTF.CacheCanvasRenderCmd(this);

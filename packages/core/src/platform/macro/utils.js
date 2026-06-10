@@ -27,10 +27,9 @@
 import { RAD, DEG } from "./constants";
 import { Point } from "../../cocoa/geometry/point";
 import { Rect } from "../../cocoa/geometry/rect";
-import { RendererConfig } from "../../renderer/renderer-config";
 import { Size } from "../../cocoa/geometry/size";
 import { log, _LogInfos } from "../../boot/debugger";
-import { Director } from "../../director/director";
+import { ServiceLocator } from "../../service-locator";
 
 /**
  * <p>
@@ -165,7 +164,7 @@ export function disableDefaultGLStates() {
  * @function
  */
 export function incrementGLDraws(addNumber) {
-  RendererConfig.getInstance().incrementDrawCount(addNumber);
+  ServiceLocator.rendererConfig.incrementDrawCount(addNumber);
 }
 
 /**
@@ -177,7 +176,7 @@ export function incrementGLDraws(addNumber) {
  * @function
  */
 export function contentScaleFactor() {
-  return Director.getInstance()._contentScaleFactor;
+  return ServiceLocator.director._contentScaleFactor;
 }
 
 /**
@@ -288,8 +287,8 @@ export function NextPOT(x) {
  * @function
  */
 export function checkGLErrorDebug() {
-  if (RendererConfig.getInstance().isWebGL) {
-    var _error = RendererConfig.getInstance().renderContext.getError();
+  if (ServiceLocator.rendererConfig.isWebGL) {
+    var _error = ServiceLocator.rendererConfig.renderContext.getError();
     if (_error) {
       log(_LogInfos.checkGLErrorDebug, _error);
     }

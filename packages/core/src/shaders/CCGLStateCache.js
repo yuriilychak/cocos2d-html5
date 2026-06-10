@@ -24,9 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { RendererConfig } from "../renderer/renderer-config";
-import { KMGLMatrix } from "../kazmath/gl/km-gl-matrix";
 import { TEXTURE_ATLAS_USE_VAO } from "../platform/config";
+import { ServiceLocator } from "../service-locator";
 
 export class GLStateCache {
   static MAX_ACTIVE_TEXTURE = 16;
@@ -51,7 +50,7 @@ export class GLStateCache {
   }
 
   invalidateStateCache() {
-    KMGLMatrix.getInstance().freeAll();
+    ServiceLocator.kmglMatrix.freeAll();
     this._currentProjectionMatrix = -1;
     this._currentShaderProgram = -1;
     for (let i = 0; i < GLStateCache.MAX_ACTIVE_TEXTURE; i++) {
@@ -65,7 +64,7 @@ export class GLStateCache {
   useProgram(program) {
     if (program !== this._currentShaderProgram) {
       this._currentShaderProgram = program;
-      RendererConfig.getInstance().renderContext.useProgram(program);
+      ServiceLocator.rendererConfig.renderContext.useProgram(program);
     }
   }
 
@@ -75,7 +74,7 @@ export class GLStateCache {
   }
 
   setBlending(sfactor, dfactor) {
-    const ctx = RendererConfig.getInstance().renderContext;
+    const ctx = ServiceLocator.rendererConfig.renderContext;
     if (sfactor === ctx.ONE && dfactor === ctx.ZERO) {
       ctx.disable(ctx.BLEND);
     } else {
@@ -98,7 +97,7 @@ export class GLStateCache {
     if (sfactor !== this._blendingSource || dfactor !== this._blendingDest) {
       this._blendingSource = sfactor;
       this._blendingDest = dfactor;
-      const ctx = RendererConfig.getInstance().renderContext;
+      const ctx = ServiceLocator.rendererConfig.renderContext;
       if (sfactor === ctx.ONE && dfactor === ctx.ZERO) {
         ctx.disable(ctx.BLEND);
       } else {
@@ -110,7 +109,7 @@ export class GLStateCache {
   }
 
   blendResetToCache() {
-    const ctx = RendererConfig.getInstance().renderContext;
+    const ctx = ServiceLocator.rendererConfig.renderContext;
     ctx.blendEquation(ctx.FUNC_ADD);
     this.setBlending(this._blendingSource, this._blendingDest);
   }
@@ -127,7 +126,7 @@ export class GLStateCache {
     if (this._currentBoundTexture[textureUnit] === textureId) return;
     this._currentBoundTexture[textureUnit] = textureId;
 
-    const ctx = RendererConfig.getInstance().renderContext;
+    const ctx = ServiceLocator.rendererConfig.renderContext;
     ctx.activeTexture(ctx.TEXTURE0 + textureUnit);
     if (textureId) ctx.bindTexture(ctx.TEXTURE_2D, textureId._webTextureObj);
     else ctx.bindTexture(ctx.TEXTURE_2D, null);
@@ -140,7 +139,7 @@ export class GLStateCache {
   deleteTextureN(textureUnit, textureId) {
     if (textureId === this._currentBoundTexture[textureUnit])
       this._currentBoundTexture[textureUnit] = -1;
-    RendererConfig.getInstance().renderContext.deleteTexture(textureId._webTextureObj);
+    ServiceLocator.rendererConfig.renderContext.deleteTexture(textureId._webTextureObj);
   }
 
   bindVAO(vaoId) {
@@ -158,17 +157,17 @@ export class GLStateCache {
 }
 
 // Backward-compatible standalone functions (used by external packages)
-export const glInvalidateStateCache = () => GLStateCache.getInstance().invalidateStateCache();
-export const glUseProgram = (program) => GLStateCache.getInstance().useProgram(program);
-export const glDeleteProgram = (program) => GLStateCache.getInstance().deleteProgram(program);
-export const setBlending = (sfactor, dfactor) => GLStateCache.getInstance().setBlending(sfactor, dfactor);
-export const glBlendFunc = (sfactor, dfactor) => GLStateCache.getInstance().blendFunc(sfactor, dfactor);
-export const glBlendFuncForParticle = (sfactor, dfactor) => GLStateCache.getInstance().blendFuncForParticle(sfactor, dfactor);
-export const glBlendResetToCache = () => GLStateCache.getInstance().blendResetToCache();
-export const setProjectionMatrixDirty = () => GLStateCache.getInstance().setProjectionMatrixDirty();
-export const glBindTexture2D = (textureId) => GLStateCache.getInstance().bindTexture2D(textureId);
-export const glBindTexture2DN = (textureUnit, textureId) => GLStateCache.getInstance().bindTexture2DN(textureUnit, textureId);
-export const glDeleteTexture = (textureId) => GLStateCache.getInstance().deleteTexture(textureId);
-export const glDeleteTextureN = (textureUnit, textureId) => GLStateCache.getInstance().deleteTextureN(textureUnit, textureId);
-export const glBindVAO = (vaoId) => GLStateCache.getInstance().bindVAO(vaoId);
-export const glEnable = (flags) => GLStateCache.getInstance().enable(flags);
+export const glInvalidateStateCache = () => ServiceLocator.glStateCache.invalidateStateCache();
+export const glUseProgram = (program) => ServiceLocator.glStateCache.useProgram(program);
+export const glDeleteProgram = (program) => ServiceLocator.glStateCache.deleteProgram(program);
+export const setBlending = (sfactor, dfactor) => ServiceLocator.glStateCache.setBlending(sfactor, dfactor);
+export const glBlendFunc = (sfactor, dfactor) => ServiceLocator.glStateCache.blendFunc(sfactor, dfactor);
+export const glBlendFuncForParticle = (sfactor, dfactor) => ServiceLocator.glStateCache.blendFuncForParticle(sfactor, dfactor);
+export const glBlendResetToCache = () => ServiceLocator.glStateCache.blendResetToCache();
+export const setProjectionMatrixDirty = () => ServiceLocator.glStateCache.setProjectionMatrixDirty();
+export const glBindTexture2D = (textureId) => ServiceLocator.glStateCache.bindTexture2D(textureId);
+export const glBindTexture2DN = (textureUnit, textureId) => ServiceLocator.glStateCache.bindTexture2DN(textureUnit, textureId);
+export const glDeleteTexture = (textureId) => ServiceLocator.glStateCache.deleteTexture(textureId);
+export const glDeleteTextureN = (textureUnit, textureId) => ServiceLocator.glStateCache.deleteTextureN(textureUnit, textureId);
+export const glBindVAO = (vaoId) => ServiceLocator.glStateCache.bindVAO(vaoId);
+export const glEnable = (flags) => ServiceLocator.glStateCache.enable(flags);
