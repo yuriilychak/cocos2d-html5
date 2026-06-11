@@ -78,7 +78,7 @@ export class ProtectedNode extends Node {
       assert(!child.parent, "child already added. It can't be added again");
 
       localZOrder = localZOrder || child.getLocalZOrder();
-      if (tag) child.setTag(tag);
+      if (tag) child.tag = tag;
 
       this._insertProtectedChild(child, localZOrder);
       child.parent = this;
@@ -100,7 +100,7 @@ export class ProtectedNode extends Node {
     getProtectedChildByTag(tag) {
       assert(tag !== NODE_TAG_INVALID, "Invalid tag");
       for (var i = 0, len = locChildren.length; i < len; i++)
-        if (locChildren.getTag() === tag) return locChildren[i];
+        if (locChildren.tag === tag) return locChildren[i];
       return null;
     }
 

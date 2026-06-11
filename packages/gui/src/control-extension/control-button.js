@@ -299,7 +299,7 @@ export class ControlButton extends Control {
         if (this.zoomOnTouchDown) {
             var scaleValue = (this.isHighlighted() && this.enabled && !this.isSelected()) ? 1.1 : 1.0;
             var zoomAction = new ScaleTo(0.05, scaleValue);
-            zoomAction.setTag(CONTROL_ZOOM_ACTION_TAG);
+            zoomAction.tag = CONTROL_ZOOM_ACTION_TAG;;
             this.runAction(zoomAction);
         }
     }

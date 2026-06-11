@@ -22,10 +22,38 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BlendFunc, Color, Node, Path, Point, Rect, Size, Sprite, log, ServiceLocator } from "@aspect/core";
+import {
+  BlendFunc,
+  Color,
+  Node,
+  Path,
+  Point,
+  Rect,
+  Size,
+  Sprite,
+  log,
+  ServiceLocator
+} from "@aspect/core";
 import { ParticleSystem } from "@aspect/particle";
 import { TMXTiledMap } from "@aspect/tilemap";
-import { helper, Layout, LayoutComponent, Button, CheckBox, ImageView, ListView, LoadingBar, PageView, ScrollView, Slider, Text, TextAtlas, TextBMFont, TextField, Widget } from "@aspect/ccui";
+import {
+  helper,
+  Layout,
+  LayoutComponent,
+  Button,
+  CheckBox,
+  ImageView,
+  ListView,
+  LoadingBar,
+  PageView,
+  ScrollView,
+  Slider,
+  Text,
+  TextAtlas,
+  TextBMFont,
+  TextField,
+  Widget
+} from "@aspect/ccui";
 
 import { Armature } from "../armature/armature.js";
 import { armatureDataManager } from "../armature/utils/armature-data-manager.js";
@@ -108,7 +136,7 @@ parser.generalAttributes = function (node, json) {
 
   if (json["Alpha"] != null) node.setOpacity(json["Alpha"]);
 
-  node.setTag(json["Tag"] || 0);
+  node.tag = json["Tag"] || 0;
 
   var actionTag = json["ActionTag"] || 0;
   var extensionData = new ComExtensionData();
@@ -284,7 +312,7 @@ parser.widgetAttributes = function (widget, json, enableContent) {
   var alpha = json["Alpha"];
   if (alpha != null) widget.setOpacity(alpha);
 
-  widget.setTag(json["Tag"] || 0);
+  widget.tag = json["Tag"] || 0;
 
   var touchEnabled = json["TouchEnable"] || false;
   widget.setTouchEnabled(touchEnabled);
@@ -983,10 +1011,7 @@ parser.initListView = function (json, resourcePath) {
     );
   }
 
-  var directionType = getParam(
-    json["DirectionType"],
-    ListView.DIR_HORIZONTAL
-  );
+  var directionType = getParam(json["DirectionType"], ListView.DIR_HORIZONTAL);
   var verticalType = getParam(json["VerticalType"], "Align_Left");
   var horizontalType = getParam(json["HorizontalType"], "Align_Top");
   if (!directionType) {
@@ -1212,7 +1237,7 @@ parser.initProjectNode = function (json, resourcePath) {
       var obj = load(file, resourcePath);
       parser.generalAttributes(obj.node, json);
       if (obj.action && obj.node) {
-        obj.action.tag = obj.node.tag;
+        obj.action.tag = obj.node.#tag;
         var InnerActionSpeed = json["InnerActionSpeed"];
         if (InnerActionSpeed !== undefined)
           obj.action.setTimeSpeed(InnerActionSpeed);

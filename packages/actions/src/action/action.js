@@ -11,7 +11,7 @@ export default class Action extends NewClass {
   //***********variables*************
   originalTarget = null;
   target = null;
-  tag = ACTION_TAG_INVALID;
+  #tag = ACTION_TAG_INVALID;
 
   //**************Public Functions***********
 
@@ -22,7 +22,7 @@ export default class Action extends NewClass {
     super();
     this.originalTarget = null;
     this.target = null;
-    this.tag = ACTION_TAG_INVALID;
+    this.#tag = ACTION_TAG_INVALID;
   }
 
   /**
@@ -123,15 +123,15 @@ export default class Action extends NewClass {
    * get tag number.
    * @return {Number}
    */
-  getTag() {
-    return this.tag;
+  get tag() {
+    return this.#tag;
   }
 
   /**
    * set tag number.
-   * @param {Number} tag
+   * @param {Number} value
    */
-  setTag(tag) {
-    this.tag = tag;
+  set tag(value) {
+    this.#tag = value;
   }
 }

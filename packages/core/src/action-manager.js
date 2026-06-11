@@ -24,8 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass } from './platform/class';
-import { log, assert, _LogInfos } from './boot/debugger';
+import { NewClass } from "./platform/class";
+import { log, assert, _LogInfos } from "./boot/debugger";
 import { ACTION_TAG_INVALID } from "./platform/macro/constants";
 import { ServiceLocator } from "./service-locator";
 
@@ -34,12 +34,12 @@ import { ServiceLocator } from "./service-locator";
  * var element = new HashElement();
  */
 export var HashElement = function () {
-    this.actions = [];
-    this.target = null;
-    this.actionIndex = 0;
-    this.currentAction = null;
-    this.paused = false;
-    this.lock = false;
+  this.actions = [];
+  this.target = null;
+  this.actionIndex = 0;
+  this.currentAction = null;
+  this.paused = false;
+  this.lock = false;
 };
 
 /**
@@ -54,245 +54,247 @@ export var HashElement = function () {
  * var mng = new ActionManager();
  */
 export class ActionManager extends NewClass {
-    _searchElementByTarget(arr, target) {
-        for (var k = 0; k < arr.length; k++) {
-            if (target === arr[k].target)
-                return arr[k];
+  _searchElementByTarget(arr, target) {
+    for (var k = 0; k < arr.length; k++) {
+      if (target === arr[k].target) return arr[k];
+    }
+    return null;
+  }
+
+  constructor() {
+    super();
+    this._elementPool = [];
+    this._hashTargets = {};
+    this._arrayTargets = [];
+    this._currentTarget = null;
+  }
+
+  _getElement(target, paused) {
+    var element = this._elementPool.pop();
+    if (!element) {
+      element = new HashElement();
+    }
+    element.target = target;
+    element.paused = !!paused;
+    return element;
+  }
+
+  _putElement(element) {
+    element.actions.length = 0;
+    element.actionIndex = 0;
+    element.currentAction = null;
+    element.paused = false;
+    element.target = null;
+    element.lock = false;
+    this._elementPool.push(element);
+  }
+
+  addAction(action, target, paused) {
+    if (!action)
+      throw new Error("ActionManager.addAction(): action must be non-null");
+    if (!target)
+      throw new Error("ActionManager.addAction(): target must be non-null");
+
+    var element = this._hashTargets[target.__instanceId];
+    if (!element) {
+      element = this._getElement(target, paused);
+      this._hashTargets[target.__instanceId] = element;
+      this._arrayTargets.push(element);
+    } else if (!element.actions) {
+      element.actions = [];
+    }
+
+    element.actions.push(action);
+    action.startWithTarget(target);
+  }
+
+  removeAllActions() {
+    var locTargets = this._arrayTargets;
+    for (var i = 0; i < locTargets.length; i++) {
+      var element = locTargets[i];
+      if (element) this.removeAllActionsFromTarget(element.target, true);
+    }
+  }
+
+  removeAllActionsFromTarget(target, forceDelete) {
+    if (target == null) return;
+    var element = this._hashTargets[target.__instanceId];
+    if (element) {
+      element.actions.length = 0;
+      this._deleteHashElement(element);
+    }
+  }
+
+  removeAction(action) {
+    if (action == null) return;
+    var target = action.getOriginalTarget();
+    var element = this._hashTargets[target.__instanceId];
+
+    if (element) {
+      for (var i = 0; i < element.actions.length; i++) {
+        if (element.actions[i] === action) {
+          element.actions.splice(i, 1);
+          if (element.actionIndex >= i) element.actionIndex--;
+          break;
         }
-        return null;
+      }
+    } else {
+      log(_LogInfos.ActionManager_removeAction);
     }
+  }
 
-    constructor() {
-        super();
-        this._elementPool = [];
-        this._hashTargets = {};
-        this._arrayTargets = [];
-        this._currentTarget = null;
-    }
+  removeActionByTag(tag, target) {
+    if (tag === ACTION_TAG_INVALID) log(_LogInfos.ActionManager_addAction);
 
-    _getElement(target, paused) {
-        var element = this._elementPool.pop();
-        if (!element) {
-            element = new HashElement();
+    assert(target, _LogInfos.ActionManager_addAction);
+
+    var element = this._hashTargets[target.__instanceId];
+
+    if (element) {
+      var limit = element.actions.length;
+      for (var i = 0; i < limit; ++i) {
+        var action = element.actions[i];
+        if (
+          action &&
+          action.tag === tag &&
+          action.getOriginalTarget() === target
+        ) {
+          this._removeActionAtIndex(i, element);
+          break;
         }
-        element.target = target;
-        element.paused = !!paused;
-        return element;
+      }
     }
+  }
 
-    _putElement(element) {
-        element.actions.length = 0;
-        element.actionIndex = 0;
-        element.currentAction = null;
-        element.paused = false;
-        element.target = null;
-        element.lock = false;
-        this._elementPool.push(element);
-    }
+  getActionByTag(tag, target) {
+    if (tag === ACTION_TAG_INVALID) log(_LogInfos.ActionManager_getActionByTag);
 
-    addAction(action, target, paused) {
-        if (!action)
-            throw new Error("ActionManager.addAction(): action must be non-null");
-        if (!target)
-            throw new Error("ActionManager.addAction(): target must be non-null");
-
-        var element = this._hashTargets[target.__instanceId];
-        if (!element) {
-            element = this._getElement(target, paused);
-            this._hashTargets[target.__instanceId] = element;
-            this._arrayTargets.push(element);
+    var element = this._hashTargets[target.__instanceId];
+    if (element) {
+      if (element.actions != null) {
+        for (var i = 0; i < element.actions.length; ++i) {
+          var action = element.actions[i];
+          if (action && action.tag === tag) return action;
         }
-        else if (!element.actions) {
-            element.actions = [];
+      }
+      log(_LogInfos.ActionManager_getActionByTag_2, tag);
+    }
+    return null;
+  }
+
+  numberOfRunningActionsInTarget(target) {
+    var element = this._hashTargets[target.__instanceId];
+    if (element) return element.actions ? element.actions.length : 0;
+    return 0;
+  }
+
+  pauseTarget(target) {
+    var element = this._hashTargets[target.__instanceId];
+    if (element) element.paused = true;
+  }
+
+  resumeTarget(target) {
+    var element = this._hashTargets[target.__instanceId];
+    if (element) element.paused = false;
+  }
+
+  pauseAllRunningActions() {
+    var idsWithActions = [];
+    var locTargets = this._arrayTargets;
+    for (var i = 0; i < locTargets.length; i++) {
+      var element = locTargets[i];
+      if (element && !element.paused) {
+        element.paused = true;
+        idsWithActions.push(element.target);
+      }
+    }
+    return idsWithActions;
+  }
+
+  resumeTargets(targetsToResume) {
+    if (!targetsToResume) return;
+
+    for (var i = 0; i < targetsToResume.length; i++) {
+      if (targetsToResume[i]) this.resumeTarget(targetsToResume[i]);
+    }
+  }
+
+  purgeSharedManager() {
+    ServiceLocator.director.getScheduler().unscheduleUpdate(this);
+  }
+
+  _removeActionAtIndex(index, element) {
+    var action = element.actions[index];
+
+    element.actions.splice(index, 1);
+
+    if (element.actionIndex >= index) element.actionIndex--;
+
+    if (element.actions.length === 0) {
+      this._deleteHashElement(element);
+    }
+  }
+
+  _deleteHashElement(element) {
+    var ret = false;
+    if (element && !element.lock) {
+      if (this._hashTargets[element.target.__instanceId]) {
+        delete this._hashTargets[element.target.__instanceId];
+        var targets = this._arrayTargets;
+        for (var i = 0, l = targets.length; i < l; i++) {
+          if (targets[i] === element) {
+            targets.splice(i, 1);
+            break;
+          }
         }
-
-        element.actions.push(action);
-        action.startWithTarget(target);
+        this._putElement(element);
+        ret = true;
+      }
     }
+    return ret;
+  }
 
-    removeAllActions() {
-        var locTargets = this._arrayTargets;
-        for (var i = 0; i < locTargets.length; i++) {
-            var element = locTargets[i];
-            if (element)
-                this.removeAllActionsFromTarget(element.target, true);
+  update(dt) {
+    var locTargets = this._arrayTargets,
+      locCurrTarget;
+    for (var elt = 0; elt < locTargets.length; elt++) {
+      this._currentTarget = locTargets[elt];
+      locCurrTarget = this._currentTarget;
+      if (!locCurrTarget.paused && locCurrTarget.actions) {
+        locCurrTarget.lock = true;
+        for (
+          locCurrTarget.actionIndex = 0;
+          locCurrTarget.actionIndex < locCurrTarget.actions.length;
+          locCurrTarget.actionIndex++
+        ) {
+          locCurrTarget.currentAction =
+            locCurrTarget.actions[locCurrTarget.actionIndex];
+          if (!locCurrTarget.currentAction) continue;
+
+          locCurrTarget.currentAction.step(
+            dt *
+              (locCurrTarget.currentAction._speedMethod
+                ? locCurrTarget.currentAction._speed
+                : 1)
+          );
+
+          if (
+            locCurrTarget.currentAction &&
+            locCurrTarget.currentAction.isDone()
+          ) {
+            locCurrTarget.currentAction.stop();
+            var action = locCurrTarget.currentAction;
+            locCurrTarget.currentAction = null;
+            this.removeAction(action);
+          }
+
+          locCurrTarget.currentAction = null;
         }
+        locCurrTarget.lock = false;
+      }
+      if (locCurrTarget.actions.length === 0) {
+        this._deleteHashElement(locCurrTarget) && elt--;
+      }
     }
-
-    removeAllActionsFromTarget(target, forceDelete) {
-        if (target == null)
-            return;
-        var element = this._hashTargets[target.__instanceId];
-        if (element) {
-            element.actions.length = 0;
-            this._deleteHashElement(element);
-        }
-    }
-
-    removeAction(action) {
-        if (action == null)
-            return;
-        var target = action.getOriginalTarget();
-        var element = this._hashTargets[target.__instanceId];
-
-        if (element) {
-            for (var i = 0; i < element.actions.length; i++) {
-                if (element.actions[i] === action) {
-                    element.actions.splice(i, 1);
-                    if (element.actionIndex >= i)
-                        element.actionIndex--;
-                    break;
-                }
-            }
-        } else {
-            log(_LogInfos.ActionManager_removeAction);
-        }
-    }
-
-    removeActionByTag(tag, target) {
-        if (tag === ACTION_TAG_INVALID)
-            log(_LogInfos.ActionManager_addAction);
-
-        assert(target, _LogInfos.ActionManager_addAction);
-
-        var element = this._hashTargets[target.__instanceId];
-
-        if (element) {
-            var limit = element.actions.length;
-            for (var i = 0; i < limit; ++i) {
-                var action = element.actions[i];
-                if (action && action.getTag() === tag && action.getOriginalTarget() === target) {
-                    this._removeActionAtIndex(i, element);
-                    break;
-                }
-            }
-        }
-    }
-
-    getActionByTag(tag, target) {
-        if (tag === ACTION_TAG_INVALID)
-            log(_LogInfos.ActionManager_getActionByTag);
-
-        var element = this._hashTargets[target.__instanceId];
-        if (element) {
-            if (element.actions != null) {
-                for (var i = 0; i < element.actions.length; ++i) {
-                    var action = element.actions[i];
-                    if (action && action.getTag() === tag)
-                        return action;
-                }
-            }
-            log(_LogInfos.ActionManager_getActionByTag_2, tag);
-        }
-        return null;
-    }
-
-    numberOfRunningActionsInTarget(target) {
-        var element = this._hashTargets[target.__instanceId];
-        if (element)
-            return (element.actions) ? element.actions.length : 0;
-        return 0;
-    }
-
-    pauseTarget(target) {
-        var element = this._hashTargets[target.__instanceId];
-        if (element)
-            element.paused = true;
-    }
-
-    resumeTarget(target) {
-        var element = this._hashTargets[target.__instanceId];
-        if (element)
-            element.paused = false;
-    }
-
-    pauseAllRunningActions() {
-        var idsWithActions = [];
-        var locTargets = this._arrayTargets;
-        for (var i = 0; i < locTargets.length; i++) {
-            var element = locTargets[i];
-            if (element && !element.paused) {
-                element.paused = true;
-                idsWithActions.push(element.target);
-            }
-        }
-        return idsWithActions;
-    }
-
-    resumeTargets(targetsToResume) {
-        if (!targetsToResume)
-            return;
-
-        for (var i = 0; i < targetsToResume.length; i++) {
-            if (targetsToResume[i])
-                this.resumeTarget(targetsToResume[i]);
-        }
-    }
-
-    purgeSharedManager() {
-        ServiceLocator.director.getScheduler().unscheduleUpdate(this);
-    }
-
-    _removeActionAtIndex(index, element) {
-        var action = element.actions[index];
-
-        element.actions.splice(index, 1);
-
-        if (element.actionIndex >= index)
-            element.actionIndex--;
-
-        if (element.actions.length === 0) {
-            this._deleteHashElement(element);
-        }
-    }
-
-    _deleteHashElement(element) {
-        var ret = false;
-        if (element && !element.lock) {
-            if (this._hashTargets[element.target.__instanceId]) {
-                delete this._hashTargets[element.target.__instanceId];
-                var targets = this._arrayTargets;
-                for (var i = 0, l = targets.length; i < l; i++) {
-                    if (targets[i] === element) {
-                        targets.splice(i, 1);
-                        break;
-                    }
-                }
-                this._putElement(element);
-                ret = true;
-            }
-        }
-        return ret;
-    }
-
-    update(dt) {
-        var locTargets = this._arrayTargets, locCurrTarget;
-        for (var elt = 0; elt < locTargets.length; elt++) {
-            this._currentTarget = locTargets[elt];
-            locCurrTarget = this._currentTarget;
-            if (!locCurrTarget.paused && locCurrTarget.actions) {
-                locCurrTarget.lock = true;
-                for (locCurrTarget.actionIndex = 0; locCurrTarget.actionIndex < locCurrTarget.actions.length; locCurrTarget.actionIndex++) {
-                    locCurrTarget.currentAction = locCurrTarget.actions[locCurrTarget.actionIndex];
-                    if (!locCurrTarget.currentAction)
-                        continue;
-
-                    locCurrTarget.currentAction.step(dt * (locCurrTarget.currentAction._speedMethod ? locCurrTarget.currentAction._speed : 1));
-
-                    if (locCurrTarget.currentAction && locCurrTarget.currentAction.isDone()) {
-                        locCurrTarget.currentAction.stop();
-                        var action = locCurrTarget.currentAction;
-                        locCurrTarget.currentAction = null;
-                        this.removeAction(action);
-                    }
-
-                    locCurrTarget.currentAction = null;
-                }
-                locCurrTarget.lock = false;
-            }
-            if (locCurrTarget.actions.length === 0) {
-                this._deleteHashElement(locCurrTarget) && elt--;
-            }
-        }
-    }
+  }
 }

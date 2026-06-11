@@ -150,6 +150,7 @@ export function setGlobalOrderOfArrival(val) {
  * @property {Number}               glServerState       - The state of OpenGL server side
  */
 export class Node extends NewClass {
+  #tag = NODE_TAG_INVALID;
   /**
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
    * @function
@@ -177,7 +178,6 @@ export class Node extends NewClass {
     this._running = false;
     this._parent = null;
     this._ignoreAnchorPointForPosition = false;
-    this.tag = NODE_TAG_INVALID;
     this.userData = null;
     this.userObject = null;
     this._reorderChildDirty = false;
@@ -1085,16 +1085,16 @@ export class Node extends NewClass {
    * @example
    *  //You can set tags to node then identify them easily.
    * // set tags
-   * node1.setTag(TAG_PLAYER);
-   * node2.setTag(TAG_MONSTER);
-   * node3.setTag(TAG_BOSS);
+   * node1.tag = TAG_PLAYER;
+   * node2.tag = TAG_MONSTER;
+   * node3.tag = TAG_BOSS;
    * parent.addChild(node1);
    * parent.addChild(node2);
    * parent.addChild(node3);
    * // identify by tags
    * var allChildren = parent.getChildren();
    * for(var i = 0; i < allChildren.length; i++){
-   *     switch(node.getTag()) {
+   *     switch(node.tag) {
    *         case TAG_PLAYER:
    *             break;
    *         case TAG_MONSTER:
@@ -1104,8 +1104,8 @@ export class Node extends NewClass {
    *     }
    * }
    */
-  getTag() {
-    return this.tag;
+  get tag() {
+    return this.#tag;
   }
 
   /**
@@ -1115,8 +1115,8 @@ export class Node extends NewClass {
    * @see Node#getTag
    * @param {Number} tag A integer that identifies the node.
    */
-  setTag(tag) {
-    this.tag = tag;
+  set tag(value) {
+    this.#tag = value;
   }
 
   /**
@@ -1337,7 +1337,7 @@ export class Node extends NewClass {
    * @function
    * @param {Node} child  A child node
    * @param {Number} [localZOrder=]  Z order for drawing priority. Please refer to setZOrder(int)
-   * @param {Number|String} [tag=]  An integer or a name to identify the node easily. Please refer to setTag(int) and setName(string)
+   * @param {Number|String} [tag=]  An integer or a name to identify the node easily. Please refer to tag = int and setName(string)
    */
   addChild(child, localZOrder, tag) {
     localZOrder = localZOrder === undefined ? child._localZOrder : localZOrder;
@@ -1366,7 +1366,7 @@ export class Node extends NewClass {
     if (!this._children) this._children = [];
 
     this._insertChild(child, localZOrder);
-    if (setTag) child.setTag(tag);
+    if (setTag) child.tag = tag;
     else child.setName(name);
 
     child.parent = this;
@@ -2257,11 +2257,7 @@ export class Node extends NewClass {
     var t = this._renderCmd.getNodeToParentTransform();
     if (ancestor) {
       var T = { a: t.a, b: t.b, c: t.c, d: t.d, tx: t.tx, ty: t.ty };
-      for (
-        var p = this._parent;
-        p != null && p != ancestor;
-        p = p.parent
-      ) {
+      for (var p = this._parent; p != null && p != ancestor; p = p.parent) {
         AffineTransform.concatIn(T, p.getNodeToParentTransform());
       }
       return T;

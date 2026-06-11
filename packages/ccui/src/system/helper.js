@@ -11,7 +11,7 @@ export const helper = {
    */
   seekWidgetByTag: function (root, tag) {
     if (!root) return null;
-    if (root.getTag() === tag) return root;
+    if (root.tag === tag) return root;
 
     var arrayRootChildren = root.children;
     var length = arrayRootChildren.length;
