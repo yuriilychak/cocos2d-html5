@@ -151,7 +151,7 @@ export class Skin extends Sprite {
    */
   setBone(bone) {
     this.bone = bone;
-    var armature = this.bone.getArmature();
+    var armature = this.bone.armature;
     if (armature) this._armature = armature;
   }
 
@@ -176,4 +176,3 @@ export class Skin extends Sprite {
     else return new this.constructor.WebGLRenderCmd(this);
   }
 };
-

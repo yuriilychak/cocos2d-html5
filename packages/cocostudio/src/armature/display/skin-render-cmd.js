@@ -83,12 +83,12 @@ import { AffineTransform, Node, Sprite } from "@aspect/core";
             var rwtm = this._realWorldTM;
             if (rwtm) {
                 rwtm.a = t.a; rwtm.b = t.b; rwtm.c = t.c; rwtm.d = t.d; rwtm.tx = t.tx; rwtm.ty = t.ty;
-                AffineTransform.concatIn(rwtm, this._node.bone.getArmature()._renderCmd._worldTransform);
+                AffineTransform.concatIn(rwtm, this._node.bone.armature._renderCmd._worldTransform);
             }
         }
 
         getNodeToWorldTransform() {
-            return AffineTransform.concat(this._transform, this._node.bone.getArmature().getNodeToWorldTransform());
+            return AffineTransform.concat(this._transform, this._node.bone.armature.getNodeToWorldTransform());
         }
 
         getNodeToWorldTransformAR() {
@@ -96,7 +96,7 @@ import { AffineTransform, Node, Sprite } from "@aspect/core";
             this._anchorPointInPoints = AffineTransform.applyToPoint(this._anchorPointInPoints, displayTransform);
             displayTransform.tx = this._anchorPointInPoints.x;
             displayTransform.ty = this._anchorPointInPoints.y;
-            return AffineTransform.concat(displayTransform, node.bone.getArmature().getNodeToWorldTransform());
+            return AffineTransform.concat(displayTransform, node.bone.armature.getNodeToWorldTransform());
         }
 
         _updateCurrentRegions() {
@@ -167,7 +167,7 @@ import { AffineTransform, Node, Sprite } from "@aspect/core";
         }
 
         getNodeToWorldTransform() {
-            return AffineTransform.concat(this._transform, this._node.bone.getArmature().getNodeToWorldTransform());
+            return AffineTransform.concat(this._transform, this._node.bone.armature.getNodeToWorldTransform());
         }
 
         getNodeToWorldTransformAR() {
@@ -175,6 +175,6 @@ import { AffineTransform, Node, Sprite } from "@aspect/core";
             this._anchorPointInPoints = AffineTransform.applyToPoint(this._anchorPointInPoints, displayTransform);
             displayTransform.tx = this._anchorPointInPoints.x;
             displayTransform.ty = this._anchorPointInPoints.y;
-            return AffineTransform.concat(displayTransform, node.bone.getArmature().getNodeToWorldTransform());
+            return AffineTransform.concat(displayTransform, node.bone.armature.getNodeToWorldTransform());
         }
     };

@@ -61,7 +61,7 @@ export class ParticleSystemWebGLRenderCmd extends Node.WebGLRenderCmd {
       if (!batchNode) {
         this._allocMemory();
         this.initIndices(node._totalParticles);
-        node.setTexture(oldBatch.getTexture());
+        node.texture = oldBatch.texture;
         this._setupVBO();
       } else if (!oldBatch) {
         node._batchNode.textureAtlas._copyQuadsToTextureAtlas(

@@ -115,7 +115,7 @@ export const displayFactory = {
                     var anchorPoint = AffineTransform.applyToPoint(node.getAnchorPointInPoints(), helpTransform);
                     helpTransform.tx = anchorPoint.x;
                     helpTransform.ty = anchorPoint.y;
-                    var t = AffineTransform.concat(helpTransform, bone.getArmature().getNodeToParentTransform());
+                    var t = AffineTransform.concat(helpTransform, bone.armature.getNodeToParentTransform());
                     detector.updateTransform(t);
                 }
             }
@@ -148,12 +148,12 @@ export const displayFactory = {
         skin.setBone(bone);
         this.initSpriteDisplay(bone, decoDisplay, displayData.displayName, skin);
 
-        var armature = bone.getArmature();
+        var armature = bone.armature;
         if (armature) {
             if (armature.getArmatureData().dataVersion >= CONST_VERSION_COMBINED)
-                skin.setSkinData(displayData.skinData);
+                skin.skinData = displayData.skinData;
             else
-                skin.setSkinData(bone.boneData);
+                skin.skinData = bone.boneData;
         }
     },
 
@@ -216,9 +216,9 @@ export const displayFactory = {
         system.removeFromParent();
         system.cleanup();
 
-        var armature = bone.getArmature();
+        var armature = bone.armature;
         if (armature)
-            system.setParent(bone.getArmature());
+            system.setParent(bone.armature);
 
         decoDisplay.setDisplay(system);
     },

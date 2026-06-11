@@ -66,7 +66,7 @@ export class DisplayManager extends NewClass {
    */
   init(bone) {
     this._bone = bone;
-    this.initDisplayList(bone.getBoneData());
+    this.initDisplayList(bone.boneData);
     return true;
   }
 
@@ -106,13 +106,13 @@ export class DisplayManager extends NewClass {
       displayFactory.initSpriteDisplay(
         this._bone,
         decoDisplay,
-        display.getDisplayName(),
+        display.displayName,
         display
       );
 
       var spriteDisplayData = decoDisplay.getDisplayData();
       if (spriteDisplayData instanceof SpriteDisplayData) {
-        display.setSkinData(spriteDisplayData.skinData);
+        display.skinData = spriteDisplayData.skinData;
         displayData.skinData = spriteDisplayData.skinData;
       } else {
         var find = false;
@@ -121,23 +121,23 @@ export class DisplayManager extends NewClass {
           var sdd = dd.getDisplayData();
           if (sdd instanceof SpriteDisplayData) {
             find = true;
-            display.setSkinData(sdd.skinData);
+            display.skinData = sdd.skinData;
             displayData.skinData = sdd.skinData;
             break;
           }
         }
-        if (!find) display.setSkinData(new BaseData());
+        if (!find) display.skinData = new BaseData();
       }
     } else if (display instanceof ParticleSystem) {
       displayData = new ParticleDisplayData();
       display.removeFromParent();
       display._performRecursive(Node._stateCallbackType.cleanup);
-      var armature = this._bone.getArmature();
+      var armature = this._bone.armature;
       if (armature) display.setParent(armature);
     } else if (display instanceof Armature) {
       displayData = new ArmatureDisplayData();
       displayData.displayName = display.getName();
-      display.setParentBone(this._bone);
+      display.parentBone = this._bone;
     } else displayData = new DisplayData();
     decoDisplay.setDisplay(display);
     decoDisplay.setDisplayData(displayData);
@@ -155,16 +155,16 @@ export class DisplayManager extends NewClass {
       var skin = display;
       skin.setBone(this._bone);
       displayData = new SpriteDisplayData();
-      displayData.displayName = skin.getDisplayName();
+      displayData.displayName = skin.displayName;
       displayFactory.initSpriteDisplay(
         this._bone,
         decoDisplay,
-        skin.getDisplayName(),
+        skin.displayName,
         skin
       );
       var spriteDisplayData = decoDisplay.getDisplayData();
       if (spriteDisplayData instanceof SpriteDisplayData)
-        skin.setSkinData(spriteDisplayData.skinData);
+        skin.skinData = spriteDisplayData.skinData;
       else {
         var find = false;
         for (var i = this._decoDisplayList.length - 2; i >= 0; i--) {
@@ -172,15 +172,15 @@ export class DisplayManager extends NewClass {
           var sdd = dd.getDisplayData();
           if (sdd) {
             find = true;
-            skin.setSkinData(sdd.skinData);
+            skin.skinData = sdd.skinData;
             displayData.skinData = sdd.skinData;
             break;
           }
         }
         if (!find) {
-          skin.setSkinData(new BaseData());
+          skin.skinData = new BaseData();
         }
-        skin.setSkinData(new BaseData());
+        skin.skinData = new BaseData();
       }
     } else if (display instanceof ParticleSystem) {
       displayData = new ParticleDisplayData();
@@ -188,7 +188,7 @@ export class DisplayManager extends NewClass {
     } else if (display instanceof Armature) {
       displayData = new ArmatureDisplayData();
       displayData.displayName = display.getName();
-      display.setParentBone(this._bone);
+      display.parentBone = this._bone;
     } else {
       displayData = new DisplayData();
     }
@@ -294,19 +294,19 @@ export class DisplayManager extends NewClass {
     var locRenderNode = this._displayRenderNode,
       locBone = this._bone;
     if (locRenderNode) {
-      if (locRenderNode instanceof Armature) locBone.setChildArmature(null);
+      if (locRenderNode instanceof Armature) locBone.childArmature = null;
       locRenderNode.removeFromParent(true);
     }
     this._displayRenderNode = displayRenderNode;
 
     if (displayRenderNode) {
       if (displayRenderNode instanceof Armature) {
-        this._bone.setChildArmature(displayRenderNode);
-        displayRenderNode.setParentBone(this._bone);
+        this._bone.childArmature = displayRenderNode;
+        displayRenderNode.parentBone = this._bone;
       } else if (displayRenderNode instanceof ParticleSystem) {
         if (displayRenderNode instanceof Armature) {
-          locBone.setChildArmature(displayRenderNode);
-          displayRenderNode.setParentBone(locBone);
+          locBone.childArmature = displayRenderNode;
+          displayRenderNode.parentBone = locBone;
         } else if (displayRenderNode instanceof ParticleSystem)
           displayRenderNode.resetSystem();
       }
@@ -465,4 +465,3 @@ export class DisplayManager extends NewClass {
     }
   }
 };
-

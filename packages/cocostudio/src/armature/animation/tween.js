@@ -62,11 +62,11 @@ export class Tween extends ProcessBase {
         this._between = new FrameData();
 
         this._bone = bone;
-        this._tweenData = this._bone.getTweenData();
+        this._tweenData = this._bone.tweenData;
         this._tweenData.displayIndex = -1;
 
-        this._animation = (this._bone !== null && this._bone.getArmature() !== null) ?
-            this._bone.getArmature().getAnimation() :
+        this._animation = (this._bone !== null && this._bone.armature !== null) ?
+            this._bone.armature.getAnimation() :
             null;
         return true;
     }
@@ -95,8 +95,8 @@ export class Tween extends ProcessBase {
         var nextKeyFrame = this._movementBoneData.getFrameData(0);
         this._tweenData.displayIndex = nextKeyFrame.displayIndex;
 
-        if (this._bone.getArmature().getArmatureData().dataVersion >= CONST_VERSION_COMBINED)        {
-            TransformHelp.nodeSub(this._tweenData, this._bone.getBoneData());
+        if (this._bone.armature.getArmatureData().dataVersion >= CONST_VERSION_COMBINED)        {
+            TransformHelp.nodeSub(this._tweenData, this._bone.boneData);
             this._tweenData.scaleX += 1;
             this._tweenData.scaleY += 1;
         }
@@ -273,7 +273,7 @@ export class Tween extends ProcessBase {
             //! Update blend type
             this._bone.setBlendFunc(keyFrameData.blendFunc);
 
-            var childAramture = locBone.getChildArmature();
+            var childAramture = locBone.childArmature;
             if (childAramture) {
                 if (keyFrameData.movement !== "")
                     childAramture.getAnimation().play(keyFrameData.movement);

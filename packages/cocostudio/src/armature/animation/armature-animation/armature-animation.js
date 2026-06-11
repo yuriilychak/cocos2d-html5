@@ -83,7 +83,7 @@ export class ArmatureAnimation extends ProcessBase {
      * @param {Number} animationScale
      */
     setAnimationScale(animationScale) {
-        this.setSpeedScale(animationScale);
+        this.speedScale = animationScale;
     }
 
     /**
@@ -92,7 +92,7 @@ export class ArmatureAnimation extends ProcessBase {
      * @returns {Number}
      */
     getAnimationScale() {
-        return this.getSpeedScale();
+        return this.speedScale;
     }
 
     /**
@@ -107,9 +107,9 @@ export class ArmatureAnimation extends ProcessBase {
         var dict = this._armature.getBoneDic();
         for (var key in dict) {
             var bone = dict[key];
-            bone.getTween().setProcessScale(this._processScale);
-            if (bone.getChildArmature())
-                bone.getChildArmature().getAnimation().setSpeedScale(this._processScale);
+            bone.tween.setProcessScale(this._processScale);
+            if (bone.childArmature)
+                bone.childArmature.getAnimation().speedScale = this._processScale;
         }
     }
 
@@ -176,17 +176,17 @@ export class ArmatureAnimation extends ProcessBase {
             var bone = map[element];
             movementBoneData = this._movementData.movBoneDataDic[bone.getName()];
 
-            var tween = bone.getTween();
+            var tween = bone.tween;
             if(movementBoneData && movementBoneData.frameList.length > 0) {
                 this._tweenList.push(tween);
                 movementBoneData.duration = this._movementData.duration;
                 tween.play(movementBoneData, durationTo, durationTween, loop, tweenEasing);
                 tween.setProcessScale(this._processScale);
 
-                if (bone.getChildArmature()) {
-                    bone.getChildArmature().getAnimation().setSpeedScale(this._processScale);
-                    if (!bone.getChildArmature().getAnimation().isPlaying())
-                        bone.getChildArmature().getAnimation().playWithIndex(0);
+                if (bone.childArmature) {
+                    bone.childArmature.getAnimation().speedScale = this._processScale;
+                    if (!bone.childArmature.getAnimation().isPlaying())
+                        bone.childArmature.getAnimation().playWithIndex(0);
                 }
             } else {
                 if(!bone.isIgnoreMovementBoneData()){

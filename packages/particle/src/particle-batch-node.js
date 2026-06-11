@@ -187,7 +187,7 @@ export class ParticleBatchNode extends Node {
     zOrder = zOrder == null ? child.zIndex : zOrder;
     tag = tag == null ? child.tag : tag;
 
-    if (child.getTexture() !== this.textureAtlas.texture)
+    if (child.texture !== this.textureAtlas.texture)
       throw new Error(
         "ParticleSystem.addChild() : the child is not using the same texture id"
       );
@@ -215,13 +215,13 @@ export class ParticleBatchNode extends Node {
 
     if (pos !== 0) {
       var p = this._children[pos - 1];
-      atlasIndex = p.getAtlasIndex() + p.getTotalParticles();
+      atlasIndex = p.getAtlasIndex() + p.totalParticles;
     } else atlasIndex = 0;
 
     this.insertChild(child, atlasIndex);
 
     // update quad info
-    child.setBatchNode(this);
+    child.batchNode = this;
   }
 
   /**
@@ -230,7 +230,7 @@ export class ParticleBatchNode extends Node {
    * @param {Number} index
    */
   insertChild(pSystem, index) {
-    var totalParticles = pSystem.getTotalParticles();
+    var totalParticles = pSystem.totalParticles;
     var locTextureAtlas = this.textureAtlas;
     var totalQuads = locTextureAtlas.totalQuads;
     pSystem.setAtlasIndex(index);
@@ -277,17 +277,17 @@ export class ParticleBatchNode extends Node {
     // remove child helper
     locTextureAtlas.removeQuadsAtIndex(
       child.getAtlasIndex(),
-      child.getTotalParticles()
+      child.totalParticles
     );
 
     // after memmove of data, empty the quads at the end of array
     locTextureAtlas.fillWithEmptyQuadsFromIndex(
       locTextureAtlas.totalQuads,
-      child.getTotalParticles()
+      child.totalParticles
     );
 
     // paticle could be reused for self rendering
-    child.setBatchNode(null);
+    child.batchNode = null;
 
     this._updateAllAtlasIndexes();
   }
@@ -342,7 +342,7 @@ export class ParticleBatchNode extends Node {
         // reorder textureAtlas quads
         this.textureAtlas.moveQuadsFromIndex(
           oldAtlasIndex,
-          child.getTotalParticles(),
+          child.totalParticles,
           newAtlasIndex
         );
 
@@ -366,7 +366,7 @@ export class ParticleBatchNode extends Node {
   removeAllChildren(doCleanup) {
     var locChildren = this._children;
     for (var i = 0; i < locChildren.length; i++) {
-      locChildren[i].setBatchNode(null);
+      locChildren[i].batchNode = null;
     }
     super.removeAllChildren(doCleanup);
     this.textureAtlas.removeAllQuads();
@@ -447,7 +447,7 @@ export class ParticleBatchNode extends Node {
     for (var i = 0; i < locChildren.length; i++) {
       var child = locChildren[i];
       child.setAtlasIndex(index);
-      index += child.getTotalParticles();
+      index += child.totalParticles;
     }
   }
 

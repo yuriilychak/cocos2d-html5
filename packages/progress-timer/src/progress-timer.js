@@ -271,7 +271,7 @@ export class ProgressTimer extends Node {
         this._reverseDirection = false;
         this.midPoint = new Point(0.5, 0.5);
         this.barChangeRate = new Point(1, 1);
-        this.setSprite(sprite);
+        this.sprite = sprite;
         this._renderCmd.resetVertexData();
         return true;
     }

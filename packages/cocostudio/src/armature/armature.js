@@ -132,7 +132,7 @@ export class Armature extends Node {
           var frameData = _movBoneData.getFrameData(0);
           if (!frameData) break;
 
-          bone.getTweenData().copy(frameData);
+          bone.tweenData.copy(frameData);
           bone.changeDisplayWithIndex(frameData.displayIndex, false);
         } while (0);
       }
@@ -206,7 +206,7 @@ export class Armature extends Node {
       this.addBone(bone, "");
     }
 
-    bone.setBoneData(boneData);
+    bone.boneData = boneData;
     bone.getDisplayManager().changeDisplayWithIndex(-1, false);
     return bone;
   }
@@ -230,7 +230,7 @@ export class Armature extends Node {
       if (boneParent) boneParent.addChildBone(bone);
       else this._topBoneList.push(bone);
     } else this._topBoneList.push(bone);
-    bone.setArmature(this);
+    bone.armature = this;
 
     locBoneDic[bone.getName()] = bone;
     this.addChild(bone);
@@ -244,7 +244,7 @@ export class Armature extends Node {
   removeBone(bone, recursion) {
     assert(bone, "bone must be added to the bone dictionary!");
 
-    bone.setArmature(null);
+    bone.armature = null;
     bone.removeFromParent(recursion);
     arrayRemoveObject(this._topBoneList, bone);
 
@@ -269,10 +269,10 @@ export class Armature extends Node {
   changeBoneParent(bone, parentName) {
     assert(bone, "bone must be added to the bone dictionary!");
 
-    var parentBone = bone.getParentBone();
+    var parentBone = bone.parentBone;
     if (parentBone) {
       arrayRemoveObject(parentBone.getChildren(), bone);
-      bone.setParentBone(null);
+      bone.parentBone = null;
     }
 
     if (parentName) {
@@ -447,7 +447,7 @@ export class Armature extends Node {
     this._parentBone = parentBone;
     var locBoneDic = this._boneDic;
     for (var key in locBoneDic) {
-      locBoneDic[key].setArmature(this);
+      locBoneDic[key].armature = this;
     }
   }
 
@@ -494,7 +494,7 @@ export class Armature extends Node {
         for (var j = 0; j < displayList.length; j++) {
           displayObject = displayList[j];
           var detector = displayObject.getColliderDetector();
-          if (detector) detector.setBody(this._body);
+          if (detector) detector.body = this._body;
         }
       }
     }
@@ -587,4 +587,3 @@ export class Armature extends Node {
     else return new this.constructor.WebGLRenderCmd(this);
   }
 };
-

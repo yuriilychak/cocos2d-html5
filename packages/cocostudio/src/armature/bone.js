@@ -170,7 +170,7 @@ export class Bone extends Node {
     if (armature) {
       this._tween.setAnimation(this._armature.getAnimation());
       this._dataVersion = this._armature.getArmatureData().dataVersion;
-      this._armatureParentBone = this._armature.getParentBone();
+      this._armatureParentBone = this._armature.parentBone;
     } else this._armatureParentBone = null;
   }
 
@@ -326,7 +326,7 @@ export class Bone extends Node {
 
     if (this._children.indexOf(child) < 0) {
       this._children.push(child);
-      child.setParentBone(this);
+      child.parentBone = this;
     }
   }
 
@@ -345,7 +345,7 @@ export class Bone extends Node {
         }
       }
 
-      bone.setParentBone(null);
+      bone.parentBone = null;
       bone.getDisplayManager().setCurrentDecorativeDisplay(null);
       arrayRemoveObject(this._children, bone);
     }
@@ -384,7 +384,7 @@ export class Bone extends Node {
   setChildArmature(armature) {
     if (this._childArmature !== armature) {
       if (armature == null && this._childArmature)
-        this._childArmature.setParentBone(null);
+        this._childArmature.parentBone = null;
       this._childArmature = armature;
     }
   }

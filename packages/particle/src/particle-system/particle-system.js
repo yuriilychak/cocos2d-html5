@@ -249,7 +249,7 @@ export class ParticleSystem extends Node {
 
     if (!plistFile || isNumber(plistFile)) {
       var ton = plistFile || 100;
-      this.setDrawMode(ParticleSystem.TEXTURE_MODE);
+      this.drawMode = ParticleSystem.TEXTURE_MODE;
       this.initWithTotalParticles(ton);
     } else if (isString(plistFile)) {
       this.initWithFile(plistFile);
@@ -2214,7 +2214,7 @@ export class ParticleSystem extends Node {
     var retParticle = new ParticleSystem();
 
     // self, not super
-    if (retParticle.initWithTotalParticles(this.getTotalParticles())) {
+    if (retParticle.initWithTotalParticles(this.totalParticles)) {
       // angle
       retParticle.setAngle(this.getAngle());
       retParticle.setAngleVar(this.getAngleVar());
@@ -2227,13 +2227,13 @@ export class ParticleSystem extends Node {
       retParticle.setBlendFunc(blend.src, blend.dst);
 
       // color
-      retParticle.setStartColor(this.getStartColor());
+      retParticle.startColor = this.startColor;
 
-      retParticle.setStartColorVar(this.getStartColorVar());
+      retParticle.startColorVar = this.startColorVar;
 
-      retParticle.setEndColor(this.getEndColor());
+      retParticle.endColor = this.endColor;
 
-      retParticle.setEndColorVar(this.getEndColorVar());
+      retParticle.endColorVar = this.endColorVar;
 
       // this size
       retParticle.setStartSize(this.getStartSize());
@@ -2243,9 +2243,7 @@ export class ParticleSystem extends Node {
 
       // position
       retParticle.setPosition(new Point(this.x, this.y));
-      retParticle.setPosVar(
-        new Point(this.getPosVar().x, this.getPosVar().y)
-      );
+      retParticle.posVar = new Point(this.posVar.x, this.posVar.y);
 
       retParticle.setPositionType(this.getPositionType());
 
@@ -2260,29 +2258,29 @@ export class ParticleSystem extends Node {
       // Mode A: Gravity + tangential accel + radial accel
       if (this.getEmitterMode() === ParticleSystem.MODE_GRAVITY) {
         // gravity
-        var gra = this.getGravity();
-        retParticle.setGravity(new Point(gra.x, gra.y));
+        var gra = this.gravity;
+        retParticle.gravity = new Point(gra.x, gra.y);
 
         // speed
-        retParticle.setSpeed(this.getSpeed());
-        retParticle.setSpeedVar(this.getSpeedVar());
+        retParticle.speed = this.speed;
+        retParticle.speedVar = this.speedVar;
 
         // radial acceleration
-        retParticle.setRadialAccel(this.getRadialAccel());
-        retParticle.setRadialAccelVar(this.getRadialAccelVar());
+        retParticle.radialAccel = this.radialAccel;
+        retParticle.radialAccelVar = this.radialAccelVar;
 
         // tangential acceleration
-        retParticle.setTangentialAccel(this.getTangentialAccel());
-        retParticle.setTangentialAccelVar(this.getTangentialAccelVar());
+        retParticle.tangentialAccel = this.tangentialAccel;
+        retParticle.tangentialAccelVar = this.tangentialAccelVar;
       } else if (this.getEmitterMode() === ParticleSystem.MODE_RADIUS) {
         // or Mode B: radius movement
-        retParticle.setStartRadius(this.getStartRadius());
-        retParticle.setStartRadiusVar(this.getStartRadiusVar());
-        retParticle.setEndRadius(this.getEndRadius());
-        retParticle.setEndRadiusVar(this.getEndRadiusVar());
+        retParticle.startRadius = this.startRadius;
+        retParticle.startRadiusVar = this.startRadiusVar;
+        retParticle.endRadius = this.endRadius;
+        retParticle.endRadiusVar = this.endRadiusVar;
 
-        retParticle.setRotatePerSecond(this.getRotatePerSecond());
-        retParticle.setRotatePerSecondVar(this.getRotatePerSecondVar());
+        retParticle.rotatePerS = this.rotatePerS;
+        retParticle.rotatePerSVar = this.rotatePerSVar;
       }
 
       // life span
@@ -2293,11 +2291,11 @@ export class ParticleSystem extends Node {
       retParticle.setEmissionRate(this.getEmissionRate());
 
       //don't get the internal texture if a batchNode is used
-      if (!this.getBatchNode()) {
+      if (!this.batchNode) {
         // Set a compatible default for the alpha transfer
-        retParticle.setOpacityModifyRGB(this.isOpacityModifyRGB());
+        retParticle.opacityModifyRGB = this.opacityModifyRGB;
         // texture
-        var texture = this.getTexture();
+        var texture = this.texture;
         if (texture) {
           var size = texture.getContentSize();
           retParticle.setTextureWithRect(
