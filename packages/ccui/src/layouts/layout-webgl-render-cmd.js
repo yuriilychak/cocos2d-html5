@@ -121,7 +121,7 @@ export class LayoutWebGLRenderCmd extends ProtectedNodeWebGLRenderCmd {
 
     stencilClippingVisit(parentCmd) {
         var node = this._node;
-        if (!node._clippingStencil || !node._clippingStencil.isVisible())
+        if (!node._clippingStencil || !node._clippingStencil.visible)
             return;
 
         if (LayoutWebGLRenderCmd._layer + 1 === ClippingNode.stencilBits) {

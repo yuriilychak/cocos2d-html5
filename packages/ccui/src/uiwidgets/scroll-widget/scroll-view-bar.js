@@ -102,7 +102,7 @@ export class ScrollViewBar extends ProtectedNode {
 
         this._lowerHalfCircle = helper._createSpriteFromBase64(ScrollViewBar.HALF_CIRCLE_IMAGE, ScrollViewBar.HALF_CIRCLE_IMAGE_KEY);
         this._lowerHalfCircle.setAnchorPoint(new Point(0.5, 0));
-        this._lowerHalfCircle.setScaleY(-1);
+        this._lowerHalfCircle.scaleY = -1;
 
         this.addProtectedChild(this._upperHalfCircle);
         this.addProtectedChild(this._lowerHalfCircle);
@@ -111,7 +111,7 @@ export class ScrollViewBar extends ProtectedNode {
         this._body.setAnchorPoint(new Point(0.5, 0));
         this.addProtectedChild(this._body);
 
-        this.setColor(ScrollViewBar.DEFAULT_COLOR);
+        this.color = ScrollViewBar.DEFAULT_COLOR;
         this.onScrolled(new Point(0, 0));
         super.setOpacity(0);
         this._autoHideRemainingTime = 0;
@@ -163,9 +163,9 @@ export class ScrollViewBar extends ProtectedNode {
             this._thumbSprite.setPreferredSize(new Size(width, this._thumbSprite.getPreferredSize().height));
         } else {
             var scale = width / this._body.width;
-            this._body.setScaleX(scale);
-            this._upperHalfCircle.setScale(scale);
-            this._lowerHalfCircle.setScale(-scale);
+            this._body.scaleX = scale;
+            this._upperHalfCircle.scale = scale;
+            this._lowerHalfCircle.scale = -scale;
         }
     }
 
@@ -251,9 +251,9 @@ export class ScrollViewBar extends ProtectedNode {
         this._thumbSprite.setPreferredSize(new Size(initialWidth, 0));
         var alpha = color && color.a != null ? color.a : 255;
         if (color) {
-            this._thumbSprite.setColor(color);
+            this._thumbSprite.color = color;
         }
-        this._thumbSprite.setOpacity(alpha);
+        this._thumbSprite.opacity = alpha;
         this.addProtectedChild(this._thumbSprite);
     }
 
@@ -286,7 +286,7 @@ export class ScrollViewBar extends ProtectedNode {
             this._thumbSprite.setPreferredSize(new Size(this._thumbSprite.getPreferredSize().width, length));
         } else {
             var ratio = length / this._body.getTextureRect().height;
-            this._body.setScaleY(ratio);
+            this._body.scaleY = ratio;
             this._upperHalfCircle.setPositionY(this._body.getPositionY() + length);
         }
     }

@@ -79,7 +79,7 @@ export class Button extends Widget {
     this._fontName = "Thonburi";
     this._fontSize = 12;
     this._type = 0;
-    this.setTouchEnabled(true);
+    this.touchEnabled = true;
 
     this._normalLoader = new Sprite.LoadManager();
     this._clickedLoader = new Sprite.LoadManager();
@@ -182,7 +182,7 @@ export class Button extends Widget {
     }
     this.setCapInsets(this._capInsetsNormal);
 
-    this.setBright(this._bright);
+    this.bright = this._bright;
 
     this._normalTextureAdaptDirty = true;
   }
@@ -518,7 +518,7 @@ export class Button extends Widget {
     if (this._pressedTextureLoaded) {
       if (this.pressedActionEnabled) {
         this._buttonScale9Renderer.stopAllActions();
-        this._buttonScale9Renderer.setScale(1.0);
+        this._buttonScale9Renderer.scale = 1.0;
 
         if (this._titleRenderer) {
           this._titleRenderer.stopAllActions();
@@ -531,24 +531,24 @@ export class Button extends Widget {
             );
             this._titleRenderer.runAction(zoomTitleAction);
           } else {
-            this._titleRenderer.setScaleX(1);
-            this._titleRenderer.setScaleY(1);
+            this._titleRenderer.scaleX = 1;
+            this._titleRenderer.scaleY = 1;
           }
         }
       }
     } else {
       this._buttonScale9Renderer.stopAllActions();
-      this._buttonScale9Renderer.setScale(1.0);
+      this._buttonScale9Renderer.scale = 1.0;
 
       if (this._scale9Enabled) {
-        this._buttonScale9Renderer.setColor(Color.WHITE);
+        this._buttonScale9Renderer.color = Color.WHITE;
       }
 
       if (this._titleRenderer) {
         this._titleRenderer.stopAllActions();
 
-        this._titleRenderer.setScaleX(1);
-        this._titleRenderer.setScaleY(1);
+        this._titleRenderer.scaleX = 1;
+        this._titleRenderer.scaleY = 1;
       }
     }
   }
@@ -591,8 +591,8 @@ export class Button extends Widget {
 
       if (this._titleRenderer) {
         this._titleRenderer.stopAllActions();
-        this._titleRenderer.setScaleX(1 + this._zoomScale);
-        this._titleRenderer.setScaleY(1 + this._zoomScale);
+        this._titleRenderer.scaleX = 1 + this._zoomScale;
+        this._titleRenderer.scaleY = 1 + this._zoomScale;
       }
     }
   }
@@ -607,7 +607,7 @@ export class Button extends Widget {
       this._buttonScale9Renderer.setSpriteFrame(this._buttonDisableSpriteFrame);
     }
 
-    this._buttonScale9Renderer.setScale(1.0);
+    this._buttonScale9Renderer.scale = 1.0;
   }
 
   _updateContentSize() {

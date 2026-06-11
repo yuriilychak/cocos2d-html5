@@ -360,8 +360,8 @@ export class Text extends Widget {
 
   _onPressStateChangedToNormal() {
     if (!this._touchScaleChangeEnabled) return;
-    this._labelRenderer.setScaleX(this._normalScaleValueX);
-    this._labelRenderer.setScaleY(this._normalScaleValueY);
+    this._labelRenderer.scaleX = this._normalScaleValueX;
+    this._labelRenderer.scaleY = this._normalScaleValueY;
   }
 
   _onPressStateChangedToPressed() {
@@ -422,7 +422,7 @@ export class Text extends Widget {
   _labelScaleChangedWithSize() {
     var locContentSize = this._contentSize;
     if (this._ignoreSize) {
-      this._labelRenderer.setScale(1.0);
+      this._labelRenderer.scale = 1.0;
       this._normalScaleValueX = this._normalScaleValueY = 1;
     } else {
       this._labelRenderer.setDimensions(
@@ -430,13 +430,13 @@ export class Text extends Widget {
       );
       var textureSize = this._labelRenderer.getContentSize();
       if (textureSize.width <= 0.0 || textureSize.height <= 0.0) {
-        this._labelRenderer.setScale(1.0);
+        this._labelRenderer.scale = 1.0;
         return;
       }
       var scaleX = locContentSize.width / textureSize.width;
       var scaleY = locContentSize.height / textureSize.height;
-      this._labelRenderer.setScaleX(scaleX);
-      this._labelRenderer.setScaleY(scaleY);
+      this._labelRenderer.scaleX = scaleX;
+      this._labelRenderer.scaleY = scaleY;
       this._normalScaleValueX = scaleX;
       this._normalScaleValueY = scaleY;
     }
@@ -533,7 +533,7 @@ export class Text extends Widget {
 
   setColor(color) {
     ProtectedNode.prototype.setColor.call(this, color);
-    this._labelRenderer.setColor(color);
+    this._labelRenderer.color = color;
   }
 
   setTextColor(color) {

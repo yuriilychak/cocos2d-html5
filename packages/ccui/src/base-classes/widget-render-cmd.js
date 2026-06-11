@@ -34,7 +34,7 @@ export class WidgetCanvasRenderCmd extends ProtectedNodeCanvasRenderCmd {
         if (node._visible && node._running) {
             node._adaptRenderers();
             if(!this._usingLayoutComponent){
-                var widgetParent = node.getWidgetParent();
+                var widgetParent = node.widgetParent;
                 if (widgetParent) {
                     var parentSize = widgetParent.getContentSize();
                     if (parentSize.width !== 0 && parentSize.height !== 0) {
@@ -83,7 +83,7 @@ export class WidgetWebGLRenderCmd extends ProtectedNodeWebGLRenderCmd {
             node._adaptRenderers();
 
             if(!this._usingLayoutComponent) {
-                var widgetParent = node.getWidgetParent();
+                var widgetParent = node.widgetParent;
                 if (widgetParent) {
                     var parentSize = widgetParent.getContentSize();
                     if (parentSize.width !== 0 && parentSize.height !== 0) {

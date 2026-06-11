@@ -161,8 +161,8 @@ export class Layout extends Widget {
     }
 
     findNextFocusedWidget(direction, current) {
-        if (this._isFocusPassing || this.isFocused()) {
-            var parent = this.getParent();
+        if (this._isFocusPassing || this.focused) {
+            var parent = this.parent;
             this._isFocusPassing = false;
             if (this.__passFocusToChild) {
                 var w = this._passFocusToChild(direction, current);
@@ -177,7 +177,7 @@ export class Layout extends Widget {
                 return this;
             parent._isFocusPassing = true;
             return parent.findNextFocusedWidget(direction, this);
-        } else if (current.isFocused() || current instanceof Layout) {
+        } else if (current.focused || current instanceof Layout) {
             if (this._layoutType === Layout.LINEAR_HORIZONTAL) {
                 switch (direction) {
                     case Widget.LEFT:
@@ -312,7 +312,7 @@ export class Layout extends Widget {
             var parent = this;
 
             while (parent) {
-                parent = parent.getParent();
+                parent = parent.parent;
                 if (parent && parent instanceof Layout && parent.isClippingEnabled()) {
                     this._clippingParent = parent;
                     break;
@@ -498,14 +498,14 @@ export class Layout extends Widget {
             case Layout.BG_COLOR_SOLID:
                 this._colorRender = new LayerColor();
                 this._colorRender.setContentSize(this._contentSize);
-                this._colorRender.setOpacity(this._opacity);
-                this._colorRender.setColor(this._color);
+                this._colorRender.opacity = this._opacity;
+                this._colorRender.color = this._color;
                 this.addProtectedChild(this._colorRender, Layout.BACKGROUND_RENDERER_ZORDER, -1);
                 break;
             case Layout.BG_COLOR_GRADIENT:
                 this._gradientRender = new LayerGradient(new Color(255, 0, 0, 255), new Color(0, 255, 0, 255));
                 this._gradientRender.setContentSize(this._contentSize);
-                this._gradientRender.setOpacity(this._opacity);
+                this._gradientRender.opacity = this._opacity;
                 this._gradientRender.setStartColor(this._startColor);
                 this._gradientRender.setEndColor(this._endColor);
                 this._gradientRender.setVector(this._alongVector);
@@ -526,7 +526,7 @@ export class Layout extends Widget {
             this._color.g = color.g;
             this._color.b = color.b;
             if (this._colorRender)
-                this._colorRender.setColor(color);
+                this._colorRender.color = color;
         } else {
             this._startColor.r = color.r;
             this._startColor.g = color.g;
@@ -563,10 +563,10 @@ export class Layout extends Widget {
             case Layout.BG_COLOR_NONE:
                 break;
             case Layout.BG_COLOR_SOLID:
-                this._colorRender.setOpacity(opacity);
+                this._colorRender.opacity = opacity;
                 break;
             case Layout.BG_COLOR_GRADIENT:
-                this._gradientRender.setOpacity(opacity);
+                this._gradientRender.opacity = opacity;
                 break;
             default:
                 break;
@@ -613,7 +613,7 @@ export class Layout extends Widget {
 
     _updateBackGroundImageColor() {
         if (this._backGroundImage)
-            this._backGroundImage.setColor(this._backGroundImageColor);
+            this._backGroundImage.color = this._backGroundImageColor;
     }
 
     getBackGroundImageTextureSize() {
@@ -657,23 +657,23 @@ export class Layout extends Widget {
     }
 
     _getLayoutElements() {
-        return this.getChildren();
+        return this.children;
     }
 
     _updateBackGroundImageOpacity() {
         if (this._backGroundImage)
-            this._backGroundImage.setOpacity(this._backGroundImageOpacity);
+            this._backGroundImage.opacity = this._backGroundImageOpacity;
     }
 
     _updateBackGroundImageRGBA() {
         if (this._backGroundImage) {
-            this._backGroundImage.setColor(this._backGroundImageColor);
-            this._backGroundImage.setOpacity(this._backGroundImageOpacity);
+            this._backGroundImage.color = this._backGroundImageColor;
+            this._backGroundImage.opacity = this._backGroundImageOpacity;
         }
     }
 
     _getLayoutAccumulatedSize() {
-        var children = this.getChildren();
+        var children = this.children;
         var layoutSize = new Size(0, 0);
         var widgetCount = 0, locSize;
         for (var i = 0, len = children.length; i < len; i++) {
@@ -706,7 +706,7 @@ export class Layout extends Widget {
         if (baseWidget == null || baseWidget === this)
             return this._findFirstFocusEnabledWidgetIndex();
 
-        var index = 0, locChildren = this.getChildren();
+        var index = 0, locChildren = this.children;
         var count = locChildren.length, widgetPosition;
 
         var distance = FLT_MAX, found = 0;
@@ -734,7 +734,7 @@ export class Layout extends Widget {
         if (baseWidget == null || baseWidget === this)
             return this._findFirstFocusEnabledWidgetIndex();
 
-        var index = 0, locChildren = this.getChildren();
+        var index = 0, locChildren = this.children;
         var count = locChildren.length;
 
         var distance = -FLT_MAX, found = 0;
@@ -842,7 +842,7 @@ export class Layout extends Widget {
     }
 
     _findFirstFocusEnabledWidgetIndex() {
-        var index = 0, locChildren = this.getChildren();
+        var index = 0, locChildren = this.children;
         var count = locChildren.length;
         while (index < count) {
             var w = locChildren[index];
@@ -982,11 +982,11 @@ export class Layout extends Widget {
     }
 
     _isLastWidgetInContainer(widget, direction) {
-        var parent = widget.getParent();
+        var parent = widget.parent;
         if (parent == null || !(parent instanceof Layout))
             return true;
 
-        var container = parent.getChildren();
+        var container = parent.children;
         var index = container.indexOf(widget);
         if (parent.getLayoutType() === Layout.LINEAR_HORIZONTAL) {
             if (direction === Widget.LEFT) {
@@ -1031,7 +1031,7 @@ export class Layout extends Widget {
     }
 
     _isWidgetAncestorSupportLoopFocus(widget, direction) {
-        var parent = widget.getParent();
+        var parent = widget.parent;
         if (parent == null || !(parent instanceof Layout))
             return false;
         if (parent.isLoopFocus()) {

@@ -81,7 +81,7 @@ export class ProtectedNode extends Node {
       if (tag) child.setTag(tag);
 
       this._insertProtectedChild(child, localZOrder);
-      child.setParent(this);
+      child.parent = this;
       child.setOrderOfArrival(s_globalOrderOfArrival);
 
       if (this._running) {
@@ -120,7 +120,7 @@ export class ProtectedNode extends Node {
         if (cleanup)
           child._performRecursive(Node._stateCallbackType.cleanup);
 
-        child.setParent(null);
+        child.parent = null;
         locChildren.splice(idx, 1);
       }
     }
@@ -153,7 +153,7 @@ export class ProtectedNode extends Node {
 
         if (cleanup)
           child._performRecursive(Node._stateCallbackType.cleanup);
-        child.setParent(null);
+        child.parent = null;
       }
       locChildren.length = 0;
     }

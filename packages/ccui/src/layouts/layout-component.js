@@ -547,7 +547,7 @@ export class LayoutComponent extends Component {
     }
 
     _getOwnerParent() {
-        return this._owner ? this._owner.getParent() : null;
+        return this._owner ? this._owner.parent : null;
     }
 
     _refreshHorizontalMargin() {

@@ -76,7 +76,7 @@ export class CheckBox extends Widget {
     this._frontCrossRendererAdaptDirty = true;
     this._backGroundBoxDisabledRendererAdaptDirty = true;
     this._frontCrossDisabledRendererAdaptDirty = true;
-    this.setTouchEnabled(true);
+    this.touchEnabled = true;
     var strNum = 0;
     for (var i = 0; i < arguments.length; i++) {
       var type = typeof arguments[i];
@@ -414,10 +414,10 @@ export class CheckBox extends Widget {
   }
 
   _onPressStateChangedToNormal() {
-    this._backGroundBoxRenderer.setVisible(true);
-    this._backGroundSelectedBoxRenderer.setVisible(false);
-    this._backGroundBoxDisabledRenderer.setVisible(false);
-    this._frontCrossDisabledRenderer.setVisible(false);
+    this._backGroundBoxRenderer.visible = true;
+    this._backGroundSelectedBoxRenderer.visible = false;
+    this._backGroundBoxDisabledRenderer.visible = false;
+    this._frontCrossDisabledRenderer.visible = false;
 
     this._backGroundBoxRenderer.setScale(
       this._backgroundTextureScaleX,
@@ -429,7 +429,7 @@ export class CheckBox extends Widget {
     );
 
     if (this._isSelected) {
-      this._frontCrossRenderer.setVisible(true);
+      this._frontCrossRenderer.visible = true;
       this._frontCrossRendererAdaptDirty = true;
     }
   }
@@ -445,21 +445,21 @@ export class CheckBox extends Widget {
         this._backgroundTextureScaleY + this._zoomScale
       );
     } else {
-      this._backGroundBoxRenderer.setVisible(false);
-      this._backGroundSelectedBoxRenderer.setVisible(true);
-      this._backGroundBoxDisabledRenderer.setVisible(false);
-      this._frontCrossDisabledRenderer.setVisible(false);
+      this._backGroundBoxRenderer.visible = false;
+      this._backGroundSelectedBoxRenderer.visible = true;
+      this._backGroundBoxDisabledRenderer.visible = false;
+      this._frontCrossDisabledRenderer.visible = false;
     }
   }
 
   _onPressStateChangedToDisabled() {
     if (this._backGroundDisabledFileName && this._frontCrossDisabledFileName) {
-      this._backGroundBoxRenderer.setVisible(false);
-      this._backGroundBoxDisabledRenderer.setVisible(true);
+      this._backGroundBoxRenderer.visible = false;
+      this._backGroundBoxDisabledRenderer.visible = true;
     }
 
-    this._backGroundSelectedBoxRenderer.setVisible(false);
-    this._frontCrossRenderer.setVisible(false);
+    this._backGroundSelectedBoxRenderer.visible = false;
+    this._frontCrossRenderer.visible = false;
     this._backGroundBoxRenderer.setScale(
       this._backgroundTextureScaleX,
       this._backgroundTextureScaleY
@@ -470,7 +470,7 @@ export class CheckBox extends Widget {
     );
 
     if (this._isSelected) {
-      this._frontCrossDisabledRenderer.setVisible(true);
+      this._frontCrossDisabledRenderer.visible = true;
       this._frontCrossDisabledRendererAdaptDirty = true;
     }
   }
@@ -497,7 +497,7 @@ export class CheckBox extends Widget {
   setSelected(selected) {
     if (selected === this._isSelected) return;
     this._isSelected = selected;
-    this._frontCrossRenderer.setVisible(this._isSelected);
+    this._frontCrossRenderer.visible = this._isSelected;
   }
 
   /**
@@ -600,12 +600,12 @@ export class CheckBox extends Widget {
     var locRenderer = this._backGroundBoxRenderer,
       locContentSize = this._contentSize;
     if (this._ignoreSize) {
-      locRenderer.setScale(1.0);
+      locRenderer.scale = 1.0;
       this._backgroundTextureScaleX = this._backgroundTextureScaleY = 1;
     } else {
       var textureSize = locRenderer.getContentSize();
       if (textureSize.width <= 0.0 || textureSize.height <= 0.0) {
-        locRenderer.setScale(1.0);
+        locRenderer.scale = 1.0;
         this._backgroundTextureScaleX = this._backgroundTextureScaleY = 1;
         return;
       }
@@ -613,8 +613,8 @@ export class CheckBox extends Widget {
       var scaleY = locContentSize.height / textureSize.height;
       this._backgroundTextureScaleX = scaleX;
       this._backgroundTextureScaleY = scaleY;
-      locRenderer.setScaleX(scaleX);
-      locRenderer.setScaleY(scaleY);
+      locRenderer.scaleX = scaleX;
+      locRenderer.scaleY = scaleY;
     }
     locRenderer.setPosition(
       locContentSize.width * 0.5,
@@ -625,17 +625,17 @@ export class CheckBox extends Widget {
   _backGroundSelectedTextureScaleChangedWithSize() {
     var locRenderer = this._backGroundSelectedBoxRenderer,
       locContentSize = this._contentSize;
-    if (this._ignoreSize) locRenderer.setScale(1.0);
+    if (this._ignoreSize) locRenderer.scale = 1.0;
     else {
       var textureSize = locRenderer.getContentSize();
       if (textureSize.width <= 0.0 || textureSize.height <= 0.0) {
-        locRenderer.setScale(1.0);
+        locRenderer.scale = 1.0;
         return;
       }
       var scaleX = locContentSize.width / textureSize.width;
       var scaleY = locContentSize.height / textureSize.height;
-      locRenderer.setScaleX(scaleX);
-      locRenderer.setScaleY(scaleY);
+      locRenderer.scaleX = scaleX;
+      locRenderer.scaleY = scaleY;
     }
     locRenderer.setPosition(
       locContentSize.width * 0.5,
@@ -646,17 +646,17 @@ export class CheckBox extends Widget {
   _frontCrossTextureScaleChangedWithSize() {
     var locRenderer = this._frontCrossRenderer,
       locContentSize = this._contentSize;
-    if (this._ignoreSize) locRenderer.setScale(1.0);
+    if (this._ignoreSize) locRenderer.scale = 1.0;
     else {
       var textureSize = locRenderer.getContentSize();
       if (textureSize.width <= 0.0 || textureSize.height <= 0.0) {
-        locRenderer.setScale(1.0);
+        locRenderer.scale = 1.0;
         return;
       }
       var scaleX = locContentSize.width / textureSize.width;
       var scaleY = locContentSize.height / textureSize.height;
-      locRenderer.setScaleX(scaleX);
-      locRenderer.setScaleY(scaleY);
+      locRenderer.scaleX = scaleX;
+      locRenderer.scaleY = scaleY;
     }
     locRenderer.setPosition(
       locContentSize.width * 0.5,
@@ -667,17 +667,17 @@ export class CheckBox extends Widget {
   _backGroundDisabledTextureScaleChangedWithSize() {
     var locRenderer = this._backGroundBoxDisabledRenderer,
       locContentSize = this._contentSize;
-    if (this._ignoreSize) locRenderer.setScale(1.0);
+    if (this._ignoreSize) locRenderer.scale = 1.0;
     else {
       var textureSize = locRenderer.getContentSize();
       if (textureSize.width <= 0.0 || textureSize.height <= 0.0) {
-        locRenderer.setScale(1.0);
+        locRenderer.scale = 1.0;
         return;
       }
       var scaleX = locContentSize.width / textureSize.width;
       var scaleY = locContentSize.height / textureSize.height;
-      locRenderer.setScaleX(scaleX);
-      locRenderer.setScaleY(scaleY);
+      locRenderer.scaleX = scaleX;
+      locRenderer.scaleY = scaleY;
     }
     locRenderer.setPosition(
       locContentSize.width * 0.5,
@@ -689,17 +689,17 @@ export class CheckBox extends Widget {
     var locRenderer = this._frontCrossDisabledRenderer,
       locContentSize = this._contentSize;
     if (this._ignoreSize) {
-      locRenderer.setScale(1.0);
+      locRenderer.scale = 1.0;
     } else {
       var textureSize = locRenderer.getContentSize();
       if (textureSize.width <= 0.0 || textureSize.height <= 0.0) {
-        locRenderer.setScale(1.0);
+        locRenderer.scale = 1.0;
         return;
       }
       var scaleX = locContentSize.width / textureSize.width;
       var scaleY = locContentSize.height / textureSize.height;
-      locRenderer.setScaleX(scaleX);
-      locRenderer.setScaleY(scaleY);
+      locRenderer.scaleX = scaleX;
+      locRenderer.scaleY = scaleY;
     }
     locRenderer.setPosition(
       locContentSize.width * 0.5,

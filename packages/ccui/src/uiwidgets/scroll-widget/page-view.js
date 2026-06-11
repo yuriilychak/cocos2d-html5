@@ -32,7 +32,7 @@ import { PageViewIndicator } from './page-view-indicator';
  * The PageView control of Cocos UI.
  * @example
  * var pageView = new PageView();
- * pageView.setTouchEnabled(true);
+ * pageView.touchEnabled = true;
  * pageView.addPage(new Layout());
  * this.addChild(pageView);
  */

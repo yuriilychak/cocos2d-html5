@@ -112,7 +112,7 @@ export class ScrollView extends Layout {
     this._scrollBarEnabled = true;
     this._initScrollBar();
 
-    this.setTouchEnabled(true);
+    this.touchEnabled = true;
   }
 
   get innerWidth() {
@@ -258,10 +258,10 @@ export class ScrollView extends Layout {
 
     this._innerContainer = new Layout();
     this._innerContainer.setColor(new Color(255, 255, 255));
-    this._innerContainer.setOpacity(255);
+    this._innerContainer.opacity = 255;
     this._innerContainer.setCascadeColorEnabled(true);
     this._innerContainer.setCascadeOpacityEnabled(true);
-    this._innerContainer.setTouchEnabled(false);
+    this._innerContainer.touchEnabled = false;
 
     this.addProtectedChild(this._innerContainer, 1, 1);
 
@@ -525,7 +525,7 @@ export class ScrollView extends Layout {
    * @returns {Array}
    */
   getChildren() {
-    return this._innerContainer.getChildren();
+    return this._innerContainer.children;
   }
 
   /**
@@ -1678,10 +1678,10 @@ export class ScrollView extends Layout {
   setScrollBarColor(color) {
     assert(this._scrollBarEnabled, "Scroll bar should be enabled!");
     if (this._verticalScrollBar) {
-      this._verticalScrollBar.setColor(color);
+      this._verticalScrollBar.color = color;
     }
     if (this._horizontalScrollBar) {
-      this._horizontalScrollBar.setColor(color);
+      this._horizontalScrollBar.color = color;
     }
   }
 
@@ -1692,10 +1692,10 @@ export class ScrollView extends Layout {
   getScrollBarColor() {
     assert(this._scrollBarEnabled, "Scroll bar should be enabled!");
     if (this._verticalScrollBar) {
-      this._verticalScrollBar.getColor();
+      this._verticalScrollBar.color;
     }
     if (this._horizontalScrollBar) {
-      this._horizontalScrollBar.getColor();
+      this._horizontalScrollBar.color;
     }
     return Color.WHITE;
   }

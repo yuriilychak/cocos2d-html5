@@ -237,7 +237,7 @@ export class TextField extends Widget {
     this._fontSize = 12;
     this._ccEventCallback = null;
 
-    this.setTouchEnabled(true);
+    this.touchEnabled = true;
     if (fontName) this.setFontName(fontName);
     if (fontSize) this.setFontSize(fontSize);
     if (placeholder) this.setPlaceHolder(placeholder);

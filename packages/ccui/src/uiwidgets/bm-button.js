@@ -78,7 +78,7 @@ export class BMButton extends Widget {
     this._fntFile = "";
     this._fontSize = 0;
     this._type = 0;
-    this.setTouchEnabled(true);
+    this.touchEnabled = true;
 
     this._normalLoader = new Sprite.LoadManager();
     this._clickedLoader = new Sprite.LoadManager();
@@ -194,7 +194,7 @@ export class BMButton extends Widget {
     }
     this.setCapInsets(this._capInsetsNormal);
 
-    this.setBright(this._bright);
+    this.bright = this._bright;
 
     this._normalTextureAdaptDirty = true;
   }
@@ -528,7 +528,7 @@ export class BMButton extends Widget {
 
     if (this._pressedTextureLoaded) {
       if (this.pressedActionEnabled) {
-        this._buttonScale9Renderer.setScale(1.0);
+        this._buttonScale9Renderer.scale = 1.0;
 
         if (this._titleRenderer) {
           this._titleRenderer.stopAllActions();
@@ -538,18 +538,18 @@ export class BMButton extends Widget {
               new ScaleTo(BMButton.ZOOM_ACTION_TIME_STEP, 1, 1)
             );
           } else {
-            this._titleRenderer.setScaleX(1);
-            this._titleRenderer.setScaleY(1);
+            this._titleRenderer.scaleX = 1;
+            this._titleRenderer.scaleY = 1;
           }
         }
       }
     } else {
-      this._buttonScale9Renderer.setScale(1.0);
+      this._buttonScale9Renderer.scale = 1.0;
 
       if (this._titleRenderer) {
         this._titleRenderer.stopAllActions();
-        this._titleRenderer.setScaleX(1);
-        this._titleRenderer.setScaleY(1);
+        this._titleRenderer.scaleX = 1;
+        this._titleRenderer.scaleY = 1;
       }
     }
 
@@ -563,7 +563,7 @@ export class BMButton extends Widget {
         )
       );
     } else if (!this._pressedTextureLoaded && this._scale9Enabled) {
-      this._buttonScale9Renderer.setColor(Color.WHITE);
+      this._buttonScale9Renderer.color = Color.WHITE;
     }
   }
 
@@ -603,8 +603,8 @@ export class BMButton extends Widget {
 
       if (this._titleRenderer) {
         this._titleRenderer.stopAllActions();
-        this._titleRenderer.setScaleX(1 + this._zoomScale);
-        this._titleRenderer.setScaleY(1 + this._zoomScale);
+        this._titleRenderer.scaleX = 1 + this._zoomScale;
+        this._titleRenderer.scaleY = 1 + this._zoomScale;
       }
     }
 
@@ -631,7 +631,7 @@ export class BMButton extends Widget {
       this._buttonScale9Renderer.setSpriteFrame(this._buttonDisableSpriteFrame);
     }
 
-    this._buttonScale9Renderer.setScale(1.0);
+    this._buttonScale9Renderer.scale = 1.0;
 
     if (this._disabledBgColor) {
       this._buttonScale9Renderer.runAction(
@@ -652,7 +652,7 @@ export class BMButton extends Widget {
   setNormalBgColor(color) {
     this._normalBgColor = color;
     if (this._brightStyle === Widget.BRIGHT_STYLE_NORMAL && this._buttonScale9Renderer) {
-      this._buttonScale9Renderer.setColor(color);
+      this._buttonScale9Renderer.color = color;
     }
   }
 
@@ -671,7 +671,7 @@ export class BMButton extends Widget {
   setPressedBgColor(color) {
     this._pressedBgColor = color;
     if (this._brightStyle === Widget.BRIGHT_STYLE_HIGH_LIGHT && this._buttonScale9Renderer) {
-      this._buttonScale9Renderer.setColor(color);
+      this._buttonScale9Renderer.color = color;
     }
   }
 
@@ -690,7 +690,7 @@ export class BMButton extends Widget {
   setDisabledBgColor(color) {
     this._disabledBgColor = color;
     if (!this._bright && this._buttonScale9Renderer) {
-      this._buttonScale9Renderer.setColor(color);
+      this._buttonScale9Renderer.color = color;
     }
   }
 
@@ -834,7 +834,7 @@ export class BMButton extends Widget {
   setTitleColor(color) {
     this._createTitleRendererIfNeeded();
     this._titleColor = color;
-    this._titleRenderer.setColor(color);
+    this._titleRenderer.color = color;
   }
 
   /**
@@ -843,7 +843,7 @@ export class BMButton extends Widget {
    */
   getTitleColor() {
     if (this._titleRenderer) {
-      return this._titleRenderer.getColor();
+      return this._titleRenderer.color;
     }
     return Color.WHITE;
   }

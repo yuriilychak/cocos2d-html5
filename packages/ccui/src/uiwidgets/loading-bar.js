@@ -265,23 +265,23 @@ export class LoadingBar extends Widget {
         }else if (this._ignoreSize) {
             if (!this._scale9Enabled) {
                 this._totalLength = this._barRendererTextureSize.width;
-                locBarRender.setScale(1.0);
+                locBarRender.scale = 1.0;
             }
         } else {
             this._totalLength = locContentSize.width;
             if (this._scale9Enabled) {
                 this._setScale9Scale();
-                locBarRender.setScale(1.0);
+                locBarRender.scale = 1.0;
             } else {
                 var textureSize = this._barRendererTextureSize;
                 if (textureSize.width <= 0.0 || textureSize.height <= 0.0) {
-                    locBarRender.setScale(1.0);
+                    locBarRender.scale = 1.0;
                     return;
                 }
                 var scaleX = locContentSize.width / textureSize.width;
                 var scaleY = locContentSize.height / textureSize.height;
-                locBarRender.setScaleX(scaleX);
-                locBarRender.setScaleY(scaleY);
+                locBarRender.scaleX = scaleX;
+                locBarRender.scaleY = scaleY;
             }
         }
         switch (this._direction) {

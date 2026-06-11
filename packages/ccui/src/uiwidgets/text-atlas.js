@@ -201,15 +201,15 @@ export class TextAtlas extends Widget {
   _labelAtlasScaleChangedWithSize() {
     var locRenderer = this._labelAtlasRenderer;
     if (this._ignoreSize) {
-      locRenderer.setScale(1.0);
+      locRenderer.scale = 1.0;
     } else {
       var textureSize = locRenderer.getContentSize();
       if (textureSize.width <= 0.0 || textureSize.height <= 0.0) {
-        locRenderer.setScale(1.0);
+        locRenderer.scale = 1.0;
         return;
       }
-      locRenderer.setScaleX(this._contentSize.width / textureSize.width);
-      locRenderer.setScaleY(this._contentSize.height / textureSize.height);
+      locRenderer.scaleX = this._contentSize.width / textureSize.width;
+      locRenderer.scaleY = this._contentSize.height / textureSize.height;
     }
     locRenderer.setPosition(
       this._contentSize.width / 2.0,

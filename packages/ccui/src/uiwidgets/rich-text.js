@@ -254,8 +254,8 @@ export class RichText extends Widget {
             default:
               break;
           }
-          elementRenderer.setColor(element._color);
-          elementRenderer.setOpacity(element._color.a);
+          elementRenderer.color = element._color;
+          elementRenderer.opacity = element._color.a;
           this._pushToContainer(elementRenderer);
         }
       } else {
@@ -345,15 +345,15 @@ export class RichText extends Widget {
             leftWords.substr(0, leftLength),
             fontNameOrFontDef
           );
-          leftRenderer.setOpacity(fontNameOrFontDef.fillStyle.a); //TODO: Verify that might not be needed...
+          leftRenderer.opacity = fontNameOrFontDef.fillStyle.a; //TODO: Verify that might not be needed...
         } else {
           leftRenderer = new LabelTTF(
             leftWords.substr(0, leftLength),
             fontNameOrFontDef,
             fontSize
           );
-          leftRenderer.setColor(color);
-          leftRenderer.setOpacity(color.a);
+          leftRenderer.color = color;
+          leftRenderer.opacity = color.a;
         }
         this._pushToContainer(leftRenderer);
       }
@@ -362,10 +362,10 @@ export class RichText extends Widget {
       this._handleTextRenderer(cutWords, fontNameOrFontDef, fontSize, color);
     } else {
       if (fontNameOrFontDef instanceof FontDefinition) {
-        textRenderer.setOpacity(fontNameOrFontDef.fillStyle.a); //TODO: Verify that might not be needed...
+        textRenderer.opacity = fontNameOrFontDef.fillStyle.a; //TODO: Verify that might not be needed...
       } else {
-        textRenderer.setColor(color);
-        textRenderer.setOpacity(color.a);
+        textRenderer.color = color;
+        textRenderer.opacity = color.a;
       }
       this._pushToContainer(textRenderer);
     }

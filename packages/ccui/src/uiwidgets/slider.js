@@ -72,7 +72,7 @@ export class Slider extends Widget {
     this._sliderBallNormalTextureScaleX = 1;
     this._sliderBallNormalTextureScaleY = 1;
     resType = resType || 0;
-    this.setTouchEnabled(true);
+    this.touchEnabled = true;
     if (barTextureName) {
       this.loadBarTexture(barTextureName, resType);
     }
@@ -105,9 +105,9 @@ export class Slider extends Widget {
     );
     this._slidBallNormalRenderer = new Sprite();
     this._slidBallPressedRenderer = new Sprite();
-    this._slidBallPressedRenderer.setVisible(false);
+    this._slidBallPressedRenderer.visible = false;
     this._slidBallDisabledRenderer = new Sprite();
-    this._slidBallDisabledRenderer.setVisible(false);
+    this._slidBallDisabledRenderer.visible = false;
     this._slidBallRenderer = new Node();
     this._slidBallRenderer.addChild(this._slidBallNormalRenderer);
     this._slidBallRenderer.addChild(this._slidBallPressedRenderer);
@@ -623,22 +623,22 @@ export class Slider extends Widget {
       this._barLength = this._contentSize.width;
       this._barRenderer.setPreferredSize(this._contentSize);
     } else if (this._ignoreSize) {
-      this._barRenderer.setScale(1.0);
+      this._barRenderer.scale = 1.0;
       this._barLength = this._contentSize.width;
     } else {
       this._barLength = this._contentSize.width;
       if (this._scale9Enabled) {
         this._barRenderer.setPreferredSize(this._contentSize);
-        this._barRenderer.setScale(1.0);
+        this._barRenderer.scale = 1.0;
       } else {
         var btextureSize = this._barTextureSize;
         if (btextureSize.width <= 0.0 || btextureSize.height <= 0.0) {
-          this._barRenderer.setScale(1.0);
+          this._barRenderer.scale = 1.0;
         } else {
           var bscaleX = this._contentSize.width / btextureSize.width;
           var bscaleY = this._contentSize.height / btextureSize.height;
-          this._barRenderer.setScaleX(bscaleX);
-          this._barRenderer.setScaleY(bscaleY);
+          this._barRenderer.scaleX = bscaleX;
+          this._barRenderer.scaleY = bscaleY;
         }
       }
     }
@@ -657,23 +657,23 @@ export class Slider extends Widget {
         var ptextureSize = this._progressBarTextureSize;
         var pscaleX = this._contentSize.width / ptextureSize.width;
         var pscaleY = this._contentSize.height / ptextureSize.height;
-        this._progressBarRenderer.setScaleX(pscaleX);
-        this._progressBarRenderer.setScaleY(pscaleY);
+        this._progressBarRenderer.scaleX = pscaleX;
+        this._progressBarRenderer.scaleY = pscaleY;
       }
     } else {
       if (this._scale9Enabled) {
         this._progressBarRenderer.setPreferredSize(this._contentSize);
-        this._progressBarRenderer.setScale(1);
+        this._progressBarRenderer.scale = 1;
       } else {
         var ptextureSize = this._progressBarTextureSize;
         if (ptextureSize.width <= 0.0 || ptextureSize.height <= 0.0) {
-          this._progressBarRenderer.setScale(1.0);
+          this._progressBarRenderer.scale = 1.0;
           return;
         }
         var pscaleX = this._contentSize.width / ptextureSize.width;
         var pscaleY = this._contentSize.height / ptextureSize.height;
-        this._progressBarRenderer.setScaleX(pscaleX);
-        this._progressBarRenderer.setScaleY(pscaleY);
+        this._progressBarRenderer.scaleX = pscaleX;
+        this._progressBarRenderer.scaleY = pscaleY;
       }
     }
     this._progressBarRenderer.setPosition(0.0, this._contentSize.height / 2.0);
@@ -681,9 +681,9 @@ export class Slider extends Widget {
   }
 
   _onPressStateChangedToNormal() {
-    this._slidBallNormalRenderer.setVisible(true);
-    this._slidBallPressedRenderer.setVisible(false);
-    this._slidBallDisabledRenderer.setVisible(false);
+    this._slidBallNormalRenderer.visible = true;
+    this._slidBallPressedRenderer.visible = false;
+    this._slidBallDisabledRenderer.visible = false;
 
     this._slidBallNormalRenderer.setScale(
       this._sliderBallNormalTextureScaleX,
@@ -704,9 +704,9 @@ export class Slider extends Widget {
         this._sliderBallNormalTextureScaleY + this._zoomScale
       );
     } else {
-      this._slidBallNormalRenderer.setVisible(false);
-      this._slidBallPressedRenderer.setVisible(true);
-      this._slidBallDisabledRenderer.setVisible(false);
+      this._slidBallNormalRenderer.visible = false;
+      this._slidBallPressedRenderer.visible = true;
+      this._slidBallDisabledRenderer.visible = false;
     }
     if (ServiceLocator.rendererConfig.isWebGL) {
       this._slidBallNormalRenderer._renderCmd._shaderProgram =
@@ -718,10 +718,10 @@ export class Slider extends Widget {
 
   _onPressStateChangedToDisabled() {
     if (this._slidBallDisabledTextureFile) {
-      this._slidBallNormalRenderer.setVisible(false);
-      this._slidBallDisabledRenderer.setVisible(true);
+      this._slidBallNormalRenderer.visible = false;
+      this._slidBallDisabledRenderer.visible = true;
     } else {
-      this._slidBallNormalRenderer.setVisible(true);
+      this._slidBallNormalRenderer.visible = true;
       if (ServiceLocator.rendererConfig.isWebGL) {
         this._slidBallNormalRenderer._renderCmd._shaderProgram =
           this._getGrayGLProgram();
@@ -733,7 +733,7 @@ export class Slider extends Widget {
       this._sliderBallNormalTextureScaleX,
       this._sliderBallNormalTextureScaleY
     );
-    this._slidBallPressedRenderer.setVisible(false);
+    this._slidBallPressedRenderer.visible = false;
   }
 
   setZoomScale(scale) {

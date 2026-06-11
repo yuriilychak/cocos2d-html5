@@ -170,7 +170,7 @@ export class Widget extends ProtectedNode {
     init() {
         this._layoutParameterDictionary = {};
         this._initRenderer();
-        this.setBright(true);
+        this.bright = true;
 
         this.onFocusChanged = this.onFocusChange;
         this.onNextFocusedWidget = null;
@@ -205,7 +205,7 @@ export class Widget extends ProtectedNode {
     }
 
     getWidgetParent() {
-        var widget = this.getParent();
+        var widget = this.parent;
         if (widget instanceof Widget)
             return widget;
         return null;
@@ -221,7 +221,7 @@ export class Widget extends ProtectedNode {
         var parentWidget = this._getAncensterWidget(this);
         if (parentWidget == null)
             return true;
-        if (parentWidget && !parentWidget.isEnabled())
+        if (parentWidget && !parentWidget.enabled)
             return false;
 
         return parentWidget._isAncestorsEnabled();
@@ -250,29 +250,29 @@ export class Widget extends ProtectedNode {
         if (null == node)
             return null;
 
-        var parent = node.getParent();
+        var parent = node.parent;
         if (null == parent)
             return null;
 
         if (parent instanceof Widget)
             return parent;
         else
-            return this._getAncensterWidget(parent.getParent());
+            return this._getAncensterWidget(parent.parent);
     }
     _isAncestorsVisible(node) {
         if (null == node)
             return true;
 
-        var parent = node.getParent();
+        var parent = node.parent;
 
-        if (parent && !parent.isVisible())
+        if (parent && !parent.visible)
             return false;
         return this._isAncestorsVisible(parent);
     }
 
     setEnabled(enabled) {
         this._enabled = enabled;
-        this.setBright(enabled);
+        this.bright = enabled;
     }
 
     _initRenderer() {
@@ -292,7 +292,7 @@ export class Widget extends ProtectedNode {
             this._contentSize = this.getVirtualRendererSize();
         }
         if (!this._usingLayoutComponent && this._running) {
-            var widgetParent = this.getWidgetParent();
+            var widgetParent = this.widgetParent;
             var pSize = widgetParent ? widgetParent.getContentSize() : this._parent.getContentSize();
             this._sizePercent.x = (pSize.width > 0.0) ? locWidth / pSize.width : 0.0;
             this._sizePercent.y = (pSize.height > 0.0) ? locHeight / pSize.height : 0.0;
@@ -317,7 +317,7 @@ export class Widget extends ProtectedNode {
         }
 
         if (!this._usingLayoutComponent && this._running) {
-            var widgetParent = this.getWidgetParent();
+            var widgetParent = this.widgetParent;
             var locWidth = widgetParent ? widgetParent.width : this._parent.width;
             this._sizePercent.x = locWidth > 0 ? this._customSize.width / locWidth : 0;
         }
@@ -342,7 +342,7 @@ export class Widget extends ProtectedNode {
         }
 
         if (!this._usingLayoutComponent && this._running) {
-            var widgetParent = this.getWidgetParent();
+            var widgetParent = this.widgetParent;
             var locH = widgetParent ? widgetParent.height : this._parent.height;
             this._sizePercent.y = locH > 0 ? this._customSize.height / locH : 0;
         }
@@ -367,7 +367,7 @@ export class Widget extends ProtectedNode {
         this._sizePercent.y = percent.y;
         var width = this._customSize.width, height = this._customSize.height;
         if (this._running) {
-            var widgetParent = this.getWidgetParent();
+            var widgetParent = this.widgetParent;
             if (widgetParent) {
                 width = widgetParent.width * percent.x;
                 height = widgetParent.height * percent.y;
@@ -388,7 +388,7 @@ export class Widget extends ProtectedNode {
         this._sizePercent.x = percent;
         var width = this._customSize.width;
         if (this._running) {
-            var widgetParent = this.getWidgetParent();
+            var widgetParent = this.widgetParent;
             width = (widgetParent ? widgetParent.width : this._parent.width) * percent;
         }
         if (this._ignoreSize)
@@ -401,7 +401,7 @@ export class Widget extends ProtectedNode {
         this._sizePercent.y = percent;
         var height = this._customSize.height;
         if (this._running) {
-            var widgetParent = this.getWidgetParent();
+            var widgetParent = this.widgetParent;
             height = (widgetParent ? widgetParent.height : this._parent.height) * percent;
         }
         if (this._ignoreSize)
@@ -413,7 +413,7 @@ export class Widget extends ProtectedNode {
 
     updateSizeAndPosition(parentSize) {
         if (!parentSize) {
-            var widgetParent = this.getWidgetParent();
+            var widgetParent = this.widgetParent;
             if (widgetParent)
                 parentSize = widgetParent.getLayoutSize();
             else
@@ -531,7 +531,7 @@ export class Widget extends ProtectedNode {
 
     _onSizeChanged() {
         if(!this._usingLayoutComponent){
-            var locChildren = this.getChildren();
+            var locChildren = this.children;
             for (var i = 0, len = locChildren.length; i < len; i++) {
                 var child = locChildren[i];
                 if (child instanceof Widget)
@@ -606,8 +606,8 @@ export class Widget extends ProtectedNode {
     findNextFocusedWidget(direction, current) {
         if (null === this.onNextFocusedWidget || null == this.onNextFocusedWidget(direction)) {
             var isLayout = current instanceof Widget.LayoutClass;
-            if (this.isFocused() || isLayout) {
-                var layout = this.getParent();
+            if (this.focused || isLayout) {
+                var layout = this.parent;
                 if (null === layout || !(layout instanceof Widget.LayoutClass)) {
                     if (isLayout)
                         return current.findNextFocusedWidget(direction, current);
@@ -634,20 +634,20 @@ export class Widget extends ProtectedNode {
     }
 
     interceptTouchEvent(eventType, sender, touch) {
-        var widgetParent = this.getWidgetParent();
+        var widgetParent = this.widgetParent;
         if (widgetParent)
             widgetParent.interceptTouchEvent(eventType, sender, touch);
     }
 
     onFocusChange(widgetLostFocus, widgetGetFocus) {
         if (widgetLostFocus)
-            widgetLostFocus.setFocused(false);
+            widgetLostFocus.focused = false;
         if (widgetGetFocus)
-            widgetGetFocus.setFocused(true);
+            widgetGetFocus.focused = true;
     }
 
     dispatchFocusEvent(widgetLostFocus, widgetGetFocus) {
-        if (widgetLostFocus && !widgetLostFocus.isFocused())
+        if (widgetLostFocus && !widgetLostFocus.focused)
             widgetLostFocus = Widget._focusedWidget;
 
         if (widgetGetFocus !== widgetLostFocus) {
@@ -701,7 +701,7 @@ export class Widget extends ProtectedNode {
 
     onTouchBegan(touch, event) {
         this._hit = false;
-        if (this.isVisible() && this.isEnabled() && this._isAncestorsEnabled() && this._isAncestorsVisible(this)) {
+        if (this.visible && this.enabled && this._isAncestorsEnabled() && this._isAncestorsVisible(this)) {
             var touchPoint = touch.getLocation();
             this._touchBeganPosition.x = touchPoint.x;
             this._touchBeganPosition.y = touchPoint.y;
@@ -721,7 +721,7 @@ export class Widget extends ProtectedNode {
         return true;
     }
     propagateTouchEvent(event, sender, touch) {
-        var widgetParent = this.getWidgetParent();
+        var widgetParent = this.widgetParent;
         if (widgetParent) {
             widgetParent.interceptTouchEvent(event, sender, touch);
         }
@@ -809,7 +809,7 @@ export class Widget extends ProtectedNode {
 
     isClippingParentContainsPoint(pt) {
         this._affectByClipping = false;
-        var parent = this.getParent();
+        var parent = this.parent;
         var clippingParent = null;
         while (parent) {
             if (parent instanceof Widget.LayoutClass) {
@@ -819,7 +819,7 @@ export class Widget extends ProtectedNode {
                     break;
                 }
             }
-            parent = parent.getParent();
+            parent = parent.parent;
         }
 
         if (!this._affectByClipping)
@@ -834,14 +834,14 @@ export class Widget extends ProtectedNode {
     }
 
     checkChildInfo(handleState, sender, touchPoint) {
-        var widgetParent = this.getWidgetParent();
+        var widgetParent = this.widgetParent;
         if (widgetParent)
             widgetParent.checkChildInfo(handleState, sender, touchPoint);
     }
 
     setPosition(pos, posY) {
         if (!this._usingLayoutComponent && this._running) {
-            var widgetParent = this.getWidgetParent();
+            var widgetParent = this.widgetParent;
             if (widgetParent) {
                 var pSize = widgetParent.getContentSize();
                 if (pSize.width <= 0 || pSize.height <= 0) {
@@ -863,7 +863,7 @@ export class Widget extends ProtectedNode {
     }
     setPositionX(x) {
         if (this._running) {
-            var widgetParent = this.getWidgetParent();
+            var widgetParent = this.widgetParent;
             if (widgetParent) {
                 var pw = widgetParent.width;
                 if (pw <= 0)
@@ -877,7 +877,7 @@ export class Widget extends ProtectedNode {
     }
     setPositionY(y) {
         if (this._running) {
-            var widgetParent = this.getWidgetParent();
+            var widgetParent = this.widgetParent;
             if (widgetParent) {
                 var ph = widgetParent.height;
                 if (ph <= 0)
@@ -969,9 +969,9 @@ export class Widget extends ProtectedNode {
     }
 
     setFlippedX(flipX) {
-        var realScale = this.getScaleX();
+        var realScale = this.scaleX;
         this._flippedX = flipX;
-        this.setScaleX(realScale);
+        this.scaleX = realScale;
     }
 
     isFlippedX() {
@@ -979,9 +979,9 @@ export class Widget extends ProtectedNode {
     }
 
     setFlippedY(flipY) {
-        var realScale = this.getScaleY();
+        var realScale = this.scaleY;
         this._flippedY = flipY;
-        this.setScaleY(realScale);
+        this.scaleY = realScale;
     }
 
     isFlippedY() {
@@ -1056,7 +1056,7 @@ export class Widget extends ProtectedNode {
         return new Widget();
     }
     _copyClonedWidgetChildren(model) {
-        var widgetChildren = model.getChildren();
+        var widgetChildren = model.children;
         for (var i = 0; i < widgetChildren.length; i++) {
             var locChild = widgetChildren[i];
             if (locChild instanceof Widget)
@@ -1066,14 +1066,14 @@ export class Widget extends ProtectedNode {
     _copySpecialProperties(model) {
     }
     _copyProperties(widget) {
-        this.setEnabled(widget.isEnabled());
-        this.setVisible(widget.isVisible());
-        this.setBright(widget.isBright());
-        this.setTouchEnabled(widget.isTouchEnabled());
+        this.enabled = widget.enabled;
+        this.visible = widget.visible;
+        this.bright = widget.bright;
+        this.touchEnabled = widget.touchEnabled;
         this.setLocalZOrder(widget.getLocalZOrder());
         this.setTag(widget.getTag());
-        this.setName(widget.getName());
-        this.setActionTag(widget.getActionTag());
+        this.name = widget.name;
+        this.actionTag = widget.actionTag;
 
         this._ignoreSize = widget._ignoreSize;
 
@@ -1092,15 +1092,15 @@ export class Widget extends ProtectedNode {
 
         this.setPosition(widget.getPosition());
         this.setAnchorPoint(widget.getAnchorPoint());
-        this.setScaleX(widget.getScaleX());
-        this.setScaleY(widget.getScaleY());
+        this.scaleX = widget.scaleX;
+        this.scaleY = widget.scaleY;
         this.setRotation(widget.getRotation());
         this.setRotationX(widget.getRotationX());
         this.setRotationY(widget.getRotationY());
         this.setFlippedX(widget.isFlippedX());
         this.setFlippedY(widget.isFlippedY());
-        this.setColor(widget.getColor());
-        this.setOpacity(widget.getOpacity());
+        this.color = widget.color;
+        this.opacity = widget.opacity;
 
         this._touchEventCallback = widget._touchEventCallback;
         this._touchEventListener = widget._touchEventListener;
@@ -1258,8 +1258,8 @@ export class Widget extends ProtectedNode {
     setScale(scaleX, scaleY) {
         if (scaleY === undefined)
             scaleY = scaleX;
-        this.setScaleX(scaleX);
-        this.setScaleY(scaleY);
+        this.scaleX = scaleX;
+        this.scaleY = scaleY;
     }
     getScaleX() {
         var originalScale = Node.prototype.getScaleX.call(this);
@@ -1274,9 +1274,9 @@ export class Widget extends ProtectedNode {
         return originalScale;
     }
     getScale() {
-        if (this.getScaleX() !== this.getScaleY())
+        if (this.scaleX !== this.scaleY)
             log("Widget#scale. ScaleX != ScaleY. Don't know which one to return");
-        return this.getScaleX();
+        return this.scaleX;
     }
 
     setCallbackName(callbackName) {

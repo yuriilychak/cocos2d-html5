@@ -60,7 +60,7 @@ export class PageViewIndicator extends ProtectedNode {
         this._indexNodesColor = Color.WHITE;
 
         this._currentIndexNode = helper._createSpriteFromBase64(PageViewIndicator.CIRCLE_IMAGE, PageViewIndicator.CIRCLE_IMAGE_KEY);
-        this._currentIndexNode.setVisible(false);
+        this._currentIndexNode.visible = false;
         this.addProtectedChild(this._currentIndexNode, 1);
 
         // this.setCascadeColorEnabled(true);
@@ -92,7 +92,7 @@ export class PageViewIndicator extends ProtectedNode {
             this._decreaseNumberOfPages();
         }
         this._rearrange();
-        this._currentIndexNode.setVisible(this._indexNodes.length > 0);
+        this._currentIndexNode.visible = this._indexNodes.length > 0;
     }
 
     /**
@@ -159,7 +159,7 @@ export class PageViewIndicator extends ProtectedNode {
      * @param {Color} color
      */
     setSelectedIndexColor(color) {
-        this._currentIndexNode.setColor(color);
+        this._currentIndexNode.color = color;
     }
 
     /**
@@ -167,7 +167,7 @@ export class PageViewIndicator extends ProtectedNode {
      * @returns {Color}
      */
     getSelectedIndexColor() {
-        return this._currentIndexNode.getColor();
+        return this._currentIndexNode.color;
     }
 
     /**
@@ -178,7 +178,7 @@ export class PageViewIndicator extends ProtectedNode {
         this._indexNodesColor = indexNodesColor;
 
         for (var i = 0; i < this._indexNodes.length; ++i) {
-            this._indexNodes[i].setColor(indexNodesColor);
+            this._indexNodes[i].color = indexNodesColor;
         }
     }
 
@@ -201,10 +201,10 @@ export class PageViewIndicator extends ProtectedNode {
         }
         this._indexNodesScale = indexNodesScale;
 
-        this._currentIndexNode.setScale(indexNodesScale);
+        this._currentIndexNode.scale = indexNodesScale;
 
         for (var i = 0; i < this._indexNodes.length; ++i) {
-            this._indexNodes[i].setScale(this, _indexNodesScale);
+            this._indexNodes[i].scale = this, _indexNodesScale;
         }
 
         this._rearrange();
@@ -271,8 +271,8 @@ export class PageViewIndicator extends ProtectedNode {
             }
         }
 
-        indexNode.setColor(this._indexNodesColor);
-        indexNode.setScale(this._indexNodesScale);
+        indexNode.color = this._indexNodesColor;
+        indexNode.scale = this._indexNodesScale;
 
         this.addProtectedChild(indexNode);
         this._indexNodes.push(indexNode);
@@ -294,7 +294,7 @@ export class PageViewIndicator extends ProtectedNode {
             this.removeProtectedChild(this._indexNodes[i]);
         }
         this._indexNodes.length = 0;
-        this._currentIndexNode.setVisible(false);
+        this._currentIndexNode.visible = false;
     }
 }
 

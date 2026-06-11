@@ -39,7 +39,7 @@ import {
  * var listView = new ListView();
  * // set list view ex direction
  * listView.setDirection(ScrollView.DIR_VERTICAL);
- * listView.setTouchEnabled(true);
+ * listView.touchEnabled = true;
  * listView.setBounceEnabled(true);
  * listView.setBackGroundImage("res/cocosui/green_edit.png");
  * listView.setBackGroundImageScale9Enabled(true);
@@ -75,7 +75,7 @@ export class ListView extends ScrollView {
     super();
     this._items = [];
     this._gravity = ListView.GRAVITY_CENTER_VERTICAL;
-    this.setTouchEnabled(true);
+    this.touchEnabled = true;
     this.setDirection(ScrollView.DIR_VERTICAL);
   }
 
@@ -247,7 +247,7 @@ export class ListView extends ScrollView {
   addChild(widget, zOrder, tag) {
     if (widget) {
       zOrder = zOrder || widget.getLocalZOrder();
-      tag = tag || widget.getName();
+      tag = tag || widget.name;
       super.addChild(widget, zOrder, tag);
       if (widget instanceof Widget) {
         this._items.push(widget);
@@ -962,11 +962,11 @@ export class ListView extends ScrollView {
     if (eventType !== Widget.TOUCH_MOVED) {
       var parent = sender;
       while (parent) {
-        if (parent && parent.getParent() === this._innerContainer) {
+        if (parent && parent.parent === this._innerContainer) {
           this._curSelectedIndex = this.getIndex(parent);
           break;
         }
-        parent = parent.getParent();
+        parent = parent.parent;
       }
       if (sender.isHighlighted()) this._selectedItemEvent(eventType);
     }

@@ -13,7 +13,7 @@ export const helper = {
     if (!root) return null;
     if (root.getTag() === tag) return root;
 
-    var arrayRootChildren = root.getChildren();
+    var arrayRootChildren = root.children;
     var length = arrayRootChildren.length;
     for (var i = 0; i < length; i++) {
       var child = arrayRootChildren[i];
@@ -31,8 +31,8 @@ export const helper = {
    */
   seekWidgetByName: function (root, name) {
     if (!root) return null;
-    if (root.getName() === name) return root;
-    var arrayRootChildren = root.getChildren();
+    if (root.name === name) return root;
+    var arrayRootChildren = root.children;
     var length = arrayRootChildren.length;
     for (var i = 0; i < length; i++) {
       var child = arrayRootChildren[i];
@@ -51,7 +51,7 @@ export const helper = {
    */
   seekWidgetByRelativeName: function (root, name) {
     if (!root) return null;
-    var arrayRootChildren = root.getChildren();
+    var arrayRootChildren = root.children;
     var length = arrayRootChildren.length;
     for (var i = 0; i < length; i++) {
       var child = arrayRootChildren[i];
@@ -70,8 +70,8 @@ export const helper = {
    */
   seekActionWidgetByActionTag: function (root, tag) {
     if (!root) return null;
-    if (root.getActionTag() === tag) return root;
-    var arrayRootChildren = root.getChildren();
+    if (root.actionTag === tag) return root;
+    var arrayRootChildren = root.children;
     for (var i = 0; i < arrayRootChildren.length; i++) {
       var child = arrayRootChildren[i];
       var res = helper.seekActionWidgetByActionTag(child, tag);
@@ -88,12 +88,12 @@ export const helper = {
    */
   doLayout: function (rootNode) {
     if (!this._activeLayout) return;
-    var children = rootNode.getChildren(),
+    var children = rootNode.children,
       node;
     for (var i = 0, len = children.length; i < len; i++) {
       node = children[i];
       var com = node.getComponent(LayoutComponent.NAME);
-      var parent = node.getParent();
+      var parent = node.parent;
       if (null != com && null !== parent && com.refreshLayout)
         com.refreshLayout();
     }
