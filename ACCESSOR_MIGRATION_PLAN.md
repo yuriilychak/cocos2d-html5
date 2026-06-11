@@ -186,7 +186,19 @@ isOpacityModifyRGB()        -> opacityModifyRGB
 
 ### Phase 1: Baseline Inventory
 
-Create or use a script that reports:
+Use the root inventory script:
+
+```bash
+npm run accessors:inventory
+```
+
+For machine-readable output:
+
+```bash
+npm run accessors:inventory -- --json
+```
+
+The script reports:
 
 - legacy method definitions by file/package
 - existing ES accessors by file/package
@@ -321,6 +333,7 @@ Recommended commands:
 ```bash
 npm run build
 npm run dev
+npm run accessors:inventory
 ```
 
 For focused scans:

@@ -23,7 +23,8 @@
   "scripts": {
     "build": "turbo run build",
     "clean": "turbo run clean",
-    "dev": "turbo run dev"
+    "dev": "turbo run dev",
+    "accessors:inventory": "node scripts/accessor-inventory.mjs"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^29.0.2",
