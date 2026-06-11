@@ -63,7 +63,7 @@ export class TestScene extends Scene {
       Widget.PLIST_TEXTURE
     );
     header.setCapInsets(new Rect(12, 12, 12, 12));
-    header.setColor(new Color(0x35, 0x39, 0x41));
+    header.color = new Color(0x35, 0x39, 0x41);
     header.setContentSize(winW, HEADER_HEIGHT);
     header.x = winW / 2;
     header.y = winH - HEADER_HEIGHT / 2;
@@ -101,7 +101,7 @@ export class TestScene extends Scene {
     this._mainMenu = btn;
 
     if (window.sideIndexBar) {
-      btn.setVisible(false);
+      btn.visible = false;
     }
 
     const makeNavBtn = (text, x) => {
@@ -123,7 +123,7 @@ export class TestScene extends Scene {
       b.pressedActionEnabled = true;
       b.x = x;
       b.y = centerY;
-      b.setVisible(false);
+      b.visible = false;
       this.addChild(b, 11);
       return b;
     };
@@ -141,15 +141,15 @@ export class TestScene extends Scene {
   setNavCallbacks(onBack, onRestart, onForward) {
     if (onBack) {
       this._navBack.addClickEventListener(onBack);
-      this._navBack.setVisible(true);
+      this._navBack.visible = true;
     }
     if (onRestart) {
       this._navRestart.addClickEventListener(onRestart);
-      this._navRestart.setVisible(true);
+      this._navRestart.visible = true;
     }
     if (onForward) {
       this._navForward.addClickEventListener(onForward);
-      this._navForward.setVisible(true);
+      this._navForward.visible = true;
     }
   }
 

@@ -39,19 +39,19 @@ export class FixedPriorityTest extends EventDispatcherTestDemo {
     var size = director.getVisibleSize();
 
     var sprite1 = TouchableSprite.create(30);
-    sprite1.setColor(new Color(0, 255, 255));
+    sprite1.color = new Color(0, 255, 255);
     sprite1.x = origin.x + size.width / 2 - 80;
     sprite1.y = origin.y + size.height / 2 + 40;
     this.addChild(sprite1, 10);
 
     var sprite2 = TouchableSprite.create(20);
-    sprite2.setColor(new Color(255, 0, 255));
+    sprite2.color = new Color(255, 0, 255);
     sprite2.x = origin.x + size.width / 2;
     sprite2.y = origin.y + size.height / 2;
     this.addChild(sprite2, 20);
 
     var sprite3 = TouchableSprite.create(10);
-    sprite3.setColor(new Color(255, 255, 0));
+    sprite3.color = new Color(255, 255, 0);
     sprite3.x = 0;
     sprite3.y = 0;
     sprite2.addChild(sprite3, 1);

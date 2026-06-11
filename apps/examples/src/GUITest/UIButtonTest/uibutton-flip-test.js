@@ -43,7 +43,7 @@ export class UIButtonFlipTest extends UIMainLayer {
       button.setTitleText("PLAY GAME");
       //button.setTitleFontName("Marker Felt");
       button.setZoomScale(0.3);
-      button.setScale(2.0);
+      button.scale = 2.0;
       button.setFlippedX(true);
       button.setPressedActionEnabled(true);
       this.addChild(button);

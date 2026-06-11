@@ -39,8 +39,8 @@ export class UILayoutComponentTest extends UIMainLayer {
       var widgetSize = this._widget.getContentSize();
 
       this._baseLayer = new LayerColor();
-      this._baseLayer.setColor(new Color(50, 100, 0));
-      this._baseLayer.setOpacity(100);
+      this._baseLayer.color = new Color(50, 100, 0);
+      this._baseLayer.opacity = 100;
       this._baseLayer.setContentSize(200, 200);
       this._mainNode.addChild(this._baseLayer);
 

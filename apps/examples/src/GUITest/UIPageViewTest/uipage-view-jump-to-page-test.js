@@ -68,7 +68,7 @@ export class UIPageViewJumpToPageTest extends UIMainLayer {
         layout.addChild(imageView);
 
         var label = new Text("page " + (i + 1), "Arial", 30);
-        label.setColor(new Color(192, 192, 192));
+        label.color = new Color(192, 192, 192);
         label.setPosition(
           new Point(layout.width / 2.0, layout.height / 2.0)
         );

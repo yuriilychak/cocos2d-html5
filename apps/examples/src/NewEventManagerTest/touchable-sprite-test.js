@@ -88,7 +88,7 @@ export class TouchableSpriteTest extends EventDispatcherTestDemo {
       onTouchEnded: function (touch, event) {
         var target = event.getCurrentTarget();
         log("sprite onTouchesEnded.. ");
-        target.setOpacity(255);
+        target.opacity = 255;
         if (target == sprite2) {
           containerForSprite1.setLocalZOrder(100);
         } else if (target == sprite1) {

@@ -67,7 +67,7 @@ export class UIButtonTest extends UIMainLayer {
   setOpacityTest() {
     var button = this._button;
     var opacity = button._realOpacity === 255 ? 100 : 255;
-    button.setOpacity(opacity);
+    button.opacity = opacity;
   }
   touchEvent(sender, type) {
     switch (type) {

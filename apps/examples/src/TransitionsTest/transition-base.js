@@ -63,13 +63,13 @@ export class TransitionBase extends BaseTestLayer {
     var title = new TextBMFont(this.title(), s_simpleFont_fnt);
     title.fontSize = 32;
     this.addChild(title);
-    title.setColor(new Color(255, 32, 32));
+    title.color = new Color(255, 32, 32);
     title.x = x / 2;
     title.y = y - 100;
 
     var label = new TextBMFont(this.sceneName, s_simpleFont_fnt);
     label.fontSize = 38;
-    label.setColor(new Color(16, 16, 255));
+    label.color = new Color(16, 16, 255);
     label.x = x / 2;
     label.y = y / 2;
     this.addChild(label);

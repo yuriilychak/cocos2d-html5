@@ -103,9 +103,9 @@ export class BaseTestLayer extends LayerGradient {
     ServiceLocator.sys.garbageCollect();
 
     // Push current test title/subtitle up into the parent scene's header.
-    let scene = this.getParent();
+    let scene = this.parent;
     while (scene && !scene.setTestInfo) {
-      scene = scene.getParent();
+      scene = scene.parent;
     }
     if (scene) {
       scene.setTestInfo(this.getTitle(), this.getSubtitle());

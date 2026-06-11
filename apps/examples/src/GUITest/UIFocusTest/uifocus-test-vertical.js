@@ -45,7 +45,7 @@ export class UIFocusTestVertical extends UIFocusTestBase {
       );
       this.addChild(this._verticalLayout);
       this._verticalLayout.setTag(100);
-      //this._verticalLayout.setScale(0.8);
+      //this._verticalLayout.scale = 0.8;
 
       this._verticalLayout.setFocused(true);
       this._verticalLayout.setLoopFocus(true);
@@ -62,7 +62,7 @@ export class UIFocusTestVertical extends UIFocusTestBase {
 
       this._loopText = new Text("loop enabled", "Arial", 20);
       this._loopText.setPosition(winSize.width / 2, winSize.height - 50);
-      this._loopText.setColor(Color.GREEN);
+      this._loopText.color = Color.GREEN;
       this.addChild(this._loopText);
 
       this._btn.addTouchEventListener(this.toggleFocusLoop, this);

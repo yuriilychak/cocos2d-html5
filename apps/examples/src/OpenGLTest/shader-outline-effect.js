@@ -117,13 +117,13 @@ export class ShaderOutlineEffect extends OpenGLTestLayer {
           .getGLProgramState()
           .setUniformFloat(
             "u_radius",
-            Math.abs(this.sprite.getRotation() / 500)
+            Math.abs(this.sprite.rotation / 500)
           );
       } else {
         this.shader.use();
         this.shader.setUniformLocationWith1f(
           this.shader.getUniformLocationForName("u_radius"),
-          Math.abs(this.sprite.getRotation() / 500)
+          Math.abs(this.sprite.rotation / 500)
         );
         this.shader.updateUniforms();
       }

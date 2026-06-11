@@ -85,7 +85,7 @@ export class UIScrollViewTest_Vertical_Multiple extends UIMainLayer {
   drawTexts() {
     var scrollView = this._scrollView;
     var n = this._itemNumber / 2;
-    if (scrollView.getChildren()) scrollView.removeAllChildren(true);
+    if (scrollView.children) scrollView.removeAllChildren(true);
     var Texts = [];
     var start = new Text("---start---", "Thonburi", 10);
     var innerWidth = scrollView.width;
@@ -108,7 +108,7 @@ export class UIScrollViewTest_Vertical_Multiple extends UIMainLayer {
   drawButtons() {
     var scrollView = this._scrollView;
     var n = this._itemNumber / 2;
-    if (scrollView.getChildren()) scrollView.removeAllChildren(true);
+    if (scrollView.children) scrollView.removeAllChildren(true);
     var Buttons = [];
     var innerWidth = scrollView.width;
 
@@ -134,7 +134,7 @@ export class UIScrollViewTest_Vertical_Multiple extends UIMainLayer {
   drawS9Buttons() {
     var scrollView = this._scrollView;
     var n = this._itemNumber;
-    if (scrollView.getChildren()) scrollView.removeAllChildren(true);
+    if (scrollView.children) scrollView.removeAllChildren(true);
     var Buttons = [];
     var innerWidth = scrollView.width;
 

@@ -46,12 +46,12 @@ export class RenderTextureTestDepthStencil extends RenderTextureBaseLayer {
     this._spriteDraw.x =
       this._spriteDraw.x +
       this._spriteDraw.getContentSize().width *
-        this._spriteDraw.getScale() *
+        this._spriteDraw.scale *
         0.5;
     this._spriteDraw.y =
       this._spriteDraw.y +
       this._spriteDraw.getContentSize().height *
-        this._spriteDraw.getScale() *
+        this._spriteDraw.scale *
         0.5;
 
     this._rend = new RenderTexture(

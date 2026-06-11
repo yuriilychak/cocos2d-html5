@@ -100,7 +100,7 @@ export class IAPTestLayer extends PluginXTest {
     this.toastLayer.setTag(TAG_TOAST);
     label.x = winSize.width / 2;
     label.y = winSize.height / 2;
-    this.toastLayer.setColor(new Color(100, 100, 100, 100));
+    this.toastLayer.color = new Color(100, 100, 100, 100);
   }
   addTouch(bool) {
     if (bool) {

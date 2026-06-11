@@ -33,7 +33,7 @@ export class UIVideoPlayerTest extends UIMainLayer {
     var video = new VideoPlayer("cocosvideo.mp4");
     video.setContentSize(320, 240);
     video.setPosition(800 / 2, 450 / 2);
-    video.setScale(0.5);
+    video.scale = 0.5;
     window.video = video;
     this.addChild(video);
 
@@ -101,7 +101,7 @@ export class UIVideoPlayerTest extends UIMainLayer {
         func: function () {
           var scale = (((Math.random() * 0.5 + 0.2) * 100) | 0) / 100;
           playState.setString("setScale(%f)!");
-          video.setScale(scale);
+          video.scale = scale;
         }
       },
       {
@@ -119,7 +119,7 @@ export class UIVideoPlayerTest extends UIMainLayer {
     var layer = this;
     list.forEach(function (item, i) {
       var button = new Button();
-      i + 1 !== list.length ? button.setScale(1.3) : button.setScale(1);
+      button.scale = i + 1 !== list.length ? 1.3 : 1;
       button.setPosition(140 + ((i / 5) | 0) * 530, 320 - (i % 5) * 50);
       button.setTitleText(item.name);
       button.setTitleColor(Color.YELLOW);

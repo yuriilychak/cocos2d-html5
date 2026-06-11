@@ -55,7 +55,7 @@ export class UIScrollViewRotated extends UIMainLayer {
             100
         )
       );
-      scrollView.setRotation(45);
+      scrollView.rotation = 45;
       this._mainNode.addChild(scrollView);
 
       var imageView = new ImageView("ccs-res/cocosui/ccicon.png");

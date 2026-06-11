@@ -46,7 +46,7 @@ export class UIButtonTitleEffectTest extends UIMainLayer {
       button.setTitleText("PLAY GAME");
       //button.setTitleFontName("Marker Felt");
       button.setZoomScale(0.3);
-      button.setScale(2.0);
+      button.scale = 2.0;
       button.setPressedActionEnabled(true);
       var title = button.getTitleRenderer();
       button.setTitleColor(Color.RED);

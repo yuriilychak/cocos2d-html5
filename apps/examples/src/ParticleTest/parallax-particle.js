@@ -36,7 +36,7 @@ export class ParallaxParticle extends ParticleDemo {
   onEnter() {
     super.onEnter();
 
-    this._background.getParent().removeChild(this._background, true);
+    this._background.parent.removeChild(this._background, true);
     this._background = null;
 
     //TODO

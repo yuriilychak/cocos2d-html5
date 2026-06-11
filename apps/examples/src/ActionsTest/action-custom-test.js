@@ -108,7 +108,7 @@ export class ActionCustomTest extends ActionsDemo {
      * group 1
      */
     var spriteTemp = this.addandCreateSpriteTemp("Show");
-    spriteTemp.setVisible(false);
+    spriteTemp.visible = false;
     var show = new (createCustomAction(Show))();
     spriteTemp.runAction(show);
 
@@ -275,12 +275,12 @@ export class ActionCustomTest extends ActionsDemo {
      * group 7
      */
     spriteTemp = this.addandCreateSpriteTemp("FadeIn");
-    spriteTemp.setOpacity(128);
+    spriteTemp.opacity = 128;
     var fadeIn = new (createCustomAction(FadeIn))(5);
     spriteTemp.runAction(fadeIn);
 
     spriteTemp = this.addandCreateSpriteTemp("FadeOut");
-    spriteTemp.setOpacity(128);
+    spriteTemp.opacity = 128;
     var fadeOut = new (createCustomAction(FadeOut))(5);
     spriteTemp.runAction(fadeOut);
 

@@ -178,6 +178,7 @@ export class EGLView extends NewClass {
     this._game = null;
     this._rendererConfig = null;
     this._sys = null;
+    this._resizeEvent = this._resizeEvent.bind(this);
 
     var _t = this,
       _strategyer = ContainerStrategy,

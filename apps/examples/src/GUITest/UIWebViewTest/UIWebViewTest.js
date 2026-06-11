@@ -35,7 +35,7 @@ export class UIWebViewTest extends UIMainLayer {
     var webView = new WebView("http://www.baidu.com");
     webView.setContentSize(320, 240);
     webView.setPosition(800 / 2, 450 / 2);
-    webView.setScale(0.5);
+    webView.scale = 0.5;
     webView.setScalesPageToFit(true);
     window.webView = webView;
     this.addChild(webView);
@@ -96,7 +96,7 @@ export class UIWebViewTest extends UIMainLayer {
         func: function () {
           var scale = (((Math.random() * 0.5 + 0.2) * 100) | 0) / 100;
           playState.setString("setScale(" + scale + ")");
-          webView.setScale(scale);
+          webView.scale = scale;
         }
       },
       {
@@ -118,7 +118,7 @@ export class UIWebViewTest extends UIMainLayer {
     var layer = this;
     list.forEach(function (item, i) {
       var button = new Button();
-      i + 1 !== list.length ? button.setScale(1.3) : button.setScale(1);
+      button.scale = i + 1 !== list.length ? 1.3 : 1;
       button.setPosition(140 + ((i / 4) | 0) * 530, 320 - (i % 4) * 50);
       button.setTitleText(item.name);
       button.setTitleColor(Color.YELLOW);

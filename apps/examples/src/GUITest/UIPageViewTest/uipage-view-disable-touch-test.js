@@ -66,7 +66,7 @@ export class UIPageViewDisableTouchTest extends UIMainLayer {
         layout.addChild(imageView);
         var pageNumber = i + 1;
         var label = new Text("page" + pageNumber, "Marker Felt", 30);
-        label.setColor(new Color(192, 192, 192));
+        label.color = new Color(192, 192, 192);
         label.setPosition(
           new Point(
             layout.getContentSize().width / 2,

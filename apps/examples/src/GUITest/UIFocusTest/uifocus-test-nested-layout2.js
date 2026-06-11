@@ -44,7 +44,7 @@ export class UIFocusTestNestedLayout2 extends UIFocusTestBase {
         winSize.height - 120
       );
       this.addChild(this._horizontalLayout);
-      //this._horizontalLayout.setScale(0.6);
+      //this._horizontalLayout.scale = 0.6;
 
       this._horizontalLayout.setFocused(true);
       this._horizontalLayout.setLoopFocus(true);
@@ -59,21 +59,21 @@ export class UIFocusTestNestedLayout2 extends UIFocusTestBase {
         w.setAnchorPoint(0, 1);
         w.setTouchEnabled(true);
         w.setTag(i + count1);
-        w.setScaleY(2.4);
+        w.scaleY = 2.4;
         w.addTouchEventListener(this.onImageViewClicked, this);
         this._horizontalLayout.addChild(w);
       }
 
       //add HBox into VBox
       var vbox = new VBox();
-      vbox.setScale(0.8);
+      vbox.scale = 0.8;
       vbox.setTag(101);
       this._horizontalLayout.addChild(vbox);
       var count2 = 2;
       for (i = 0; i < count2; ++i) {
         w = new ImageView("ccs-res/cocosui/scrollviewbg.png");
         w.setAnchorPoint(0, 1);
-        w.setScaleX(2.0);
+        w.scaleX = 2.0;
         w.setTouchEnabled(true);
         w.setTag(i + count1 + count2);
         w.addTouchEventListener(this.onImageViewClicked, this);
@@ -96,7 +96,7 @@ export class UIFocusTestNestedLayout2 extends UIFocusTestBase {
 
       this._loopText = new Text("loop enabled", "Arial", 20);
       this._loopText.setPosition(winSize.width / 2, winSize.height - 50);
-      this._loopText.setColor(Color.GREEN);
+      this._loopText.color = Color.GREEN;
       this.addChild(this._loopText);
 
       this._btn.addTouchEventListener(this.toggleFocusLoop, this);

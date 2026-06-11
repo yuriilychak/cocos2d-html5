@@ -40,7 +40,7 @@ export function createColoredView(color, size) {
     iv.loadTexture(SQUARE_TEXTURE, Widget.PLIST_TEXTURE);
     iv.setCapInsets(SQUARE_CAP);
     iv.setContentSize(size, size);
-    iv.setColor(color);
+    iv.color = color;
     return iv;
 }
 
@@ -78,7 +78,7 @@ export class TouchableSprite extends ImageView {
                 var rect = new Rect(0, 0, s.width, s.height);
 
                 if (Rect.containsPoint(rect, locationInNode)) {
-                    selfPointer.setOpacity(128);
+                    selfPointer.opacity = 128;
                     return true;
                 }
                 return false;
@@ -87,7 +87,7 @@ export class TouchableSprite extends ImageView {
                 //this.setPosition(this.getPosition() + touch.getDelta());
             },
             onTouchEnded: function (touch, event) {
-                selfPointer.setOpacity(255);
+                selfPointer.opacity = 255;
                 if(selfPointer._removeListenerOnTouchEnded) {
                     ServiceLocator.eventManager.removeListener(selfPointer._listener);
                     selfPointer._listener = null;

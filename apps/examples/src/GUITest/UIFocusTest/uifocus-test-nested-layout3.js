@@ -44,7 +44,7 @@ export class UIFocusTestNestedLayout3 extends UIFocusTestBase {
         winSize.height - 150
       );
       this.addChild(this._verticalLayout);
-      //this._verticalLayout.setScale(0.8);
+      //this._verticalLayout.scale = 0.8;
 
       this._verticalLayout.setFocused(true);
       this._verticalLayout.setLoopFocus(true);
@@ -67,7 +67,7 @@ export class UIFocusTestNestedLayout3 extends UIFocusTestBase {
         w;
       for (i = 0; i < count; ++i) {
         var firstVbox = new VBox();
-        firstVbox.setScale(0.5);
+        firstVbox.scale = 0.5;
         firstVbox.setLayoutParameter(params);
         firstVbox.setTag((i + 1) * 100);
 
@@ -83,7 +83,7 @@ export class UIFocusTestNestedLayout3 extends UIFocusTestBase {
       }
 
       var bottomHBox = new HBox();
-      bottomHBox.setScale(0.5);
+      bottomHBox.scale = 0.5;
       bottomHBox.setTag(600);
       bottomHBox.setLayoutParameter(vparams);
       count = 3;
@@ -101,7 +101,7 @@ export class UIFocusTestNestedLayout3 extends UIFocusTestBase {
 
       this._loopText = new Text("loop enabled", "Arial", 20);
       this._loopText.setPosition(winSize.width / 2, winSize.height - 50);
-      this._loopText.setColor(Color.GREEN);
+      this._loopText.color = Color.GREEN;
       this.addChild(this._loopText);
 
       this._btn.addTouchEventListener(this.toggleFocusLoop, this);

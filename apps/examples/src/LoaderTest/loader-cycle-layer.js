@@ -45,10 +45,10 @@ export class LoaderCycleLayer extends BaseTestLayer {
 
     var cb = function (num) {
       if (num === 1) {
-        resultTTF.setColor(Color.GREEN);
+        resultTTF.color = Color.GREEN;
         resultTTF.setString("result: success");
       } else {
-        resultTTF.setColor(Color.RED);
+        resultTTF.color = Color.RED;
         resultTTF.setString("result: failed");
       }
     };
@@ -117,13 +117,13 @@ export class LoaderCycleLayer extends BaseTestLayer {
   }
 
   onRestartCallback() {
-    var parent = this.getParent();
+    var parent = this.parent;
     parent.removeChild(this);
     parent.addChild(new LoaderCycleLayer());
   }
 
   onBackCallback() {
-    var parent = this.getParent();
+    var parent = this.parent;
     parent.removeChild(this);
     parent.addChild(new LoaderTestLayer());
   }

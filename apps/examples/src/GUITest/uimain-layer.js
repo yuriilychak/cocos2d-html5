@@ -68,9 +68,9 @@ export class UIMainLayer extends Layer {
 
   onEnter() {
     super.onEnter();
-    let scene = this.getParent();
+    let scene = this.parent;
     while (scene && !scene.setTestInfo) {
-      scene = scene.getParent();
+      scene = scene.parent;
     }
     if (scene) {
       scene.setTestInfo(this._title || "", "");
@@ -88,9 +88,9 @@ export class UIMainLayer extends Layer {
 
   setSceneTitle(title) {
     this._title = title;
-    let scene = this.getParent();
+    let scene = this.parent;
     while (scene && !scene.setTestInfo) {
-      scene = scene.getParent();
+      scene = scene.parent;
     }
     if (scene) scene.setTestInfo(title, "");
   }

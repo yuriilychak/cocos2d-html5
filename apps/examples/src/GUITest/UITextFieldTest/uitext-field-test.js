@@ -52,7 +52,7 @@ export class UITextFieldTest extends UIMainLayer {
             this._bottomDisplayLabel.getContentSize().height * 3.4
         )
       );
-      this._bottomDisplayLabel.setColor(new Color(255, 255, 255, 255));
+      this._bottomDisplayLabel.color = new Color(255, 255, 255, 255);
 
       // Create the textfield
       var textField = new TextField("PlaceHolder", "Marker Felt", 30);

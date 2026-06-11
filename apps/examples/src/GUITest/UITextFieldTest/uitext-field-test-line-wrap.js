@@ -45,7 +45,7 @@ export class UITextFieldTest_LineWrap extends UIMainLayer {
 
       // Add the alert
       var alert = new Text("TextField line wrap", "Marker Felt", 30);
-      alert.setColor(new Color(159, 168, 176));
+      alert.color = new Color(159, 168, 176);
       alert.setPosition(
         new Point(
           widgetSize.width / 2,

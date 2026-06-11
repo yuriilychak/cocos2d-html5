@@ -35,7 +35,7 @@ export class UILayoutTest_Layout_Scaled_Widget extends UIMainLayer {
 
       // Add the alert
       var alert = new Text("Layout Scaled Widget", "Marker Felt", 20);
-      alert.setColor(new Color(159, 168, 176));
+      alert.color = new Color(159, 168, 176);
       alert.setPosition(
         widgetSize.width / 2.0,
         widgetSize.height / 2.0 - alert.height * 4.5

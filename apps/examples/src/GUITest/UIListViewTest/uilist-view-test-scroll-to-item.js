@@ -96,7 +96,7 @@ export class UIListViewTest_ScrollToItem extends UIMainLayer {
         "ccs-res/cocosui/backtotopnormal.png"
       );
       pButton.setAnchorPoint(new Point(0, 0.5));
-      pButton.setScale(0.8);
+      pButton.scale = 0.8;
       pButton.setPosition(
         Point.add(
           new Point(widgetSize.width / 2, widgetSize.height / 2),

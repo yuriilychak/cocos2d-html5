@@ -79,7 +79,7 @@ export class MenuTestLayer extends Layer {
     bg.ignoreContentAdaptWithSize(false);
     bg.loadTexture("default_theme/squere_shadow_0.png", Widget.PLIST_TEXTURE);
     bg.setCapInsets(new Rect(12, 12, 12, 12));
-    bg.setColor(new Color(0x35, 0x39, 0x41));
+    bg.color = new Color(0x35, 0x39, 0x41);
 
     const bgComp = bg._getOrCreateLayoutComponent();
     bgComp.setHorizontalEdge(LayoutComponent.horizontalEdge.CENTER);

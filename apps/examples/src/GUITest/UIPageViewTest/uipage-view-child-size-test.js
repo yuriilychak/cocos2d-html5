@@ -60,7 +60,7 @@ export class UIPageViewChildSizeTest extends UIMainLayer {
         var label = new Text("page " + (i + 1), "Arial", 30);
 
         imageView.setScale9Enabled(true);
-        label.setColor(new Color(192, 192, 192));
+        label.color = new Color(192, 192, 192);
         label.setAnchorPoint(new Point(0, 0));
         imageView.addChild(label);
 

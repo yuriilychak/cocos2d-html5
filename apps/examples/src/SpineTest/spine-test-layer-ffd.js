@@ -41,7 +41,7 @@ export class SpineTestLayerFFD extends SpineTestLayer {
     skeletonNode.setAnimation(0, "walk", true);
     skeletonNode.setSkin("goblin");
 
-    skeletonNode.setScale(0.5);
+    skeletonNode.scale = 0.5;
     var winSize = ServiceLocator.director.getWinSize();
     skeletonNode.setPosition(winSize.width / 2, 20);
     this.addChild(skeletonNode);

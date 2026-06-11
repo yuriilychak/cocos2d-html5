@@ -63,7 +63,7 @@ export class BakeLayerTest1 extends BakeLayerBaseTest {
 
     var bakeLayer = new Layer();
     bakeLayer.bake();
-    bakeLayer.setRotation(30);
+    bakeLayer.rotation = 30;
     rootLayer.addChild(bakeLayer);
 
     for (var i = 0; i < 9; i++) {

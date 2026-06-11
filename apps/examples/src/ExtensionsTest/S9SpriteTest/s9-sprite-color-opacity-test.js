@@ -40,8 +40,8 @@ export class S9SpriteColorOpacityTest extends S9SpriteTestDemo {
 
     this.setCascadeColorEnabled(true);
     this.setCascadeOpacityEnabled(true);
-    this.setOpacity(128);
-    this.setColor(new Color(255, 0, 0));
+    this.opacity = 128;
+    this.color = new Color(255, 0, 0);
 
     var blocks = new Scale9Sprite("blocks9.png");
     blocks.x = winSize.width / 2 - 100;

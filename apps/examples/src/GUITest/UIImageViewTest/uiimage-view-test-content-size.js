@@ -40,7 +40,7 @@ export class UIImageViewTest_ContentSize extends UIMainLayer {
         "Marker Felt",
         26
       );
-      alert.setColor(new Color(159, 168, 176));
+      alert.color = new Color(159, 168, 176);
       alert.setPosition(
         new Point(
           widgetSize.width / 2,
@@ -55,7 +55,7 @@ export class UIImageViewTest_ContentSize extends UIMainLayer {
         "Marker Felt",
         16
       );
-      status.setColor(Color.RED);
+      status.color = Color.RED;
       status.setPosition(
         new Point(widgetSize.width / 2, widgetSize.height / 2 + 80)
       );

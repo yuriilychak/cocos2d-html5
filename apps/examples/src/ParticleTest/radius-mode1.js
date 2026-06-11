@@ -35,7 +35,7 @@ export class RadiusMode1 extends ParticleDemo {
     onEnter() {
         super.onEnter();
 
-        this.setColor(new Color(0, 0, 0));
+        this.color = new Color(0, 0, 0);
         this.removeChild(this._background, true);
         this._background = null;
 

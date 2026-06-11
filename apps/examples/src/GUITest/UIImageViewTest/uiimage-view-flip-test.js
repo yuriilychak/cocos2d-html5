@@ -45,7 +45,7 @@ export class UIImageViewFlipTest extends UIMainLayer {
       imageView.setScale9Enabled(true);
       imageView.setContentSize(new Size(250, 115));
       imageView.setFlippedX(true);
-      imageView.setScale(0.5);
+      imageView.scale = 0.5;
       imageView.ignoreContentAdaptWithSize(false);
       imageView.setPosition(
         new Point(widgetSize.width / 2, widgetSize.height / 2)

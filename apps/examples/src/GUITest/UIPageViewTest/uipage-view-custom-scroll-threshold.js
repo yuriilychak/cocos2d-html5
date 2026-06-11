@@ -77,7 +77,7 @@ export class UIPageViewCustomScrollThreshold extends UIMainLayer {
         layout.addChild(imageView);
 
         var label = new Text("page " + (i + 1), "Marker Felt", 30);
-        label.setColor(new Color(192, 192, 192));
+        label.color = new Color(192, 192, 192);
         label.setPosition(
           new Point(
             layout.getContentSize().width / 2.0,

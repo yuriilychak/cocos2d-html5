@@ -42,7 +42,7 @@ export class UISliderDisabledDefaultTest extends UIMainLayer {
         "Marker Felt",
         20
       );
-      alert.setColor(new Color(159, 168, 176));
+      alert.color = new Color(159, 168, 176);
       alert.setPosition(
         new Point(
           widgetSize.width / 2,

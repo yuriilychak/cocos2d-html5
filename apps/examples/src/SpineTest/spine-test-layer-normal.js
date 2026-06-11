@@ -62,7 +62,7 @@ export class SpineTestLayerNormal extends SpineTestLayer {
     spineBoy.setMix("jump", "run", 0.2);
     spineBoy.setAnimation(0, "walk", true);
     //spineBoy.setAnimationListener(this, this.animationStateEvent);
-    spineBoy.setScale(0.5);
+    spineBoy.scale = 0.5;
     this.addChild(spineBoy, 4);
     this._spineboy = spineBoy;
     spineBoy.setStartListener(function (trackEntry) {
@@ -175,10 +175,10 @@ export class SpineTestLayerNormal extends SpineTestLayer {
         log(trackIndex + " complete: " + animationName + "," + loopCount);
         if (this._flipped) {
           this._flipped = false;
-          this._spineboy.setScaleX(0.5);
+          this._spineboy.scaleX = 0.5;
         } else {
           this._flipped = true;
-          this._spineboy.setScaleX(-0.5);
+          this._spineboy.scaleX = -0.5;
         }
         break;
       default:

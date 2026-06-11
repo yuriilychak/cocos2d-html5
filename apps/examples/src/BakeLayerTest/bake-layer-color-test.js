@@ -68,7 +68,7 @@ export class BakeLayerColorTest extends BakeLayerBaseTest {
     );
     bakeLayer.setPosition(60, 80);
     bakeLayer.setContentSize(700, 300);
-    bakeLayer.setRotation(30);
+    bakeLayer.rotation = 30;
 
     rootLayer.addChild(bakeLayer);
 

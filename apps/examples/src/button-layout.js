@@ -64,8 +64,8 @@ export class ButtonLayout extends Layout {
     bg.ignoreContentAdaptWithSize(false);
     bg.loadTexture("default_theme/squere_shadow_0.png", Widget.PLIST_TEXTURE);
     bg.setCapInsets(new Rect(CAP_INSETS, CAP_INSETS, CAP_INSETS, CAP_INSETS));
-    bg.setColor(new Color(255, 255, 255));
-    bg.setOpacity(64);
+    bg.color = new Color(255, 255, 255);
+    bg.opacity = 64;
     bg.setContentSize(new Size(totalWidth, totalHeight));
     this.addChild(bg, -1);
 
@@ -155,7 +155,7 @@ export class ButtonLayout extends Layout {
    */
   setButtonVisible(index, visible) {
     const item = this._items[index];
-    if (item) item.setVisible(visible);
+    if (item) item.visible = visible;
   }
 
   /**

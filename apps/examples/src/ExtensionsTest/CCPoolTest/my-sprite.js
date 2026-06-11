@@ -51,12 +51,12 @@ export class MySprite extends Sprite {
     this._hp = 0;
     this._mp = 0;
     this._sp = 0;
-    this.setVisible(false);
+    this.visible = false;
     this.removeFromParent(true);
   }
   reuse(f1, f2, f3) {
     this.initData(f1, f2, f3);
-    this.setVisible(true);
+    this.visible = true;
   }
 
   static create(f1, f2, f3) {

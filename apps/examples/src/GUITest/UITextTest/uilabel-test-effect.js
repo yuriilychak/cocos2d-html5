@@ -40,7 +40,7 @@ export class UILabelTest_Effect extends UIMainLayer {
       alert.setString("Label Effect");
       alert.setFontName("Marker Felt");
       alert.setFontSize(30);
-      alert.setColor(new Color(159, 168, 176));
+      alert.color = new Color(159, 168, 176);
       alert.setPosition(
         widgetSize.width / 2,
         widgetSize.height / 2 - alert.height * 3.05

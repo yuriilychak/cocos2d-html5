@@ -78,8 +78,8 @@ export class SpriteBlendFuncTest extends SpriteTestDemo {
     sourceTexture.handleLoadedTexture(true);
     var sourceSprite = new Sprite(sourceImg);
     var destSprite = new Sprite(destImg);
-    sourceSprite.setScale(0.8);
-    destSprite.setScale(0.8);
+    sourceSprite.scale = 0.8;
+    destSprite.scale = 0.8;
     sourceSprite.setPosition(60, 400);
     destSprite.setPosition(120, 400);
     this.addChild(sourceSprite);
@@ -109,19 +109,19 @@ export class SpriteBlendFuncTest extends SpriteTestDemo {
       titleLabel = new TextBMFont(title, s_simpleFont_fnt);
       titleLabel.setAnchorPoint(0, 0.5);
       titleLabel.setPosition(220 + i * 60, 390);
-      titleLabel.setRotation(-20);
+      titleLabel.rotation = -20;
       this.addChild(titleLabel);
     }
     //j = 0;
     for (i = 0; i < srcFactors.length; i++) {
       for (j = 0; j < destFactors.length; j++) {
         sourceSprite = new Sprite(sourceImg);
-        //sourceSprite.setScale(0.8);
+        //sourceSprite.scale = 0.8;
         sourceSprite.setPosition(220 + i * 60, 355 - j * 60);
         sourceSprite.setBlendFunc(srcFactors[i], destFactors[j]);
 
         destSprite = new Sprite(destImg);
-        //destSprite.setScale(0.8);
+        //destSprite.scale = 0.8;
         destSprite.setPosition(220 + i * 60, 355 - j * 60);
         //                destSprite.setBlendFunc(srcFactors[j], destFactors[i]);
 

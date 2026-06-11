@@ -55,13 +55,13 @@ export class RemoveListenerWhenDispatching extends EventDispatcherTestDemo {
         var rect = new Rect(0, 0, s.width, s.height);
 
         if (Rect.containsPoint(rect, locationInNode)) {
-          sprite1.setColor(Color.RED);
+          sprite1.color = Color.RED;
           return true;
         }
         return false;
       },
       onTouchEnded: function (touch, event) {
-        sprite1.setColor(Color.WHITE);
+        sprite1.color = Color.WHITE;
       }
     });
     this.setUserObject(listener1);

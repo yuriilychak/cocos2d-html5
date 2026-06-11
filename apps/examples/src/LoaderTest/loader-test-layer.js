@@ -98,7 +98,7 @@ export class LoaderTestLayer extends BaseTestLayer {
   }
 
   onNextCallback() {
-    var parent = this.getParent();
+    var parent = this.parent;
     parent.removeChild(this);
     parent.addChild(new LoaderCycleLayer());
   }
