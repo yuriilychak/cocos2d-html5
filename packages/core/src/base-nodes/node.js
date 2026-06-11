@@ -196,16 +196,15 @@ export class Node extends NewClass {
     this._cascadeColorEnabled = false;
     this._cascadeOpacityEnabled = false;
     this._renderCmd = null;
-    var _t = this;
-    _t._anchorPoint = new Point(0, 0);
-    _t._contentSize = new Size(0, 0);
-    _t._position = new Point(0, 0);
-    _t._normalizedPosition = new Point(0, 0);
-    _t._children = [];
+    this._anchorPoint = new Point(0, 0);
+    this._contentSize = new Size(0, 0);
+    this._position = new Point(0, 0);
+    this._normalizedPosition = new Point(0, 0);
+    this._children = [];
 
-    _t._additionalTransform = AffineTransform.makeIdentity();
+    this._additionalTransform = AffineTransform.makeIdentity();
     if (ComponentContainer) {
-      _t._componentContainer = new ComponentContainer(_t);
+      this._componentContainer = new ComponentContainer(this);
     }
     this._realColor = new Color(255, 255, 255, 255);
 
