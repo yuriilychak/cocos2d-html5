@@ -150,7 +150,7 @@ export default class EventManager {
     // Mark the node dirty only when there is an event listener associated with it.
     if (this._nodeListenersMap[node.__instanceId] != null)
       this._dirtyNodes.push(node);
-    var _children = node.getChildren();
+    var _children = node.children;
     for (var i = 0, len = _children.length; i < len; i++)
       this._setDirtyForNode(_children[i]);
   }
@@ -169,7 +169,7 @@ export default class EventManager {
         listeners[i]._setPaused(true);
     }
     if (recursive === true) {
-      var locChildren = node.getChildren();
+      var locChildren = node.children;
       for (i = 0, len = locChildren.length; i < len; i++)
         this.pauseTarget(locChildren[i], true);
     }
@@ -190,7 +190,7 @@ export default class EventManager {
     }
     this._setDirtyForNode(node);
     if (recursive === true) {
-      var locChildren = node.getChildren();
+      var locChildren = node.children;
       for (i = 0, len = locChildren.length; i < len; i++)
         this.resumeTarget(locChildren[i], true);
     }
@@ -709,7 +709,7 @@ export default class EventManager {
   }
 
   _visitTarget(node, isRootNode) {
-    var children = node.getChildren(),
+    var children = node.children,
       i = 0;
     var childrenCount = children.length,
       locGlobalZOrderNodeMap = this._globalZOrderNodeMap,
@@ -970,7 +970,7 @@ export default class EventManager {
       }
 
       if (recursive === true) {
-        var locChildren = listenerType.getChildren(),
+        var locChildren = listenerType.children,
           len;
         for (i = 0, len = locChildren.length; i < len; i++)
           _t.removeListeners(locChildren[i], true);

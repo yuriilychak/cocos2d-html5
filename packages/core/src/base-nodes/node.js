@@ -1369,7 +1369,7 @@ export class Node extends NewClass {
     if (setTag) child.setTag(tag);
     else child.setName(name);
 
-    child.setParent(this);
+    child.parent = this;
     child.setOrderOfArrival(s_globalOrderOfArrival);
     setGlobalOrderOfArrival(s_globalOrderOfArrival + 1);
 
@@ -2260,7 +2260,7 @@ export class Node extends NewClass {
       for (
         var p = this._parent;
         p != null && p != ancestor;
-        p = p.getParent()
+        p = p.parent
       ) {
         AffineTransform.concatIn(T, p.getNodeToParentTransform());
       }
@@ -2584,7 +2584,7 @@ export class Node extends NewClass {
       ret = true;
     } else {
       var child,
-        children = node.getChildren(),
+        children = node.children,
         length = children.length;
       // search its children
       for (var i = 0; i < length; i++) {
@@ -2684,4 +2684,3 @@ export class Node extends NewClass {
     Node._performing--;
   }
 }
-

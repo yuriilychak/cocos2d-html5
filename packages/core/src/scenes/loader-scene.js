@@ -99,7 +99,7 @@ export class LoaderScene extends Scene {
       fontSize
     ));
     label.setPosition(Point.add(visibleRect.center, new Point(0, lblHeight)));
-    label.setColor(new Color(180, 180, 180));
+    label.color = new Color(180, 180, 180);
     bgLayer.addChild(this._label, 10);
     return true;
   }
@@ -110,7 +110,7 @@ export class LoaderScene extends Scene {
     texture2d.initWithElement(img);
     texture2d.handleLoadedTexture();
     var logo = (self._logo = new Sprite(texture2d));
-    logo.setScale(contentScaleFactor());
+    logo.scale = contentScaleFactor();
     logo.x = centerPos.x;
     logo.y = centerPos.y;
     self._bgLayer.addChild(logo, 10);

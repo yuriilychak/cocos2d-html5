@@ -802,7 +802,7 @@ export class Sprite extends EventHelper(Node) {
 
     if (pNewTexture !== _t._texture) {
       this._renderCmd._setTexture(pNewTexture);
-      _t.setColor(_t._realColor);
+      _t.color = _t._realColor;
     }
     _t.setTextureRect(
       newFrame.getRect(),
@@ -886,7 +886,7 @@ export class Sprite extends EventHelper(Node) {
 
     this._renderCmd._setTexture(texture);
     if (isFileName) this._changeRectWithTexture(texture);
-    this.setColor(this._realColor);
+    this.color = this._realColor;
     this._textureLoaded = true;
   }
 

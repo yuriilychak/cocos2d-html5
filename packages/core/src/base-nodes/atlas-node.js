@@ -126,7 +126,7 @@ export class AtlasNode extends EventHelper(Node) {
   setOpacityModifyRGB(value) {
     var oldColor = this.color;
     this._opacityModifyRGB = value;
-    this.setColor(oldColor);
+    this.color = oldColor;
   }
 
   /**
