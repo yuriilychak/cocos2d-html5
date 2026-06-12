@@ -107,8 +107,8 @@ parser.generalAttributes = function (node, json) {
 
   var scale = json["Scale"];
   if (scale != null) {
-    if (scale["ScaleX"] != null) node.setScaleX(scale["ScaleX"]);
-    if (scale["ScaleY"] != null) node.setScaleY(scale["ScaleY"]);
+    if (scale["ScaleX"] != null) node.scaleX = scale["ScaleX"];
+    if (scale["ScaleY"] != null) node.scaleY = scale["ScaleY"];
   }
 
   var rotationSkewX = json["RotationSkewX"];
@@ -330,10 +330,8 @@ parser.widgetAttributes = function (widget, json, enableContent) {
 
   var scale = json["Scale"];
   if (scale != null) {
-    var scaleX = getParam(scale["ScaleX"], 1);
-    var scaleY = getParam(scale["ScaleY"], 1);
-    widget.setScaleX(scaleX);
-    widget.setScaleY(scaleY);
+    widget.scaleX = getParam(scale["ScaleX"], 1);
+    widget.scaleY = getParam(scale["ScaleY"], 1);
   }
 
   var anchorPoint = json["AnchorPoint"];

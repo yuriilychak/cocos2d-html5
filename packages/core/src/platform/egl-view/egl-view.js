@@ -980,7 +980,7 @@ export class EGLView extends NewClass {
    * Returns scale factor of the horizontal direction (X axis).
    * @return {Number}
    */
-  getScaleX() {
+  get scaleX() {
     return this._scaleX;
   }
 
@@ -988,7 +988,7 @@ export class EGLView extends NewClass {
    * Returns scale factor of the vertical direction (Y axis).
    * @return {Number}
    */
-  getScaleY() {
+  get scaleY() {
     return this._scaleY;
   }
 

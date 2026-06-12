@@ -107,8 +107,8 @@ export class ActionNode extends NewClass {
         actionFrame.frameIndex = frameIndex;
         actionFrame.setEasingType(frameTweenType);
         actionFrame.setEasingParameter(frameTweenParameter);
-        actionFrame.setScaleX(scaleX);
-        actionFrame.setScaleY(scaleY);
+        actionFrame.scaleX = scaleX;
+        actionFrame.scaleY = scaleY;
         actionArray = this._frameArray[FRAME_TYPE_SCALE];
         actionArray.push(actionFrame);
       }

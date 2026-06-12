@@ -98,7 +98,7 @@ export class MenuPassive extends Layer {
         if (this._children && this._children.length > 0) {
             for (i = 0; i < this._children.length; i++) {
                 if (this._children[i]) {
-                    height += this._children[i].getContentSize().height * this._children[i].getScaleY() + padding;
+                    height += this._children[i].getContentSize().height * this._children[i].scaleY + padding;
                 }
             }
         }
@@ -108,8 +108,8 @@ export class MenuPassive extends Layer {
             for (i = 0; i < this._children.length; i++) {
                 if (this._children[i]) {
                     width = Math.max(width, this._children[i].getContentSize().width);
-                    this._children[i].setPosition(0, y - this._children[i].getContentSize().height * this._children[i].getScaleY() / 2.0);
-                    y -= this._children[i].getContentSize().height * this._children[i].getScaleY() + padding;
+                    this._children[i].setPosition(0, y - this._children[i].getContentSize().height * this._children[i].scaleY / 2.0);
+                    y -= this._children[i].getContentSize().height * this._children[i].scaleY + padding;
                 }
             }
         }
@@ -126,7 +126,7 @@ export class MenuPassive extends Layer {
         if (this._children && this._children.length > 0) {
             for (i = 0; i < this._children.length; i++) {
                 if (this._children[i]) {
-                    width += this._children[i].getContentSize().width * this._children[i].getScaleX() + padding;
+                    width += this._children[i].getContentSize().width * this._children[i].scaleX + padding;
                 }
             }
         }
@@ -136,8 +136,8 @@ export class MenuPassive extends Layer {
             for (i = 0; i < this._children.length; i++) {
                 if (this._children[i]) {
                     height = Math.max(height, this._children[i].getContentSize().height);
-                    this._children[i].setPosition(x + this._children[i].getContentSize().width * this._children[i].getScaleX() / 2.0, 0);
-                    x += this._children[i].getContentSize().width * this._children[i].getScaleX() + padding;
+                    this._children[i].setPosition(x + this._children[i].getContentSize().width * this._children[i].scaleX / 2.0, 0);
+                    x += this._children[i].getContentSize().width * this._children[i].scaleX + padding;
                 }
             }
         }

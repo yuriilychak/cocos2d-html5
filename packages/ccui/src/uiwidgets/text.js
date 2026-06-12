@@ -335,12 +335,8 @@ export class Text extends Widget {
 
   _onPressStateChangedToPressed() {
     if (!this._touchScaleChangeEnabled) return;
-    this._labelRenderer.setScaleX(
-      this._normalScaleValueX + this._onSelectedScaleOffset
-    );
-    this._labelRenderer.setScaleY(
-      this._normalScaleValueY + this._onSelectedScaleOffset
-    );
+    this._labelRenderer.scaleX = this._normalScaleValueX + this._onSelectedScaleOffset;
+    this._labelRenderer.scaleY = this._normalScaleValueY + this._onSelectedScaleOffset;
   }
 
   _onPressStateChangedToDisabled() {}

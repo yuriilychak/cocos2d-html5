@@ -601,8 +601,8 @@ export class CanvasRenderCmd extends LabelRenderMixin(SpriteCanvasRenderCmd) {
   }
 
   rendering(ctx) {
-    const scaleX = ServiceLocator.eglView.getScaleX(),
-      scaleY = ServiceLocator.eglView.getScaleY();
+    const scaleX = ServiceLocator.eglView.scaleX,
+      scaleY = ServiceLocator.eglView.scaleY;
     const wrapper = ctx || ServiceLocator.rendererConfig.renderContext,
       context = wrapper.getContext();
     if (!context) return;

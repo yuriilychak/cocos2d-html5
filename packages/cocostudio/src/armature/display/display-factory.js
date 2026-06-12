@@ -227,8 +227,8 @@ export const displayFactory = {
         var node = new BaseData();
         TransformHelp.matrixToNode(bone.nodeToArmatureTransform(), node);
         particleSystem.setPosition(node.x, node.y);
-        particleSystem.setScaleX(node.scaleX);
-        particleSystem.setScaleY(node.scaleY);
+        particleSystem.scaleX = node.scaleX;
+        particleSystem.scaleY = node.scaleY;
         particleSystem.update(dt);
     }
 };

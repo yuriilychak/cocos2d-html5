@@ -634,7 +634,7 @@ export class LabelTTF extends Sprite {
    * @function
    * @return {Number} The scale factor on X axis.
    */
-  getScaleX() {
+  get scaleX() {
     return this._scaleX * ServiceLocator.eglView.getDevicePixelRatio();
   }
   /**
@@ -645,7 +645,7 @@ export class LabelTTF extends Sprite {
    * @function
    * @param {Number} newScaleX The scale factor on X axis.
    */
-  setScaleX(newScaleX) {
+  set scaleX(newScaleX) {
     this._scaleX = newScaleX / ServiceLocator.eglView.getDevicePixelRatio();
     this._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
   }
@@ -654,7 +654,7 @@ export class LabelTTF extends Sprite {
    * @function
    * @return {Number} The scale factor on Y axis.
    */
-  getScaleY() {
+  get scaleY() {
     return this._scaleY * ServiceLocator.eglView.getDevicePixelRatio();
   }
   /**
@@ -665,7 +665,7 @@ export class LabelTTF extends Sprite {
    * @function
    * @param {Number} newScaleY The scale factor on Y axis.
    */
-  setScaleY(newScaleY) {
+  set scaleY(newScaleY) {
     this._scaleY = newScaleY / ServiceLocator.eglView.getDevicePixelRatio();
     this._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
   }

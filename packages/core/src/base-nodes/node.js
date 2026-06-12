@@ -309,20 +309,6 @@ export class Node extends NewClass {
     this.setScale(v);
   }
 
-  get scaleX() {
-    return this.getScaleX();
-  }
-  set scaleX(v) {
-    this.setScaleX(v);
-  }
-
-  get scaleY() {
-    return this.getScaleY();
-  }
-  set scaleY(v) {
-    this.setScaleY(v);
-  }
-
   get children() {
     return this.getChildren();
   }
@@ -676,7 +662,7 @@ export class Node extends NewClass {
    * @function
    * @return {Number} The scale factor on X axis.
    */
-  getScaleX() {
+  get scaleX() {
     return this._scaleX;
   }
 
@@ -688,7 +674,7 @@ export class Node extends NewClass {
    * @function
    * @param {Number} newScaleX The scale factor on X axis.
    */
-  setScaleX(newScaleX) {
+  set scaleX(newScaleX) {
     this._scaleX = newScaleX;
     this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
   }
@@ -698,7 +684,7 @@ export class Node extends NewClass {
    * @function
    * @return {Number} The scale factor on Y axis.
    */
-  getScaleY() {
+  get scaleY() {
     return this._scaleY;
   }
 
@@ -710,7 +696,7 @@ export class Node extends NewClass {
    * @function
    * @param {Number} newScaleY The scale factor on Y axis.
    */
-  setScaleY(newScaleY) {
+  set scaleY(newScaleY) {
     this._scaleY = newScaleY;
     this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
   }

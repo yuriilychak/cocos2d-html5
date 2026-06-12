@@ -652,8 +652,8 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
    * Horizontal scale.
    * @param {Number} scaleX
    */
-  setScaleX(scaleX) {
-    Node.prototype.setScaleX.call(this, scaleX);
+  set scaleX(scaleX) {
+    super.scaleX = scaleX;
     this.updateLabel();
   }
 
@@ -663,8 +663,8 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
    * Longitudinal scale.
    * @param {Number} scaleY
    */
-  setScaleY(scaleY) {
-    Node.prototype.setScaleY.call(this, scaleY);
+  set scaleY(scaleY) {
+    super.scaleY = scaleY;
     this.updateLabel();
   }
 

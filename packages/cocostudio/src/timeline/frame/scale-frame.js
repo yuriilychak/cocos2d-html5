@@ -42,8 +42,8 @@ export class ScaleFrame extends Frame {
    */
   onEnter(nextFrame) {
     if (!this._node) return;
-    this._node.setScaleX(this._scaleX);
-    this._node.setScaleY(this._scaleY);
+    this._node.scaleX = this._scaleX;
+    this._node.scaleY = this._scaleY;
 
     if (this._tween) {
       this._betweenScaleX = nextFrame._scaleX - this._scaleX;
@@ -60,11 +60,8 @@ export class ScaleFrame extends Frame {
       this._node &&
       (this._betweenScaleX !== 0 || this._betweenScaleY !== 0)
     ) {
-      var scaleX = this._scaleX + this._betweenScaleX * percent;
-      var scaleY = this._scaleY + this._betweenScaleY * percent;
-
-      this._node.setScaleX(scaleX);
-      this._node.setScaleY(scaleY);
+      this._node.scaleX = this._scaleX + this._betweenScaleX * percent;
+      this._node.scaleY = this._scaleY + this._betweenScaleY * percent;
     }
   }
 
@@ -75,8 +72,8 @@ export class ScaleFrame extends Frame {
    */
   clone() {
     var frame = new ScaleFrame();
-    frame.setScaleX(this._scaleX);
-    frame.setScaleY(this._scaleY);
+    frame.scaleX = this._scaleX;
+    frame.scaleY = this._scaleY;
 
     frame._cloneProperty(this);
 
@@ -96,7 +93,7 @@ export class ScaleFrame extends Frame {
    * Set the scale x
    * @param {Number} scaleX
    */
-  setScaleX(scaleX) {
+  set scaleX(scaleX) {
     this._scaleX = scaleX;
   }
 
@@ -104,7 +101,7 @@ export class ScaleFrame extends Frame {
    * Gets the scale x
    * @returns {Number}
    */
-  getScaleX() {
+  get scaleX() {
     return this._scaleX;
   }
 
@@ -112,7 +109,7 @@ export class ScaleFrame extends Frame {
    * Set the scale y
    * @param {Number} scaleY
    */
-  setScaleY(scaleY) {
+  set scaleY(scaleY) {
     this._scaleY = scaleY;
   }
 
@@ -120,7 +117,7 @@ export class ScaleFrame extends Frame {
    * Gets the scale y
    * @returns {Number}
    */
-  getScaleY() {
+  get scaleY() {
     return this._scaleY;
   }
 };

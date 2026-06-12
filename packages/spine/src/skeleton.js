@@ -91,7 +91,7 @@ export class Skeleton extends Node {
 
     getBoundingBox() {
         let minX = FLT_MAX, minY = FLT_MAX, maxX = -FLT_MAX, maxY = -FLT_MAX;
-        const scaleX = this.getScaleX(), scaleY = this.getScaleY();
+        const scaleX = this.scaleX, scaleY = this.scaleY;
         const slots = this._skeleton.slots;
 
         for (let i = 0, n = slots.length; i < n; ++i) {

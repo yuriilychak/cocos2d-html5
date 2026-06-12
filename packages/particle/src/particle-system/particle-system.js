@@ -996,14 +996,14 @@ export class ParticleSystem extends Node {
     super.setRotation(newRotation);
   }
 
-  setScaleX(newScaleX) {
+  set scaleX(newScaleX) {
     this._transformSystemDirty = true;
-    super.setScaleX(newScaleX);
+    super.scaleX = newScaleX;
   }
 
-  setScaleY(newScaleY) {
+  set scaleY(newScaleY) {
     this._transformSystemDirty = true;
-    super.setScaleY(newScaleY);
+    super.scaleY = newScaleY;
   }
 
   /**

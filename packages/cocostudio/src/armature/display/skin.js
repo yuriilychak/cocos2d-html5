@@ -109,8 +109,8 @@ export class Skin extends Sprite {
    */
   setSkinData(skinData) {
     this._skinData = skinData;
-    this.setScaleX(skinData.scaleX);
-    this.setScaleY(skinData.scaleY);
+    this.scaleX = skinData.scaleX;
+    this.scaleY = skinData.scaleY;
     this.setRotationX(radiansToDegrees(skinData.skewX));
     this.setRotationY(radiansToDegrees(-skinData.skewY));
     this.setPosition(skinData.x, skinData.y);

@@ -118,10 +118,8 @@ import { _ccsLoad } from "./load/utils.js";
             name: "Scale",
             handle: function(options){
                 var frame = new ScaleFrame();
-                var scalex = options["X"];
-                var scaley = options["Y"];
-                frame.setScaleX(scalex);
-                frame.setScaleY(scaley);
+                frame.scaleX = options["X"];
+                frame.scaleY = options["Y"];
                 return frame;
             }
         },

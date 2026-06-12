@@ -340,7 +340,7 @@ export class Sprite extends EventHelper(Node) {
    * It only flips the texture of the sprite, and not the texture of the sprite's children.                       <br/>
    * Also, flipping the texture doesn't alter the anchorPoint.                                                    <br/>
    * If you want to flip the anchorPoint too, and/or to flip the children too use:                                <br/>
-   *      sprite.setScaleX(sprite.getScaleX() * -1);  <p/>
+   *      sprite.scaleX = -sprite.scaleX;  <p/>
    * @return {Boolean} true if the sprite is flipped horizontally, false otherwise.
    */
   isFlippedX() {
@@ -354,7 +354,7 @@ export class Sprite extends EventHelper(Node) {
    *      It only flips the texture of the sprite, and not the texture of the sprite's children.                  <br/>
    *      Also, flipping the texture doesn't alter the anchorPoint.                                               <br/>
    *      If you want to flip the anchorPoint too, and/or to flip the children too use:                           <br/>
-   *         sprite.setScaleY(sprite.getScaleY() * -1); <p/>
+   *         sprite.scaleY = -sprite.scaleY; <p/>
    * @return {Boolean} true if the sprite is flipped vertically, false otherwise.
    */
   isFlippedY() {

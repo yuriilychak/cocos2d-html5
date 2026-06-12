@@ -20,7 +20,7 @@ export class ActionScaleFrame extends ActionFrame {
    * Changes the scale action scaleX.
    * @param {number} scaleX
    */
-  setScaleX(scaleX) {
+  set scaleX(scaleX) {
     this._scaleX = scaleX;
   }
 
@@ -28,7 +28,7 @@ export class ActionScaleFrame extends ActionFrame {
    * Returns the scale action scaleX.
    * @returns {number}
    */
-  getScaleX() {
+  get scaleX() {
     return this._scaleX;
   }
 
@@ -36,7 +36,7 @@ export class ActionScaleFrame extends ActionFrame {
    * Changes the scale action scaleY.
    * @param {number} scaleY
    */
-  setScaleY(scaleY) {
+  set scaleY(scaleY) {
     this._scaleY = scaleY;
   }
 
@@ -44,7 +44,7 @@ export class ActionScaleFrame extends ActionFrame {
    * Returns the scale action scaleY.
    * @returns {number}
    */
-  getScaleY() {
+  get scaleY() {
     return this._scaleY;
   }
 

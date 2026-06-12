@@ -1337,28 +1337,23 @@ export class Widget extends ProtectedNode {
     this._ccEventCallback = callback;
   }
 
-  setScaleX(scaleX) {
-    if (this._flippedX) scaleX = scaleX * -1;
-    Node.prototype.setScaleX.call(this, scaleX);
+  set scaleX(scaleX) {
+    super.scaleX = this._flippedX ? -scaleX : scaleX;
   }
-  setScaleY(scaleY) {
-    if (this._flippedY) scaleY = scaleY * -1;
-    Node.prototype.setScaleY.call(this, scaleY);
+  set scaleY(scaleY) {
+    super.scaleY = this._flippedY ? -scaleY : scaleY;
   }
+
   setScale(scaleX, scaleY) {
     if (scaleY === undefined) scaleY = scaleX;
     this.scaleX = scaleX;
     this.scaleY = scaleY;
   }
-  getScaleX() {
-    var originalScale = Node.prototype.getScaleX.call(this);
-    if (this._flippedX) originalScale = originalScale * -1.0;
-    return originalScale;
+  get scaleX() {
+    return this._flippedX ? -super.scaleX : super.scaleX;
   }
-  getScaleY() {
-    var originalScale = Node.prototype.getScaleY.call(this);
-    if (this._flippedY) originalScale = originalScale * -1.0;
-    return originalScale;
+  get scaleY() {
+    return this._flippedY ? -super.scaleY : super.scaleY;
   }
   getScale() {
     if (this.scaleX !== this.scaleY)
