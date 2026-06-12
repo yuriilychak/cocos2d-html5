@@ -33,8 +33,8 @@ export class UIButtonTestSwitchScale9 extends UIMainLayer {
       var widgetSize = this._widget.getContentSize();
 
       // Add a label in which the button events will be displayed
-      this._topDisplayLabel.setString("No Event");
-      this._bottomDisplayLabel.setString("");
+      this._topDisplayLabel.string = "No Event";
+      this._bottomDisplayLabel.string = "";
 
       // Create the button
       var button = new Button(
@@ -55,21 +55,21 @@ export class UIButtonTestSwitchScale9 extends UIMainLayer {
   touchEvent(sender, type) {
     switch (type) {
       case Widget.TOUCH_BEGAN:
-        this._topDisplayLabel.setString("Touch Down");
+        this._topDisplayLabel.string = "Touch Down";
         break;
 
       case Widget.TOUCH_MOVED:
-        this._topDisplayLabel.setString("Touch Move");
+        this._topDisplayLabel.string = "Touch Move";
         break;
 
       case Widget.TOUCH_ENDED:
-        this._topDisplayLabel.setString("Touch Up");
+        this._topDisplayLabel.string = "Touch Up";
         sender.setScale9Enabled(!sender.isScale9Enabled());
         sender.setContentSize(200, 100);
         break;
 
       case Widget.TOUCH_CANCELED:
-        this._topDisplayLabel.setString("Touch Cancelled");
+        this._topDisplayLabel.string = "Touch Cancelled";
         break;
 
       default:

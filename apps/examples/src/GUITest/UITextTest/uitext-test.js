@@ -34,7 +34,7 @@ export class UITextTest extends UIMainLayer {
     if (super.init()) {
       var widgetSize = this._widget.getContentSize();
 
-      this._bottomDisplayLabel.setString("Text");
+      this._bottomDisplayLabel.string = "Text";
 
       // Create the text
       var text = new Text("Text", "AmericanTypewriter", 30);

@@ -80,9 +80,7 @@ export class XHRArrayBufferTestLayer extends BaseTestLayer {
     statusPostLabel.x = 10;
     statusPostLabel.y = winSize.height - 100;
     this.ensureLeftAligned(statusPostLabel);
-    statusPostLabel.setString(
-      "Status: Send Post Request to httpbin.org with ArrayBuffer"
-    );
+    statusPostLabel.string = "Status: Send Post Request to httpbin.org with ArrayBuffer";
 
     var responseLabel = new TextBMFont("", s_simpleFont_fnt);
     responseLabel.fontSize = 16;

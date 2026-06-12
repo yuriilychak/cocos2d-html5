@@ -96,12 +96,10 @@ export class WebSocketTestLayer extends BaseTestLayer {
 
     this._wsiSendText = new WebSocket("wss://echo.websocket.org");
     this._wsiSendText.onopen = function (evt) {
-      self._sendTextStatus.setString(
-        "Opened, url: " +
+      self._sendTextStatus.string = "Opened, url: " +
           self._wsiSendText.url +
           ", protocol: " +
-          self._wsiSendText.protocol
-      );
+          self._wsiSendText.protocol;
     };
 
     this._wsiSendText.onmessage = function (evt) {
@@ -110,13 +108,13 @@ export class WebSocketTestLayer extends BaseTestLayer {
         "response text msg: " + evt.data + ", " + self._sendTextTimes;
       log(textStr);
 
-      self._sendTextStatus.setString(textStr);
+      self._sendTextStatus.string = textStr;
     };
 
     this._wsiSendText.onerror = function (evt) {
       log("_wsiSendText Error was fired");
       if (ServiceLocator.sys.isObjectValid(self)) {
-        self._errorStatus.setString("an error was fired");
+        self._errorStatus.string = "an error was fired";
       } else {
         log("WebSocket test layer was destroyed!");
       }
@@ -130,12 +128,10 @@ export class WebSocketTestLayer extends BaseTestLayer {
     this._wsiSendBinary = new WebSocket("ws://echo.websocket.org");
     this._wsiSendBinary.binaryType = "arraybuffer";
     this._wsiSendBinary.onopen = function (evt) {
-      self._sendBinaryStatus.setString(
-        "Opened, url: " +
+      self._sendBinaryStatus.string = "Opened, url: " +
           self._wsiSendBinary.url +
           ", protocol: " +
-          self._wsiSendBinary.protocol
-      );
+          self._wsiSendBinary.protocol;
     };
 
     this._wsiSendBinary.onmessage = function (evt) {
@@ -155,13 +151,13 @@ export class WebSocketTestLayer extends BaseTestLayer {
 
       binaryStr += str + ", " + self._sendBinaryTimes;
       log(binaryStr);
-      self._sendBinaryStatus.setString(binaryStr);
+      self._sendBinaryStatus.string = binaryStr;
     };
 
     this._wsiSendBinary.onerror = function (evt) {
       log("_wsiSendBinary Error was fired");
       if (ServiceLocator.sys.isObjectValid(self)) {
-        self._errorStatus.setString("an error was fired");
+        self._errorStatus.string = "an error was fired";
       } else {
         log("WebSocket test layer was destroyed!");
       }
@@ -178,7 +174,7 @@ export class WebSocketTestLayer extends BaseTestLayer {
     this._wsiError.onerror = function (evt) {
       log("_wsiError Error was fired");
       if (ServiceLocator.sys.isObjectValid(self)) {
-        self._errorStatus.setString("an error was fired");
+        self._errorStatus.string = "an error was fired";
       } else {
         log("WebSocket test layer was destroyed!");
       }
@@ -203,12 +199,12 @@ export class WebSocketTestLayer extends BaseTestLayer {
   // Menu Callbacks
   onMenuSendTextClicked(sender) {
     if (this._wsiSendText.readyState == WebSocket.OPEN) {
-      this._sendTextStatus.setString("Send Text WS is waiting...");
+      this._sendTextStatus.string = "Send Text WS is waiting...";
       this._wsiSendText.send("Hello WebSocket中文, I'm a text message.");
     } else {
       var warningStr = "send text websocket instance wasn't ready...";
       log(warningStr);
-      this._sendTextStatus.setString(warningStr);
+      this._sendTextStatus.string = warningStr;
     }
   }
 
@@ -224,7 +220,7 @@ export class WebSocketTestLayer extends BaseTestLayer {
 
   onMenuSendBinaryClicked(sender) {
     if (this._wsiSendBinary.readyState == WebSocket.OPEN) {
-      this._sendBinaryStatus.setString("Send Binary WS is waiting...");
+      this._sendBinaryStatus.string = "Send Binary WS is waiting...";
       var buf = "Hello WebSocket中文,\0 I'm\0 a\0 binary\0 message\0.";
       var binary = this._stringConvertToArray(buf);
 
@@ -232,7 +228,7 @@ export class WebSocketTestLayer extends BaseTestLayer {
     } else {
       var warningStr = "send binary websocket instance wasn't ready...";
       log(warningStr);
-      this._sendBinaryStatus.setString(warningStr);
+      this._sendBinaryStatus.string = warningStr;
     }
   }
 }

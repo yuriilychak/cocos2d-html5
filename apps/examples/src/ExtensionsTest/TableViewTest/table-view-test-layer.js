@@ -103,7 +103,7 @@ export class TableViewTestLayer extends BaseTestLayer {
       cell.addChild(label);
     } else {
       label = cell.getChildByTag(123);
-      label.setString(strValue);
+      label.string = strValue;
     }
 
     return cell;

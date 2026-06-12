@@ -54,6 +54,8 @@ import { ServiceLocator } from "../service-locator";
  * @property {Number}           quadsToDraw     - Number of quads to draw
  */
 export class AtlasNode extends EventHelper(Node) {
+  #opacityModifyRGB = false;
+
   /**
    * <p>Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.</p>
    * @param {String} tile
@@ -74,9 +76,8 @@ export class AtlasNode extends EventHelper(Node) {
     this._itemWidth = 0;
     //! height of each char
     this._itemHeight = 0;
-
     // protocol variables
-    this._opacityModifyRGB = false;
+    
     this._blendFunc = null;
 
     // This variable is only used for LabelAtlas FPS display. So plz don't modify its value.
@@ -113,7 +114,7 @@ export class AtlasNode extends EventHelper(Node) {
    * @return {Color}
    */
   get color() {
-    return this._opacityModifyRGB ? this._renderCmd._colorUnmodified : super.color;
+    return this.#opacityModifyRGB ? this._renderCmd._colorUnmodified : super.color;
   }
 
   /**
@@ -124,7 +125,7 @@ export class AtlasNode extends EventHelper(Node) {
    */
   set isOpacityModifyRGB(value) {
     var oldColor = this.color;
-    this._opacityModifyRGB = value;
+    this.#opacityModifyRGB = value;
     this.color = oldColor;
   }
 
@@ -134,7 +135,7 @@ export class AtlasNode extends EventHelper(Node) {
    * @return {Boolean}
    */
   get isOpacityModifyRGB() {
-    return this._opacityModifyRGB;
+    return this.#opacityModifyRGB;
   }
 
   /**

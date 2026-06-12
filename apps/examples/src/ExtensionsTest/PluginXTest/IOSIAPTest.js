@@ -138,7 +138,7 @@ export class IAPTestLayer extends PluginXTest {
       var label = this.getChildByTag(TAG_SETSERVERMODE_RESULT);
       this._serverMode = true;
       if (label) {
-        label.setString("true");
+        label.string = "true";
         this.toggleToast(false);
       }
     } else if (index == TAG_GETPRODUCTLIST) {
@@ -155,7 +155,7 @@ export class IAPTestLayer extends PluginXTest {
       if (!this.product) {
         var label = this.getChildByTag(TAG_PAYMENT_RESULT);
         if (label) {
-          label.setString("please call requestProducts first");
+          label.string = "please call requestProducts first";
           this.toggleToast(false);
           return;
         }
@@ -181,7 +181,7 @@ export class IAPTestLayer extends PluginXTest {
     }
     var label = this.getChildByTag(TAG_PAYMENT_RESULT);
     if (label) {
-      label.setString(str);
+      label.string = str;
     }
   }
   onRequestProductResult(ret, productInfo) {
@@ -202,7 +202,7 @@ export class IAPTestLayer extends PluginXTest {
     }
     var label = this.getChildByTag(TAG_GETPRODUCTLIST_RESULT);
     if (label) {
-      label.setString(msgStr);
+      label.string = msgStr;
     }
   }
   postServerData(data) {

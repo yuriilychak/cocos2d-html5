@@ -257,7 +257,7 @@ export class ScrollView extends Layout {
     super._initRenderer();
 
     this._innerContainer = new Layout();
-    this._innerContainer.setColor(new Color(255, 255, 255));
+    this._innerContainer.color = new Color(255, 255, 255);
     this._innerContainer.opacity = 255;
     this._innerContainer.setCascadeColorEnabled(true);
     this._innerContainer.setCascadeOpacityEnabled(true);

@@ -31,8 +31,8 @@ export class UICheckBoxTest extends UIMainLayer {
   init() {
     if (super.init()) {
       //init text
-      this._topDisplayLabel.setString("No Event");
-      this._bottomDisplayLabel.setString("CheckBox");
+      this._topDisplayLabel.string = "No Event";
+      this._bottomDisplayLabel.string = "CheckBox";
 
       var widgetSize = this._widget.getContentSize();
       // Create the checkbox
@@ -58,10 +58,10 @@ export class UICheckBoxTest extends UIMainLayer {
   selectedStateEvent(sender, type) {
     switch (type) {
       case CheckBox.EVENT_UNSELECTED:
-        this._topDisplayLabel.setString("Unselected");
+        this._topDisplayLabel.string = "Unselected";
         break;
       case CheckBox.EVENT_SELECTED:
-        this._topDisplayLabel.setString("Selected");
+        this._topDisplayLabel.string = "Selected";
         break;
 
       default:

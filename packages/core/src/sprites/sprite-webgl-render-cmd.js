@@ -263,12 +263,12 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
       if (blendFunc.src === ONE && blendFunc.dst === BLEND_DST) {
         blendFunc.src = SRC_ALPHA;
       }
-      node.opacityModifyRGB = false;
+      node.isOpacityModifyRGB = false;
     } else {
       if (blendFunc.src === SRC_ALPHA && blendFunc.dst === BLEND_DST) {
         blendFunc.src = ONE;
       }
-      node.opacityModifyRGB = true;
+      node.isOpacityModifyRGB = true;
     }
   }
 
@@ -395,7 +395,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
     let r = this._displayedColor.r,
       g = this._displayedColor.g,
       b = this._displayedColor.b;
-    if (node._opacityModifyRGB) {
+    if (node.isOpacityModifyRGB) {
       const a = opacity / 255;
       r *= a;
       g *= a;

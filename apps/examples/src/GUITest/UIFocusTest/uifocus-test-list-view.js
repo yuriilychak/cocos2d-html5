@@ -89,9 +89,9 @@ export class UIFocusTestListView extends UIFocusTestBase {
     if (touchType == Widget.TOUCH_ENDED) {
       this._listView.setLoopFocus(!this._listView.isLoopFocus());
       if (this._listView.isLoopFocus()) {
-        this._loopText.setString("loop enabled");
+        this._loopText.string = "loop enabled";
       } else {
-        this._loopText.setString("loop disabled");
+        this._loopText.string = "loop disabled";
       }
     }
   }

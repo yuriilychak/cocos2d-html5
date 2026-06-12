@@ -56,6 +56,6 @@ export default class ControlPotentiometerTest extends Node {
   }
 
   valueChanged(sender) {
-    this._displayValueLabel.setString(sender.value.toFixed(2));
+    this._displayValueLabel.string = sender.value.toFixed(2);
   }
 }

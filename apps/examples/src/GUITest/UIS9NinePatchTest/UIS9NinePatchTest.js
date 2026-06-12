@@ -33,8 +33,8 @@ export class UIS9NinePatchTest extends UIMainLayer {
   init() {
     if (super.init()) {
       //init text
-      this._topDisplayLabel.setString("");
-      this._bottomDisplayLabel.setString("");
+      this._topDisplayLabel.string = "";
+      this._bottomDisplayLabel.string = "";
 
       ServiceLocator.spriteFrameCache.addSpriteFrames(
         "ccs-res/cocosui/android9patch.plist"

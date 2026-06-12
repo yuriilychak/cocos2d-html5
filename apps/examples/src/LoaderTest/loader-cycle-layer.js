@@ -46,10 +46,10 @@ export class LoaderCycleLayer extends BaseTestLayer {
     var cb = function (num) {
       if (num === 1) {
         resultTTF.color = Color.GREEN;
-        resultTTF.setString("result: success");
+        resultTTF.string = "result: success";
       } else {
         resultTTF.color = Color.RED;
-        resultTTF.setString("result: failed");
+        resultTTF.string = "result: failed";
       }
     };
     this.createInfo();

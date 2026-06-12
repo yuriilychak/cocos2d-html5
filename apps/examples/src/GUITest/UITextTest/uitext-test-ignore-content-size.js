@@ -33,7 +33,7 @@ export class UITextTest_IgnoreContentSize extends UIMainLayer {
     if (super.init()) {
       var widgetSize = this._widget.getContentSize();
 
-      this._bottomDisplayLabel.setString("");
+      this._bottomDisplayLabel.string = "";
 
       var leftText = new Text("ignore content", "Marker Felt", 10);
       leftText.setPosition(
@@ -41,9 +41,7 @@ export class UITextTest_IgnoreContentSize extends UIMainLayer {
       );
       leftText.ignoreContentAdaptWithSize(false);
       leftText.setTextAreaSize(new Size(60, 60));
-      leftText.setString(
-        "Text line with break\nText line with break\nText line with break\nText line with break\n"
-      );
+      leftText.string = "Text line with break\nText line with break\nText line with break\nText line with break\n";
       leftText.setTouchScaleChangeEnabled(true);
       leftText.setTouchEnabled(true);
       this._mainNode.addChild(leftText);
@@ -52,9 +50,7 @@ export class UITextTest_IgnoreContentSize extends UIMainLayer {
       rightText.setPosition(
         new Point(widgetSize.width / 2 + 50, widgetSize.height / 2)
       );
-      rightText.setString(
-        "Text line with break\nText line with break\nText line with break\nText line with break\n"
-      );
+      rightText.string = "Text line with break\nText line with break\nText line with break\nText line with break\n";
       //note: setTextAreaSize must be used with ignoreContentAdaptWithSize(false)
       rightText.setTextAreaSize(new Size(100, 30));
       rightText.ignoreContentAdaptWithSize(false);

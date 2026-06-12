@@ -284,6 +284,8 @@ var scale9QuadGenerator = {
 };
 
 export class Scale9Sprite extends EventHelper(Node) {
+    #opacityModifyRGB = false;
+
     constructor(file, rectOrCapInsets, capInsets) {
         super();
 
@@ -297,7 +299,6 @@ export class Scale9Sprite extends EventHelper(Node) {
         this._blendFunc = null;
         this._renderingType = 1;
         this._brightState = 0;
-        this._opacityModifyRGB = false;
         this._rawVerts = null;
         this._rawUvs = null;
         this._vertices = null;
@@ -510,24 +511,24 @@ export class Scale9Sprite extends EventHelper(Node) {
             if (blendFunc.src === ONE && blendFunc.dst === BLEND_DST) {
                 blendFunc.src = SRC_ALPHA;
             }
-            this._opacityModifyRGB = false;
+            this.#opacityModifyRGB = false;
         } else {
             if (blendFunc.src === SRC_ALPHA && blendFunc.dst === BLEND_DST) {
                 blendFunc.src = ONE;
             }
-            this._opacityModifyRGB = true;
+            this.#opacityModifyRGB = true;
         }
     }
 
     setOpacityModifyRGB(value) {
-        if (this._opacityModifyRGB !== value) {
-            this._opacityModifyRGB = value;
+        if (this.#opacityModifyRGB !== value) {
+            this.#opacityModifyRGB = value;
             this._renderCmd._setColorDirty();
         }
     }
 
     isOpacityModifyRGB() {
-        return this._opacityModifyRGB;
+        return this.#opacityModifyRGB;
     }
 
     setSpriteFrame(spriteFrame) {

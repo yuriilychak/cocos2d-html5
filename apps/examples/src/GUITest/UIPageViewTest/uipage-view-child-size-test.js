@@ -33,12 +33,12 @@ export class UIPageViewChildSizeTest extends UIMainLayer {
     if (super.init()) {
       var widgetSize = this._widget.getContentSize();
       //init text
-      this._topDisplayLabel.setString("Move by horizontal direction");
+      this._topDisplayLabel.string = "Move by horizontal direction";
       this._topDisplayLabel.setFontSize(14);
       this._topDisplayLabel.x = widgetSize.width / 2.0;
       this._topDisplayLabel.y =
         widgetSize.height / 2.0 + this._topDisplayLabel.height * 4;
-      this._bottomDisplayLabel.setString("");
+      this._bottomDisplayLabel.string = "";
       this._bottomDisplayLabel.x = widgetSize.width / 2;
       this._bottomDisplayLabel.y =
         widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
@@ -80,9 +80,7 @@ export class UIPageViewChildSizeTest extends UIMainLayer {
     switch (type) {
       case PageView.EVENT_TURNING:
         var pageView = sender;
-        this._topDisplayLabel.setString(
-          "page = " + (pageView.getCurPageIndex().valueOf() - 0 + 1)
-        );
+        this._topDisplayLabel.string = "page = " + (pageView.getCurPageIndex().valueOf() - 0 + 1);
         break;
       default:
         break;

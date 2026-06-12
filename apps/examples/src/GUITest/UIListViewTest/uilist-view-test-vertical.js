@@ -45,7 +45,7 @@ export class UIListViewTest_Vertical extends UIMainLayer {
     if (super.init()) {
       var widgetSize = this._widget.getContentSize();
 
-      this._topDisplayLabel.setString("We only create 8 item templates here.");
+      this._topDisplayLabel.string = "We only create 8 item templates here.";
       this._topDisplayLabel.x = widgetSize.width / 2.0;
       this._topDisplayLabel.y =
         widgetSize.height / 2.0 + this._topDisplayLabel.height * 1.5;

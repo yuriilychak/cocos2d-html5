@@ -39,11 +39,11 @@ export class UIListViewTest_Magnetic extends UIMainLayer {
     if (super.init()) {
       var widgetSize = this._widget.getContentSize();
 
-      this._topDisplayLabel.setString("1");
+      this._topDisplayLabel.string = "1";
       this._topDisplayLabel.setFontSize(14);
       this._topDisplayLabel.x = widgetSize.width / 2.0;
       this._topDisplayLabel.y = widgetSize.height / 2 + 90;
-      this._bottomDisplayLabel.setString("");
+      this._bottomDisplayLabel.string = "";
       this._bottomDisplayLabel.x = widgetSize.width / 2;
       this._bottomDisplayLabel.y =
         widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
@@ -98,7 +98,7 @@ export class UIListViewTest_Magnetic extends UIMainLayer {
 
       // Initial magnetic type
       this._listView.setMagneticType(ListView.MAGNETIC_NONE);
-      this._topDisplayLabel.setString("MagneticType - NONE");
+      this._topDisplayLabel.string = "MagneticType - NONE";
 
       // Magnetic change button
       var pButton = new Button(
@@ -150,7 +150,7 @@ export class UIListViewTest_Magnetic extends UIMainLayer {
           }
           this._listView.setMagneticType(eNextType);
 
-          this._topDisplayLabel.setString("MagneticType - " + sString);
+          this._topDisplayLabel.string = "MagneticType - " + sString;
         }.bind(this)
       );
       this._mainNode.addChild(pButton);

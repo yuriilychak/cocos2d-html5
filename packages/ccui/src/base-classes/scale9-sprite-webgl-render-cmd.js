@@ -96,7 +96,7 @@ export class Scale9SpriteWebGLRenderCmd extends Node.WebGLRenderCmd {
         var r = this._displayedColor.r,
             g = this._displayedColor.g,
             b = this._displayedColor.b;
-        if (node._opacityModifyRGB) {
+        if (node.isOpacityModifyRGB) {
             var a = opacity / 255;
             r *= a;
             g *= a;

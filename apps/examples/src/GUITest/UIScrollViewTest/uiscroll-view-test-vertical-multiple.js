@@ -40,13 +40,11 @@ export class UIScrollViewTest_Vertical_Multiple extends UIMainLayer {
     if (super.init()) {
       var widgetSize = this._widget.getContentSize();
       //init text
-      this._topDisplayLabel.setString("Move by vertical direction");
+      this._topDisplayLabel.string = "Move by vertical direction";
       this._topDisplayLabel.x = widgetSize.width / 2.0;
       this._topDisplayLabel.y =
         widgetSize.height / 2.0 + this._topDisplayLabel.height * 1.5;
-      this._bottomDisplayLabel.setString(
-        "Compare drawCalls and FPS with Previous Version"
-      );
+      this._bottomDisplayLabel.string = "Compare drawCalls and FPS with Previous Version";
       this._bottomDisplayLabel.setFontSize(25);
       this._bottomDisplayLabel.x = widgetSize.width / 2;
       this._bottomDisplayLabel.y =

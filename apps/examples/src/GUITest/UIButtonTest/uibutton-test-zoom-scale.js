@@ -34,8 +34,8 @@ export class UIButtonTestZoomScale extends UIMainLayer {
       var widgetSize = this._widget.getContentSize();
 
       // Add a label in which the button events will be displayed
-      this._topDisplayLabel.setString("Zoom Scale: -0.5");
-      this._bottomDisplayLabel.setString("");
+      this._topDisplayLabel.string = "Zoom Scale: -0.5";
+      this._bottomDisplayLabel.string = "";
 
       // Create the button
       var button = new Button(
@@ -76,7 +76,7 @@ export class UIButtonTestZoomScale extends UIMainLayer {
       var btn = this._mainNode.getChildByName("button");
       var zoomScale = percent * 0.01;
       btn.setZoomScale(zoomScale);
-      this._topDisplayLabel.setString("Zoom Scale: " + zoomScale.toFixed(2));
+      this._topDisplayLabel.string = "Zoom Scale: " + zoomScale.toFixed(2);
     }
   }
 }

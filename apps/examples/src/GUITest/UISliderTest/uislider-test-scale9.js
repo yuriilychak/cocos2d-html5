@@ -33,8 +33,8 @@ export class UISliderTest_Scale9 extends UIMainLayer {
     if (super.init()) {
       var widgetSize = this._widget.getContentSize();
       //init text
-      this._topDisplayLabel.setString("Move the slider thumb");
-      this._bottomDisplayLabel.setString("Slider scale9 render");
+      this._topDisplayLabel.string = "Move the slider thumb";
+      this._bottomDisplayLabel.string = "Slider scale9 render";
 
       // Create the slider
       var slider = new Slider();
@@ -66,7 +66,7 @@ export class UISliderTest_Scale9 extends UIMainLayer {
       case Slider.EVENT_PERCENT_CHANGED:
         var slider = sender;
         var percent = slider.getPercent();
-        this._topDisplayLabel.setString("Percent " + percent.toFixed(0));
+        this._topDisplayLabel.string = "Percent " + percent.toFixed(0);
         break;
       default:
         break;

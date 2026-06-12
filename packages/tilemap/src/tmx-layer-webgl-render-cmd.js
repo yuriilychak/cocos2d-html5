@@ -79,7 +79,7 @@ export class TMXLayerWebGLRenderCmd extends Node.WebGLRenderCmd {
       cr = this._displayedColor.r,
       cg = this._displayedColor.g,
       cb = this._displayedColor.b;
-    if (node._opacityModifyRGB) {
+    if (node.isOpacityModifyRGB) {
       const ca = opacity / 255;
       cr *= ca;
       cg *= ca;

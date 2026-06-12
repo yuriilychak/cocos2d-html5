@@ -34,7 +34,7 @@ export class UISliderDisabledDefaultTest extends UIMainLayer {
     if (super.init()) {
       var widgetSize = this._widget.getContentSize();
 
-      this._bottomDisplayLabel.setString("");
+      this._bottomDisplayLabel.string = "";
 
       // Add the alert
       var alert = new Text(

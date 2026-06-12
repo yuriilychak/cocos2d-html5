@@ -65,7 +65,7 @@ export class Text extends Widget {
     if (fontSize !== undefined) {
       this.setFontName(fontName);
       this.setFontSize(fontSize);
-      this.setString(textContent);
+      this.string = textContent;
     } else {
       this.setFontName(this._fontName);
     }
@@ -83,17 +83,6 @@ export class Text extends Widget {
   }
   set boundingHeight(v) {
     this._setBoundingHeight(v);
-  }
-
-  get string() {
-    return this.getString();
-  }
-  set string(v) {
-    this.setString(v);
-  }
-
-  get stringLength() {
-    return this.getStringLength();
   }
 
   get font() {
@@ -138,20 +127,10 @@ export class Text extends Widget {
 
   /**
    * Changes the value of Text.
-   * @deprecated since v3.0, please use setString() instead.
    * @param {String} text
    */
-  setText(text) {
-    log("Please use the setString");
-    this.setString(text);
-  }
-
-  /**
-   * Changes the value of Text.
-   * @param {String} text
-   */
-  setString(text) {
-    if (text === this._labelRenderer.getString()) return;
+  set string(text) {
+    if (text === this._labelRenderer.string) return;
     this._setString(text);
 
     this._updateContentSizeWithTextureSize(
@@ -160,34 +139,24 @@ export class Text extends Widget {
   }
 
   _setString(text) {
-    this._labelRenderer.setString(text);
+    this._labelRenderer.string = text;
     this._labelRendererAdaptDirty = true;
   }
 
   /**
    * Gets the string value of Text.
-   * @deprecated since v3.0, please use getString instead.
    * @returns {String}
    */
-  getStringValue() {
-    log("Please use the getString");
-    return this._labelRenderer.getString();
-  }
-
-  /**
-   * Gets the string value of Text.
-   * @returns {String}
-   */
-  getString() {
-    return this._labelRenderer.getString();
+  get string() {
+    return this._labelRenderer.string;
   }
 
   /**
    * Gets the string length of Text.
    * @returns {Number}
    */
-  getStringLength() {
-    return this._labelRenderer.getStringLength();
+  get stringLength() {
+    return this._labelRenderer.stringLength;
   }
 
   /**
@@ -496,7 +465,7 @@ export class Text extends Widget {
     if (uiLabel instanceof Text) {
       this.setFontName(uiLabel._fontName);
       this.setFontSize(uiLabel.getFontSize());
-      this.setString(uiLabel.getString());
+      this.string = uiLabel.string;
       this.setTouchScaleChangeEnabled(uiLabel.touchScaleEnabled);
       this.setTextAreaSize(uiLabel._textAreaSize);
       this.setTextHorizontalAlignment(
@@ -531,8 +500,8 @@ export class Text extends Widget {
     this._adaptRenderers();
   }
 
-  setColor(color) {
-    ProtectedNode.prototype.setColor.call(this, color);
+   set color(color) {
+    super.color = color;
     this._labelRenderer.color = color;
   }
 

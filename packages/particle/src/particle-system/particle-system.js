@@ -70,7 +70,7 @@ import { tiffReader } from "../tiff-reader";
  *     It is possible to customize any of the above mentioned properties in runtime. Example:   <br/>
  * </p>
  *
- * @property {Boolean}              opacityModifyRGB    - Indicate whether the alpha value modify color.
+ * @property {Boolean}              isOpacityModifyRGB    - Indicate whether the alpha value modify color.
  * @property {SpriteBatchNode}   batchNode           - Weak reference to the sprite batch node.
  * @property {Boolean}              active              - <@readonly> Indicate whether the particle system is activated.
  * @property {Number}               shapeType           - ShapeType of ParticleSystem : ParticleSystem.BALL_SHAPE | ParticleSystem.STAR_SHAPE.
@@ -180,7 +180,7 @@ export class ParticleSystem extends Node {
   _totalParticles = 0;
   _texture = null;
   _blendFunc = null;
-  _opacityModifyRGB = false;
+  #opacityModifyRGB = false;
   positionType = null;
   autoRemoveOnFinish = false;
   emitterMode = 0;
@@ -241,7 +241,7 @@ export class ParticleSystem extends Node {
     this.emissionRate = 0;
     this._totalParticles = 0;
     this._texture = null;
-    this._opacityModifyRGB = false;
+    this.#opacityModifyRGB = false;
     this.positionType = ParticleSystem.TYPE_FREE;
     this.autoRemoveOnFinish = false;
 
@@ -1330,16 +1330,16 @@ export class ParticleSystem extends Node {
    * does the alpha value modify color getter
    * @return {Boolean}
    */
-  isOpacityModifyRGB() {
-    return this._opacityModifyRGB;
+  get isOpacityModifyRGB() {
+    return this.#opacityModifyRGB;
   }
 
   /**
    * does the alpha value modify color setter
    * @param newValue
    */
-  setOpacityModifyRGB(newValue) {
-    this._opacityModifyRGB = newValue;
+  set isOpacityModifyRGB(newValue) {
+    this.#opacityModifyRGB = newValue;
   }
 
   /**
@@ -1651,7 +1651,7 @@ export class ParticleSystem extends Node {
       //don't get the internal texture if a batchNode is used
       if (!this._batchNode) {
         // Set a compatible default for the alpha transfer
-        this._opacityModifyRGB = false;
+        this.#opacityModifyRGB = false;
 
         // texture
         // Try to get the texture from the cache
@@ -2188,14 +2188,14 @@ export class ParticleSystem extends Node {
 
     var locTexture = this._texture;
     if (locTexture && locTexture instanceof Texture2D) {
-      this._opacityModifyRGB = false;
+      this.#opacityModifyRGB = false;
       var locBlendFunc = this._blendFunc;
       if (
         locBlendFunc.src === BLEND_SRC &&
         locBlendFunc.dst === BLEND_DST
       ) {
         if (locTexture.hasPremultipliedAlpha()) {
-          this._opacityModifyRGB = true;
+          this.#opacityModifyRGB = true;
         } else {
           locBlendFunc.src = SRC_ALPHA;
           locBlendFunc.dst = ONE_MINUS_SRC_ALPHA;
@@ -2293,7 +2293,7 @@ export class ParticleSystem extends Node {
       //don't get the internal texture if a batchNode is used
       if (!this.batchNode) {
         // Set a compatible default for the alpha transfer
-        retParticle.opacityModifyRGB = this.opacityModifyRGB;
+        retParticle.isOpacityModifyRGB = this.isOpacityModifyRGB;
         // texture
         var texture = this.texture;
         if (texture) {

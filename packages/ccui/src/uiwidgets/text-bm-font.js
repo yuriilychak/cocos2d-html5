@@ -50,15 +50,8 @@ export class TextBMFont extends Widget {
 
     if (filename !== undefined) {
       this.setFntFile(filename);
-      this.setString(text);
+      this.string = text;
     }
-  }
-
-  get string() {
-    return this.getString();
-  }
-  set string(v) {
-    this.setString(v);
   }
 
   get fontSize() {
@@ -107,33 +100,23 @@ export class TextBMFont extends Widget {
 
   /**
    * Sets string value for TextBMFont
-   * @deprecated since v3.0, please use setString instead.
    * @param {String} value
    */
-  setText(value) {
-    log("Please use the setString");
-    this.setString(value);
-  }
-
-  /**
-   * Sets string value for TextBMFont
-   * @param {String} value
-   */
-  setString(value) {
+  set string(value) {
     this._loader.clear();
     this._stringValue = value;
     if (!this._labelBMFontRenderer._textureLoaded) {
       this._loader.add(
         this._labelBMFontRenderer,
         function () {
-          this.setString(value);
+          this.string = value;
         },
         this
       );
       return;
     }
-    if (value === this._labelBMFontRenderer.getString()) return;
-    this._labelBMFontRenderer.setString(value);
+    if (value === this._labelBMFontRenderer.string) return;
+    this._labelBMFontRenderer.string = value;
     if (!this._fntFileHasInit) return;
     this._updateContentSizeWithTextureSize(
       this._labelBMFontRenderer.getContentSize()
@@ -145,7 +128,7 @@ export class TextBMFont extends Widget {
    * Returns string value for TextBMFont.
    * @returns {String}
    */
-  getString() {
+  get string() {
     return this._stringValue;
   }
 
@@ -153,8 +136,8 @@ export class TextBMFont extends Widget {
    * Returns the length of TextBMFont's string.
    * @returns {Number}
    */
-  getStringLength() {
-    return this._labelBMFontRenderer.getStringLength();
+  get stringLength() {
+    return this._labelBMFontRenderer.stringLength;
   }
 
   _onSizeChanged() {
@@ -219,7 +202,7 @@ export class TextBMFont extends Widget {
 
   _copySpecialProperties(labelBMFont) {
     this.setFntFile(labelBMFont._fntFileName);
-    this.setString(labelBMFont._stringValue);
+    this.string = labelBMFont._stringValue;
   }
 }
 

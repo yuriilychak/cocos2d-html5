@@ -85,14 +85,10 @@ export default class ControlSliderTest extends Node {
   }
 
   upperValueChanged(sender) {
-    this._displayValueLabel.setString(
-      `Upper slider value = ${sender.value.toFixed(2)}`
-    );
+    this._displayValueLabel.string = `Upper slider value = ${sender.value.toFixed(2)}`; 
   }
 
   lowerValueChanged(sender) {
-    this._displayValueLabel.setString(
-      `Lower slider value = ${sender.value.toFixed(2)}`
-    );
+    this._displayValueLabel.string = `Lower slider value = ${sender.value.toFixed(2)}`;
   }
 }

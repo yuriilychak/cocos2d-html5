@@ -24,7 +24,6 @@ export class Skeleton extends Node {
             this.initWithArgs(skeletonDataFile, atlasFile, scale);
     }
 
-    get opacityModifyRGB() { return this.isOpacityModifyRGB(); }
     get _blendFunc() { return this.getBlendFunc(); }
     get _texture() { return this._renderCmd._currTexture; }
 

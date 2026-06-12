@@ -42,22 +42,22 @@ export class UIWebViewTest extends UIMainLayer {
 
     var widgetSize = this._widget.getContentSize();
     var playState = this._topDisplayLabel;
-    playState.setString("Press buttons to start");
+    playState.string = "Press buttons to start";
     playState.y = widgetSize.height / 2.0 + playState.height * 1.5;
-    this._bottomDisplayLabel.setString("");
+    this._bottomDisplayLabel.string = "";
 
     var list = [
       {
         name: "loadURL",
         func: function () {
-          playState.setString("loadURL!");
+          playState.string = "loadURL!";
           webView.loadURL("src/GUITest/UIWebViewTest/webview2.html");
         }
       },
       {
         name: "Reload",
         func: function () {
-          playState.setString("reload!");
+          playState.string = "reload!";
           webView.reload();
         }
       },
@@ -65,10 +65,10 @@ export class UIWebViewTest extends UIMainLayer {
         name: "goBack",
         func: function () {
           if (webView.canGoBack()) {
-            playState.setString("goBack!");
+            playState.string = "goBack!";
             webView.goBack();
           } else {
-            playState.setString("can not goBack!");
+            playState.string = "can not goBack!";
           }
         }
       },
@@ -76,17 +76,17 @@ export class UIWebViewTest extends UIMainLayer {
         name: "goForward",
         func: function () {
           if (webView.canGoForward()) {
-            playState.setString("goForward!");
+            playState.string = "goForward!";
             webView.goForward();
           } else {
-            playState.setString("can not goForward!");
+            playState.string = "can not goForward!";
           }
         }
       },
       {
         name: "EvaluateJS",
         func: function () {
-          playState.setString("evaluateJS!");
+          playState.string = "evaluateJS!";
           var code = "alert('evaluateJS!')";
           webView.evaluateJS(code);
         }
@@ -95,7 +95,7 @@ export class UIWebViewTest extends UIMainLayer {
         name: "Scale",
         func: function () {
           var scale = (((Math.random() * 0.5 + 0.2) * 100) | 0) / 100;
-          playState.setString("setScale(" + scale + ")");
+          playState.string = "setScale(" + scale + ")";
           webView.scale = scale;
         }
       },

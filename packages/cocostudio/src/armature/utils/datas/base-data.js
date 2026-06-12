@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Color, NewClass } from "@aspect/core";
+import { Color } from "@aspect/core";
 
 import { DOUBLE_PI, M_PI } from "../../animation/tween-function/constants.js";
 /**
@@ -48,12 +48,12 @@ import { DOUBLE_PI, M_PI } from "../../animation/tween-function/constants.js";
  * @property {Number}         b                - b of color
  * @property {Number}         a                - a of color
  */
-export class BaseData extends NewClass {
+export class BaseData extends Color {
   /**
    * Construction of BaseData
    */
   constructor() {
-    super();
+    super(255, 255, 255, 255);
     this.x = 0;
     this.y = 0;
     this.zOrder = 0;
@@ -63,10 +63,6 @@ export class BaseData extends NewClass {
     this.scaleY = 1;
     this.tweenRotate = 0;
     this.isUseColorInfo = false;
-    this.r = 255;
-    this.g = 255;
-    this.b = 255;
-    this.a = 255;
   }
 
   /**
@@ -98,7 +94,7 @@ export class BaseData extends NewClass {
    * @function
    * @param {Color} color
    */
-  setColor(color) {
+  set color(color) {
     this.r = color.r;
     this.g = color.g;
     this.b = color.b;
@@ -110,8 +106,8 @@ export class BaseData extends NewClass {
    * @function
    * @returns {Color}
    */
-  getColor() {
-    return new Color(this.r, this.g, this.b, this.a);
+  get color() {
+    return super.clone();
   }
 
   /**

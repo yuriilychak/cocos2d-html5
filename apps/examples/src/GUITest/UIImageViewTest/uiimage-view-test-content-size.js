@@ -34,7 +34,7 @@ export class UIImageViewTest_ContentSize extends UIMainLayer {
     if (super.init()) {
       var widgetSize = this._widget.getContentSize();
 
-      this._bottomDisplayLabel.setString("");
+      this._bottomDisplayLabel.string = "";
       var alert = new Text(
         "ImageView ContentSize Change",
         "Marker Felt",
@@ -104,12 +104,10 @@ export class UIImageViewTest_ContentSize extends UIMainLayer {
           imageViewChild.setPositionPercent(
             new Point(Math.random().toFixed(2), Math.random().toFixed(2))
           );
-          status.setString(
-            "child ImageView position percent: " +
+          status.string = "child ImageView position percent: " +
               imageViewChild.getPositionPercent().x +
               ", " +
-              imageViewChild.getPositionPercent().y
-          );
+              imageViewChild.getPositionPercent().y;
         }
       });
       this._mainNode.addChild(imageView);

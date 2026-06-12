@@ -31,8 +31,8 @@ export class UIButtonFlipTest extends UIMainLayer {
   init() {
     if (super.init()) {
       // Add a label in which the button events will be displayed
-      this._topDisplayLabel.setString("");
-      this._bottomDisplayLabel.setString("");
+      this._topDisplayLabel.string = "";
+      this._bottomDisplayLabel.string = "";
 
       // Create the button
       var button = new Button(

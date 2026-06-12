@@ -33,8 +33,8 @@ export class UIWidgetAddNodeTest extends UIMainLayer {
     if (super.init()) {
       var widgetSize = this._widget.getContentSize();
       //init text
-      this._topDisplayLabel.setString("");
-      this._bottomDisplayLabel.setString("NodeContainer");
+      this._topDisplayLabel.string = "";
+      this._bottomDisplayLabel.string = "NodeContainer";
 
       // Create the ui node container
       var nodeContainer = new Widget();

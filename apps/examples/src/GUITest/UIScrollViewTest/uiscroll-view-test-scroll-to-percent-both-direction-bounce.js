@@ -33,10 +33,8 @@ export class UIScrollViewTest_ScrollToPercentBothDirection_Bounce extends UIMain
     if (super.init()) {
       var widgetSize = this._widget.getContentSize();
       //init text
-      this._topDisplayLabel.setString("");
-      this._bottomDisplayLabel.setString(
-        "ScrollView scroll to percent both directrion bounce"
-      );
+      this._topDisplayLabel.string = "";
+      this._bottomDisplayLabel.string = "ScrollView scroll to percent both directrion bounce";
       this._bottomDisplayLabel.x = widgetSize.width / 2;
       this._bottomDisplayLabel.y =
         widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;

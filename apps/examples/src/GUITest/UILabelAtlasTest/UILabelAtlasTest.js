@@ -31,8 +31,8 @@ export class UILabelAtlasTest extends UIMainLayer {
   init() {
     if (super.init()) {
       //init text
-      this._topDisplayLabel.setString("");
-      this._bottomDisplayLabel.setString("LabelAtlas");
+      this._topDisplayLabel.string = "";
+      this._bottomDisplayLabel.string = "LabelAtlas";
 
       // Create the label atlas
       var textAtlas = new TextAtlas();

@@ -81,7 +81,7 @@ export class XHRTestLayer extends BaseTestLayer {
     statusGetLabel.x = 10;
     statusGetLabel.y = winSize.height - 100;
     this.ensureLeftAligned(statusGetLabel);
-    statusGetLabel.setString("Status: Send Get Request to httpbin.org");
+    statusGetLabel.string = "Status: Send Get Request to httpbin.org";
 
     var responseLabel = new TextBMFont("", s_simpleFont_fnt);
     responseLabel.fontSize = 16;
@@ -117,9 +117,7 @@ export class XHRTestLayer extends BaseTestLayer {
     statusPostLabel.x = (winSize.width / 10) * 3;
     statusPostLabel.y = winSize.height - 100;
     this.ensureLeftAligned(statusPostLabel);
-    statusPostLabel.setString(
-      "Status: Send Post Request to httpbin.org with plain text"
-    );
+    statusPostLabel.string = "Status: Send Post Request to httpbin.org with plain text";
 
     var responseLabel = new TextBMFont("", s_simpleFont_fnt);
     responseLabel.fontSize = 16;
@@ -152,9 +150,7 @@ export class XHRTestLayer extends BaseTestLayer {
     statusPostLabel.x = (winSize.width / 10) * 7;
     statusPostLabel.y = winSize.height - 100;
     this.ensureLeftAligned(statusPostLabel);
-    statusPostLabel.setString(
-      "Status: Send Post Request to httpbin.org width form data"
-    );
+    statusPostLabel.string = "Status: Send Post Request to httpbin.org width form data";
 
     var responseLabel = new TextBMFont("", s_simpleFont_fnt);
     responseLabel.fontSize = 16;

@@ -109,7 +109,7 @@ export class ParticleSystemWebGLRenderCmd extends Node.WebGLRenderCmd {
     } else quad = this._quads[node._particleIdx];
 
     let r, g, b, a;
-    if (node._opacityModifyRGB) {
+    if (node.isOpacityModifyRGB) {
       r = 0 | ((particle.color.r * particle.color.a) / 255);
       g = 0 | ((particle.color.g * particle.color.a) / 255);
       b = 0 | ((particle.color.b * particle.color.a) / 255);

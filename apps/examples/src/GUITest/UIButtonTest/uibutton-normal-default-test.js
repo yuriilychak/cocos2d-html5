@@ -34,8 +34,8 @@ export class UIButtonNormalDefaultTest extends UIMainLayer {
       var widgetSize = this._widget.getContentSize();
 
       // Add a label in which the button events will be displayed
-      this._topDisplayLabel.setString("");
-      this._bottomDisplayLabel.setString("");
+      this._topDisplayLabel.string = "";
+      this._bottomDisplayLabel.string = "";
 
       // Add the alert
       var alert = new Text(

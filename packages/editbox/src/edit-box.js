@@ -92,7 +92,7 @@ export class EditBox extends Node {
       text = text.slice(0, this._maxLength);
     }
     this._text = text;
-    this._input.setString(text);
+    this._input.string = text;
   }
 
   get maxLength() {

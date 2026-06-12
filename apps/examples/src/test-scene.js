@@ -157,7 +157,7 @@ export class TestScene extends Scene {
     let text = this._suiteTitle;
     if (subtitle) text += `: ${subtitle}`;
     if (description) text += ` - ${description}`;
-    this._testInfoLabel.setString(text);
+    this._testInfoLabel.string = text;
   }
 
   onMainMenuCallback() {

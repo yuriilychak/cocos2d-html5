@@ -59,7 +59,7 @@ function initPanel(widget, opts, resourcePath) {
 }
 
 function initLabel(widget, opts) {
-    if (opts.text != null) widget.setString(opts.text);
+    if (opts.text != null) widget.string = opts.text;
     if (opts.fontSize != null) widget.setFontSize(opts.fontSize);
     if (opts.fontName != null) widget.setFontName(opts.fontName);
 }
@@ -114,7 +114,7 @@ function initLoadingBar(widget, opts, resourcePath) {
 
 function initTextField(widget, opts) {
     if (opts.placeHolder != null) widget.setPlaceHolder(opts.placeHolder);
-    if (opts.text != null) widget.setString(opts.text);
+    if (opts.text != null) widget.string = opts.text;
     if (opts.fontSize != null) widget.setFontSize(opts.fontSize);
     if (opts.maxLengthEnabled != null && opts.maxLength != null)
         widget.setMaxLength(opts.maxLength);

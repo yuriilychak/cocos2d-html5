@@ -41,8 +41,8 @@ export class UILayoutTestBase extends UIMainLayer {
     if (super.init()) {
       var widgetSize = this._widget.getContentSize();
       //init text
-      this._topDisplayLabel.setString("");
-      this._bottomDisplayLabel.setString(this.getText());
+      this._topDisplayLabel.string = "";
+      this._bottomDisplayLabel.string = this.getText();
       this._bottomDisplayLabel.x = widgetSize.width / 2;
       this._bottomDisplayLabel.y =
         widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;

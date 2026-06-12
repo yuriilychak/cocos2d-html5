@@ -84,13 +84,13 @@ export class DirectorEventTest extends EventDispatcherTestDemo {
     this._event3 = dispatcher.addCustomListener(
       Director.EVENT_AFTER_DRAW,
       function (event) {
-        selfPointer._label3.setString("Draw: " + selfPointer._count3++);
+        selfPointer._label3.string = "Draw: " + selfPointer._count3++;
       }
     );
     this._event4 = dispatcher.addCustomListener(
       Director.EVENT_PROJECTION_CHANGED,
       function (event) {
-        selfPointer._label4.setString("Projection: " + selfPointer._count4++);
+        selfPointer._label4.string = "Projection: " + selfPointer._count4++;
       }
     );
 
@@ -121,13 +121,13 @@ export class DirectorEventTest extends EventDispatcherTestDemo {
 
   onEvent1(event) {
     //----start8----onExit
-    this._label1.setString("Update: " + this._count1++);
+    this._label1.string = "Update: " + this._count1++;
     //----end8----
   }
 
   onEvent2(event) {
     //----start8----onExit
-    this._label2.setString("Visit: " + this._count2++);
+    this._label2.string = "Visit: " + this._count2++;
     //----end8----
   }
 

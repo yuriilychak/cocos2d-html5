@@ -84,12 +84,12 @@ export class RemoveListenerWhenDispatching extends EventDispatcherTestDemo {
       () => {
         if (enable) {
           ServiceLocator.eventManager.removeListener(listener1);
-          statusLabel.setString("The sprite could not be touched!");
+          statusLabel.string = "The sprite could not be touched!";
           layout.setLabelText(0, "Disabled");
           enable = false;
         } else {
           ServiceLocator.eventManager.addListener(listener1, sprite1);
-          statusLabel.setString("The sprite could be touched!");
+          statusLabel.string = "The sprite could be touched!";
           layout.setLabelText(0, "Enabled");
           enable = true;
         }

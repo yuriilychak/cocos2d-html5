@@ -88,6 +88,6 @@ export default class ControlSwitchTest extends Node {
   }
 
   valueChanged(sender) {
-    this._displayValueLabel.setString(sender.isOn ? "On" : "Off");
+    this._displayValueLabel.string = sender.isOn ? "On" : "Off";
   }
 }

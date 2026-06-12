@@ -34,8 +34,8 @@ export class UITextFieldTest_MaxLength extends UIMainLayer {
     if (super.init()) {
       var widgetSize = this._widget.getContentSize();
       //init text
-      this._topDisplayLabel.setString("No Event");
-      this._bottomDisplayLabel.setString("TextField max length");
+      this._topDisplayLabel.string = "No Event";
+      this._bottomDisplayLabel.string = "TextField max length";
 
       // Create the textfield
       var textField = new TextField();
@@ -69,9 +69,7 @@ export class UITextFieldTest_MaxLength extends UIMainLayer {
             )
           )
         );
-        this._topDisplayLabel.setString(
-          "attach with IME max length:" + textField.getMaxLength()
-        );
+        this._topDisplayLabel.string = "attach with IME max length:" + textField.getMaxLength();
         break;
       case TextField.EVENT_DETACH_WITH_IME:
         textField.runAction(
@@ -80,23 +78,17 @@ export class UITextFieldTest_MaxLength extends UIMainLayer {
             new Point(widgetSize.width / 2.0, widgetSize.height / 2.0)
           )
         );
-        this._topDisplayLabel.setString(
-          "detach with IME max length:" + textField.getMaxLength()
-        );
+        this._topDisplayLabel.string = "detach with IME max length:" + textField.getMaxLength();
         break;
       case TextField.EVENT_INSERT_TEXT:
-        this._topDisplayLabel.setString(
-          "insert with IME max length:" + textField.getMaxLength()
-        );
+        this._topDisplayLabel.string = "insert with IME max length:" + textField.getMaxLength();
         break;
       case TextField.EVENT_DELETE_BACKWARD:
-        this._topDisplayLabel.setString(
-          "delete with IME max length:" + textField.getMaxLength()
-        );
+        this._topDisplayLabel.string = "delete with IME max length:" + textField.getMaxLength();
         break;
       default:
         break;
     }
-    this._bottomDisplayLabel.setString(textField.getString());
+    this._bottomDisplayLabel.string = textField.getString();
   }
 }

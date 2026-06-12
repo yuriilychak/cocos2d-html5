@@ -34,7 +34,7 @@ export class UITextFieldTest extends UIMainLayer {
     if (super.init()) {
       var widgetSize = this._widget.getContentSize();
       //init text
-      this._topDisplayLabel.setString("No Event");
+      this._topDisplayLabel.string = "No Event";
       this._topDisplayLabel.setAnchorPoint(new Point(0.5, -1));
       this._topDisplayLabel.setPosition(
         new Point(
@@ -44,7 +44,7 @@ export class UITextFieldTest extends UIMainLayer {
         )
       );
 
-      this._bottomDisplayLabel.setString("TextField");
+      this._bottomDisplayLabel.string = "TextField";
       this._bottomDisplayLabel.setPosition(
         new Point(
           widgetSize.width / 2.0,
@@ -76,7 +76,7 @@ export class UITextFieldTest extends UIMainLayer {
             new Point(widgetSize.width / 2, widgetSize.height / 2 + 30)
           )
         );
-        this._topDisplayLabel.setString("attach with IME");
+        this._topDisplayLabel.string = "attach with IME";
         break;
       case TextField.EVENT_DETACH_WITH_IME:
         var widgetSize = this._widget.getContentSize();
@@ -86,13 +86,13 @@ export class UITextFieldTest extends UIMainLayer {
             new Point(widgetSize.width / 2.0, widgetSize.height / 2.0)
           )
         );
-        this._topDisplayLabel.setString("detach with IME");
+        this._topDisplayLabel.string = "detach with IME";
         break;
       case TextField.EVENT_INSERT_TEXT:
-        this._topDisplayLabel.setString("insert words");
+        this._topDisplayLabel.string = "insert words";
         break;
       case TextField.EVENT_DELETE_BACKWARD:
-        this._topDisplayLabel.setString("delete word");
+        this._topDisplayLabel.string = "delete word";
         break;
       default:
         break;

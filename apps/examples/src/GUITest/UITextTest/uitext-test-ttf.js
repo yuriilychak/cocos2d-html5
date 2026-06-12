@@ -33,7 +33,7 @@ export class UITextTest_TTF extends UIMainLayer {
     if (super.init()) {
       var widgetSize = this._widget.getContentSize();
 
-      this._bottomDisplayLabel.setString("Text set TTF font");
+      this._bottomDisplayLabel.string = "Text set TTF font";
 
       // Create the text, and set font with .ttf
       var text = new Text("Text", "fonts/A Damn Mess.ttf", 30);

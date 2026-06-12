@@ -31,13 +31,13 @@ export class UILabelBMFontTest extends UIMainLayer {
   init() {
     if (super.init()) {
       //init text
-      this._topDisplayLabel.setString("");
-      this._bottomDisplayLabel.setString("LabelBMFont");
+      this._topDisplayLabel.string = "";
+      this._bottomDisplayLabel.string = "LabelBMFont";
 
       // Create the LabelBMFont
       var labelBMFont = new TextBMFont();
       labelBMFont.setFntFile("ccs-res/cocosui/bitmapFontTest2.fnt");
-      labelBMFont.setString("BMFont");
+      labelBMFont.string = "BMFont";
       labelBMFont.x = this._widget.width / 2;
       labelBMFont.y = this._widget.height / 2.0 + labelBMFont.height / 8.0;
       this._mainNode.addChild(labelBMFont);

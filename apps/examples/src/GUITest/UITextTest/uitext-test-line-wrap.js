@@ -33,7 +33,7 @@ export class UITextTest_LineWrap extends UIMainLayer {
     if (super.init()) {
       var widgetSize = this._widget.getContentSize();
 
-      this._bottomDisplayLabel.setString("Text line wrap");
+      this._bottomDisplayLabel.string = "Text line wrap";
 
       // Create the line wrap
       var text = new Text(

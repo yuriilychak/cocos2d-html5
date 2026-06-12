@@ -80,8 +80,8 @@ export class ControlButton extends Control {
         this._titleLabel = this.getTitleLabelForState(locState);
 
         var label = this._titleLabel;
-        if (label && label.setString)
-            label.setString(this._currentTitle);
+        if (label && Object.getOwnPropertyDescriptor(label, "string"))
+            label.string = this._currentTitle;
         if (label)
             label.color = this._currentTitleColor;
 
@@ -154,7 +154,7 @@ export class ControlButton extends Control {
             this._backgroundSprite = backgroundSprite;
             this.opacity = 255;
             this.isOpacityModifyRGB = true;
-            var tempString = label.getString();
+            var tempString = label.string;
             this.setTitleForState(tempString, CONTROL_STATE_NORMAL);
             this.setTitleColorForState(label.color, CONTROL_STATE_NORMAL);
             this.setTitleLabelForState(label, CONTROL_STATE_NORMAL);

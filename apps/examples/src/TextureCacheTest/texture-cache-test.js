@@ -233,9 +233,7 @@ export class TextureCacheTest extends TextureCacheTestBase {
   }
   loadingCallBack(obj) {
     ++this._numberOfLoadedSprites;
-    this._labelPercent.setString(
-      (this._numberOfLoadedSprites / this._numberOfSprites) * 100 + ""
-    );
+    this._labelPercent.string = (this._numberOfLoadedSprites / this._numberOfSprites) * 100 + "";
     if (this._numberOfLoadedSprites == this._numberOfSprites) {
       this.removeChild(this._labelLoading, true);
       this.removeChild(this._labelPercent, true);

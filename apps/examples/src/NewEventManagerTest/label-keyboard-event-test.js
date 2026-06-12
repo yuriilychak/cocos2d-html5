@@ -51,27 +51,23 @@ export class LabelKeyboardEventTest extends EventDispatcherTestDemo {
         event: EventListener.KEYBOARD,
         onKeyPressed: function (keyCode, event) {
           var label = event.getCurrentTarget();
-          label.setString(
-            "Key " +
+          label.string = "Key " +
               (ServiceLocator.sys.isNative
                 ? that.getNativeKeyName(keyCode)
                 : String.fromCharCode(keyCode)) +
               "(" +
               keyCode.toString() +
-              ") was pressed!"
-          );
+              ") was pressed!";
         },
         onKeyReleased: function (keyCode, event) {
           var label = event.getCurrentTarget();
-          label.setString(
-            "Key " +
+          label.string = "Key " +
               (ServiceLocator.sys.isNative
                 ? that.getNativeKeyName(keyCode)
                 : String.fromCharCode(keyCode)) +
               "(" +
               keyCode.toString() +
-              ") was released!"
-          );
+              ") was released!";
         }
       },
       statusLabel

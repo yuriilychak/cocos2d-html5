@@ -35,10 +35,10 @@ export class UIScrollViewNestTest extends UIMainLayer {
       var widgetSize = this._widget.getContentSize();
 
       // Add a label in which the scrollview alert will be displayed
-      this._topDisplayLabel.setString("Move by vertical direction");
+      this._topDisplayLabel.string = "Move by vertical direction";
 
       // Add the alert
-      this._bottomDisplayLabel.setString("ScrollView vertical");
+      this._bottomDisplayLabel.string = "ScrollView vertical";
       this._bottomDisplayLabel.setPosition(
         widgetSize.width / 2.0,
         widgetSize.height / 2.0 - this._bottomDisplayLabel.height * 3.075

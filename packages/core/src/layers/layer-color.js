@@ -39,9 +39,9 @@ export class LayerColor extends Layer {
     return this._blendFunc;
   }
 
-  setOpacityModifyRGB(value) {}
+  set isOpacityModifyRGB(value) {}
 
-  isOpacityModifyRGB() {
+  get isOpacityModifyRGB() {
     return false;
   }
 

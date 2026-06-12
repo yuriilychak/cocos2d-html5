@@ -31,8 +31,8 @@ export class UIImageViewTest extends UIMainLayer {
     init() {
         if (super.init()) {
             //init text
-            this._topDisplayLabel.setString("");
-            this._bottomDisplayLabel.setString("ImageView");
+            this._topDisplayLabel.string = "";
+            this._bottomDisplayLabel.string = "ImageView";
 
             var widgetSize = this._widget.getContentSize();
             // Create the imageview

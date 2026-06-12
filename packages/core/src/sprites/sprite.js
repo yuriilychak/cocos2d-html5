@@ -34,7 +34,11 @@ import { Texture2D } from "../textures/texture-2d";
 import { SpriteFrame } from "./sprite-frame";
 import { PolygonInfo } from "./polygon-info";
 import { BLEND_DST, BLEND_SRC } from "../platform/macro/constants";
-import { sizePointsToPixels, rectPointsToPixels, pointPointsToPixels } from "../platform/macro/utils.js";
+import {
+  sizePointsToPixels,
+  rectPointsToPixels,
+  pointPointsToPixels
+} from "../platform/macro/utils.js";
 import { ServiceLocator } from "../service-locator";
 
 /**
@@ -130,7 +134,7 @@ export class Sprite extends EventHelper(Node) {
     this._offsetPosition = null; // absolute
     this._unflippedOffsetPositionFromCenter = null;
 
-    this._opacityModifyRGB = false;
+    this.isOpacityModifyRGB = false;
 
     // image is flipped
     this._flippedX = false; //Whether the sprite is flipped horizontally or not.
@@ -366,8 +370,8 @@ export class Sprite extends EventHelper(Node) {
    * @param {Boolean} modify
    */
   set isOpacityModifyRGB(modify) {
-    if (this._opacityModifyRGB !== modify) {
-      this._opacityModifyRGB = modify;
+    if (super.isOpacityModifyRGB !== modify) {
+      super.isOpacityModifyRGB = modify;
       this._renderCmd._setColorDirty();
     }
   }
@@ -377,10 +381,8 @@ export class Sprite extends EventHelper(Node) {
    * @return {Boolean}
    */
   get isOpacityModifyRGB() {
-    return this._opacityModifyRGB;
+    return super.isOpacityModifyRGB;
   }
-
-  // Animation
 
   /**
    * Changes the display frame with animation name and index.<br/>
@@ -651,15 +653,14 @@ export class Sprite extends EventHelper(Node) {
    * @return {Boolean} true if the sprite is initialized properly, false otherwise.
    */
   initWithTexture(texture, rect, rotated, counterclockwise) {
-    var _t = this;
     assert(arguments.length !== 0, _LogInfos.CCSpriteBatchNode_initWithTexture);
     this._loader.clear();
 
-    _t._textureLoaded = texture.isLoaded();
-    if (!_t._textureLoaded) {
+    this._textureLoaded = texture.isLoaded();
+    if (!this._textureLoaded) {
       this._loader.once(
         texture,
-        function () {
+         () => {
           this.initWithTexture(texture, rect, rotated, counterclockwise);
           this.dispatchEvent("load");
         },
@@ -678,39 +679,39 @@ export class Sprite extends EventHelper(Node) {
 
     if (!super.init()) return false;
 
-    _t._batchNode = null;
-    _t._recursiveDirty = false;
-    _t.dirty = false;
-    _t._opacityModifyRGB = true;
+    this._batchNode = null;
+    this._recursiveDirty = false;
+    this.dirty = false;
+    this.isOpacityModifyRGB = true;
 
-    _t._blendFunc.src = BLEND_SRC;
-    _t._blendFunc.dst = BLEND_DST;
+    this._blendFunc.src = BLEND_SRC;
+    this._blendFunc.dst = BLEND_DST;
 
-    _t._flippedX = _t._flippedY = false;
+    this._flippedX = this._flippedY = false;
 
     // zwoptex default values
-    _t._offsetPosition.x = 0;
-    _t._offsetPosition.y = 0;
-    _t._hasChildren = false;
+    this._offsetPosition.x = 0;
+    this._offsetPosition.y = 0;
+    this._hasChildren = false;
 
-    _t._rectRotated = rotated;
+    this._rectRotated = rotated;
     if (rect) {
-      _t._rect.x = rect.x;
-      _t._rect.y = rect.y;
-      _t._rect.width = rect.width;
-      _t._rect.height = rect.height;
+      this._rect.x = rect.x;
+      this._rect.y = rect.y;
+      this._rect.width = rect.width;
+      this._rect.height = rect.height;
     }
 
     if (!rect) rect = new Rect(0, 0, texture.width, texture.height);
 
     this._renderCmd._checkTextureBoundary(texture, rect, rotated);
 
-    _t.setTexture(texture);
-    _t.setTextureRect(rect, rotated);
+    this.setTexture(texture);
+    this.setTextureRect(rect, rotated);
 
     // by default use "Self Render".
     // if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
-    _t.setBatchNode(null);
+    this.setBatchNode(null);
     return true;
   }
 

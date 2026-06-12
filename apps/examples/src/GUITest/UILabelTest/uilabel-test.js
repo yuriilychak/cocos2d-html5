@@ -31,8 +31,8 @@ export class UILabelTest extends UIMainLayer {
   init() {
     if (super.init()) {
       //init text
-      this._topDisplayLabel.setString("");
-      this._bottomDisplayLabel.setString("Label");
+      this._topDisplayLabel.string = "";
+      this._bottomDisplayLabel.string = "Label";
 
       // Create the label
       var text = new Text();

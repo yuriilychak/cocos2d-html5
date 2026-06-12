@@ -34,10 +34,10 @@ export class UILabelTest_Effect extends UIMainLayer {
     if (super.init()) {
       var widgetSize = this._widget.getContentSize();
 
-      this._bottomDisplayLabel.setString("");
+      this._bottomDisplayLabel.string = "";
 
       var alert = new Text();
-      alert.setString("Label Effect");
+      alert.string = "Label Effect";
       alert.setFontName("Marker Felt");
       alert.setFontSize(30);
       alert.color = new Color(159, 168, 176);
@@ -51,7 +51,7 @@ export class UILabelTest_Effect extends UIMainLayer {
       var shadow_label = new Text();
 
       shadow_label.enableShadow(Color.GRAY, new Point(10, -10));
-      shadow_label.setString("Shadow");
+      shadow_label.string = "Shadow";
       shadow_label.setPosition(
         widgetSize.width / 2,
         widgetSize.height / 2 + shadow_label.height
@@ -62,7 +62,7 @@ export class UILabelTest_Effect extends UIMainLayer {
       // create the stroke only label
       var glow_label = new Text();
       glow_label.setFontName("Marker Felt");
-      glow_label.setString("Glow");
+      glow_label.string = "Glow";
       glow_label.enableGlow(Color.RED);
       glow_label.setPosition(widgetSize.width / 2, widgetSize.height / 2);
       this._mainNode.addChild(glow_label);
@@ -70,7 +70,7 @@ export class UILabelTest_Effect extends UIMainLayer {
       // create the label stroke and shadow
       var outline_label = new Text();
       outline_label.enableOutline(Color.BLUE, 2);
-      outline_label.setString("Outline");
+      outline_label.string = "Outline";
       outline_label.setPosition(
         widgetSize.width / 2,
         widgetSize.height / 2 - shadow_label.height

@@ -537,7 +537,7 @@ parser.initText = function (json, resourcePath) {
     widget.setTouchScaleChangeEnabled(touchScaleEnabled);
 
   var text = json["LabelText"];
-  if (text != null) widget.setString(text);
+  if (text != null) widget.string = text;
 
   var fontSize = json["FontSize"];
   if (fontSize != null) widget.setFontSize(fontSize);
@@ -1114,7 +1114,7 @@ parser.initTextBMFont = function (json, resourcePath) {
   });
 
   var text = json["LabelText"];
-  widget.setString(text);
+  widget.string = text;
 
   widget.ignoreContentAdaptWithSize(true);
   return widget;
@@ -1156,7 +1156,7 @@ parser.initTextField = function (json, resourcePath) {
   this.widgetAttributes(widget, json);
 
   var text = json["LabelText"];
-  if (text != null) widget.setString(text);
+  if (text != null) widget.string = text;
 
   var fontResource = json["FontResource"];
   if (fontResource != null) {

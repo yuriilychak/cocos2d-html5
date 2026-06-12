@@ -503,7 +503,7 @@ export class ProgressTimerWebGLRenderCmd extends Node.WebGLRenderCmd {
         let g = spColor.g;
         let b = spColor.b;
         const a = sp._renderCmd._displayedOpacity / 255;
-        if (sp._opacityModifyRGB) {
+        if (sp.isOpacityModifyRGB) {
             r *= a;
             g *= a;
             b *= a;

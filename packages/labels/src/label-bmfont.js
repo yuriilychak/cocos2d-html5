@@ -5,7 +5,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
   //property textAlign is Getter and Setter.
   //property boundingWidth is Getter and Setter.
   //property fontSize is Getter and Setter.
-  _opacityModifyRGB = false;
+  #opacityModifyRGB = false;
 
   _string = "";
   _config = null;
@@ -35,12 +35,6 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
     else return new LabelBMFont.CanvasRenderCmd(this);
   }
 
-  get string() {
-    return this.getString();
-  }
-  set string(v) {
-    this._setStringForSetter(v);
-  }
   get boundingWidth() {
     return this._getBoundingWidth();
   }
@@ -113,21 +107,21 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
    * Conforms to RGBAProtocol protocol.
    * @return {Boolean}
    */
-  isOpacityModifyRGB() {
-    return this._opacityModifyRGB;
+  get isOpacityModifyRGB() {
+    return this.#opacityModifyRGB;
   }
 
   /**
    * Set whether to support RGBAProtocol protocol
    * @param {Boolean} opacityModifyRGB
    */
-  setOpacityModifyRGB(opacityModifyRGB) {
-    this._opacityModifyRGB = opacityModifyRGB;
+  set isOpacityModifyRGB(opacityModifyRGB) {
+    this.#opacityModifyRGB = opacityModifyRGB;
     var locChildren = this._children;
     if (locChildren) {
       for (var i = 0; i < locChildren.length; i++) {
         var node = locChildren[i];
-        if (node) node.opacityModifyRGB = this._opacityModifyRGB;
+        if (node) node.isOpacityModifyRGB = this.#opacityModifyRGB;
       }
     }
   }
@@ -154,10 +148,9 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
    * @return {Boolean}
    */
   initWithString(str, fntFile, width, alignment, imageOffset, fontSize) {
-    var self = this,
-      theString = str || "";
+    var theString = str || "";
 
-    if (self._config)
+    if (this._config)
       log("LabelBMFont.initWithString(): re-init is no longer supported");
 
     var texture;
@@ -174,8 +167,8 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
         }
       }
 
-      self._config = newConf;
-      self._fntFile = fntFile;
+      this._config = newConf;
+      this._fntFile = fntFile;
       var spriteFrameBaseName = newConf.atlasName;
       var spriteFrame =
         ServiceLocator.spriteFrameCache.getSpriteFrame(spriteFrameBaseName) ||
@@ -189,43 +182,42 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
         texture = ServiceLocator.textureCache.addImage(newConf.atlasName);
       }
       var locIsLoaded = texture.isLoaded();
-      self._textureLoaded = locIsLoaded;
+      this._textureLoaded = locIsLoaded;
       if (!locIsLoaded) {
         texture.addEventListener(
           "load",
-          function (sender) {
-            var self1 = this;
-            self1._textureLoaded = true;
+           (sender) => {
+            this._textureLoaded = true;
             //reset the LabelBMFont
-            self1.initWithTexture(sender, self1._initialString.length);
-            self1.setString(self1._initialString, true);
-            self1.dispatchEvent("load");
+            this.initWithTexture(sender, this._initialString.length);
+            this.string = this._initialString;
+            this.dispatchEvent("load");
           },
-          self
+          this
         );
       }
     } else {
       texture = new Texture2D();
       var image = new Image();
       texture.initWithElement(image);
-      self._textureLoaded = false;
+      this._textureLoaded = false;
     }
 
-    if (self.initWithTexture(texture, theString.length)) {
-      self._alignment = alignment || TEXT_ALIGNMENT_LEFT;
-      self._imageOffset = imageOffset || new Point(0, 0);
-      self._width = width === undefined ? -1 : width;
-      self._fontSize = fontSize > 0 ? fontSize : 0;
+    if (this.initWithTexture(texture, theString.length)) {
+      this._alignment = alignment || TEXT_ALIGNMENT_LEFT;
+      this._imageOffset = imageOffset || new Point(0, 0);
+      this._width = width === undefined ? -1 : width;
+      this._fontSize = fontSize > 0 ? fontSize : 0;
 
-      self._realOpacity = 255;
-      self._realColor = new Color(255, 255, 255, 255);
+      this._realOpacity = 255;
+      this._realColor = new Color(255, 255, 255, 255);
 
-      self._contentSize.width = 0;
-      self._contentSize.height = 0;
+      this._contentSize.width = 0;
+      this._contentSize.height = 0;
 
-      self.setAnchorPoint(0.5, 0.5);
+      this.setAnchorPoint(0.5, 0.5);
 
-      self.setString(theString, true);
+      this.string = theString;
 
       return true;
     }
@@ -338,7 +330,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
       }
 
       // Apply label properties
-      fontChar.opacityModifyRGB = this._opacityModifyRGB;
+      fontChar.isOpacityModifyRGB = this.#opacityModifyRGB;
       cmd._updateCharColorAndOpacity(fontChar);
       fontChar.setScale(locScale);
 
@@ -396,7 +388,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
    * Gets the text of this label
    * @return {String}
    */
-  getString() {
+  get string() {
     return this._initialString;
   }
 
@@ -405,18 +397,9 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
    * @param {String} newString
    * @param {Boolean|null} needUpdateLabel
    */
-  setString(newString, needUpdateLabel) {
-    newString = String(newString);
-    if (needUpdateLabel === undefined) needUpdateLabel = true;
-    if (newString === undefined || typeof newString !== "string")
-      newString = newString + "";
-
+  set string(newString) {
     this._initialString = newString;
-    this._setString(newString, needUpdateLabel);
-  }
-
-  _setStringForSetter(newString) {
-    this.setString(newString, false);
+    this._setString(newString, true);
   }
 
   // calc the text all with in a line
@@ -532,20 +515,19 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
    * Update this Label display string and more...
    */
   updateLabel() {
-    var self = this;
-    self.string = self._initialString;
+    this._setString(this._initialString, false);
 
     var i, j, characterSprite;
     // process string
     // Step 1: Make multiline
-    if (self._width > 0) {
-      var stringArr = self.string.split("\n");
+    if (this._width > 0) {
+      var stringArr = this.string.split("\n");
       var wrapString = "";
       var newWrapNum = 0;
       var oldArrLength = 0;
       for (i = 0; i < stringArr.length; i++) {
         oldArrLength = stringArr.length;
-        this._checkWarp(stringArr, i, self._width * this._scaleX, newWrapNum);
+        this._checkWarp(stringArr, i, this._width * this._scaleX, newWrapNum);
         if (oldArrLength < stringArr.length) {
           newWrapNum++;
         }
@@ -555,20 +537,20 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
         wrapString += stringArr[i];
       }
       wrapString = wrapString + String.fromCharCode(0);
-      self._setString(wrapString, false);
+      this._setString(wrapString, false);
     }
     // Step 2: Make alignment
-    if (self._alignment !== TEXT_ALIGNMENT_LEFT) {
+    if (this._alignment !== TEXT_ALIGNMENT_LEFT) {
       i = 0;
 
       var lineNumber = 0;
-      var strlen = self._string.length;
+      var strlen = this._string.length;
       var last_line = [];
 
       for (var ctr = 0; ctr < strlen; ctr++) {
         if (
-          self._string[ctr].charCodeAt(0) === 10 ||
-          self._string[ctr].charCodeAt(0) === 0
+          this._string[ctr].charCodeAt(0) === 10 ||
+          this._string[ctr].charCodeAt(0) === 0
         ) {
           var lineWidth = 0;
           var line_length = last_line.length;
@@ -580,17 +562,17 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
           var index = i + line_length - 1 + lineNumber;
           if (index < 0) continue;
 
-          var lastChar = self.getChildByTag(index);
+          var lastChar = this.getChildByTag(index);
           if (lastChar == null) continue;
           lineWidth = lastChar.getPositionX() + lastChar._getWidth() * lastChar._scaleX / 2;
 
           var shift = 0;
-          switch (self._alignment) {
+          switch (this._alignment) {
             case TEXT_ALIGNMENT_CENTER:
-              shift = self.width / 2 - lineWidth / 2;
+              shift = this.width / 2 - lineWidth / 2;
               break;
             case TEXT_ALIGNMENT_RIGHT:
-              shift = self.width - lineWidth;
+              shift = this.width - lineWidth;
               break;
             default:
               break;
@@ -600,7 +582,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
             for (j = 0; j < line_length; j++) {
               index = i + j + lineNumber;
               if (index < 0) continue;
-              characterSprite = self.getChildByTag(index);
+              characterSprite = this.getChildByTag(index);
               if (characterSprite) characterSprite.x += shift;
             }
           }
@@ -611,7 +593,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
           last_line.length = 0;
           continue;
         }
-        last_line.push(self._string[i]);
+        last_line.push(this._string[i]);
       }
     }
   }

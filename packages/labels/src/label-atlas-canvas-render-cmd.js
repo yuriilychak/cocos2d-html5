@@ -67,7 +67,7 @@ export class LabelAtlasCanvasRenderCmd extends AtlasNode.CanvasRenderCmd {
         }
     }
 
-    setString(label) {
+    set string(label) {
         const node = this._node;
         if (node._children) {
             const locChildren = node._children;

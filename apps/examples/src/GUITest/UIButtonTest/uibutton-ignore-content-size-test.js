@@ -35,8 +35,8 @@ export class UIButtonIgnoreContentSizeTest extends UIMainLayer {
       var widgetSize = this._widget.getContentSize();
 
       // Add a label in which the button events will be displayed
-      this._topDisplayLabel.setString("Button IgnoreContent Size Test");
-      this._bottomDisplayLabel.setString("");
+      this._topDisplayLabel.string = "Button IgnoreContent Size Test";
+      this._bottomDisplayLabel.string = "";
 
       // Create the button
       var button = new Button(

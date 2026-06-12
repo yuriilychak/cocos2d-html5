@@ -7,7 +7,7 @@ import {
 } from "./constants";
 
 export class Control extends Layer {
-  _isOpacityModifyRGB = false;
+  #isOpacityModifyRGB = false;
   _hasVisibleParents = false;
   _touchListener = null;
   _className = "Control";
@@ -145,17 +145,17 @@ export class Control extends Layer {
 
   needsLayout() {}
 
-  isOpacityModifyRGB() {
-    return this._isOpacityModifyRGB;
+  get isOpacityModifyRGB() {
+    return this.#isOpacityModifyRGB;
   }
 
-  setOpacityModifyRGB(value) {
-    this._isOpacityModifyRGB = value;
+  set isOpacityModifyRGB(value) {
+    this.#isOpacityModifyRGB = value;
     var children = this.getChildren();
     for (var i = 0, len = children.length; i < len; i++) {
       var selNode = children[i];
-      if (selNode && typeof selNode.setOpacityModifyRGB === "function") {
-        selNode.setOpacityModifyRGB(value);
+      if (selNode && Object.hasOwnProperty(selNode, "isOpacityModifyRGB")) {
+        selNode.isOpacityModifyRGB = value;
       }
     }
   }

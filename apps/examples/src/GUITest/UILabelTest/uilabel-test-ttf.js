@@ -32,8 +32,8 @@ export class UILabelTest_TTF extends UIMainLayer {
   init() {
     if (super.init()) {
       //init text
-      this._topDisplayLabel.setString("");
-      this._bottomDisplayLabel.setString("Label set TTF font");
+      this._topDisplayLabel.string = "";
+      this._bottomDisplayLabel.string = "Label set TTF font";
 
       // Create the text area
       var text = new Text();

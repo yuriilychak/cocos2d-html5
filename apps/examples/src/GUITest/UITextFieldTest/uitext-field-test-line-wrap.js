@@ -36,12 +36,12 @@ export class UITextFieldTest_LineWrap extends UIMainLayer {
       var widgetSize = this._widget.getContentSize();
 
       // Add a label in which the textfield events will be displayed
-      this._topDisplayLabel.setString("No Event");
+      this._topDisplayLabel.string = "No Event";
       this._topDisplayLabel.setPosition(
         widgetSize.width / 2,
         widgetSize.height / 2 + this._topDisplayLabel.height * 1.5
       );
-      this._bottomDisplayLabel.setString("");
+      this._bottomDisplayLabel.string = "";
 
       // Add the alert
       var alert = new Text("TextField line wrap", "Marker Felt", 30);
@@ -59,7 +59,7 @@ export class UITextFieldTest_LineWrap extends UIMainLayer {
       textField.ignoreContentAdaptWithSize(false);
       //textField.getVirtualRenderer().setLineBreakWithoutSpace(true);
       textField.setContentSize(240, 120);
-      textField.setString("input words here");
+      textField.string = "input words here";
       textField.setTextHorizontalAlignment(TEXT_ALIGNMENT_CENTER);
       textField.setTextVerticalAlignment(TEXT_ALIGNMENT_CENTER);
       textField.setPosition(widgetSize.width / 2, widgetSize.height / 2);
@@ -81,7 +81,7 @@ export class UITextFieldTest_LineWrap extends UIMainLayer {
         );
         textField.setTextHorizontalAlignment(TEXT_ALIGNMENT_LEFT);
         textField.setTextVerticalAlignment(VERTICAL_TEXT_ALIGNMENT_TOP);
-        this._topDisplayLabel.setString("attach with IME");
+        this._topDisplayLabel.string = "attach with IME";
         break;
       case TextField.EVENT_DETACH_WITH_IME:
         textField.runAction(
@@ -92,17 +92,17 @@ export class UITextFieldTest_LineWrap extends UIMainLayer {
         );
         textField.setTextHorizontalAlignment(TEXT_ALIGNMENT_CENTER);
         textField.setTextVerticalAlignment(TEXT_ALIGNMENT_CENTER);
-        this._topDisplayLabel.setString("detach with IME");
+        this._topDisplayLabel.string = "detach with IME";
         break;
       case TextField.EVENT_INSERT_TEXT:
-        this._topDisplayLabel.setString("insert words");
+        this._topDisplayLabel.string = "insert words";
         break;
       case TextField.EVENT_DELETE_BACKWARD:
-        this._topDisplayLabel.setString("delete word");
+        this._topDisplayLabel.string = "delete word";
         break;
       default:
         break;
     }
-    this._bottomDisplayLabel.setString(textField.getString());
+    this._bottomDisplayLabel.string = textField.getString();
   }
 }

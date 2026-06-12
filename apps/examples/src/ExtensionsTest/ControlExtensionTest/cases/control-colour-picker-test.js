@@ -42,6 +42,6 @@ export default class ControlColourPickerTest extends Node {
   }
 
   colourValueChanged(sender) {
-    this._colorLabel.setString(Color.toHex(sender.color).toUpperCase());
+    this._colorLabel.string = Color.toHex(sender.color).toUpperCase();
   }
 }

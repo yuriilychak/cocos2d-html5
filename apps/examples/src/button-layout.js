@@ -144,7 +144,7 @@ export class ButtonLayout extends Layout {
     if (item instanceof BMButton) {
       item.setTitleText(text);
     } else {
-      item.setString(text);
+      item.string = text;
     }
   }
 

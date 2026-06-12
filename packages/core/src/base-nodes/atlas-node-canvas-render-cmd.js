@@ -44,7 +44,7 @@ export class AtlasNodeCanvasRenderCmd extends NodeCanvasRenderCmd {
     node._itemWidth = tileWidth;
     node._itemHeight = tileHeight;
 
-    node._opacityModifyRGB = true;
+    node.isOpacityModifyRGB = true;
     node._texture = texture;
     if (!node._texture) {
       log(_LogInfos.AtlasNode__initWithTexture);

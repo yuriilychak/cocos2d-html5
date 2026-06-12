@@ -150,24 +150,24 @@ export class IntervalLayer extends LayerGradient {
 
   step1(dt) {
     this.time1 += dt;
-    this.label1.setString(this.time1.toFixed(1));
+    this.label1.string = this.time1.toFixed(1);
   }
   step2(dt) {
     this.time2 += dt;
-    this.label2.setString(this.time2.toFixed(1));
+    this.label2.string = this.time2.toFixed(1);
   }
   step3(dt) {
     this.time3 += dt;
-    this.label3.setString(this.time3.toFixed(1));
+    this.label3.string = this.time3.toFixed(1);
   }
   step4(dt) {
     this.time4 += dt;
-    this.label4.setString(this.time4.toFixed(1));
+    this.label4.string = this.time4.toFixed(1);
   }
   update(dt) {
     this.time0 += dt;
 
-    this.label0.setString(this.time0.toFixed(1));
+    this.label0.string = this.time0.toFixed(1);
   }
 
   //CREATE_NODE(IntervalLayer);

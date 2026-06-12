@@ -50,7 +50,7 @@ export class KeyboardTest extends EventTest {
             if (keyStr.length > 0) {
               strTemp += " the key name is:" + keyStr;
             }
-            label.setString(strTemp);
+            label.string = strTemp;
           },
           onKeyReleased: function (key, event) {
             var strTemp = "Key up:" + key;
@@ -58,7 +58,7 @@ export class KeyboardTest extends EventTest {
             if (keyStr.length > 0) {
               strTemp += " the key name is:" + keyStr;
             }
-            label.setString(strTemp);
+            label.string = strTemp;
           }
         },
         this

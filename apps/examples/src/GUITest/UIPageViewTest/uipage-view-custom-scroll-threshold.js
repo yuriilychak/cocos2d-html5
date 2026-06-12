@@ -35,13 +35,13 @@ export class UIPageViewCustomScrollThreshold extends UIMainLayer {
       var widgetSize = this._widget.getContentSize();
 
       // Add a label in which the dragpanel events will be displayed
-      this._topDisplayLabel.setString("Scroll Threshold");
+      this._topDisplayLabel.string = "Scroll Threshold";
       this._topDisplayLabel.x = widgetSize.width / 2.0;
       this._topDisplayLabel.y =
         widgetSize.height / 2.0 + this._topDisplayLabel.height * 1.5;
 
       // Add the black background
-      this._bottomDisplayLabel.setString("PageView");
+      this._bottomDisplayLabel.string = "PageView";
       this._bottomDisplayLabel.setPosition(
         new Point(
           widgetSize.width / 2.0,
@@ -118,9 +118,7 @@ export class UIPageViewCustomScrollThreshold extends UIMainLayer {
       if (percent == 0) percent = 1;
       pageView.setCustomScrollThreshold(percent * 0.01 * pageView.width);
 
-      this._topDisplayLabel.setString(
-        "Scroll Threshold: " + pageView.getCustomScrollThreshold().toFixed(2)
-      );
+      this._topDisplayLabel.string = "Scroll Threshold: " + pageView.getCustomScrollThreshold().toFixed(2);
     }
   }
 }

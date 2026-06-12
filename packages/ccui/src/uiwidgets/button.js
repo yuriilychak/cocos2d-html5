@@ -219,7 +219,7 @@ export class Button extends Widget {
     if (this._unifySize) return this._getNormalSize();
 
     if (!this._normalTextureLoaded) {
-      if (this._titleRenderer && this._titleRenderer.getString().length > 0) {
+      if (this._titleRenderer && this._titleRenderer.string.length > 0) {
         return this._titleRenderer.getContentSize();
       }
     }
@@ -680,7 +680,7 @@ export class Button extends Widget {
 
     this._createTitleRendererIfNeeded();
 
-    this._titleRenderer.setString(text);
+    this._titleRenderer.string = text;
     if (this._ignoreSize) {
       var s = this.getVirtualRendererSize();
       this.setContentSize(s);
@@ -695,7 +695,7 @@ export class Button extends Widget {
    */
   getTitleText() {
     if (this._titleRenderer) {
-      return this._titleRenderer.getString();
+      return this._titleRenderer.string;
     }
     return "";
   }

@@ -73,7 +73,7 @@ export class TextureLoadImgTest extends TextureCacheTestBase {
 
   texFirstLoaded(texture) {
     if (!texture) {
-      this._labelFirst.setString("texFirstLoaded fail");
+      this._labelFirst.string = "texFirstLoaded fail";
       return;
     }
 
@@ -85,12 +85,12 @@ export class TextureLoadImgTest extends TextureCacheTestBase {
     this.sprite.y = winSize.height / 2;
     this.addChild(this.sprite);
 
-    this._labelFirst.setString("texFirstLoaded successful");
+    this._labelFirst.string = "texFirstLoaded successful";
   }
 
   texSecondLoaded(texture) {
     if (!texture) {
-      this._labelSecond.setString("texSecondLoaded fail");
+      this._labelSecond.string = "texSecondLoaded fail";
       return;
     }
 
@@ -102,6 +102,6 @@ export class TextureLoadImgTest extends TextureCacheTestBase {
     this.sprite2.y = winSize.height / 2 + 70;
     this.addChild(this.sprite2);
 
-    this._labelSecond.setString("texSecondLoaded successful");
+    this._labelSecond.string = "texSecondLoaded successful";
   }
 }

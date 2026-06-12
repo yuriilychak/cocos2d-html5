@@ -76,12 +76,10 @@ export default class TintTo extends ActionInterval {
     var locFrom = this._from,
       locTo = this._to;
     if (locFrom) {
-      this.target.setColor(
-        new Color(
-          locFrom.r + (locTo.r - locFrom.r) * dt,
-          locFrom.g + (locTo.g - locFrom.g) * dt,
-          locFrom.b + (locTo.b - locFrom.b) * dt
-        )
+      this.target.color = new Color(
+        locFrom.r + (locTo.r - locFrom.r) * dt,
+        locFrom.g + (locTo.g - locFrom.g) * dt,
+        locFrom.b + (locTo.b - locFrom.b) * dt
       );
     }
   }

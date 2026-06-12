@@ -20,20 +20,18 @@ export class ActionTintFrame extends ActionFrame {
    * Changes the tint action color.
    * @param {Color} color
    */
-  setColor(color) {
-    var locColor = this._color;
-    locColor.r = color.r;
-    locColor.g = color.g;
-    locColor.b = color.b;
+  set color(color) {
+    this._color.r = color.r;
+    this._color.g = color.g;
+    this._color.b = color.b;
   }
 
   /**
    * Returns the color of tint action.
    * @returns {Color}
    */
-  getColor() {
-    var locColor = this._color;
-    return new Color(locColor.r, locColor.g, locColor.b, locColor.a);
+  get color() {
+    return this._color.clone();
   }
 
   /**
@@ -46,5 +44,4 @@ export class ActionTintFrame extends ActionFrame {
       new TintTo(duration, this._color.r, this._color.g, this._color.b)
     );
   }
-};
-
+}

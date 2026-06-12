@@ -48,6 +48,10 @@ export class Color {
     }
   }
 
+  clone() {
+    return new Color(this.r, this.g, this.b, this.a);
+  }
+
   get r() {
     return (this._val & 0xff000000) >>> 24;
   }

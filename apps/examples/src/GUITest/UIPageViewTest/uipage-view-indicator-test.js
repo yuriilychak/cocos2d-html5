@@ -33,15 +33,13 @@ export class UIPageViewIndicatorTest extends UIMainLayer {
     if (super.init()) {
       var widgetSize = this._widget.getContentSize();
 
-      this._topDisplayLabel.setString(
-        "PageView indicator custom texture\nscale : 0.5, index color: RED"
-      );
+      this._topDisplayLabel.string = "PageView indicator custom texture\nscale : 0.5, index color: RED";
       this._topDisplayLabel.setFontSize(14);
       this._topDisplayLabel.x = widgetSize.width / 2.0;
       this._topDisplayLabel.y =
         widgetSize.height / 2.0 + this._topDisplayLabel.height;
 
-      this._bottomDisplayLabel.setString("PageView");
+      this._bottomDisplayLabel.string = "PageView";
       this._bottomDisplayLabel.x = widgetSize.width / 2;
       this._bottomDisplayLabel.y =
         widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;

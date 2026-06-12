@@ -36,7 +36,7 @@ export class UITextFieldTest_TrueTypeFont extends UIMainLayer {
       var widgetSize = this._widget.getContentSize();
 
       // Add a label in which the textfield events will be displayed
-      this._topDisplayLabel.setString("True Type Font Test - No Event");
+      this._topDisplayLabel.string = "True Type Font Test - No Event";
       this._topDisplayLabel.setPosition(
         new Point(
           widgetSize.width / 2,
@@ -45,7 +45,7 @@ export class UITextFieldTest_TrueTypeFont extends UIMainLayer {
       );
 
       // Add the alert
-      this._bottomDisplayLabel.setString("TextField");
+      this._bottomDisplayLabel.string = "TextField";
       this._bottomDisplayLabel.setPosition(
         widgetSize.width / 2,
         widgetSize.height / 2 - this._bottomDisplayLabel.height * 3.075
@@ -73,7 +73,7 @@ export class UITextFieldTest_TrueTypeFont extends UIMainLayer {
             )
           )
         );
-        this._topDisplayLabel.setString("attach with IME");
+        this._topDisplayLabel.string = "attach with IME";
         break;
 
       case TextField.EVENT_DETACH_WITH_IME:
@@ -83,20 +83,20 @@ export class UITextFieldTest_TrueTypeFont extends UIMainLayer {
             new Point(widgetSize.width / 2, widgetSize.height / 2)
           )
         );
-        this._topDisplayLabel.setString("detach with IME");
+        this._topDisplayLabel.string = "detach with IME";
         break;
 
       case TextField.EVENT_INSERT_TEXT:
-        this._topDisplayLabel.setString("insert words");
+        this._topDisplayLabel.string = "insert words";
         break;
 
       case TextField.EVENT_DELETE_BACKWARD:
-        this._topDisplayLabel.setString("delete word");
+        this._topDisplayLabel.string = "delete word";
         break;
 
       default:
         break;
     }
-    this._bottomDisplayLabel.setString(textField.getString());
+    this._bottomDisplayLabel.string = textField.getString();
   }
 }

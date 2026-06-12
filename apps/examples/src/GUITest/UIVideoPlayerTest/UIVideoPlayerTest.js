@@ -39,15 +39,15 @@ export class UIVideoPlayerTest extends UIMainLayer {
 
     var widgetSize = this._widget.getContentSize();
     var playState = this._topDisplayLabel;
-    playState.setString("Press buttons to start");
+    playState.string = "Press buttons to start";
     playState.y = widgetSize.height / 2.0 + playState.height * 1.5;
-    this._bottomDisplayLabel.setString("");
+    this._bottomDisplayLabel.string = "";
 
     var list = [
       {
         name: "playURL",
         func: function () {
-          playState.setString("Video from Web address");
+          playState.string = "Video from Web address";
           video.setURL("http://benchmark.cocos2d-x.org/cocosvideo.mp4");
           video.play();
         }
@@ -55,7 +55,7 @@ export class UIVideoPlayerTest extends UIMainLayer {
       {
         name: "PlayLocal",
         func: function () {
-          playState.setString("Video from Local resource");
+          playState.string = "Video from Local resource";
           video.setURL("cocosvideo.mp4");
           video.play();
         }
@@ -63,21 +63,21 @@ export class UIVideoPlayerTest extends UIMainLayer {
       {
         name: "Pause",
         func: function () {
-          playState.setString("Pause playing");
+          playState.string = "Pause playing";
           video.pause();
         }
       },
       {
         name: "Resume",
         func: function () {
-          playState.setString("Resume");
+          playState.string = "Resume";
           video.resume();
         }
       },
       {
         name: "Stop",
         func: function () {
-          playState.setString("Stop playing");
+          playState.string = "Stop playing";
           video.stop();
         }
       },
@@ -85,14 +85,14 @@ export class UIVideoPlayerTest extends UIMainLayer {
         name: "SeekTo",
         func: function () {
           var sec = ((Math.random() * 59 * 100) | 0) / 100;
-          playState.setString("SeekTo %f sec", sec);
+          playState.string = "SeekTo " + sec + " sec";
           video.seekTo(sec);
         }
       },
       {
         name: "Full Screen",
         func: function () {
-          playState.setString("setFullScreenEnabled");
+          playState.string = "setFullScreenEnabled";
           video.setFullScreenEnabled(true);
         }
       },
@@ -100,7 +100,7 @@ export class UIVideoPlayerTest extends UIMainLayer {
         name: "Scale",
         func: function () {
           var scale = (((Math.random() * 0.5 + 0.2) * 100) | 0) / 100;
-          playState.setString("setScale(%f)!");
+          playState.string = "setScale(%f)!";
           video.scale = scale;
         }
       },

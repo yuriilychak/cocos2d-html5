@@ -36,13 +36,13 @@ export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
       var widgetSize = this._widget.getContentSize();
 
       // Add a label in which the dragpanel events will be displayed
-      this._topDisplayLabel.setString("Click Buttons on the Left");
+      this._topDisplayLabel.string = "Click Buttons on the Left";
       this._topDisplayLabel.x = widgetSize.width / 2.0;
       this._topDisplayLabel.y =
         widgetSize.height / 2.0 + this._topDisplayLabel.height * 1.5;
 
       // Add the black background
-      this._bottomDisplayLabel.setString("PageView Dynamic Modification");
+      this._bottomDisplayLabel.string = "PageView Dynamic Modification";
       this._bottomDisplayLabel.setPosition(
         widgetSize.width / 2.0,
         widgetSize.height / 2.0 - this._bottomDisplayLabel.height * 3.075
@@ -119,9 +119,7 @@ export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
         }
 
         pageView.addPage(outerBox);
-        self._topDisplayLabel.setString(
-          "page count = " + pageView.getPages().length
-        );
+        self._topDisplayLabel.string = "page count = " + pageView.getPages().length;
       });
       this._mainNode.addChild(button);
 
@@ -139,9 +137,7 @@ export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
         } else {
           log("There is no page to remove!");
         }
-        self._topDisplayLabel.setString(
-          "page count = " + pageView.getPages().length
-        );
+        self._topDisplayLabel.string = "page count = " + pageView.getPages().length;
       });
       this._mainNode.addChild(button2);
 
@@ -155,9 +151,7 @@ export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
       button3.setTitleColor(Color.RED);
       button3.addClickEventListener(function (sender) {
         pageView.removeAllPages();
-        self._topDisplayLabel.setString(
-          "page count = " + pageView.getPages().length
-        );
+        self._topDisplayLabel.string = "page count = " + pageView.getPages().length;
       });
       this._mainNode.addChild(button3);
 
@@ -168,9 +162,7 @@ export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
   pageViewEvent(pageView, type) {
     switch (type) {
       case PageView.EVENT_TURNING:
-        this._topDisplayLabel.setString(
-          "page = " + (pageView.getCurPageIndex() + 1)
-        );
+        this._topDisplayLabel.string = "page = " + (pageView.getCurPageIndex() + 1);
         break;
       default:
         break;

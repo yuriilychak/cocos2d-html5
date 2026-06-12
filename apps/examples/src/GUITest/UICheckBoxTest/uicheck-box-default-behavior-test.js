@@ -41,7 +41,7 @@ export class UICheckBoxDefaultBehaviorTest extends UIMainLayer {
         new Point(widgetSize.width / 2, widgetSize.height / 2)
       );
       this._mainNode.addChild(this._displayValueLabel);
-      this._bottomDisplayLabel.setString("");
+      this._bottomDisplayLabel.string = "";
 
       // Add the alert
       var alert = new Text(

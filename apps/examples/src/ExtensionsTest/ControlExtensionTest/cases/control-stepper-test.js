@@ -68,6 +68,6 @@ export default class ControlStepperTest extends Node {
   }
 
   valueChanged(sender) {
-    this._displayValueLabel.setString(sender.value.toString());
+    this._displayValueLabel.string = sender.value.toString();
   }
 }

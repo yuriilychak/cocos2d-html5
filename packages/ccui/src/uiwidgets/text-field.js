@@ -77,10 +77,10 @@ class TextFieldRenderer extends TextFieldTTF {
 
     if (text !== "\n") {
       if (this._maxLengthEnabled) {
-        var text_count = this.getString().length;
+        var text_count = this.string.length;
         if (text_count >= this._maxLength) {
           // password
-          if (this._passwordEnabled) this.setPasswordText(this.getString());
+          if (this._passwordEnabled) this.setPasswordText(this.string);
           return;
         }
       }
@@ -89,7 +89,7 @@ class TextFieldRenderer extends TextFieldTTF {
 
     // password
     if (this._passwordEnabled && super.getCharCount() > 0)
-      this.setPasswordText(this.getString());
+      this.setPasswordText(this.string);
   }
 
   deleteBackward() {
@@ -152,7 +152,7 @@ class TextFieldRenderer extends TextFieldTTF {
 
     for (var i = 0; i < max; ++i) tempStr += this._passwordStyleText;
 
-    LabelTTF.prototype.setString.call(this, tempStr);
+    this.string = tempStr;
   }
 
   setAttachWithIME(attach) {
@@ -241,13 +241,6 @@ export class TextField extends Widget {
     if (fontName) this.setFontName(fontName);
     if (fontSize) this.setFontSize(fontSize);
     if (placeholder) this.setPlaceHolder(placeholder);
-  }
-
-  get string() {
-    return this.getString();
-  }
-  set string(v) {
-    this.setString(v);
   }
 
   get placeHolder() {
@@ -372,28 +365,18 @@ export class TextField extends Widget {
 
   /**
    *  Changes the string value of textField.
-   * @deprecated since v3.0, please use setString instead.
    * @param {String} text
    */
-  setText(text) {
-    log("Please use the setString");
-    this.setString(text);
-  }
-
-  /**
-   *  Changes the string value of textField.
-   * @param {String} text
-   */
-  setString(text) {
+  set string(text) {
     if (text == null) return;
 
     text = String(text);
     if (this.isMaxLengthEnabled()) text = text.substr(0, this.getMaxLength());
     if (this.isPasswordEnabled()) {
       this._textFieldRenderer.setPasswordText(text);
-      this._textFieldRenderer.setString("");
+      this._textFieldRenderer.string = "";
       this._textFieldRenderer.insertText(text, text.length);
-    } else this._textFieldRenderer.setString(text);
+    } else this._textFieldRenderer.string = text;
     this._textFieldRendererAdaptDirty = true;
     this._updateContentSizeWithTextureSize(
       this._textFieldRenderer.getContentSize()
@@ -495,29 +478,19 @@ export class TextField extends Widget {
   }
 
   /**
-   * Returns textField string value
-   * @deprecated since v3.0, please use getString instead.
-   * @returns {String}
-   */
-  getStringValue() {
-    log("Please use the getString");
-    return this.getString();
-  }
-
-  /**
    * Returns string value of TextField.
    * @returns {String}
    */
-  getString() {
-    return this._textFieldRenderer.getString();
+  get string() {
+    return this._textFieldRenderer.string;
   }
 
   /**
    * Returns the length of TextField.
    * @returns {Number}
    */
-  getStringLength() {
-    return this._textFieldRenderer.getStringLength();
+  get stringLength() {
+    return this._textFieldRenderer.stringLength;
   }
 
   /**
@@ -565,7 +538,7 @@ export class TextField extends Widget {
    */
   setMaxLength(length) {
     this._textFieldRenderer.setMaxLength(length);
-    this.setString(this.getString());
+    this.string = this.string;
   }
 
   /**
@@ -600,7 +573,7 @@ export class TextField extends Widget {
     this._textFieldRenderer.setPasswordStyleText(styleText);
     this._passwordStyleText = styleText;
 
-    this.setString(this.getString());
+    this.string = this.string;
   }
 
   /**
@@ -853,10 +826,10 @@ export class TextField extends Widget {
   }
 
   _copySpecialProperties(textField) {
-    this.setString(textField._textFieldRenderer.getString());
-    this.setPlaceHolder(textField.getString());
-    this.setFontSize(textField._textFieldRenderer.getFontSize());
-    this.setFontName(textField._textFieldRenderer.getFontName());
+    this.string = textField._textFieldRenderer.string;
+    this.setPlaceHolder(textField.string);
+    this.setFontSize(textField._textFieldRenderer.fontSize);
+    this.setFontName(textField._textFieldRenderer.fontName);
     this.setMaxLengthEnabled(textField.isMaxLengthEnabled());
     this.setMaxLength(textField.getMaxLength());
     this.setPasswordEnabled(textField.isPasswordEnabled());

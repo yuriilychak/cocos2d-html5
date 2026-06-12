@@ -35,13 +35,13 @@ export class UIPageViewButtonTest extends UIMainLayer {
       var widgetSize = this._widget.getContentSize();
 
       // Add a label in which the dragpanel events will be displayed
-      this._topDisplayLabel.setString("Move by horizontal direction");
+      this._topDisplayLabel.string = "Move by horizontal direction";
       this._topDisplayLabel.x = widgetSize.width / 2.0;
       this._topDisplayLabel.y =
         widgetSize.height / 2.0 + this._topDisplayLabel.height * 1.5;
 
       // Add the black background
-      this._bottomDisplayLabel.setString("PageView with Buttons");
+      this._bottomDisplayLabel.string = "PageView with Buttons";
       this._bottomDisplayLabel.setPosition(
         widgetSize.width / 2.0,
         widgetSize.height / 2.0 - this._bottomDisplayLabel.height * 3.075
@@ -101,9 +101,7 @@ export class UIPageViewButtonTest extends UIMainLayer {
   pageViewEvent(pageView, type) {
     switch (type) {
       case PageView.EVENT_TURNING:
-        this._topDisplayLabel.setString(
-          "page = " + pageView.getCurPageIndex() + 1
-        );
+        this._topDisplayLabel.string = "page = " + pageView.getCurPageIndex() + 1;
         break;
       default:
         break;

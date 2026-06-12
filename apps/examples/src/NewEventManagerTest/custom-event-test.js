@@ -59,9 +59,7 @@ export class CustomEventTest extends EventDispatcherTestDemo {
       event: EventListener.CUSTOM,
       eventName: "game_custom_event1",
       callback: function (event) {
-        statusLabel.setString(
-          "Custom event 1 received, " + event.getUserData() + " times"
-        );
+        statusLabel.string = "Custom event 1 received, " + event.getUserData() + " times";
       }
     });
     ServiceLocator.eventManager.addListener(this._listener1, 1);
@@ -77,9 +75,7 @@ export class CustomEventTest extends EventDispatcherTestDemo {
       event: EventListener.CUSTOM,
       eventName: "game_custom_event2",
       callback: function (event) {
-        statusLabel2.setString(
-          "Custom event 2 received, " + event.getUserData() + " times"
-        );
+        statusLabel2.string = "Custom event 2 received, " + event.getUserData() + " times";
       }
     });
     ServiceLocator.eventManager.addListener(this._listener2, 1);

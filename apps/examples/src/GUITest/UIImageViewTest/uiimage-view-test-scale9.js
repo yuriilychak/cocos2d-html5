@@ -33,8 +33,8 @@ export class UIImageViewTest_Scale9 extends UIMainLayer {
     if (super.init()) {
       var widgetSize = this._widget.getContentSize();
       //init text
-      this._topDisplayLabel.setString("");
-      this._bottomDisplayLabel.setString("ImageView scale9 render");
+      this._topDisplayLabel.string = "";
+      this._bottomDisplayLabel.string = "ImageView scale9 render";
 
       // Create the imageview
       var imageView = new ImageView();

@@ -114,9 +114,9 @@ export class UIFocusTestNestedLayout3 extends UIFocusTestBase {
     if (touchType == Widget.TOUCH_ENDED) {
       this._verticalLayout.setLoopFocus(!this._verticalLayout.isLoopFocus());
       if (this._verticalLayout.isLoopFocus()) {
-        this._loopText.setString("loop enabled");
+        this._loopText.string = "loop enabled";
       } else {
-        this._loopText.setString("loop disabled");
+        this._loopText.string = "loop disabled";
       }
     }
   }

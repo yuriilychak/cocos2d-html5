@@ -78,7 +78,7 @@ export default class ControlButtonEventTest extends Node {
     for (const [event, label] of events) {
       controlButton.addTargetWithActionForControlEvents(
         this,
-        () => this._displayValueLabel.setString(label),
+        () => this._displayValueLabel.string = label,
         event
       );
     }

@@ -231,7 +231,7 @@ export class BMButton extends Widget {
     if (this._unifySize) return this._getNormalSize();
 
     if (!this._normalTextureLoaded) {
-      if (this._titleRenderer && this._titleRenderer.getString().length > 0) {
+      if (this._titleRenderer && this._titleRenderer.string.length > 0) {
         return this._titleRenderer.getContentSize();
       }
     }
@@ -809,7 +809,7 @@ export class BMButton extends Widget {
 
     this._createTitleRendererIfNeeded();
 
-    this._titleRenderer.setString(text);
+    this._titleRenderer.string = text;
     if (this._ignoreSize) {
       var s = this.getVirtualRendererSize();
       this.setContentSize(s);
@@ -822,7 +822,7 @@ export class BMButton extends Widget {
    */
   getTitleText() {
     if (this._titleRenderer) {
-      return this._titleRenderer.getString();
+      return this._titleRenderer.string;
     }
     return "";
   }
@@ -951,7 +951,7 @@ export class BMButton extends Widget {
       uiButton._disabledTexType
     );
 
-    if (uiButton._titleRenderer && uiButton._titleRenderer.getString()) {
+    if (uiButton._titleRenderer && uiButton._titleRenderer.string) {
       this.setTitleFntFile(uiButton._fntFile);
       this.setTitleText(uiButton.getTitleText());
       this.setTitleFontSize(uiButton.getTitleFontSize());

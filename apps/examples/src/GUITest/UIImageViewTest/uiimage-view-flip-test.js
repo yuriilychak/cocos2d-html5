@@ -35,7 +35,7 @@ export class UIImageViewFlipTest extends UIMainLayer {
       ServiceLocator.spriteFrameCache.addSpriteFrames("Images/blocks9ss.plist");
       var widgetSize = this._widget.getContentSize();
 
-      this._bottomDisplayLabel.setString("ImageView flip test");
+      this._bottomDisplayLabel.string = "ImageView flip test";
 
       // Create the imageview
       var imageView = new ImageView(

@@ -202,12 +202,12 @@ export class EditBoxInputBase {
         var editBoxSize = this._editBox.getContentSize();
         if (!this._textLabel) {
             this._textLabel = new LabelBMFont('', fntFile);
-            this._textLabel.setColor(this._editBox._textColor);
+            this._textLabel.color = this._editBox._textColor;
             this._editBox.addChild(this._textLabel, 100);
         }
         if (!this._placeholderLabel) {
             this._placeholderLabel = new LabelBMFont('', fntFile);
-            this._placeholderLabel.setColor(this._editBox._placeholderColor);
+            this._placeholderLabel.color = this._editBox._placeholderColor;
             this._editBox.addChild(this._placeholderLabel, 100);
         }
         this._updateLabelPosition(editBoxSize);
@@ -272,14 +272,14 @@ export class EditBoxInputBase {
             displayText = text;
         }
         this._restoreBlinkedSprite();
-        this._textLabel.setString(displayText);
+        this._textLabel.string = displayText;
         this._caretSprite = this._editingMode ? this._findCaretSprite() : null;
         this._caretVisible = true;
         if (this._editingMode) this._restartCaretBlink();
     }
 
     /**
-     * After LabelBMFont.setString() the label's internal `_string` may be a
+     * After LabelBMFont.string the label's internal `_string` may be a
      * wrapped version with extra `\n`s, so a sprite at tag === _caretPos no
      * longer corresponds to the caret glyph. Walk the wrapped string,
      * skipping newlines (and null terminators), and return the sprite whose
@@ -375,7 +375,7 @@ export class EditBoxInputBase {
     }
 
     setFontColor(color) {
-        if (this._textLabel) this._textLabel.setColor(color);
+        if (this._textLabel) this._textLabel.color = color;
     }
 
     _updateLabelFontStyle() {
@@ -386,7 +386,7 @@ export class EditBoxInputBase {
 
     // --- Placeholder ---
     setPlaceHolder(text) {
-        if (this._placeholderLabel) this._placeholderLabel.setString(text);
+        if (this._placeholderLabel) this._placeholderLabel.string = text;
     }
 
     _updateDOMPlaceholderFontStyle() {
@@ -396,7 +396,7 @@ export class EditBoxInputBase {
     }
 
     setPlaceholderFontColor(color) {
-        if (this._placeholderLabel) this._placeholderLabel.setColor(color);
+        if (this._placeholderLabel) this._placeholderLabel.color = color;
     }
 
     // --- Input mode / flag / max length / string ---
@@ -448,7 +448,7 @@ export class EditBoxInputBase {
         this.updateSize(contentSize.width, contentSize.height);
     }
 
-    setString(text) {
+    set string(text) {
         if (text === null) return;
         if (this._edTxt) this._edTxt.value = text;
         this._editBox._text = text;

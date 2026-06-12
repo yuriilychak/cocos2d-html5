@@ -82,9 +82,7 @@ export class VibrateTest extends BaseTestLayer {
         var slider = sender;
         var percent = slider.getPercent();
         this._duration = (percent / 100.0) * 1.9 + 0.1; // from 0.1ms to 2s
-        this._durationLabel.setString(
-          "duration: " + this._duration.toFixed(3) + "s"
-        );
+        this._durationLabel.string = "duration: " + this._duration.toFixed(3) + "s";
         break;
       default:
         break;

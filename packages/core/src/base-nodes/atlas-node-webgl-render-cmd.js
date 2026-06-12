@@ -71,8 +71,8 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
     }
   }
 
-  _updateOpacityModifyRGB() {
-    this._node._opacityModifyRGB =
+  #updateOpacityModifyRGB() {
+    this._node.isOpacityModifyRGB =
       this._textureAtlas.texture.hasPremultipliedAlpha();
   }
 
@@ -102,7 +102,7 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
     node._itemWidth = tileWidth;
     node._itemHeight = tileHeight;
     this._colorUnmodified = Color.WHITE;
-    node._opacityModifyRGB = true;
+    node.isOpacityModifyRGB = true;
 
     node._blendFunc.src = BLEND_SRC;
     node._blendFunc.dst = BLEND_DST;
@@ -123,7 +123,7 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
     }
 
     this._updateBlendFunc();
-    this._updateOpacityModifyRGB();
+    this.#updateOpacityModifyRGB();
     this._calculateMaxItems();
     node.quadsToDraw = itemsToRender;
 
@@ -135,7 +135,7 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
       node = this._node;
     this._colorUnmodified = color3;
     const locDisplayedOpacity = this._displayedOpacity;
-    if (node._opacityModifyRGB) {
+    if (node.isOpacityModifyRGB) {
       temp.r = (temp.r * locDisplayedOpacity) / 255;
       temp.g = (temp.g * locDisplayedOpacity) / 255;
       temp.b = (temp.b * locDisplayedOpacity) / 255;
@@ -146,7 +146,7 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
   set opacity(opacity) {
     this._node.opacity = opacity;
     // special opacity for premultiplied textures
-    if (this._node._opacityModifyRGB) {
+    if (this._node.isOpacityModifyRGB) {
       this._node.color = this._colorUnmodified;
     }
   }
@@ -168,7 +168,7 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
   setTexture(texture) {
     this._textureAtlas.texture = texture;
     this._updateBlendFunc();
-    this._updateOpacityModifyRGB();
+    this.#updateOpacityModifyRGB();
   }
 
   _calculateMaxItems() {

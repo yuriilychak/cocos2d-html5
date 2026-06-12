@@ -32,8 +32,8 @@ export class UIButtonTextOnly extends UIMainLayer {
   init() {
     if (super.init()) {
       // Add a label in which the button events will be displayed
-      this._topDisplayLabel.setString("Text Only Button");
-      this._bottomDisplayLabel.setString("");
+      this._topDisplayLabel.string = "Text Only Button";
+      this._bottomDisplayLabel.string = "";
 
       // Create the button
       var button = new Button();

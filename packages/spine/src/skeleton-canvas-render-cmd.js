@@ -223,7 +223,7 @@ export class SkeletonCanvasRenderCmd extends Node.CanvasRenderCmd {
         const r = 0 | (color.r * slot.color.r);
         const g = 0 | (color.g * slot.color.g);
         const b = 0 | (color.b * slot.color.b);
-        selSprite.setColor(new Color(r, g, b));
+        selSprite.color = new Color(r, g, b);
         selSprite._renderCmd._updateColor();
       } else if (attachment instanceof MeshAttachment) {
         // mesh not supported in canvas mode

@@ -99,7 +99,7 @@ export class LabelAtlas extends LabelBMFont {
                     self1._textureLoaded = true;
                     //reset the LabelBMFont
                     self1.initWithTexture(sender, self1._initialString.length);
-                    self1.setString(self1._initialString, true);
+                    self1.string = self1._initialString;
                     self1.dispatchEvent("load");
                 }, self);
             }
@@ -121,7 +121,7 @@ export class LabelAtlas extends LabelBMFont {
             self._contentSize.width = 0;
             self._contentSize.height = 0;
 
-            self.setString(theString, true);
+            self.string = theString;
             return true;
         }
         return false;

@@ -116,9 +116,9 @@ export class UIFocusTestNestedLayout2 extends UIFocusTestBase {
         !this._horizontalLayout.isLoopFocus()
       );
       if (this._horizontalLayout.isLoopFocus()) {
-        this._loopText.setString("loop enabled");
+        this._loopText.string = "loop enabled";
       } else {
-        this._loopText.setString("loop disabled");
+        this._loopText.string = "loop disabled";
       }
     }
   }

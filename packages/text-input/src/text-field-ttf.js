@@ -96,7 +96,7 @@ export class TextFieldTTF extends LabelTTF {
     this.colorSpaceHolder.g = value.g;
     this.colorSpaceHolder.b = value.b;
     this.colorSpaceHolder.a = isUndefined(value.a) ? 255 : value.a;
-    if (!this._inputText.length) this.setColor(this.colorSpaceHolder);
+    if (!this._inputText.length) this.color = this.colorSpaceHolder;
   }
 
   /**
@@ -108,7 +108,7 @@ export class TextFieldTTF extends LabelTTF {
     this._colorText.g = textColor.g;
     this._colorText.b = textColor.b;
     this._colorText.a = isUndefined(textColor.a) ? 255 : textColor.a;
-    if (this._inputText.length) this.setColor(this._colorText);
+    if (this._inputText.length) this.color = this._colorText;
   }
 
   /**
@@ -150,17 +150,17 @@ export class TextFieldTTF extends LabelTTF {
    * Input text property
    * @param {String} text
    */
-  setString(text) {
+  set string(text) {
     text = String(text);
     this._inputText = text || "";
 
     // if there is no input text, display placeholder instead
     if (!this._inputText.length) {
-      super.setString(this._placeHolder);
-      if (this.colorSpaceHolder) this.setColor(this.colorSpaceHolder);
+      super.string = this._placeHolder;
+      if (this.colorSpaceHolder) this.color = this.colorSpaceHolder;
     } else {
-      super.setString(this._inputText);
-      if (this._colorText) this.setColor(this._colorText);
+      super.string = this._inputText;
+      if (this._colorText) this.color = this._colorText;
     }
     if (ServiceLocator.rendererConfig.isCanvas) this._renderCmd._updateTexture();
     this._charCount = this._inputText.length;
@@ -170,7 +170,7 @@ export class TextFieldTTF extends LabelTTF {
    * Gets the string
    * @return {String}
    */
-  getString() {
+  get string() {
     return this._inputText;
   }
 
@@ -182,8 +182,8 @@ export class TextFieldTTF extends LabelTTF {
   setPlaceHolder(text) {
     this._placeHolder = text || "";
     if (!this._inputText.length) {
-      super.setString(this._placeHolder);
-      this.setColor(this.colorSpaceHolder);
+      super.string = this._placeHolder;
+      this.color = this.colorSpaceHolder;
     }
   }
 
@@ -278,8 +278,8 @@ export class TextFieldTTF extends LabelTTF {
     if (strLen <= deleteLen) {
       this._inputText = "";
       this._charCount = 0;
-      super.setString(this._placeHolder);
-      this.setColor(this.colorSpaceHolder);
+      super.string = this._placeHolder;
+      this.color = this.colorSpaceHolder;
       return;
     }
 

@@ -62,13 +62,6 @@ export class TextAtlas extends Widget {
     }
   }
 
-  get string() {
-    return this.getString();
-  }
-  set string(v) {
-    this.setString(v);
-  }
-
   _initRenderer() {
     this._labelAtlasRenderer = new LabelAtlas();
     this._labelAtlasRenderer.setAnchorPoint(new Point(0.5, 0.5));
@@ -123,50 +116,31 @@ export class TextAtlas extends Widget {
    * Sets string value for ui text atlas.
    * @param {String} value
    */
-  setString(value) {
-    if (value === this._labelAtlasRenderer.getString()) return;
+  set string(value) {
+    if (value === this._labelAtlasRenderer.string) return;
     this._stringValue = value;
-    this._labelAtlasRenderer.setString(value);
+    this._labelAtlasRenderer.string = value;
     this._updateContentSizeWithTextureSize(
       this._labelAtlasRenderer.getContentSize()
     );
     this._labelAtlasRendererAdaptDirty = true;
   }
 
-  /**
-   * Sets string value for text atlas.
-   * @deprecated since v3.0, please use setString instead.
-   * @param {String} value
-   */
-  setStringValue(value) {
-    log("Please use the setString");
-    this.setString(value);
-  }
-
-  /**
-   * get string value for text atlas.
-   * @deprecated since v3.0, please use getString instead.
-   * @returns {String}
-   */
-  getStringValue() {
-    log("Please use the getString");
-    return this.getString();
-  }
 
   /**
    * get string value for ui text atlas.
    * @returns {String}
    */
-  getString() {
-    return this._labelAtlasRenderer.getString();
+  get string() {
+    return this._labelAtlasRenderer.string;
   }
 
   /**
    * Returns the length of string.
    * @returns {*|Number|long|int}
    */
-  getStringLength() {
-    return this._labelAtlasRenderer.getStringLength();
+  get stringLength() {
+    return this._labelAtlasRenderer.stringLength;
   }
 
   _onSizeChanged() {

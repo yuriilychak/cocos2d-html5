@@ -34,8 +34,8 @@ export class UIButtonTitleEffectTest extends UIMainLayer {
       var widgetSize = this._widget.getContentSize();
 
       // Add a label in which the button events will be displayed
-      this._topDisplayLabel.setString("Button Title Effect");
-      this._bottomDisplayLabel.setString("");
+      this._topDisplayLabel.string = "Button Title Effect";
+      this._bottomDisplayLabel.string = "";
 
       // Create the button
       var button = new Button(

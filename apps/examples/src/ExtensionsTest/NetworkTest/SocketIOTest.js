@@ -96,19 +96,19 @@ export class SocketIOTestLayer extends BaseTestLayer {
   //socket callback for testing
   testevent(data) {
     var msg = this.tag + " says 'testevent' with data: " + data;
-    this.statusLabel.setString(msg);
+    this.statusLabel.string = msg;
     log(msg);
   }
 
   message(data) {
     var msg = this.tag + " received message: " + data;
-    this.statusLabel.setString(msg);
+    this.statusLabel.string = msg;
     log(msg);
   }
 
   disconnection() {
     var msg = this.tag + " disconnected!";
-    this.statusLabel.setString(msg);
+    this.statusLabel.string = msg;
     log(msg);
   }
   // Menu Callbacks
@@ -118,7 +118,7 @@ export class SocketIOTestLayer extends BaseTestLayer {
       log(
         "Socket.IO not available. Please include socket.io-client library."
       );
-      this._sioClientStatus.setString("Socket.IO not available!");
+      this._sioClientStatus.string = "Socket.IO not available!";
       return;
     }
 
@@ -139,7 +139,7 @@ export class SocketIOTestLayer extends BaseTestLayer {
     //this is an example of a handler declared inline
     sioclient.on("connect", function () {
       var msg = sioclient.tag + " Connected!";
-      this.statusLabel.setString(msg);
+      this.statusLabel.string = msg;
       log(msg);
       sioclient.send(msg);
     });
@@ -150,7 +150,7 @@ export class SocketIOTestLayer extends BaseTestLayer {
     sioclient.on("echotest", function (data) {
       log("echotest 'on' callback fired!");
       var msg = this.tag + " says 'echotest' with data: " + data;
-      this.statusLabel.setString(msg);
+      this.statusLabel.string = msg;
       log(msg);
     });
 
@@ -164,14 +164,14 @@ export class SocketIOTestLayer extends BaseTestLayer {
   onMenuSIOEndpointClicked(sender) {
     // If socket.io isn't loaded yet, load it from CDN first
     if (!window.io) {
-      this._sioClientStatus.setString("Loading Socket.IO from CDN...");
+      this._sioClientStatus.string = "Loading Socket.IO from CDN...";
       SocketIO.loadAsync()
         .then(() => {
           this._doSocketIOEndpointConnection();
         })
         .catch((error) => {
           log("Failed to load Socket.IO: " + error.message);
-          this._sioClientStatus.setString("Failed to load Socket.IO!");
+          this._sioClientStatus.string = "Failed to load Socket.IO!";
         });
       return;
     }
@@ -193,7 +193,7 @@ export class SocketIOTestLayer extends BaseTestLayer {
 
     sioendpoint.on("connect", function () {
       var msg = sioendpoint.tag + " Connected!";
-      this.statusLabel.setString(msg);
+      this.statusLabel.string = msg;
       log(msg);
       sioendpoint.send(msg);
     });
@@ -202,7 +202,7 @@ export class SocketIOTestLayer extends BaseTestLayer {
     sioendpoint.on("echotest", function (data) {
       log("echotest 'on' callback fired!");
       var msg = this.tag + " says 'echotest' with data: " + data;
-      this.statusLabel.setString(msg);
+      this.statusLabel.string = msg;
       log(msg);
     });
 

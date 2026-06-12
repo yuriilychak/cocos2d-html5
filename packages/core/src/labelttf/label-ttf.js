@@ -77,63 +77,6 @@ import { ServiceLocator } from "../service-locator";
  * @property {Number}       shadowBlur      - The blur size of shadow
  */
 export class LabelTTF extends Sprite {
-  /**
-   * Initializes the LabelTTF with a font name, alignment, dimension and font size, do not call it by yourself,
-   * you should pass the correct arguments in constructor to initialize the label.
-   * @param {String} label string
-   * @param {String} fontName
-   * @param {Number} fontSize
-   * @param {Size} [dimensions=]
-   * @param {Number} [hAlignment=]
-   * @param {Number} [vAlignment=]
-   * @return {Boolean} return false on error
-   */
-  initWithString(
-    label,
-    fontName,
-    fontSize,
-    dimensions,
-    hAlignment,
-    vAlignment
-  ) {
-    var strInfo;
-    if (label) strInfo = label + "";
-    else strInfo = "";
-
-    fontSize = fontSize || 16;
-    dimensions = dimensions || new Size(0, 0 /*fontSize*/);
-    hAlignment = hAlignment || TEXT_ALIGNMENT_LEFT;
-    vAlignment = vAlignment || VERTICAL_TEXT_ALIGNMENT_TOP;
-
-    this._opacityModifyRGB = false;
-    this._dimensions = new Size(dimensions.width, dimensions.height);
-    this._fontName = fontName || "Arial";
-    this._hAlignment = hAlignment;
-    this._vAlignment = vAlignment;
-
-    this._fontSize = fontSize;
-    this._renderCmd._setFontStyle(
-      this._fontName,
-      fontSize,
-      this._fontStyle,
-      this._fontWeight
-    );
-    this.string = strInfo;
-    this._renderCmd._setColorsString();
-    this._renderCmd._updateTexture();
-    this._setUpdateTextureDirty();
-
-    // Needed for high dpi text.
-    // In order to render it crisp, we request devicePixelRatio times the
-    // font size and scale it down 1/devicePixelRatio.
-    this._scaleX = this._scaleY =
-      1 / ServiceLocator.eglView.getDevicePixelRatio();
-    return true;
-  }
-  _setUpdateTextureDirty() {
-    this._needUpdateTexture = true;
-    this._renderCmd.setDirtyFlag(Node._dirtyFlags.textDirty);
-  }
   constructor(text, fontName, fontSize, dimensions, hAlignment, vAlignment) {
     super();
 
@@ -167,7 +110,7 @@ export class LabelTTF extends Sprite {
     this._dimensions = new Size(0, 0);
     this._hAlignment = TEXT_ALIGNMENT_LEFT;
     this._vAlignment = VERTICAL_TEXT_ALIGNMENT_TOP;
-    this._opacityModifyRGB = false;
+    this.isOpacityModifyRGB = false;
     this._fontName = "Arial";
 
     this._shadowEnabled = false;
@@ -202,6 +145,64 @@ export class LabelTTF extends Sprite {
       );
     }
   }
+  /**
+   * Initializes the LabelTTF with a font name, alignment, dimension and font size, do not call it by yourself,
+   * you should pass the correct arguments in constructor to initialize the label.
+   * @param {String} label string
+   * @param {String} fontName
+   * @param {Number} fontSize
+   * @param {Size} [dimensions=]
+   * @param {Number} [hAlignment=]
+   * @param {Number} [vAlignment=]
+   * @return {Boolean} return false on error
+   */
+  initWithString(
+    label,
+    fontName,
+    fontSize,
+    dimensions,
+    hAlignment,
+    vAlignment
+  ) {
+    var strInfo;
+    if (label) strInfo = label + "";
+    else strInfo = "";
+
+    fontSize = fontSize || 16;
+    dimensions = dimensions || new Size(0, 0 /*fontSize*/);
+    hAlignment = hAlignment || TEXT_ALIGNMENT_LEFT;
+    vAlignment = vAlignment || VERTICAL_TEXT_ALIGNMENT_TOP;
+
+    this.isOpacityModifyRGB = false;
+    this._dimensions = new Size(dimensions.width, dimensions.height);
+    this._fontName = fontName || "Arial";
+    this._hAlignment = hAlignment;
+    this._vAlignment = vAlignment;
+
+    this._fontSize = fontSize;
+    this._renderCmd._setFontStyle(
+      this._fontName,
+      fontSize,
+      this._fontStyle,
+      this._fontWeight
+    );
+    this.string = strInfo;
+    this._renderCmd._setColorsString();
+    this._renderCmd._updateTexture();
+    this._setUpdateTextureDirty();
+
+    // Needed for high dpi text.
+    // In order to render it crisp, we request devicePixelRatio times the
+    // font size and scale it down 1/devicePixelRatio.
+    this._scaleX = this._scaleY =
+      1 / ServiceLocator.eglView.getDevicePixelRatio();
+    return true;
+  }
+  _setUpdateTextureDirty() {
+    this._needUpdateTexture = true;
+    this._renderCmd.setDirtyFlag(Node._dirtyFlags.textDirty);
+  }
+
   init() {
     return this.initWithString(" ", this._fontName, this._fontSize);
   }
@@ -226,7 +227,7 @@ export class LabelTTF extends Sprite {
    * Returns the text of the label
    * @return {String}
    */
-  getString() {
+  get string() {
     return this._string;
   }
   /**
@@ -677,7 +678,7 @@ export class LabelTTF extends Sprite {
    * @warning Changing the string is as expensive as creating a new LabelTTF. To obtain better performance use LabelAtlas
    * @param {String} text Text content for the label
    */
-  setString(text) {
+  set string(text) {
     text = String(text);
     if (this._originalText !== text) {
       this._originalText = text + "";
@@ -905,14 +906,6 @@ export class LabelTTF extends Sprite {
   }
   _getFontWeight() {
     return this._fontWeight;
-  }
-
-  get string() {
-    return this.getString();
-  }
-
-  set string(value) {
-    this.setString(value);
   }
 
   get textAlign() {

@@ -124,8 +124,7 @@ export class LoaderScene extends Scene {
 
   onExit() {
     Node.prototype.onExit.call(this);
-    var tmpStr = "Loading... 0%";
-    this._label.setString(tmpStr);
+    this._label.string = "Loading... 0%";
   }
 
   initWithResources(resources, cb, target) {
@@ -144,7 +143,7 @@ export class LoaderScene extends Scene {
       function (result, count, loadedCount) {
         var percent = ((loadedCount / count) * 100) | 0;
         percent = Math.min(percent, 100);
-        self._label.setString("Loading... " + percent + "%");
+        self._label.string = "Loading... " + percent + "%";
       },
       function () {
         if (self.cb) self.cb.call(self.target);

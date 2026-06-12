@@ -33,10 +33,10 @@ export class UIListViewTest_TouchIntercept extends UIMainLayer {
         if(super.init()) {
             var widgetSize = this._widget.getContentSize();
 
-            this._topDisplayLabel.setString("TouchIntercept");
+            this._topDisplayLabel.string = "TouchIntercept";
             this._topDisplayLabel.x = widgetSize.width / 2.0;
             this._topDisplayLabel.y = widgetSize.height / 2.0 + this._topDisplayLabel.height * 1.5;
-            this._bottomDisplayLabel.setString("ListView Disable Touch");
+            this._bottomDisplayLabel.string = "ListView Disable Touch";
             this._bottomDisplayLabel.x = widgetSize.width / 2;
             this._bottomDisplayLabel.y = widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
 

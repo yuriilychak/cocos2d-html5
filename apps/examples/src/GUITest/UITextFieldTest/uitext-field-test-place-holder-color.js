@@ -36,14 +36,14 @@ export class UITextFieldTest_PlaceHolderColor extends UIMainLayer {
       var widgetSize = this._widget.getContentSize();
 
       // Add a label in which the textfield events will be displayed
-      this._topDisplayLabel.setString("Set place hold color");
+      this._topDisplayLabel.string = "Set place hold color";
       this._topDisplayLabel.setPosition(
         widgetSize.width / 2,
         widgetSize.height / 2 + this._topDisplayLabel.height * 1.5
       );
 
       // Add the alert
-      this._bottomDisplayLabel.setString("TextField");
+      this._bottomDisplayLabel.string = "TextField";
       this._bottomDisplayLabel.setPosition(
         new Point(
           widgetSize.width / 2,
@@ -78,7 +78,7 @@ export class UITextFieldTest_PlaceHolderColor extends UIMainLayer {
             )
           )
         );
-        this._topDisplayLabel.setString("attach with IME");
+        this._topDisplayLabel.string = "attach with IME";
         break;
       case TextField.EVENT_DETACH_WITH_IME:
         textField.runAction(
@@ -87,17 +87,17 @@ export class UITextFieldTest_PlaceHolderColor extends UIMainLayer {
             new Point(widgetSize.width / 2, widgetSize.height / 2)
           )
         );
-        this._topDisplayLabel.setString("detach with IME");
+        this._topDisplayLabel.string = "detach with IME";
         break;
       case TextField.EVENT_INSERT_TEXT:
-        this._topDisplayLabel.setString("insert words");
+        this._topDisplayLabel.string = "insert words";
         break;
       case TextField.EVENT_DELETE_BACKWARD:
-        this._topDisplayLabel.setString("delete word");
+        this._topDisplayLabel.string = "delete word";
         break;
       default:
         break;
     }
-    this._bottomDisplayLabel.setString(textField.getString());
+    this._bottomDisplayLabel.string = textField.getString();
   }
 }

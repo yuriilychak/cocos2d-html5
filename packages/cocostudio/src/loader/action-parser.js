@@ -194,7 +194,7 @@ import { _ccsLoad } from "./load/utils.js";
                 color["R"] = color["R"] === undefined ? 255 : color["R"];
                 color["G"] = color["G"] === undefined ? 255 : color["G"];
                 color["B"] = color["B"] === undefined ? 255 : color["B"];
-                frame.setColor(new Color(color["R"], color["G"], color["B"]));
+                frame.color = new Color(color["R"], color["G"], color["B"]);
                 return frame;
             }
         },

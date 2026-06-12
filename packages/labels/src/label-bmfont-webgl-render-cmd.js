@@ -6,7 +6,7 @@ export class LabelBMFontWebGLRenderCmd extends Node.WebGLRenderCmd {
     }
 
     setTexture(texture) {
-        this._node.setOpacityModifyRGB(this._node._texture.hasPremultipliedAlpha());
+        this._node.isOpacityModifyRGB = this._node._texture.hasPremultipliedAlpha();
     }
 
     _updateCharTexture(fontChar, rect, key, isRotated) {
