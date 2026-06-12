@@ -42,7 +42,7 @@ export class ColorFrame extends Frame {
    */
   onEnter(nextFrame) {
     if (!this._node) return;
-    this._node.setColor(this._color);
+    this._node.color = this._color;
     if (this._tween) {
       var color = nextFrame._color;
       this._betweenRed = color.r - this._color.r;
@@ -69,7 +69,7 @@ export class ColorFrame extends Frame {
       color.g = this._color.g + this._betweenGreen * percent;
       color.b = this._color.b + this._betweenBlue * percent;
 
-      this._node.setColor(color);
+      this._node.color = color;
       if (this._alpha !== null) {
         var alpha = this._alpha + this._betweenAlpha * percent;
         this._node.opacity = alpha;
@@ -84,7 +84,7 @@ export class ColorFrame extends Frame {
    */
   clone() {
     var frame = new ColorFrame();
-    frame.setColor(this._color);
+    frame.colro = this._color;
     frame._cloneProperty(this);
     return frame;
   }
@@ -93,7 +93,7 @@ export class ColorFrame extends Frame {
    * Set the color
    * @param {color} color
    */
-  setColor(color) {
+  set color(color) {
     this._color = color;
   }
 
@@ -101,7 +101,7 @@ export class ColorFrame extends Frame {
    * Gets the color
    * @returns {color}
    */
-  getColor() {
+  get color() {
     return this._color;
   }
 };

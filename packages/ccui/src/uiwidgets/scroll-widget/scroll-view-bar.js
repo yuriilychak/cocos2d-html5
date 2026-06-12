@@ -237,7 +237,7 @@ export class ScrollViewBar extends ProtectedNode {
         // color and alpha are displayed as-is, without the bar's DEFAULT_COLOR
         // (52,65,87) multiplying into the cascade and darkening the thumb.
         this._opacity = 255;
-        this.setColor(new Color(255, 255, 255));
+        this.color = new Color(255, 255, 255);
 
         var initialWidth = this.getWidth();
         this._thumbSprite = new Scale9Sprite(file, capInsets);

@@ -311,7 +311,7 @@ export class DisplayManager extends NewClass {
           displayRenderNode.resetSystem();
       }
 
-      displayRenderNode.setColor(locBone.getDisplayedColor());
+      displayRenderNode.color = locBone.getDisplayedColor();
       displayRenderNode.opacity = locBone.getDisplayedOpacity();
 
       this._displayRenderNode.setVisible(this._visible);

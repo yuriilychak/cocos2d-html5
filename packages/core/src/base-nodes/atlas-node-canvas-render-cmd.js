@@ -57,7 +57,7 @@ export class AtlasNodeCanvasRenderCmd extends NodeCanvasRenderCmd {
     return true;
   }
 
-  setColor(color3) {
+  set color(color3) {
     const node = this._node;
     const locRealColor = node._realColor;
     if (
@@ -93,9 +93,8 @@ export class AtlasNodeCanvasRenderCmd extends NodeCanvasRenderCmd {
       );
   }
 
-  setOpacity(opacity) {
-    const node = this._node;
-    Node.prototype.setOpacity.call(node, opacity);
+  set opacity(opacity) {
+    this._node.opacity = opacity;
   }
 
   _calculateMaxItems() {

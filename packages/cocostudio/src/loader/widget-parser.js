@@ -33,7 +33,7 @@ function applyCommonAttributes(widget, opts) {
     if (opts.scaleX != null) widget.setScaleX(opts.scaleX);
     if (opts.scaleY != null) widget.setScaleY(opts.scaleY);
     if (opts.colorR != null && opts.colorG != null && opts.colorB != null)
-        widget.setColor(new Color(opts.colorR, opts.colorG, opts.colorB));
+        widget.color = new Color(opts.colorR, opts.colorG, opts.colorB);
     if (opts.touchAble != null) widget.setTouchEnabled(opts.touchAble);
     if (opts.flipX != null) widget.setFlippedX(opts.flipX);
     if (opts.flipY != null) widget.setFlippedY(opts.flipY);

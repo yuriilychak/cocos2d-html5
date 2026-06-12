@@ -27,23 +27,24 @@ export class MenuPassive extends Layer {
         super();
     }
 
-    getColor() {
-        var locColor = this._color;
-        return new Color(locColor.r, locColor.g, locColor.b, locColor.a);
+    get color() {
+        return this._color.clone();
     }
 
-    setColor(color) {
+    set color(color) {
         var locColor = this._color;
         locColor.r = color.r;
         locColor.g = color.g;
         locColor.b = color.b;
+
         if (this._children && this._children.length > 0) {
             for (var i = 0; i < this._children.length; i++) {
                 if (this._children[i]) {
-                    this._children[i].setColor(color);
+                    this._children[i].color = color;
                 }
             }
         }
+
         if (color.a !== undefined && !color.a_undefined) {
             this.opacity = color.a;
         }
@@ -271,8 +272,8 @@ export class MenuPassive extends Layer {
         }
     }
 
-    setOpacityModifyRGB(bValue) {}
-    isOpacityModifyRGB() { return false; }
+    set isOpacityModifyRGB(bValue) {}
+    get isOpacityModifyRGB() { return false; }
 
     static create(item) {
         if (!item) item = null;

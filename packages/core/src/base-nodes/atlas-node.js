@@ -112,9 +112,8 @@ export class AtlasNode extends EventHelper(Node) {
    * @function
    * @return {Color}
    */
-  getColor() {
-    if (this._opacityModifyRGB) return this._renderCmd._colorUnmodified;
-    return super.getColor();
+  get color() {
+    return this._opacityModifyRGB ? this._renderCmd._colorUnmodified : super.color;
   }
 
   /**
@@ -123,7 +122,7 @@ export class AtlasNode extends EventHelper(Node) {
    * @function
    * @param {Boolean} value
    */
-  setOpacityModifyRGB(value) {
+  set isOpacityModifyRGB(value) {
     var oldColor = this.color;
     this._opacityModifyRGB = value;
     this.color = oldColor;
@@ -134,7 +133,7 @@ export class AtlasNode extends EventHelper(Node) {
    * @function
    * @return {Boolean}
    */
-  isOpacityModifyRGB() {
+  get isOpacityModifyRGB() {
     return this._opacityModifyRGB;
   }
 
@@ -234,8 +233,8 @@ export class AtlasNode extends EventHelper(Node) {
    * @function
    * @param {Color} color Color object created with color(r, g, b).
    */
-  setColor(color) {
-    this._renderCmd.setColor(color);
+  set color(color) {
+    this._renderCmd.color = color;
   }
 
   /**
@@ -267,14 +266,6 @@ export class AtlasNode extends EventHelper(Node) {
 
   _setIgnoreContentScaleFactor(ignoreContentScaleFactor) {
     this._ignoreContentScaleFactor = ignoreContentScaleFactor;
-  }
-
-  get color() {
-    return this.getColor();
-  }
-
-  set color(value) {
-    this.setColor(value);
   }
 
   get texture() {

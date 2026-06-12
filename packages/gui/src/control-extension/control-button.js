@@ -83,7 +83,7 @@ export class ControlButton extends Control {
         if (label && label.setString)
             label.setString(this._currentTitle);
         if (label)
-            label.setColor(this._currentTitleColor);
+            label.color = this._currentTitleColor;
 
         var locContentSize = this.getContentSize();
         if (label)
@@ -153,10 +153,10 @@ export class ControlButton extends Control {
             this._titleLabel = label;
             this._backgroundSprite = backgroundSprite;
             this.opacity = 255;
-            this.setOpacityModifyRGB(true);
+            this.isOpacityModifyRGB = true;
             var tempString = label.getString();
             this.setTitleForState(tempString, CONTROL_STATE_NORMAL);
-            this.setTitleColorForState(label.getColor(), CONTROL_STATE_NORMAL);
+            this.setTitleColorForState(label.color, CONTROL_STATE_NORMAL);
             this.setTitleLabelForState(label, CONTROL_STATE_NORMAL);
             this.setBackgroundSpriteForState(backgroundSprite, CONTROL_STATE_NORMAL);
             this._state = CONTROL_STATE_NORMAL;
@@ -234,7 +234,7 @@ export class ControlButton extends Control {
     }
 
     set color(color) {
-        super.setColor(color);
+        super.color = color;
         var locTable = this._backgroundSpriteDispatchTable;
         for (var key in locTable)
             locTable[key].color = color;

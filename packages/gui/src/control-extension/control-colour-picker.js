@@ -22,7 +22,7 @@ export class ControlColourPicker extends Control {
 
   hueSliderValueChanged(sender, controlEvent) {
     this._hsv.h = sender.hue;
-    super.setColor(Color.fromHSV(this._hsv));
+    super.color = Color.fromHSV(this._hsv);
     this.sendActionsForControlEvents(CONTROL_EVENT_VALUE_CHANGED);
     this._updateControlPicker();
   }
@@ -30,16 +30,12 @@ export class ControlColourPicker extends Control {
   colourSliderValueChanged(sender, controlEvent) {
     this._hsv.s = sender.saturation;
     this._hsv.v = sender.brightness;
-    super.setColor(Color.fromHSV(this._hsv));
+    super.color = Color.fromHSV(this._hsv);
     this.sendActionsForControlEvents(CONTROL_EVENT_VALUE_CHANGED);
   }
 
-  get color() {
-    return this.getColor();
-  }
-
   set color(color) {
-    super.setColor(color);
+    super.color = color;
 
     this._hsv = color.hsv;
     this._updateHueAndControlPicker();

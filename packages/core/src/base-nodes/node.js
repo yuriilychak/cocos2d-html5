@@ -381,22 +381,11 @@ export class Node extends NewClass {
     this.setShaderProgram(v);
   }
 
-  get opacityModifyRGB() {
-    return this.isOpacityModifyRGB();
-  }
-
   get cascadeOpacity() {
     return this.isCascadeOpacityEnabled();
   }
   set cascadeOpacity(v) {
     this.setCascadeOpacityEnabled(v);
-  }
-
-  get color() {
-    return this.getColor();
-  }
-  set color(v) {
-    this.setColor(v);
   }
 
   get cascadeColor() {
@@ -2418,14 +2407,8 @@ export class Node extends NewClass {
    * @function
    * @returns {Color}
    */
-  getColor() {
-    var locRealColor = this._realColor;
-    return new Color(
-      locRealColor.r,
-      locRealColor.g,
-      locRealColor.b,
-      locRealColor.a
-    );
+  get color() {
+    return this._realColor.clone();
   }
 
   /**
@@ -2445,7 +2428,7 @@ export class Node extends NewClass {
    * @function
    * @param {Color} color The new color given
    */
-  setColor(color) {
+  set color(color) {
     var locRealColor = this._realColor;
     locRealColor.r = color.r;
     locRealColor.g = color.g;
@@ -2488,14 +2471,14 @@ export class Node extends NewClass {
    * @function
    * @param {Boolean} opacityValue
    */
-  setOpacityModifyRGB(opacityValue) {}
+  set isOpacityModifyRGB(opacityValue) {}
 
   /**
    * Get whether color should be changed with the opacity value
    * @function
    * @return {Boolean}
    */
-  isOpacityModifyRGB() {
+  get isOpacityModifyRGB() {
     return false;
   }
 

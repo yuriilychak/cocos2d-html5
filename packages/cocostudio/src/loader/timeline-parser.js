@@ -37,7 +37,6 @@ import {
 import { ParticleSystem } from "@aspect/particle";
 import { TMXTiledMap } from "@aspect/tilemap";
 import {
-  helper,
   Layout,
   LayoutComponent,
   Button,
@@ -191,7 +190,7 @@ parser.initSingleNode = function (json) {
 
   this.generalAttributes(node, json);
   var color = json["CColor"];
-  if (color != null) node.setColor(getColor(color));
+  if (color != null) node.color = getColor(color);
 
   return node;
 };
@@ -226,7 +225,7 @@ parser.initSprite = function (json, resourcePath) {
 
   this.generalAttributes(node, json);
   var color = json["CColor"];
-  if (color != null) node.setColor(getColor(color));
+  if (color != null) node.color = getColor(color);
 
   return node;
 };
@@ -345,7 +344,7 @@ parser.widgetAttributes = function (widget, json, enableContent) {
     );
 
   var color = json["CColor"];
-  if (color != null) widget.setColor(getColor(color));
+  if (color != null) widget.color = getColor(color);
 
   setLayoutComponent(widget, json);
   bindCallback(widget, json);
@@ -1295,7 +1294,7 @@ parser.initArmature = function (json, resourcePath) {
   delete json["Size"];
   parser.generalAttributes(node, json);
 
-  node.setColor(getColor(json["CColor"]));
+  node.color = getColor(json["CColor"]);
   return node;
 };
 
@@ -1321,7 +1320,7 @@ parser.initBoneNode = function (json, resourcePath) {
       color["G"] !== undefined ||
       color["B"] !== undefined)
   )
-    node.setColor(getColor(color));
+    node.color = getColor(color);
   return node;
 };
 
@@ -1335,7 +1334,7 @@ parser.initSkeletonNode = function (json) {
       color["G"] !== undefined ||
       color["B"] !== undefined)
   )
-    node.setColor(getColor(color));
+    node.color = getColor(color);
   return node;
 };
 

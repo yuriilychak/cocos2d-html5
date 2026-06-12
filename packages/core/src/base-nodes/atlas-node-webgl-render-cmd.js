@@ -130,7 +130,7 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
     return true;
   }
 
-  setColor(color3) {
+  set color(color3) {
     const temp = new Color(color3.r, color3.g, color3.b),
       node = this._node;
     this._colorUnmodified = color3;
@@ -140,15 +140,14 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
       temp.g = (temp.g * locDisplayedOpacity) / 255;
       temp.b = (temp.b * locDisplayedOpacity) / 255;
     }
-    Node.prototype.setColor.call(node, temp);
+    node.color = temp;
   }
 
-  setOpacity(opacity) {
-    const node = this._node;
-    Node.prototype.setOpacity.call(node, opacity);
+  set opacity(opacity) {
+    this._node.opacity = opacity;
     // special opacity for premultiplied textures
-    if (node._opacityModifyRGB) {
-      node.color = this._colorUnmodified;
+    if (this._node._opacityModifyRGB) {
+      this._node.color = this._colorUnmodified;
     }
   }
 

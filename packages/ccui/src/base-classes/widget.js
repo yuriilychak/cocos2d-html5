@@ -764,7 +764,7 @@ export class Widget extends ProtectedNode {
   _onPressStateChangedToPressed() {}
   _onPressStateChangedToDisabled() {}
   _updateChildrenDisplayedRGBA() {
-    this.setColor(this.getColor());
+    this.color =this.color;
     this.opacity = this.opacity;
   }
 

@@ -365,7 +365,7 @@ export class Sprite extends EventHelper(Node) {
    * @function
    * @param {Boolean} modify
    */
-  setOpacityModifyRGB(modify) {
+  set isOpacityModifyRGB(modify) {
     if (this._opacityModifyRGB !== modify) {
       this._opacityModifyRGB = modify;
       this._renderCmd._setColorDirty();
@@ -376,7 +376,7 @@ export class Sprite extends EventHelper(Node) {
    * Returns whether opacity modify color or not.
    * @return {Boolean}
    */
-  isOpacityModifyRGB() {
+  get isOpacityModifyRGB() {
     return this._opacityModifyRGB;
   }
 
@@ -894,22 +894,6 @@ export class Sprite extends EventHelper(Node) {
     var contentSize = texture._contentSize;
     var rect = new Rect(0, 0, contentSize.width, contentSize.height);
     this.setTextureRect(rect);
-  }
-
-  get opacityModifyRGB() {
-    return this.isOpacityModifyRGB();
-  }
-
-  set opacityModifyRGB(value) {
-    this.setOpacityModifyRGB(value);
-  }
-
-  get color() {
-    return this.getColor();
-  }
-
-  set color(value) {
-    this.setColor(value);
   }
 
   get flippedX() {

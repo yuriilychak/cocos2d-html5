@@ -907,14 +907,6 @@ export class LabelTTF extends Sprite {
     return this._fontWeight;
   }
 
-  get color() {
-    return this.getColor();
-  }
-
-  set color(value) {
-    this.setColor(value);
-  }
-
   get string() {
     return this.getString();
   }

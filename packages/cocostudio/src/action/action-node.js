@@ -143,7 +143,7 @@ export class ActionNode extends NewClass {
         actionFrame.frameIndex = frameIndex;
         actionFrame.setEasingType(frameTweenType);
         actionFrame.setEasingParameter(frameTweenParameter);
-        actionFrame.setColor(new Color(colorR, colorG, colorB));
+        actionFrame.color = new Color(colorR, colorG, colorB);
         actionArray = this._frameArray[FRAME_TYPE_TINT];
         actionArray.push(actionFrame);
       }

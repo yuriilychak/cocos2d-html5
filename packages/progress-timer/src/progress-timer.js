@@ -155,14 +155,14 @@ export class ProgressTimer extends Node {
      * only use for jsbinding
      * @param bValue
      */
-    setOpacityModifyRGB(bValue) {
+    set isOpacityModifyRGB(bValue) {
     }
 
     /**
      * only use for jsbinding
      * @returns {boolean}
      */
-    isOpacityModifyRGB() {
+    get isOpacityModifyRGB() {
         return false;
     }
 
@@ -178,7 +178,7 @@ export class ProgressTimer extends Node {
      * set color of sprite
      * @param {Color} color
      */
-    setColor(color) {
+    set color(color) {
         this._sprite.color = color;
         this._renderCmd.setDirtyFlag(Node._dirtyFlags.colorDirty);
     }
@@ -187,7 +187,7 @@ export class ProgressTimer extends Node {
      * return color of sprite
      * @return {Color}
      */
-    getColor() {
+    get color() {
         return this._sprite.color;
     }
 
