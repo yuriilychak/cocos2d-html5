@@ -134,7 +134,7 @@ parser.generalAttributes = function (node, json) {
   var size = json["Size"];
   if (size) setContentSize(node, size);
 
-  if (json["Alpha"] != null) node.setOpacity(json["Alpha"]);
+  if (json["Alpha"] != null) node.opacity = json["Alpha"];
 
   node.tag = json["Tag"] || 0;
 
@@ -310,7 +310,7 @@ parser.widgetAttributes = function (widget, json, enableContent) {
   widget.setVisible(visible);
 
   var alpha = json["Alpha"];
-  if (alpha != null) widget.setOpacity(alpha);
+  if (alpha != null) widget.opacity = alpha;
 
   widget.tag = json["Tag"] || 0;
 
@@ -490,7 +490,7 @@ parser.initPanel = function (json, resourcePath) {
     widget.setBackGroundImageScale9Enabled(backGroundScale9Enabled);
 
   var opacity = getParam(json["Alpha"], 255);
-  widget.setOpacity(opacity);
+  widget.opacity = opacity;
 
   loadTexture(json["FileData"], resourcePath, function (path, type) {
     widget.setBackGroundImage(path, type);

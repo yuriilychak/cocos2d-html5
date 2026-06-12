@@ -243,8 +243,8 @@ export class AtlasNode extends EventHelper(Node) {
    * @function
    * @param {Number} opacity The opacity value
    */
-  setOpacity(opacity) {
-    this._renderCmd.setOpacity(opacity);
+  set opacity(opacity) {
+    this._renderCmd.opacity = opacity;
   }
 
   /**
@@ -267,14 +267,6 @@ export class AtlasNode extends EventHelper(Node) {
 
   _setIgnoreContentScaleFactor(ignoreContentScaleFactor) {
     this._ignoreContentScaleFactor = ignoreContentScaleFactor;
-  }
-
-  get opacity() {
-    return this.getOpacity();
-  }
-
-  set opacity(value) {
-    this.setOpacity(value);
   }
 
   get color() {

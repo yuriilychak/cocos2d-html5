@@ -915,14 +915,6 @@ export class LabelTTF extends Sprite {
     this.setColor(value);
   }
 
-  get opacity() {
-    return this.getOpacity();
-  }
-
-  set opacity(value) {
-    this.setOpacity(value);
-  }
-
   get string() {
     return this.getString();
   }

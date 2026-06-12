@@ -249,12 +249,6 @@ export class Widget extends ProtectedNode {
     this.setActionTag(v);
   }
 
-  get opacity() {
-    return this.getOpacity();
-  }
-  set opacity(v) {
-    this.setOpacity(v);
-  }
 
   init() {
     this._layoutParameterDictionary = {};
@@ -771,7 +765,7 @@ export class Widget extends ProtectedNode {
   _onPressStateChangedToDisabled() {}
   _updateChildrenDisplayedRGBA() {
     this.setColor(this.getColor());
-    this.setOpacity(this.getOpacity());
+    this.opacity = this.opacity;
   }
 
   didNotSelectSelf() {}

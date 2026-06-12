@@ -85,9 +85,6 @@ export class ScrollViewBar extends ProtectedNode {
         this.setCascadeOpacityEnabled(true);
     }
 
-    get opacity() { return this.getOpacity(); }
-    set opacity(v) { this.setOpacity(v); }
-
     get autoHideEnabled() { return this.isAutoHideEnabled(); }
     set autoHideEnabled(v) { this.setAutoHideEnabled(v); }
 
@@ -113,7 +110,7 @@ export class ScrollViewBar extends ProtectedNode {
 
         this.color = ScrollViewBar.DEFAULT_COLOR;
         this.onScrolled(new Point(0, 0));
-        super.setOpacity(0);
+        super.opacity = 0;
         this._autoHideRemainingTime = 0;
 
         if (this._direction === DIR_HORIZONTAL) {
@@ -187,10 +184,7 @@ export class ScrollViewBar extends ProtectedNode {
     setAutoHideEnabled(autoHideEnabled) {
         this._autoHideEnabled = autoHideEnabled;
 
-        if (!this._autoHideEnabled && !this._touching && this._autoHideRemainingTime <= 0)
-            super.setOpacity(this.opacity);
-        else
-            super.setOpacity(0);
+        super.opacity = !this._autoHideEnabled && !this._touching && this._autoHideRemainingTime <= 0 ?  this.opacity : 0;
     }
 
     /**
@@ -205,7 +199,7 @@ export class ScrollViewBar extends ProtectedNode {
      * Set scroll bar opacity
      * @param {number} opacity scroll bar opacity
      */
-    setOpacity(opacity) {
+    set opacity(opacity) {
         this._opacity = opacity;
     }
 
@@ -213,7 +207,7 @@ export class ScrollViewBar extends ProtectedNode {
      * Get scroll bar opacity
      * @returns {number}
      */
-    getOpacity() {
+    get opacity() {
         return this._opacity;
     }
 
@@ -303,7 +297,7 @@ export class ScrollViewBar extends ProtectedNode {
         this._autoHideRemainingTime -= dt;
         if (this._autoHideRemainingTime <= this.autoHideTime) {
             this._autoHideRemainingTime = Math.max(0, this._autoHideRemainingTime);
-            super.setOpacity(this._opacity * (this._autoHideRemainingTime / this.autoHideTime));
+            super.opacity = this._opacity * (this._autoHideRemainingTime / this.autoHideTime);
         }
     }
 
@@ -345,7 +339,7 @@ export class ScrollViewBar extends ProtectedNode {
     onScrolled(outOfBoundary) {
         if (this._autoHideEnabled) {
             this._autoHideRemainingTime = this.autoHideTime;
-            super.setOpacity(this.opacity);
+            super.opacity = this.opacity;
         }
 
         var innerContainer = this._parentScroll.getInnerContainer();

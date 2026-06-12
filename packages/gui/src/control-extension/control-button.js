@@ -152,7 +152,7 @@ export class ControlButton extends Control {
             this.setAnchorPoint(0.5, 0.5);
             this._titleLabel = label;
             this._backgroundSprite = backgroundSprite;
-            this.setOpacity(255);
+            this.opacity = 255;
             this.setOpacityModifyRGB(true);
             var tempString = label.getString();
             this.setTitleForState(tempString, CONTROL_STATE_NORMAL);
@@ -227,7 +227,7 @@ export class ControlButton extends Control {
     }
 
     set opacity(opacity) {
-        super.setOpacity(opacity);
+        super.opacity = opacity;
         var locTable = this._backgroundSpriteDispatchTable;
         for (var itemKey in locTable)
             locTable[itemKey].opacity = opacity;

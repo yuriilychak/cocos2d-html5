@@ -381,13 +381,6 @@ export class Node extends NewClass {
     this.setShaderProgram(v);
   }
 
-  get opacity() {
-    return this.getOpacity();
-  }
-  set opacity(v) {
-    this.setOpacity(v);
-  }
-
   get opacityModifyRGB() {
     return this.isOpacityModifyRGB();
   }
@@ -2366,7 +2359,7 @@ export class Node extends NewClass {
    * @function
    * @returns {number} opacity
    */
-  getOpacity() {
+  get opacity() {
     return this._realOpacity;
   }
 
@@ -2385,7 +2378,7 @@ export class Node extends NewClass {
    * @function
    * @param {Number} opacity
    */
-  setOpacity(opacity) {
+  set opacity(opacity) {
     this._realOpacity = opacity;
     this._renderCmd.setDirtyFlag(dirtyFlags.opacityDirty);
   }

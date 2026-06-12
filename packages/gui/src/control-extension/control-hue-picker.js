@@ -43,7 +43,7 @@ export class ControlHuePicker extends Control {
     set enabled(enabled) {
         super.setEnabled(enabled);
         if (this._slider) {
-            this._slider.setOpacity(enabled ? 255 : 128);
+            this._slider.opacity = enabled ? 255 : 128;
         }
     }
 

@@ -19,7 +19,7 @@ export class ActionFadeFrame extends ActionFrame {
    * Changes the fade action opacity.
    * @param {number} opacity
    */
-  setOpacity(opacity) {
+  set opacity(opacity) {
     this._opacity = opacity;
   }
 
@@ -27,7 +27,7 @@ export class ActionFadeFrame extends ActionFrame {
    * Returns the fade action opacity.
    * @returns {number}
    */
-  getOpacity() {
+  get opacity() {
     return this._opacity;
   }
 

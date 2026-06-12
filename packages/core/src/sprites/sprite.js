@@ -904,14 +904,6 @@ export class Sprite extends EventHelper(Node) {
     this.setOpacityModifyRGB(value);
   }
 
-  get opacity() {
-    return this.getOpacity();
-  }
-
-  set opacity(value) {
-    this.setOpacity(value);
-  }
-
   get color() {
     return this.getColor();
   }

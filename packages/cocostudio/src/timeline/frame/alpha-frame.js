@@ -37,7 +37,7 @@ export class AlphaFrame extends Frame {
 
   onEnter(nextFrame) {
     if (!this._node) return;
-    this._node.setOpacity(this._alpha);
+    this._node.opacity = this._alpha;
     if (this._tween) {
       this._betweenAlpha = nextFrame._alpha - this._alpha;
     }
@@ -46,7 +46,7 @@ export class AlphaFrame extends Frame {
   _onApply(percent) {
     if (!this._node) return;
     var alpha = this._alpha + this._betweenAlpha * percent;
-    this._node.setOpacity(alpha);
+    this._node.opacity = alpha;
   }
 
   /**

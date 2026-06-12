@@ -72,7 +72,7 @@ export class ColorFrame extends Frame {
       this._node.setColor(color);
       if (this._alpha !== null) {
         var alpha = this._alpha + this._betweenAlpha * percent;
-        this._node.setOpacity(alpha);
+        this._node.opacity = alpha;
       }
     }
   }

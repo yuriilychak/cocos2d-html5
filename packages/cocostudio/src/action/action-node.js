@@ -130,7 +130,7 @@ export class ActionNode extends NewClass {
         actionFrame.frameIndex = frameIndex;
         actionFrame.setEasingType(frameTweenType);
         actionFrame.setEasingParameter(frameTweenParameter);
-        actionFrame.setOpacity(opacity);
+        actionFrame.opacity = opacity;
         actionArray = this._frameArray[FRAME_TYPE_FADE];
         actionArray.push(actionFrame);
       }

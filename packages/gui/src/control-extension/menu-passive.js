@@ -45,20 +45,20 @@ export class MenuPassive extends Layer {
             }
         }
         if (color.a !== undefined && !color.a_undefined) {
-            this.setOpacity(color.a);
+            this.opacity = color.a;
         }
     }
 
-    getOpacity() {
+    get opacity() {
         return this._opacity;
     }
 
-    setOpacity(opacity) {
+    set opacity(opacity) {
         this._opacity = opacity;
         if (this._children && this._children.length > 0) {
             for (var i = 0; i < this._children.length; i++) {
                 if (this._children[i]) {
-                    this._children[i].setOpacity(opacity);
+                    this._children[i].opacity = opacity;
                 }
             }
         }

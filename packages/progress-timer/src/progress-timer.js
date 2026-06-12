@@ -184,15 +184,6 @@ export class ProgressTimer extends Node {
     }
 
     /**
-     * set opacity of sprite
-     * @param {Number} opacity
-     */
-    setOpacity(opacity) {
-        this._sprite.opacity = opacity;
-        this._renderCmd.setDirtyFlag(Node._dirtyFlags.opacityDirty);
-    }
-
-    /**
      * return color of sprite
      * @return {Color}
      */
@@ -204,8 +195,17 @@ export class ProgressTimer extends Node {
      * return Opacity of sprite
      * @return {Number}
      */
-    getOpacity() {
+    get opacity() {
         return this._sprite.opacity;
+    }
+
+    /**
+     * set opacity of sprite
+     * @param {Number} opacity
+     */
+    set opacity(opacity) {
+        this._sprite.opacity = opacity;
+        this._renderCmd.setDirtyFlag(Node._dirtyFlags.opacityDirty);
     }
 
     /**

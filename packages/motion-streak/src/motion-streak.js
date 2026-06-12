@@ -83,12 +83,12 @@ export class MotionStreak extends Node {
     }
   }
 
-  getOpacity() {
+  get opacity() {
     log("MotionStreak.getOpacity has not been supported.");
     return 0;
   }
 
-  setOpacity(opacity) {
+  set opacity(opacity) {
     log("MotionStreak.setOpacity has not been supported.");
   }
 

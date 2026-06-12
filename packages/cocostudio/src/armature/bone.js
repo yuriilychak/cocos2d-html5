@@ -296,7 +296,7 @@ export class Bone extends Node {
           (cmd._displayedColor.b * this._tweenData.b) / 255
         )
       );
-      display.setOpacity((cmd._displayedOpacity * this._tweenData.a) / 255);
+      display.opacity = (cmd._displayedOpacity * this._tweenData.a) / 255;
     }
   }
 
@@ -700,7 +700,7 @@ class BoneCanvasRenderCmd extends Node.CanvasRenderCmd {
       if (display !== null) {
         var displayCmd = display._renderCmd;
         display.setColor(this._displayedColor);
-        display.setOpacity(this._displayedOpacity);
+        display.opacity = this._displayedOpacity;
         displayCmd._syncDisplayColor(node._tweenData);
         displayCmd._syncDisplayOpacity(node._tweenData.a);
         displayCmd._updateColor();
@@ -753,7 +753,7 @@ class BoneWebGLRenderCmd extends Node.WebGLRenderCmd {
       if (display !== null) {
         var displayCmd = display._renderCmd;
         display.setColor(this._displayedColor);
-        display.setOpacity(this._displayedOpacity);
+        display.opacity = this._displayedOpacity;
         displayCmd._syncDisplayColor(node._tweenData);
         displayCmd._syncDisplayOpacity(node._tweenData.a);
         displayCmd._updateColor();
