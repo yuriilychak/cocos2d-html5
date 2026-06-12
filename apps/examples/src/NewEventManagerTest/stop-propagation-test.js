@@ -43,7 +43,7 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
           return false;
 
         var target = event.getCurrentTarget();
-        if (target.getTag() != StopPropagationTest._TAG_BLUE_SPRITE)
+        if (target.tag != StopPropagationTest._TAG_BLUE_SPRITE)
           log("Yellow blocks shouldn't response event.");
 
         if (this._isPointInNode(touch.getLocation(), target)) {
@@ -68,7 +68,7 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
           return;
 
         var target = event.getCurrentTarget();
-        if (target.getTag() != StopPropagationTest._TAG_BLUE_SPRITE2)
+        if (target.tag != StopPropagationTest._TAG_BLUE_SPRITE2)
           log("Yellow blocks shouldn't response event.");
 
         if (this._isPointInNode(touches[0].getLocation(), target))
@@ -82,7 +82,7 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
           return;
 
         var target = event.getCurrentTarget();
-        if (target.getTag() != StopPropagationTest._TAG_BLUE_SPRITE2)
+        if (target.tag != StopPropagationTest._TAG_BLUE_SPRITE2)
           log("Yellow blocks shouldn't response event.");
 
         if (this._isPointInNode(touches[0].getLocation(), target))
@@ -98,8 +98,8 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
         var target = event.getCurrentTarget();
         if (
           !(
-            target.getTag() == StopPropagationTest._TAG_BLUE_SPRITE ||
-            target.getTag() == StopPropagationTest._TAG_BLUE_SPRITE2
+            target.tag == StopPropagationTest._TAG_BLUE_SPRITE ||
+            target.tag == StopPropagationTest._TAG_BLUE_SPRITE2
           )
         ) {
           log("Yellow blocks shouldn't response event.");
@@ -116,11 +116,11 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
     for (var i = 0; i < SPRITE_COUNT; i++) {
       if (i == 4) {
         sprite1 = createColoredView(new Color(0, 255, 255));
-        sprite1.setTag(StopPropagationTest._TAG_BLUE_SPRITE);
+        sprite1.tag = StopPropagationTest._TAG_BLUE_SPRITE;
         this.addChild(sprite1, 100);
 
         sprite2 = createColoredView(new Color(0, 255, 255));
-        sprite2.setTag(StopPropagationTest._TAG_BLUE_SPRITE2);
+        sprite2.tag = StopPropagationTest._TAG_BLUE_SPRITE2;
         this.addChild(sprite2, 100);
       } else {
         sprite1 = createColoredView(new Color(255, 255, 0));

@@ -97,7 +97,7 @@ export class IAPTestLayer extends PluginXTest {
     this.toastLayer = new LayerColor();
     var label = new TextBMFont("loading", s_simpleFont_fnt);
     this.toastLayer.addChild(label);
-    this.toastLayer.setTag(TAG_TOAST);
+    this.toastLayer.tag = TAG_TOAST;
     label.x = winSize.width / 2;
     label.y = winSize.height / 2;
     this.toastLayer.color = new Color(100, 100, 100, 100);

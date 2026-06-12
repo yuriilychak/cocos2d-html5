@@ -48,11 +48,11 @@ export class UIFocusTestNestedLayout3 extends UIFocusTestBase {
 
       this._verticalLayout.setFocused(true);
       this._verticalLayout.setLoopFocus(true);
-      this._verticalLayout.setTag(-1000);
+      this._verticalLayout.tag = -1000;
       this._firstFocusedWidget = this._verticalLayout;
 
       var upperHBox = new HBox();
-      upperHBox.setTag(-200);
+      upperHBox.tag = -200;
       this._verticalLayout.addChild(upperHBox);
 
       var params = new LinearLayoutParameter();
@@ -69,13 +69,13 @@ export class UIFocusTestNestedLayout3 extends UIFocusTestBase {
         var firstVbox = new VBox();
         firstVbox.scale = 0.5;
         firstVbox.setLayoutParameter(params);
-        firstVbox.setTag((i + 1) * 100);
+        firstVbox.tag = (i + 1) * 100;
 
         var count1 = 3;
         for (var j = 0; j < count1; ++j) {
           w = new ImageView("ccs-res/cocosui/scrollviewbg.png");
           w.setTouchEnabled(true);
-          w.setTag(j + firstVbox.getTag() + 1);
+          w.tag = j + firstVbox.tag + 1;
           w.addTouchEventListener(this.onImageViewClicked, this);
           firstVbox.addChild(w);
         }
@@ -84,7 +84,7 @@ export class UIFocusTestNestedLayout3 extends UIFocusTestBase {
 
       var bottomHBox = new HBox();
       bottomHBox.scale = 0.5;
-      bottomHBox.setTag(600);
+      bottomHBox.tag = 600;
       bottomHBox.setLayoutParameter(vparams);
       count = 3;
       var bottomParams = new LinearLayoutParameter();
@@ -93,7 +93,7 @@ export class UIFocusTestNestedLayout3 extends UIFocusTestBase {
         w = new ImageView("ccs-res/cocosui/scrollviewbg.png");
         w.setLayoutParameter(bottomParams);
         w.setTouchEnabled(true);
-        w.setTag(i + 601);
+        w.tag = i + 601;
         w.addTouchEventListener(this.onImageViewClicked, this);
         bottomHBox.addChild(w);
       }

@@ -47,14 +47,14 @@ export class UIFocusTestHorizontal extends UIFocusTestBase {
 
       this._horizontalLayout.setFocused(true);
       this._horizontalLayout.setLoopFocus(true);
-      this._horizontalLayout.setTag(100);
+      this._horizontalLayout.tag = 100;
       this._firstFocusedWidget = this._horizontalLayout;
 
       var count = 3;
       for (var i = 0; i < count; ++i) {
         var w = new ImageView("ccs-res/cocosui/scrollviewbg.png");
         w.setTouchEnabled(true);
-        w.setTag(i);
+        w.tag = i;
         w.addTouchEventListener(this.onImageViewClicked, this);
         this._horizontalLayout.addChild(w);
       }

@@ -1237,7 +1237,7 @@ parser.initProjectNode = function (json, resourcePath) {
       var obj = load(file, resourcePath);
       parser.generalAttributes(obj.node, json);
       if (obj.action && obj.node) {
-        obj.action.tag = obj.node.#tag;
+        obj.action.tag = obj.node.tag;
         var InnerActionSpeed = json["InnerActionSpeed"];
         if (InnerActionSpeed !== undefined)
           obj.action.setTimeSpeed(InnerActionSpeed);

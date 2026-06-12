@@ -44,7 +44,7 @@ export class UIFocusTestVertical extends UIFocusTestBase {
         winSize.height - 80
       );
       this.addChild(this._verticalLayout);
-      this._verticalLayout.setTag(100);
+      this._verticalLayout.tag = 100;
       //this._verticalLayout.scale = 0.8;
 
       this._verticalLayout.setFocused(true);
@@ -55,7 +55,7 @@ export class UIFocusTestVertical extends UIFocusTestBase {
       for (var i = 0; i < count; ++i) {
         var w = new ImageView("ccs-res/cocosui/scrollviewbg.png");
         w.setTouchEnabled(true);
-        w.setTag(i);
+        w.tag = i;
         w.addTouchEventListener(this.onImageViewClicked, this);
         this._verticalLayout.addChild(w);
       }

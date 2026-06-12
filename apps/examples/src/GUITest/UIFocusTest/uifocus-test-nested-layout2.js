@@ -48,7 +48,7 @@ export class UIFocusTestNestedLayout2 extends UIFocusTestBase {
 
       this._horizontalLayout.setFocused(true);
       this._horizontalLayout.setLoopFocus(true);
-      this._horizontalLayout.setTag(100);
+      this._horizontalLayout.tag = 100;
       this._firstFocusedWidget = this._horizontalLayout;
 
       var count1 = 2,
@@ -58,7 +58,7 @@ export class UIFocusTestNestedLayout2 extends UIFocusTestBase {
         w = new ImageView("ccs-res/cocosui/scrollviewbg.png");
         w.setAnchorPoint(0, 1);
         w.setTouchEnabled(true);
-        w.setTag(i + count1);
+        w.tag = i + count1;
         w.scaleY = 2.4;
         w.addTouchEventListener(this.onImageViewClicked, this);
         this._horizontalLayout.addChild(w);
@@ -67,7 +67,7 @@ export class UIFocusTestNestedLayout2 extends UIFocusTestBase {
       //add HBox into VBox
       var vbox = new VBox();
       vbox.scale = 0.8;
-      vbox.setTag(101);
+      vbox.setag = (101);
       this._horizontalLayout.addChild(vbox);
       var count2 = 2;
       for (i = 0; i < count2; ++i) {
@@ -75,21 +75,26 @@ export class UIFocusTestNestedLayout2 extends UIFocusTestBase {
         w.setAnchorPoint(0, 1);
         w.scaleX = 2.0;
         w.setTouchEnabled(true);
-        w.setTag(i + count1 + count2);
+        w.tag = i + count1 + count2 
+        
+        
+        
+        
+        ;
         w.addTouchEventListener(this.onImageViewClicked, this);
         vbox.addChild(w);
       }
 
       var innerHBox = new HBox();
       vbox.addChild(innerHBox);
-      innerHBox.setTag(102);
+      innerHBox.tag = 102;
       //innerVBox.setPassFocusToChild(false);
       //innerVBox.setFocusEnabled(false);
       var count3 = 2;
       for (i = 0; i < count3; ++i) {
         w = new ImageView("ccs-res/cocosui/scrollviewbg.png");
         w.setTouchEnabled(true);
-        w.setTag(i + count1 + count2 + count3);
+        w.tag = i + count1 + count2 + count3;
         w.addTouchEventListener(this.onImageViewClicked, this);
         innerHBox.addChild(w);
       }

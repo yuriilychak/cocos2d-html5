@@ -51,7 +51,7 @@ export class UIFocusTestListView extends UIFocusTestBase {
 
       this._listView.setFocused(true);
       this._listView.setLoopFocus(true);
-      this._listView.setTag(-1000);
+      this._listView.tag = -1000;
       this._firstFocusedWidget = this._listView;
 
       // create model

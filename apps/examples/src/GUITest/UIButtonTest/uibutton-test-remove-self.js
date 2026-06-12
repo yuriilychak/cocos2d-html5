@@ -47,7 +47,7 @@ export class UIButtonTestRemoveSelf extends UIMainLayer {
       layout.setBackGroundColorOpacity(100);
       layout.setPosition(widgetSize.width / 2, widgetSize.height / 2);
       layout.setAnchorPoint(0.5, 0.5);
-      layout.setTag(12);
+      layout.tag = 12;
       this._mainNode.addChild(layout);
 
       // Create the button

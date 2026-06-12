@@ -97,7 +97,7 @@ export class UIListViewTest_Vertical extends UIMainLayer {
       for (i = 0; i < this._totalCount; ++i) {
         if (i < this._spawnCount) {
           var item = default_item.clone();
-          item.setTag(i);
+          item.tag = i;
           var btn = item.getChildByName("TextButton");
           btn.setTitleText(this._array[i]);
           this.listView.pushBackCustomItem(item);
@@ -139,7 +139,7 @@ export class UIListViewTest_Vertical extends UIMainLayer {
   updateItem(itemID, templateID) {
     var itemTemplate = this.listView.getItems()[templateID];
     var btn = itemTemplate.getChildByName("TextButton");
-    itemTemplate.setTag(itemID);
+    itemTemplate.tag = itemID;
     btn.setTitleText(this._array[itemID]);
   }
 
@@ -166,7 +166,7 @@ export class UIListViewTest_Vertical extends UIMainLayer {
           itemPos < -this._bufferZone &&
           item.getPosition().y + this._reuseItemOffset < totalHeight
         ) {
-          var itemID = item.getTag() - items.length;
+          var itemID = item.tag - items.length;
           item.y = item.y + this._reuseItemOffset;
           this.updateItem(itemID, i);
         }
@@ -176,7 +176,7 @@ export class UIListViewTest_Vertical extends UIMainLayer {
           item.y - this._reuseItemOffset >= 0
         ) {
           item.y = item.y - this._reuseItemOffset;
-          itemID = item.getTag() + items.length;
+          itemID = item.tag + items.length;
           this.updateItem(itemID, i);
         }
       }
@@ -190,7 +190,7 @@ export class UIListViewTest_Vertical extends UIMainLayer {
       case ListView.EVENT_SELECTED_ITEM:
         var listViewEx = sender;
         var item = listViewEx.getItem(listViewEx.getCurSelectedIndex());
-        log("select child index = " + item.getTag());
+        log("select child index = " + item.tag);
         break;
 
       default:

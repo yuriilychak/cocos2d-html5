@@ -1159,7 +1159,7 @@ export class Widget extends ProtectedNode {
     this.bright = widget.bright;
     this.touchEnabled = widget.touchEnabled;
     this.setLocalZOrder(widget.getLocalZOrder());
-    this.#tag = widget.tag;
+    this.tag = widget.tag;
     this.name = widget.name;
     this.actionTag = widget.actionTag;
 
