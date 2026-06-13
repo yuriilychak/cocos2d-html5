@@ -99,7 +99,7 @@ var getParam = function (value, dValue) {
 //////////
 
 parser.generalAttributes = function (node, json) {
-  if (json["Name"] != null) node.setName(json["Name"]);
+  if (json["Name"] != null) node.name = json["Name"];
 
   var position = json["Position"];
   if (position != null && (position["X"] != null || position["Y"] != null))
@@ -273,7 +273,7 @@ parser.widgetAttributes = function (widget, json, enableContent) {
   !enableContent && setContentSize(widget, json["Size"]);
 
   var name = json["Name"];
-  if (name) widget.setName(name);
+  if (name) widget.name = name;
 
   var actionTag = json["ActionTag"] || 0;
   widget.setActionTag(actionTag);

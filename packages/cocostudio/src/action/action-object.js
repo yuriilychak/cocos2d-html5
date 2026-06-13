@@ -28,16 +28,17 @@
  * The Cocostudio's action object.
  */
 import { NewClass, REPEAT_FOREVER, arrayRemoveObject, ServiceLocator } from "@aspect/core";
-
 import { ActionNode } from "./action-node.js";
 export class ActionObject extends NewClass {
+  #name = "";
+
   /**
    * Construction of ActionObject.
    */
   constructor() {
     super();
     this._actionNodeList = [];
-    this._name = "";
+    
     this._loop = false;
     this._pause = false;
     this._playing = false;
@@ -51,16 +52,16 @@ export class ActionObject extends NewClass {
    * Sets name to ActionObject
    * @param {string} name
    */
-  setName(name) {
-    this._name = name;
+  set name(name) {
+    this.#name = name;
   }
 
   /**
    * Returns name fo ActionObject
    * @returns {string}
    */
-  getName() {
-    return this._name;
+  get name() {
+    return this.#name;
   }
 
   /**
@@ -83,12 +84,12 @@ export class ActionObject extends NewClass {
    * Sets the time interval of frame.
    * @param {number} time
    */
-  setUnitTime(time) {
+  set unitTime(time) {
     this._unitTime = time;
     var frameNum = this._actionNodeList.length;
     for (var i = 0; i < frameNum; i++) {
       var locActionNode = this._actionNodeList[i];
-      locActionNode.setUnitTime(this._unitTime);
+      locActionNode.unitTime = this._unitTime;
     }
   }
 
@@ -96,7 +97,7 @@ export class ActionObject extends NewClass {
    * Returns the time interval of frame.
    * @returns {number} the time interval of frame
    */
-  getUnitTime() {
+  get unitTime() {
     return this._unitTime;
   }
 
@@ -138,9 +139,9 @@ export class ActionObject extends NewClass {
    * @param {Object} root
    */
   initWithDictionary(dic, root) {
-    this.setName(dic["name"]);
+    this.name = dic["name"];
     this.setLoop(dic["loop"]);
-    this.setUnitTime(dic["unittime"]);
+    this.unitTime = dic["unittime"];
     var actionNodeList = dic["actionnodelist"];
     var maxLength = 0;
     for (var i = 0; i < actionNodeList.length; i++) {
@@ -148,7 +149,7 @@ export class ActionObject extends NewClass {
 
       var actionNodeDic = actionNodeList[i];
       actionNode.initWithDictionary(actionNodeDic, root);
-      actionNode.setUnitTime(this.getUnitTime());
+      actionNode.unitTime = this.unitTime;
       this._actionNodeList.push(actionNode);
       var length =
         actionNode.getLastFrameIndex() - actionNode.getFirstFrameIndex();
@@ -166,7 +167,7 @@ export class ActionObject extends NewClass {
   addActionNode(node) {
     if (!node) return;
     this._actionNodeList.push(node);
-    node.setUnitTime(this._unitTime);
+    node.unitTime = this._unitTime;
   }
 
   /**

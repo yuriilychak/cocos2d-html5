@@ -235,13 +235,6 @@ export class Widget extends ProtectedNode {
     this.setBright(v);
   }
 
-  get name() {
-    return this.getName();
-  }
-  set name(v) {
-    this.setName(v);
-  }
-
   get actionTag() {
     return this.getActionTag();
   }

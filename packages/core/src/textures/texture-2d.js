@@ -192,8 +192,8 @@ export class Texture2D extends EventHelper(NewClass) {
     ServiceLocator.loader.release(this.url);
   }
 
-  getName() {
-    return this._renderer.getName();
+  get name() {
+    return this._renderer.name;
   }
 
   getMaxS() {
@@ -305,10 +305,6 @@ export class Texture2D extends EventHelper(NewClass) {
 
   _generateGrayTexture() {
     return this._renderer._generateGrayTexture();
-  }
-
-  get name() {
-    return this.getName();
   }
 
   get pixelFormat() {

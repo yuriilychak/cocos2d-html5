@@ -174,7 +174,7 @@ export class ArmatureAnimation extends ProcessBase {
         var movementBoneData, map = this._armature.getBoneDic();
         for(var element in map) {
             var bone = map[element];
-            movementBoneData = this._movementData.movBoneDataDic[bone.getName()];
+            movementBoneData = this._movementData.movBoneDataDic[bone.name];
 
             var tween = bone.tween;
             if(movementBoneData && movementBoneData.frameList.length > 0) {

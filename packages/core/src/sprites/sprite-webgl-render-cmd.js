@@ -133,7 +133,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
     const node = this._node;
     return (
       Rect.equalTo(frame.getRect(), node._rect) &&
-      frame.getTexture().getName() === node._texture.getName() &&
+      frame.getTexture().name === node._texture.name &&
       Point.equalTo(
         frame.getOffset(),
         node._unflippedOffsetPositionFromCenter

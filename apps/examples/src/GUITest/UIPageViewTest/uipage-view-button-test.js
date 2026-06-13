@@ -72,7 +72,7 @@ export class UIPageViewButtonTest extends UIMainLayer {
               "ccs-res/cocosui/animationbuttonnormal.png",
               "ccs-res/cocosui/animationbuttonpressed.png"
             );
-            btn.setName("button " + j);
+            btn.name = "button " + j;
             btn.addTouchEventListener(this.onButtonClicked, this);
             innerBox.addChild(btn);
           }
@@ -95,7 +95,7 @@ export class UIPageViewButtonTest extends UIMainLayer {
   }
 
   onButtonClicked(sender, type) {
-    log("button %s clicked", sender.getName());
+    log("button %s clicked", sender.name);
   }
 
   pageViewEvent(pageView, type) {

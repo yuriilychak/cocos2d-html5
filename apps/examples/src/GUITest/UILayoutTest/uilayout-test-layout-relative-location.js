@@ -68,7 +68,7 @@ export class UILayoutTest_Layout_Relative_Location extends UIMainLayer {
       );
       layout.addChild(imageView_AboveCenter);
       var rp_AboveCenter = new RelativeLayoutParameter();
-      rp_AboveCenter.setRelativeToWidgetName("rp_Center");
+      rp_AboveCenter.relativeToWidgetName = "rp_Center";
       rp_AboveCenter.setAlign(
         RelativeLayoutParameter.LOCATION_ABOVE_CENTER
       );
@@ -80,7 +80,7 @@ export class UILayoutTest_Layout_Relative_Location extends UIMainLayer {
       );
       layout.addChild(imageView_BelowCenter);
       var rp_BelowCenter = new RelativeLayoutParameter();
-      rp_BelowCenter.setRelativeToWidgetName("rp_Center");
+      rp_BelowCenter.relativeToWidgetName = "rp_Center";
       rp_BelowCenter.setAlign(
         RelativeLayoutParameter.LOCATION_BELOW_CENTER
       );
@@ -92,7 +92,7 @@ export class UILayoutTest_Layout_Relative_Location extends UIMainLayer {
       );
       layout.addChild(imageView_LeftCenter);
       var rp_LeftCenter = new RelativeLayoutParameter();
-      rp_LeftCenter.setRelativeToWidgetName("rp_Center");
+      rp_LeftCenter.relativeToWidgetName = "rp_Center";
       rp_LeftCenter.setAlign(
         RelativeLayoutParameter.LOCATION_LEFT_OF_CENTER
       );
@@ -104,7 +104,7 @@ export class UILayoutTest_Layout_Relative_Location extends UIMainLayer {
       );
       layout.addChild(imageView_RightCenter);
       var rp_RightCenter = new RelativeLayoutParameter();
-      rp_RightCenter.setRelativeToWidgetName("rp_Center");
+      rp_RightCenter.relativeToWidgetName = "rp_Center";
       rp_RightCenter.setAlign(
         RelativeLayoutParameter.LOCATION_RIGHT_OF_CENTER
       );

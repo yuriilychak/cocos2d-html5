@@ -63,7 +63,7 @@ export class UIListViewTest_Horizontal extends UIMainLayer {
 
       // create model
       var default_button = new Button();
-      default_button.setName("TextButton");
+      default_button.name = "TextButton";
       default_button.setTouchEnabled(true);
       default_button.loadTextures(
         "ccs-res/cocosui/backtotoppressed.png",
@@ -94,7 +94,7 @@ export class UIListViewTest_Horizontal extends UIMainLayer {
       // add custom item
       for (i = 0; i < count / 4; ++i) {
         var custom_button = new Button();
-        custom_button.setName("TextButton");
+        custom_button.name = "TextButton";
         custom_button.setTouchEnabled(true);
         custom_button.setScale9Enabled(true);
         custom_button.loadTextures(
@@ -116,7 +116,7 @@ export class UIListViewTest_Horizontal extends UIMainLayer {
       var items_count = listView.getItems().length;
       for (i = 0; i < count / 4; ++i) {
         var custom_button = new Button();
-        custom_button.setName("TextButton");
+        custom_button.name = "TextButton";
         custom_button.setTouchEnabled(true);
         custom_button.setScale9Enabled(true);
         custom_button.loadTextures(

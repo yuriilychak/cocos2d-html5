@@ -149,7 +149,7 @@ export const relativeLayoutManager = {
     _getRelativeWidget: function (widget) {
         var relativeWidget = null;
         var layoutParameter = widget.getLayoutParameter();
-        var relativeName = layoutParameter.getRelativeToWidgetName();
+        var relativeName = layoutParameter.relativeToWidgetName;
 
         if (relativeName && relativeName.length !== 0) {
             var locChildren = this._widgetChildren;

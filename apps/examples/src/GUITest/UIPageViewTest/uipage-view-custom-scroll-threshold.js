@@ -90,7 +90,7 @@ export class UIPageViewCustomScrollThreshold extends UIMainLayer {
       }
 
       this._mainNode.addChild(pageView);
-      pageView.setName("pageView");
+      pageView.name = "pageView";
 
       var slider = new Slider();
       slider.loadBarTexture("ccs-res/cocosui/sliderTrack.png");

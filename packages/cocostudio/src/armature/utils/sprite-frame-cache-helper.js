@@ -51,7 +51,7 @@ export const spriteFrameCacheHelper = {
     getTextureAtlasWithTexture:function (texture) {
         //todo
         return null;
-        var textureName = texture.getName();
+        var textureName = texture.name;
         var atlas = this._textureAtlasDic[textureName];
         if (atlas == null) {
             atlas = new TextureAtlas(texture, 20);

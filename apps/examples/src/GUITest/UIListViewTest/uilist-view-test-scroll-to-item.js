@@ -122,7 +122,7 @@ export class UIListViewTest_ScrollToItem extends UIMainLayer {
       // Add list items
 
       var default_button = new Button();
-      default_button.setName("TextButton");
+      default_button.name = "TextButton";
       default_button.setTouchEnabled(true);
       default_button.loadTextures(
         "ccs-res/cocosui/backtotoppressed.png",

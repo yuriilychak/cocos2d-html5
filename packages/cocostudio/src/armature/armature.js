@@ -126,7 +126,7 @@ export class Armature extends Node {
           );
           if (!movData) break;
 
-          var _movBoneData = movData.getMovementBoneData(bone.getName());
+          var _movBoneData = movData.getMovementBoneData(bone.name);
           if (!_movBoneData || _movBoneData.frameList.length <= 0) break;
 
           var frameData = _movBoneData.getFrameData(0);
@@ -219,9 +219,9 @@ export class Armature extends Node {
   addBone(bone, parentName) {
     assert(bone, "Argument must be non-nil");
     var locBoneDic = this._boneDic;
-    if (bone.getName())
+    if (bone.name)
       assert(
-        !locBoneDic[bone.getName()],
+        !locBoneDic[bone.name],
         "bone already added. It can't be added again"
       );
 
@@ -232,7 +232,7 @@ export class Armature extends Node {
     } else this._topBoneList.push(bone);
     bone.armature = this;
 
-    locBoneDic[bone.getName()] = bone;
+    locBoneDic[bone.name] = bone;
     this.addChild(bone);
   }
 
@@ -248,7 +248,7 @@ export class Armature extends Node {
     bone.removeFromParent(recursion);
     arrayRemoveObject(this._topBoneList, bone);
 
-    delete this._boneDic[bone.getName()];
+    delete this._boneDic[bone.name];
     this.removeChild(bone, true);
   }
 

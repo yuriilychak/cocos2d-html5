@@ -49,7 +49,7 @@ export class UIButtonTestZoomScale extends UIMainLayer {
           "Button clicked, position = (" + button.x + ", " + button.y + ")"
         );
       });
-      button.setName("button");
+      button.name = "button";
       this._mainNode.addChild(button);
       button.setZoomScale(-0.5);
 

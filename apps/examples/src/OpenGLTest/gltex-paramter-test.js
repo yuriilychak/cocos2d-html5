@@ -55,7 +55,7 @@ export class GLTexParamterTest extends OpenGLTestLayer {
     getTexValues() {
         if(!ServiceLocator.sys.isNative){
             var texture2d = ServiceLocator.textureCache.getTextureForKey(s_pathGrossini);
-            gl.bindTexture(gl.TEXTURE_2D, texture2d.getName());
+            gl.bindTexture(gl.TEXTURE_2D, texture2d.name);
         } else {
             gl.bindTexture(gl.TEXTURE_2D, null);
         }

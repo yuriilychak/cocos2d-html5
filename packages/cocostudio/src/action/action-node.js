@@ -39,21 +39,25 @@ import { ActionScaleFrame } from "./action-frame/action-scale-frame.js";
 import { ActionTintFrame } from "./action-frame/action-tint-frame.js";
 import { FRAME_TYPE_FADE, FRAME_TYPE_MAX, FRAME_TYPE_MOVE, FRAME_TYPE_ROTATE, FRAME_TYPE_SCALE, FRAME_TYPE_TINT } from "./action-frame/constants.js";
 export class ActionNode extends NewClass {
+  #unitTime = 0.1;
+  #currentFrameIndex = 0;
+  #destFrameIndex = 0;
+  #actionTag = 0;
+  #object = null;
+  #actionSpawn = null;
+  #action = null;
+  #frameArray = [];
+  #frameArrayNum = 0;
+
   /**
    * Construction of ActionNode
    */
   constructor() {
     super();
-    this._currentFrameIndex = 0;
-    this._destFrameIndex = 0;
-    this._unitTime = 0.1;
-    this._actionTag = 0;
-    this._object = null;
-    this._actionSpawn = null;
-    this._action = null;
-    this._frameArray = [];
-    this._frameArrayNum = FRAME_TYPE_MAX;
-    for (var i = 0; i < this._frameArrayNum; i++) this._frameArray.push([]);
+    this.#frameArrayNum = FRAME_TYPE_MAX;
+    for (var i = 0; i < this.#frameArrayNum; i++) {
+      this.#frameArray.push([]);
+    }
   }
 
   /**
@@ -66,8 +70,7 @@ export class ActionNode extends NewClass {
     var actionFrameList = dic["actionframelist"];
 
     var node = helper.seekActionWidgetByActionTag(root, dic["ActionTag"]);
-    var positionOffset =
-      node instanceof Widget && !(node instanceof Layout);
+    var positionOffset = node instanceof Widget && !(node instanceof Layout);
 
     for (var i = 0; i < actionFrameList.length; i++) {
       var actionFrameDic = actionFrameList[i];
@@ -96,7 +99,7 @@ export class ActionNode extends NewClass {
         actionFrame.setEasingType(frameTweenType);
         actionFrame.setEasingParameter(frameTweenParameter);
         actionFrame.setPosition(positionX, positionY);
-        actionArray = this._frameArray[FRAME_TYPE_MOVE];
+        actionArray = this.#frameArray[FRAME_TYPE_MOVE];
         actionArray.push(actionFrame);
       }
 
@@ -109,7 +112,7 @@ export class ActionNode extends NewClass {
         actionFrame.setEasingParameter(frameTweenParameter);
         actionFrame.scaleX = scaleX;
         actionFrame.scaleY = scaleY;
-        actionArray = this._frameArray[FRAME_TYPE_SCALE];
+        actionArray = this.#frameArray[FRAME_TYPE_SCALE];
         actionArray.push(actionFrame);
       }
 
@@ -120,7 +123,7 @@ export class ActionNode extends NewClass {
         actionFrame.setEasingType(frameTweenType);
         actionFrame.setEasingParameter(frameTweenParameter);
         actionFrame.setRotation(rotation);
-        actionArray = this._frameArray[FRAME_TYPE_ROTATE];
+        actionArray = this.#frameArray[FRAME_TYPE_ROTATE];
         actionArray.push(actionFrame);
       }
 
@@ -131,7 +134,7 @@ export class ActionNode extends NewClass {
         actionFrame.setEasingType(frameTweenType);
         actionFrame.setEasingParameter(frameTweenParameter);
         actionFrame.opacity = opacity;
-        actionArray = this._frameArray[FRAME_TYPE_FADE];
+        actionArray = this.#frameArray[FRAME_TYPE_FADE];
         actionArray.push(actionFrame);
       }
 
@@ -144,30 +147,20 @@ export class ActionNode extends NewClass {
         actionFrame.setEasingType(frameTweenType);
         actionFrame.setEasingParameter(frameTweenParameter);
         actionFrame.color = new Color(colorR, colorG, colorB);
-        actionArray = this._frameArray[FRAME_TYPE_TINT];
+        actionArray = this.#frameArray[FRAME_TYPE_TINT];
         actionArray.push(actionFrame);
       }
       actionFrameDic = null;
     }
-    this._initActionNodeFromRoot(root);
-  }
-
-  _initActionNodeFromRoot(root) {
-    if (root instanceof Widget) {
-      var widget = helper.seekActionWidgetByActionTag(
-        root,
-        this.getActionTag()
-      );
-      if (widget) this.setObject(widget);
-    }
+    this.#initActionNodeFromRoot(root);
   }
 
   /**
    * Sets the time interval of frame.
    * @param {number} time
    */
-  setUnitTime(time) {
-    this._unitTime = time;
+  set unitTime(time) {
+    this.#unitTime = time;
     this._refreshActionProperty();
   }
 
@@ -175,8 +168,8 @@ export class ActionNode extends NewClass {
    * Returns the time interval of frame.
    * @returns {number}
    */
-  getUnitTime() {
-    return this._unitTime;
+  get unitTime() {
+    return this.#unitTime;
   }
 
   /**
@@ -184,7 +177,7 @@ export class ActionNode extends NewClass {
    * @param {Number} tag
    */
   setActionTag(tag) {
-    this._actionTag = tag;
+    this.#actionTag = tag;
   }
 
   /**
@@ -192,7 +185,7 @@ export class ActionNode extends NewClass {
    * @returns {number}
    */
   getActionTag() {
-    return this._actionTag;
+    return this.#actionTag;
   }
 
   /**
@@ -200,7 +193,7 @@ export class ActionNode extends NewClass {
    * @param {Object} node
    */
   setObject(node) {
-    this._object = node;
+    this.#object = node;
   }
 
   /**
@@ -208,7 +201,7 @@ export class ActionNode extends NewClass {
    * @returns {*}
    */
   getObject() {
-    return this._object;
+    return this.#object;
   }
 
   /**
@@ -216,8 +209,7 @@ export class ActionNode extends NewClass {
    * @returns {Node}
    */
   getActionNode() {
-    if (this._object instanceof Node) return this._object;
-    return null;
+    return this.#object instanceof Node ? this.#object : null;
   }
 
   /**
@@ -228,7 +220,7 @@ export class ActionNode extends NewClass {
   insertFrame(index, frame) {
     if (frame == null) return;
     var frameType = frame.frameType;
-    var array = this._frameArray[frameType];
+    var array = this.#frameArray[frameType];
     array.splice(index, 0, frame);
   }
 
@@ -239,7 +231,7 @@ export class ActionNode extends NewClass {
   addFrame(frame) {
     if (!frame) return;
     var frameType = frame.frameType;
-    var array = this._frameArray[frameType];
+    var array = this.#frameArray[frameType];
     array.push(frame);
   }
 
@@ -250,7 +242,7 @@ export class ActionNode extends NewClass {
   deleteFrame(frame) {
     if (frame === undefined) return;
     var frameType = frame.frameType;
-    var array = this._frameArray[frameType];
+    var array = this.#frameArray[frameType];
     arrayRemoveObject(array, frame);
   }
 
@@ -258,15 +250,15 @@ export class ActionNode extends NewClass {
    * Removes all ActionFrames from ActionNode.
    */
   clearAllFrame() {
-    for (var i = 0; i < this._frameArrayNum; i++)
-      this._frameArray[i].length = 0;
+    for (var i = 0; i < this.#frameArrayNum; i++)
+      this.#frameArray[i].length = 0;
   }
 
   _refreshActionProperty() {
-    if (!this._object) return null;
+    if (!this.#object) return null;
     var locSpawnArray = [];
-    for (var i = 0; i < this._frameArrayNum; i++) {
-      var locArray = this._frameArray[i];
+    for (var i = 0; i < this.#frameArrayNum; i++) {
+      var locArray = this.#frameArray[i];
       if (locArray.length <= 0) continue;
       var locSequenceArray = [];
       for (var j = 0; j < locArray.length; j++) {
@@ -275,7 +267,7 @@ export class ActionNode extends NewClass {
         if (j !== 0) {
           var locSrcFrame = locArray[j - 1];
           var locDuration =
-            (locFrame.frameIndex - locSrcFrame.frameIndex) * this.getUnitTime();
+            (locFrame.frameIndex - locSrcFrame.frameIndex) * this.unitTime;
           locAction = locFrame.getAction(locDuration);
         } else {
           locAction = locFrame.getAction(0);
@@ -288,9 +280,9 @@ export class ActionNode extends NewClass {
       }
     }
 
-    this._action = null;
-    this._actionSpawn = spawn(locSpawnArray);
-    return this._actionSpawn;
+    this.#action = null;
+    this.#actionSpawn = spawn(locSpawnArray);
+    return this.#actionSpawn;
   }
 
   /**
@@ -298,15 +290,15 @@ export class ActionNode extends NewClass {
    * @param {CallFunc} fun
    */
   playAction(fun) {
-    if (!this._object || !this._actionSpawn) return;
-    if (fun) this._action = sequence(this._actionSpawn, fun);
-    else this._action = sequence(this._actionSpawn);
+    if (!this.#object || !this.#actionSpawn) return;
+    if (fun) this.#action = sequence(this.#actionSpawn, fun);
+    else this.#action = sequence(this.#actionSpawn);
     this._runAction();
   }
 
   _runAction() {
     var node = this.getActionNode();
-    if (node !== null && this._action !== null) node.runAction(this._action);
+    if (node !== null && this.#action !== null) node.runAction(this.#action);
   }
 
   /**
@@ -314,8 +306,8 @@ export class ActionNode extends NewClass {
    */
   stopAction() {
     var node = this.getActionNode();
-    if (node !== null && this._action !== null) {
-      if (!this._action.isDone()) node.stopAction(this._action);
+    if (node !== null && this.#action !== null) {
+      if (!this.#action.isDone()) node.stopAction(this.#action);
     }
   }
 
@@ -326,8 +318,8 @@ export class ActionNode extends NewClass {
   getFirstFrameIndex() {
     var locFrameindex = 99999;
     var bFindFrame = false,
-      locFrameArray = this._frameArray;
-    for (var i = 0, len = this._frameArrayNum; i < len; i++) {
+      locFrameArray = this.#frameArray;
+    for (var i = 0, len = this.#frameArrayNum; i < len; i++) {
       var locArray = locFrameArray[i];
       if (locArray.length <= 0) continue;
       bFindFrame = true;
@@ -346,8 +338,8 @@ export class ActionNode extends NewClass {
   getLastFrameIndex() {
     var locFrameindex = -1;
     var locIsFindFrame = false,
-      locFrameArray = this._frameArray;
-    for (var i = 0, len = this._frameArrayNum; i < len; i++) {
+      locFrameArray = this.#frameArray;
+    for (var i = 0, len = this.#frameArrayNum; i < len; i++) {
       var locArray = locFrameArray[i];
       if (locArray.length <= 0) continue;
       locIsFindFrame = true;
@@ -367,28 +359,28 @@ export class ActionNode extends NewClass {
    */
   updateActionToTimeLine(time) {
     var locIsFindFrame = false;
-    var locUnitTime = this.getUnitTime();
-    for (var i = 0; i < this._frameArrayNum; i++) {
-      var locArray = this._frameArray[i];
+    var locUnitTime = this.unitTime;
+    for (var i = 0; i < this.#frameArrayNum; i++) {
+      var locArray = this.#frameArray[i];
       if (!locArray) continue;
 
       for (var j = 0; j < locArray.length; j++) {
         var locFrame = locArray[j];
         if (locFrame.frameIndex * locUnitTime === time) {
-          this._easingToFrame(1.0, 1.0, locFrame);
+          this.#easingToFrame(1.0, 1.0, locFrame);
           locIsFindFrame = true;
           break;
         } else if (locFrame.frameIndex * locUnitTime > time) {
           if (j === 0) {
-            this._easingToFrame(1.0, 1.0, locFrame);
+            this.#easingToFrame(1.0, 1.0, locFrame);
             locIsFindFrame = false;
           } else {
             var locSrcFrame = locArray[j - 1];
             var locDuration =
               (locFrame.frameIndex - locSrcFrame.frameIndex) * locUnitTime;
             var locDelaytime = time - locSrcFrame.frameIndex * locUnitTime;
-            this._easingToFrame(locDuration, 1.0, locSrcFrame);
-            this._easingToFrame(
+            this.#easingToFrame(locDuration, 1.0, locSrcFrame);
+            this.#easingToFrame(
               locDuration,
               locDelaytime / locDuration,
               locFrame
@@ -402,7 +394,17 @@ export class ActionNode extends NewClass {
     return locIsFindFrame;
   }
 
-  _easingToFrame(duration, delayTime, destFrame) {
+  #initActionNodeFromRoot(root) {
+    if (root instanceof Widget) {
+      var widget = helper.seekActionWidgetByActionTag(
+        root,
+        this.getActionTag()
+      );
+      if (widget) this.setObject(widget);
+    }
+  }
+
+  #easingToFrame(duration, delayTime, destFrame) {
     var action = destFrame.getAction(duration);
     var node = this.getActionNode();
     if (action == null || node == null) return;
@@ -415,8 +417,7 @@ export class ActionNode extends NewClass {
    * @returns {Boolean} that if the action is done once time
    */
   isActionDoneOnce() {
-    if (!this._action) return true;
-    return this._action.isDone();
+    return !this.#action || this.#action.isDone();
   }
 };
 

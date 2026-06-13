@@ -113,7 +113,7 @@ export default class WebGLTextureRenderer {
     return this._pixelFormat;
   }
 
-  getName() {
+  get name() {
     return this._webTextureObj;
   }
 

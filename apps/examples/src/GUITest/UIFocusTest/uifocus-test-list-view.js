@@ -59,7 +59,7 @@ export class UIFocusTestListView extends UIFocusTestBase {
         "ccs-res/cocosui/backtotoppressed.png",
         "ccs-res/cocosui/backtotopnormal.png"
       );
-      default_button.setName("Title Button");
+      default_button.name = "Title Button";
 
       // set model
       this._listView.setItemModel(default_button);

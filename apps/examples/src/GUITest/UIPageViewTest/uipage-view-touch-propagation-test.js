@@ -70,7 +70,7 @@ export class UIPageViewTouchPropagationTest extends UIMainLayer {
               "ccs-res/cocosui/animationbuttonnormal.png",
               "ccs-res/cocosui/animationbuttonpressed.png"
             );
-            btn.setName("button " + j);
+            btn.name = "button " + j;
             btn.addTouchEventListener(this.onButtonClicked, this);
             innerBox.addChild(btn);
           }
@@ -85,7 +85,7 @@ export class UIPageViewTouchPropagationTest extends UIMainLayer {
       }
 
       pageView.addEventListener(this.pageViewEvent, this);
-      pageView.setName("pageView");
+      pageView.name = "pageView";
       pageView.addTouchEventListener(function (sender, type) {
         if (type == Widget.TOUCH_BEGAN) {
           log("page view touch began");
@@ -127,7 +127,7 @@ export class UIPageViewTouchPropagationTest extends UIMainLayer {
         propagationPosition.y - 20
       );
 
-      checkBox1.setName("propagation");
+      checkBox1.name = "propagation";
       this._mainNode.addChild(checkBox1);
 
       // Create the checkbox
@@ -144,7 +144,7 @@ export class UIPageViewTouchPropagationTest extends UIMainLayer {
         swallowPosition.y - 20
       );
 
-      checkBox2.setName("swallow");
+      checkBox2.name = "swallow";
       this._mainNode.addChild(checkBox2);
 
       //            var eventListener = new EventListenerTouchOneByOne();

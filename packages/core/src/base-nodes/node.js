@@ -1091,7 +1091,7 @@ export class Node extends NewClass {
    * @function
    * @param {String} name
    */
-  setName(name) {
+  set name(name) {
     this._name = name;
   }
 
@@ -1100,7 +1100,7 @@ export class Node extends NewClass {
    * @function
    * @returns {string} A string that identifies the node.
    */
-  getName() {
+  get name() {
     return this._name;
   }
 
@@ -1304,7 +1304,7 @@ export class Node extends NewClass {
    * @function
    * @param {Node} child  A child node
    * @param {Number} [localZOrder=]  Z order for drawing priority. Please refer to setZOrder(int)
-   * @param {Number|String} [tag=]  An integer or a name to identify the node easily. Please refer to tag = int and setName(string)
+   * @param {Number|String} [tag=]  An integer or a name to identify the node easily. Please refer to tag = int and name = string
    */
   addChild(child, localZOrder, tag) {
     localZOrder = localZOrder === undefined ? child._localZOrder : localZOrder;
@@ -1334,7 +1334,7 @@ export class Node extends NewClass {
 
     this._insertChild(child, localZOrder);
     if (setTag) child.tag = tag;
-    else child.setName(name);
+    else child.name = name;
 
     child.parent = this;
     child.setOrderOfArrival(s_globalOrderOfArrival);

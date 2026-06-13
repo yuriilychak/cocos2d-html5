@@ -70,7 +70,7 @@ export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
               "ccs-res/cocosui/animationbuttonnormal.png",
               "ccs-res/cocosui/animationbuttonpressed.png"
             );
-            btn.setName("button " + j);
+            btn.name = "button " + j;
             innerBox.addChild(btn);
           }
 
@@ -84,7 +84,7 @@ export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
       }
 
       pageView.addEventListener(this.pageViewEvent, this);
-      pageView.setName("pageView");
+      pageView.name = "pageView";
       this._mainNode.addChild(pageView);
 
       //add buttons
@@ -107,7 +107,7 @@ export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
               "ccs-res/cocosui/animationbuttonnormal.png",
               "ccs-res/cocosui/animationbuttonpressed.png"
             );
-            btn.setName("button " + j);
+            btn.name = "button " + j;
             innerBox.addChild(btn);
           }
 

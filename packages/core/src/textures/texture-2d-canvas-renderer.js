@@ -192,7 +192,7 @@ export default class CanvasTextureRenderer {
     t._htmlElementObj = null;
   }
 
-  getName() {
+  get name() {
     return null;
   }
 

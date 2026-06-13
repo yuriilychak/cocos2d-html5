@@ -62,13 +62,13 @@ export class ComponentContainer extends NewClass {
             this._components = {};
             this._owner.scheduleUpdate();
         }
-        var oldComponent = this._components[component.getName()];
+        var oldComponent = this._components[component.name];
         if (oldComponent) {
             log("ComponentContainer.add(): Component already added. It can't be added again");
             return false;
         }
         component.setOwner(this._owner);
-        this._components[component.getName()] = component;
+        this._components[component.name] = component;
         component.onEnter();
         return true;
     }
@@ -91,7 +91,7 @@ export class ComponentContainer extends NewClass {
             return false;
         component.onExit();
         component.setOwner(null);
-        delete this._components[component.getName()];
+        delete this._components[component.name];
         return true;
     }
 

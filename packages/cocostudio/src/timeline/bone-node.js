@@ -116,7 +116,7 @@ export function _setSkeletonNodeClass(SN) { _SkeletonNode = SN; }
             if (typeof skin === "string") {
                 for (i = 0; i < boneSkins.length; i++) {
                     boneSkin = boneSkins[i];
-                    if (skin == boneSkin.getName()) {
+                    if (skin == boneSkin.name) {
                         boneSkin.setVisible(true);
                     } else if (hideOthers) {
                         boneSkin.setVisible(false);
@@ -306,10 +306,10 @@ export function _setSkeletonNodeClass(SN) { _SkeletonNode = SN; }
                 this._rootSkeleton._subBonesOrderDirty = true;
         }
 
-        setName(name) {
+        set name(name) {
             var rootSkeleton = this._rootSkeleton;
-            var oldName = this.getName();
-            super.setName(name);
+            var oldName = this.name;
+            super.name = name;
             if (rootSkeleton != null) {
                 var oIter = rootSkeleton._subBonesMap[oldName];
                 var nIter = rootSkeleton._subBonesMap[name];
@@ -371,7 +371,7 @@ export function _setSkeletonNodeClass(SN) { _SkeletonNode = SN; }
                 for (var subBone, i = 0; i < subBones.length; i++) {
                     subBone = subBones[i];
                     subBone._rootSkeleton = null;
-                    delete this._rootSkeleton._subBonesMap[subBone.getName()];
+                    delete this._rootSkeleton._subBonesMap[subBone.name];
                     this._rootSkeleton._subBonesDirty = true;
                     this._rootSkeleton._subBonesOrderDirty = true;
                 }
@@ -401,13 +401,13 @@ export function _setSkeletonNodeClass(SN) { _SkeletonNode = SN; }
                     for (var subBone, i = 0; i < subBones.length; i++) {
                         subBone = subBones[i];
                         subBone._setRootSkeleton(this._rootSkeleton);
-                        var bonename = subBone.getName();
+                        var bonename = subBone.name;
                         if (!this._rootSkeleton._subBonesMap[bonename]) {
-                            this._rootSkeleton._subBonesMap[subBone.getName()] = subBone;
+                            this._rootSkeleton._subBonesMap[subBone.name] = subBone;
                             this._rootSkeleton._subBonesDirty = true;
                             this._rootSkeleton._subBonesOrderDirty = true;
                         } else {
-                            log("already has a bone named %s in skeleton %s", bonename, this._rootSkeleton.getName());
+                            log("already has a bone named %s in skeleton %s", bonename, this._rootSkeleton.name);
                             this._rootSkeleton._subBonesDirty = true;
                             this._rootSkeleton._subBonesOrderDirty = true;
                         }

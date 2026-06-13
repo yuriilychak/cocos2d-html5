@@ -6,13 +6,15 @@ import { FRAME_TYPE_FADE } from "./constants.js";
  * The Cocostudio's fade action frame.
  */
 export class ActionFadeFrame extends ActionFrame {
-  /**
-   * Construction of ActionFadeFrame
-   */
-  constructor() {
-    super();
-    this._opacity = 255;
-    this.frameType = FRAME_TYPE_FADE;
+  #opacity = 255;
+  #frameType = FRAME_TYPE_FADE;
+
+  get frameType() {
+    return this.#frameType;
+  }
+
+  set frameType(frameType) {
+    this.#frameType = frameType;
   }
 
   /**
@@ -20,7 +22,7 @@ export class ActionFadeFrame extends ActionFrame {
    * @param {number} opacity
    */
   set opacity(opacity) {
-    this._opacity = opacity;
+    this.#opacity = opacity;
   }
 
   /**
@@ -28,7 +30,7 @@ export class ActionFadeFrame extends ActionFrame {
    * @returns {number}
    */
   get opacity() {
-    return this._opacity;
+    return this.#opacity;
   }
 
   /**
@@ -37,7 +39,7 @@ export class ActionFadeFrame extends ActionFrame {
    * @returns {FadeTo}
    */
   getAction(duration) {
-    return this._getEasingAction(new FadeTo(duration, this._opacity));
+    return this._getEasingAction(new FadeTo(duration, this.#opacity));
   }
 };
 

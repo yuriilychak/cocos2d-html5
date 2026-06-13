@@ -31,7 +31,7 @@ export class UILoadingBarTest_Right extends UILoadingBarTest {
   createLoadingBar() {
     var widgetSize = this._widget.getContentSize();
     var loadingBar = new LoadingBar();
-    loadingBar.setName("LoadingBar");
+    loadingBar.name = "LoadingBar";
     loadingBar.loadTexture("ccs-res/cocosui/sliderProgress.png");
     loadingBar.setDirection(LoadingBar.TYPE_RIGHT);
     loadingBar.setPercent(0);

@@ -148,7 +148,7 @@ export class Bone extends Node {
 
     if (this._boneData !== boneData) this._boneData = boneData;
 
-    this.setName(this._boneData.name);
+    this.name = this._boneData.name;
     this._localZOrder = this._boneData.zOrder;
     this._displayManager.initDisplayList(boneData);
   }

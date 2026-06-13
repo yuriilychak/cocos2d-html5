@@ -19,7 +19,7 @@ var CLASSNAME_MAP = {
 };
 
 function applyCommonAttributes(widget, opts) {
-    if (opts.name != null) widget.setName(opts.name);
+    if (opts.name != null) widget.name = opts.name;
     if (opts.tag != null) widget.tag = opts.tag;
     if (opts.width != null && opts.height != null)
         widget.setContentSize(opts.width, opts.height);

@@ -57,11 +57,11 @@ export class Component extends NewClass {
         this._enabled = enable;
     }
 
-    getName() {
+    get name() {
         return this._name;
     }
 
-    setName(name) {
+    set name(name) {
         this._name = name;
     }
 

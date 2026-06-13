@@ -32,7 +32,7 @@ export class UILoadingBarTest_Right_Scale9 extends UILoadingBarTest {
   createLoadingBar() {
     var widgetSize = this._widget.getContentSize();
     var loadingBar = new LoadingBar();
-    loadingBar.setName("LoadingBar");
+    loadingBar.name = "LoadingBar";
     loadingBar.setScale9Enabled(true);
     loadingBar.loadTexture("ccs-res/cocosui/slider_bar_active_9patch.png");
     loadingBar.setCapInsets(new Rect(0, 0, 0, 0));

@@ -55,7 +55,7 @@ export class UIListViewTest_TouchIntercept extends UIMainLayer {
 
             // create model
             var default_button = new Button();
-            default_button.setName("Title Button");
+            default_button.name = "Title Button";
             default_button.loadTextures("ccs-res/cocosui/backtotoppressed.png", "ccs-res/cocosui/backtotopnormal.png", "");
 
             var default_item = new Layout();

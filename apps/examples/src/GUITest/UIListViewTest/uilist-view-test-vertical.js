@@ -73,7 +73,7 @@ export class UIListViewTest_Vertical extends UIMainLayer {
 
       // create model
       var default_button = new Button();
-      default_button.setName("TextButton");
+      default_button.name = "TextButton";
       default_button.setTouchEnabled(true);
       default_button.loadTextures(
         "ccs-res/cocosui/backtotoppressed.png",

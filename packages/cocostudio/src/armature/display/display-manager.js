@@ -136,7 +136,7 @@ export class DisplayManager extends NewClass {
       if (armature) display.setParent(armature);
     } else if (display instanceof Armature) {
       displayData = new ArmatureDisplayData();
-      displayData.displayName = display.getName();
+      displayData.displayName = display.name;
       display.parentBone = this._bone;
     } else displayData = new DisplayData();
     decoDisplay.setDisplay(display);
@@ -187,7 +187,7 @@ export class DisplayManager extends NewClass {
       displayData.displayName = display._plistFile;
     } else if (display instanceof Armature) {
       displayData = new ArmatureDisplayData();
-      displayData.displayName = display.getName();
+      displayData.displayName = display.name;
       display.parentBone = this._bone;
     } else {
       displayData = new DisplayData();

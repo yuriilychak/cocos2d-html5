@@ -140,11 +140,11 @@ export class RelativeLayoutParameter extends LayoutParameter {
         return this._relativeAlign;
     }
 
-    setRelativeToWidgetName(name) {
+    set relativeToWidgetName(name) {
         this._relativeWidgetName = name;
     }
 
-    getRelativeToWidgetName() {
+    get relativeToWidgetName() {
         return this._relativeWidgetName;
     }
 
@@ -164,7 +164,7 @@ export class RelativeLayoutParameter extends LayoutParameter {
         super._copyProperties(model);
         if (model instanceof RelativeLayoutParameter) {
             this.setAlign(model._relativeAlign);
-            this.setRelativeToWidgetName(model._relativeWidgetName);
+            this.relativeToWidgetName = model._relativeWidgetName;
             this.setRelativeName(model._relativeLayoutName);
         }
     }
