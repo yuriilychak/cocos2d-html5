@@ -1,3 +1,4 @@
+import "./injections";
 export { default as EaseIn } from './ease-in';
 export { default as EaseOut } from './ease-out';
 export { default as ActionEase } from './action-ease';

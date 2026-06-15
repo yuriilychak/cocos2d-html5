@@ -1,0 +1,21 @@
+import EaseBackIn from "./ease-back-in";
+import EaseBackOut from "./ease-back-out";
+import EaseBounceIn from "./ease-bounce-in";
+import EaseBounceOut from "./ease-bounce-out";
+import EaseElasticIn from "./ease-elastic-in";
+import EaseElasticOut from "./ease-elastic-out";
+import EaseExponentialIn from "./ease-exponential-in";
+import EaseExponentialOut from "./ease-exponential-out";
+import EaseSineIn from "./ease-sine-in";
+import EaseSineOut from "./ease-sine-out";
+
+EaseBackIn.ReversedAction = EaseBackOut;
+EaseBackOut.ReversedAction = EaseBackIn;
+EaseBounceIn.ReversedAction = EaseBounceOut;
+EaseBounceOut.ReversedAction = EaseBounceIn;
+EaseElasticIn.ReversedAction = EaseElasticOut;
+EaseElasticOut.ReversedAction = EaseElasticIn;
+EaseExponentialIn.ReversedAction = EaseExponentialOut;
+EaseExponentialOut.ReversedAction = EaseExponentialIn;
+EaseSineIn.ReversedAction = EaseSineOut;
+EaseSineOut.ReversedAction = EaseSineIn;
