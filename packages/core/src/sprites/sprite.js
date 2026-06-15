@@ -134,7 +134,7 @@ export class Sprite extends EventHelper(Node) {
     this._offsetPosition = null; // absolute
     this._unflippedOffsetPositionFromCenter = null;
 
-    this.isOpacityModifyRGB = false;
+    this._opacityModifyRGB = false;
 
     // image is flipped
     this._flippedX = false; //Whether the sprite is flipped horizontally or not.
@@ -370,8 +370,8 @@ export class Sprite extends EventHelper(Node) {
    * @param {Boolean} modify
    */
   set isOpacityModifyRGB(modify) {
-    if (super.isOpacityModifyRGB !== modify) {
-      super.isOpacityModifyRGB = modify;
+    if (this._opacityModifyRGB !== modify) {
+      this._opacityModifyRGB = modify;
       this._renderCmd._setColorDirty();
     }
   }
@@ -381,7 +381,7 @@ export class Sprite extends EventHelper(Node) {
    * @return {Boolean}
    */
   get isOpacityModifyRGB() {
-    return super.isOpacityModifyRGB;
+    return this._opacityModifyRGB;
   }
 
   /**
