@@ -36,7 +36,7 @@ import {
   MoveBy,
   easeCubicActionIn,
   easeCubicActionOut,
-  sequence
+  Sequence
 } from "@aspect/actions";
 
 export class SpriteEaseCubicTest extends EaseSpriteDemo {

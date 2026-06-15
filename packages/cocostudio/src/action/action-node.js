@@ -28,8 +28,8 @@
 /**
  * The Cocostudio's action node, it contains action target, action frame list and current frame index.  it can be play action by calling playAciton.
  */
-import { Color, NewClass, Node, REPEAT_FOREVER, arrayRemoveObject } from "@aspect/core";
-import { sequence, spawn } from "@aspect/actions";
+import { Color, NewClass, Node, arrayRemoveObject } from "@aspect/core";
+import { Sequence, Spawn } from "@aspect/actions";
 import { helper, Layout, Widget } from "@aspect/ccui";
 
 import { ActionFadeFrame } from "./action-frame/action-fade-frame.js";
@@ -275,13 +275,13 @@ export class ActionNode extends NewClass {
         if (locAction) locSequenceArray.push(locAction);
       }
       if (locSequenceArray) {
-        var locSequence = sequence(locSequenceArray);
+        var locSequence = new Sequence(locSequenceArray);
         if (locSequence !== null) locSpawnArray.push(locSequence);
       }
     }
 
     this.#action = null;
-    this.#actionSpawn = spawn(locSpawnArray);
+    this.#actionSpawn = new Spawn(locSpawnArray);
     return this.#actionSpawn;
   }
 
@@ -291,8 +291,8 @@ export class ActionNode extends NewClass {
    */
   playAction(fun) {
     if (!this.#object || !this.#actionSpawn) return;
-    if (fun) this.#action = sequence(this.#actionSpawn, fun);
-    else this.#action = sequence(this.#actionSpawn);
+    if (fun) this.#action = new Sequence(this.#actionSpawn, fun);
+    else this.#action = new Sequence(this.#actionSpawn);
     this._runAction();
   }
 

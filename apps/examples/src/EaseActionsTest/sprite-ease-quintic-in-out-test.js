@@ -35,7 +35,7 @@ import {
   DelayTime,
   MoveBy,
   easeQuinticActionInOut,
-  sequence
+  Sequence
 } from "@aspect/actions";
 
 export class SpriteEaseQuinticInOutTest extends EaseSpriteDemo {

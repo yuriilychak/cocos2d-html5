@@ -36,7 +36,7 @@ import {
   MoveBy,
   easeQuarticActionIn,
   easeQuarticActionOut,
-  sequence
+  Sequence
 } from "@aspect/actions";
 
 export class SpriteEaseQuarticTest extends EaseSpriteDemo {

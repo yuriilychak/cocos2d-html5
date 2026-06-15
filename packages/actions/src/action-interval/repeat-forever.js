@@ -5,7 +5,7 @@ import ActionInterval from "./action-interval";
  * @warning This action can't be Sequenceable because it is not an IntervalAction
  * @param {FiniteTimeAction} action
  * @example
- * var rep = new RepeatForever(sequence(jump2, jump1), 5);
+ * var rep = new RepeatForever(new Sequence(jump2, jump1), 5);
  */
 export default class RepeatForever extends ActionInterval {
   _innerAction = null; //ActionInterval

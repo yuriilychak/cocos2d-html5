@@ -8,7 +8,7 @@ import {
   EventListener,
   ServiceLocator
 } from "@aspect/core";
-import { MoveTo, CallFunc, sequence, ActionTween } from "@aspect/actions";
+import { MoveTo, CallFunc, Sequence, ActionTween } from "@aspect/actions";
 
 export const SCROLLVIEW_DIRECTION_NONE = -1;
 export const SCROLLVIEW_DIRECTION_HORIZONTAL = 0;
@@ -214,7 +214,7 @@ export class GScrollView extends Layer {
   setContentOffsetInDuration(offset, dt) {
     var scroll = new MoveTo(dt, offset);
     var expire = new CallFunc(this._stoppedAnimatedScroll, this);
-    this._container.runAction(sequence(scroll, expire));
+    this._container.runAction(new Sequence(scroll, expire));
     this.schedule(this._performedAnimatedScroll);
   }
 

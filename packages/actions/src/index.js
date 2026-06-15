@@ -66,11 +66,6 @@ EaseExponentialOut.ReversedAction = EaseExponentialIn;
 EaseSineIn.ReversedAction = EaseSineOut;
 EaseSineOut.ReversedAction = EaseSineIn;
 
-
-// Factory functions for backward compatibility
-export const sequence = (...args) => new Sequence(...args);
-export const spawn = (...args) => new Spawn(...args);
-
 // ─── Re-exports ─────────────────────────────────────
 export {
   easeIn, easeOut, easeInOut,

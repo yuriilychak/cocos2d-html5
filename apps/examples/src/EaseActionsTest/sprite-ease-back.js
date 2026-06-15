@@ -38,7 +38,7 @@ import {
   MoveBy,
   easeBackIn,
   easeBackOut,
-  sequence
+  Sequence
 } from "@aspect/actions";
 
 export class SpriteEaseBack extends EaseSpriteDemo {

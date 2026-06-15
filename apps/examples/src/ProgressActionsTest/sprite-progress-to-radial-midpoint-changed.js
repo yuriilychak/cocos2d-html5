@@ -29,7 +29,7 @@ import { SpriteDemo } from "./sprite-demo";
 import { s_pathBlock } from "../resources";
 import { winSize } from "../constants";
 import { Point, Sprite } from "@aspect/core";
-import { sequence } from "@aspect/actions";
+import { Sequence } from "@aspect/actions";
 
 import { ProgressTimer, ProgressTo } from "@aspect/progress-timer";
 export class SpriteProgressToRadialMidpointChanged extends SpriteDemo {

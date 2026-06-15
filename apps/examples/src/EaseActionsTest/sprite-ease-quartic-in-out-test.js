@@ -35,7 +35,7 @@ import {
   DelayTime,
   MoveBy,
   easeQuarticActionInOut,
-  sequence
+  Sequence
 } from "@aspect/actions";
 
 export class SpriteEaseQuarticInOutTest extends EaseSpriteDemo {

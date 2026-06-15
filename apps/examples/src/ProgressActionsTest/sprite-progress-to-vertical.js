@@ -29,7 +29,7 @@ import { SpriteDemo } from "./sprite-demo";
 import { s_pathSister1, s_pathSister2 } from "../resources";
 import { winSize } from "../constants";
 import { Point, Sprite } from "@aspect/core";
-import { sequence } from "@aspect/actions";
+import { Sequence } from "@aspect/actions";
 
 import { ProgressTimer, ProgressTo } from "@aspect/progress-timer";
 export class SpriteProgressToVertical extends SpriteDemo {

@@ -5,10 +5,10 @@ import { log } from "@aspect/core";
  * Runs actions sequentially, one after another.
  * @param {Array|FiniteTimeAction} tempArray
  * @example
- * // create sequence with actions
+ * // create Sequence with actions
  * var seq = new Sequence(act1, act2);
  *
- * // create sequence with array
+ * // create Sequence with array
  * var seq = new Sequence(actArray);
  */
 export default class Sequence extends ActionInterval {
@@ -36,7 +36,7 @@ export default class Sequence extends ActionInterval {
       for (var i = 1; i < last; i++) {
         if (paramArray[i]) {
           action1 = prev;
-          prev = Sequence._actionOneTwo(action1, paramArray[i]);
+          prev = new Sequence(action1, paramArray[i]);
         }
       }
       this.initWithTwoActions(prev, paramArray[last]);
@@ -156,24 +156,12 @@ export default class Sequence extends ActionInterval {
    * @return {Sequence}
    */
   reverse() {
-    var action = Sequence._actionOneTwo(
+    var action = new Sequence(
       this._actions[1].reverse(),
       this._actions[0].reverse()
     );
     this._cloneDecoration(action);
     this._reverseEaseList(action);
     return action;
-  }
-
-  /**
-   * Creates a Sequence from exactly two actions.
-   * @param {FiniteTimeAction} actionOne
-   * @param {FiniteTimeAction} actionTwo
-   * @return {Sequence}
-   */
-  static _actionOneTwo(actionOne, actionTwo) {
-    var sequence = new Sequence();
-    sequence.initWithTwoActions(actionOne, actionTwo);
-    return sequence;
   }
 }

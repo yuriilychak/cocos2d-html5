@@ -37,7 +37,7 @@ import {
   DelayTime,
   MoveBy,
   easeExponentialInOut,
-  sequence
+  Sequence
 } from "@aspect/actions";
 
 export class SpriteEaseExponentialInOut extends EaseSpriteDemo {

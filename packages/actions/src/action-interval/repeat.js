@@ -7,7 +7,7 @@ import ActionInstant from "../action-instant/action-instant";
  * @param {FiniteTimeAction} action
  * @param {Number} times
  * @example
- * var rep = new Repeat(sequence(jump2, jump1), 5);
+ * var rep = new Repeat(new Sequence(jump2, jump1), 5);
  */
 export default class Repeat extends ActionInterval {
   _times = 0;

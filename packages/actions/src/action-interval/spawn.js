@@ -39,7 +39,7 @@ export default class Spawn extends ActionInterval {
       for (i = 1; i < last; i++) {
         if (paramArray[i]) {
           action1 = prev;
-          prev = Spawn._actionOneTwo(action1, paramArray[i]);
+          prev = new Spawn(action1, paramArray[i]);
         }
       }
       this.initWithTwoActions(prev, paramArray[last]);
@@ -67,9 +67,9 @@ export default class Spawn extends ActionInterval {
       this._two = action2;
 
       if (d1 > d2) {
-        this._two = Sequence._actionOneTwo(action2, delayTime(d1 - d2));
+        this._two = new Sequence(action2, delayTime(d1 - d2));
       } else if (d1 < d2) {
-        this._one = Sequence._actionOneTwo(action1, delayTime(d2 - d1));
+        this._one = new Sequence(action1, delayTime(d2 - d1));
       }
 
       ret = true;
@@ -122,21 +122,9 @@ export default class Spawn extends ActionInterval {
    * @return {Spawn}
    */
   reverse() {
-    var action = Spawn._actionOneTwo(this._one.reverse(), this._two.reverse());
+    var action = new Spawn(this._one.reverse(), this._two.reverse());
     this._cloneDecoration(action);
     this._reverseEaseList(action);
     return action;
-  }
-
-  /**
-   * Creates a Spawn from exactly two actions.
-   * @param {FiniteTimeAction} action1
-   * @param {FiniteTimeAction} action2
-   * @return {Spawn}
-   */
-  static _actionOneTwo(action1, action2) {
-    var spawn = new Spawn();
-    spawn.initWithTwoActions(action1, action2);
-    return spawn;
   }
 }

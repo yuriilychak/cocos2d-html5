@@ -60,8 +60,7 @@ import {
   Spawn,
   TintBy,
   TintTo,
-  Sequence,
-  spawn
+  Sequence
 } from "@aspect/actions";
 import { ButtonLayout } from "../button-layout";
 import { winSize } from "../constants";

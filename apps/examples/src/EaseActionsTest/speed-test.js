@@ -29,7 +29,7 @@ import { EaseSpriteDemo } from "./ease-sprite-demo";
 import { winSize } from "../constants";
 import { TAG_ACTION1_EASE_ACTIONS } from "./ease-actions-test-constants";
 import { Point } from "@aspect/core";
-import { JumpBy, RotateBy, Sequence, spawn } from "@aspect/actions";
+import { JumpBy, RotateBy, Sequence, Spawn } from "@aspect/actions";
 
 export class SpeedTest extends EaseSpriteDemo {
   constructor() {
@@ -49,7 +49,7 @@ export class SpeedTest extends EaseSpriteDemo {
 
     var seq3_1 = new Sequence(jump2, jump1);
     var seq3_2 = new Sequence(rot1, rot2);
-    var spawnAction = spawn(seq3_1, seq3_2);
+    var spawnAction = new Spawn(seq3_1, seq3_2);
 
     var action = spawnAction.repeatForever().speed(2);
     action.tag = TAG_ACTION1_EASE_ACTIONS;
