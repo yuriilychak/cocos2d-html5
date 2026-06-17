@@ -73,7 +73,7 @@ export class UIButtonDisableDefaultTest extends UIMainLayer {
       );
       buttonScale9.setContentSize(150, 70);
       buttonScale9.setPressedActionEnabled(true);
-      buttonScale9.setEnabled(false);
+      buttonScale9.enabled = false;
       buttonScale9.setBright(false);
       this._mainNode.addChild(buttonScale9);
       return true;

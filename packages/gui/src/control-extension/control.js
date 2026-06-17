@@ -168,18 +168,10 @@ export class Control extends Layer {
     return this._state;
   }
 
-  setEnabled(value) {
+  set enabled(value) {
     this._enabled = value;
     this._state = value ? CONTROL_STATE_NORMAL : CONTROL_STATE_DISABLED;
     this.needsLayout();
-  }
-
-  isEnabled() {
-    return this._enabled;
-  }
-
-  set enabled(value) {
-    this.setEnabled(value);
   }
 
   get enabled() {

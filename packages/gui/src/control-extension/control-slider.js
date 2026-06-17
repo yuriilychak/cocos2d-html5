@@ -312,7 +312,7 @@ export class ControlSlider extends Control {
 
 
   set enabled(value) {
-    super.setEnabled(value);
+    super.enabled = value;
 
     if (this._thumb !== null) {
       this._thumb.enabled = value;

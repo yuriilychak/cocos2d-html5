@@ -189,13 +189,6 @@ export class Widget extends ProtectedNode {
     return this.getWidgetParent();
   }
 
-  get enabled() {
-    return this.isEnabled();
-  }
-  set enabled(v) {
-    this.setEnabled(v);
-  }
-
   get focused() {
     return this.isFocused();
   }
@@ -334,7 +327,7 @@ export class Widget extends ProtectedNode {
     return this._isAncestorsVisible(parent);
   }
 
-  setEnabled(enabled) {
+  set enabled(enabled) {
     this._enabled = enabled;
     this.bright = enabled;
   }
@@ -1072,7 +1065,7 @@ export class Widget extends ProtectedNode {
     return this._bright;
   }
 
-  isEnabled() {
+ get enabled() {
     return this._enabled;
   }
 

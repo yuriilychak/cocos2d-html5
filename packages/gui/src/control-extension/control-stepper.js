@@ -227,7 +227,7 @@ export class ControlStepper extends Control {
   }
 
   set enabled(enabled) {
-    super.setEnabled(enabled);
+    super.enabled = enabled;
     if (this._minusButton !== null) {
       this._minusButton.enabled = enabled;
     }

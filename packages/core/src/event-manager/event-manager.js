@@ -657,7 +657,7 @@ export default class EventManager {
         for (; i < listeners.gt0Index; ++i) {
           selListener = fixedPriorityListeners[i];
           if (
-            selListener.isEnabled() &&
+            selListener.enabled &&
             !selListener._isPaused() &&
             selListener._isRegistered() &&
             onEvent(selListener, eventOrArgs)
@@ -674,7 +674,7 @@ export default class EventManager {
       for (j = 0; j < sceneGraphPriorityListeners.length; j++) {
         selListener = sceneGraphPriorityListeners[j];
         if (
-          selListener.isEnabled() &&
+          selListener.enabled &&
           !selListener._isPaused() &&
           selListener._isRegistered() &&
           onEvent(selListener, eventOrArgs)
@@ -690,7 +690,7 @@ export default class EventManager {
       for (; i < fixedPriorityListeners.length; ++i) {
         selListener = fixedPriorityListeners[i];
         if (
-          selListener.isEnabled() &&
+          selListener.enabled &&
           !selListener._isPaused() &&
           selListener._isRegistered() &&
           onEvent(selListener, eventOrArgs)
@@ -1050,7 +1050,7 @@ export default class EventManager {
    * Whether to enable dispatching events
    * @param {boolean} enabled
    */
-  setEnabled(enabled) {
+  set enabled(enabled) {
     this._isEnabled = enabled;
   }
 
@@ -1058,7 +1058,7 @@ export default class EventManager {
    * Checks whether dispatching events is enabled
    * @returns {boolean}
    */
-  isEnabled() {
+  get enabled() {
     return this._isEnabled;
   }
 

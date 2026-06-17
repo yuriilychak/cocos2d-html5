@@ -115,7 +115,7 @@ export class ControlColourPicker extends Control {
   }
 
   set enabled(enabled) {
-    super.setEnabled(enabled);
+    super.enabled = enabled;
     if (this._huePicker !== null) {
       this._huePicker.enabled = enabled;
     }

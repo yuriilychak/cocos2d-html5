@@ -37,7 +37,7 @@ export class ComRender extends Component {
   constructor(node, comName) {
     super();
     this._render = node;
-    this._name = comName;
+    this.name = comName;
     this.isRenderer = true;
     this.init();
   }
@@ -46,15 +46,15 @@ export class ComRender extends Component {
    * The callback calls when a render component enter stage.
    */
   onEnter() {
-    if (this._owner) this._owner.addChild(this._render);
+    if (this.owner) this.owner.addChild(this._render);
   }
 
   /**
    * The callback calls when a render component exit stage.
    */
   onExit() {
-    if (this._owner) {
-      this._owner.removeChild(this._render, true);
+    if (this.owner) {
+      this.owner.removeChild(this._render, true);
       this._render = null;
     }
   }
@@ -75,4 +75,3 @@ export class ComRender extends Component {
     this._render = node;
   }
 };
-

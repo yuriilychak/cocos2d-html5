@@ -20,7 +20,7 @@ export class DirectorCanvasRenderer extends DirectorRenderer {
         director._winSizeInPoints.height = ServiceLocator.game.canvas.height;
         director._openGLView = openGLView || ServiceLocator.eglView;
         if (ServiceLocator.eventManager)
-            ServiceLocator.eventManager.setEnabled(true);
+            ServiceLocator.eventManager.enabled = true;
     }
 
     getVisibleSize() {

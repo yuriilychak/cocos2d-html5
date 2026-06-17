@@ -23,53 +23,63 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass } from '../platform/class';
+import { NewClass } from "../platform/class";
 
 /**
  * The base class of component in CocoStudio
  */
 export class Component extends NewClass {
-    _owner = null;
-    _name = "";
-    _enabled = true;
+  static componentName;
+  #owner = null;
+  #name = "";
+  #enabled = true;
 
-    constructor() {
-        super();
-        this._owner = null;
-        this._name = "";
-        this._enabled = true;
-    }
+  constructor() {
+    super();
+    this.#owner = null;
+    this.#name = this.constructor.componentName || this.constructor.NAME || "";
+    this.#enabled = true;
+  }
 
-    init() {
-        return true;
-    }
+  init() {
+    return true;
+  }
 
-    onEnter() {}
-    onExit() {}
-    update(delta) {}
-    serialize(reader) {}
+  onEnter() {}
 
-    isEnabled() {
-        return this._enabled;
-    }
+  onExit() {}
 
-    setEnabled(enable) {
-        this._enabled = enable;
-    }
+  update(delta) {}
+  
+  serialize(reader) {}
 
-    get name() {
-        return this._name;
-    }
+  get enabled() {
+    return this.#enabled;
+  }
 
-    set name(name) {
-        this._name = name;
-    }
+  set enabled(enable) {
+    this.#enabled = enable;
+  }
 
-    setOwner(owner) {
-        this._owner = owner;
-    }
+  get name() {
+    return (
+      this.#name ||
+      this.constructor.componentName ||
+      this.constructor.NAME ||
+      this._name ||
+      ""
+    );
+  }
 
-    getOwner() {
-        return this._owner;
-    }
+  set name(name) {
+    this.#name = name;
+  }
+
+  set owner(owner) {
+    this.#owner = owner;
+  }
+
+  get owner() {
+    return this.#owner;
+  }
 }

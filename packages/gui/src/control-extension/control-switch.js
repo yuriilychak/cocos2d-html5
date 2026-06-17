@@ -72,7 +72,7 @@ export class ControlSwitch extends Control {
   }
 
   set enabled(enabled) {
-    super.setEnabled(enabled);
+    super.enabled = enabled;
 
     if (this._thumb !== null) {
       this._thumb.enabled = enabled;

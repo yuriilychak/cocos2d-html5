@@ -18,7 +18,7 @@ export class TransitionScene extends Scene {
     var director = ServiceLocator.director;
     this._isSendCleanupToScene = director.isSendCleanupToScene();
     director.runScene(this._inScene);
-    ServiceLocator.eventManager.setEnabled(true);
+    ServiceLocator.eventManager.enabled = true;
     this._outScene.visible = true;
   }
 
@@ -39,7 +39,7 @@ export class TransitionScene extends Scene {
 
   onEnter() {
     Node.prototype.onEnter.call(this);
-    ServiceLocator.eventManager.setEnabled(false);
+    ServiceLocator.eventManager.enabled = false;
     this._outScene._performRecursive(
       Node._stateCallbackType.onExitTransitionDidStart
     );
@@ -48,7 +48,7 @@ export class TransitionScene extends Scene {
 
   onExit() {
     Node.prototype.onExit.call(this);
-    ServiceLocator.eventManager.setEnabled(true);
+    ServiceLocator.eventManager.enalbed = true;
     this._outScene._performRecursive(Node._stateCallbackType.onExit);
     this._inScene._performRecursive(
       Node._stateCallbackType.onEnterTransitionDidFinish

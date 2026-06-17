@@ -30,246 +30,244 @@ import { Component, ServiceLocator } from "@aspect/core";
 import { audioEngine } from "@aspect/audio";
 
 export class ComAudio extends Component {
+  static componentName = "Audio";
 
-    /**
-     * Construction of ComAudio
-     */
-    constructor () {
-        super();
-        this._filePath = "";
-        this._loop = false;
-        this._name = "Audio";
-        this.init();
-    }
+  /**
+   * Construction of ComAudio
+   */
+  constructor() {
+    super();
+    this._filePath = "";
+    this._loop = false;
+    this.init();
+  }
 
-    /**
-     * Initializes a ComAudio.
-     * @returns {boolean}
-     */
-    init () {
-        return true;
-    }
+  /**
+   * Initializes a ComAudio.
+   * @returns {boolean}
+   */
+  init() {
+    return true;
+  }
 
-    /**
-     * The callback calls when a audio component enter stage.
-     * @override
-     */
-    onExit () {
-        this.stopBackgroundMusic(true);
-        this.stopAllEffects();
-    }
+  /**
+   * The callback calls when a audio component enter stage.
+   * @override
+   */
+  onExit() {
+    this.stopBackgroundMusic(true);
+    this.stopAllEffects();
+  }
 
-    /**
-     * Stops all audios.
-     */
-    end () {
-        audioEngine.end();
-    }
+  /**
+   * Stops all audios.
+   */
+  end() {
+    audioEngine.end();
+  }
 
-    /**
-     * Preload background music resource
-     * @param {String} pszFilePath
-     */
-    preloadBackgroundMusic (pszFilePath) {
-        ServiceLocator.loader.load(pszFilePath);
-    }
+  /**
+   * Preload background music resource
+   * @param {String} pszFilePath
+   */
+  preloadBackgroundMusic(pszFilePath) {
+    ServiceLocator.loader.load(pszFilePath);
+  }
 
-    /**
-     * Play background music
-     * @param {String} [pszFilePath]
-     * @param {Boolean} [loop]
-     */
-    playBackgroundMusic (pszFilePath, loop) {
-        if(pszFilePath){
-            audioEngine.playMusic(pszFilePath, loop);
-        }else{
-            audioEngine.playMusic(this._filePath, this._loop);
-        }
+  /**
+   * Play background music
+   * @param {String} [pszFilePath]
+   * @param {Boolean} [loop]
+   */
+  playBackgroundMusic(pszFilePath, loop) {
+    if (pszFilePath) {
+      audioEngine.playMusic(pszFilePath, loop);
+    } else {
+      audioEngine.playMusic(this._filePath, this._loop);
     }
+  }
 
-    /**
-     * Stop background music
-     * @param {String} releaseData
-     */
-    stopBackgroundMusic (releaseData) {
-        audioEngine.stopMusic(releaseData);
-    }
+  /**
+   * Stop background music
+   * @param {String} releaseData
+   */
+  stopBackgroundMusic(releaseData) {
+    audioEngine.stopMusic(releaseData);
+  }
 
-    /**
-     * Pause background music
-     */
-    pauseBackgroundMusic () {
-        audioEngine.pauseMusic();
-    }
+  /**
+   * Pause background music
+   */
+  pauseBackgroundMusic() {
+    audioEngine.pauseMusic();
+  }
 
-    /**
-     * Resume background music
-     */
-    resumeBackgroundMusic () {
-        audioEngine.resumeMusic();
-    }
+  /**
+   * Resume background music
+   */
+  resumeBackgroundMusic() {
+    audioEngine.resumeMusic();
+  }
 
-    /**
-     * Rewind background music
-     */
-    rewindBackgroundMusic () {
-        audioEngine.rewindMusic();
-    }
+  /**
+   * Rewind background music
+   */
+  rewindBackgroundMusic() {
+    audioEngine.rewindMusic();
+  }
 
-    /**
-     * Indicates whether any background music can be played or not.
-     * @returns {boolean}
-     */
-    willPlayBackgroundMusic () {
-        return audioEngine.willPlayMusic();
-    }
+  /**
+   * Indicates whether any background music can be played or not.
+   * @returns {boolean}
+   */
+  willPlayBackgroundMusic() {
+    return audioEngine.willPlayMusic();
+  }
 
-    /**
-     * Whether the music is playing.
-     * @returns {Boolean}
-     */
-    isBackgroundMusicPlaying () {
-        return audioEngine.isMusicPlaying();
-    }
+  /**
+   * Whether the music is playing.
+   * @returns {Boolean}
+   */
+  isBackgroundMusicPlaying() {
+    return audioEngine.isMusicPlaying();
+  }
 
-    /**
-     * The volume of the music max value is 1.0,the min value is 0.0 .
-     * @returns {Number}
-     */
-    getBackgroundMusicVolume () {
-        return audioEngine.getMusicVolume();
-    }
+  /**
+   * The volume of the music max value is 1.0,the min value is 0.0 .
+   * @returns {Number}
+   */
+  getBackgroundMusicVolume() {
+    return audioEngine.getMusicVolume();
+  }
 
-    /**
-     * Set the volume of music.
-     * @param {Number} volume   must be in 0.0~1.0 .
-     */
-    setBackgroundMusicVolume (volume) {
-        audioEngine.setMusicVolume(volume);
-    }
+  /**
+   * Set the volume of music.
+   * @param {Number} volume   must be in 0.0~1.0 .
+   */
+  setBackgroundMusicVolume(volume) {
+    audioEngine.setMusicVolume(volume);
+  }
 
-    /**
-     * The volume of the effects max value is 1.0,the min value is 0.0 .
-     * @returns {Number}
-     */
-    getEffectsVolume () {
-        return audioEngine.getEffectsVolume();
-    }
+  /**
+   * The volume of the effects max value is 1.0,the min value is 0.0 .
+   * @returns {Number}
+   */
+  getEffectsVolume() {
+    return audioEngine.getEffectsVolume();
+  }
 
-    /**
-     * Set the volume of sound effects.
-     * @param {Number} volume
-     */
-    setEffectsVolume (volume) {
-        audioEngine.setEffectsVolume(volume);
-    }
+  /**
+   * Set the volume of sound effects.
+   * @param {Number} volume
+   */
+  setEffectsVolume(volume) {
+    audioEngine.setEffectsVolume(volume);
+  }
 
-    /**
-     * Play sound effect.
-     * @param {String} [pszFilePath]
-     * @param {Boolean} [loop]
-     * @returns {Boolean}
-     */
-    playEffect (pszFilePath, loop) {
-        if (pszFilePath)
-            return audioEngine.playEffect(pszFilePath, loop);
-         else
-            return audioEngine.playEffect(this._filePath, this._loop);
-    }
+  /**
+   * Play sound effect.
+   * @param {String} [pszFilePath]
+   * @param {Boolean} [loop]
+   * @returns {Boolean}
+   */
+  playEffect(pszFilePath, loop) {
+    if (pszFilePath) return audioEngine.playEffect(pszFilePath, loop);
+    else return audioEngine.playEffect(this._filePath, this._loop);
+  }
 
-    /**
-     * Pause playing sound effect.
-     * @param {Number} soundId
-     */
-    pauseEffect (soundId) {
-        audioEngine.pauseEffect(soundId);
-    }
+  /**
+   * Pause playing sound effect.
+   * @param {Number} soundId
+   */
+  pauseEffect(soundId) {
+    audioEngine.pauseEffect(soundId);
+  }
 
-    /**
-     * Pause all effects
-     */
-    pauseAllEffects () {
-        audioEngine.pauseAllEffects();
-    }
+  /**
+   * Pause all effects
+   */
+  pauseAllEffects() {
+    audioEngine.pauseAllEffects();
+  }
 
-    /**
-     * Resume effect
-     * @param {Number} soundId
-     */
-    resumeEffect (soundId) {
-        audioEngine.resumeEffect(soundId);
-    }
+  /**
+   * Resume effect
+   * @param {Number} soundId
+   */
+  resumeEffect(soundId) {
+    audioEngine.resumeEffect(soundId);
+  }
 
-    /**
-     * Resume all effects
-     */
-    resumeAllEffects () {
-        audioEngine.resumeAllEffects();
-    }
+  /**
+   * Resume all effects
+   */
+  resumeAllEffects() {
+    audioEngine.resumeAllEffects();
+  }
 
-    /**
-     * Stop effect
-     * @param {Number} soundId
-     */
-    stopEffect (soundId) {
-        audioEngine.stopEffect(soundId);
-    }
+  /**
+   * Stop effect
+   * @param {Number} soundId
+   */
+  stopEffect(soundId) {
+    audioEngine.stopEffect(soundId);
+  }
 
-    /**
-     * stop all effects
-     */
-    stopAllEffects () {
-        audioEngine.stopAllEffects();
-    }
+  /**
+   * stop all effects
+   */
+  stopAllEffects() {
+    audioEngine.stopAllEffects();
+  }
 
-    /**
-     * Preload effect
-     * @param {String} pszFilePath
-     */
-    preloadEffect (pszFilePath) {
-        ServiceLocator.loader.getRes(pszFilePath);
-        this.setFile(pszFilePath);
-        this.setLoop(false);
-    }
+  /**
+   * Preload effect
+   * @param {String} pszFilePath
+   */
+  preloadEffect(pszFilePath) {
+    ServiceLocator.loader.getRes(pszFilePath);
+    this.setFile(pszFilePath);
+    this.setLoop(false);
+  }
 
-    /**
-     * Unload effect
-     * @param {String} pszFilePath
-     */
-    unloadEffect (pszFilePath) {
-        audioEngine.unloadEffect(pszFilePath);
-    }
+  /**
+   * Unload effect
+   * @param {String} pszFilePath
+   */
+  unloadEffect(pszFilePath) {
+    audioEngine.unloadEffect(pszFilePath);
+  }
 
-    /**
-     * File path setter
-     * @param {String} pszFilePath
-     */
-    setFile (pszFilePath) {
-        this._filePath = pszFilePath;
-    }
+  /**
+   * File path setter
+   * @param {String} pszFilePath
+   */
+  setFile(pszFilePath) {
+    this._filePath = pszFilePath;
+  }
 
-    /**
-     * Sets audio component whether plays loop
-     * @param {Boolean} loop
-     */
-    setLoop (loop) {
-        this._loop = loop;
-    }
+  /**
+   * Sets audio component whether plays loop
+   * @param {Boolean} loop
+   */
+  setLoop(loop) {
+    this._loop = loop;
+  }
 
-    /**
-     * Returns the file path of audio component.
-     * @returns {string}
-     */
-    getFile () {
-        return this._filePath;
-    }
+  /**
+   * Returns the file path of audio component.
+   * @returns {string}
+   */
+  getFile() {
+    return this._filePath;
+  }
 
-    /**
-     * Returns audio component whether plays loop
-     * @returns {boolean}
-     */
-    isLoop () {
-        return this._loop;
-    }
+  /**
+   * Returns audio component whether plays loop
+   * @returns {boolean}
+   */
+  isLoop() {
+    return this._loop;
+  }
 };
 

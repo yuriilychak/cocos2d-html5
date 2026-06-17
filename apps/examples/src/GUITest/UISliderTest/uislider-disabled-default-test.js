@@ -55,7 +55,7 @@ export class UISliderDisabledDefaultTest extends UIMainLayer {
       var slider = new Slider();
       slider.loadBarTexture("ccs-res/cocosui/slidbar.png");
       slider.loadSlidBallTextureNormal("ccs-res/cocosui/sliderballnormal.png");
-      slider.setEnabled(false);
+      slider.enabled = false;
       slider.setBright(false);
       slider.setPosition(
         new Point(widgetSize.width / 2, widgetSize.height / 2 + 50)
@@ -67,7 +67,7 @@ export class UISliderDisabledDefaultTest extends UIMainLayer {
         "ccs-res/cocosui/sliderballnormal.png"
       );
       sliderScale9.setScale9Enabled(true);
-      sliderScale9.setEnabled(false);
+      sliderScale9.enabled = false;
       sliderScale9.setBright(false);
       sliderScale9.setCapInsets(new Rect(0, 0, 0, 0));
       sliderScale9.setContentSize(new Size(250, 10));

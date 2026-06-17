@@ -64,7 +64,7 @@ export default class EventListener extends NewClass {
    *     `EventDispatcher::resumeAllEventListenersForTarget(node)` will set the paused state to `true`,
    *     while `EventDispatcher::pauseAllEventListenersForTarget(node)` will set it to `false`.
    *     @note 1) Fixed priority listeners will never get paused. If a fixed priority doesn't want to receive events,
-   *              call `setEnabled(false)` instead.
+   *              call `enabled = false` instead.
    *            2) In `Node`'s onEnter and onExit, the `paused state` of the listeners which associated with that node will be automatically updated.
    * </p>
    * @param {boolean} paused
@@ -182,7 +182,7 @@ export default class EventListener extends NewClass {
    *          paused state is always false when it is a fixed priority listener.
    * @param {boolean} enabled
    */
-  setEnabled(enabled) {
+  set enabled(enabled) {
     this._isEnabled = enabled;
   }
 
@@ -190,7 +190,7 @@ export default class EventListener extends NewClass {
    * Checks whether the listener is enabled
    * @returns {boolean}
    */
-  isEnabled() {
+  get enabled() {
     return this._isEnabled;
   }
 }

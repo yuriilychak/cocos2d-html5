@@ -29,39 +29,20 @@ import { Component } from "@aspect/core";
  * The controller component for Cocostudio.
  */
 export class ComController extends Component {
+  static componentName = "ComController";
+  /**
+   * Construction of ComController.
+   */
+  constructor() {
+    super();
+    this.init();
+  }
 
-    /**
-     * Construction of ComController.
-     */
-    constructor () {
-        super();
-        this._name = "ComController";
-        this.init();
-    }
-
-    /**
-     * The callback calls when controller component enter stage.
-     * @override
-     */
-    onEnter () {
-        if (this._owner !== null)
-            this._owner.scheduleUpdate();
-    }
-
-    /**
-     * Returns controller component whether is enabled
-     * @returns {Boolean}
-     */
-    isEnabled () {
-        return this._enabled;
-    }
-
-    /**
-     * Sets controller component whether is enabled
-     * @param {Boolean} bool
-     */
-    setEnabled (bool) {
-        this._enabled = bool;
-    }
-};
-
+  /**
+   * The callback calls when controller component enter stage.
+   * @override
+   */
+  onEnter() {
+    if (this.owner !== null) this.owner.scheduleUpdate();
+  }
+}

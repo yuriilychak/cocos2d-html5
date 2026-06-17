@@ -53,7 +53,7 @@ export class ComponentContainer extends NewClass {
     add(component) {
         if (!component)
             throw new Error("ComponentContainer.add(): component should be non-null");
-        if (component.getOwner()) {
+        if (component.owner) {
             log("ComponentContainer.add(): Component already added. It can't be added again");
             return false;
         }
@@ -67,7 +67,7 @@ export class ComponentContainer extends NewClass {
             log("ComponentContainer.add(): Component already added. It can't be added again");
             return false;
         }
-        component.setOwner(this._owner);
+        component.owner = this._owner;
         this._components[component.name] = component;
         component.onEnter();
         return true;
@@ -90,7 +90,7 @@ export class ComponentContainer extends NewClass {
         if (!component)
             return false;
         component.onExit();
-        component.setOwner(null);
+        component.owner  = null;
         delete this._components[component.name];
         return true;
     }
@@ -102,7 +102,7 @@ export class ComponentContainer extends NewClass {
         for (var selKey in locComponents) {
             var selComponent = locComponents[selKey];
             selComponent.onExit();
-            selComponent.setOwner(null);
+            selComponent.owner = null;
             delete locComponents[selKey];
         }
         this._owner.unscheduleUpdate();

@@ -91,7 +91,7 @@ export class UICheckBoxDefaultBehaviorTest extends UIMainLayer {
       checkBoxDisabled.setPosition(
         new Point(widgetSize.width / 2 + 20, widgetSize.height / 2)
       );
-      checkBoxDisabled.setEnabled(false);
+      checkBoxDisabled.enabled = false;
       checkBoxDisabled.setBright(false);
       this._mainNode.addChild(checkBoxDisabled);
 
@@ -102,7 +102,7 @@ export class UICheckBoxDefaultBehaviorTest extends UIMainLayer {
       checkBoxDisabled2.setPosition(
         new Point(widgetSize.width / 2 + 70, widgetSize.height / 2)
       );
-      checkBoxDisabled2.setEnabled(false);
+      checkBoxDisabled2.enabled = false;
       checkBoxDisabled2.setBright(false);
       checkBoxDisabled2.setSelected(true);
       this._mainNode.addChild(checkBoxDisabled2);

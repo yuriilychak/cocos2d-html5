@@ -146,7 +146,7 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
 
     this.setGLDefaultValues();
 
-    if (ServiceLocator.eventManager) ServiceLocator.eventManager.setEnabled(true);
+    if (ServiceLocator.eventManager) ServiceLocator.eventManager.enabled = true;
   }
 
   getVisibleSize() {

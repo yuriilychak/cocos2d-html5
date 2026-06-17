@@ -329,7 +329,7 @@ export class Director extends NewClass {
     this.getScheduler().unscheduleAll();
 
     if (this._eventManager)
-      this._eventManager.setEnabled(false);
+      this._eventManager.enabled = false;
 
     if (this._runningScene) {
       this._runningScene._performRecursive(

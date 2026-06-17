@@ -264,7 +264,7 @@ export class ControlButton extends Control {
     }
 
     set enabled(value) {
-        super.setEnabled(value);
+        super.enabled = value;
         this.needsLayout();
     }
 

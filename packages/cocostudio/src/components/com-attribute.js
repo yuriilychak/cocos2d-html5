@@ -29,170 +29,170 @@
 import { log, Component, ServiceLocator } from "@aspect/core";
 
 export class ComAttribute extends Component {
+  static componentName = "CCComAttribute";
 
-    /**
-     * Construction of ComAttribute
-     */
-    constructor () {
-        super();
-        this._jsonDict = {};
-        this._filePath = "";
-        this._name = "CCComAttribute";
-        this.init();
-    }
+  /**
+   * Construction of ComAttribute
+   */
+  constructor() {
+    super();
+    this._jsonDict = {};
+    this._filePath = "";
+    this.init();
+  }
 
-    /**
-     * Initializes a ComAttribute
-     * @returns {boolean}
-     */
-    init () {
-        this._jsonDict = {};
-        return true;
-    }
+  /**
+   * Initializes a ComAttribute
+   * @returns {boolean}
+   */
+  init() {
+    this._jsonDict = {};
+    return true;
+  }
 
-    /**
-     * Sets int attribute
-     * @param {String} key
-     * @param {number} value
-     */
-    setInt (key, value) {
-        if (!key) {
-            log("Argument must be non-nil");
-            return;
-        }
-        this._jsonDict[key] = value;
+  /**
+   * Sets int attribute
+   * @param {String} key
+   * @param {number} value
+   */
+  setInt(key, value) {
+    if (!key) {
+      log("Argument must be non-nil");
+      return;
     }
+    this._jsonDict[key] = value;
+  }
 
-    /**
-     * Sets double attribute
-     * @param {String} key
-     * @param {number} value
-     */
-    setDouble (key, value) {
-        if (!key) {
-            log("Argument must be non-nil");
-            return;
-        }
-        this._jsonDict[key] = value;
+  /**
+   * Sets double attribute
+   * @param {String} key
+   * @param {number} value
+   */
+  setDouble(key, value) {
+    if (!key) {
+      log("Argument must be non-nil");
+      return;
     }
+    this._jsonDict[key] = value;
+  }
 
-    /**
-     * Sets float attribute
-     * @param {String} key
-     * @param {number} value
-     */
-    setFloat (key, value) {
-        if (!key) {
-            log("Argument must be non-nil");
-            return;
-        }
-        this._jsonDict[key] = value;
+  /**
+   * Sets float attribute
+   * @param {String} key
+   * @param {number} value
+   */
+  setFloat(key, value) {
+    if (!key) {
+      log("Argument must be non-nil");
+      return;
     }
+    this._jsonDict[key] = value;
+  }
 
-    /**
-     * Sets boolean attribute
-     * @param {String} key
-     * @param {Boolean} value
-     */
-    setBool (key, value) {
-        if (!key) {
-            log("Argument must be non-nil");
-            return;
-        }
-        this._jsonDict[key] = value;
+  /**
+   * Sets boolean attribute
+   * @param {String} key
+   * @param {Boolean} value
+   */
+  setBool(key, value) {
+    if (!key) {
+      log("Argument must be non-nil");
+      return;
     }
+    this._jsonDict[key] = value;
+  }
 
-    /**
-     * Sets string attribute
-     * @param {String} key
-     * @param {Boolean} value
-     */
-    setString (key, value) {
-        if (!key) {
-            log("Argument must be non-nil");
-            return;
-        }
-        this._jsonDict[key] = value;
+  /**
+   * Sets string attribute
+   * @param {String} key
+   * @param {Boolean} value
+   */
+  setString(key, value) {
+    if (!key) {
+      log("Argument must be non-nil");
+      return;
     }
+    this._jsonDict[key] = value;
+  }
 
-    /**
-     * Sets object attribute
-     * @param {String} key
-     * @param {Object} value
-     */
-    setObject (key, value) {
-        if (!key) {
-            log("Argument must be non-nil");
-            return;
-        }
-        this._jsonDict[key] = value;
+  /**
+   * Sets object attribute
+   * @param {String} key
+   * @param {Object} value
+   */
+  setObject(key, value) {
+    if (!key) {
+      log("Argument must be non-nil");
+      return;
     }
+    this._jsonDict[key] = value;
+  }
 
-    /**
-     * Returns int value from attribute
-     * @param {String} key
-     * @returns {Number}
-     */
-    getInt (key) {
-        var ret = this._jsonDict[key];
-        return parseInt(ret || 0);
-    }
+  /**
+   * Returns int value from attribute
+   * @param {String} key
+   * @returns {Number}
+   */
+  getInt(key) {
+    var ret = this._jsonDict[key];
+    return parseInt(ret || 0);
+  }
 
-    /**
-     * Returns double value from attribute
-     * @param {String} key
-     * @returns {Number}
-     */
-    getDouble (key) {
-        var ret = this._jsonDict[key];
-        return parseFloat(ret || 0.0);
-    }
+  /**
+   * Returns double value from attribute
+   * @param {String} key
+   * @returns {Number}
+   */
+  getDouble(key) {
+    var ret = this._jsonDict[key];
+    return parseFloat(ret || 0.0);
+  }
 
-    /**
-     * Returns float value from attribute
-     * @param {String} key
-     * @returns {Number}
-     */
-    getFloat (key) {
-        var ret = this._jsonDict[key];
-        return parseFloat(ret || 0.0);
-    }
+  /**
+   * Returns float value from attribute
+   * @param {String} key
+   * @returns {Number}
+   */
+  getFloat(key) {
+    var ret = this._jsonDict[key];
+    return parseFloat(ret || 0.0);
+  }
 
-    /**
-     * Returns boolean value from attribute
-     * @param {String} key
-     * @returns {Boolean}
-     */
-    getBool (key) {
-        var ret = this._jsonDict[key];
-        return Boolean(ret || false);
-    }
+  /**
+   * Returns boolean value from attribute
+   * @param {String} key
+   * @returns {Boolean}
+   */
+  getBool(key) {
+    var ret = this._jsonDict[key];
+    return Boolean(ret || false);
+  }
 
-    /**
-     * Returns string value from attribute
-     * @param {String} key
-     * @returns {String}
-     */
-    getString (key) {
-        var ret = this._jsonDict[key];
-        return ret || "";
-    }
+  /**
+   * Returns string value from attribute
+   * @param {String} key
+   * @returns {String}
+   */
+  getString(key) {
+    var ret = this._jsonDict[key];
+    return ret || "";
+  }
 
-    /**
-     * Returns object value from attribute
-     * @param {String} key
-     * @returns {Object}
-     */
-    getObject (key) {
-        return this._jsonDict[key];
-    }
+  /**
+   * Returns object value from attribute
+   * @param {String} key
+   * @returns {Object}
+   */
+  getObject(key) {
+    return this._jsonDict[key];
+  }
 
-    /**
-     * Parses json file.
-     * @param  filename
-     */
-    parse (filename) {
-        this._jsonDict = ServiceLocator.loader.getRes(filename);
-    }
+  /**
+   * Parses json file.
+   * @param  filename
+   */
+  parse(filename) {
+    this._jsonDict = ServiceLocator.loader.getRes(filename);
+  }
 };
 

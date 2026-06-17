@@ -91,8 +91,8 @@ export class MenuTestLayer extends Layer {
     bgComp.setBottomMargin(0);
     bgComp.setTopMargin(0);
 
-    layout.addChild(bg, -1);
-    this.addChild(layout, -1);
+    layout.addChild(bg);
+    this.addChild(layout);
     this._bgLayout = layout;
 
     const listWidth = winSizeLocal.width - PADDING * 2;
@@ -138,7 +138,7 @@ export class MenuTestLayer extends Layer {
       btn.setPressedBgColor(new Color(0x44, 0x44, 0x44));
       btn.setDisabledBgColor(new Color(0x88, 0x88, 0x88));
       btn.pressedActionEnabled = true;
-      btn.setEnabled(item.enabled !== false);
+      btn.enabled = item.enabled !== false;
       const idx = i;
       btn.addClickEventListener(() => this.onItemCallback(idx));
       listView.pushBackCustomItem(btn);

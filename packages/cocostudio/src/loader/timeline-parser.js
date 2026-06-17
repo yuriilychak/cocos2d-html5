@@ -657,7 +657,7 @@ parser.initButton = function (json, resourcePath) {
 
   var displaystate = getParam(json["DisplayState"], true);
   widget.setBright(displaystate);
-  widget.setEnabled(displaystate);
+  widget.enabled = displaystate;
 
   var fontResource = json["FontResource"];
   if (fontResource != null) {
@@ -758,7 +758,7 @@ parser.initCheckBox = function (json, resourcePath) {
 
   var displaystate = getParam(json["DisplayState"], true);
   widget.setBright(displaystate);
-  widget.setEnabled(displaystate);
+  widget.enabled = displaystate;
 
   return widget;
 };
@@ -919,7 +919,7 @@ parser.initSlider = function (json, resourcePath) {
 
   var displaystate = getParam(json["DisplayState"], true);
   widget.setBright(displaystate);
-  widget.setEnabled(displaystate);
+  widget.enabled = displaystate;
 
   return widget;
 };

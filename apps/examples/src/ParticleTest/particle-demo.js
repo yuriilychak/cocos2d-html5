@@ -25,9 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import {
-  BaseTestLayer
-} from "../BaseTestLayer/BaseTestLayer";
+import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
 import { particleSceneIdx } from "./particle-test-constants";
 import {
   backParticleAction,
@@ -37,7 +35,14 @@ import {
 import { ParticleTestScene } from "./particle-test-scene";
 import { s_back3 } from "../resources";
 import { director } from "../constants";
-import { Color, EventListener, EventMouse, Point, Sprite, ServiceLocator } from "@aspect/core";
+import {
+  Color,
+  EventListener,
+  EventMouse,
+  Point,
+  Sprite,
+  ServiceLocator
+} from "@aspect/core";
 import { MoveBy, Sequence } from "@aspect/actions";
 import { ParticleSystem } from "@aspect/particle";
 import { ButtonLayout } from "../button-layout";
@@ -89,15 +94,23 @@ export class ParticleDemo extends BaseTestLayer {
 
     var s = director.getWinSize();
 
-    const movementColor = new Color(0xFF, 0x88, 0x00);
-    const modeColor = new Color(0x00, 0xAA, 0x00);
+    const movementColor = new Color(0xff, 0x88, 0x00);
+    const modeColor = new Color(0x00, 0xaa, 0x00);
     const pressedColor = new Color(0x22, 0x33, 0x55);
 
     this._layout = new ButtonLayout(
       [
         { type: "text", label: "Count: 0" },
-        { label: "Movement: Free", tintDefault: movementColor, tintPressed: pressedColor },
-        { label: "Mode: Texture",  tintDefault: modeColor,     tintPressed: pressedColor },
+        {
+          label: "Movement: Free",
+          tintDefault: movementColor,
+          tintPressed: pressedColor
+        },
+        {
+          label: "Mode: Texture",
+          tintDefault: modeColor,
+          tintPressed: pressedColor
+        }
       ],
       196,
       "Actions",
@@ -106,7 +119,9 @@ export class ParticleDemo extends BaseTestLayer {
     this.addChild(this._layout, 100);
 
     if ("opengl" in ServiceLocator.sys.capabilities) {
-      this._layout.getButton(2)?.setEnabled(false);
+      if (this._layout.getButton(2)) {
+        this._layout.getButton(2).enabled = false;
+      }
     }
 
     // moving background
@@ -125,9 +140,9 @@ export class ParticleDemo extends BaseTestLayer {
 
   _onButtonClick(i) {
     const movements = [
-      { type: ParticleSystem.TYPE_FREE,     label: "Movement: Free" },
+      { type: ParticleSystem.TYPE_FREE, label: "Movement: Free" },
       { type: ParticleSystem.TYPE_RELATIVE, label: "Movement: Relative" },
-      { type: ParticleSystem.TYPE_GROUPED,  label: "Movement: Group" },
+      { type: ParticleSystem.TYPE_GROUPED, label: "Movement: Group" }
     ];
 
     switch (i) {
@@ -141,9 +156,14 @@ export class ParticleDemo extends BaseTestLayer {
         this._isTexture = !this._isTexture;
         if (this._emitter?.setDrawMode)
           this._emitter.setDrawMode(
-            this._isTexture ? ParticleSystem.TEXTURE_MODE : ParticleSystem.SHAPE_MODE
+            this._isTexture
+              ? ParticleSystem.TEXTURE_MODE
+              : ParticleSystem.SHAPE_MODE
           );
-        this._layout.setLabelText(2, this._isTexture ? "Mode: Texture" : "Mode: Shape");
+        this._layout.setLabelText(
+          2,
+          this._isTexture ? "Mode: Texture" : "Mode: Shape"
+        );
         break;
     }
   }
@@ -189,7 +209,10 @@ export class ParticleDemo extends BaseTestLayer {
 
   update(dt) {
     if (this._emitter) {
-      this._layout.setLabelText(0, `Count: ${this._emitter.getParticleCount().toFixed(0)}`);
+      this._layout.setLabelText(
+        0,
+        `Count: ${this._emitter.getParticleCount().toFixed(0)}`
+      );
     }
   }
   setEmitterPosition() {

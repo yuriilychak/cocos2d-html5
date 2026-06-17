@@ -164,7 +164,7 @@ export class TestScene extends Scene {
     if (director.isPaused()) {
       director.resume();
     }
-    this._mainMenu.setEnabled(false);
+    this._mainMenu.enabled = false;
     const scene = new TestScene("Examples", "Close");
     scene.onMainMenuCallback = () => {
       if (ServiceLocator.sys.isNative) {

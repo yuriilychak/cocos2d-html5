@@ -65,7 +65,7 @@ export class PauseResumeTargetTest extends EventDispatcherTestDemo {
       196,
       "Actions",
       () => {
-        sprite3.getListener().setEnabled(false);
+        sprite3.getListener().enabled = false;
         ServiceLocator.eventManager.pauseTarget(_this, true);
 
         var overlay = new ImageView();
@@ -110,7 +110,7 @@ export class PauseResumeTargetTest extends EventDispatcherTestDemo {
         closeBtn.addClickEventListener(() => {
           overlay.removeFromParent();
           ServiceLocator.eventManager.resumeTarget(_this, true);
-          sprite3.getListener().setEnabled(true);
+          sprite3.getListener().enabled = true;
         });
       }
     );
