@@ -239,13 +239,6 @@ export class Node extends NewClass {
     this._setAnchorY(v);
   }
 
-  get zIndex() {
-    return this.getLocalZOrder();
-  }
-  set zIndex(v) {
-    this.setLocalZOrder(v);
-  }
-
   get vertexZ() {
     return this.getVertexZ();
   }
@@ -430,7 +423,7 @@ export class Node extends NewClass {
    * @function
    * @param {Number} localZOrder
    */
-  setLocalZOrder(localZOrder) {
+  set zIndex(localZOrder) {
     if (localZOrder === this._localZOrder) return;
     if (this._parent) this._parent.reorderChild(this, localZOrder);
     else this._localZOrder = localZOrder;
@@ -447,7 +440,7 @@ export class Node extends NewClass {
    * @function
    * @returns {Number} The local (relative to its siblings) Z order.
    */
-  getLocalZOrder() {
+  get zIndex() {
     return this._localZOrder;
   }
 

@@ -35,7 +35,7 @@ export class ZOrderFrame extends Frame {
    * @param {Frame} nextFrame
    */
   onEnter(nextFrame) {
-    if (this._node) this._node.setLocalZOrder(this._zorder);
+    if (this._node) this._node.zIndex = this._zorder;
   }
 
   /**

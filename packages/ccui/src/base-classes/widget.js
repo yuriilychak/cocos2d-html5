@@ -933,7 +933,7 @@ export class Widget extends ProtectedNode {
 
     Node.prototype.setPosition.call(this, pos, posY);
   }
-  
+
   set x(x) {
     if (this._running) {
       var widgetParent = this.widgetParent;
@@ -944,8 +944,13 @@ export class Widget extends ProtectedNode {
       }
     }
 
-    Node.prototype.setPositionX.call(this, x);
+    super.x = x;
   }
+
+  get x() {
+    return super.x;
+  }
+
   set y(y) {
     if (this._running) {
       var widgetParent = this.widgetParent;
@@ -956,7 +961,11 @@ export class Widget extends ProtectedNode {
       }
     }
 
-    Node.prototype.setPositionY.call(this, y);
+    super.y = y;
+  }
+
+  get y() {
+    return super.y;
   }
 
   setPositionPercent(percent) {
@@ -1135,7 +1144,7 @@ export class Widget extends ProtectedNode {
     this.visible = widget.visible;
     this.bright = widget.bright;
     this.touchEnabled = widget.touchEnabled;
-    this.setLocalZOrder(widget.getLocalZOrder());
+    this.zIndex = widget.zIndex;
     this.tag = widget.tag;
     this.name = widget.name;
     this.actionTag = widget.actionTag;

@@ -489,7 +489,7 @@ export class ScrollView extends Layout {
   addChild(widget, zOrder, tag) {
     if (!widget) return false;
     if (this._isInContainer(widget) === false) widget._inViewRect = false;
-    zOrder = zOrder || widget.getLocalZOrder();
+    zOrder = zOrder || widget.zIndex;
     tag = tag || widget.tag;
     return this._innerContainer.addChild(widget, zOrder, tag);
   }

@@ -77,7 +77,7 @@ export class ProtectedNode extends Node {
       assert(child != null, "child must be non-nil");
       assert(!child.parent, "child already added. It can't be added again");
 
-      localZOrder = localZOrder || child.getLocalZOrder();
+      localZOrder = localZOrder || child.zIndex;
       if (tag) child.tag = tag;
 
       this._insertProtectedChild(child, localZOrder);

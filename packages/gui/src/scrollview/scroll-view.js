@@ -571,7 +571,7 @@ export class GScrollView extends Layer {
   addChild(child, zOrder, tag) {
     if (!child) throw new Error("child must not nil!");
 
-    zOrder = zOrder || child.getLocalZOrder();
+    zOrder = zOrder || child.zIndex;
     tag = tag || child.tag;
 
     if (this._container !== child) {

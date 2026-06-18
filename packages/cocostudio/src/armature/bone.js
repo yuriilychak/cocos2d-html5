@@ -305,9 +305,9 @@ export class Bone extends Node {
     if (
       this._armature.getArmatureData().dataVersion >= CONST_VERSION_COMBINED
     ) {
-      this.setLocalZOrder(this._tweenData.zOrder + this._boneData.zOrder);
+      this.zIndex = this._tweenData.zOrder + this._boneData.zOrder;
     } else {
-      this.setLocalZOrder(this._tweenData.zOrder);
+      this.zIndex = this._tweenData.zOrder;
     }
   }
 
@@ -407,8 +407,8 @@ export class Bone extends Node {
    * Sets the local zOrder to Bone.
    * @param {Number} zOrder
    */
-  setLocalZOrder(zOrder) {
-    if (this._localZOrder !== zOrder) super.setLocalZOrder(zOrder);
+  set zIndex(zOrder) {
+    if (this._localZOrder !== zOrder) super.zIndex = zOrder;
   }
 
   /**

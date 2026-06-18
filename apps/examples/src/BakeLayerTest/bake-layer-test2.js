@@ -122,13 +122,13 @@ export class BakeLayerTest2 extends BakeLayerBaseTest {
   onChangeZOrder() {
     this.zOrder++;
     var childId = Math.floor(Math.random() * 9);
-    this._normalLayer.children[childId].setLocalZOrder(this.zOrder);
+    this._normalLayer.children[childId].zIndex = this.zOrder;
     this._normalLayer.children[childId].rotation = 360 * Math.random();
   }
 
   onChangeBakeZOrder() {
     this.zOrder++;
     var childId = Math.floor(Math.random() * 9);
-    this._bakeLayer.children[childId].setLocalZOrder(this.zOrder);
+    this._bakeLayer.children[childId].zIndex = this.zOrder;
   }
 }

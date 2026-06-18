@@ -720,7 +720,7 @@ export default class EventManager {
       // visit children zOrder < 0
       for (; i < childrenCount; i++) {
         child = children[i];
-        if (child && child.getLocalZOrder() < 0)
+        if (child && child.zIndex < 0)
           this._visitTarget(child, false);
         else break;
       }

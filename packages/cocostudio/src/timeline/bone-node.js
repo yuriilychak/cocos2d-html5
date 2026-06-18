@@ -300,8 +300,8 @@ export function _setSkeletonNodeClass(SN) { _SkeletonNode = SN; }
         batchBoneDrawToSkeleton(bone) {
         }
 
-        setLocalZOrder(localZOrder) {
-            super.setLocalZOrder(localZOrder);
+        set zIndex(localZOrder) {
+            super.zIndex = localZOrder;
             if (this._rootSkeleton != null)
                 this._rootSkeleton._subBonesOrderDirty = true;
         }
