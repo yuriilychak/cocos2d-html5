@@ -17,8 +17,59 @@ import terser from '@rollup/plugin-terser';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import MagicString, { Bundle } from 'magic-string';
+import ts from 'typescript';
 
 const VIRTUAL_ENTRY_ID = 'app-concat-entry';
+const SOURCE_EXTENSIONS = ['.ts', '.js'];
+
+function resolvePackageSource(rootDir, pkgName) {
+  for (const ext of SOURCE_EXTENSIONS) {
+    const srcFile = join(rootDir, 'packages', pkgName, 'src', `index${ext}`);
+    if (existsSync(srcFile)) return srcFile;
+  }
+  return null;
+}
+
+function typescriptPlugin() {
+  return {
+    name: 'typescript-transpile',
+    transform(code, id) {
+      if (!id.endsWith('.ts')) {
+        return null;
+      }
+
+      const result = ts.transpileModule(code, {
+        fileName: id,
+        compilerOptions: {
+          target: ts.ScriptTarget.ES2019,
+          module: ts.ModuleKind.ESNext,
+          sourceMap: true,
+          inlineSources: true
+        },
+        reportDiagnostics: true
+      });
+
+      const diagnostics = result.diagnostics?.filter(
+        diagnostic => diagnostic.category === ts.DiagnosticCategory.Error
+      );
+
+      if (diagnostics?.length) {
+        this.error(
+          ts.formatDiagnosticsWithColorAndContext(diagnostics, {
+            getCanonicalFileName: fileName => fileName,
+            getCurrentDirectory: () => process.cwd(),
+            getNewLine: () => '\n'
+          })
+        );
+      }
+
+      return {
+        code: result.outputText,
+        map: result.sourceMapText ? JSON.parse(result.sourceMapText) : null
+      };
+    }
+  };
+}
 
 /**
  * Resolves all transitive workspace dependencies of a package,
@@ -146,7 +197,7 @@ export function createAppConfig({ outputFile = 'dist/cocos2d.min.js' } = {}) {
 }
 
 /**
- * Workspace packages that are resolved to their src/index.js and inlined
+ * Workspace packages that are resolved to their src/index.ts or src/index.js and inlined
  * in the test bundle instead of being treated as cc.* externals.
  * - 'core' is NOT in this set — it lives in the engine bundle as cc.* globals.
  */
@@ -173,7 +224,7 @@ const ASPECT_GLOBALS = {
  *   externals mapped to their runtime global (ccs, cc).
  *
  * Use this for apps that have migrated to a real ES module entry
- * (typically `src/index.js`).
+ * (typically `src/index.js` or `src/index.ts`).
  */
 export function createTestsBundleConfig({
   input = 'src/index.js',
@@ -197,15 +248,16 @@ export function createTestsBundleConfig({
             return { id, external: true };
           }
 
-          // All other @aspect/* packages: inline from src/index.js.
+          // All other @aspect/* packages: inline from src/index.ts or src/index.js.
           // Rollup deduplicates, so shared deps are included only once.
-          const srcFile = join(rootDir, 'packages', pkgName, 'src', 'index.js');
-          if (existsSync(srcFile)) return srcFile;
+          const srcFile = resolvePackageSource(rootDir, pkgName);
+          if (srcFile) return srcFile;
 
           return { id, external: true };
         }
       },
-      resolve(),
+      resolve({ extensions: SOURCE_EXTENSIONS }),
+      typescriptPlugin(),
       commonjs(),
       ...(minify ? [terser({
         ecma: 2020,
@@ -264,15 +316,16 @@ export function createStandaloneConfig({
         resolveId(id) {
           if (!id.startsWith('@aspect/')) return null;
           const pkgName = id.replace('@aspect/', '');
-          const srcFile = join(rootDir, 'packages', pkgName, 'src', 'index.js');
-          if (existsSync(srcFile)) return srcFile;
+          const srcFile = resolvePackageSource(rootDir, pkgName);
+          if (srcFile) return srcFile;
           throw new Error(
-            `[aspect-src-resolver] No src/index.js found for "${id}". ` +
+            `[aspect-src-resolver] No src/index.ts or src/index.js found for "${id}". ` +
             `Meta-packages cannot be imported directly in standalone mode.`
           );
         }
       },
-      resolve({ extensions: ['.js'] }),
+      resolve({ extensions: SOURCE_EXTENSIONS }),
+      typescriptPlugin(),
       terser({
         ecma: 2020,
         module: false,
@@ -299,4 +352,3 @@ export function createStandaloneConfig({
     }
   };
 }
-
