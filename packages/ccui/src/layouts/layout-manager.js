@@ -48,7 +48,7 @@ export const linearVerticalLayoutManager = {
                     finalPosX += mg.left;
                     finalPosY -= mg.top;
                     child.setPosition(finalPosX, finalPosY);
-                    topBoundary = child.getPositionY() - ap.y * cs.height - mg.bottom;
+                    topBoundary = child.y - ap.y * cs.height - mg.bottom;
                 }
             }
         }

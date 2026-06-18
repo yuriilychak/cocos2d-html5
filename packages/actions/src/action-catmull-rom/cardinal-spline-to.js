@@ -87,8 +87,8 @@ export default class CardinalSplineTo extends ActionInterval {
     // Issue #1441 from cocos2d-iphone
     this._deltaT = 1 / (this._points.length - 1);
     this._previousPosition = new Point(
-      this.target.getPositionX(),
-      this.target.getPositionY()
+      this.target.x,
+      this.target.y
     );
     this._accumulatedDiff = new Point(0, 0);
   }
@@ -126,8 +126,8 @@ export default class CardinalSplineTo extends ActionInterval {
 
     if (ENABLE_STACKABLE_ACTIONS) {
       let tempX, tempY;
-      tempX = this.target.getPositionX() - this._previousPosition.x;
-      tempY = this.target.getPositionY() - this._previousPosition.y;
+      tempX = this.target.x - this._previousPosition.x;
+      tempY = this.target.y - this._previousPosition.y;
       if (tempX !== 0 || tempY !== 0) {
         const locAccDiff = this._accumulatedDiff;
         tempX = locAccDiff.x + tempX;

@@ -208,21 +208,21 @@ export class MotionStreak extends Node {
     }
   }
 
-  getPositionX() {
+  get x() {
     return this._positionR.x;
   }
 
-  setPositionX(x) {
+  set x(x) {
     this._positionR.x = x;
     if (!this.startingPositionInitialized)
       this.startingPositionInitialized = true;
   }
 
-  getPositionY() {
+  get y() {
     return this._positionR.y;
   }
 
-  setPositionY(y) {
+  set y(y) {
     this._positionR.y = y;
     if (!this.startingPositionInitialized)
       this.startingPositionInitialized = true;

@@ -564,7 +564,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
 
           var lastChar = this.getChildByTag(index);
           if (lastChar == null) continue;
-          lineWidth = lastChar.getPositionX() + lastChar._getWidth() * lastChar._scaleX / 2;
+          lineWidth = lastChar.x + lastChar._getWidth() * lastChar._scaleX / 2;
 
           var shift = 0;
           switch (this._alignment) {
@@ -794,14 +794,14 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
 
   _getLetterPosXLeft(sp) {
     return (
-      sp.getPositionX() * this._scaleX -
+      sp.x * this._scaleX -
       sp._getWidth() * sp._scaleX * this._scaleX * sp._getAnchorX()
     );
   }
 
   _getLetterPosXRight(sp) {
     return (
-      sp.getPositionX() * this._scaleX +
+      sp.x * this._scaleX +
       sp._getWidth() * sp._scaleX * this._scaleX * sp._getAnchorX()
     );
   }

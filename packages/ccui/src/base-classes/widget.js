@@ -933,7 +933,8 @@ export class Widget extends ProtectedNode {
 
     Node.prototype.setPosition.call(this, pos, posY);
   }
-  setPositionX(x) {
+  
+  set x(x) {
     if (this._running) {
       var widgetParent = this.widgetParent;
       if (widgetParent) {
@@ -945,7 +946,7 @@ export class Widget extends ProtectedNode {
 
     Node.prototype.setPositionX.call(this, x);
   }
-  setPositionY(y) {
+  set y(y) {
     if (this._running) {
       var widgetParent = this.widgetParent;
       if (widgetParent) {
@@ -1066,11 +1067,11 @@ export class Widget extends ProtectedNode {
   }
 
   getLeftBoundary() {
-    return this.getPositionX() - this._getAnchorX() * this._contentSize.width;
+    return this.x - this._getAnchorX() * this._contentSize.width;
   }
 
   getBottomBoundary() {
-    return this.getPositionY() - this._getAnchorY() * this._contentSize.height;
+    return this.y - this._getAnchorY() * this._contentSize.height;
   }
 
   getRightBoundary() {

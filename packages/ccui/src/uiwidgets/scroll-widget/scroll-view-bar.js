@@ -281,7 +281,7 @@ export class ScrollViewBar extends ProtectedNode {
         } else {
             var ratio = length / this._body.getTextureRect().height;
             this._body.scaleY = ratio;
-            this._upperHalfCircle.setPositionY(this._body.getPositionY() + length);
+            this._upperHalfCircle.y = this._body.y + length;
         }
     }
 
@@ -353,13 +353,13 @@ export class ScrollViewBar extends ProtectedNode {
             innerContainerMeasure = innerContainer.height;
             scrollViewMeasure = this._parentScroll.height;
             outOfBoundaryValue = outOfBoundary.y;
-            innerContainerPosition = -innerContainer.getPositionY();
+            innerContainerPosition = -innerContainer.y;
         }
         else if (this._direction === DIR_HORIZONTAL) {
             innerContainerMeasure = innerContainer.width;
             scrollViewMeasure = this._parentScroll.width;
             outOfBoundaryValue = outOfBoundary.x;
-            innerContainerPosition = -innerContainer.getPositionX();
+            innerContainerPosition = -innerContainer.x;
         }
 
         var length = this._calculateLength(innerContainerMeasure, scrollViewMeasure, outOfBoundaryValue);

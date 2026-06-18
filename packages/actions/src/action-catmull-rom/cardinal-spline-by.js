@@ -38,8 +38,8 @@ export default class CardinalSplineBy extends CardinalSplineTo {
    */
   startWithTarget(target) {
     super.startWithTarget(target);
-    this._startPosition.x = target.getPositionX();
-    this._startPosition.y = target.getPositionY();
+    this._startPosition.x = target.x;
+    this._startPosition.y = target.y;
   }
 
   /**

@@ -390,8 +390,8 @@ export class ScrollView extends Layout {
    */
   setInnerContainerPosition(position) {
     if (
-      position.x === this._innerContainer.getPositionX() &&
-      position.y === this._innerContainer.getPositionY()
+      position.x === this._innerContainer.x &&
+      position.y === this._innerContainer.y
     ) {
       return;
     }
@@ -942,7 +942,7 @@ export class ScrollView extends Layout {
    */
   scrollToBottom(time, attenuated) {
     this._startAutoScrollToDestination(
-      new Point(this._innerContainer.getPositionX(), 0),
+      new Point(this._innerContainer.x, 0),
       time,
       attenuated
     );
@@ -956,7 +956,7 @@ export class ScrollView extends Layout {
   scrollToTop(time, attenuated) {
     this._startAutoScrollToDestination(
       new Point(
-        this._innerContainer.getPositionX(),
+        this._innerContainer.x,
         this._contentSize.height - this._innerContainer.getContentSize().height
       ),
       time,
@@ -971,7 +971,7 @@ export class ScrollView extends Layout {
    */
   scrollToLeft(time, attenuated) {
     this._startAutoScrollToDestination(
-      new Point(0, this._innerContainer.getPositionY()),
+      new Point(0, this._innerContainer.y),
       time,
       attenuated
     );
@@ -986,7 +986,7 @@ export class ScrollView extends Layout {
     this._startAutoScrollToDestination(
       new Point(
         this._contentSize.width - this._innerContainer.getContentSize().width,
-        this._innerContainer.getPositionY()
+        this._innerContainer.y
       ),
       time,
       attenuated
@@ -1079,7 +1079,7 @@ export class ScrollView extends Layout {
     var h = -minY;
     this._startAutoScrollToDestination(
       new Point(
-        this._innerContainer.getPositionX(),
+        this._innerContainer.x,
         minY + (percent * h) / 100
       ),
       time,
@@ -1097,7 +1097,7 @@ export class ScrollView extends Layout {
     var w =
       this._innerContainer.getContentSize().width - this._contentSize.width;
     this._startAutoScrollToDestination(
-      new Point(-((percent * w) / 100), this._innerContainer.getPositionY()),
+      new Point(-((percent * w) / 100), this._innerContainer.y),
       time,
       attenuated
     );
@@ -1127,7 +1127,7 @@ export class ScrollView extends Layout {
    * Move inner container to bottom boundary of ScrollView.
    */
   jumpToBottom() {
-    this._jumpToDestination(this._innerContainer.getPositionX(), 0);
+    this._jumpToDestination(this._innerContainer.x, 0);
   }
 
   /**
@@ -1135,7 +1135,7 @@ export class ScrollView extends Layout {
    */
   jumpToTop() {
     this._jumpToDestination(
-      this._innerContainer.getPositionX(),
+      this._innerContainer.x,
       this._contentSize.height - this._innerContainer.getContentSize().height
     );
   }
@@ -1144,7 +1144,7 @@ export class ScrollView extends Layout {
    * Move inner container to left boundary of ScrollView.
    */
   jumpToLeft() {
-    this._jumpToDestination(0, this._innerContainer.getPositionY());
+    this._jumpToDestination(0, this._innerContainer.y);
   }
 
   /**
@@ -1153,7 +1153,7 @@ export class ScrollView extends Layout {
   jumpToRight() {
     this._jumpToDestination(
       this._contentSize.width - this._innerContainer.getContentSize().width,
-      this._innerContainer.getPositionY()
+      this._innerContainer.y
     );
   }
 
@@ -1220,7 +1220,7 @@ export class ScrollView extends Layout {
       this._contentSize.height - this._innerContainer.getContentSize().height;
     var h = -minY;
     this._jumpToDestination(
-      this._innerContainer.getPositionX(),
+      this._innerContainer.x,
       minY + (percent * h) / 100
     );
   }
@@ -1234,7 +1234,7 @@ export class ScrollView extends Layout {
       this._innerContainer.getContentSize().width - this._contentSize.width;
     this._jumpToDestination(
       -((percent * w) / 100),
-      this._innerContainer.getPositionY()
+      this._innerContainer.y
     );
   }
 

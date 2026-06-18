@@ -423,7 +423,7 @@ export class GScrollView extends Layer {
         pos;
       if (locDirection === SCROLLVIEW_DIRECTION_VERTICAL) {
         dis = moveDistance.y;
-        pos = this._container.getPositionY();
+        pos = this._container.y;
         if (
           !(
             this.minContainerOffset().y <= pos &&
@@ -433,7 +433,7 @@ export class GScrollView extends Layer {
           moveDistance.y *= BOUNCE_BACK_FACTOR;
       } else if (locDirection === SCROLLVIEW_DIRECTION_HORIZONTAL) {
         dis = moveDistance.x;
-        pos = this._container.getPositionX();
+        pos = this._container.x;
         if (
           !(
             this.minContainerOffset().x <= pos &&
@@ -446,13 +446,13 @@ export class GScrollView extends Layer {
           moveDistance.x * moveDistance.x + moveDistance.y * moveDistance.y
         );
 
-        pos = this._container.getPositionY();
+        pos = this._container.y;
         var _minOffset = this.minContainerOffset(),
           _maxOffset = this.maxContainerOffset();
         if (!(_minOffset.y <= pos && pos <= _maxOffset.y))
           moveDistance.y *= BOUNCE_BACK_FACTOR;
 
-        pos = this._container.getPositionX();
+        pos = this._container.x;
         if (!(_minOffset.x <= pos && pos <= _maxOffset.x))
           moveDistance.x *= BOUNCE_BACK_FACTOR;
       }
@@ -664,8 +664,8 @@ export class GScrollView extends Layer {
       minInset = this.minContainerOffset();
     }
 
-    var newX = this._container.getPositionX();
-    var newY = this._container.getPositionY();
+    var newX = this._container.x;
+    var newY = this._container.y;
 
     locScrollDistance.x = locScrollDistance.x * SCROLL_DEACCEL_RATE;
     locScrollDistance.y = locScrollDistance.y * SCROLL_DEACCEL_RATE;

@@ -65,7 +65,7 @@ export default class MoveTo extends MoveBy {
    */
   startWithTarget(target) {
     super.startWithTarget(target);
-    this._positionDelta.x = this._endPosition.x - target.getPositionX();
-    this._positionDelta.y = this._endPosition.y - target.getPositionY();
+    this._positionDelta.x = this._endPosition.x - target.x;
+    this._positionDelta.y = this._endPosition.y - target.y;
   }
 }

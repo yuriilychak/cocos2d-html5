@@ -65,8 +65,8 @@ export default class BezierBy extends ActionInterval {
    */
   startWithTarget(target) {
     super.startWithTarget(target);
-    var locPosX = target.getPositionX();
-    var locPosY = target.getPositionY();
+    var locPosX = target.x;
+    var locPosY = target.y;
     this._previousPosition.x = locPosX;
     this._previousPosition.y = locPosY;
     this._startPosition.x = locPosX;
@@ -96,8 +96,8 @@ export default class BezierBy extends ActionInterval {
 
       var locStartPosition = this._startPosition;
       if (ENABLE_STACKABLE_ACTIONS) {
-        var targetX = this.target.getPositionX();
-        var targetY = this.target.getPositionY();
+        var targetX = this.target.x;
+        var targetY = this.target.y;
         var locPreviousPosition = this._previousPosition;
 
         locStartPosition.x =

@@ -211,20 +211,6 @@ export class Node extends NewClass {
     this._renderCmd = this._createRenderCmd();
   }
 
-  get x() {
-    return this.getPositionX();
-  }
-  set x(v) {
-    this.setPositionX(v);
-  }
-
-  get y() {
-    return this.getPositionY();
-  }
-  set y(v) {
-    this.setPositionY(v);
-  }
-
   get width() {
     return this._getWidth();
   }
@@ -743,7 +729,7 @@ export class Node extends NewClass {
    * @function
    * @return {Number}
    */
-  getPositionX() {
+  get x() {
     return this._position.x;
   }
 
@@ -752,7 +738,7 @@ export class Node extends NewClass {
    * @function
    * @param {Number} x The new position in x axis
    */
-  setPositionX(x) {
+  set x(x) {
     this._position.x = x;
     this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
   }
@@ -762,7 +748,7 @@ export class Node extends NewClass {
    * @function
    * @return {Number}
    */
-  getPositionY() {
+  get y() {
     return this._position.y;
   }
 
@@ -771,7 +757,7 @@ export class Node extends NewClass {
    * @function
    * @param {Number} y The new position in y axis
    */
-  setPositionY(y) {
+  set y(y) {
     this._position.y = y;
     this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
   }

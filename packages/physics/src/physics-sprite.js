@@ -51,11 +51,11 @@ export class PhysicsSprite extends Sprite {
     return { x: locBody.p.x, y: locBody.p.y };
   }
 
-  getPositionX() {
+  get x() {
     return this._body.p.x;
   }
 
-  getPositionY() {
+  get y() {
     return this._body.p.y;
   }
 
@@ -69,11 +69,11 @@ export class PhysicsSprite extends Sprite {
     }
   }
 
-  setPositionX(xValue) {
+  set x(xValue) {
     this._body.p.x = xValue;
   }
 
-  setPositionY(yValue) {
+  set y(yValue) {
     this._body.p.y = yValue;
   }
 

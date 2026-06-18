@@ -25,7 +25,7 @@ export const LayoutComponent_SizeType = {
 
 export class LayoutComponent extends Component {
   static componentName = LayoutComponent.NAME;
-  
+
   constructor() {
     super();
     this._horizontalEdge = 0;
@@ -154,7 +154,7 @@ export class LayoutComponent extends Component {
 
     var parent = this._getOwnerParent();
     if (parent !== null) {
-      this.owner.setPositionX(parent.width * this._positionPercentX);
+      this.owner.x = parent.width * this._positionPercentX;
       this._refreshHorizontalMargin();
     }
   }
@@ -178,7 +178,7 @@ export class LayoutComponent extends Component {
 
     var parent = this._getOwnerParent();
     if (parent !== null) {
-      this.owner.setPositionY(parent.height * this._positionPercentY);
+      this.owner.y = parent.height * this._positionPercentY;
       this._refreshVerticalMargin();
     }
   }
