@@ -216,8 +216,8 @@ export class EditBox extends Node {
     this._updateEditBoxSize(width, height);
   }
 
-  setVisible(visible) {
-    super.setVisible(visible);
+  set visible(visible) {
+    super.visible = visible;
     this._input.updateVisibility();
   }
 
@@ -263,12 +263,12 @@ export class EditBox extends Node {
   _isAncestorsVisible(node) {
     if (null == node) return true;
     var parent = node.getParent();
-    if (parent && !parent.isVisible()) return false;
+    if (parent && !parent.visible) return false;
     return this._isAncestorsVisible(parent);
   }
 
   _onTouchBegan(touch) {
-    if (!this.isVisible() || !this._isAncestorsVisible(this)) return;
+    if (!this.visible || !this._isAncestorsVisible(this)) return;
     var touchPoint = touch.getLocation();
     var bb = new Rect(0, 0, this._contentSize.width, this._contentSize.height);
     var hitted = Rect.containsPoint(bb, this.convertToNodeSpace(touchPoint));
@@ -281,7 +281,7 @@ export class EditBox extends Node {
   }
 
   _onTouchEnded() {
-    if (!this.isVisible() || !this._isAncestorsVisible(this)) return;
+    if (!this.visible || !this._isAncestorsVisible(this)) return;
     this._input._beginEditing();
   }
 

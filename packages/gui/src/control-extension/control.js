@@ -28,7 +28,7 @@ export class Control extends Layer {
   hasVisibleParents() {
     var parent = this.getParent();
     for (var c = parent; c != null; c = c.getParent()) {
-      if (!c.isVisible()) return false;
+      if (!c.visible) return false;
     }
     return true;
   }

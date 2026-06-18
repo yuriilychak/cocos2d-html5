@@ -41,7 +41,7 @@ export class VisibleFrame extends Frame {
    * @param {Frame} nextFrame
    */
   onEnter(nextFrame) {
-    if (this._node) this._node.setVisible(this._visible);
+    if (this._node) this._node.visible = this._visible;
   }
 
   /**
@@ -51,7 +51,7 @@ export class VisibleFrame extends Frame {
    */
   clone() {
     var frame = new VisibleFrame();
-    frame.setVisible(this._visible);
+    frame.visible = this._visible;
 
     frame._cloneProperty(this);
 
@@ -62,7 +62,7 @@ export class VisibleFrame extends Frame {
    * Set display state
    * @param {Boolean} visible
    */
-  setVisible(visible) {
+  set visible(visible) {
     this._visible = visible;
   }
 
@@ -70,7 +70,7 @@ export class VisibleFrame extends Frame {
    * Get the display state
    * @returns {Boolean}
    */
-  isVisible() {
+  get visible() {
     return this._visible;
   }
 };

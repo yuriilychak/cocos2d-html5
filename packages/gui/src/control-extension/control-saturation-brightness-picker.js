@@ -151,7 +151,7 @@ export class ControlSaturationBrightnessPicker extends Control {
   }
 
   onTouchBegan(touch, event) {
-    if (!this.enabled || !this.isVisible()) return false;
+    if (!this.enabled || !this.visible) return false;
     var touchLocation = this.getTouchLocation(touch);
     return this._checkSliderPosition(touchLocation);
   }

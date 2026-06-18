@@ -10,6 +10,7 @@ export class ControlColourPicker extends Control {
   _huePicker = null;
   _background = null;
   _className = "ControlColourPicker";
+  _color = null;
 
   get background() {
     return this.getBackground();
@@ -17,12 +18,13 @@ export class ControlColourPicker extends Control {
 
   constructor() {
     super();
+    this._color = Color.WHITE;
     this.init();
   }
 
   hueSliderValueChanged(sender, controlEvent) {
     this._hsv.h = sender.hue;
-    super.color = Color.fromHSV(this._hsv);
+    this._color = Color.fromHSV(this._hsv);
     this.sendActionsForControlEvents(CONTROL_EVENT_VALUE_CHANGED);
     this._updateControlPicker();
   }
@@ -30,15 +32,19 @@ export class ControlColourPicker extends Control {
   colourSliderValueChanged(sender, controlEvent) {
     this._hsv.s = sender.saturation;
     this._hsv.v = sender.brightness;
-    super.color = Color.fromHSV(this._hsv);
+    this._color = Color.fromHSV(this._hsv);
     this.sendActionsForControlEvents(CONTROL_EVENT_VALUE_CHANGED);
   }
 
   set color(color) {
-    super.color = color;
+    this._color = color;
 
     this._hsv = color.hsv;
     this._updateHueAndControlPicker();
+  }
+
+  get color() {
+    return this._color;
   }
 
   get background() {

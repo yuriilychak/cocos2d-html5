@@ -237,8 +237,8 @@ export class EditBoxInputBase {
     _updatePlaceholderVisibility() {
         if (!this._textLabel || !this._placeholderLabel) return;
         var isEmpty = !this._editBox._text;
-        this._placeholderLabel.setVisible(isEmpty && !this._editingMode);
-        this._textLabel.setVisible(!isEmpty || this._editingMode);
+        this._placeholderLabel.visible = isEmpty && !this._editingMode;
+        this._textLabel.visible = !isEmpty || this._editingMode;
     }
 
     _updateDomTextCases() {
@@ -301,7 +301,7 @@ export class EditBoxInputBase {
 
     _restoreBlinkedSprite() {
         if (this._blinkedSprite) {
-            this._blinkedSprite.setVisible(true);
+            this._blinkedSprite.visible = true;
             this._blinkedSprite = null;
         }
     }
@@ -309,7 +309,7 @@ export class EditBoxInputBase {
     _toggleCaret() {
         if (!this._caretSprite || !this._editingMode) return;
         this._caretVisible = !this._caretVisible;
-        this._caretSprite.setVisible(this._caretVisible);
+        this._caretSprite.visible = this._caretVisible;
         this._blinkedSprite = this._caretVisible ? null : this._caretSprite;
     }
 

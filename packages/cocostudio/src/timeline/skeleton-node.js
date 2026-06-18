@@ -198,7 +198,7 @@ import { BoneNode } from "./bone-node.js";
             var childBones = this._childBones;
             for (var bone, i = 0; i < childBones.length; i++) {
                 bone = childBones[i];
-                if (bone.isVisible())
+                if (bone.visible)
                     boneStack.push(bone);
             }
             while (boneStack.length > 0) {
@@ -211,7 +211,7 @@ import { BoneNode } from "./bone-node.js";
 
                 for (var childbone, i = 0; i < topChildren.length; i++) {
                     childbone = topChildren[i];
-                    if (childbone.isVisible())
+                    if (childbone.visible)
                         boneStack.push(childbone);
                 }
             }
@@ -248,7 +248,7 @@ import { BoneNode } from "./bone-node.js";
             this._subDrawBones = {}; //.clear()
             for (var name in this._subBonesMap) {
                 var bone = this._subBonesMap[name];
-                if (bone.isVisible() && bone.isDebugDrawEnabled())
+                if (bone.visible && bone.isDebugDrawEnabled())
                     this._subDrawBones.push(bone);
             }
             this._sortArray(this._sortedAllBones);

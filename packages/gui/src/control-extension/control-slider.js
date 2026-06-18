@@ -92,7 +92,7 @@ export class ControlSlider extends Control {
   }
 
   onTouchBegan(touch, event) {
-    if (!this.isTouchInside(touch) || !this.enabled || !this.isVisible()) {
+    if (!this.isTouchInside(touch) || !this.enabled || !this.visible) {
       return false;
     }
 

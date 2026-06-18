@@ -324,13 +324,6 @@ export class Node extends NewClass {
     this.setParent(v);
   }
 
-  get visible() {
-    return this.isVisible();
-  }
-  set visible(v) {
-    this.setVisible(v);
-  }
-
   get running() {
     return this.isRunning();
   }
@@ -842,7 +835,7 @@ export class Node extends NewClass {
    * @see Node#setVisible
    * @return {Boolean} true if the node is visible, false if the node is hidden.
    */
-  isVisible() {
+  get visible() {
     return this._visible;
   }
 
@@ -852,7 +845,7 @@ export class Node extends NewClass {
    * @function
    * @param {Boolean} visible Pass true to make the node visible, false to hide the node.
    */
-  setVisible(visible) {
+  set visible(visible) {
     if (this._visible !== visible) {
       this._visible = visible;
       //if(visible)

@@ -65,7 +65,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
     if (locChildren) {
       for (var i = 0; i < locChildren.length; i++) {
         var selNode = locChildren[i];
-        if (selNode) selNode.setVisible(false);
+        if (selNode) selNode.visible = false;
       }
     }
     if (this._textureLoaded) {

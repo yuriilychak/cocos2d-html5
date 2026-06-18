@@ -109,8 +109,7 @@ import { _ccsLoad } from "./load/utils.js";
             name: "VisibleForFrame",
             handle: function(options){
                 var frame = new VisibleFrame();
-                var visible = options["Value"];
-                frame.setVisible(visible);
+                frame.visible = options["Value"];
                 return frame;
             }
         },

@@ -91,7 +91,7 @@ export class ControlHuePicker extends Control {
     }
 
     onTouchBegan(touch, event) {
-        if (!this.enabled || !this.isVisible())
+        if (!this.enabled || !this.visible)
             return false;
         var touchLocation = this.getTouchLocation(touch);
         return this._checkSliderPosition(touchLocation);

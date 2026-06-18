@@ -66,7 +66,7 @@ export class ControlPotentiometer extends Control {
   }
 
   onTouchBegan(touch, event) {
-    if (!this.isTouchInside(touch) || !this.enabled || !this.isVisible())
+    if (!this.isTouchInside(touch) || !this.enabled || !this.visible)
       return false;
     this._previousLocation = this.getTouchLocation(touch);
     this.potentiometerBegan(this._previousLocation);

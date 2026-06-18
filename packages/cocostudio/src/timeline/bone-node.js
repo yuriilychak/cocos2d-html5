@@ -94,12 +94,12 @@ export function _setSkeletonNodeClass(SN) { _SkeletonNode = SN; }
             debug.assert(skin != null, "Argument must be non-nil");
             if (hideOthers) {
                 for (var i = 0; i < boneSkins.length; i++) {
-                    boneSkins[i].setVisible(false);
+                    boneSkins[i].visible = false;
                 }
             }
             super.addChild(skin);
             this._boneSkins.push(skin);
-            skin.setVisible(display);
+            skin.visible = display;
         }
 
         getChildBones() {
@@ -117,18 +117,18 @@ export function _setSkeletonNodeClass(SN) { _SkeletonNode = SN; }
                 for (i = 0; i < boneSkins.length; i++) {
                     boneSkin = boneSkins[i];
                     if (skin == boneSkin.name) {
-                        boneSkin.setVisible(true);
+                        boneSkin.visible = true;
                     } else if (hideOthers) {
-                        boneSkin.setVisible(false);
+                        boneSkin.visible = false;
                     }
                 }
             } else {
                 for (i = 0; i < boneSkins.length; i++) {
                     boneSkin = boneSkins[i];
                     if (boneSkin == skin) {
-                        boneSkin.setVisible(true);
+                        boneSkin.visible = true;
                     } else if (hideOthers) {
-                        boneSkin.setVisible(false);
+                        boneSkin.visible = false;
                     }
                 }
             }
@@ -139,7 +139,7 @@ export function _setSkeletonNodeClass(SN) { _SkeletonNode = SN; }
             var boneSkins = this._boneSkins;
             for (var boneSkin, i = 0; i < boneSkins.length; i++) {
                 boneSkin = boneSkins[i];
-                if (boneSkin.isVisible()) {
+                if (boneSkin.visible) {
                     displayingSkins.push(boneSkin);
                 }
             }
@@ -271,7 +271,7 @@ export function _setSkeletonNodeClass(SN) { _SkeletonNode = SN; }
             for (var skin, i = 0; i < boneSkins.length; i++) {
                 skin = boneSkins[i];
                 var r = skin.getBoundingBox();
-                if (!skin.isVisible() || (r.x === 0 && r.y === 0 && r.width === 0 && r.height === 0))
+                if (!skin.visible || (r.x === 0 && r.y === 0 && r.width === 0 && r.height === 0))
                     continue;
 
                 if (first) {
@@ -330,10 +330,10 @@ export function _setSkeletonNodeClass(SN) { _SkeletonNode = SN; }
             this._updateVertices();
         }
 
-        setVisible(visible) {
+        set visible(visible) {
             if (this._visible == visible)
                 return;
-            super.setVisible(visible);
+            super.visible = visible;
             if (this._rootSkeleton != null) {
                 this._rootSkeleton._subBonesDirty = true;
                 this._rootSkeleton._subBonesOrderDirty = true;

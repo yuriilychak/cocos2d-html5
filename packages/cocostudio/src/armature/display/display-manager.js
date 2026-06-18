@@ -314,7 +314,7 @@ export class DisplayManager extends NewClass {
       displayRenderNode.color = locBone.getDisplayedColor();
       displayRenderNode.opacity = locBone.getDisplayedOpacity();
 
-      this._displayRenderNode.setVisible(this._visible);
+      this._displayRenderNode.visible = this._visible;
       this._displayType = this._currentDecoDisplay.getDisplayData().displayType;
     } else this._displayType = DISPLAY_TYPE_MAX;
 
@@ -419,17 +419,17 @@ export class DisplayManager extends NewClass {
    * </p>
    * @param {boolean} visible
    */
-  setVisible(visible) {
+  set visible(visible) {
     if (!this._displayRenderNode) return;
     this._visible = visible;
-    this._displayRenderNode.setVisible(visible);
+    this._displayRenderNode.visible = visible;
   }
 
   /**
    * Determines if the display is visible
    * @returns {boolean} true if the node is visible, false if the node is hidden.
    */
-  isVisible() {
+  get visible() {
     return this._visible;
   }
 

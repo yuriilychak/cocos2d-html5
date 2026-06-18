@@ -98,7 +98,7 @@ export class ControlSwitch extends Control {
   }
 
   onTouchBegan(touch, event) {
-    if (!this.isTouchInside(touch) || !this.enabled || !this.isVisible())
+    if (!this.isTouchInside(touch) || !this.enabled || !this.visible)
       return false;
     this._moved = false;
     var location = this.locationFromTouch(touch);

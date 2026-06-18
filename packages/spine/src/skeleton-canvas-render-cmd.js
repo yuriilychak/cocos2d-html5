@@ -165,7 +165,7 @@ export class SkeletonCanvasRenderCmd extends Node.CanvasRenderCmd {
       const slotNode = slot._slotNode;
 
       if (!attachment) {
-        slotNode.setVisible(false);
+        slotNode.visible = false;
         continue;
       }
 
@@ -177,10 +177,10 @@ export class SkeletonCanvasRenderCmd extends Node.CanvasRenderCmd {
           ) {
             const spriteName = attachment.region.name;
             if (slot.currentSprite !== undefined)
-              slot.currentSprite.setVisible(false);
+              slot.currentSprite.visible = false;
             slot.sprites = slot.sprites || {};
             if (slot.sprites[spriteName] !== undefined) {
-              slot.sprites[spriteName].setVisible(true);
+              slot.sprites[spriteName].visible = true;
             } else {
               const sprite = this._createSprite(slot, attachment);
               slotNode.addChild(sprite);
@@ -228,10 +228,10 @@ export class SkeletonCanvasRenderCmd extends Node.CanvasRenderCmd {
       } else if (attachment instanceof MeshAttachment) {
         // mesh not supported in canvas mode
       } else {
-        slotNode.setVisible(false);
+        slotNode.visible = false;
         continue;
       }
-      slotNode.setVisible(true);
+      slotNode.visible =  true;
     }
   }
 }

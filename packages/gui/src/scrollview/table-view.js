@@ -433,7 +433,7 @@ export class TableView extends GScrollView {
     scrollViewDidZoom(view) {}
 
     onTouchEnded(touch, event) {
-        if (!this.isVisible())
+        if (!this.visible)
             return;
 
         if (this._touchedCell) {
@@ -456,7 +456,7 @@ export class TableView extends GScrollView {
 
     onTouchBegan(touch, event) {
         for (var c = this; c != null; c = c.parent) {
-            if (!c.isVisible())
+            if (!c.visible)
                 return false;
         }
 

@@ -366,7 +366,7 @@ export class GScrollView extends Layer {
 
   onTouchBegan(touch, event) {
     for (var c = this; c != null; c = c.parent) {
-      if (!c.isVisible()) return false;
+      if (!c.visible) return false;
     }
 
     var frame = this._getViewRect();
@@ -407,7 +407,7 @@ export class GScrollView extends Layer {
   }
 
   onTouchMoved(touch, event) {
-    if (!this.isVisible()) return;
+    if (!this.visible) return;
 
     this.setNodeDirty();
 
@@ -501,7 +501,7 @@ export class GScrollView extends Layer {
   }
 
   onTouchEnded(touch, event) {
-    if (!this.isVisible()) return;
+    if (!this.visible) return;
 
     if (this._touches.length === 1 && this._touchMoved)
       this.schedule(this._deaccelerateScrolling);
@@ -512,7 +512,7 @@ export class GScrollView extends Layer {
   }
 
   onTouchCancelled(touch, event) {
-    if (!this.isVisible()) return;
+    if (!this.visible) return;
 
     this._touches.length = 0;
     this._dragging = false;

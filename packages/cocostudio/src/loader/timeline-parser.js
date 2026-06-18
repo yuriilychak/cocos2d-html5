@@ -127,8 +127,7 @@ parser.generalAttributes = function (node, json) {
 
   if (json["ZOrder"] != null) node.setLocalZOrder(json["ZOrder"]);
 
-  var visible = getParam(json["VisibleForFrame"], true);
-  node.setVisible(visible);
+  node.visible = getParam(json["VisibleForFrame"], true);
 
   var size = json["Size"];
   if (size) setContentSize(node, size);
@@ -305,8 +304,7 @@ parser.widgetAttributes = function (widget, json, enableContent) {
 
   //var visible = json["Visible"];
 
-  var visible = getParam(json["VisibleForFrame"], true);
-  widget.setVisible(visible);
+  widget.visible = getParam(json["VisibleForFrame"], true);
 
   var alpha = json["Alpha"];
   if (alpha != null) widget.opacity = alpha;

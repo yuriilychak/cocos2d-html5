@@ -68,9 +68,9 @@ export class ControlButton extends Control {
             return;
 
         if (this._titleLabel)
-            this._titleLabel.setVisible(false);
+            this._titleLabel.visible = false;
         if (this._backgroundSprite)
-            this._backgroundSprite.setVisible(false);
+            this._backgroundSprite.visible = false;
 
         this.setLabelAnchorPoint(this._labelAnchorPoint);
 
@@ -123,11 +123,11 @@ export class ControlButton extends Control {
         locContentSize = this.getContentSize();
         if (label) {
             label.setPosition(locContentSize.width / 2, locContentSize.height / 2);
-            label.setVisible(true);
+            label.visible = true;
         }
         if (locBackgroundSprite) {
             locBackgroundSprite.setPosition(locContentSize.width / 2, locContentSize.height / 2);
-            locBackgroundSprite.setVisible(true);
+            locBackgroundSprite.visible = true;
         }
     }
 
@@ -305,7 +305,7 @@ export class ControlButton extends Control {
     }
 
     onTouchBegan(touch, event) {
-        if (!this.isTouchInside(touch) || !this.enabled || !this.isVisible() || !this.hasVisibleParents())
+        if (!this.isTouchInside(touch) || !this.enabled || !this.visible || !this.hasVisibleParents())
             return false;
         this._isPushed = true;
         this.setHighlighted(true);
@@ -396,7 +396,7 @@ export class ControlButton extends Control {
                 this.removeChild(previousLabel, true);
         }
         locTable[state] = titleLabel;
-        titleLabel.setVisible(false);
+        titleLabel.visible = false;
         titleLabel.setAnchorPoint(0.5, 0.5);
         this.addChild(titleLabel, 1);
         if (this.state === state)
@@ -433,7 +433,7 @@ export class ControlButton extends Control {
                 this.removeChild(previousSprite, true);
         }
         locTable[state] = sprite;
-        sprite.setVisible(false);
+        sprite.visible = false;
         sprite.setAnchorPoint(0.5, 0.5);
         this.addChild(sprite);
         var locPreferredSize = this._preferredSize;
