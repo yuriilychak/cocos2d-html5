@@ -42,8 +42,8 @@ export class SkewFrame extends Frame {
    */
   onEnter(nextFrame) {
     if (!this._node) return;
-    this._node.setSkewX(this._skewX);
-    this._node.setSkewY(this._skewY);
+    this._node.skewX = this._skewX;
+    this._node.skewY = this._skewY;
 
     if (this._tween) {
       this._betweenSkewX = nextFrame._skewX - this._skewX;
@@ -57,11 +57,8 @@ export class SkewFrame extends Frame {
    */
   _onApply(percent) {
     if (this._betweenSkewX !== 0 || this._betweenSkewY !== 0) {
-      var skewx = this._skewX + percent * this._betweenSkewX;
-      var skewy = this._skewY + percent * this._betweenSkewY;
-
-      this._node.setSkewX(skewx);
-      this._node.setSkewY(skewy);
+      this._node.skewX = this._skewX + percent * this._betweenSkewX;
+      this._node.skewY = this._skewY + percent * this._betweenSkewY;
     }
   }
 
@@ -72,8 +69,8 @@ export class SkewFrame extends Frame {
    */
   clone() {
     var frame = new SkewFrame();
-    frame.setSkewX(this._skewX);
-    frame.setSkewY(this._skewY);
+    frame.skewX = this._skewX;
+    frame.skewY = this._skewY;
 
     frame._cloneProperty(this);
 
@@ -84,7 +81,7 @@ export class SkewFrame extends Frame {
    * Set the skew x
    * @param {Number} skewx
    */
-  setSkewX(skewx) {
+  set skewX(skewx) {
     this._skewX = skewx;
   }
 
@@ -92,7 +89,7 @@ export class SkewFrame extends Frame {
    * Gets the skew x
    * @returns {Number}
    */
-  getSkewX() {
+  get skewX() {
     return this._skewX;
   }
 
@@ -100,7 +97,7 @@ export class SkewFrame extends Frame {
    * Set the skew y
    * @param {Number} skewy
    */
-  setSkewY(skewy) {
+  set skewY(skewy) {
     this._skewY = skewy;
   }
 
@@ -108,7 +105,7 @@ export class SkewFrame extends Frame {
    * Gets the skew y
    * @returns {Number}
    */
-  getSkewY() {
+  get skewY() {
     return this._skewY;
   }
 };

@@ -135,10 +135,8 @@ import { _ccsLoad } from "./load/utils.js";
             name: "Skew",
             handle: function(options){
                 var frame = new SkewFrame();
-                var skewx = options["X"];
-                var skewy = options["Y"];
-                frame.setSkewX(skewx);
-                frame.setSkewY(skewy);
+                frame.skewX = options["X"];
+                frame.skewY = options["Y"];
                 return frame;
             }
         },
@@ -146,10 +144,8 @@ import { _ccsLoad } from "./load/utils.js";
             name: "RotationSkew",
             handle: function(options){
                 var frame = new RotationSkewFrame();
-                var skewx = options["X"];
-                var skewy = options["Y"];
-                frame.setSkewX(skewx);
-                frame.setSkewY(skewy);
+                frame.skewX = options["X"];
+                frame.skewY = options["Y"];
                 return frame;
             }
         },

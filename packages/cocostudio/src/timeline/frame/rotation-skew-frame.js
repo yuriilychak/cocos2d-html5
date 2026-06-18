@@ -66,8 +66,8 @@ export class RotationSkewFrame extends SkewFrame {
    */
   clone() {
     var frame = new RotationSkewFrame();
-    frame.setSkewX(this._skewX);
-    frame.setSkewY(this._skewY);
+    frame.skewX = this._skewX;
+    frame.skewY = this._skewY;
 
     frame._cloneProperty(this);
 

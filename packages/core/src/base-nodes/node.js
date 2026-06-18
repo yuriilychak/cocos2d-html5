@@ -253,20 +253,6 @@ export class Node extends NewClass {
     this._setAnchorY(v);
   }
 
-  get skewX() {
-    return this.getSkewX();
-  }
-  set skewX(v) {
-    this.setSkewX(v);
-  }
-
-  get skewY() {
-    return this.getSkewY();
-  }
-  set skewY(v) {
-    this.setSkewY(v);
-  }
-
   get zIndex() {
     return this.getLocalZOrder();
   }
@@ -394,7 +380,7 @@ export class Node extends NewClass {
    * @function
    * @return {Number} The X skew angle of the node in degrees.
    */
-  getSkewX() {
+  get skewX() {
     return this._skewX;
   }
 
@@ -409,7 +395,7 @@ export class Node extends NewClass {
    * @function
    * @param {Number} newSkewX The X skew angle of the node in degrees.
    */
-  setSkewX(newSkewX) {
+  set skewX(newSkewX) {
     this._skewX = newSkewX;
     this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
   }
@@ -424,7 +410,7 @@ export class Node extends NewClass {
    * @function
    * @return {Number} The Y skew angle of the node in degrees.
    */
-  getSkewY() {
+  get skewY() {
     return this._skewY;
   }
 
@@ -439,7 +425,7 @@ export class Node extends NewClass {
    * @function
    * @param {Number} newSkewY  The Y skew angle of the node in degrees.
    */
-  setSkewY(newSkewY) {
+  set skewY(newSkewY) {
     this._skewY = newSkewY;
     this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
   }
