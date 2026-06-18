@@ -160,7 +160,7 @@ export class ControlPotentiometer extends Control {
     var percent =
       (value - this._minimumValue) / (this._maximumValue - this._minimumValue);
     this._progressTimer.setPercentage(percent * 100.0);
-    this._thumb.setRotation(percent * 360.0);
+    this._thumb.rotation = percent * 360;
     this.sendActionsForControlEvents(CONTROL_EVENT_VALUE_CHANGED);
   }
 

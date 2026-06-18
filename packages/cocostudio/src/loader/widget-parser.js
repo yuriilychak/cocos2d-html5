@@ -29,7 +29,7 @@ function applyCommonAttributes(widget, opts) {
         widget.setAnchorPoint(opts.anchorPointX, opts.anchorPointY);
     if (opts.opacity != null) widget.opacity = opts.opacity;
     if (opts.visible != null) widget.visible = opts.visible;
-    if (opts.rotation != null) widget.setRotation(opts.rotation);
+    if (opts.rotation != null) widget.rotation = opts.rotation;
     if (opts.scaleX != null) widget.scaleX = opts.scaleX;
     if (opts.scaleY != null) widget.scaleY = opts.scaleY;
     if (opts.colorR != null && opts.colorG != null && opts.colorB != null)

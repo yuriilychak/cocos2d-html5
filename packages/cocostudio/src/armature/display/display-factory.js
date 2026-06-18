@@ -218,7 +218,7 @@ export const displayFactory = {
 
         var armature = bone.armature;
         if (armature)
-            system.setParent(bone.armature);
+            system.parent = bone.armature;
 
         decoDisplay.setDisplay(system);
     },

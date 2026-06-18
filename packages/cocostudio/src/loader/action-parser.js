@@ -127,7 +127,7 @@ import { _ccsLoad } from "./load/utils.js";
             handle: function(options){
                 var frame = new RotationFrame();
                 var rotation = options["Rotation"] || options["Value"] || 0;
-                frame.setRotation(rotation);
+                frame.rotation = rotation;
                 return frame;
             }
         },

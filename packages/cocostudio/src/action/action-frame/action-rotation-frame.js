@@ -19,7 +19,7 @@ export class ActionRotationFrame extends ActionFrame {
    * Changes rotate action rotation.
    * @param {number} rotation
    */
-  setRotation(rotation) {
+  set rotation(rotation) {
     this._rotation = rotation;
   }
 
@@ -27,7 +27,7 @@ export class ActionRotationFrame extends ActionFrame {
    * Returns the rotate action rotation.
    * @returns {number}
    */
-  getRotation() {
+  get rotation() {
     return this._rotation;
   }
 

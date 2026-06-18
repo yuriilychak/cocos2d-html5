@@ -281,13 +281,6 @@ export class Node extends NewClass {
     this.setVertexZ(v);
   }
 
-  get rotation() {
-    return this.getRotation();
-  }
-  set rotation(v) {
-    this.setRotation(v);
-  }
-
   get rotationX() {
     return this.getRotationX();
   }
@@ -315,13 +308,6 @@ export class Node extends NewClass {
 
   get childrenCount() {
     return this.getChildrenCount();
-  }
-
-  get parent() {
-    return this.getParent();
-  }
-  set parent(v) {
-    this.setParent(v);
   }
 
   get running() {
@@ -557,7 +543,7 @@ export class Node extends NewClass {
    * @function
    * @return {Number} The rotation of the node in degrees.
    */
-  getRotation() {
+  get rotation() {
     if (this._rotationX !== this._rotationY) log(_LogInfos.Node_getRotation);
     return this._rotationX;
   }
@@ -572,7 +558,7 @@ export class Node extends NewClass {
    * @function
    * @param {Number} newRotation The rotation of the node in degrees.
    */
-  setRotation(newRotation) {
+  set rotation(newRotation) {
     this._rotationX = this._rotationY = newRotation;
     this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
   }
@@ -997,7 +983,7 @@ export class Node extends NewClass {
    * @function
    * @return {Node} A reference to the parent node
    */
-  getParent() {
+  get parent() {
     return this._parent;
   }
 
@@ -1005,7 +991,7 @@ export class Node extends NewClass {
    * Sets the parent node
    * @param {Node} parent A reference to the parent node
    */
-  setParent(parent) {
+  set parent(parent) {
     this._parent = parent;
     this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
   }
@@ -1953,7 +1939,7 @@ export class Node extends NewClass {
    * spriteB.setAdditionalTransform(t);
    *
    * //rotation
-   * spriteA.setRotation(20);
+   * spriteA.rotation = 20;
    *
    * // Gets the spriteA's transform.
    * t = spriteA.getNodeToParentTransform();

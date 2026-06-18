@@ -262,7 +262,7 @@ export class EditBox extends Node {
 
   _isAncestorsVisible(node) {
     if (null == node) return true;
-    var parent = node.getParent();
+    var parent = node.parent;
     if (parent && !parent.visible) return false;
     return this._isAncestorsVisible(parent);
   }

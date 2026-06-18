@@ -122,7 +122,7 @@ export class ActionNode extends NewClass {
         actionFrame.frameIndex = frameIndex;
         actionFrame.setEasingType(frameTweenType);
         actionFrame.setEasingParameter(frameTweenParameter);
-        actionFrame.setRotation(rotation);
+        actionFrame.rotation = rotation;
         actionArray = this.#frameArray[FRAME_TYPE_ROTATE];
         actionArray.push(actionFrame);
       }

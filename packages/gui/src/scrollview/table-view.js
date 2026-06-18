@@ -208,7 +208,7 @@ export class TableView extends GScrollView {
         arrayRemoveObject(this._indices, cell.getIdx());
 
         cell.reset();
-        if (cell.getParent() === this.getContainer()) {
+        if (cell.parent === this.getContainer()) {
             this.getContainer().removeChild(cell, true);
         }
     }
@@ -220,7 +220,7 @@ export class TableView extends GScrollView {
     }
 
     _addCellIfNecessary(cell) {
-        if (cell.getParent() !== this.getContainer()) {
+        if (cell.parent !== this.getContainer()) {
             this.getContainer().addChild(cell);
         }
         this._cellsUsed.insertSortedObject(cell);
@@ -331,7 +331,7 @@ export class TableView extends GScrollView {
 
             locCellsFreed.addObject(cell);
             cell.reset();
-            if (cell.getParent() === locContainer)
+            if (cell.parent === locContainer)
                 locContainer.removeChild(cell, true);
         }
 

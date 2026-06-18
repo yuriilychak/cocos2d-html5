@@ -593,7 +593,7 @@ export class TMXLayer extends SpriteBatchNode {
     sprite.opacity = this._opacity;
     sprite.setFlippedX(false);
     sprite.setFlippedY(false);
-    sprite.setRotation(0.0);
+    sprite.rotation = 0;
 
     if ((gid & TMX_TILE_DIAGONAL_FLAG) >>> 0) {
       sprite.setAnchorPoint(0.5, 0.5);
@@ -606,16 +606,16 @@ export class TMXLayer extends SpriteBatchNode {
         (gid &
           ((TMX_TILE_HORIZONTAL_FLAG | TMX_TILE_VERTICAL_FLAG) >>> 0)) >>>
         0;
-      if (flag === TMX_TILE_HORIZONTAL_FLAG) sprite.setRotation(90);
-      else if (flag === TMX_TILE_VERTICAL_FLAG) sprite.setRotation(270);
+      if (flag === TMX_TILE_HORIZONTAL_FLAG) sprite.rotation = 90;
+      else if (flag === TMX_TILE_VERTICAL_FLAG) sprite.rotation = 270;
       else if (
         flag ===
         (TMX_TILE_VERTICAL_FLAG | TMX_TILE_HORIZONTAL_FLAG) >>> 0
       ) {
-        sprite.setRotation(90);
+        sprite.rotation = 90;
         sprite.setFlippedX(true);
       } else {
-        sprite.setRotation(270);
+        sprite.rotation = 270;
         sprite.setFlippedX(true);
       }
     } else {

@@ -134,7 +134,7 @@ export class SkeletonCanvasRenderCmd extends Node.CanvasRenderCmd {
       sprite._rect.width = attachment.width;
       sprite._rect.height = attachment.height;
       sprite.setContentSize(attachment.width, attachment.height);
-      sprite.setRotation(-attachment.rotation);
+      sprite.rotation = -attachment.rotation;
       sprite.setScale(
         (rendererObject.width / rendererObject.originalWidth) *
           attachment.scaleX,
@@ -212,11 +212,11 @@ export class SkeletonCanvasRenderCmd extends Node.CanvasRenderCmd {
         selSprite._flippedX = bone.skeleton.scaleX < 0;
         selSprite._flippedY = bone.skeleton.scaleY < 0;
         if (selSprite._flippedY || selSprite._flippedX) {
-          slotNode.setRotation(bone.getWorldRotationX());
-          selSprite.setRotation(attachment.rotation);
+          slotNode.rotation = bone.getWorldRotationX();
+          selSprite.rotation = attachment.rotation;
         } else {
-          slotNode.setRotation(-bone.getWorldRotationX());
-          selSprite.setRotation(-attachment.rotation);
+          slotNode.rotation = -bone.getWorldRotationX();
+          selSprite.rotation = -attachment.rotation;
         }
 
         selSprite._renderCmd._displayedOpacity = 0 | (opacity * slot.color.a);

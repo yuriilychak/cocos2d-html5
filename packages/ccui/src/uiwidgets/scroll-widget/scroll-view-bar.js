@@ -109,12 +109,12 @@ export class ScrollViewBar extends ProtectedNode {
         this.addProtectedChild(this._body);
 
         this.color = ScrollViewBar.DEFAULT_COLOR;
-        this.onScrolled(new Point(0, 0));
+        this.onScrolled(new Point());
         super.opacity = 0;
         this._autoHideRemainingTime = 0;
 
         if (this._direction === DIR_HORIZONTAL) {
-            this.setRotation(90);
+            this.rotation = 90;
         }
     }
 

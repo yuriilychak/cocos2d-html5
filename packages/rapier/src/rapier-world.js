@@ -79,7 +79,7 @@ export class RapierWorld {
     if (opts.density !== undefined) desc.setDensity(opts.density);
     if (opts.sensor) desc.setSensor(true);
     if (opts.translation) desc.setTranslation(opts.translation.x, opts.translation.y);
-    if (opts.rotation !== undefined) desc.setRotation(opts.rotation);
+    if (opts.rotation !== undefined) desc.rotation = opts.rotation;
     return desc;
   }
 

@@ -185,10 +185,6 @@ export class Widget extends ProtectedNode {
     this._setHeightPercent(v);
   }
 
-  get widgetParent() {
-    return this.getWidgetParent();
-  }
-
   get focused() {
     return this.isFocused();
   }
@@ -271,7 +267,7 @@ export class Widget extends ProtectedNode {
     return layoutComponent;
   }
 
-  getWidgetParent() {
+  get widgetParent() {
     var widget = this.parent;
     if (widget instanceof Widget) return widget;
     return null;
@@ -1162,7 +1158,7 @@ export class Widget extends ProtectedNode {
     this.setAnchorPoint(widget.getAnchorPoint());
     this.scaleX = widget.scaleX;
     this.scaleY = widget.scaleY;
-    this.setRotation(widget.getRotation());
+    this.rotation = widget.rotation;
     this.setRotationX(widget.getRotationX());
     this.setRotationY(widget.getRotationY());
     this.setFlippedX(widget.isFlippedX());

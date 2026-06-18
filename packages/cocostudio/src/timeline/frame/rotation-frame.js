@@ -41,7 +41,7 @@ export class RotationFrame extends Frame {
    */
   onEnter(nextFrame) {
     if (!this._node) return;
-    this._node.setRotation(this._rotation);
+    this._node.rotation = this._rotation;
 
     if (this._tween) {
       this._betwennRotation = nextFrame._rotation - this._rotation;
@@ -55,7 +55,7 @@ export class RotationFrame extends Frame {
   _onApply(percent) {
     if (this._betwennRotation !== 0) {
       var rotation = this._rotation + percent * this._betwennRotation;
-      this._node.setRotation(rotation);
+      this._node.rotation = rotation;
     }
   }
 
@@ -66,7 +66,7 @@ export class RotationFrame extends Frame {
    */
   clone() {
     var frame = new RotationFrame();
-    frame.setRotation(this._rotation);
+    frame.rotation = this._rotation;
 
     frame._cloneProperty(this);
 
@@ -77,7 +77,7 @@ export class RotationFrame extends Frame {
    * Set the rotation
    * @param {Number} rotation
    */
-  setRotation(rotation) {
+  set rotation(rotation) {
     this._rotation = rotation;
   }
 
@@ -85,7 +85,7 @@ export class RotationFrame extends Frame {
    * Gets the rotation
    * @returns {Number}
    */
-  getRotation() {
+  get rotation() {
     return this._rotation;
   }
 };

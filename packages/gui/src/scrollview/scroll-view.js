@@ -712,12 +712,12 @@ export class GScrollView extends Layer {
     var screenPos = this.convertToWorldSpace(new Point(0, 0));
     var locViewSize = this._viewSize;
 
-    var scaleX = this.getScaleX();
-    var scaleY = this.getScaleY();
+    var scaleX = this.scaleX;
+    var scaleY = this.scaleY;
 
-    for (var p = this._parent; p != null; p = p.getParent()) {
-      scaleX *= p.getScaleX();
-      scaleY *= p.getScaleY();
+    for (var p = this._parent; p != null; p = p.parent) {
+      scaleX *= p.scaleX;
+      scaleY *= p.scaleY;
     }
 
     if (scaleX < 0) {

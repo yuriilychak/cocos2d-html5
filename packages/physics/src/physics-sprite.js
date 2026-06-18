@@ -85,13 +85,13 @@ export class PhysicsSprite extends Sprite {
     }
   }
 
-  getRotation() {
+  get rotation() {
     return this._ignoreBodyRotation
       ? this._rotationX
       : -radiansToDegrees(this._body.a);
   }
 
-  setRotation(r) {
+  set rotation(r) {
     if (this._ignoreBodyRotation) {
       Sprite.prototype.setRotation.call(this, r);
     } else {

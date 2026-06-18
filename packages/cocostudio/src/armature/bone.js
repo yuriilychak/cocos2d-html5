@@ -312,7 +312,7 @@ export class Bone extends Node {
   }
 
   /**
-   * Adds a child to this bone, and it will let this child call setParent(Bone) function to set self to it's parent
+   * Adds a child to this bone, and it will let this child call parent = Bone function to set self to it's parent
    * @param {Bone} child
    */
   addChildBone(child) {

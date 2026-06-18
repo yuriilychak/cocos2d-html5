@@ -133,7 +133,7 @@ export class DisplayManager extends NewClass {
       display.removeFromParent();
       display._performRecursive(Node._stateCallbackType.cleanup);
       var armature = this._bone.armature;
-      if (armature) display.setParent(armature);
+      if (armature) display.parent = armature;
     } else if (display instanceof Armature) {
       displayData = new ArmatureDisplayData();
       displayData.displayName = display.name;

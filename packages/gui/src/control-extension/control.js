@@ -26,8 +26,8 @@ export class Control extends Layer {
   }
 
   hasVisibleParents() {
-    var parent = this.getParent();
-    for (var c = parent; c != null; c = c.getParent()) {
+    var parent = this.parent;
+    for (var c = parent; c != null; c = c.parent) {
       if (!c.visible) return false;
     }
     return true;
@@ -97,7 +97,7 @@ export class Control extends Layer {
 
   isTouchInside(touch) {
     let touchLocation = touch.getLocation();
-    touchLocation = this.getParent().convertToNodeSpace(touchLocation);
+    touchLocation = this.parent.convertToNodeSpace(touchLocation);
     return Rect.containsPoint(this.getBoundingBox(), touchLocation);
   }
 
