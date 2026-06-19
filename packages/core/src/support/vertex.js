@@ -25,7 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Point } from "../cocoa/geometry/point";
+import { Point } from "../geometry";
 import { degreesToRadians } from "../platform/macro/utils";
 import { vertex2 } from "../platform/types/vertex";
 

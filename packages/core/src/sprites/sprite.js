@@ -26,9 +26,7 @@
 
 import EventHelper from "../event-manager/event-helper";
 import { Node } from "../base-nodes/node";
-import { Point } from "../cocoa/geometry/point";
-import { Rect } from "../cocoa/geometry/rect";
-import { Size } from "../cocoa/geometry/size";
+import { Point, Rect, Size } from "../geometry";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import { Texture2D } from "../textures/texture-2d";
 import { SpriteFrame } from "./sprite-frame";

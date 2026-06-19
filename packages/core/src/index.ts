@@ -88,9 +88,7 @@ LabelTTF.WebGLRenderCmd = LabelTTFWebGLRenderCmd;
 // ======================================================================
 // Named re-exports for direct imports from other packages
 // ======================================================================
-export { Point } from "./cocoa/geometry/point";
-export { Size } from "./cocoa/geometry/size";
-export { cardinalSplineAt, getControlPointAt } from "./cocoa/geometry/spline-utils";
+export { Point, Size, Rect, AffineTransform, cardinalSplineAt, getControlPointAt } from "./geometry";
 export { Vertex3F, Quad3, V3F_C4B_T2F } from "./platform/types/vertex";
 export {
   rand,
@@ -104,7 +102,6 @@ export { RendererConfig } from "./renderer/renderer-config";
 export { Director, DisplayLinkDirector } from "./director/director";
 export { Sys } from "./boot";
 export { NewClass, classManager } from "./platform/class";
-export { Rect } from "./cocoa/geometry/rect";
 export {
   VERTEX_ATTRIB_POSITION,
   VERTEX_ATTRIB_COLOR,
@@ -251,7 +248,6 @@ export { INVALID_INDEX, REPEAT_FOREVER } from "./platform/macro/constants";
 export { rectPointsToPixels } from "./platform/macro/utils";
 export { Path, Game, Loader, Engine } from "./boot";
 export { EGLView } from "./platform/egl-view/egl-view";
-export { AffineTransform } from "./cocoa/affine-transform";
 export { TextureAtlas } from "./textures/texture-atlas";
 export { isObject } from "./boot";
 export { V3F_C4B_T2F_Quad, V3F_C4B_T2F_QuadZero } from "./platform/types/vertex";

@@ -23,8 +23,7 @@
  ****************************************************************************/
 
 import LayerCanvasRenderer from "./layer-canvas-renderer";
-import { Rect } from "../../cocoa/geometry/rect";
-import { AffineTransform } from "../../cocoa/affine-transform";
+import { Rect, AffineTransform } from "../../geometry";
 import { Color } from "../../platform/types/color";
 import { CustomRenderCmd, CanvasRenderCmd as NodeCanvasRenderCmd } from "../../base-nodes/node-canvas-render-cmd";
 import { ServiceLocator } from "../../service-locator";

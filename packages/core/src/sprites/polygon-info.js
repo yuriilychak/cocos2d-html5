@@ -16,7 +16,7 @@
    - filename: source file the polygon belongs to (optional metadata).
  ****************************************************************************/
 
-import { Rect } from "../cocoa/geometry/rect";
+import { Rect } from "../geometry";
 
 export class Triangles {
   constructor(verts, indices) {

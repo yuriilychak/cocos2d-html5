@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Point } from "../cocoa/geometry/point";
+import { Point } from "../geometry";
 
 /**
  * visibleRect is a singleton object which defines the actual visible rect of the current view,

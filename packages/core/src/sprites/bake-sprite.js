@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 import { Sprite } from "./sprite";
-import { Rect } from "../cocoa/geometry/rect";
+import { Rect } from "../geometry";
 import { Texture2D } from "../textures/texture-2d";
 import { CanvasContextWrapper } from "../renderer/renderer-canvas";
 

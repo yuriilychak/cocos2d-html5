@@ -25,9 +25,7 @@
  ****************************************************************************/
 
 import { RAD, DEG } from "./constants";
-import { Point } from "../../cocoa/geometry/point";
-import { Rect } from "../../cocoa/geometry/rect";
-import { Size } from "../../cocoa/geometry/size";
+import { Point, Rect, Size } from "../../geometry";
 import { log, _LogInfos } from "../../boot/debugger";
 import { ServiceLocator } from "../../service-locator";
 

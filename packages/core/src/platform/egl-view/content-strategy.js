@@ -25,7 +25,7 @@
  ****************************************************************************/
 
 import { NewClass } from "../class";
-import { Rect } from "../../cocoa/geometry/rect";
+import { Rect } from "../../geometry";
 import { ServiceLocator } from "../../service-locator";
 
 /**

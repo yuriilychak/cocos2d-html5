@@ -26,16 +26,13 @@
 
 import { NewClass } from "../platform/class";
 import { dirtyFlags } from "./node-canvas-render-cmd";
-import { Point } from "../cocoa/geometry/point";
+import { Point, Rect, Size, AffineTransform } from "../geometry";
 import { Color } from "../platform/types/color";
-import { Rect } from "../cocoa/geometry/rect";
-import { Size } from "../cocoa/geometry/size";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import {
   REPEAT_FOREVER,
   ACTION_TAG_INVALID
 } from "../platform/macro/constants";
-import { AffineTransform } from "../cocoa/affine-transform";
 
 import { arrayRemoveObject } from "../platform/macro/utils";
 import { ComponentContainer } from "../components/component-container";

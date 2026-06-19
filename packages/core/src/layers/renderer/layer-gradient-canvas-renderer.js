@@ -24,7 +24,7 @@
 
 import LayerColorCanvasRenderer from "./layer-color-canvas-renderer";
 import { Node } from "../../base-nodes/node";
-import { Point } from "../../cocoa/geometry/point";
+import { Point } from "../../geometry";
 import { Color } from "../../platform/types/color";
 import { ServiceLocator } from "../../service-locator";
 

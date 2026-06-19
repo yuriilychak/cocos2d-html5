@@ -1,4 +1,4 @@
-import { Point } from "./point";
+import Point from "./point";
 import type { PointLike } from "./types";
 
 export function cardinalSplineAt(

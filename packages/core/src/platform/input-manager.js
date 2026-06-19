@@ -23,8 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Point } from "../cocoa/geometry/point";
-import { Rect } from "../cocoa/geometry/rect";
+import { Point, Rect } from "../geometry";
 import { log, _LogInfos } from "../boot/debugger";
 import Touch from "../event-manager/touch";
 import { EventTouch, EventMouse } from "../event-manager/event/index";

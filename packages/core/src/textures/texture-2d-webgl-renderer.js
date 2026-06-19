@@ -1,5 +1,5 @@
 import { RendererConfig } from "../renderer/renderer-config";
-import { Size } from "../cocoa/geometry/size";
+import { Size } from "../geometry";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import { NextPOT } from "../platform/macro/utils";
 import {

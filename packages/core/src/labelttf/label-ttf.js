@@ -26,10 +26,9 @@
 
 import { Sprite } from "../sprites/sprite";
 import { Node } from "../base-nodes/node";
-import { Point } from "../cocoa/geometry/point";
+import { Point, Size } from "../geometry";
 import { Color } from "../platform/types/color";
 import { FontDefinition } from "../platform/types/font-definition";
-import { Size } from "../cocoa/geometry/size";
 import { log, _LogInfos } from "../boot/debugger";
 import {
   TEXT_ALIGNMENT_LEFT,

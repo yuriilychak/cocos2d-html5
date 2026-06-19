@@ -42,7 +42,7 @@ import {
   PROJECTION_CUSTOM,
   PROJECTION_DEFAULT
 } from "./constants";
-import { Size } from "../cocoa/geometry/size";
+import { Size } from "../geometry";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import { checkGLErrorDebug } from "../platform/macro/utils";
 

@@ -24,15 +24,13 @@
 
 import { WebGLRenderCmd as NodeWebGLRenderCmd } from "../base-nodes/node-webgl-render-cmd";
 import { Node } from "../base-nodes/node";
-import { Point } from "../cocoa/geometry/point";
-import { Rect } from "../cocoa/geometry/rect";
+import { Point, Rect, AffineTransform } from "../geometry";
 import Matrix4 from "../kazmath/mat4";
 import {
   SHADER_POSITION_COLOR,
   VERTEX_ATTRIB_COLOR,
   VERTEX_ATTRIB_POSITION
 } from "../platform/macro/constants";
-import { AffineTransform } from "../cocoa/affine-transform";
 import { radiansToDegrees } from "../platform/macro/utils";
 import { ServiceLocator } from "../service-locator";
 

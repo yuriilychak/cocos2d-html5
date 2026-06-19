@@ -24,8 +24,7 @@
 
 import { CanvasRenderCmd as NodeCanvasRenderCmd } from "../../base-nodes/node-canvas-render-cmd";
 import { Node } from "../../base-nodes/node";
-import { Point } from "../../cocoa/geometry/point";
-import { Rect } from "../../cocoa/geometry/rect";
+import { Point, Rect } from "../../geometry";
 import { BakeSprite } from "../../sprites/bake-sprite";
 import { ServiceLocator } from "../../service-locator";
 

@@ -24,7 +24,7 @@
 
 import { CanvasRenderCmd as NodeCanvasRenderCmd } from "../base-nodes/node-canvas-render-cmd";
 import { Node } from "../base-nodes/node";
-import { Rect } from "../cocoa/geometry/rect";
+import { Rect } from "../geometry";
 import { error, _LogInfos } from "../boot/debugger";
 import { Texture2D } from "../textures/texture-2d";
 import { Color } from "../platform/types/color";

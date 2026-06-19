@@ -24,13 +24,11 @@
 
 import LayerColorWebGLRenderer from "./layer-color-webgl-renderer";
 import { Node } from "../../base-nodes/node";
-import { Point } from "../../cocoa/geometry/point";
-import { Rect } from "../../cocoa/geometry/rect";
+import { Point, Rect, AffineTransform } from "../../geometry";
 import {
   VERTEX_ATTRIB_COLOR,
   VERTEX_ATTRIB_POSITION
 } from "../../platform/macro/constants";
-import { AffineTransform } from "../../cocoa/affine-transform";
 import { radiansToDegrees } from "../../platform/macro/utils";
 import Matrix4 from "../../kazmath/mat4";
 import { ServiceLocator } from "../../service-locator";

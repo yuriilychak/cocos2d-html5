@@ -26,9 +26,7 @@
 
 import { NewClass } from "../platform/class";
 import EventHelper from "../event-manager/event-helper";
-import { Point } from "../cocoa/geometry/point";
-import { Rect } from "../cocoa/geometry/rect";
-import { Size } from "../cocoa/geometry/size";
+import { Point, Rect, Size } from "../geometry";
 import { error, _LogInfos } from "../boot/debugger";
 import { Texture2D } from "../textures/texture-2d";
 import { rectPixelsToPoints, rectPointsToPixels, _pointPixelsToPointsOut, _sizePixelsToPointsOut } from "../platform/macro/utils";

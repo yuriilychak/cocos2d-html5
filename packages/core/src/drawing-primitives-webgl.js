@@ -25,8 +25,7 @@
  ****************************************************************************/
 
 import { NewClass } from "./platform/class";
-import { Point } from "./cocoa/geometry/point";
-import { cardinalSplineAt, getControlPointAt } from "./cocoa/geometry/spline-utils";
+import { Point, cardinalSplineAt, getControlPointAt } from "./geometry";
 import {
   SHADER_POSITION_UCOLOR,
   VERTEX_ATTRIB_POSITION

@@ -26,7 +26,7 @@
 
 import type { SizeLike } from "./types";
 
-export class Size implements SizeLike {
+export default class Size implements SizeLike {
   #data: number[];
 
   constructor();

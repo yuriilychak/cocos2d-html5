@@ -24,10 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Point } from "../cocoa/geometry/point";
+import { Point, Rect, Size } from "../geometry";
 import Path from "../boot/path";
-import { Rect } from "../cocoa/geometry/rect";
-import { Size } from "../cocoa/geometry/size";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import { Texture2D } from "../textures/texture-2d";
 import { SpriteFrame } from "./sprite-frame";

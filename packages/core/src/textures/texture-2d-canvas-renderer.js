@@ -1,4 +1,4 @@
-import { Rect } from "../cocoa/geometry/rect";
+import { Rect } from "../geometry";
 import { Texture2D } from "./texture-2d";
 import {
   REPEAT

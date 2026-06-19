@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Point } from "../cocoa/geometry/point";
+import { Point } from "../geometry";
 
 /**
  * <p>

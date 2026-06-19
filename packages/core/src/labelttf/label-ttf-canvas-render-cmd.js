@@ -21,9 +21,7 @@
 import { LabelTTF } from "./label-ttf";
 import { Node } from "../base-nodes/node";
 import { SpriteCanvasRenderCmd } from "../sprites/sprite-canvas-render-cmd";
-import { Point } from "../cocoa/geometry/point";
-import { Rect } from "../cocoa/geometry/rect";
-import { Size } from "../cocoa/geometry/size";
+import { Point, Rect, Size } from "../geometry";
 import { FontDefinition } from "../platform/types/font-definition";
 import { Texture2D } from "../textures/texture-2d";
 import {

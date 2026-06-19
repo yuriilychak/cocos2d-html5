@@ -9,3 +9,12 @@ export interface SizeLike {
 }
 
 export interface RectLike extends PointLike, SizeLike {}
+
+export interface AffineTransformLike {
+  a: number;
+  b: number;
+  c: number;
+  d: number;
+  tx: number;
+  ty: number;
+}

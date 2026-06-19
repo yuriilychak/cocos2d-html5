@@ -25,10 +25,10 @@
  ****************************************************************************/
 
 import type { PointLike, RectLike, SizeLike } from "./types";
-import { Point } from "./point";
-import { Size } from "./size";
+import Point from "./point";
+import Size from "./size";
 
-export class Rect implements RectLike {
+export default class Rect implements RectLike {
   #data: number[];
 
   constructor();

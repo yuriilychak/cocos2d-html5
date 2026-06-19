@@ -26,7 +26,7 @@
 
 import { NewClass } from "../platform/class";
 import EventHelper from "../event-manager/event-helper";
-import { Size } from "../cocoa/geometry/size";
+import { Size } from "../geometry";
 import CanvasTextureRenderer from "./texture-2d-canvas-renderer";
 import WebGLTextureRenderer from "./texture-2d-webgl-renderer";
 import { log, _LogInfos } from "../boot/debugger";

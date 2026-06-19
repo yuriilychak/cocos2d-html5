@@ -25,9 +25,7 @@
  ****************************************************************************/
 
 import { NewClass } from "../class";
-import { Point } from "../../cocoa/geometry/point";
-import { Rect } from "../../cocoa/geometry/rect";
-import { Size } from "../../cocoa/geometry/size";
+import { Point, Rect, Size } from "../../geometry";
 import { contentScaleFactor } from "../macro/utils";
 import { screen } from "../screen";
 import { visibleRect } from "../visible-rect";

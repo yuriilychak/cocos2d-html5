@@ -27,7 +27,7 @@
 import { NewClass } from "../../platform/class";
 import { AnimationFrame } from "./animation-frame";
 import { SpriteFrame } from "../sprite-frame";
-import { Rect } from "../../cocoa/geometry/rect";
+import { Rect } from "../../geometry";
 import { arrayVerifyType } from "../../platform/macro/utils";
 import { ServiceLocator } from "../../service-locator";
 

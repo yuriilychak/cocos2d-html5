@@ -1,5 +1,5 @@
 import { DirectorRenderer } from './director-renderer';
-import { Point } from '../cocoa/geometry/point';
+import { Point } from '../geometry';
 import { ServiceLocator } from "../service-locator";
 
 export class DirectorCanvasRenderer extends DirectorRenderer {

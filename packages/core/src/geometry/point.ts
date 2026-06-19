@@ -26,9 +26,8 @@
 
 import type { PointLike, SizeLike } from "./types";
 
-const POINT_EPSILON = parseFloat("1.192092896e-07F");
-
-export class Point implements PointLike {
+export default class Point implements PointLike {
+  private static EPSILON = parseFloat("1.192092896e-07F");
   #data: number[];
 
   constructor();
@@ -209,13 +208,13 @@ export class Point implements PointLike {
     const a2 = Point.normalize(a);
     const b2 = Point.normalize(b);
     const angle = Math.atan2(a2.x * b2.y - a2.y * b2.x, Point.dot(a2, b2));
-    if (Math.abs(angle) < POINT_EPSILON) return 0.0;
+    if (Math.abs(angle) < Point.EPSILON) return 0.0;
     return angle;
   }
 
   public static angle(a: PointLike, b: PointLike): number {
     const angle = Math.acos(Point.dot(Point.normalize(a), Point.normalize(b)));
-    if (Math.abs(angle) < POINT_EPSILON) return 0.0;
+    if (Math.abs(angle) < Point.EPSILON) return 0.0;
     return angle;
   }
 

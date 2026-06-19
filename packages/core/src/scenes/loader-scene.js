@@ -25,7 +25,7 @@
 
 import { Scene } from "./scene";
 import { Node } from "../base-nodes/node";
-import { Point } from "../cocoa/geometry/point";
+import { Point } from "../geometry";
 import { Color } from "../platform/types/color";
 import { visibleRect } from "../platform/visible-rect";
 import { contentScaleFactor } from "../platform/macro/utils";

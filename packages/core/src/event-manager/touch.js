@@ -24,7 +24,7 @@
  ****************************************************************************/
 
 import { NewClass } from "../platform/class";
-import { Point } from "../cocoa/geometry/point";
+import { Point } from "../geometry";
 import { ServiceLocator } from "../service-locator";
 
 /**

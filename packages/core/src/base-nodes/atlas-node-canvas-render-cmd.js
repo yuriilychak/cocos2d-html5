@@ -25,7 +25,7 @@
 import { CanvasRenderCmd as NodeCanvasRenderCmd } from "./node-canvas-render-cmd";
 import { Node } from "./node";
 import { Color } from "../platform/types/color";
-import { Rect } from "../cocoa/geometry/rect";
+import { Rect } from "../geometry";
 import { log, _LogInfos } from "../boot/debugger";
 
 /**

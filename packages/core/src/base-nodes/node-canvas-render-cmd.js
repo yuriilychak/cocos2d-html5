@@ -22,10 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Point } from "../cocoa/geometry/point";
-import { Rect } from "../cocoa/geometry/rect";
+import { Point, Rect, AffineTransform } from "../geometry";
 import { Color } from "../platform/types/color";
-import { AffineTransform } from "../cocoa/affine-transform";
 import { Region } from "../renderer/dirty-region";
 import { Node } from "./node";
 import {

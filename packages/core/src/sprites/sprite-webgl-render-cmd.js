@@ -23,8 +23,7 @@
  ****************************************************************************/
 
 import { WebGLRenderCmd as NodeWebGLRenderCmd } from "../base-nodes/node-webgl-render-cmd";
-import { Rect } from "../cocoa/geometry/rect";
-import { Point } from "../cocoa/geometry/point";
+import { Rect, Point } from "../geometry";
 import { log, error, _LogInfos } from "../boot/debugger";
 import { rectPointsToPixels, contentScaleFactor } from "../platform/macro/utils";
 import {
