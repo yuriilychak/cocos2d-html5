@@ -290,7 +290,7 @@ export class GScrollView extends Layer {
       size.height / scale
     );
 
-    return Rect.intersects(viewRect, node.getBoundingBox());
+    return Rect.intersects(viewRect, node.boundingBox);
   }
 
   pause(sender) {

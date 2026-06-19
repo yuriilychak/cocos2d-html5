@@ -1177,7 +1177,7 @@ export class Node extends NewClass {
    * @function
    * @return {Rect} The calculated bounding box of the node
    */
-  getBoundingBox() {
+  get boundingBox() {
     var rect = new Rect(
       0,
       0,

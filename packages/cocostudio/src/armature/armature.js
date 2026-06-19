@@ -297,7 +297,7 @@ export class Armature extends Node {
    */
   updateOffsetPoint() {
     // Set contentsize and Calculate anchor point.
-    var rect = this.getBoundingBox();
+    var rect = this.boundingBox;
     this.setContentSize(rect);
     var locOffsetPoint = this._offsetPoint;
     locOffsetPoint.x = -rect.x;
@@ -372,7 +372,7 @@ export class Armature extends Node {
    * This boundingBox will calculate all bones' boundingBox every time
    * @returns {Rect}
    */
-  getBoundingBox() {
+  get boundingBox() {
     var minX,
       minY,
       maxX,
@@ -386,7 +386,7 @@ export class Armature extends Node {
     for (var i = 0; i < len; i++) {
       var bone = locChildren[i];
       if (bone) {
-        var r = bone.getDisplayManager().getBoundingBox();
+        var r = bone.getDisplayManager().boundingBox;
         if (r.x === 0 && r.y === 0 && r.width === 0 && r.height === 0) continue;
 
         if (first) {

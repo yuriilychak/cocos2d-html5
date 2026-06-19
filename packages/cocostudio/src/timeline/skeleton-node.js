@@ -104,7 +104,7 @@ import { BoneNode } from "./bone-node.js";
             this._skinGroupMap[groupName] = boneSkinNameMap;
         }
 
-        getBoundingBox() {
+        get boundingBox() {
             var minx, miny, maxx, maxy = 0;
             minx = miny = maxx = maxy;
             var boundingBox = this.getVisibleSkinsRect();

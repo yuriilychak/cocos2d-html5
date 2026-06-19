@@ -96,7 +96,7 @@ export class ControlButton extends Control {
 
         var titleLabelSize = new Size(0, 0);
         if (label) {
-            var boundingBox = label.getBoundingBox();
+            var boundingBox = label.boundingBox;
             titleLabelSize.width = boundingBox.width;
             titleLabelSize.height = boundingBox.height;
         }
@@ -116,8 +116,10 @@ export class ControlButton extends Control {
             }
         }
 
-        var rectTitle = label ? label.getBoundingBox() : new Rect(0, 0, 0, 0);
-        var rectBackground = locBackgroundSprite ? locBackgroundSprite.getBoundingBox() : new Rect(0, 0, 0, 0);
+        var rectTitle = label ? label.boundingBox : new Rect();
+        var rectBackground = locBackgroundSprite
+          ? locBackgroundSprite.boundingBox
+          : new Rect();
         var maxRect = Rect.union(rectTitle, rectBackground);
         this.setContentSize(maxRect.width, maxRect.height);
         locContentSize = this.getContentSize();

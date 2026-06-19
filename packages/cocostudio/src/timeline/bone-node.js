@@ -270,7 +270,7 @@ export function _setSkeletonNodeClass(SN) { _SkeletonNode = SN; }
             var boneSkins = this._boneSkins;
             for (var skin, i = 0; i < boneSkins.length; i++) {
                 skin = boneSkins[i];
-                var r = skin.getBoundingBox();
+                var r = skin.boundingBox;
                 if (!skin.visible || (r.x === 0 && r.y === 0 && r.width === 0 && r.height === 0))
                     continue;
 
@@ -292,7 +292,7 @@ export function _setSkeletonNodeClass(SN) { _SkeletonNode = SN; }
             return displayRect;
         }
 
-        getBoundingBox() {
+        get boundingBox() {
             var boundingBox = this.getVisibleSkinsRect();
             return AffineTransform.applyToRect(boundingBox, this.getNodeToParentAffineTransform());
         }

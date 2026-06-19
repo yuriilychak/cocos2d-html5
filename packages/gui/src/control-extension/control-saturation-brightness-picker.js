@@ -99,15 +99,14 @@ export class ControlSaturationBrightnessPicker extends Control {
   }
 
   _updateSliderPosition(sliderPosition) {
-    var centerX =
-      this._startPos.x + this._background.getBoundingBox().width * 0.5;
+    var centerX = this._startPos.x + this._background.boundingBox.width * 0.5;
     var centerY =
-      this._startPos.y + this._background.getBoundingBox().height * 0.5;
+      this._startPos.y + this._background.boundingBox.height * 0.5;
     var dx = sliderPosition.x - centerX;
     var dy = sliderPosition.y - centerY;
     var dist = Math.sqrt(dx * dx + dy * dy);
     var angle = Math.atan2(dy, dx);
-    var limit = this._background.getBoundingBox().width * 0.5;
+    var limit = this._background.boundingBox.width * 0.5;
     if (dist > limit) {
       sliderPosition.x = centerX + limit * Math.cos(angle);
       sliderPosition.y = centerY + limit * Math.sin(angle);
@@ -135,14 +134,13 @@ export class ControlSaturationBrightnessPicker extends Control {
   }
 
   _checkSliderPosition(location) {
-    var centerX =
-      this._startPos.x + this._background.getBoundingBox().width * 0.5;
+    var centerX = this._startPos.x + this._background.boundingBox.width * 0.5;
     var centerY =
-      this._startPos.y + this._background.getBoundingBox().height * 0.5;
+      this._startPos.y + this._background.boundingBox.height * 0.5;
     var dx = location.x - centerX;
     var dy = location.y - centerY;
     var dist = Math.sqrt(dx * dx + dy * dy);
-    if (dist <= this._background.getBoundingBox().width * 0.5) {
+    if (dist <= this._background.boundingBox.width * 0.5) {
       this._updateSliderPosition(location);
       this.sendActionsForControlEvents(CONTROL_EVENT_VALUE_CHANGED);
       return true;

@@ -174,7 +174,7 @@ export class ScrollViewBar extends ProtectedNode {
         if (this._thumbSprite) {
             return this._thumbSprite.getPreferredSize().width;
         }
-        return this._body.getBoundingBox().width;
+        return this._body.boundingBox.width;
     }
 
     /**

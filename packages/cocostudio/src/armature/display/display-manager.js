@@ -438,9 +438,9 @@ export class DisplayManager extends NewClass {
     return this._displayRenderNode.getContentSize();
   }
 
-  getBoundingBox() {
+  get boundingBox() {
     if (!this._displayRenderNode) return new Rect(0, 0, 0, 0);
-    return this._displayRenderNode.getBoundingBox();
+    return this._displayRenderNode.boundingBox;
   }
 
   getAnchorPoint() {
