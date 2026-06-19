@@ -33,10 +33,10 @@ export const EPSILON = 1.0 / 64.0;
  * Returns the square of s (e.g. s*s)
  * @param {Number} s
  */
-export function square(s) {
+export function square(s: number): number {
     return s * s;
 }
 
-export function almostEqual(lhs, rhs) {
+export function almostEqual(lhs: number, rhs: number): boolean {
     return (lhs + EPSILON > rhs && lhs - EPSILON < rhs);
 }

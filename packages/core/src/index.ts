@@ -138,14 +138,6 @@ export {
 } from "./shaders/CCGLStateCache";
 export {
   Matrix4,
-  KM_GL_MODELVIEW,
-  KM_GL_PROJECTION,
-  kmGLMatrixMode,
-  kmGLLoadMatrix,
-  kmGLLoadIdentity,
-  kmGLMultMatrix,
-  kmGLPushMatrix,
-  kmGLPopMatrix,
   KMGLMatrix
 } from "./kazmath";
 export type {

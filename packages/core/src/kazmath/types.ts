@@ -49,6 +49,6 @@ export interface AABBLike {
 
 export interface Matrix4StackLike {
   top: Mat4Like | null;
-  stack: Mat4Like[];
+  stack: Array<Mat4Like | null> | null;
   lastUpdated: number;
 }

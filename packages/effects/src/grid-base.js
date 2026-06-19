@@ -25,7 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass, Rect, Point, Size, NextPOT, log, Texture2D, GLProgramState, SHADER_POSITION_TEXTURE, glBindTexture2D, setProjectionMatrixDirty, kmGLMatrixMode, kmGLLoadIdentity, kmGLMultMatrix, KM_GL_PROJECTION, KM_GL_MODELVIEW, Matrix4, PIXEL_FORMAT_RGBA8888, ServiceLocator } from "@aspect/core";
+import { NewClass, Rect, Point, Size, NextPOT, log, Texture2D, GLProgramState, SHADER_POSITION_TEXTURE, glBindTexture2D, setProjectionMatrixDirty, Matrix4, KMGLMatrix, PIXEL_FORMAT_RGBA8888, ServiceLocator } from "@aspect/core";
 import { Grabber } from "./grabber.js";
 
 /**
@@ -275,8 +275,8 @@ export class GridBase extends NewClass {
 
     const gl = ServiceLocator.rendererConfig.renderContext;
     gl.viewport(0, 0, winSize.width, winSize.height);
-    kmGLMatrixMode(KM_GL_PROJECTION);
-    kmGLLoadIdentity();
+    ServiceLocator.kmglMatrix.matrixMode(KMGLMatrix.KM_GL_PROJECTION);
+    ServiceLocator.kmglMatrix.loadIdentity();
 
     const orthoMatrix = Matrix4.createOrthographicProjection(
       0,
@@ -286,10 +286,10 @@ export class GridBase extends NewClass {
       -1,
       1
     );
-    kmGLMultMatrix(orthoMatrix);
+    ServiceLocator.kmglMatrix.multMatrix(orthoMatrix);
 
-    kmGLMatrixMode(KM_GL_MODELVIEW);
-    kmGLLoadIdentity();
+    ServiceLocator.kmglMatrix.matrixMode(KMGLMatrix.KM_GL_MODELVIEW);
+    ServiceLocator.kmglMatrix.loadIdentity();
     setProjectionMatrixDirty();
   }
 }

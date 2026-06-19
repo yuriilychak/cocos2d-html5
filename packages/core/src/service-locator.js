@@ -32,7 +32,7 @@ import SpriteFrameCache from "./sprites/sprite-frame-cache";
 import AnimationCache from "./sprites/animation-cache";
 import ShaderCache from "./shaders/CCShaderCache";
 import { GLStateCache } from "./shaders/CCGLStateCache";
-import { KMGLMatrix } from "./kazmath/gl/km-gl-matrix";
+import { KMGLMatrix } from "./kazmath/km-gl-matrix";
 import { Configuration } from "./configuration";
 import { Profiler } from "./utils/profiler";
 import { InputManager } from "./platform/input-manager";

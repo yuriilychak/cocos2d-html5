@@ -38,12 +38,8 @@ import {
   UNIFORM_RANDOM01_S,
   UNIFORM_SAMPLER_S
 } from "../platform/macro/constants";
-import {
-  KM_GL_MODELVIEW,
-  KM_GL_PROJECTION,
-  kmGLGetMatrix
-} from "../kazmath/gl/matrix";
 import Matrix4 from "../kazmath/mat4";
+import { KMGLMatrix } from "../kazmath/km-gl-matrix";
 import { checkGLErrorDebug } from "../platform/macro/utils";
 import { ServiceLocator } from "../service-locator";
 
@@ -786,8 +782,8 @@ export default class GLProgram extends NewClass {
     let matrixMV = new Matrix4();
     let matrixMVP = new Matrix4();
 
-    kmGLGetMatrix(KM_GL_PROJECTION, matrixP);
-    kmGLGetMatrix(KM_GL_MODELVIEW, matrixMV);
+    ServiceLocator.kmglMatrix.getMatrix(KMGLMatrix.KM_GL_PROJECTION, matrixP);
+    ServiceLocator.kmglMatrix.getMatrix(KMGLMatrix.KM_GL_MODELVIEW, matrixMV);
 
     Matrix4.multiply(matrixMVP, matrixP, matrixMV);
 
@@ -854,8 +850,8 @@ export default class GLProgram extends NewClass {
     let matrixP = new Matrix4();
     let matrixMVP = new Matrix4();
 
-    kmGLGetMatrix(KM_GL_PROJECTION, matrixP);
-    //kmGLGetMatrix(KM_GL_MODELVIEW, node._stackMatrix);
+    ServiceLocator.kmglMatrix.getMatrix(KMGLMatrix.KM_GL_PROJECTION, matrixP);
+    //ServiceLocator.kmglMatrix.getMatrix(KMGLMatrix.KM_GL_MODELVIEW, node._stackMatrix);
 
     Matrix4.multiply(matrixMVP, matrixP, node._renderCmd._stackMatrix);
 

@@ -1,4 +1,4 @@
-import { Node, Point, Matrix4, KM_GL_MODELVIEW, kmGLMatrixMode, ONE, ONE_MINUS_SRC_ALPHA, SRC_ALPHA, DST_COLOR, ONE_MINUS_SRC_COLOR, SHADER_SPRITE_POSITION_TEXTURECOLOR, BATCH_VERTEX_COUNT, ServiceLocator } from "@aspect/core";
+import { Node, Point, Matrix4, KMGLMatrix, ONE, ONE_MINUS_SRC_ALPHA, SRC_ALPHA, DST_COLOR, ONE_MINUS_SRC_COLOR, SHADER_SPRITE_POSITION_TEXTURECOLOR, BATCH_VERTEX_COUNT, ServiceLocator } from "@aspect/core";
 import {
   RegionAttachment,
   MeshAttachment,
@@ -182,7 +182,7 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
       mat[1] = wt.b;
       mat[5] = wt.d;
       mat[13] = wt.ty;
-      kmGLMatrixMode(KM_GL_MODELVIEW);
+      ServiceLocator.kmglMatrix.matrixMode(KMGLMatrix.KM_GL_MODELVIEW);
       const currentStack = ServiceLocator.kmglMatrix.currentStack;
       currentStack.push(this._matrix);
       const drawingUtil = ServiceLocator.game.drawingUtil;

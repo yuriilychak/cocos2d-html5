@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Node, Texture2D, Size, Rect, Sprite, log, NextPOT, contentScaleFactor, Matrix4, kmGLMatrixMode, kmGLPushMatrix, kmGLPopMatrix, kmGLMultMatrix, KM_GL_PROJECTION, KM_GL_MODELVIEW, PIXEL_FORMAT_A8, ServiceLocator } from "@aspect/core";
+import { Node, Texture2D, Size, Rect, Sprite, log, NextPOT, contentScaleFactor, Matrix4, KMGLMatrix, PIXEL_FORMAT_A8, ServiceLocator } from "@aspect/core";
 
 const NodeWebGLRenderCmd = Node.WebGLRenderCmd;
 
@@ -267,10 +267,10 @@ export class RenderTextureWebGLRenderCmd extends NodeWebGLRenderCmd {
   begin() {
     const node = this._node;
     // Save the current matrix
-    kmGLMatrixMode(KM_GL_PROJECTION);
-    kmGLPushMatrix();
-    kmGLMatrixMode(KM_GL_MODELVIEW);
-    kmGLPushMatrix();
+    ServiceLocator.kmglMatrix.matrixMode(KMGLMatrix.KM_GL_PROJECTION);
+    ServiceLocator.kmglMatrix.pushMatrix();
+    ServiceLocator.kmglMatrix.matrixMode(KMGLMatrix.KM_GL_MODELVIEW);
+    ServiceLocator.kmglMatrix.pushMatrix();
 
     const gl = ServiceLocator.rendererConfig.renderContext;
 
@@ -292,7 +292,7 @@ export class RenderTextureWebGLRenderCmd extends NodeWebGLRenderCmd {
       -1,
       1
     );
-    kmGLMultMatrix(orthoMatrix);
+    ServiceLocator.kmglMatrix.multMatrix(orthoMatrix);
 
     //calculate viewport
     const viewport = new Rect(0, 0, 0, 0);
@@ -384,10 +384,10 @@ export class RenderTextureWebGLRenderCmd extends NodeWebGLRenderCmd {
 
     //restore viewport
     director.setViewport();
-    kmGLMatrixMode(KM_GL_PROJECTION);
-    kmGLPopMatrix();
-    kmGLMatrixMode(KM_GL_MODELVIEW);
-    kmGLPopMatrix();
+    ServiceLocator.kmglMatrix.matrixMode(KMGLMatrix.KM_GL_PROJECTION);
+    ServiceLocator.kmglMatrix.popMatrix();
+    ServiceLocator.kmglMatrix.matrixMode(KMGLMatrix.KM_GL_MODELVIEW);
+    ServiceLocator.kmglMatrix.popMatrix();
   }
 
   clearRect(x, y, width, height) {

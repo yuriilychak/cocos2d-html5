@@ -8,26 +8,8 @@ export { default as Matrix4 } from "./mat4";
 export { default as Plane } from "./plane";
 export { default as Quaternion } from "./quaternion";
 export { default as AABB } from "./aabb";
-export { default as Matrix4Stack } from "./gl/mat4-stack";
-export {
-  KM_GL_MODELVIEW,
-  KM_GL_PROJECTION,
-  KM_GL_TEXTURE,
-  lazyInitialize,
-  kmGLFreeAll,
-  kmGLPushMatrix,
-  kmGLPushMatrixWitMat4,
-  kmGLPopMatrix,
-  kmGLMatrixMode,
-  kmGLLoadIdentity,
-  kmGLLoadMatrix,
-  kmGLMultMatrix,
-  kmGLTranslatef,
-  kmGLRotatef,
-  kmGLScalef,
-  kmGLGetMatrix
-} from "./gl/matrix";
-export { KMGLMatrix } from "./gl/km-gl-matrix";
+export { default as Matrix4Stack } from "./mat4-stack";
+export { KMGLMatrix } from "./km-gl-matrix";
 export type {
   AABBLike,
   Mat3Like,

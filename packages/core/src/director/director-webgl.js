@@ -2,13 +2,7 @@ import { NewClass } from "../platform/class";
 import { Node } from "../base-nodes/node";
 import Matrix4 from "../kazmath/mat4";
 import Vec3 from "../kazmath/vec3";
-import {
-  KM_GL_PROJECTION,
-  KM_GL_MODELVIEW,
-  kmGLMatrixMode,
-  kmGLLoadIdentity,
-  kmGLMultMatrix
-} from "../kazmath/gl/matrix";
+import { KMGLMatrix } from "../kazmath/km-gl-matrix";
 import { DirectorRenderer } from "./director-renderer";
 import {
   EVENT_PROJECTION_CHANGED,
@@ -73,8 +67,8 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
 
     switch (projection) {
       case PROJECTION_2D:
-        kmGLMatrixMode(KM_GL_PROJECTION);
-        kmGLLoadIdentity();
+        ServiceLocator.kmglMatrix.matrixMode(KMGLMatrix.KM_GL_PROJECTION);
+        ServiceLocator.kmglMatrix.loadIdentity();
         var orthoMatrix = Matrix4.createOrthographicProjection(
           0,
           size.width,
@@ -83,16 +77,16 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
           -1024,
           1024
         );
-        kmGLMultMatrix(orthoMatrix);
-        kmGLMatrixMode(KM_GL_MODELVIEW);
-        kmGLLoadIdentity();
+        ServiceLocator.kmglMatrix.multMatrix(orthoMatrix);
+        ServiceLocator.kmglMatrix.matrixMode(KMGLMatrix.KM_GL_MODELVIEW);
+        ServiceLocator.kmglMatrix.loadIdentity();
         break;
       case PROJECTION_3D:
         var zeye = this.getZEye();
         var matrixPerspective = new Matrix4(),
           matrixLookup = new Matrix4();
-        kmGLMatrixMode(KM_GL_PROJECTION);
-        kmGLLoadIdentity();
+        ServiceLocator.kmglMatrix.matrixMode(KMGLMatrix.KM_GL_PROJECTION);
+        ServiceLocator.kmglMatrix.loadIdentity();
 
         matrixPerspective = Matrix4.createPerspectiveProjection(
           60,
@@ -101,16 +95,16 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
           zeye * 2
         );
 
-        kmGLMultMatrix(matrixPerspective);
+        ServiceLocator.kmglMatrix.multMatrix(matrixPerspective);
 
         var eye = new Vec3(-ox + size.width / 2, -oy + size.height / 2, zeye);
         var center = new Vec3(-ox + size.width / 2, -oy + size.height / 2, 0.0);
         var up = new Vec3(0.0, 1.0, 0.0);
         matrixLookup.lookAt(eye, center, up);
-        kmGLMultMatrix(matrixLookup);
+        ServiceLocator.kmglMatrix.multMatrix(matrixLookup);
 
-        kmGLMatrixMode(KM_GL_MODELVIEW);
-        kmGLLoadIdentity();
+        ServiceLocator.kmglMatrix.matrixMode(KMGLMatrix.KM_GL_MODELVIEW);
+        ServiceLocator.kmglMatrix.loadIdentity();
         break;
       case PROJECTION_CUSTOM:
         if (director._projectionDelegate)
