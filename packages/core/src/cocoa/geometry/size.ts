@@ -27,20 +27,34 @@
 import type { SizeLike } from "./types";
 
 export class Size implements SizeLike {
-  width: number;
-  height: number;
+  #data: number[];
 
   constructor();
   constructor(size: SizeLike);
   constructor(width: number, height: number);
   constructor(widthOrSize: number | SizeLike = 0, height = 0) {
+    this.#data = [0, 0];
     if (Size.isLike(widthOrSize)) {
-      this.width = widthOrSize.width;
-      this.height = widthOrSize.height;
+      this.#initFromSize(widthOrSize);
     } else {
-      this.width = widthOrSize;
-      this.height = height;
+      this.#initFromNumber(widthOrSize, height);
     }
+  }
+
+  get width(): number {
+    return this.#data[0];
+  }
+
+  set width(value: number) {
+    this.#data[0] = value;
+  }
+
+  get height(): number {
+    return this.#data[1];
+  }
+
+  set height(value: number) {
+    this.#data[1] = value;
   }
 
   clone(): Size {
@@ -51,15 +65,22 @@ export class Size implements SizeLike {
   set(width: number, height: number): void;
   set(widthOrSize: number | SizeLike, height = 0): void {
     if (Size.isLike(widthOrSize)) {
-      this.width = widthOrSize.width;
-      this.height = widthOrSize.height;
+      this.#initFromSize(widthOrSize);
     } else {
-      this.width = widthOrSize;
-      this.height = height;
+      this.#initFromNumber(widthOrSize, height);
     }
   }
 
-  static equalTo(
+  #initFromNumber(width: number, height: number): void {
+    this.#data[0] = width;
+    this.#data[1] = height;
+  }
+
+  #initFromSize(size: SizeLike): void {
+    this.#initFromNumber(size.width, size.height);
+  }
+
+  public static equalTo(
     size1: SizeLike | null | undefined,
     size2: SizeLike | null | undefined
   ): boolean {
@@ -71,7 +92,7 @@ export class Size implements SizeLike {
     );
   }
 
-  static isLike(value: unknown): value is SizeLike {
+  public static isLike(value: unknown): value is SizeLike {
     return (
       value != null &&
       typeof (value as SizeLike).width === "number" &&

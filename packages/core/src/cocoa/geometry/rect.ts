@@ -24,29 +24,66 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import type { PointLike, RectLike } from "./types";
+import type { PointLike, RectLike, SizeLike } from "./types";
+import { Point } from "./point";
+import { Size } from "./size";
 
 export class Rect implements RectLike {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
+  #data: number[];
 
   constructor();
   constructor(rect: RectLike);
+  constructor(pos: PointLike, size: SizeLike);
   constructor(x: number, y: number, width: number, height: number);
-  constructor(xOrRect: number | RectLike = 0, y = 0, width = 0, height = 0) {
-    if (Rect.isLike(xOrRect)) {
-      this.x = xOrRect.x;
-      this.y = xOrRect.y;
-      this.width = xOrRect.width;
-      this.height = xOrRect.height;
+  constructor(
+    xOrRectOrPos: number | PointLike | RectLike = 0,
+    yOrSize: number | SizeLike = 0,
+    width = 0,
+    height = 0
+  ) {
+    this.#data = [0, 0, 0, 0];
+    if (Rect.isLike(xOrRectOrPos)) {
+      this.#initFromRect(xOrRectOrPos);
+    } else if (Point.isLike(xOrRectOrPos) && Size.isLike(yOrSize)) {
+      this.#initFromPosAndSize(xOrRectOrPos, yOrSize);
     } else {
-      this.x = xOrRect;
-      this.y = y;
-      this.width = width;
-      this.height = height;
+      if (typeof xOrRectOrPos !== "number" || typeof yOrSize !== "number") {
+        throw new TypeError("Invalid Rect constructor arguments");
+      }
+      this.#initFromNumber(xOrRectOrPos, yOrSize, width, height);
     }
+  }
+
+  get x(): number {
+    return this.#data[0];
+  }
+
+  set x(value: number) {
+    this.#data[0] = value;
+  }
+
+  get y(): number {
+    return this.#data[1];
+  }
+
+  set y(value: number) {
+    this.#data[1] = value;
+  }
+
+  get width(): number {
+    return this.#data[2];
+  }
+
+  set width(value: number) {
+    this.#data[2] = value;
+  }
+
+  get height(): number {
+    return this.#data[3];
+  }
+
+  set height(value: number) {
+    this.#data[3] = value;
   }
 
   get maxX(): number {
@@ -78,22 +115,42 @@ export class Rect implements RectLike {
   }
 
   set(rect: RectLike): void;
+  set(pos: PointLike, size: SizeLike): void;
   set(x: number, y: number, width: number, height: number): void;
-  set(xOrRect: number | RectLike, y = 0, width = 0, height = 0): void {
-    if (Rect.isLike(xOrRect)) {
-      this.x = xOrRect.x;
-      this.y = xOrRect.y;
-      this.width = xOrRect.width;
-      this.height = xOrRect.height;
+  set(
+    xOrRectOrPos: number | PointLike | RectLike,
+    yOrSize: number | SizeLike = 0,
+    width = 0,
+    height = 0
+  ): void {
+    if (Rect.isLike(xOrRectOrPos)) {
+      this.#initFromRect(xOrRectOrPos);
+    } else if (Point.isLike(xOrRectOrPos) && Size.isLike(yOrSize)) {
+      this.#initFromPosAndSize(xOrRectOrPos, yOrSize);
     } else {
-      this.x = xOrRect;
-      this.y = y;
-      this.width = width;
-      this.height = height;
+      if (typeof xOrRectOrPos !== "number" || typeof yOrSize !== "number") {
+        throw new TypeError("Invalid Rect set arguments");
+      }
+      this.#initFromNumber(xOrRectOrPos, yOrSize, width, height);
     }
   }
 
-  static equalTo(
+  #initFromNumber(x: number, y: number, width: number, height: number): void {
+    this.#data[0] = x;
+    this.#data[1] = y;
+    this.#data[2] = width;
+    this.#data[3] = height;
+  }
+
+  #initFromRect(rect: RectLike): void {
+    this.#initFromNumber(rect.x, rect.y, rect.width, rect.height);
+  }
+
+  #initFromPosAndSize(pos: PointLike, size: SizeLike): void {
+    this.#initFromNumber(pos.x, pos.y, size.width, size.height);
+  }
+
+  public static equalTo(
     rect1: RectLike | null | undefined,
     rect2: RectLike | null | undefined
   ): boolean {
@@ -107,11 +164,11 @@ export class Rect implements RectLike {
     );
   }
 
-  static equalToZero(r: RectLike | null | undefined): boolean {
+  public static equalToZero(r: RectLike | null | undefined): boolean {
     return r != null && r.x === 0 && r.y === 0 && r.width === 0 && r.height === 0;
   }
 
-  static contains(rect1: RectLike | null | undefined, rect2: RectLike | null | undefined): boolean {
+  public static contains(rect1: RectLike | null | undefined, rect2: RectLike | null | undefined): boolean {
     if (!rect1 || !rect2) return false;
     return !(
       rect1.x >= rect2.x ||
@@ -121,31 +178,31 @@ export class Rect implements RectLike {
     );
   }
 
-  static getMaxX(rect: RectLike): number {
+  public static getMaxX(rect: RectLike): number {
     return rect.x + rect.width;
   }
 
-  static getMidX(rect: RectLike): number {
+  public static getMidX(rect: RectLike): number {
     return rect.x + rect.width / 2.0;
   }
 
-  static getMinX(rect: RectLike): number {
+  public static getMinX(rect: RectLike): number {
     return rect.x;
   }
 
-  static getMaxY(rect: RectLike): number {
+  public static getMaxY(rect: RectLike): number {
     return rect.y + rect.height;
   }
 
-  static getMidY(rect: RectLike): number {
+  public static getMidY(rect: RectLike): number {
     return rect.y + rect.height / 2.0;
   }
 
-  static getMinY(rect: RectLike): number {
+  public static getMinY(rect: RectLike): number {
     return rect.y;
   }
 
-  static containsPoint(rect: RectLike, point: PointLike): boolean {
+  public static containsPoint(rect: RectLike, point: PointLike): boolean {
     return (
       point.x >= Rect.getMinX(rect) &&
       point.x <= Rect.getMaxX(rect) &&
@@ -154,7 +211,7 @@ export class Rect implements RectLike {
     );
   }
 
-  static intersects(ra: RectLike, rb: RectLike): boolean {
+  public static intersects(ra: RectLike, rb: RectLike): boolean {
     const maxax = ra.x + ra.width;
     const maxay = ra.y + ra.height;
     const maxbx = rb.x + rb.width;
@@ -162,7 +219,7 @@ export class Rect implements RectLike {
     return !(maxax < rb.x || maxbx < ra.x || maxay < rb.y || maxby < ra.y);
   }
 
-  static overlaps(rectA: RectLike, rectB: RectLike): boolean {
+  public static overlaps(rectA: RectLike, rectB: RectLike): boolean {
     return !(
       rectA.x + rectA.width < rectB.x ||
       rectB.x + rectB.width < rectA.x ||
@@ -171,7 +228,7 @@ export class Rect implements RectLike {
     );
   }
 
-  static union(rectA: RectLike, rectB: RectLike): Rect {
+  public static union(rectA: RectLike, rectB: RectLike): Rect {
     const r = new Rect(0, 0, 0, 0);
     r.x = Math.min(rectA.x, rectB.x);
     r.y = Math.min(rectA.y, rectB.y);
@@ -180,7 +237,7 @@ export class Rect implements RectLike {
     return r;
   }
 
-  static intersection(rectA: RectLike, rectB: RectLike): Rect {
+  public static intersection(rectA: RectLike, rectB: RectLike): Rect {
     const intersection = new Rect(
       Math.max(Rect.getMinX(rectA), Rect.getMinX(rectB)),
       Math.max(Rect.getMinY(rectA), Rect.getMinY(rectB)),
@@ -194,13 +251,7 @@ export class Rect implements RectLike {
     return intersection;
   }
 
-  static isLike(value: unknown): value is RectLike {
-    return (
-      value != null &&
-      typeof (value as RectLike).x === "number" &&
-      typeof (value as RectLike).y === "number" &&
-      typeof (value as RectLike).width === "number" &&
-      typeof (value as RectLike).height === "number"
-    );
+  public static isLike(value: unknown): value is RectLike {
+    return Point.isLike(value) && Size.isLike(value);
   }
 }
