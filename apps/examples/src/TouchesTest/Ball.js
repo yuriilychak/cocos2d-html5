@@ -80,7 +80,7 @@ export class Ball extends Sprite {
             if (hit) {
                 var hitAngle = Point.toAngle(new Point(paddle.x - this.x, paddle.y - this.y)) + angleOffset;
 
-                var scalarVelocity = Point.length(this._velocity) * 1.00000005;
+                var scalarVelocity = Point.vectorLength(this._velocity) * 1.00000005;
                 var velocityAngle = -Point.toAngle(this._velocity) + 0.00000005 * hitAngle;
                 //this._velocity = -this._velocity.y;
                 this._velocity = Point.mult(Point.forAngle(velocityAngle), scalarVelocity);

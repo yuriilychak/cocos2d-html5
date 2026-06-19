@@ -1,5 +1,5 @@
 import Grid3DAction from "../action-grid/grid3d-action";
-import { Point, pointEqualToPoint } from "@aspect/core";
+import { Point } from "@aspect/core";
 
 /**
  * Lens3D action.
@@ -47,7 +47,7 @@ export default class Lens3D extends Grid3DAction {
   }
 
   setPosition(position) {
-    if (!pointEqualToPoint(position, this._position)) {
+    if (!Point.equalTo(position, this._position)) {
       this._position.x = position.x;
       this._position.y = position.y;
       this._dirty = true;
@@ -93,7 +93,7 @@ export default class Lens3D extends Grid3DAction {
           v = this.getOriginalVertex(locPos);
           vect.x = this._position.x - v.x;
           vect.y = this._position.y - v.y;
-          r = Point.length(vect);
+          r = Point.vectorLength(vect);
 
           if (r < locRadius) {
             r = locRadius - r;
@@ -103,14 +103,14 @@ export default class Lens3D extends Grid3DAction {
             l = Math.log(pre_log) * locLensEffect;
             new_r = Math.exp(l) * locRadius;
 
-            r = Point.length(vect);
+            r = Point.vectorLength(vect);
             if (r > 0) {
               vect.x = vect.x / r;
               vect.y = vect.y / r;
 
               vect.x = vect.x * new_r;
               vect.y = vect.y * new_r;
-              v.z += Point.length(vect) * locLensEffect;
+              v.z += Point.vectorLength(vect) * locLensEffect;
             }
           }
           this.setVertex(locPos, v);

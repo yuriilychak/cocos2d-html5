@@ -105,7 +105,7 @@ export default class Ripple3D extends Grid3DAction {
 
         tempPos.x = this._position.x - v.x;
         tempPos.y = this._position.y - v.y;
-        r = Point.length(tempPos);
+        r = Point.vectorLength(tempPos);
 
         if (r < locRadius) {
           r = locRadius - r;

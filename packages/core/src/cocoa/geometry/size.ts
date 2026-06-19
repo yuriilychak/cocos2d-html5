@@ -24,32 +24,58 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-/**
- * Size is the class for size object.
- * @param {Number|Size} [width=0]
- * @param {Number} [height=0]
- */
-export class Size {
-  constructor(width, height) {
-    if (width === undefined) {
-      this.width = 0;
-      this.height = 0;
-    } else if (height === undefined) {
-      this.width = width.width;
-      this.height = width.height;
+import type { SizeLike } from "./types";
+
+export class Size implements SizeLike {
+  width: number;
+  height: number;
+
+  constructor();
+  constructor(size: SizeLike);
+  constructor(width: number, height: number);
+  constructor(widthOrSize: number | SizeLike = 0, height = 0) {
+    if (Size.isLike(widthOrSize)) {
+      this.width = widthOrSize.width;
+      this.height = widthOrSize.height;
     } else {
-      this.width = width;
+      this.width = widthOrSize;
       this.height = height;
     }
   }
 
-  /** Check whether a size's value equals to another. */
-  static equalTo(size1, size2) {
+  clone(): Size {
+    return new Size(this);
+  }
+
+  set(size: SizeLike): void;
+  set(width: number, height: number): void;
+  set(widthOrSize: number | SizeLike, height = 0): void {
+    if (Size.isLike(widthOrSize)) {
+      this.width = widthOrSize.width;
+      this.height = widthOrSize.height;
+    } else {
+      this.width = widthOrSize;
+      this.height = height;
+    }
+  }
+
+  static equalTo(
+    size1: SizeLike | null | undefined,
+    size2: SizeLike | null | undefined
+  ): boolean {
     return (
       size1 != null &&
       size2 != null &&
       size1.width === size2.width &&
       size1.height === size2.height
+    );
+  }
+
+  static isLike(value: unknown): value is SizeLike {
+    return (
+      value != null &&
+      typeof (value as SizeLike).width === "number" &&
+      typeof (value as SizeLike).height === "number"
     );
   }
 }

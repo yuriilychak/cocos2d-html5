@@ -243,7 +243,7 @@ export class PageView extends ListView {
         var touchMoveVelocity = this._flattenVectorByDirection(this._calculateTouchMoveVelocity());
 
         var INERTIA_THRESHOLD = 500;
-        if (Point.length(touchMoveVelocity) < INERTIA_THRESHOLD) {
+        if (Point.vectorLength(touchMoveVelocity) < INERTIA_THRESHOLD) {
             this._startMagneticScroll();
         }
         else {

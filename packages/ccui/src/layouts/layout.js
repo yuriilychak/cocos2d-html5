@@ -716,7 +716,7 @@ export class Layout extends Widget {
                 var w = locChildren[index];
                 if (w && w instanceof Widget && w.isFocusEnabled()) {
                     var length = (w instanceof Layout) ? w._calculateNearestDistance(baseWidget)
-                        : Point.length(Point.sub(this._getWorldCenterPoint(w), widgetPosition));
+                        : Point.vectorLength(Point.sub(this._getWorldCenterPoint(w), widgetPosition));
                     if (length < distance) {
                         found = index;
                         distance = length;
@@ -744,7 +744,7 @@ export class Layout extends Widget {
                 var w = locChildren[index];
                 if (w && w instanceof Widget && w.isFocusEnabled()) {
                     var length = (w instanceof Layout) ? w._calculateFarthestDistance(baseWidget)
-                        : Point.length(Point.sub(this._getWorldCenterPoint(w), widgetPosition));
+                        : Point.vectorLength(Point.sub(this._getWorldCenterPoint(w), widgetPosition));
                     if (length > distance) {
                         found = index;
                         distance = length;
@@ -769,7 +769,7 @@ export class Layout extends Widget {
                 length = widget._calculateNearestDistance(baseWidget);
             else {
                 if (widget instanceof Widget && widget.isFocusEnabled())
-                    length = Point.length(Point.sub(this._getWorldCenterPoint(widget), widgetPosition));
+                    length = Point.vectorLength(Point.sub(this._getWorldCenterPoint(widget), widgetPosition));
                 else
                     continue;
             }
@@ -792,7 +792,7 @@ export class Layout extends Widget {
             else {
                 if (layout instanceof Widget && layout.isFocusEnabled()) {
                     var wPosition = this._getWorldCenterPoint(layout);
-                    length = Point.length(Point.sub(wPosition, widgetPosition));
+                    length = Point.vectorLength(Point.sub(wPosition, widgetPosition));
                 } else
                     continue;
             }

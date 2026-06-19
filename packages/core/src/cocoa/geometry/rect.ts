@@ -24,35 +24,79 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-/**
- * Rect is the class for rect object.
- * @param {Number|Rect} [x=0]
- * @param {Number} [y=0]
- * @param {Number} [width=0]
- * @param {Number} [height=0]
- */
-export class Rect {
-  constructor(x, y, width, height) {
-    if (x === undefined) {
-      this.x = 0;
-      this.y = 0;
-      this.width = 0;
-      this.height = 0;
-    } else if (y === undefined) {
-      this.x = x.x;
-      this.y = x.y;
-      this.width = x.width;
-      this.height = x.height;
+import type { PointLike, RectLike } from "./types";
+
+export class Rect implements RectLike {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+
+  constructor();
+  constructor(rect: RectLike);
+  constructor(x: number, y: number, width: number, height: number);
+  constructor(xOrRect: number | RectLike = 0, y = 0, width = 0, height = 0) {
+    if (Rect.isLike(xOrRect)) {
+      this.x = xOrRect.x;
+      this.y = xOrRect.y;
+      this.width = xOrRect.width;
+      this.height = xOrRect.height;
     } else {
-      this.x = x;
+      this.x = xOrRect;
       this.y = y;
       this.width = width;
       this.height = height;
     }
   }
 
-  /** Check whether a rect's value equals to another. */
-  static equalTo(rect1, rect2) {
+  get maxX(): number {
+    return Rect.getMaxX(this);
+  }
+
+  get midX(): number {
+    return Rect.getMidX(this);
+  }
+
+  get minX(): number {
+    return Rect.getMinX(this);
+  }
+
+  get maxY(): number {
+    return Rect.getMaxY(this);
+  }
+
+  get midY(): number {
+    return Rect.getMidY(this);
+  }
+
+  get minY(): number {
+    return Rect.getMinY(this);
+  }
+
+  clone(): Rect {
+    return new Rect(this);
+  }
+
+  set(rect: RectLike): void;
+  set(x: number, y: number, width: number, height: number): void;
+  set(xOrRect: number | RectLike, y = 0, width = 0, height = 0): void {
+    if (Rect.isLike(xOrRect)) {
+      this.x = xOrRect.x;
+      this.y = xOrRect.y;
+      this.width = xOrRect.width;
+      this.height = xOrRect.height;
+    } else {
+      this.x = xOrRect;
+      this.y = y;
+      this.width = width;
+      this.height = height;
+    }
+  }
+
+  static equalTo(
+    rect1: RectLike | null | undefined,
+    rect2: RectLike | null | undefined
+  ): boolean {
     return (
       rect1 != null &&
       rect2 != null &&
@@ -63,15 +107,11 @@ export class Rect {
     );
   }
 
-  /** Check whether a rect equals zero. */
-  static equalToZero(r) {
-    return (
-      r != null && r.x === 0 && r.y === 0 && r.width === 0 && r.height === 0
-    );
+  static equalToZero(r: RectLike | null | undefined): boolean {
+    return r != null && r.x === 0 && r.y === 0 && r.width === 0 && r.height === 0;
   }
 
-  /** Check whether rect1 contains rect2. */
-  static contains(rect1, rect2) {
+  static contains(rect1: RectLike | null | undefined, rect2: RectLike | null | undefined): boolean {
     if (!rect1 || !rect2) return false;
     return !(
       rect1.x >= rect2.x ||
@@ -81,38 +121,31 @@ export class Rect {
     );
   }
 
-  /** Returns the rightmost x-value of a rect. */
-  static getMaxX(rect) {
+  static getMaxX(rect: RectLike): number {
     return rect.x + rect.width;
   }
 
-  /** Returns the midpoint x-value of a rect. */
-  static getMidX(rect) {
+  static getMidX(rect: RectLike): number {
     return rect.x + rect.width / 2.0;
   }
 
-  /** Returns the leftmost x-value of a rect. */
-  static getMinX(rect) {
+  static getMinX(rect: RectLike): number {
     return rect.x;
   }
 
-  /** Returns the topmost y-value of a rect. */
-  static getMaxY(rect) {
+  static getMaxY(rect: RectLike): number {
     return rect.y + rect.height;
   }
 
-  /** Returns the midpoint y-value of a rect. */
-  static getMidY(rect) {
+  static getMidY(rect: RectLike): number {
     return rect.y + rect.height / 2.0;
   }
 
-  /** Returns the bottommost y-value of a rect. */
-  static getMinY(rect) {
+  static getMinY(rect: RectLike): number {
     return rect.y;
   }
 
-  /** Check whether a rect contains a point. */
-  static containsPoint(rect, point) {
+  static containsPoint(rect: RectLike, point: PointLike): boolean {
     return (
       point.x >= Rect.getMinX(rect) &&
       point.x <= Rect.getMaxX(rect) &&
@@ -121,17 +154,15 @@ export class Rect {
     );
   }
 
-  /** Check whether two rects intersect. */
-  static intersects(ra, rb) {
-    var maxax = ra.x + ra.width,
-      maxay = ra.y + ra.height,
-      maxbx = rb.x + rb.width,
-      maxby = rb.y + rb.height;
+  static intersects(ra: RectLike, rb: RectLike): boolean {
+    const maxax = ra.x + ra.width;
+    const maxay = ra.y + ra.height;
+    const maxbx = rb.x + rb.width;
+    const maxby = rb.y + rb.height;
     return !(maxax < rb.x || maxbx < ra.x || maxay < rb.y || maxby < ra.y);
   }
 
-  /** Check whether a rect overlaps another. */
-  static overlaps(rectA, rectB) {
+  static overlaps(rectA: RectLike, rectB: RectLike): boolean {
     return !(
       rectA.x + rectA.width < rectB.x ||
       rectB.x + rectB.width < rectA.x ||
@@ -140,9 +171,8 @@ export class Rect {
     );
   }
 
-  /** Returns the smallest rectangle that contains the two source rectangles. */
-  static union(rectA, rectB) {
-    var r = new Rect(0, 0, 0, 0);
+  static union(rectA: RectLike, rectB: RectLike): Rect {
+    const r = new Rect(0, 0, 0, 0);
     r.x = Math.min(rectA.x, rectB.x);
     r.y = Math.min(rectA.y, rectB.y);
     r.width = Math.max(rectA.x + rectA.width, rectB.x + rectB.width) - r.x;
@@ -150,20 +180,27 @@ export class Rect {
     return r;
   }
 
-  /** Returns the overlapping portion of two rectangles. */
-  static intersection(rectA, rectB) {
-    var intersection = new Rect(
+  static intersection(rectA: RectLike, rectB: RectLike): Rect {
+    const intersection = new Rect(
       Math.max(Rect.getMinX(rectA), Rect.getMinX(rectB)),
       Math.max(Rect.getMinY(rectA), Rect.getMinY(rectB)),
       0,
       0
     );
     intersection.width =
-      Math.min(Rect.getMaxX(rectA), Rect.getMaxX(rectB)) -
-      Rect.getMinX(intersection);
+      Math.min(Rect.getMaxX(rectA), Rect.getMaxX(rectB)) - Rect.getMinX(intersection);
     intersection.height =
-      Math.min(Rect.getMaxY(rectA), Rect.getMaxY(rectB)) -
-      Rect.getMinY(intersection);
+      Math.min(Rect.getMaxY(rectA), Rect.getMaxY(rectB)) - Rect.getMinY(intersection);
     return intersection;
+  }
+
+  static isLike(value: unknown): value is RectLike {
+    return (
+      value != null &&
+      typeof (value as RectLike).x === "number" &&
+      typeof (value as RectLike).y === "number" &&
+      typeof (value as RectLike).width === "number" &&
+      typeof (value as RectLike).height === "number"
+    );
   }
 }

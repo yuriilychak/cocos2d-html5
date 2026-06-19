@@ -592,7 +592,7 @@ export class ListView extends ScrollView {
       items[midIndex],
       itemAnchorPoint
     );
-    var distanceFromMid = Point.length(Point.sub(targetPosition, itemPosition));
+    var distanceFromMid = Point.vectorLength(Point.sub(targetPosition, itemPosition));
 
     if (distanceFromFirst <= distanceFromLast) {
       // Left half
@@ -637,7 +637,7 @@ export class ListView extends ScrollView {
       this._items[firstIndex],
       itemAnchorPoint
     );
-    var distanceFromFirst = Point.length(
+    var distanceFromFirst = Point.vectorLength(
       Point.sub(targetPosition, firstPosition)
     );
 
@@ -646,7 +646,7 @@ export class ListView extends ScrollView {
       this._items[lastIndex],
       itemAnchorPoint
     );
-    var distanceFromLast = Point.length(
+    var distanceFromLast = Point.vectorLength(
       Point.sub(targetPosition, lastPosition)
     );
 

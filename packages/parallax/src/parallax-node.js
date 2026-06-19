@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Node, Point, pointEqualToPoint, log, ServiceLocator } from "@aspect/core";
+import { Node, Point, log, ServiceLocator } from "@aspect/core";
 import { PointObject } from "./point-object";
 
 /**
@@ -122,7 +122,7 @@ export class ParallaxNode extends Node {
 
     _updateParallaxPosition() {
         var pos = this._absolutePosition();
-        if (!pointEqualToPoint(pos, this._lastPosition)) {
+        if (!Point.equalTo(pos, this._lastPosition)) {
             var locParallaxArray = this.parallaxArray;
             for (var i = 0, len = locParallaxArray.length; i < len; i++) {
                 var point = locParallaxArray[i];

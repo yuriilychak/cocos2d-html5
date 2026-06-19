@@ -727,7 +727,7 @@ export class ScrollView extends Layout {
 
   _startAttenuatingAutoScroll(deltaMove, initialVelocity) {
     var time = this._calculateAutoScrollTimeByInitialSpeed(
-      Point.length(initialVelocity)
+      Point.vectorLength(initialVelocity)
     );
     this._startAutoScroll(deltaMove, time, true);
   }
@@ -1412,7 +1412,7 @@ export class ScrollView extends Layout {
         this._handlePressLogic(touch);
         break;
       case Widget.TOUCH_MOVED:
-        var offset = Point.length(
+        var offset = Point.vectorLength(
           Point.sub(sender.getTouchBeganPosition(), touchPoint)
         );
         this._touchMovePosition.x = touchPoint.x;

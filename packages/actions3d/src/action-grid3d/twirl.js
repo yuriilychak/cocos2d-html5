@@ -86,7 +86,7 @@ export default class Twirl extends Grid3DAction {
         avg.y = j - locSizeHeight / 2.0;
 
         a =
-          Point.length(avg) *
+          Point.vectorLength(avg) *
           Math.cos(Math.PI / 2.0 + dt * Math.PI * locTwirls * 2) *
           amp;
 
