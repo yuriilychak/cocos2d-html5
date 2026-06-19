@@ -148,6 +148,20 @@ export {
   kmGLPopMatrix,
   KMGLMatrix
 } from "./kazmath";
+export type {
+  AABBLike,
+  Mat3Like,
+  Mat4Like,
+  Matrix4StackLike,
+  NumericArrayLike,
+  PlaneLike,
+  QuaternionLike,
+  QuaterionLike,
+  Ray2Like,
+  Vec2Like,
+  Vec3Like,
+  Vec4Like
+} from "./kazmath";
 export {
   ACTION_TAG_INVALID,
   FLT_EPSILON,

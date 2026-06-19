@@ -53,13 +53,13 @@ export class KMGLMatrix {
   }
 
   pushMatrixWithMat4(saveMat) {
-    this.currentStack.stack.push(this.currentStack.top);
+    this.currentStack.push(this.currentStack.top);
     saveMat.assignFrom(this.currentStack.top);
     this.currentStack.top = saveMat;
   }
 
   popMatrix() {
-    this.currentStack.top = this.currentStack.stack.pop();
+    this.currentStack.pop();
   }
 
   matrixMode(mode) {

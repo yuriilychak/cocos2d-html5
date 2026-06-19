@@ -43,7 +43,7 @@ import {
   KM_GL_PROJECTION,
   kmGLGetMatrix
 } from "../kazmath/gl/matrix";
-import Matrix4, { kmMat4Multiply, getMat4MultiplyValue } from "../kazmath/mat4";
+import Matrix4 from "../kazmath/mat4";
 import { checkGLErrorDebug } from "../platform/macro/utils";
 import { ServiceLocator } from "../service-locator";
 
@@ -789,7 +789,7 @@ export default class GLProgram extends NewClass {
     kmGLGetMatrix(KM_GL_PROJECTION, matrixP);
     kmGLGetMatrix(KM_GL_MODELVIEW, matrixMV);
 
-    kmMat4Multiply(matrixMVP, matrixP, matrixMV);
+    Matrix4.multiply(matrixMVP, matrixP, matrixMV);
 
     this.setUniformLocationWithMatrix4fv(
       this._uniforms[UNIFORM_PMATRIX_S],
@@ -852,13 +852,12 @@ export default class GLProgram extends NewClass {
     if (!node || !node._renderCmd) return;
 
     let matrixP = new Matrix4();
-    //var matrixMV = new kmMat4();
     let matrixMVP = new Matrix4();
 
     kmGLGetMatrix(KM_GL_PROJECTION, matrixP);
     //kmGLGetMatrix(KM_GL_MODELVIEW, node._stackMatrix);
 
-    kmMat4Multiply(matrixMVP, matrixP, node._renderCmd._stackMatrix);
+    Matrix4.multiply(matrixMVP, matrixP, node._renderCmd._stackMatrix);
 
     this.setUniformLocationWithMatrix4fv(
       this._uniforms[UNIFORM_PMATRIX_S],
@@ -922,7 +921,7 @@ export default class GLProgram extends NewClass {
   setUniformForModelViewProjectionMatrix() {
     this.setUniformLocationWithMatrix4fv(
       this._uniforms[UNIFORM_MVPMATRIX_S],
-      getMat4MultiplyValue(
+      Matrix4.getMultiplyValue(
         ServiceLocator.kmglMatrix.projectionStack.top,
         ServiceLocator.kmglMatrix.modelViewStack.top
       )
@@ -930,7 +929,7 @@ export default class GLProgram extends NewClass {
   }
 
   setUniformForModelViewProjectionMatrixWithMat4(swapMat4) {
-    kmMat4Multiply(
+    Matrix4.multiply(
       swapMat4,
       ServiceLocator.kmglMatrix.projectionStack.top,
       ServiceLocator.kmglMatrix.modelViewStack.top

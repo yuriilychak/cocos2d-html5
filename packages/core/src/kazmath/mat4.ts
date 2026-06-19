@@ -5,9 +5,12 @@ import Plane from "./plane";
 import Quaternion from "./quaternion";
 import { log } from "../boot/debugger";
 import { degreesToRadians } from "../platform/macro/utils";
+import type { Mat3Like, Mat4Like, NumericArrayLike, QuaternionLike, Vec3Like } from "./types";
 
-export default class Matrix4 {
-  constructor(mat4) {
+export default class Matrix4 implements Mat4Like {
+  public mat: Float32Array;
+
+  public constructor(mat4: Mat4Like | null = null) {
     if (mat4 && mat4.mat) {
       this.mat = new Float32Array(mat4.mat);
     } else {
@@ -15,7 +18,7 @@ export default class Matrix4 {
     }
   }
 
-  fill(scalarArr) {
+  public fill(scalarArr: NumericArrayLike): this {
     const mat = this.mat;
     for (let i = 0; i < 16; i++) {
       mat[i] = scalarArr[i];
@@ -23,7 +26,7 @@ export default class Matrix4 {
     return this;
   }
 
-  identity() {
+  public identity(): this {
     const mat = this.mat;
     mat[1] =
       mat[2] =
@@ -42,29 +45,29 @@ export default class Matrix4 {
     return this;
   }
 
-  get(row, col) {
+  public get(row: number, col: number): number {
     return this.mat[row + 4 * col];
   }
 
-  set(row, col, value) {
+  public set(row: number, col: number, value: number): void {
     this.mat[row + 4 * col] = value;
   }
 
-  swap(r1, c1, r2, c2) {
+  public swap(r1: number, c1: number, r2: number, c2: number): void {
     const mat = this.mat,
       tmp = mat[r1 + 4 * c1];
     mat[r1 + 4 * c1] = mat[r2 + 4 * c2];
     mat[r2 + 4 * c2] = tmp;
   }
 
-  inverse() {
+  public inverse(): Matrix4 | null {
     const inv = new Matrix4(this);
     const tmp = new Matrix4(identityMatrix);
     if (Matrix4._gaussj(inv, tmp) === false) return null;
     return inv;
   }
 
-  isIdentity() {
+  public isIdentity(): boolean {
     const mat = this.mat;
     return (
       mat[0] === 1 &&
@@ -86,7 +89,7 @@ export default class Matrix4 {
     );
   }
 
-  transpose() {
+  public transpose(): this {
     const mat = this.mat;
     const m1 = mat[1],
       m2 = mat[2],
@@ -115,7 +118,7 @@ export default class Matrix4 {
     return this;
   }
 
-  multiply(mat4) {
+  public multiply(mat4: Mat4Like): this {
     const mat = this.mat,
       mat2 = mat4.mat;
     const a00 = mat[0],
@@ -171,7 +174,7 @@ export default class Matrix4 {
     return this;
   }
 
-  assignFrom(mat4) {
+  public assignFrom(mat4: Mat4Like): this {
     if (this === mat4) {
       log("mat.Matrix4.assignFrom(): mat4 equals current matrix");
       return this;
@@ -197,9 +200,9 @@ export default class Matrix4 {
     return this;
   }
 
-  equals(mat4) {
+  public equals(mat4: Mat4Like): boolean {
     if (this === mat4) {
-      log("kmMat4AreEqual(): pMat1 and pMat2 are same object.");
+      log("Matrix4.equals(): pMat1 and pMat2 are same object.");
       return true;
     }
     const matA = this.mat,
@@ -211,25 +214,25 @@ export default class Matrix4 {
     return true;
   }
 
-  getUpVec3() {
+  public getUpVec3(): Vec3 {
     const mat = this.mat;
     const ret = new Vec3(mat[4], mat[5], mat[6]);
     return ret.normalize();
   }
 
-  getRightVec3() {
+  public getRightVec3(): Vec3 {
     const mat = this.mat;
     const ret = new Vec3(mat[0], mat[1], mat[2]);
     return ret.normalize();
   }
 
-  getForwardVec3() {
+  public getForwardVec3(): Vec3 {
     const mat = this.mat;
     const ret = new Vec3(mat[8], mat[9], mat[10]);
     return ret.normalize();
   }
 
-  lookAt(eyeVec, centerVec, upVec) {
+  public lookAt(eyeVec: Vec3Like, centerVec: Vec3Like, upVec: Vec3Like): this {
     const f = new Vec3(centerVec),
       up = new Vec3(upVec),
       mat = this.mat;
@@ -266,7 +269,7 @@ export default class Matrix4 {
     return this;
   }
 
-  extractRotation() {
+  public extractRotation(): Matrix3 {
     const matrix = new Matrix3(),
       mat4 = this.mat,
       mat3 = matrix.mat;
@@ -282,7 +285,7 @@ export default class Matrix4 {
     return matrix;
   }
 
-  extractPlane(planeType) {
+  public extractPlane(planeType: number): Plane {
     const plane = new Plane(),
       mat = this.mat;
     switch (planeType) {
@@ -336,15 +339,15 @@ export default class Matrix4 {
     return plane;
   }
 
-  toAxisAndAngle() {
+  public toAxisAndAngle() {
     const rotation = this.extractRotation();
     const temp = Quaternion.rotationMatrix(rotation);
-    return temp.toAxisAndAngle();
+    return temp!.toAxisAndAngle();
   }
 
-  static tempMatrix = new Matrix4();
+  public static tempMatrix = new Matrix4();
 
-  static createByRotationX(radians, matrix) {
+  public static createByRotationX(radians: number, matrix: Matrix4 | null = null): Matrix4 {
     matrix = matrix || new Matrix4();
     const mat = matrix.mat;
     mat[0] = 1.0;
@@ -362,7 +365,7 @@ export default class Matrix4 {
     return matrix;
   }
 
-  static createByRotationY(radians, matrix) {
+  public static createByRotationY(radians: number, matrix: Matrix4 | null = null): Matrix4 {
     matrix = matrix || new Matrix4();
     const mat = matrix.mat;
     mat[0] = Math.cos(radians);
@@ -380,7 +383,7 @@ export default class Matrix4 {
     return matrix;
   }
 
-  static createByRotationZ(radians, matrix) {
+  public static createByRotationZ(radians: number, matrix: Matrix4 | null = null): Matrix4 {
     matrix = matrix || new Matrix4();
     const mat = matrix.mat;
     mat[0] = Math.cos(radians);
@@ -396,7 +399,7 @@ export default class Matrix4 {
     return matrix;
   }
 
-  static createByPitchYawRoll(pitch, yaw, roll, matrix) {
+  public static createByPitchYawRoll(pitch: number, yaw: number, roll: number, matrix: Matrix4 | null = null): Matrix4 {
     matrix = matrix || new Matrix4();
     const cr = Math.cos(pitch),
       sr = Math.sin(pitch);
@@ -421,7 +424,7 @@ export default class Matrix4 {
     return matrix;
   }
 
-  static createByQuaternion(quaternion, matrix) {
+  public static createByQuaternion(quaternion: QuaternionLike, matrix: Matrix4 | null = null): Matrix4 {
     matrix = matrix || new Matrix4();
     const mat = matrix.mat;
     mat[0] =
@@ -444,7 +447,7 @@ export default class Matrix4 {
     return matrix;
   }
 
-  static createByRotationTranslation(rotation, translation, matrix) {
+  public static createByRotationTranslation(rotation: Mat3Like, translation: Vec3Like, matrix: Matrix4 | null = null): Matrix4 {
     matrix = matrix || new Matrix4();
     const mat = matrix.mat,
       rMat = rotation.mat;
@@ -467,7 +470,7 @@ export default class Matrix4 {
     return matrix;
   }
 
-  static createByScale(x, y, z, matrix) {
+  public static createByScale(x: number, y: number, z: number, matrix: Matrix4 | null = null): Matrix4 {
     matrix = matrix || new Matrix4();
     const mat = matrix.mat;
     mat[0] = x;
@@ -490,7 +493,7 @@ export default class Matrix4 {
     return matrix;
   }
 
-  static createByTranslation(x, y, z, matrix) {
+  public static createByTranslation(x: number, y: number, z: number, matrix: Matrix4 | null = null): Matrix4 {
     matrix = matrix || new Matrix4();
     matrix.identity();
     matrix.mat[12] = x;
@@ -499,7 +502,7 @@ export default class Matrix4 {
     return matrix;
   }
 
-  static createPerspectiveProjection(fovY, aspect, zNear, zFar) {
+  public static createPerspectiveProjection(fovY: number, aspect: number, zNear: number, zFar: number): Matrix4 | null {
     const r = degreesToRadians(fovY / 2),
       deltaZ = zFar - zNear;
     const s = Math.sin(r);
@@ -517,14 +520,14 @@ export default class Matrix4 {
     return matrix;
   }
 
-  static createOrthographicProjection(
-    left,
-    right,
-    bottom,
-    top,
-    nearVal,
-    farVal
-  ) {
+  public static createOrthographicProjection(
+    left: number,
+    right: number,
+    bottom: number,
+    top: number,
+    nearVal: number,
+    farVal: number
+  ): Matrix4 {
     const matrix = new Matrix4(),
       mat = matrix.mat;
     matrix.identity();
@@ -537,7 +540,7 @@ export default class Matrix4 {
     return matrix;
   }
 
-  static createByAxisAndAngle(axis, radians, matrix) {
+  public static createByAxisAndAngle(axis: Vec3Like, radians: number, matrix: Matrix4 | null = null): Matrix4 {
     matrix = matrix || new Matrix4();
     const mat = matrix.mat,
       rcos = Math.cos(radians),
@@ -574,7 +577,7 @@ export default class Matrix4 {
     return matrix;
   }
 
-  static areEqual(matA, matB) {
+  public static areEqual(matA: NumericArrayLike, matB: NumericArrayLike): boolean {
     for (let i = 0; i < 16; i++) {
       if (!(matA[i] + EPSILON > matB[i] && matA[i] - EPSILON < matB[i]))
         return false;
@@ -582,7 +585,7 @@ export default class Matrix4 {
     return true;
   }
 
-  static _gaussj(a, b) {
+  public static _gaussj(a: Matrix4, b: Matrix4): boolean {
     let i,
       icol = 0,
       irow = 0,
@@ -646,240 +649,246 @@ export default class Matrix4 {
     }
     return true;
   }
+
+  public static identity<T extends Mat4Like>(pOut: T): T {
+    const mat = pOut.mat;
+    mat[1] =
+      mat[2] =
+      mat[3] =
+      mat[4] =
+      mat[6] =
+      mat[7] =
+      mat[8] =
+      mat[9] =
+      mat[11] =
+      mat[12] =
+      mat[13] =
+      mat[14] =
+        0;
+    mat[0] = mat[5] = mat[10] = mat[15] = 1.0;
+    return pOut;
+  }
+
+  public static inverse<T extends Matrix4>(pOut: T, pM: Mat4Like): T | null {
+    const inv = new Matrix4(pM);
+    const tmp = new Matrix4(identityMatrix);
+    if (Matrix4._gaussj(inv, tmp) === false) return null;
+    pOut.assignFrom(inv);
+    return pOut;
+  }
+
+  public static multiply<T extends Mat4Like>(pOut: T, pM1: Mat4Like, pM2: Mat4Like): T {
+    const outArray = pOut.mat,
+      mat1 = pM1.mat,
+      mat2 = pM2.mat;
+    const a00 = mat1[0],
+      a01 = mat1[1],
+      a02 = mat1[2],
+      a03 = mat1[3];
+    const a10 = mat1[4],
+      a11 = mat1[5],
+      a12 = mat1[6],
+      a13 = mat1[7];
+    const a20 = mat1[8],
+      a21 = mat1[9],
+      a22 = mat1[10],
+      a23 = mat1[11];
+    const a30 = mat1[12],
+      a31 = mat1[13],
+      a32 = mat1[14],
+      a33 = mat1[15];
+
+    const b00 = mat2[0],
+      b01 = mat2[1],
+      b02 = mat2[2],
+      b03 = mat2[3];
+    const b10 = mat2[4],
+      b11 = mat2[5],
+      b12 = mat2[6],
+      b13 = mat2[7];
+    const b20 = mat2[8],
+      b21 = mat2[9],
+      b22 = mat2[10],
+      b23 = mat2[11];
+    const b30 = mat2[12],
+      b31 = mat2[13],
+      b32 = mat2[14],
+      b33 = mat2[15];
+
+    outArray[0] = b00 * a00 + b01 * a10 + b02 * a20 + b03 * a30;
+    outArray[1] = b00 * a01 + b01 * a11 + b02 * a21 + b03 * a31;
+    outArray[2] = b00 * a02 + b01 * a12 + b02 * a22 + b03 * a32;
+    outArray[3] = b00 * a03 + b01 * a13 + b02 * a23 + b03 * a33;
+    outArray[4] = b10 * a00 + b11 * a10 + b12 * a20 + b13 * a30;
+    outArray[5] = b10 * a01 + b11 * a11 + b12 * a21 + b13 * a31;
+    outArray[6] = b10 * a02 + b11 * a12 + b12 * a22 + b13 * a32;
+    outArray[7] = b10 * a03 + b11 * a13 + b12 * a23 + b13 * a33;
+    outArray[8] = b20 * a00 + b21 * a10 + b22 * a20 + b23 * a30;
+    outArray[9] = b20 * a01 + b21 * a11 + b22 * a21 + b23 * a31;
+    outArray[10] = b20 * a02 + b21 * a12 + b22 * a22 + b23 * a32;
+    outArray[11] = b20 * a03 + b21 * a13 + b22 * a23 + b23 * a33;
+    outArray[12] = b30 * a00 + b31 * a10 + b32 * a20 + b33 * a30;
+    outArray[13] = b30 * a01 + b31 * a11 + b32 * a21 + b33 * a31;
+    outArray[14] = b30 * a02 + b31 * a12 + b32 * a22 + b33 * a32;
+    outArray[15] = b30 * a03 + b31 * a13 + b32 * a23 + b33 * a33;
+    return pOut;
+  }
+
+  public static getMultiplyValue(pM1: Mat4Like, pM2: Mat4Like): Float32Array {
+    const m1 = pM1.mat,
+      m2 = pM2.mat;
+    const mat = new Float32Array(16);
+
+    mat[0] = m1[0] * m2[0] + m1[4] * m2[1] + m1[8] * m2[2] + m1[12] * m2[3];
+    mat[1] = m1[1] * m2[0] + m1[5] * m2[1] + m1[9] * m2[2] + m1[13] * m2[3];
+    mat[2] = m1[2] * m2[0] + m1[6] * m2[1] + m1[10] * m2[2] + m1[14] * m2[3];
+    mat[3] = m1[3] * m2[0] + m1[7] * m2[1] + m1[11] * m2[2] + m1[15] * m2[3];
+
+    mat[4] = m1[0] * m2[4] + m1[4] * m2[5] + m1[8] * m2[6] + m1[12] * m2[7];
+    mat[5] = m1[1] * m2[4] + m1[5] * m2[5] + m1[9] * m2[6] + m1[13] * m2[7];
+    mat[6] = m1[2] * m2[4] + m1[6] * m2[5] + m1[10] * m2[6] + m1[14] * m2[7];
+    mat[7] = m1[3] * m2[4] + m1[7] * m2[5] + m1[11] * m2[6] + m1[15] * m2[7];
+
+    mat[8] = m1[0] * m2[8] + m1[4] * m2[9] + m1[8] * m2[10] + m1[12] * m2[11];
+    mat[9] = m1[1] * m2[8] + m1[5] * m2[9] + m1[9] * m2[10] + m1[13] * m2[11];
+    mat[10] = m1[2] * m2[8] + m1[6] * m2[9] + m1[10] * m2[10] + m1[14] * m2[11];
+    mat[11] = m1[3] * m2[8] + m1[7] * m2[9] + m1[11] * m2[10] + m1[15] * m2[11];
+
+    mat[12] = m1[0] * m2[12] + m1[4] * m2[13] + m1[8] * m2[14] + m1[12] * m2[15];
+    mat[13] = m1[1] * m2[12] + m1[5] * m2[13] + m1[9] * m2[14] + m1[13] * m2[15];
+    mat[14] = m1[2] * m2[12] + m1[6] * m2[13] + m1[10] * m2[14] + m1[14] * m2[15];
+    mat[15] = m1[3] * m2[12] + m1[7] * m2[13] + m1[11] * m2[14] + m1[15] * m2[15];
+
+    return mat;
+  }
+
+  public static assign<T extends Mat4Like>(pOut: T, pIn: Mat4Like): T {
+    if (pOut === pIn) {
+      log("Matrix4.assign(): pOut equals pIn");
+      return pOut;
+    }
+    const outArr = pOut.mat,
+      inArr = pIn.mat;
+    outArr[0] = inArr[0];
+    outArr[1] = inArr[1];
+    outArr[2] = inArr[2];
+    outArr[3] = inArr[3];
+    outArr[4] = inArr[4];
+    outArr[5] = inArr[5];
+    outArr[6] = inArr[6];
+    outArr[7] = inArr[7];
+    outArr[8] = inArr[8];
+    outArr[9] = inArr[9];
+    outArr[10] = inArr[10];
+    outArr[11] = inArr[11];
+    outArr[12] = inArr[12];
+    outArr[13] = inArr[13];
+    outArr[14] = inArr[14];
+    outArr[15] = inArr[15];
+    return pOut;
+  }
+
+  public static translation<T extends Mat4Like>(pOut: T, x: number, y: number, z: number): T {
+    pOut.mat[0] = pOut.mat[5] = pOut.mat[10] = pOut.mat[15] = 1.0;
+    pOut.mat[1] =
+      pOut.mat[2] =
+      pOut.mat[3] =
+      pOut.mat[4] =
+      pOut.mat[6] =
+      pOut.mat[7] =
+      pOut.mat[8] =
+      pOut.mat[9] =
+      pOut.mat[11] =
+        0.0;
+    pOut.mat[12] = x;
+    pOut.mat[13] = y;
+    pOut.mat[14] = z;
+    return pOut;
+  }
+
+  public static perspectiveProjection<T extends Matrix4>(
+    pOut: T,
+    fovY: number,
+    aspect: number,
+    zNear: number,
+    zFar: number
+  ): T | null {
+    const r = degreesToRadians(fovY / 2);
+    const deltaZ = zFar - zNear;
+    const s = Math.sin(r);
+    if (deltaZ === 0 || s === 0 || aspect === 0) return null;
+    const cotangent = Math.cos(r) / s;
+    pOut.identity();
+    pOut.mat[0] = cotangent / aspect;
+    pOut.mat[5] = cotangent;
+    pOut.mat[10] = -(zFar + zNear) / deltaZ;
+    pOut.mat[11] = -1;
+    pOut.mat[14] = (-2 * zNear * zFar) / deltaZ;
+    pOut.mat[15] = 0;
+    return pOut;
+  }
+
+  public static lookAt<T extends Matrix4>(pOut: T, pEye: Vec3Like, pCenter: Vec3Like, pUp: Vec3Like): T {
+    const f = new Vec3(pCenter),
+      up = new Vec3(pUp);
+    f.subtract(pEye);
+    f.normalize();
+    up.normalize();
+
+    const s = new Vec3(f);
+    s.cross(up);
+    s.normalize();
+
+    const u = new Vec3(s);
+    u.cross(f);
+    s.normalize();
+
+    pOut.identity();
+    pOut.mat[0] = s.x;
+    pOut.mat[4] = s.y;
+    pOut.mat[8] = s.z;
+    pOut.mat[1] = u.x;
+    pOut.mat[5] = u.y;
+    pOut.mat[9] = u.z;
+    pOut.mat[2] = -f.x;
+    pOut.mat[6] = -f.y;
+    pOut.mat[10] = -f.z;
+
+    const translate = Matrix4.createByTranslation(-pEye.x, -pEye.y, -pEye.z);
+    pOut.multiply(translate);
+    return pOut;
+  }
+
+  public static rotationAxisAngle<T extends Mat4Like>(pOut: T, axis: Vec3Like, radians: number): T {
+    const rcos = Math.cos(radians),
+      rsin = Math.sin(radians);
+    const normalizedAxis = new Vec3(axis);
+    normalizedAxis.normalize();
+
+    pOut.mat[0] = rcos + normalizedAxis.x * normalizedAxis.x * (1 - rcos);
+    pOut.mat[1] =
+      normalizedAxis.z * rsin + normalizedAxis.y * normalizedAxis.x * (1 - rcos);
+    pOut.mat[2] =
+      -normalizedAxis.y * rsin + normalizedAxis.z * normalizedAxis.x * (1 - rcos);
+    pOut.mat[3] = 0.0;
+    pOut.mat[4] =
+      -normalizedAxis.z * rsin + normalizedAxis.x * normalizedAxis.y * (1 - rcos);
+    pOut.mat[5] = rcos + normalizedAxis.y * normalizedAxis.y * (1 - rcos);
+    pOut.mat[6] =
+      normalizedAxis.x * rsin + normalizedAxis.z * normalizedAxis.y * (1 - rcos);
+    pOut.mat[7] = 0.0;
+    pOut.mat[8] =
+      normalizedAxis.y * rsin + normalizedAxis.x * normalizedAxis.z * (1 - rcos);
+    pOut.mat[9] =
+      -normalizedAxis.x * rsin + normalizedAxis.y * normalizedAxis.z * (1 - rcos);
+    pOut.mat[10] = rcos + normalizedAxis.z * normalizedAxis.z * (1 - rcos);
+    pOut.mat[11] = 0.0;
+    pOut.mat[12] = 0.0;
+    pOut.mat[13] = 0.0;
+    pOut.mat[14] = 0.0;
+    pOut.mat[15] = 1.0;
+    return pOut;
+  }
 }
 
 const identityMatrix = new Matrix4().identity();
-
-export function kmMat4Identity(pOut) {
-  const mat = pOut.mat;
-  mat[1] =
-    mat[2] =
-    mat[3] =
-    mat[4] =
-    mat[6] =
-    mat[7] =
-    mat[8] =
-    mat[9] =
-    mat[11] =
-    mat[12] =
-    mat[13] =
-    mat[14] =
-      0;
-  mat[0] = mat[5] = mat[10] = mat[15] = 1.0;
-  return pOut;
-}
-
-export function kmMat4Inverse(pOut, pM) {
-  const inv = new Matrix4(pM);
-  const tmp = new Matrix4(identityMatrix);
-  if (Matrix4._gaussj(inv, tmp) === false) return null;
-  pOut.assignFrom(inv);
-  return pOut;
-}
-
-export function kmMat4Multiply(pOut, pM1, pM2) {
-  const outArray = pOut.mat,
-    mat1 = pM1.mat,
-    mat2 = pM2.mat;
-  const a00 = mat1[0],
-    a01 = mat1[1],
-    a02 = mat1[2],
-    a03 = mat1[3];
-  const a10 = mat1[4],
-    a11 = mat1[5],
-    a12 = mat1[6],
-    a13 = mat1[7];
-  const a20 = mat1[8],
-    a21 = mat1[9],
-    a22 = mat1[10],
-    a23 = mat1[11];
-  const a30 = mat1[12],
-    a31 = mat1[13],
-    a32 = mat1[14],
-    a33 = mat1[15];
-
-  const b00 = mat2[0],
-    b01 = mat2[1],
-    b02 = mat2[2],
-    b03 = mat2[3];
-  const b10 = mat2[4],
-    b11 = mat2[5],
-    b12 = mat2[6],
-    b13 = mat2[7];
-  const b20 = mat2[8],
-    b21 = mat2[9],
-    b22 = mat2[10],
-    b23 = mat2[11];
-  const b30 = mat2[12],
-    b31 = mat2[13],
-    b32 = mat2[14],
-    b33 = mat2[15];
-
-  outArray[0] = b00 * a00 + b01 * a10 + b02 * a20 + b03 * a30;
-  outArray[1] = b00 * a01 + b01 * a11 + b02 * a21 + b03 * a31;
-  outArray[2] = b00 * a02 + b01 * a12 + b02 * a22 + b03 * a32;
-  outArray[3] = b00 * a03 + b01 * a13 + b02 * a23 + b03 * a33;
-  outArray[4] = b10 * a00 + b11 * a10 + b12 * a20 + b13 * a30;
-  outArray[5] = b10 * a01 + b11 * a11 + b12 * a21 + b13 * a31;
-  outArray[6] = b10 * a02 + b11 * a12 + b12 * a22 + b13 * a32;
-  outArray[7] = b10 * a03 + b11 * a13 + b12 * a23 + b13 * a33;
-  outArray[8] = b20 * a00 + b21 * a10 + b22 * a20 + b23 * a30;
-  outArray[9] = b20 * a01 + b21 * a11 + b22 * a21 + b23 * a31;
-  outArray[10] = b20 * a02 + b21 * a12 + b22 * a22 + b23 * a32;
-  outArray[11] = b20 * a03 + b21 * a13 + b22 * a23 + b23 * a33;
-  outArray[12] = b30 * a00 + b31 * a10 + b32 * a20 + b33 * a30;
-  outArray[13] = b30 * a01 + b31 * a11 + b32 * a21 + b33 * a31;
-  outArray[14] = b30 * a02 + b31 * a12 + b32 * a22 + b33 * a32;
-  outArray[15] = b30 * a03 + b31 * a13 + b32 * a23 + b33 * a33;
-  return pOut;
-}
-
-export function getMat4MultiplyValue(pM1, pM2) {
-  const m1 = pM1.mat,
-    m2 = pM2.mat;
-  const mat = new Float32Array(16);
-
-  mat[0] = m1[0] * m2[0] + m1[4] * m2[1] + m1[8] * m2[2] + m1[12] * m2[3];
-  mat[1] = m1[1] * m2[0] + m1[5] * m2[1] + m1[9] * m2[2] + m1[13] * m2[3];
-  mat[2] = m1[2] * m2[0] + m1[6] * m2[1] + m1[10] * m2[2] + m1[14] * m2[3];
-  mat[3] = m1[3] * m2[0] + m1[7] * m2[1] + m1[11] * m2[2] + m1[15] * m2[3];
-
-  mat[4] = m1[0] * m2[4] + m1[4] * m2[5] + m1[8] * m2[6] + m1[12] * m2[7];
-  mat[5] = m1[1] * m2[4] + m1[5] * m2[5] + m1[9] * m2[6] + m1[13] * m2[7];
-  mat[6] = m1[2] * m2[4] + m1[6] * m2[5] + m1[10] * m2[6] + m1[14] * m2[7];
-  mat[7] = m1[3] * m2[4] + m1[7] * m2[5] + m1[11] * m2[6] + m1[15] * m2[7];
-
-  mat[8] = m1[0] * m2[8] + m1[4] * m2[9] + m1[8] * m2[10] + m1[12] * m2[11];
-  mat[9] = m1[1] * m2[8] + m1[5] * m2[9] + m1[9] * m2[10] + m1[13] * m2[11];
-  mat[10] = m1[2] * m2[8] + m1[6] * m2[9] + m1[10] * m2[10] + m1[14] * m2[11];
-  mat[11] = m1[3] * m2[8] + m1[7] * m2[9] + m1[11] * m2[10] + m1[15] * m2[11];
-
-  mat[12] = m1[0] * m2[12] + m1[4] * m2[13] + m1[8] * m2[14] + m1[12] * m2[15];
-  mat[13] = m1[1] * m2[12] + m1[5] * m2[13] + m1[9] * m2[14] + m1[13] * m2[15];
-  mat[14] = m1[2] * m2[12] + m1[6] * m2[13] + m1[10] * m2[14] + m1[14] * m2[15];
-  mat[15] = m1[3] * m2[12] + m1[7] * m2[13] + m1[11] * m2[14] + m1[15] * m2[15];
-
-  return mat;
-}
-
-export function kmMat4Assign(pOut, pIn) {
-  if (pOut === pIn) {
-    log("kmMat4Assign(): pOut equals pIn");
-    return pOut;
-  }
-  const outArr = pOut.mat,
-    inArr = pIn.mat;
-  outArr[0] = inArr[0];
-  outArr[1] = inArr[1];
-  outArr[2] = inArr[2];
-  outArr[3] = inArr[3];
-  outArr[4] = inArr[4];
-  outArr[5] = inArr[5];
-  outArr[6] = inArr[6];
-  outArr[7] = inArr[7];
-  outArr[8] = inArr[8];
-  outArr[9] = inArr[9];
-  outArr[10] = inArr[10];
-  outArr[11] = inArr[11];
-  outArr[12] = inArr[12];
-  outArr[13] = inArr[13];
-  outArr[14] = inArr[14];
-  outArr[15] = inArr[15];
-  return pOut;
-}
-
-export function kmMat4Translation(pOut, x, y, z) {
-  pOut.mat[0] = pOut.mat[5] = pOut.mat[10] = pOut.mat[15] = 1.0;
-  pOut.mat[1] =
-    pOut.mat[2] =
-    pOut.mat[3] =
-    pOut.mat[4] =
-    pOut.mat[6] =
-    pOut.mat[7] =
-    pOut.mat[8] =
-    pOut.mat[9] =
-    pOut.mat[11] =
-      0.0;
-  pOut.mat[12] = x;
-  pOut.mat[13] = y;
-  pOut.mat[14] = z;
-  return pOut;
-}
-
-export function kmMat4PerspectiveProjection(pOut, fovY, aspect, zNear, zFar) {
-  const r = degreesToRadians(fovY / 2);
-  const deltaZ = zFar - zNear;
-  const s = Math.sin(r);
-  if (deltaZ === 0 || s === 0 || aspect === 0) return null;
-  const cotangent = Math.cos(r) / s;
-  pOut.identity();
-  pOut.mat[0] = cotangent / aspect;
-  pOut.mat[5] = cotangent;
-  pOut.mat[10] = -(zFar + zNear) / deltaZ;
-  pOut.mat[11] = -1;
-  pOut.mat[14] = (-2 * zNear * zFar) / deltaZ;
-  pOut.mat[15] = 0;
-  return pOut;
-}
-
-export function kmMat4LookAt(pOut, pEye, pCenter, pUp) {
-  const f = new Vec3(pCenter),
-    up = new Vec3(pUp);
-  f.subtract(pEye);
-  f.normalize();
-  up.normalize();
-
-  const s = new Vec3(f);
-  s.cross(up);
-  s.normalize();
-
-  const u = new Vec3(s);
-  u.cross(f);
-  s.normalize();
-
-  pOut.identity();
-  pOut.mat[0] = s.x;
-  pOut.mat[4] = s.y;
-  pOut.mat[8] = s.z;
-  pOut.mat[1] = u.x;
-  pOut.mat[5] = u.y;
-  pOut.mat[9] = u.z;
-  pOut.mat[2] = -f.x;
-  pOut.mat[6] = -f.y;
-  pOut.mat[10] = -f.z;
-
-  const translate = Matrix4.createByTranslation(-pEye.x, -pEye.y, -pEye.z);
-  pOut.multiply(translate);
-  return pOut;
-}
-
-export function kmMat4RotationAxisAngle(pOut, axis, radians) {
-  const rcos = Math.cos(radians),
-    rsin = Math.sin(radians);
-  const normalizedAxis = new Vec3(axis);
-  normalizedAxis.normalize();
-
-  pOut.mat[0] = rcos + normalizedAxis.x * normalizedAxis.x * (1 - rcos);
-  pOut.mat[1] =
-    normalizedAxis.z * rsin + normalizedAxis.y * normalizedAxis.x * (1 - rcos);
-  pOut.mat[2] =
-    -normalizedAxis.y * rsin + normalizedAxis.z * normalizedAxis.x * (1 - rcos);
-  pOut.mat[3] = 0.0;
-  pOut.mat[4] =
-    -normalizedAxis.z * rsin + normalizedAxis.x * normalizedAxis.y * (1 - rcos);
-  pOut.mat[5] = rcos + normalizedAxis.y * normalizedAxis.y * (1 - rcos);
-  pOut.mat[6] =
-    normalizedAxis.x * rsin + normalizedAxis.z * normalizedAxis.y * (1 - rcos);
-  pOut.mat[7] = 0.0;
-  pOut.mat[8] =
-    normalizedAxis.y * rsin + normalizedAxis.x * normalizedAxis.z * (1 - rcos);
-  pOut.mat[9] =
-    -normalizedAxis.x * rsin + normalizedAxis.y * normalizedAxis.z * (1 - rcos);
-  pOut.mat[10] = rcos + normalizedAxis.z * normalizedAxis.z * (1 - rcos);
-  pOut.mat[11] = 0.0;
-  pOut.mat[12] = 0.0;
-  pOut.mat[13] = 0.0;
-  pOut.mat[14] = 0.0;
-  pOut.mat[15] = 1.0;
-  return pOut;
-}

@@ -26,9 +26,9 @@
  ****************************************************************************/
 
 /**
- * convert an affine transform object to a kmMat4 object
+ * convert an affine transform object to a Matrix4 array
  * @param {AffineTransform} trans
- * @param {kmMat4} mat
+ * @param {Float32Array} mat
  * @function
  */
 export function CGAffineToGL(trans, mat) {
@@ -47,8 +47,8 @@ export function CGAffineToGL(trans, mat) {
 }
 
 /**
- * Convert a kmMat4 object to an affine transform object
- * @param {kmMat4} mat
+ * Convert a Matrix4 array to an affine transform object
+ * @param {Float32Array} mat
  * @param {AffineTransform} trans
  * @function
  */

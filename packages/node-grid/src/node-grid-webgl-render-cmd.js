@@ -18,9 +18,8 @@ export class NodeGridWebGLRenderCmd extends Node.WebGLRenderCmd {
       this._curLevel = parentCmd._curLevel + 1;
 
     const currentStack = ServiceLocator.kmglMatrix.currentStack;
-    currentStack.stack.push(currentStack.top);
     this._syncStatus(parentCmd);
-    currentStack.top = this._stackMatrix;
+    currentStack.push(this._stackMatrix);
 
     ServiceLocator.rendererConfig.renderer.pushRenderCommand(this._gridBeginCommand);
 
@@ -40,7 +39,7 @@ export class NodeGridWebGLRenderCmd extends Node.WebGLRenderCmd {
     ServiceLocator.rendererConfig.renderer.pushRenderCommand(this._gridEndCommand);
 
     this._dirtyFlag = 0;
-    currentStack.top = currentStack.stack.pop();
+    currentStack.pop();
   }
 
   onGridBeginDraw() {

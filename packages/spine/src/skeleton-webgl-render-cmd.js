@@ -1,4 +1,4 @@
-import { Node, Point, Matrix4, KM_GL_MODELVIEW, kmGLMatrixMode, kmGLPopMatrix, ONE, ONE_MINUS_SRC_ALPHA, SRC_ALPHA, DST_COLOR, ONE_MINUS_SRC_COLOR, SHADER_SPRITE_POSITION_TEXTURECOLOR, BATCH_VERTEX_COUNT, ServiceLocator } from "@aspect/core";
+import { Node, Point, Matrix4, KM_GL_MODELVIEW, kmGLMatrixMode, ONE, ONE_MINUS_SRC_ALPHA, SRC_ALPHA, DST_COLOR, ONE_MINUS_SRC_COLOR, SHADER_SPRITE_POSITION_TEXTURECOLOR, BATCH_VERTEX_COUNT, ServiceLocator } from "@aspect/core";
 import {
   RegionAttachment,
   MeshAttachment,
@@ -183,8 +183,8 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
       mat[5] = wt.d;
       mat[13] = wt.ty;
       kmGLMatrixMode(KM_GL_MODELVIEW);
-      ServiceLocator.kmglMatrix.currentStack.stack.push(ServiceLocator.kmglMatrix.currentStack.top);
-      ServiceLocator.kmglMatrix.currentStack.top = this._matrix;
+      const currentStack = ServiceLocator.kmglMatrix.currentStack;
+      currentStack.push(this._matrix);
       const drawingUtil = ServiceLocator.game.drawingUtil;
 
       if (node._debugSlots && debugSlotsInfo && debugSlotsInfo.length > 0) {
@@ -216,7 +216,7 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
           if (i === 0) drawingUtil.setDrawColor(0, 255, 0, 255);
         }
       }
-      kmGLPopMatrix();
+      currentStack.pop();
     }
 
     return 0;

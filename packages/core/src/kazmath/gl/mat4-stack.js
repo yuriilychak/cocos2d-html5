@@ -42,15 +42,3 @@ export default class Matrix4Stack {
         this._matrixPool.push(matrix);
     }
 }
-
-export function km_mat4_stack_push(stack, item) {
-    stack.push(item);
-}
-
-export function km_mat4_stack_pop(stack) {
-    stack.pop();
-}
-
-export function km_mat4_stack_release(stack) {
-    stack.release();
-}

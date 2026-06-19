@@ -1,23 +1,60 @@
 import { EPSILON, square } from "./utility";
 import Vec3 from "./vec3";
 import { degreesToRadians } from "../platform/macro/utils";
+import type { Mat3Like, QuaternionLike, Vec3Like } from "./types";
 
-export default class Quaternion {
-  constructor(x, y, z, w) {
-    if (x && y === undefined) {
-      this.x = x.x;
-      this.y = x.y;
-      this.z = x.z;
-      this.w = x.w;
+export interface AxisAngleResult {
+  axis: Vec3;
+  angle: number;
+}
+
+export default class Quaternion implements QuaternionLike {
+  #data: number[] = [0, 0, 0, 0];
+
+  public constructor();
+  public constructor(quaternion: QuaternionLike);
+  public constructor(x: number, y: number, z: number, w: number);
+  public constructor(xOrQuaternion: number | QuaternionLike = 0, y = 0, z = 0, w = 0) {
+    if (Quaternion.isLike(xOrQuaternion)) {
+      this.#initFromQuaternion(xOrQuaternion);
     } else {
-      this.x = x || 0;
-      this.y = y || 0;
-      this.z = z || 0;
-      this.w = w || 0;
+      this.#initFromNumber(xOrQuaternion, y, z, w);
     }
   }
 
-  conjugate(quaternion) {
+  public get x(): number {
+    return this.#data[0];
+  }
+
+  public set x(value: number) {
+    this.#data[0] = value;
+  }
+
+  public get y(): number {
+    return this.#data[1];
+  }
+
+  public set y(value: number) {
+    this.#data[1] = value;
+  }
+
+  public get z(): number {
+    return this.#data[2];
+  }
+
+  public set z(value: number) {
+    this.#data[2] = value;
+  }
+
+  public get w(): number {
+    return this.#data[3];
+  }
+
+  public set w(value: number) {
+    this.#data[3] = value;
+  }
+
+  public conjugate(quaternion: QuaternionLike): this {
     this.x = -quaternion.x;
     this.y = -quaternion.y;
     this.z = -quaternion.z;
@@ -25,7 +62,7 @@ export default class Quaternion {
     return this;
   }
 
-  dot(quaternion) {
+  public dot(quaternion: QuaternionLike): number {
     return (
       this.w * quaternion.w +
       this.x * quaternion.x +
@@ -34,11 +71,11 @@ export default class Quaternion {
     );
   }
 
-  exponential() {
+  public exponential(): this {
     return this;
   }
 
-  identity() {
+  public identity(): this {
     this.x = 0.0;
     this.y = 0.0;
     this.z = 0.0;
@@ -46,8 +83,8 @@ export default class Quaternion {
     return this;
   }
 
-  inverse() {
-    const len = this.length();
+  public inverse(): this {
+    const len = this.length;
     if (Math.abs(len) > EPSILON) {
       this.x = 0.0;
       this.y = 0.0;
@@ -60,21 +97,21 @@ export default class Quaternion {
     return this;
   }
 
-  isIdentity() {
+  public isIdentity(): boolean {
     return this.x === 0.0 && this.y === 0.0 && this.z === 0.0 && this.w === 1.0;
   }
 
-  length() {
-    return Math.sqrt(this.lengthSq());
+  public get length(): number {
+    return Math.sqrt(this.lengthSq);
   }
 
-  lengthSq() {
+  public get lengthSq(): number {
     return (
       this.x * this.x + this.y * this.y + this.z * this.z + this.w * this.w
     );
   }
 
-  multiply(quaternion) {
+  public multiply(quaternion: QuaternionLike): this {
     const x = this.x,
       y = this.y,
       z = this.z,
@@ -90,8 +127,8 @@ export default class Quaternion {
     return this;
   }
 
-  normalize() {
-    const length = this.length();
+  public normalize(): this {
+    const length = this.length;
     if (Math.abs(length) <= EPSILON) {
       throw new Error("current quaternion is an invalid value");
     }
@@ -99,7 +136,7 @@ export default class Quaternion {
     return this;
   }
 
-  rotationAxis(axis, angle) {
+  public rotationAxis(axis: Vec3Like, angle: number): this {
     const rad = angle * 0.5;
     const scale = Math.sin(rad);
     this.w = Math.cos(rad);
@@ -109,7 +146,7 @@ export default class Quaternion {
     return this;
   }
 
-  slerp(quaternion, t) {
+  public slerp(quaternion: QuaternionLike, t: number): this {
     if (
       this.x === quaternion.x &&
       this.y === quaternion.y &&
@@ -130,7 +167,7 @@ export default class Quaternion {
     return this;
   }
 
-  toAxisAndAngle() {
+  public toAxisAndAngle(): AxisAngleResult {
     const tempAngle = Math.acos(this.w);
     const scale = Math.sqrt(square(this.x) + square(this.y) + square(this.z));
     let retAngle;
@@ -154,7 +191,7 @@ export default class Quaternion {
     return { axis: retAxis, angle: retAngle };
   }
 
-  scale(scale) {
+  public scale(scale: number): this {
     this.x *= scale;
     this.y *= scale;
     this.z *= scale;
@@ -162,7 +199,7 @@ export default class Quaternion {
     return this;
   }
 
-  assignFrom(quaternion) {
+  public assignFrom(quaternion: QuaternionLike): this {
     this.x = quaternion.x;
     this.y = quaternion.y;
     this.z = quaternion.z;
@@ -170,7 +207,7 @@ export default class Quaternion {
     return this;
   }
 
-  add(quaternion) {
+  public add(quaternion: QuaternionLike): this {
     this.x += quaternion.x;
     this.y += quaternion.y;
     this.z += quaternion.z;
@@ -178,7 +215,7 @@ export default class Quaternion {
     return this;
   }
 
-  multiplyVec3(vec) {
+  public multiplyVec3(vec: Vec3Like): Vec3 {
     const x = this.x,
       y = this.y,
       z = this.z;
@@ -194,11 +231,11 @@ export default class Quaternion {
     return retVec;
   }
 
-  static rotationMatrix(mat3) {
+  public static rotationMatrix(mat3: Mat3Like | null): Quaternion | null {
     if (!mat3) return null;
 
-    let x, y, z, w;
-    const m4x4 = [];
+    let x = 0, y = 0, z = 0, w = 0;
+    const m4x4: number[] = [];
     const mat = mat3.mat;
     let scale = 0.0;
 
@@ -212,7 +249,7 @@ export default class Quaternion {
     m4x4[9] = mat[5];
     m4x4[10] = mat[8];
     m4x4[15] = 1;
-    const pMatrix = m4x4[0];
+    const pMatrix = m4x4;
 
     const diagonal = pMatrix[0] + pMatrix[5] + pMatrix[10] + 1;
     if (diagonal > EPSILON) {
@@ -245,7 +282,7 @@ export default class Quaternion {
     return new Quaternion(x, y, z, w);
   }
 
-  static rotationYawPitchRoll(yaw, pitch, roll) {
+  public static rotationYawPitchRoll(yaw: number, pitch: number, roll: number): Quaternion {
     const ex = degreesToRadians(pitch) / 2.0;
     const ey = degreesToRadians(yaw) / 2.0;
     const ez = degreesToRadians(roll) / 2.0;
@@ -269,7 +306,7 @@ export default class Quaternion {
     return ret;
   }
 
-  static rotationBetweenVec3(vec1, vec2, fallback) {
+  public static rotationBetweenVec3(vec1: Vec3Like, vec2: Vec3Like, fallback: Vec3Like): Quaternion {
     const v1 = new Vec3(vec1);
     const v2 = new Vec3(vec2);
     v1.normalize();
@@ -283,12 +320,12 @@ export default class Quaternion {
     }
 
     if (a < 1e-6 - 1.0) {
-      if (Math.abs(fallback.lengthSq()) < EPSILON) {
+      if (Math.abs(square(fallback.x) + square(fallback.y) + square(fallback.z)) < EPSILON) {
         quaternion.rotationAxis(fallback, Math.PI);
       } else {
         const axis = new Vec3(1.0, 0.0, 0.0);
         axis.cross(vec1);
-        if (Math.abs(axis.lengthSq()) < EPSILON) {
+        if (Math.abs(axis.lengthSq) < EPSILON) {
           axis.fill(0.0, 1.0, 0.0);
           axis.cross(vec1);
         }
@@ -306,5 +343,30 @@ export default class Quaternion {
       quaternion.normalize();
     }
     return quaternion;
+  }
+
+  private static isLike(value: unknown): value is QuaternionLike {
+    return (
+      typeof value === "object" &&
+      value !== null &&
+      "x" in value &&
+      "y" in value &&
+      "z" in value &&
+      "w" in value
+    );
+  }
+
+  #initFromNumber(x: number, y: number, z: number, w: number): void {
+    this.x = x || 0;
+    this.y = y || 0;
+    this.z = z || 0;
+    this.w = w || 0;
+  }
+
+  #initFromQuaternion(quaternion: QuaternionLike): void {
+    this.x = quaternion.x;
+    this.y = quaternion.y;
+    this.z = quaternion.z;
+    this.w = quaternion.w;
   }
 }

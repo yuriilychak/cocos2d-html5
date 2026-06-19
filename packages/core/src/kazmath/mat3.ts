@@ -1,9 +1,12 @@
-import { EPSILON } from './utility';
-import Quaternion from './quaternion';
-import { log } from '../boot/debugger';
+import { EPSILON } from "./utility";
+import Quaternion from "./quaternion";
+import { log } from "../boot/debugger";
+import type { Mat3Like, QuaternionLike, Vec3Like } from "./types";
 
-export default class Matrix3 {
-    constructor(mat3) {
+export default class Matrix3 implements Mat3Like {
+    public mat: Float32Array;
+
+    public constructor(mat3: Mat3Like | null = null) {
         if (mat3 && mat3.mat) {
             this.mat = new Float32Array(mat3.mat);
         } else {
@@ -11,7 +14,7 @@ export default class Matrix3 {
         }
     }
 
-    fill(mat3) {
+    public fill(mat3: Mat3Like): this {
         const mat = this.mat, matIn = mat3.mat;
         mat[0] = matIn[0]; mat[1] = matIn[1]; mat[2] = matIn[2];
         mat[3] = matIn[3]; mat[4] = matIn[4]; mat[5] = matIn[5];
@@ -19,7 +22,7 @@ export default class Matrix3 {
         return this;
     }
 
-    adjugate() {
+    public adjugate(): this {
         const mat = this.mat;
         const m0 = mat[0], m1 = mat[1], m2 = mat[2],
               m3 = mat[3], m4 = mat[4], m5 = mat[5],
@@ -35,14 +38,14 @@ export default class Matrix3 {
         return this;
     }
 
-    identity() {
+    public identity(): this {
         const mat = this.mat;
         mat[1] = mat[2] = mat[3] = mat[5] = mat[6] = mat[7] = 0;
         mat[0] = mat[4] = mat[8] = 1.0;
         return this;
     }
 
-    inverse(determinate) {
+    public inverse(determinate: number): this {
         if (determinate === 0.0) return this;
         tmpMatrix.assignFrom(this);
         const detInv = 1.0 / determinate;
@@ -51,7 +54,7 @@ export default class Matrix3 {
         return this;
     }
 
-    isIdentity() {
+    public isIdentity(): boolean {
         const mat = this.mat;
         return (
             mat[0] === 1 && mat[1] === 0 && mat[2] === 0 &&
@@ -60,7 +63,7 @@ export default class Matrix3 {
         );
     }
 
-    transpose() {
+    public transpose(): this {
         const mat = this.mat;
         const m1 = mat[1], m2 = mat[2], m3 = mat[3],
               m5 = mat[5], m6 = mat[6], m7 = mat[7];
@@ -69,14 +72,14 @@ export default class Matrix3 {
         return this;
     }
 
-    determinant() {
+    public determinant(): number {
         const mat = this.mat;
         let output = mat[0] * mat[4] * mat[8] + mat[1] * mat[5] * mat[6] + mat[2] * mat[3] * mat[7];
         output -= mat[2] * mat[4] * mat[6] + mat[0] * mat[5] * mat[7] + mat[1] * mat[3] * mat[8];
         return output;
     }
 
-    multiply(mat3) {
+    public multiply(mat3: Mat3Like): this {
         const m1 = this.mat, m2 = mat3.mat;
         const a0 = m1[0], a1 = m1[1], a2 = m1[2],
               a3 = m1[3], a4 = m1[4], a5 = m1[5],
@@ -99,7 +102,7 @@ export default class Matrix3 {
         return this;
     }
 
-    multiplyScalar(factor) {
+    public multiplyScalar(factor: number): this {
         const mat = this.mat;
         mat[0] *= factor; mat[1] *= factor; mat[2] *= factor;
         mat[3] *= factor; mat[4] *= factor; mat[5] *= factor;
@@ -107,7 +110,7 @@ export default class Matrix3 {
         return this;
     }
 
-    static rotationAxisAngle(axis, radians) {
+    public static rotationAxisAngle(axis: Vec3Like, radians: number): Matrix3 {
         const rcos = Math.cos(radians), rsin = Math.sin(radians);
         const retMat = new Matrix3();
         const mat = retMat.mat;
@@ -127,7 +130,7 @@ export default class Matrix3 {
         return retMat;
     }
 
-    assignFrom(matIn) {
+    public assignFrom(matIn: Mat3Like): this {
         if (this === matIn) {
             log("math.Matrix3.assign(): current matrix equals matIn");
             return this;
@@ -139,7 +142,7 @@ export default class Matrix3 {
         return this;
     }
 
-    equals(mat3) {
+    public equals(mat3: Mat3Like): boolean {
         if (this === mat3) return true;
         const m1 = this.mat, m2 = mat3.mat;
         for (let i = 0; i < 9; ++i) {
@@ -148,7 +151,7 @@ export default class Matrix3 {
         return true;
     }
 
-    static createByRotationX(radians) {
+    public static createByRotationX(radians: number): Matrix3 {
         const retMat = new Matrix3(), mat = retMat.mat;
         mat[0] = 1.0; mat[1] = 0.0; mat[2] = 0.0;
         mat[3] = 0.0; mat[4] = Math.cos(radians); mat[5] = Math.sin(radians);
@@ -156,7 +159,7 @@ export default class Matrix3 {
         return retMat;
     }
 
-    static createByRotationY(radians) {
+    public static createByRotationY(radians: number): Matrix3 {
         const retMat = new Matrix3(), mat = retMat.mat;
         mat[0] = Math.cos(radians); mat[1] = 0.0; mat[2] = -Math.sin(radians);
         mat[3] = 0.0; mat[4] = 1.0; mat[5] = 0.0;
@@ -164,7 +167,7 @@ export default class Matrix3 {
         return retMat;
     }
 
-    static createByRotationZ(radians) {
+    public static createByRotationZ(radians: number): Matrix3 {
         const retMat = new Matrix3(), mat = retMat.mat;
         mat[0] = Math.cos(radians); mat[1] = -Math.sin(radians); mat[2] = 0.0;
         mat[3] = Math.sin(radians); mat[4] = Math.cos(radians); mat[5] = 0.0;
@@ -172,7 +175,7 @@ export default class Matrix3 {
         return retMat;
     }
 
-    static createByRotation(radians) {
+    public static createByRotation(radians: number): Matrix3 {
         const retMat = new Matrix3(), mat = retMat.mat;
         mat[0] = Math.cos(radians); mat[1] = Math.sin(radians); mat[2] = 0.0;
         mat[3] = -Math.sin(radians); mat[4] = Math.cos(radians); mat[5] = 0.0;
@@ -180,7 +183,7 @@ export default class Matrix3 {
         return retMat;
     }
 
-    static createByScale(x, y) {
+    public static createByScale(x: number, y: number): Matrix3 {
         const ret = new Matrix3();
         ret.identity();
         ret.mat[0] = x;
@@ -188,7 +191,7 @@ export default class Matrix3 {
         return ret;
     }
 
-    static createByTranslation(x, y) {
+    public static createByTranslation(x: number, y: number): Matrix3 {
         const ret = new Matrix3();
         ret.identity();
         ret.mat[6] = x;
@@ -196,7 +199,7 @@ export default class Matrix3 {
         return ret;
     }
 
-    static createByQuaternion(quaternion) {
+    public static createByQuaternion(quaternion: QuaternionLike | null): Matrix3 | null {
         if (!quaternion) return null;
 
         const ret = new Matrix3(), mat = ret.mat;
@@ -214,8 +217,8 @@ export default class Matrix3 {
         return ret;
     }
 
-    rotationToAxisAngle() {
-        return Quaternion.rotationMatrix(this).toAxisAndAngle();
+    public rotationToAxisAngle() {
+        return Quaternion.rotationMatrix(this)!.toAxisAndAngle();
     }
 }
 
