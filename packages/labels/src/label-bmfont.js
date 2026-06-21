@@ -1,4 +1,4 @@
-import { EventHelper, SpriteBatchNode, RendererConfig, Node, Point, Rect, Size, Sprite, Texture2D, Color, log, contentScaleFactor, rectPixelsToPoints, pointPixelsToPoints, sizePixelsToPoints, TEXT_ALIGNMENT_LEFT, TEXT_ALIGNMENT_CENTER, TEXT_ALIGNMENT_RIGHT, LabelTTF, Path, ServiceLocator } from "@aspect/core";
+import { EventHelper, SpriteBatchNode, RendererConfig, Node, Point, Rect, Size, Sprite, Texture2D, Color, log, contentScaleFactor, rectPixelsToPoints, pointPixelsToPoints, sizePixelsToPoints, TextAlignment, LabelTTF, Path, ServiceLocator } from "@aspect/core";
 
 export class LabelBMFont extends EventHelper(SpriteBatchNode) {
   //property string is Getter and Setter.
@@ -17,7 +17,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
   _initialString = "";
 
   // alignment of all lines
-  _alignment = TEXT_ALIGNMENT_CENTER;
+  _alignment = TextAlignment.CENTER;
 
   // max width until a line break is added
   _width = -1;
@@ -82,7 +82,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
    * @param {String} str
    * @param {String} fntFile
    * @param {Number} [width=-1]
-   * @param {Number} [alignment=TEXT_ALIGNMENT_LEFT]
+   * @param {Number} [alignment=TextAlignment.LEFT]
    * @param {Point} [imageOffset=new Point(0,0)]
    * @param {Number} [fontSize=0] desired font size; 0 means use the native size defined in the fnt file
    */
@@ -142,7 +142,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
    * @param {String} str
    * @param {String} fntFile
    * @param {Number} [width=-1]
-   * @param {Number} [alignment=TEXT_ALIGNMENT_LEFT]
+   * @param {Number} [alignment=TextAlignment.LEFT]
    * @param {Point} [imageOffset=new Point(0,0)]
    * @param {Number} [fontSize=0] desired font size; 0 means use the native size defined in the fnt file
    * @return {Boolean}
@@ -204,7 +204,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
     }
 
     if (this.initWithTexture(texture, theString.length)) {
-      this._alignment = alignment || TEXT_ALIGNMENT_LEFT;
+      this._alignment = alignment || TextAlignment.LEFT;
       this._imageOffset = imageOffset || new Point(0, 0);
       this._width = width === undefined ? -1 : width;
       this._fontSize = fontSize > 0 ? fontSize : 0;
@@ -540,7 +540,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
       this._setString(wrapString, false);
     }
     // Step 2: Make alignment
-    if (this._alignment !== TEXT_ALIGNMENT_LEFT) {
+    if (this._alignment !== TextAlignment.LEFT) {
       i = 0;
 
       var lineNumber = 0;
@@ -568,10 +568,10 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
 
           var shift = 0;
           switch (this._alignment) {
-            case TEXT_ALIGNMENT_CENTER:
+            case TextAlignment.CENTER:
               shift = this.width / 2 - lineWidth / 2;
               break;
-            case TEXT_ALIGNMENT_RIGHT:
+            case TextAlignment.RIGHT:
               shift = this.width - lineWidth;
               break;
             default:

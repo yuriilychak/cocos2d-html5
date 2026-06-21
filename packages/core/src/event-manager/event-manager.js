@@ -26,7 +26,7 @@
 import { BaseClass } from "../platform/class";
 import { Node } from "../base-nodes/node";
 import { Event, EventCustom, EventTouch } from "./event";
-import Game from "../boot/game";
+import { GameEvent } from "../enums";
 import { arrayRemoveObject, copyArray } from "../platform/macro/utils";
 import { isNumber } from "../boot/utils";
 import {
@@ -138,7 +138,7 @@ export default class EventManager {
     this._inDispatch = 0;
     this._isEnabled = false;
     this._nodePriorityIndex = 0;
-    this._internalCustomListenerIDs = [Game.EVENT_HIDE, Game.EVENT_SHOW];
+    this._internalCustomListenerIDs = [GameEvent.HIDE, GameEvent.SHOW];
     this._director = null;
   }
 

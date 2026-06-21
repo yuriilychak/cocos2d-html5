@@ -1,4 +1,4 @@
-import { Node, SRC_ALPHA, ONE, Color, ServiceLocator } from "@aspect/core";
+import { Node, Color, ServiceLocator, GLState } from "@aspect/core";
 import { DrawNode } from "./draw-node";
 
 export class DrawNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
@@ -27,8 +27,8 @@ export class DrawNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
     wrapper.setGlobalAlpha(alpha);
     if (
       this._blendFunc &&
-      this._blendFunc.src === SRC_ALPHA &&
-      this._blendFunc.dst === ONE
+      this._blendFunc.src === GLState.SRC_ALPHA &&
+      this._blendFunc.dst === GLState.ONE
     )
       wrapper.setCompositeOperation("lighter");
     const locBuffer = this._buffer;

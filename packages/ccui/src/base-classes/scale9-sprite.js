@@ -1,4 +1,21 @@
-import { Node, EventHelper, SpriteFrame, Rect, Size, Point, Color, Sprite, BlendFunc, rectPointsToPixels, contentScaleFactor, FIX_ARTIFACTS_BY_STRECHING_TEXEL, BLEND_SRC, BLEND_DST, ONE, SRC_ALPHA, log, error, ServiceLocator } from "@aspect/core";
+import {
+  Node,
+  EventHelper,
+  SpriteFrame,
+  Rect,
+  Size,
+  Point,
+  Color,
+  Sprite,
+  BlendFunc,
+  rectPointsToPixels,
+  contentScaleFactor,
+  FIX_ARTIFACTS_BY_STRECHING_TEXEL,
+  log,
+  error,
+  ServiceLocator,
+  GLState
+} from "@aspect/core";
 
 const dataPool = {
     _pool: {},
@@ -508,13 +525,13 @@ export class Scale9Sprite extends EventHelper(Node) {
     _updateBlendFunc() {
         var blendFunc = this._blendFunc;
         if (!this._spriteFrame || !this._spriteFrame._texture.hasPremultipliedAlpha()) {
-            if (blendFunc.src === ONE && blendFunc.dst === BLEND_DST) {
-                blendFunc.src = SRC_ALPHA;
+            if (blendFunc.src === GLState.ONE && blendFunc.dst === GLState.BLEND_DST) {
+                blendFunc.src = GLState.SRC_ALPHA;
             }
             this.#opacityModifyRGB = false;
         } else {
-            if (blendFunc.src === SRC_ALPHA && blendFunc.dst === BLEND_DST) {
-                blendFunc.src = ONE;
+            if (blendFunc.src === GLState.SRC_ALPHA && blendFunc.dst === GLState.BLEND_DST) {
+                blendFunc.src = GLState.ONE;
             }
             this.#opacityModifyRGB = true;
         }
@@ -560,12 +577,12 @@ export class Scale9Sprite extends EventHelper(Node) {
 
     setBlendFunc(blendFunc, dst) {
         if (dst === undefined) {
-            this._blendFunc.src = blendFunc.src || BLEND_SRC;
-            this._blendFunc.dst = blendFunc.dst || BLEND_DST;
+            this._blendFunc.src = blendFunc.src || GLState.BLEND_SRC;
+            this._blendFunc.dst = blendFunc.dst || GLState.BLEND_DST;
         }
         else {
-            this._blendFunc.src = blendFunc || BLEND_SRC;
-            this._blendFunc.dst = dst || BLEND_DST;
+            this._blendFunc.src = blendFunc || GLState.BLEND_SRC;
+            this._blendFunc.dst = dst || GLState.BLEND_DST;
         }
         this._renderCmd.setDirtyFlag(Node._dirtyFlags.contentDirty);
     }

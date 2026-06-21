@@ -1,7 +1,8 @@
 import Game from "../boot/game";
+import { RenderType } from "../enums";
 
 export class RendererConfig {
-  _renderType = Game.RENDER_TYPE_CANVAS;
+  _renderType = RenderType.CANVAS;
   _supportRender = false;
   _renderContext = null;
   _renderer = null;
@@ -77,11 +78,11 @@ export class RendererConfig {
   }
 
   get isWebGL() {
-    return this._renderType === Game.RENDER_TYPE_WEBGL;
+    return this._renderType === RenderType.WEBGL;
   }
 
   get isCanvas() {
-    return this._renderType === Game.RENDER_TYPE_CANVAS;
+    return this._renderType === RenderType.CANVAS;
   }
 
   get isSupportRenderer() {
@@ -103,28 +104,28 @@ export class RendererConfig {
     if (isNaN(userRenderMode) || userRenderMode > 2 || userRenderMode < 0)
       config[CONFIG_KEY.renderMode] = 0;
 
-    this._renderType = Game.RENDER_TYPE_CANVAS;
+    this._renderType = RenderType.CANVAS;
     this._supportRender = false;
 
     if (userRenderMode === 0) {
       if (this._sys.capabilities["opengl"]) {
-        this._renderType = Game.RENDER_TYPE_WEBGL;
+        this._renderType = RenderType.WEBGL;
         this._supportRender = true;
       } else if (this._sys.capabilities["canvas"]) {
-        this._renderType = Game.RENDER_TYPE_CANVAS;
+        this._renderType = RenderType.CANVAS;
         this._supportRender = true;
       }
     } else if (
       userRenderMode === 1 &&
       this._sys.capabilities["canvas"]
     ) {
-      this._renderType = Game.RENDER_TYPE_CANVAS;
+      this._renderType = RenderType.CANVAS;
       this._supportRender = true;
     } else if (
       userRenderMode === 2 &&
       this._sys.capabilities["opengl"]
     ) {
-      this._renderType = Game.RENDER_TYPE_WEBGL;
+      this._renderType = RenderType.WEBGL;
       this._supportRender = true;
     }
   }

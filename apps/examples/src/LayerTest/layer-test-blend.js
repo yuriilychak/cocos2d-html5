@@ -33,7 +33,7 @@
 import { LayerTest } from "./layer-test";
 import { s_pathSister1, s_pathSister2, s_simpleFont_fnt } from "../resources";
 import { winSize } from "../constants";
-import { Color, LayerColor, ONE_MINUS_DST_COLOR, ONE_MINUS_SRC_ALPHA, SRC_ALPHA, Sprite, ZERO, ServiceLocator } from "@aspect/core";
+import { Color, LayerColor, Sprite, ServiceLocator, GLState } from "@aspect/core";
 import { TAG_LAYER } from "./layer-test-constants";
 import { TextBMFont } from "@aspect/ccui";
 export class LayerTestBlend extends LayerTest {
@@ -78,11 +78,11 @@ export class LayerTestBlend extends LayerTest {
         var dst;
 
         if (this._blend) {
-            src = SRC_ALPHA;
-            dst = ONE_MINUS_SRC_ALPHA;
+            src = GLState.SRC_ALPHA;
+            dst = GLState.ONE_MINUS_SRC_ALPHA;
         } else {
-            src = ONE_MINUS_DST_COLOR;
-            dst = ZERO;
+            src = GLState.ONE_MINUS_DST_COLOR;
+            dst = GLState.ZERO;
         }
         layer.setBlendFunc( src, dst );
         this._blend = ! this._blend;

@@ -22,7 +22,23 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Node, Rect, Matrix4, glBindTexture2D, glBlendFuncForParticle, VERTEX_ATTRIB_POSITION, VERTEX_ATTRIB_COLOR, VERTEX_ATTRIB_TEX_COORDS, V3F_C4B_T2F_Quad, V3F_C4B_T2F_QuadZero, SHADER_POSITION_TEXTURECOLOR, SRC_ALPHA, ONE_MINUS_SRC_ALPHA, BLEND_SRC, BLEND_DST, contentScaleFactor, degreesToRadians, log, FIX_ARTIFACTS_BY_STRECHING_TEXEL, ServiceLocator } from "@aspect/core";
+import {
+  Node,
+  Rect,
+  Matrix4,
+  glBindTexture2D,
+  glBlendFuncForParticle,
+  V3F_C4B_T2F_Quad,
+  V3F_C4B_T2F_QuadZero,
+  contentScaleFactor,
+  degreesToRadians,
+  log,
+  FIX_ARTIFACTS_BY_STRECHING_TEXEL,
+  ServiceLocator,
+  VertexAttribute,
+  ShaderName,
+  GLState
+} from "@aspect/core";
 import { Particle } from "./particle-system/particle";
 
 export class ParticleSystemWebGLRenderCmd extends Node.WebGLRenderCmd {
@@ -200,14 +216,14 @@ export class ParticleSystemWebGLRenderCmd extends Node.WebGLRenderCmd {
     glBindTexture2D(node._texture);
     glBlendFuncForParticle(node._blendFunc.src, node._blendFunc.dst);
 
-    gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
-    gl.enableVertexAttribArray(VERTEX_ATTRIB_COLOR);
-    gl.enableVertexAttribArray(VERTEX_ATTRIB_TEX_COORDS);
+    gl.enableVertexAttribArray(VertexAttribute.POSITION);
+    gl.enableVertexAttribArray(VertexAttribute.COLOR);
+    gl.enableVertexAttribArray(VertexAttribute.TEX_COORDS);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, this._buffersVBO[0]);
-    gl.vertexAttribPointer(VERTEX_ATTRIB_POSITION, 3, gl.FLOAT, false, 24, 0);
+    gl.vertexAttribPointer(VertexAttribute.POSITION, 3, gl.FLOAT, false, 24, 0);
     gl.vertexAttribPointer(
-      VERTEX_ATTRIB_COLOR,
+      VertexAttribute.COLOR,
       4,
       gl.UNSIGNED_BYTE,
       true,
@@ -215,7 +231,7 @@ export class ParticleSystemWebGLRenderCmd extends Node.WebGLRenderCmd {
       12
     );
     gl.vertexAttribPointer(
-      VERTEX_ATTRIB_TEX_COORDS,
+      VertexAttribute.TEX_COORDS,
       2,
       gl.FLOAT,
       false,
@@ -397,11 +413,11 @@ export class ParticleSystemWebGLRenderCmd extends Node.WebGLRenderCmd {
   _setBlendAdditive() {
     const locBlendFunc = this._node._blendFunc;
     if (this._texture && !this._texture.hasPremultipliedAlpha()) {
-      locBlendFunc.src = SRC_ALPHA;
-      locBlendFunc.dst = ONE_MINUS_SRC_ALPHA;
+      locBlendFunc.src = GLState.SRC_ALPHA;
+      locBlendFunc.dst = GLState.ONE_MINUS_SRC_ALPHA;
     } else {
-      locBlendFunc.src = BLEND_SRC;
-      locBlendFunc.dst = BLEND_DST;
+      locBlendFunc.src = GLState.BLEND_SRC;
+      locBlendFunc.dst = GLState.BLEND_DST;
     }
   }
 
@@ -412,7 +428,7 @@ export class ParticleSystemWebGLRenderCmd extends Node.WebGLRenderCmd {
     this._setupVBO();
 
     this._shaderProgram = ServiceLocator.shaderCache.programForKey(
-      SHADER_POSITION_TEXTURECOLOR
+      ShaderName.POSITION_TEXTURECOLOR
     );
   }
 

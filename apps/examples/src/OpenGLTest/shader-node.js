@@ -29,7 +29,7 @@
 //
 //------------------------------------------------------------------
 import { GLNode } from "./glnode-polyfill";
-import { GLProgram, VERTEX_ATTRIB_POSITION, ServiceLocator } from "@aspect/core";
+import { GLProgram, ServiceLocator, VertexAttribute } from "@aspect/core";
 export class ShaderNode extends GLNode {
   constructor(vertexShader, framentShader) {
     super();
@@ -42,7 +42,7 @@ export class ShaderNode extends GLNode {
       this.anchorY = 0.5;
 
       this.shader = new GLProgram(vertexShader, framentShader);
-      this.shader.addAttribute("aVertex", VERTEX_ATTRIB_POSITION);
+      this.shader.addAttribute("aVertex", VertexAttribute.POSITION);
       this.shader.link();
       this.shader.updateUniforms();
 
@@ -74,11 +74,11 @@ export class ShaderNode extends GLNode {
     this.shader.setUniformLocationF32(this.uniformCenter, centerx, centery);
     this.shader.setUniformLocationF32(this.uniformResolution, 256, 256);
 
-    gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
+    gl.enableVertexAttribArray(VertexAttribute.POSITION);
 
     // Draw fullscreen Square
     gl.bindBuffer(gl.ARRAY_BUFFER, this.squareVertexPositionBuffer);
-    gl.vertexAttribPointer(VERTEX_ATTRIB_POSITION, 2, gl.FLOAT, false, 0, 0);
+    gl.vertexAttribPointer(VertexAttribute.POSITION, 2, gl.FLOAT, false, 0, 0);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, null);

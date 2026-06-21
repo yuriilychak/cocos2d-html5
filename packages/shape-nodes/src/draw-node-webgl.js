@@ -1,4 +1,17 @@
-import { Point, BlendFunc, SRC_ALPHA, ONE_MINUS_SRC_ALPHA, Color, GlobalVertexBuffer, DRAWNODE_TOTAL_VERTICES, SHADER_POSITION_LENGTHTEXTURECOLOR, VERTEX_ATTRIB_POSITION, VERTEX_ATTRIB_COLOR, VERTEX_ATTRIB_TEX_COORDS, incrementGLDraws, warn, Node, ServiceLocator } from "@aspect/core";
+import {
+  Point,
+  BlendFunc,
+  Color,
+  GlobalVertexBuffer,
+  DRAWNODE_TOTAL_VERTICES,
+  incrementGLDraws,
+  warn,
+  Node,
+  ServiceLocator,
+  GLState,
+  ShaderName,
+  VertexAttribute
+} from "@aspect/core";
 import { cardinalSplineAt, getControlPointAt } from "@aspect/core";
 // 9600 vertices by default configurable in ccConfig
 // 5 floats per vertex: 2 position + 1 color (uint32) + 2 uv
@@ -59,9 +72,9 @@ export class DrawNodeWebGL {
     }
 
     this._renderCmd._shaderProgram = ServiceLocator.shaderCache.programForKey(
-      SHADER_POSITION_LENGTHTEXTURECOLOR
+      ShaderName.POSITION_LENGTHTEXTURECOLOR
     );
-    this._blendFunc = new BlendFunc(SRC_ALPHA, ONE_MINUS_SRC_ALPHA);
+    this._blendFunc = new BlendFunc(GLState.SRC_ALPHA, GLState.ONE_MINUS_SRC_ALPHA);
     this._drawColor = new Color(255, 255, 255, 255);
 
     this._bufferCapacity = capacity || 64;
@@ -323,13 +336,13 @@ export class DrawNodeWebGL {
       gl.bindBuffer(gl.ARRAY_BUFFER, _sharedBuffer.vertexBuffer);
     }
 
-    gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
-    gl.enableVertexAttribArray(VERTEX_ATTRIB_COLOR);
-    gl.enableVertexAttribArray(VERTEX_ATTRIB_TEX_COORDS);
+    gl.enableVertexAttribArray(VertexAttribute.POSITION);
+    gl.enableVertexAttribArray(VertexAttribute.COLOR);
+    gl.enableVertexAttribArray(VertexAttribute.TEX_COORDS);
 
     // vertex
     gl.vertexAttribPointer(
-      VERTEX_ATTRIB_POSITION,
+      VertexAttribute.POSITION,
       2,
       gl.FLOAT,
       false,
@@ -338,7 +351,7 @@ export class DrawNodeWebGL {
     );
     // color
     gl.vertexAttribPointer(
-      VERTEX_ATTRIB_COLOR,
+      VertexAttribute.COLOR,
       4,
       gl.UNSIGNED_BYTE,
       true,
@@ -347,7 +360,7 @@ export class DrawNodeWebGL {
     );
     // texcoord
     gl.vertexAttribPointer(
-      VERTEX_ATTRIB_TEX_COORDS,
+      VertexAttribute.TEX_COORDS,
       2,
       gl.FLOAT,
       false,

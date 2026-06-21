@@ -22,7 +22,17 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Color, Node, CanvasContextWrapper, contentScaleFactor, Texture2D, Sprite, ONE, ONE_MINUS_SRC_ALPHA, log, ServiceLocator } from "@aspect/core";
+import {
+  Color,
+  Node,
+  CanvasContextWrapper,
+  contentScaleFactor,
+  Texture2D,
+  Sprite,
+  log,
+  ServiceLocator,
+  GLState
+} from "@aspect/core";
 
 export class RenderTextureCanvasRenderCmd extends Node.CanvasRenderCmd {
   constructor(renderableObject) {
@@ -61,7 +71,7 @@ export class RenderTextureCanvasRenderCmd extends Node.CanvasRenderCmd {
     texture.handleLoadedTexture();
 
     const locSprite = (node.sprite = new Sprite(texture));
-    locSprite.setBlendFunc(ONE, ONE_MINUS_SRC_ALPHA);
+    locSprite.setBlendFunc(GLState.ONE, GLState.ONE_MINUS_SRC_ALPHA);
     // Disabled by default.
     node.autoDraw = false;
     // add sprite for backward compatibility

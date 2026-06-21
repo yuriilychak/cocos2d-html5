@@ -26,13 +26,11 @@
 
 import { BaseClass } from "./platform/class";
 import { Point, cardinalSplineAt, getControlPointAt } from "./geometry";
-import {
-  SHADER_POSITION_UCOLOR,
-  VERTEX_ATTRIB_POSITION
-} from "./platform/macro/constants";
+
 import { incrementGLDraws, contentScaleFactor } from "./platform/macro/utils";
 import { GLProgramState } from "./shaders/CCGLProgramState";
 import { ServiceLocator } from "./service-locator";
+import { ShaderName, VertexAttribute } from "./enums";
 
 /**
  * Canvas of DrawingPrimitive implement version use for WebGlMode
@@ -64,7 +62,7 @@ export class DrawingPrimitiveWebGL extends BaseClass {
     var _t = this;
     if (!_t._initialized) {
       _t._shader = ServiceLocator.shaderCache.programForKey(
-        SHADER_POSITION_UCOLOR
+        ShaderName.POSITION_UCOLOR
       );
       _t._shader._addUniformLocation(this._colorLocation);
       _t._shader._addUniformLocation(this._pointSizeLocation);
@@ -84,7 +82,7 @@ export class DrawingPrimitiveWebGL extends BaseClass {
     var glContext = this._renderContext;
     this._glProgramState.apply();
     this._shader.setUniformForModelViewAndProjectionMatrixWithMat4();
-    glContext.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
+    glContext.enableVertexAttribArray(VertexAttribute.POSITION);
     this._shader.setUniformLocationWith4fv(
       this._colorLocation,
       this._colorArray
@@ -102,7 +100,7 @@ export class DrawingPrimitiveWebGL extends BaseClass {
       glContext.STATIC_DRAW
     );
     glContext.vertexAttribPointer(
-      VERTEX_ATTRIB_POSITION,
+      VertexAttribute.POSITION,
       2,
       glContext.FLOAT,
       false,
@@ -124,7 +122,7 @@ export class DrawingPrimitiveWebGL extends BaseClass {
     var glContext = this._renderContext;
     this._glProgramState.apply();
     this._shader.setUniformForModelViewAndProjectionMatrixWithMat4();
-    glContext.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
+    glContext.enableVertexAttribArray(VertexAttribute.POSITION);
     this._shader.setUniformLocationWith4fv(
       this._colorLocation,
       this._colorArray
@@ -142,7 +140,7 @@ export class DrawingPrimitiveWebGL extends BaseClass {
       glContext.STATIC_DRAW
     );
     glContext.vertexAttribPointer(
-      VERTEX_ATTRIB_POSITION,
+      VertexAttribute.POSITION,
       2,
       glContext.FLOAT,
       false,
@@ -171,7 +169,7 @@ export class DrawingPrimitiveWebGL extends BaseClass {
     var glContext = this._renderContext;
     this._glProgramState.apply();
     this._shader.setUniformForModelViewAndProjectionMatrixWithMat4();
-    glContext.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
+    glContext.enableVertexAttribArray(VertexAttribute.POSITION);
     this._shader.setUniformLocationWith4fv(
       this._colorLocation,
       this._colorArray
@@ -185,7 +183,7 @@ export class DrawingPrimitiveWebGL extends BaseClass {
       glContext.STATIC_DRAW
     );
     glContext.vertexAttribPointer(
-      VERTEX_ATTRIB_POSITION,
+      VertexAttribute.POSITION,
       2,
       glContext.FLOAT,
       false,
@@ -235,7 +233,7 @@ export class DrawingPrimitiveWebGL extends BaseClass {
     var glContext = this._renderContext;
     this._glProgramState.apply();
     this._shader.setUniformForModelViewAndProjectionMatrixWithMat4();
-    glContext.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
+    glContext.enableVertexAttribArray(VertexAttribute.POSITION);
     this._shader.setUniformLocationWith4fv(
       this._colorLocation,
       this._colorArray
@@ -249,7 +247,7 @@ export class DrawingPrimitiveWebGL extends BaseClass {
       glContext.STATIC_DRAW
     );
     glContext.vertexAttribPointer(
-      VERTEX_ATTRIB_POSITION,
+      VertexAttribute.POSITION,
       2,
       glContext.FLOAT,
       false,
@@ -272,7 +270,7 @@ export class DrawingPrimitiveWebGL extends BaseClass {
     var glContext = this._renderContext;
     this._glProgramState.apply();
     this._shader.setUniformForModelViewAndProjectionMatrixWithMat4();
-    glContext.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
+    glContext.enableVertexAttribArray(VertexAttribute.POSITION);
     this._shader.setUniformLocationWith4fv(
       this._colorLocation,
       this._colorArray
@@ -286,7 +284,7 @@ export class DrawingPrimitiveWebGL extends BaseClass {
       glContext.STATIC_DRAW
     );
     glContext.vertexAttribPointer(
-      VERTEX_ATTRIB_POSITION,
+      VertexAttribute.POSITION,
       2,
       glContext.FLOAT,
       false,
@@ -324,7 +322,7 @@ export class DrawingPrimitiveWebGL extends BaseClass {
     var glContext = this._renderContext;
     this._glProgramState.apply();
     this._shader.setUniformForModelViewAndProjectionMatrixWithMat4();
-    glContext.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
+    glContext.enableVertexAttribArray(VertexAttribute.POSITION);
     this._shader.setUniformLocationWith4fv(
       this._colorLocation,
       this._colorArray
@@ -338,7 +336,7 @@ export class DrawingPrimitiveWebGL extends BaseClass {
       glContext.STATIC_DRAW
     );
     glContext.vertexAttribPointer(
-      VERTEX_ATTRIB_POSITION,
+      VertexAttribute.POSITION,
       2,
       glContext.FLOAT,
       false,
@@ -375,7 +373,7 @@ export class DrawingPrimitiveWebGL extends BaseClass {
     var glContext = this._renderContext;
     this._glProgramState.apply();
     this._shader.setUniformForModelViewAndProjectionMatrixWithMat4();
-    glContext.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
+    glContext.enableVertexAttribArray(VertexAttribute.POSITION);
     this._shader.setUniformLocationWith4fv(
       this._colorLocation,
       this._colorArray
@@ -389,7 +387,7 @@ export class DrawingPrimitiveWebGL extends BaseClass {
       glContext.STATIC_DRAW
     );
     glContext.vertexAttribPointer(
-      VERTEX_ATTRIB_POSITION,
+      VertexAttribute.POSITION,
       2,
       glContext.FLOAT,
       false,
@@ -428,7 +426,7 @@ export class DrawingPrimitiveWebGL extends BaseClass {
     var glContext = this._renderContext;
     this._glProgramState.apply();
     this._shader.setUniformForModelViewAndProjectionMatrixWithMat4();
-    glContext.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
+    glContext.enableVertexAttribArray(VertexAttribute.POSITION);
     this._shader.setUniformLocationWith4fv(
       this._colorLocation,
       this._colorArray
@@ -442,7 +440,7 @@ export class DrawingPrimitiveWebGL extends BaseClass {
       glContext.STATIC_DRAW
     );
     glContext.vertexAttribPointer(
-      VERTEX_ATTRIB_POSITION,
+      VertexAttribute.POSITION,
       2,
       glContext.FLOAT,
       false,
@@ -493,7 +491,7 @@ export class DrawingPrimitiveWebGL extends BaseClass {
     var glContext = this._renderContext;
     this._glProgramState.apply();
     this._shader.setUniformForModelViewAndProjectionMatrixWithMat4();
-    glContext.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
+    glContext.enableVertexAttribArray(VertexAttribute.POSITION);
     this._shader.setUniformLocationWith4fv(
       this._colorLocation,
       this._colorArray
@@ -507,7 +505,7 @@ export class DrawingPrimitiveWebGL extends BaseClass {
       glContext.STATIC_DRAW
     );
     glContext.vertexAttribPointer(
-      VERTEX_ATTRIB_POSITION,
+      VertexAttribute.POSITION,
       2,
       glContext.FLOAT,
       false,

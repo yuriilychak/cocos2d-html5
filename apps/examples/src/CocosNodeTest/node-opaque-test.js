@@ -27,7 +27,7 @@
 
 import { TestNodeDemo } from "./test-node-demo";
 import { s_back1 } from "../resources";
-import { ONE, ONE_MINUS_SRC_ALPHA, Sprite, ServiceLocator } from "@aspect/core";
+import { Sprite, ServiceLocator, GLState } from "@aspect/core";
 export class NodeOpaqueTest extends TestNodeDemo {
   constructor() {
     //----start13----ctor
@@ -36,7 +36,7 @@ export class NodeOpaqueTest extends TestNodeDemo {
     var background;
     for (var i = 0; i < 50; i++) {
       background = new Sprite(s_back1);
-      background.setBlendFunc(ONE, ONE_MINUS_SRC_ALPHA);
+      background.setBlendFunc(GLState.ONE, GLState.ONE_MINUS_SRC_ALPHA);
       background.x = winSize.width / 2;
       background.y = winSize.height / 2;
       this.addChild(background);

@@ -24,18 +24,11 @@
 
 import { Color } from "../platform/types/color";
 import { arrayRemoveObject } from "../platform/macro/utils";
-import {
-  BATCH_VERTEX_COUNT,
-  VERTEX_ATTRIB_COLOR,
-  VERTEX_ATTRIB_POSITION,
-  VERTEX_ATTRIB_TEX_COORDS,
-  VERTEX_ATTRIB_TEX_INDEX,
-  SHADER_SPRITE_POSITION_TEXTURECOLOR_MULTI
-} from "../platform/macro/constants";
+import { BATCH_VERTEX_COUNT } from "../platform/macro/constants";
 import { GLProgramState } from "../shaders/CCGLProgramState";
 import Matrix4 from "../kazmath/mat4";
 import { ServiceLocator } from "../service-locator";
-import { OperatingSystem } from "../enums";
+import { OperatingSystem, VertexAttribute, ShaderName } from "../enums";
 
 // Internal variables
 // Batching general informations
@@ -190,7 +183,7 @@ var rendererWebGL = {
     }
     if (!_multiProgramState) {
       var program = ServiceLocator.shaderCache.programForKey(
-        SHADER_SPRITE_POSITION_TEXTURECOLOR_MULTI
+        ShaderName.SPRITE_POSITION_TEXTURECOLOR_MULTI
       );
       _multiProgramState = GLProgramState.getOrCreateWithGLProgram(program);
     }
@@ -583,12 +576,12 @@ var rendererWebGL = {
       gl.bufferData(gl.ARRAY_BUFFER, view, gl.DYNAMIC_DRAW);
     }
 
-    gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
-    gl.enableVertexAttribArray(VERTEX_ATTRIB_COLOR);
-    gl.enableVertexAttribArray(VERTEX_ATTRIB_TEX_COORDS);
-    gl.vertexAttribPointer(VERTEX_ATTRIB_POSITION, 3, gl.FLOAT, false, stride, 0);
+    gl.enableVertexAttribArray(VertexAttribute.POSITION);
+    gl.enableVertexAttribArray(VertexAttribute.COLOR);
+    gl.enableVertexAttribArray(VertexAttribute.TEX_COORDS);
+    gl.vertexAttribPointer(VertexAttribute.POSITION, 3, gl.FLOAT, false, stride, 0);
     gl.vertexAttribPointer(
-      VERTEX_ATTRIB_COLOR,
+      VertexAttribute.COLOR,
       4,
       gl.UNSIGNED_BYTE,
       true,
@@ -596,7 +589,7 @@ var rendererWebGL = {
       12
     );
     gl.vertexAttribPointer(
-      VERTEX_ATTRIB_TEX_COORDS,
+      VertexAttribute.TEX_COORDS,
       2,
       gl.FLOAT,
       false,
@@ -604,9 +597,9 @@ var rendererWebGL = {
       16
     );
     if (_multiTexture) {
-      gl.enableVertexAttribArray(VERTEX_ATTRIB_TEX_INDEX);
+      gl.enableVertexAttribArray(VertexAttribute.TEX_INDEX);
       gl.vertexAttribPointer(
-        VERTEX_ATTRIB_TEX_INDEX,
+        VertexAttribute.TEX_INDEX,
         1,
         gl.FLOAT,
         false,

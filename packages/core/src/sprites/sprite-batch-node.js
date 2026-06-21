@@ -27,13 +27,11 @@
 import { Node } from "../base-nodes/node";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import { Texture2D } from "../textures/texture-2d";
-import {
-  BLEND_DST,
-  BLEND_SRC
-} from "../platform/macro/constants";
+
 import { BlendFunc } from "../platform/types/blend-func";
 import { isString } from "../boot/utils";
 import { ServiceLocator } from "../service-locator";
+import { GLState } from "../enums";
 
 /**
  * <p>
@@ -69,7 +67,7 @@ export class SpriteBatchNode extends Node {
     // all descendants: chlidren, gran children, etc...
     this._texture = null;
     this._className = "SpriteBatchNode";
-    this._blendFunc = new BlendFunc(BLEND_SRC, BLEND_DST);
+    this._blendFunc = new BlendFunc(GLState.BLEND_SRC, GLState.BLEND_DST);
 
     var texture2D;
     if (isString(fileImage)) {

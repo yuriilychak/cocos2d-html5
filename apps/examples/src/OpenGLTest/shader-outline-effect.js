@@ -35,7 +35,14 @@ import { OpenGLTestLayer } from "./open-gltest-layer";
 import { ccbjs } from "../resources";
 import { winSize } from "../constants";
 import { RotateTo, Sequence } from "@aspect/actions";
-import { GLProgram, GLProgramState, Sprite, VERTEX_ATTRIB_COLOR, VERTEX_ATTRIB_POSITION, VERTEX_ATTRIB_TEX_COORDS, ATTRIBUTE_NAME_COLOR, ATTRIBUTE_NAME_POSITION, ATTRIBUTE_NAME_TEX_COORD, ServiceLocator } from "@aspect/core";
+import {
+  GLProgram,
+  GLProgramState,
+  Sprite,
+  ServiceLocator,
+  VertexAttribute,
+  AttributeName
+} from "@aspect/core";
 export class ShaderOutlineEffect extends OpenGLTestLayer {
   constructor() {
     super();
@@ -54,14 +61,14 @@ export class ShaderOutlineEffect extends OpenGLTestLayer {
           ccbjs + "Shaders/example_Outline.fsh"
         );
         this.shader.addAttribute(
-          ATTRIBUTE_NAME_POSITION,
-          VERTEX_ATTRIB_POSITION
+          AttributeName.POSITION,
+          VertexAttribute.POSITION
         );
         this.shader.addAttribute(
-          ATTRIBUTE_NAME_TEX_COORD,
-          VERTEX_ATTRIB_TEX_COORDS
+          AttributeName.TEX_COORD,
+          VertexAttribute.TEX_COORDS
         );
-        this.shader.addAttribute(ATTRIBUTE_NAME_COLOR, VERTEX_ATTRIB_COLOR);
+        this.shader.addAttribute(AttributeName.COLOR, VertexAttribute.COLOR);
 
         this.shader.link();
         this.shader.updateUniforms();

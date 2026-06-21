@@ -28,14 +28,7 @@
 import { EffectAdvanceTextLayer } from "./effect-advance-text-layer";
 import { EffectsAdvancedTest } from "./effects-advanced-test-constants";
 import { s_pathFog, s_pathGrossini } from "../resources";
-import {
-  Color,
-  LayerColor,
-  ONE_MINUS_SRC_ALPHA,
-  SRC_ALPHA,
-  Size,
-  Sprite
-} from "@aspect/core";
+import { Color, LayerColor, Size, Sprite, GLState } from "@aspect/core";
 import { DelayTime, Sequence } from "@aspect/actions";
 import { Shaky3D } from "@aspect/actions3d";
 
@@ -73,7 +66,7 @@ export class Issue631 extends EffectAdvanceTextLayer {
     var layer2 = new LayerColor(new Color(0, 255, 0, 255));
     var fog = new Sprite(s_pathFog);
 
-    fog.setBlendFunc(SRC_ALPHA, ONE_MINUS_SRC_ALPHA);
+    fog.setBlendFunc(GLState.SRC_ALPHA, GLState.ONE_MINUS_SRC_ALPHA);
     var nodeGrid = new NodeGrid();
     layer2.addChild(fog, 1);
     nodeGrid.addChild(layer2);

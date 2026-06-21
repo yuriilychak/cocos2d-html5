@@ -1,4 +1,12 @@
-import { Node, glBlendFunc, glBindTexture2D, SHADER_POSITION_TEXTURECOLOR, VERTEX_ATTRIB_POSITION, VERTEX_ATTRIB_COLOR, VERTEX_ATTRIB_TEX_COORDS, Matrix4, ServiceLocator } from "@aspect/core";
+import {
+  Node,
+  glBlendFunc,
+  glBindTexture2D,
+  Matrix4,
+  ServiceLocator,
+  ShaderName,
+  VertexAttribute
+} from "@aspect/core";
 
 export class MotionStreakWebGLRenderCmd extends Node.WebGLRenderCmd {
   constructor(renderableObject) {
@@ -7,7 +15,7 @@ export class MotionStreakWebGLRenderCmd extends Node.WebGLRenderCmd {
     this._matrix = new Matrix4();
     this._matrix.identity();
     this._shaderProgram = ServiceLocator.shaderCache.programForKey(
-      SHADER_POSITION_TEXTURECOLOR
+      ShaderName.POSITION_TEXTURECOLOR
     );
   }
 
@@ -30,15 +38,15 @@ export class MotionStreakWebGLRenderCmd extends Node.WebGLRenderCmd {
       glBlendFunc(node._blendFunc.src, node._blendFunc.dst);
       glBindTexture2D(node.texture);
 
-      ctx.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
-      ctx.enableVertexAttribArray(VERTEX_ATTRIB_COLOR);
-      ctx.enableVertexAttribArray(VERTEX_ATTRIB_TEX_COORDS);
+      ctx.enableVertexAttribArray(VertexAttribute.POSITION);
+      ctx.enableVertexAttribArray(VertexAttribute.COLOR);
+      ctx.enableVertexAttribArray(VertexAttribute.TEX_COORDS);
 
       // position
       ctx.bindBuffer(ctx.ARRAY_BUFFER, node._verticesBuffer);
       ctx.bufferData(ctx.ARRAY_BUFFER, node._vertices, ctx.DYNAMIC_DRAW);
       ctx.vertexAttribPointer(
-        VERTEX_ATTRIB_POSITION,
+        VertexAttribute.POSITION,
         2,
         ctx.FLOAT,
         false,
@@ -50,7 +58,7 @@ export class MotionStreakWebGLRenderCmd extends Node.WebGLRenderCmd {
       ctx.bindBuffer(ctx.ARRAY_BUFFER, node._texCoordsBuffer);
       ctx.bufferData(ctx.ARRAY_BUFFER, node._texCoords, ctx.DYNAMIC_DRAW);
       ctx.vertexAttribPointer(
-        VERTEX_ATTRIB_TEX_COORDS,
+        VertexAttribute.TEX_COORDS,
         2,
         ctx.FLOAT,
         false,
@@ -62,7 +70,7 @@ export class MotionStreakWebGLRenderCmd extends Node.WebGLRenderCmd {
       ctx.bindBuffer(ctx.ARRAY_BUFFER, node._colorPointerBuffer);
       ctx.bufferData(ctx.ARRAY_BUFFER, node._colorPointer, ctx.DYNAMIC_DRAW);
       ctx.vertexAttribPointer(
-        VERTEX_ATTRIB_COLOR,
+        VertexAttribute.COLOR,
         4,
         ctx.UNSIGNED_BYTE,
         true,

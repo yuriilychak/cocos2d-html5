@@ -1,9 +1,5 @@
-import {
-  ONE,
-  ONE_MINUS_SRC_ALPHA,
-  SRC_ALPHA,
-  ZERO
-} from "../macro/constants";
+import { GLState } from "../../enums";
+
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
@@ -43,19 +39,19 @@ export class BlendFunc {
     }
 
     static get DISABLE() {
-        return new BlendFunc(ONE, ZERO);
+        return new BlendFunc(GLState.ONE, GLState.ZERO);
     }
 
     static get ALPHA_PREMULTIPLIED() {
-        return new BlendFunc(ONE, ONE_MINUS_SRC_ALPHA);
+        return new BlendFunc(GLState.ONE, GLState.ONE_MINUS_SRC_ALPHA);
     }
 
     static get ALPHA_NON_PREMULTIPLIED() {
-        return new BlendFunc(SRC_ALPHA, ONE_MINUS_SRC_ALPHA);
+        return new BlendFunc(GLState.SRC_ALPHA, GLState.ONE_MINUS_SRC_ALPHA);
     }
 
     static get ADDITIVE() {
-        return new BlendFunc(SRC_ALPHA, ONE);
+        return new BlendFunc(GLState.SRC_ALPHA, GLState.ONE);
     }
 }
 
@@ -64,5 +60,5 @@ export class BlendFunc {
  * @returns {BlendFunc}
  */
 export function blendFuncDisable() {
-    return new BlendFunc(ONE, ZERO);
+    return new BlendFunc(GLState.ONE, GLState.ZERO);
 }

@@ -1,13 +1,4 @@
-export {
-  Color,
-  Acceleration,
-  TEXT_ALIGNMENT_LEFT,
-  TEXT_ALIGNMENT_CENTER,
-  TEXT_ALIGNMENT_RIGHT,
-  VERTICAL_TEXT_ALIGNMENT_TOP,
-  VERTICAL_TEXT_ALIGNMENT_CENTER,
-  VERTICAL_TEXT_ALIGNMENT_BOTTOM
-} from "./color";
+export { Color, Acceleration } from "./color";
 export {
   Vertex2F,
   Vertex3F,

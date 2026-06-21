@@ -27,7 +27,16 @@
  *
  */
 
-import { Node, Texture2D, TextureAtlas, BlendFunc, BLEND_SRC, BLEND_DST, SRC_ALPHA, ONE_MINUS_SRC_ALPHA, log, isString, ServiceLocator } from "@aspect/core";
+import {
+  Node,
+  Texture2D,
+  TextureAtlas,
+  BlendFunc,
+  log,
+  isString,
+  ServiceLocator,
+  GLState
+} from "@aspect/core";
 import { ParticleSystem } from "./particle-system/particle-system";
 
 /**
@@ -94,7 +103,7 @@ export class ParticleBatchNode extends Node {
    */
   constructor(fileImage, capacity) {
     super();
-    this._blendFunc = { src: BLEND_SRC, dst: BLEND_DST };
+    this._blendFunc = { src: GLState.BLEND_SRC, dst: GLState.BLEND_DST };
     if (isString(fileImage)) {
       this.init(fileImage, capacity);
     } else if (fileImage instanceof Texture2D) {
@@ -410,11 +419,11 @@ export class ParticleBatchNode extends Node {
     if (
       texture &&
       !texture.hasPremultipliedAlpha() &&
-      locBlendFunc.src === BLEND_SRC &&
-      locBlendFunc.dst === BLEND_DST
+      locBlendFunc.src === GLState.BLEND_SRC &&
+      locBlendFunc.dst === GLState.BLEND_DST
     ) {
-      locBlendFunc.src = SRC_ALPHA;
-      locBlendFunc.dst = ONE_MINUS_SRC_ALPHA;
+      locBlendFunc.src = GLState.SRC_ALPHA;
+      locBlendFunc.dst = GLState.ONE_MINUS_SRC_ALPHA;
     }
   }
 
@@ -554,8 +563,8 @@ export class ParticleBatchNode extends Node {
 
   _updateBlendFunc() {
     if (!this.textureAtlas.texture.hasPremultipliedAlpha()) {
-      this._blendFunc.src = SRC_ALPHA;
-      this._blendFunc.dst = ONE_MINUS_SRC_ALPHA;
+      this._blendFunc.src = GLState.SRC_ALPHA;
+      this._blendFunc.dst = GLState.ONE_MINUS_SRC_ALPHA;
     }
   }
 

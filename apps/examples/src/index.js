@@ -29,7 +29,7 @@ import { TestController } from "./test-controller";
 import { TestScene } from "./test-scene";
 import { _initGlobals } from "./constants";
 import { g_resources, s_simpleTheme_plist } from "./resources";
-import { ContentStrategy, LoaderScene, ORIENTATION_LANDSCAPE, ServiceLocator } from "@aspect/core";
+import { ContentStrategy, LoaderScene, ServiceLocator, DeviceOrientation } from "@aspect/core";
 const projectConfig = {
   debugMode: 1,
   noCache: false,
@@ -41,7 +41,7 @@ const projectConfig = {
 
 ServiceLocator.game.onStart = function () {
   ServiceLocator.eglView.enableRetina(true);
-  ServiceLocator.eglView.setOrientation(ORIENTATION_LANDSCAPE);
+  ServiceLocator.eglView.setOrientation(DeviceOrientation.LANDSCAPE);
   ServiceLocator.eglView.setDesignResolutionSize(
     1280,
     720,

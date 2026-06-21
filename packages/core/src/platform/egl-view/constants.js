@@ -29,8 +29,3 @@
  */
 export var Touches = [];
 export var TouchesIntergerDict = {};
-
-export const DENSITYDPI_DEVICE = "device-dpi";
-export const DENSITYDPI_HIGH = "high-dpi";
-export const DENSITYDPI_MEDIUM = "medium-dpi";
-export const DENSITYDPI_LOW = "low-dpi";

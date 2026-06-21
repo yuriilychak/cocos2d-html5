@@ -25,29 +25,7 @@
  ****************************************************************************/
 
 import { log } from '../boot/debugger';
-import {
-    SHADER_POSITION_TEXTURECOLOR,
-    SHADER_POSITION_TEXTURECOLORALPHATEST,
-    SHADER_POSITION_COLOR,
-    SHADER_POSITION_TEXTURE,
-    SHADER_POSITION_TEXTURE_UCOLOR,
-    SHADER_POSITION_TEXTUREA8COLOR,
-    SHADER_POSITION_UCOLOR,
-    SHADER_POSITION_LENGTHTEXTURECOLOR,
-    SHADER_SPRITE_POSITION_TEXTURECOLOR,
-    SHADER_SPRITE_POSITION_TEXTURECOLOR_MULTI,
-    SHADER_SPRITE_POSITION_TEXTURECOLORALPHATEST,
-    SHADER_SPRITE_POSITION_COLOR,
-    SHADER_SPRITE_POSITION_TEXTURECOLOR_GRAY,
-    ATTRIBUTE_NAME_POSITION,
-    ATTRIBUTE_NAME_COLOR,
-    ATTRIBUTE_NAME_TEX_COORD,
-    ATTRIBUTE_NAME_TEX_INDEX,
-    VERTEX_ATTRIB_POSITION,
-    VERTEX_ATTRIB_COLOR,
-    VERTEX_ATTRIB_TEX_COORDS,
-    VERTEX_ATTRIB_TEX_INDEX
-} from "../platform/macro/constants";
+
 import {
     SHADER_POSITION_TEXTURE_COLOR_VERT,
     SHADER_POSITION_TEXTURE_COLOR_FRAG,
@@ -72,6 +50,7 @@ import {
 } from './CCShaders';
 import GLProgram from './CCGLProgram';
 import { checkGLErrorDebug } from "../platform/macro/utils";
+import { ShaderName, AttributeName, VertexAttribute } from "../enums";
 
 /**
  * ShaderCache is a singleton object that stores manages GL shaders
@@ -158,18 +137,18 @@ export default class ShaderCache {
 
     constructor() {
         this._keyMap = [
-            SHADER_POSITION_TEXTURECOLOR,
-            SHADER_POSITION_TEXTURECOLORALPHATEST,
-            SHADER_POSITION_COLOR,
-            SHADER_POSITION_TEXTURE,
-            SHADER_POSITION_TEXTURE_UCOLOR,
-            SHADER_POSITION_TEXTUREA8COLOR,
-            SHADER_POSITION_UCOLOR,
-            SHADER_POSITION_LENGTHTEXTURECOLOR,
-            SHADER_SPRITE_POSITION_TEXTURECOLOR,
-            SHADER_SPRITE_POSITION_TEXTURECOLORALPHATEST,
-            SHADER_SPRITE_POSITION_COLOR,
-            SHADER_SPRITE_POSITION_TEXTURECOLOR_GRAY
+            ShaderName.POSITION_TEXTURECOLOR,
+            ShaderName.POSITION_TEXTURECOLORALPHATEST,
+            ShaderName.POSITION_COLOR,
+            ShaderName.POSITION_TEXTURE,
+            ShaderName.POSITION_TEXTURE_UCOLOR,
+            ShaderName.POSITION_TEXTUREA8COLOR,
+            ShaderName.POSITION_UCOLOR,
+            ShaderName.POSITION_LENGTHTEXTURECOLOR,
+            ShaderName.SPRITE_POSITION_TEXTURECOLOR,
+            ShaderName.SPRITE_POSITION_TEXTURECOLORALPHATEST,
+            ShaderName.SPRITE_POSITION_COLOR,
+            ShaderName.SPRITE_POSITION_TEXTURECOLOR_GRAY
         ];
         this._programs = {};
         this._rendererConfig = null;
@@ -186,81 +165,81 @@ export default class ShaderCache {
 
     _loadDefaultShader(program, type) {
         switch (type) {
-            case SHADER_POSITION_TEXTURECOLOR:
+            case ShaderName.POSITION_TEXTURECOLOR:
                 program.initWithVertexShaderByteArray(SHADER_POSITION_TEXTURE_COLOR_VERT, SHADER_POSITION_TEXTURE_COLOR_FRAG);
-                program.addAttribute(ATTRIBUTE_NAME_POSITION, VERTEX_ATTRIB_POSITION);
-                program.addAttribute(ATTRIBUTE_NAME_COLOR, VERTEX_ATTRIB_COLOR);
-                program.addAttribute(ATTRIBUTE_NAME_TEX_COORD, VERTEX_ATTRIB_TEX_COORDS);
+                program.addAttribute(AttributeName.POSITION, VertexAttribute.POSITION);
+                program.addAttribute(AttributeName.COLOR, VertexAttribute.COLOR);
+                program.addAttribute(AttributeName.TEX_COORD, VertexAttribute.TEX_COORDS);
                 break;
-            case SHADER_POSITION_TEXTURECOLORALPHATEST:
+            case ShaderName.POSITION_TEXTURECOLORALPHATEST:
                 program.initWithVertexShaderByteArray(SHADER_POSITION_TEXTURE_COLOR_VERT, SHADER_POSITION_TEXTURE_COLOR_ALPHATEST_FRAG);
-                program.addAttribute(ATTRIBUTE_NAME_POSITION, VERTEX_ATTRIB_POSITION);
-                program.addAttribute(ATTRIBUTE_NAME_COLOR, VERTEX_ATTRIB_COLOR);
-                program.addAttribute(ATTRIBUTE_NAME_TEX_COORD, VERTEX_ATTRIB_TEX_COORDS);
+                program.addAttribute(AttributeName.POSITION, VertexAttribute.POSITION);
+                program.addAttribute(AttributeName.COLOR, VertexAttribute.COLOR);
+                program.addAttribute(AttributeName.TEX_COORD, VertexAttribute.TEX_COORDS);
                 break;
-            case SHADER_POSITION_COLOR:
+            case ShaderName.POSITION_COLOR:
                 program.initWithVertexShaderByteArray(SHADER_POSITION_COLOR_VERT, SHADER_POSITION_COLOR_FRAG);
-                program.addAttribute(ATTRIBUTE_NAME_POSITION, VERTEX_ATTRIB_POSITION);
-                program.addAttribute(ATTRIBUTE_NAME_COLOR, VERTEX_ATTRIB_COLOR);
+                program.addAttribute(AttributeName.POSITION, VertexAttribute.POSITION);
+                program.addAttribute(AttributeName.COLOR, VertexAttribute.COLOR);
                 break;
-            case SHADER_POSITION_TEXTURE:
+            case ShaderName.POSITION_TEXTURE:
                 program.initWithVertexShaderByteArray(SHADER_POSITION_TEXTURE_VERT, SHADER_POSITION_TEXTURE_FRAG);
-                program.addAttribute(ATTRIBUTE_NAME_POSITION, VERTEX_ATTRIB_POSITION);
-                program.addAttribute(ATTRIBUTE_NAME_TEX_COORD, VERTEX_ATTRIB_TEX_COORDS);
+                program.addAttribute(AttributeName.POSITION, VertexAttribute.POSITION);
+                program.addAttribute(AttributeName.TEX_COORD, VertexAttribute.TEX_COORDS);
                 break;
-            case SHADER_POSITION_TEXTURE_UCOLOR:
+            case ShaderName.POSITION_TEXTURE_UCOLOR:
                 program.initWithVertexShaderByteArray(SHADER_POSITION_TEXTURE_UCOLOR_VERT, SHADER_POSITION_TEXTURE_UCOLOR_FRAG);
-                program.addAttribute(ATTRIBUTE_NAME_POSITION, VERTEX_ATTRIB_POSITION);
-                program.addAttribute(ATTRIBUTE_NAME_TEX_COORD, VERTEX_ATTRIB_TEX_COORDS);
+                program.addAttribute(AttributeName.POSITION, VertexAttribute.POSITION);
+                program.addAttribute(AttributeName.TEX_COORD, VertexAttribute.TEX_COORDS);
                 break;
-            case SHADER_POSITION_TEXTUREA8COLOR:
+            case ShaderName.POSITION_TEXTUREA8COLOR:
                 program.initWithVertexShaderByteArray(SHADER_POSITION_TEXTURE_A8COLOR_VERT, SHADER_POSITION_TEXTURE_A8COLOR_FRAG);
-                program.addAttribute(ATTRIBUTE_NAME_POSITION, VERTEX_ATTRIB_POSITION);
-                program.addAttribute(ATTRIBUTE_NAME_COLOR, VERTEX_ATTRIB_COLOR);
-                program.addAttribute(ATTRIBUTE_NAME_TEX_COORD, VERTEX_ATTRIB_TEX_COORDS);
+                program.addAttribute(AttributeName.POSITION, VertexAttribute.POSITION);
+                program.addAttribute(AttributeName.COLOR, VertexAttribute.COLOR);
+                program.addAttribute(AttributeName.TEX_COORD, VertexAttribute.TEX_COORDS);
                 break;
-            case SHADER_POSITION_UCOLOR:
+            case ShaderName.POSITION_UCOLOR:
                 program.initWithVertexShaderByteArray(SHADER_POSITION_UCOLOR_VERT, SHADER_POSITION_UCOLOR_FRAG);
-                program.addAttribute("aVertex", VERTEX_ATTRIB_POSITION);
+                program.addAttribute("aVertex", VertexAttribute.POSITION);
                 break;
-            case SHADER_POSITION_LENGTHTEXTURECOLOR:
+            case ShaderName.POSITION_LENGTHTEXTURECOLOR:
                 program.initWithVertexShaderByteArray(SHADER_POSITION_COLOR_LENGTH_TEXTURE_VERT, SHADER_POSITION_COLOR_LENGTH_TEXTURE_FRAG);
-                program.addAttribute(ATTRIBUTE_NAME_POSITION, VERTEX_ATTRIB_POSITION);
-                program.addAttribute(ATTRIBUTE_NAME_TEX_COORD, VERTEX_ATTRIB_TEX_COORDS);
-                program.addAttribute(ATTRIBUTE_NAME_COLOR, VERTEX_ATTRIB_COLOR);
+                program.addAttribute(AttributeName.POSITION, VertexAttribute.POSITION);
+                program.addAttribute(AttributeName.TEX_COORD, VertexAttribute.TEX_COORDS);
+                program.addAttribute(AttributeName.COLOR, VertexAttribute.COLOR);
                 break;
-            case SHADER_SPRITE_POSITION_TEXTURECOLOR:
+            case ShaderName.SPRITE_POSITION_TEXTURECOLOR:
                 program.initWithVertexShaderByteArray(SHADER_SPRITE_POSITION_TEXTURE_COLOR_VERT, SHADER_POSITION_TEXTURE_COLOR_FRAG);
-                program.addAttribute(ATTRIBUTE_NAME_POSITION, VERTEX_ATTRIB_POSITION);
-                program.addAttribute(ATTRIBUTE_NAME_COLOR, VERTEX_ATTRIB_COLOR);
-                program.addAttribute(ATTRIBUTE_NAME_TEX_COORD, VERTEX_ATTRIB_TEX_COORDS);
+                program.addAttribute(AttributeName.POSITION, VertexAttribute.POSITION);
+                program.addAttribute(AttributeName.COLOR, VertexAttribute.COLOR);
+                program.addAttribute(AttributeName.TEX_COORD, VertexAttribute.TEX_COORDS);
                 break;
-            case SHADER_SPRITE_POSITION_TEXTURECOLOR_MULTI:
+            case ShaderName.SPRITE_POSITION_TEXTURECOLOR_MULTI:
                 program.initWithVertexShaderByteArray(
                     buildSpriteMultiTextureVert(),
                     buildSpriteMultiTextureFrag(this._rendererConfig.getMaxBatchTextures())
                 );
-                program.addAttribute(ATTRIBUTE_NAME_POSITION, VERTEX_ATTRIB_POSITION);
-                program.addAttribute(ATTRIBUTE_NAME_COLOR, VERTEX_ATTRIB_COLOR);
-                program.addAttribute(ATTRIBUTE_NAME_TEX_COORD, VERTEX_ATTRIB_TEX_COORDS);
-                program.addAttribute(ATTRIBUTE_NAME_TEX_INDEX, VERTEX_ATTRIB_TEX_INDEX);
+                program.addAttribute(AttributeName.POSITION, VertexAttribute.POSITION);
+                program.addAttribute(AttributeName.COLOR, VertexAttribute.COLOR);
+                program.addAttribute(AttributeName.TEX_COORD, VertexAttribute.TEX_COORDS);
+                program.addAttribute(AttributeName.TEX_INDEX, VertexAttribute.TEX_INDEX);
                 break;
-            case SHADER_SPRITE_POSITION_TEXTURECOLORALPHATEST:
+            case ShaderName.SPRITE_POSITION_TEXTURECOLORALPHATEST:
                 program.initWithVertexShaderByteArray(SHADER_SPRITE_POSITION_TEXTURE_COLOR_VERT, SHADER_POSITION_TEXTURE_COLOR_ALPHATEST_FRAG);
-                program.addAttribute(ATTRIBUTE_NAME_POSITION, VERTEX_ATTRIB_POSITION);
-                program.addAttribute(ATTRIBUTE_NAME_COLOR, VERTEX_ATTRIB_COLOR);
-                program.addAttribute(ATTRIBUTE_NAME_TEX_COORD, VERTEX_ATTRIB_TEX_COORDS);
+                program.addAttribute(AttributeName.POSITION, VertexAttribute.POSITION);
+                program.addAttribute(AttributeName.COLOR, VertexAttribute.COLOR);
+                program.addAttribute(AttributeName.TEX_COORD, VertexAttribute.TEX_COORDS);
                 break;
-            case SHADER_SPRITE_POSITION_COLOR:
+            case ShaderName.SPRITE_POSITION_COLOR:
                 program.initWithVertexShaderByteArray(SHADER_SPRITE_POSITION_COLOR_VERT, SHADER_POSITION_COLOR_FRAG);
-                program.addAttribute(ATTRIBUTE_NAME_POSITION, VERTEX_ATTRIB_POSITION);
-                program.addAttribute(ATTRIBUTE_NAME_COLOR, VERTEX_ATTRIB_COLOR);
+                program.addAttribute(AttributeName.POSITION, VertexAttribute.POSITION);
+                program.addAttribute(AttributeName.COLOR, VertexAttribute.COLOR);
                 break;
-            case SHADER_SPRITE_POSITION_TEXTURECOLOR_GRAY:
+            case ShaderName.SPRITE_POSITION_TEXTURECOLOR_GRAY:
                 program.initWithVertexShaderByteArray(SHADER_SPRITE_POSITION_TEXTURE_COLOR_VERT, SHADER_SPRITE_POSITION_TEXTURE_COLOR_GRAY_FRAG);
-                program.addAttribute(ATTRIBUTE_NAME_POSITION, VERTEX_ATTRIB_POSITION);
-                program.addAttribute(ATTRIBUTE_NAME_COLOR, VERTEX_ATTRIB_COLOR);
-                program.addAttribute(ATTRIBUTE_NAME_TEX_COORD, VERTEX_ATTRIB_TEX_COORDS);
+                program.addAttribute(AttributeName.POSITION, VertexAttribute.POSITION);
+                program.addAttribute(AttributeName.COLOR, VertexAttribute.COLOR);
+                program.addAttribute(AttributeName.TEX_COORD, VertexAttribute.TEX_COORDS);
                 break;
             default:
                 log("cocos2d: shaderCache._loadDefaultShader, error shader type");
@@ -272,22 +251,22 @@ export default class ShaderCache {
     }
 
     loadDefaultShaders() {
-        this.programForKey(SHADER_POSITION_TEXTURECOLOR);
-        this.programForKey(SHADER_POSITION_TEXTURECOLORALPHATEST);
-        this.programForKey(SHADER_POSITION_COLOR);
-        this.programForKey(SHADER_POSITION_TEXTURE);
-        this.programForKey(SHADER_POSITION_TEXTURE_UCOLOR);
-        this.programForKey(SHADER_POSITION_TEXTUREA8COLOR);
-        this.programForKey(SHADER_POSITION_UCOLOR);
-        this.programForKey(SHADER_POSITION_LENGTHTEXTURECOLOR);
+        this.programForKey(ShaderName.POSITION_TEXTURECOLOR);
+        this.programForKey(ShaderName.POSITION_TEXTURECOLORALPHATEST);
+        this.programForKey(ShaderName.POSITION_COLOR);
+        this.programForKey(ShaderName.POSITION_TEXTURE);
+        this.programForKey(ShaderName.POSITION_TEXTURE_UCOLOR);
+        this.programForKey(ShaderName.POSITION_TEXTUREA8COLOR);
+        this.programForKey(ShaderName.POSITION_UCOLOR);
+        this.programForKey(ShaderName.POSITION_LENGTHTEXTURECOLOR);
 
-        this.programForKey(SHADER_SPRITE_POSITION_TEXTURECOLOR);
+        this.programForKey(ShaderName.SPRITE_POSITION_TEXTURECOLOR);
         if (this._rendererConfig.isWebGL2) {
-            this.programForKey(SHADER_SPRITE_POSITION_TEXTURECOLOR_MULTI);
+            this.programForKey(ShaderName.SPRITE_POSITION_TEXTURECOLOR_MULTI);
         }
-        this.programForKey(SHADER_SPRITE_POSITION_TEXTURECOLORALPHATEST);
-        this.programForKey(SHADER_SPRITE_POSITION_COLOR);
-        this.programForKey(SHADER_SPRITE_POSITION_TEXTURECOLOR_GRAY);
+        this.programForKey(ShaderName.SPRITE_POSITION_TEXTURECOLORALPHATEST);
+        this.programForKey(ShaderName.SPRITE_POSITION_COLOR);
+        this.programForKey(ShaderName.SPRITE_POSITION_TEXTURECOLOR_GRAY);
     }
 
     reloadDefaultShaders() {

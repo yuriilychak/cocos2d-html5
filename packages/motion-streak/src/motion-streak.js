@@ -2,13 +2,12 @@ import {
   Node,
   Point,
   BlendFunc,
-  SRC_ALPHA,
-  ONE_MINUS_SRC_ALPHA,
   isString,
   vertexLineToPolygon,
   Color,
   log,
-  ServiceLocator
+  ServiceLocator,
+  GLState
 } from "@aspect/core";
 
 /**
@@ -49,7 +48,7 @@ export class MotionStreak extends Node {
   constructor(fade, minSeg, stroke, color, texture) {
     super();
     this._positionR = new Point(0, 0);
-    this._blendFunc = new BlendFunc(SRC_ALPHA, ONE_MINUS_SRC_ALPHA);
+    this._blendFunc = new BlendFunc(GLState.SRC_ALPHA, GLState.ONE_MINUS_SRC_ALPHA);
 
     this.fastMode = false;
     this.startingPositionInitialized = false;

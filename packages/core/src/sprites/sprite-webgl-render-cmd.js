@@ -26,15 +26,10 @@ import { WebGLRenderCmd as NodeWebGLRenderCmd } from "../base-nodes/node-webgl-r
 import { Rect, Point } from "../geometry";
 import { log, error, _LogInfos } from "../boot/debugger";
 import { rectPointsToPixels, contentScaleFactor } from "../platform/macro/utils";
-import {
-  BLEND_DST,
-  ONE,
-  SHADER_SPRITE_POSITION_TEXTURECOLOR,
-  SHADER_SPRITE_POSITION_TEXTURECOLOR_MULTI,
-  SRC_ALPHA
-} from "../platform/macro/constants";
+
 import { FIX_ARTIFACTS_BY_STRECHING_TEXEL } from "../platform/config";
 import { ServiceLocator } from "../service-locator";
+import { GLState, ShaderName } from "../enums";
 
 //Sprite's WebGL render command
 export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
@@ -60,8 +55,8 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
 
     this._shaderProgram = ServiceLocator.shaderCache.programForKey(
       ServiceLocator.rendererConfig.isWebGL2
-        ? SHADER_SPRITE_POSITION_TEXTURECOLOR_MULTI
-        : SHADER_SPRITE_POSITION_TEXTURECOLOR
+        ? ShaderName.SPRITE_POSITION_TEXTURECOLOR_MULTI
+        : ShaderName.SPRITE_POSITION_TEXTURECOLOR
     );
   }
 
@@ -259,13 +254,13 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
     const node = this._node,
       blendFunc = node._blendFunc;
     if (!node._texture || !node._texture.hasPremultipliedAlpha()) {
-      if (blendFunc.src === ONE && blendFunc.dst === BLEND_DST) {
-        blendFunc.src = SRC_ALPHA;
+      if (blendFunc.src === GLState.ONE && blendFunc.dst === GLState.BLEND_DST) {
+        blendFunc.src = GLState.SRC_ALPHA;
       }
       node.isOpacityModifyRGB = false;
     } else {
-      if (blendFunc.src === SRC_ALPHA && blendFunc.dst === BLEND_DST) {
-        blendFunc.src = ONE;
+      if (blendFunc.src === GLState.SRC_ALPHA && blendFunc.dst === GLState.BLEND_DST) {
+        blendFunc.src = GLState.ONE;
       }
       node.isOpacityModifyRGB = true;
     }

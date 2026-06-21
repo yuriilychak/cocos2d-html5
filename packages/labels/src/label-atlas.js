@@ -1,7 +1,7 @@
 import { LabelBMFont } from "./label-bmfont";
 import { LabelBMFontCanvasRenderCmd } from "./label-bmfont-canvas-render-cmd";
 import { LabelBMFontWebGLRenderCmd } from "./label-bmfont-webgl-render-cmd";
-import { RendererConfig, Point, Texture2D, Color, log, warn, contentScaleFactor, TEXT_ALIGNMENT_LEFT, Path, ServiceLocator } from "@aspect/core";
+import { RendererConfig, Point, Texture2D, Color, log, warn, contentScaleFactor, TextAlignment, Path, ServiceLocator } from "@aspect/core";
 
 export class LabelAtlas extends LabelBMFont {
     _className = "LabelAtlas";
@@ -111,7 +111,7 @@ export class LabelAtlas extends LabelBMFont {
         }
 
         if (self.initWithTexture(texture, theString.length)) {
-            self._alignment = TEXT_ALIGNMENT_LEFT;
+            self._alignment = TextAlignment.LEFT;
             self._imageOffset = new Point(0, 0);
             self._width = -1;
 

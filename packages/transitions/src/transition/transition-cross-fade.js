@@ -1,4 +1,4 @@
-import { LayerColor, Color, ONE, SRC_ALPHA, ONE_MINUS_SRC_ALPHA, ServiceLocator } from "@aspect/core";
+import { LayerColor, Color, ServiceLocator, GLState } from "@aspect/core";
 import { RenderTexture } from "@aspect/render-texture";
 import { Sequence, FadeTo, CallFunc } from "@aspect/actions";
 import { SCENE_FADE } from "./constants";
@@ -40,8 +40,8 @@ export class TransitionCrossFade extends TransitionScene {
     this._outScene.visit();
     outTexture.end();
 
-    inTexture.sprite.setBlendFunc(ONE, ONE);
-    outTexture.sprite.setBlendFunc(SRC_ALPHA, ONE_MINUS_SRC_ALPHA);
+    inTexture.sprite.setBlendFunc(GLState.ONE, GLState.ONE);
+    outTexture.sprite.setBlendFunc(GLState.SRC_ALPHA, GLState.ONE_MINUS_SRC_ALPHA);
 
     layer.addChild(inTexture);
     layer.addChild(outTexture);

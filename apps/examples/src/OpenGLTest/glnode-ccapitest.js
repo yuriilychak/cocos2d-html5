@@ -31,7 +31,7 @@
 import { OpenGLTestLayer } from "./open-gltest-layer";
 import { GLNode } from "./glnode-polyfill";
 import { winSize } from "../constants";
-import { VERTEX_ATTRIB_COLOR, VERTEX_ATTRIB_POSITION, ServiceLocator } from "@aspect/core";
+import { ServiceLocator, VertexAttribute } from "@aspect/core";
 export class GLNodeCCAPITest extends OpenGLTestLayer {
   constructor() {
     super();
@@ -47,13 +47,13 @@ export class GLNodeCCAPITest extends OpenGLTestLayer {
       glnode.draw = function () {
         this.shader.use();
         this.shader.setUniformsForBuiltins();
-        gl.enableVertexAttribArray(VERTEX_ATTRIB_COLOR);
-        gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
+        gl.enableVertexAttribArray(VertexAttribute.COLOR);
+        gl.enableVertexAttribArray(VertexAttribute.POSITION);
 
         // Draw fullscreen Square
         gl.bindBuffer(gl.ARRAY_BUFFER, this.squareVertexPositionBuffer);
         gl.vertexAttribPointer(
-          VERTEX_ATTRIB_POSITION,
+          VertexAttribute.POSITION,
           2,
           gl.FLOAT,
           false,
@@ -63,7 +63,7 @@ export class GLNodeCCAPITest extends OpenGLTestLayer {
 
         gl.bindBuffer(gl.ARRAY_BUFFER, this.squareVertexColorBuffer);
         gl.vertexAttribPointer(
-          VERTEX_ATTRIB_COLOR,
+          VertexAttribute.COLOR,
           4,
           gl.FLOAT,
           false,
@@ -76,7 +76,7 @@ export class GLNodeCCAPITest extends OpenGLTestLayer {
         // Draw fullscreen Triangle
         gl.bindBuffer(gl.ARRAY_BUFFER, this.triangleVertexPositionBuffer);
         gl.vertexAttribPointer(
-          VERTEX_ATTRIB_POSITION,
+          VertexAttribute.POSITION,
           2,
           gl.FLOAT,
           false,
@@ -86,7 +86,7 @@ export class GLNodeCCAPITest extends OpenGLTestLayer {
 
         gl.bindBuffer(gl.ARRAY_BUFFER, this.triangleVertexColorBuffer);
         gl.vertexAttribPointer(
-          VERTEX_ATTRIB_COLOR,
+          VertexAttribute.COLOR,
           4,
           gl.FLOAT,
           false,

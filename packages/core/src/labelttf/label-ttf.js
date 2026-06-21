@@ -30,11 +30,7 @@ import { Point, Size } from "../geometry";
 import { Color } from "../platform/types/color";
 import { FontDefinition } from "../platform/types/font-definition";
 import { log, _LogInfos } from "../boot/debugger";
-import {
-  TEXT_ALIGNMENT_LEFT,
-  TEXT_ALIGNMENT_CENTER,
-  VERTICAL_TEXT_ALIGNMENT_TOP
-} from "../platform/types/color";
+import { TextAlignment, VerticalTextAlignment } from "../enums";
 import { contentScaleFactor } from "../platform/macro/utils";
 import { ServiceLocator } from "../service-locator";
 
@@ -49,10 +45,10 @@ import { ServiceLocator } from "../service-locator";
  * @param {String|FontDefinition} [fontName="Arial"]
  * @param {Number} [fontSize=16]
  * @param {Size} [dimensions=size(0,0)]
- * @param {Number} [hAlignment=TEXT_ALIGNMENT_LEFT]
- * @param {Number} [vAlignment=VERTICAL_TEXT_ALIGNMENT_TOP]
+ * @param {Number} [hAlignment=TextAlignment.LEFT]
+ * @param {Number} [vAlignment=VerticalTextAlignment.TOP]
  * @example
- * var myLabel = new LabelTTF('label text',  'Times New Roman', 32, size(320,32), TEXT_ALIGNMENT_LEFT);
+ * var myLabel = new LabelTTF('label text',  'Times New Roman', 32, size(320,32), TextAlignment.LEFT);
  *
  * var fontDef = new FontDefinition();
  * fontDef.fontName = "Arial";
@@ -60,8 +56,8 @@ import { ServiceLocator } from "../service-locator";
  * var myLabel = new LabelTTF('label text',  fontDef);
  *
  * @property {String}       string          - Content string of label
- * @property {Number}       textAlign       - Horizontal Alignment of label: TEXT_ALIGNMENT_LEFT|TEXT_ALIGNMENT_CENTER|TEXT_ALIGNMENT_RIGHT
- * @property {Number}       verticalAlign   - Vertical Alignment of label: VERTICAL_TEXT_ALIGNMENT_TOP|VERTICAL_TEXT_ALIGNMENT_CENTER|VERTICAL_TEXT_ALIGNMENT_BOTTOM
+ * @property {Number}       textAlign       - Horizontal Alignment of label: TextAlignment.LEFT|TextAlignment.CENTER|TextAlignment.RIGHT
+ * @property {Number}       verticalAlign   - Vertical Alignment of label: VerticalTextAlignment.TOP|VerticalTextAlignment.CENTER|VerticalTextAlignment.BOTTOM
  * @property {Number}       fontSize        - Font size of label
  * @property {String}       fontName        - Font name of label
  * @property {String}       font            - The label font with a style string: e.g. "18px Verdana"
@@ -81,8 +77,8 @@ export class LabelTTF extends Sprite {
 
     // Property defaults (from ES5 prototype)
     this._dimensions = null;
-    this._hAlignment = TEXT_ALIGNMENT_CENTER;
-    this._vAlignment = VERTICAL_TEXT_ALIGNMENT_TOP;
+    this._hAlignment = TextAlignment.CENTER;
+    this._vAlignment = VerticalTextAlignment.TOP;
     this._fontName = null;
     this._fontSize = 0.0;
     this._string = "";
@@ -107,8 +103,8 @@ export class LabelTTF extends Sprite {
     this._lineHeight = "normal";
 
     this._dimensions = new Size(0, 0);
-    this._hAlignment = TEXT_ALIGNMENT_LEFT;
-    this._vAlignment = VERTICAL_TEXT_ALIGNMENT_TOP;
+    this._hAlignment = TextAlignment.LEFT;
+    this._vAlignment = VerticalTextAlignment.TOP;
     this.isOpacityModifyRGB = false;
     this._fontName = "Arial";
 
@@ -169,8 +165,8 @@ export class LabelTTF extends Sprite {
 
     fontSize = fontSize || 16;
     dimensions = dimensions || new Size(0, 0 /*fontSize*/);
-    hAlignment = hAlignment || TEXT_ALIGNMENT_LEFT;
-    vAlignment = vAlignment || VERTICAL_TEXT_ALIGNMENT_TOP;
+    hAlignment = hAlignment || TextAlignment.LEFT;
+    vAlignment = vAlignment || VerticalTextAlignment.TOP;
 
     this.isOpacityModifyRGB = false;
     this._dimensions = new Size(dimensions.width, dimensions.height);
@@ -231,14 +227,14 @@ export class LabelTTF extends Sprite {
   }
   /**
    * Returns Horizontal Alignment of LabelTTF
-   * @return {TEXT_ALIGNMENT_LEFT|TEXT_ALIGNMENT_CENTER|TEXT_ALIGNMENT_RIGHT}
+   * @return {TextAlignment.LEFT|TextAlignment.CENTER|TextAlignment.RIGHT}
    */
   getHorizontalAlignment() {
     return this._hAlignment;
   }
   /**
    * Returns Vertical Alignment of LabelTTF
-   * @return {VERTICAL_TEXT_ALIGNMENT_TOP|VERTICAL_TEXT_ALIGNMENT_CENTER|VERTICAL_TEXT_ALIGNMENT_BOTTOM}
+   * @return {VerticalTextAlignment.TOP|VerticalTextAlignment.CENTER|VerticalTextAlignment.BOTTOM}
    */
   getVerticalAlignment() {
     return this._vAlignment;
@@ -699,7 +695,7 @@ export class LabelTTF extends Sprite {
   }
   /**
    * Sets Horizontal Alignment of LabelTTF
-   * @param {TEXT_ALIGNMENT_LEFT|TEXT_ALIGNMENT_CENTER|TEXT_ALIGNMENT_RIGHT} alignment Horizontal Alignment
+   * @param {TextAlignment.LEFT|TextAlignment.CENTER|TextAlignment.RIGHT} alignment Horizontal Alignment
    */
   setHorizontalAlignment(alignment) {
     if (alignment !== this._hAlignment) {
@@ -710,7 +706,7 @@ export class LabelTTF extends Sprite {
   }
   /**
    * Sets Vertical Alignment of LabelTTF
-   * @param {VERTICAL_TEXT_ALIGNMENT_TOP|VERTICAL_TEXT_ALIGNMENT_CENTER|VERTICAL_TEXT_ALIGNMENT_BOTTOM} verticalAlignment
+   * @param {VerticalTextAlignment.TOP|VerticalTextAlignment.CENTER|VerticalTextAlignment.BOTTOM} verticalAlignment
    */
   setVerticalAlignment(verticalAlignment) {
     if (verticalAlignment !== this._vAlignment) {

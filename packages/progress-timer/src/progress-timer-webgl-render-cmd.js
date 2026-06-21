@@ -1,4 +1,15 @@
-import { Node, glBlendFunc, glBindTexture2D, incrementGLDraws, VERTEX_ATTRIB_POSITION, VERTEX_ATTRIB_COLOR, VERTEX_ATTRIB_TEX_COORDS, V3F_C4B_T2F, SHADER_SPRITE_POSITION_TEXTURECOLOR, FLT_MAX, Point, ServiceLocator } from "@aspect/core";
+import {
+  Node,
+  glBlendFunc,
+  glBindTexture2D,
+  incrementGLDraws,
+  V3F_C4B_T2F,
+  FLT_MAX,
+  Point,
+  ServiceLocator,
+  VertexAttribute,
+  ShaderName
+} from "@aspect/core";
 import { TYPE_RADIAL, TYPE_BAR, TEXTURE_COORDS_COUNT, TEXTURE_COORDS } from "./constants";
 
 const MAX_VERTEX_COUNT = 8;
@@ -51,18 +62,18 @@ export class ProgressTimerWebGLRenderCmd extends Node.WebGLRenderCmd {
         glBindTexture2D(node._sprite.texture);
         context.bindBuffer(context.ARRAY_BUFFER, this._vertexWebGLBuffer);
 
-        context.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
-        context.enableVertexAttribArray(VERTEX_ATTRIB_COLOR);
-        context.enableVertexAttribArray(VERTEX_ATTRIB_TEX_COORDS);
+        context.enableVertexAttribArray(VertexAttribute.POSITION);
+        context.enableVertexAttribArray(VertexAttribute.COLOR);
+        context.enableVertexAttribArray(VertexAttribute.TEX_COORDS);
 
         if (this._vertexDataDirty) {
             context.bufferSubData(context.ARRAY_BUFFER, 0, this._float32View);
             this._vertexDataDirty = false;
         }
         const locVertexDataLen = V3F_C4B_T2F.BYTES_PER_ELEMENT;
-        context.vertexAttribPointer(VERTEX_ATTRIB_POSITION, 3, context.FLOAT, false, locVertexDataLen, 0);
-        context.vertexAttribPointer(VERTEX_ATTRIB_COLOR, 4, context.UNSIGNED_BYTE, true, locVertexDataLen, 12);
-        context.vertexAttribPointer(VERTEX_ATTRIB_TEX_COORDS, 2, context.FLOAT, false, locVertexDataLen, 16);
+        context.vertexAttribPointer(VertexAttribute.POSITION, 3, context.FLOAT, false, locVertexDataLen, 0);
+        context.vertexAttribPointer(VertexAttribute.COLOR, 4, context.UNSIGNED_BYTE, true, locVertexDataLen, 12);
+        context.vertexAttribPointer(VertexAttribute.TEX_COORDS, 2, context.FLOAT, false, locVertexDataLen, 16);
 
         if (node._type === TYPE_RADIAL)
             context.drawArrays(context.TRIANGLE_FAN, 0, this._vertexDataCount);
@@ -203,7 +214,7 @@ export class ProgressTimerWebGLRenderCmd extends Node.WebGLRenderCmd {
             this._vertexDataCount = 0;
             this._vertexDataDirty = true;
 
-            this._shaderProgram = ServiceLocator.shaderCache.programForKey(SHADER_SPRITE_POSITION_TEXTURECOLOR);
+            this._shaderProgram = ServiceLocator.shaderCache.programForKey(ShaderName.SPRITE_POSITION_TEXTURECOLOR);
         }
     }
 

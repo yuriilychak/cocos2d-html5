@@ -1,4 +1,17 @@
-import { Node, SpriteBatchNode, Sprite, Size, Point, log, pointPixelsToPoints, sizePixelsToPoints, rectPixelsToPoints, SHADER_SPRITE_POSITION_TEXTURECOLORALPHATEST, UNIFORM_ALPHA_TEST_VALUE_S, ServiceLocator } from "@aspect/core";
+import {
+  Node,
+  SpriteBatchNode,
+  Sprite,
+  Size,
+  Point,
+  log,
+  pointPixelsToPoints,
+  sizePixelsToPoints,
+  rectPixelsToPoints,
+  ServiceLocator,
+  ShaderName,
+  UniformName
+} from "@aspect/core";
 import {
   TMX_ORIENTATION_ORTHO,
   TMX_ORIENTATION_HEX,
@@ -573,11 +586,11 @@ export class TMXLayer extends SpriteBatchNode {
 
         if (ServiceLocator.rendererConfig.isWebGL) {
           this.shaderProgram = ServiceLocator.shaderCache.programForKey(
-            SHADER_SPRITE_POSITION_TEXTURECOLORALPHATEST
+            ShaderName.SPRITE_POSITION_TEXTURECOLORALPHATEST
           );
           this.shaderProgram.use();
           this.shaderProgram.setUniformLocationWith1f(
-            UNIFORM_ALPHA_TEST_VALUE_S,
+            UniformName.ALPHA_TEST_VALUE,
             alphaFuncValue
           );
         }

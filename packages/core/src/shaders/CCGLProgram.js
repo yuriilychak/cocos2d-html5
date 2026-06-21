@@ -28,20 +28,12 @@
 
 import { BaseClass } from "../platform/class";
 import { log } from "../boot/debugger";
-import {
-  UNIFORM_PMATRIX_S,
-  UNIFORM_MVPMATRIX_S,
-  UNIFORM_MVMATRIX_S,
-  UNIFORM_TIME_S,
-  UNIFORM_SINTIME_S,
-  UNIFORM_COSTIME_S,
-  UNIFORM_RANDOM01_S,
-  UNIFORM_SAMPLER_S
-} from "../platform/macro/constants";
+
 import Matrix4 from "../kazmath/mat4";
 import { KMGLMatrix } from "../kazmath/km-gl-matrix";
 import { checkGLErrorDebug } from "../platform/macro/utils";
 import { ServiceLocator } from "../service-locator";
+import { UniformName } from "../enums";
 
 /**
  * Class that implements a WebGL program
@@ -336,22 +328,22 @@ export default class GLProgram extends BaseClass {
    *  UNIFORM_SAMPLER
    */
   updateUniforms() {
-    this._addUniformLocation(UNIFORM_PMATRIX_S);
-    this._addUniformLocation(UNIFORM_MVMATRIX_S);
-    this._addUniformLocation(UNIFORM_MVPMATRIX_S);
-    this._addUniformLocation(UNIFORM_TIME_S);
-    this._addUniformLocation(UNIFORM_SINTIME_S);
-    this._addUniformLocation(UNIFORM_COSTIME_S);
-    this._addUniformLocation(UNIFORM_RANDOM01_S);
-    this._addUniformLocation(UNIFORM_SAMPLER_S);
+    this._addUniformLocation(UniformName.PMATRIX);
+    this._addUniformLocation(UniformName.MVMATRIX);
+    this._addUniformLocation(UniformName.MVPMATRIX);
+    this._addUniformLocation(UniformName.TIME);
+    this._addUniformLocation(UniformName.SINTIME);
+    this._addUniformLocation(UniformName.COSTIME);
+    this._addUniformLocation(UniformName.RANDOM01);
+    this._addUniformLocation(UniformName.SAMPLER);
     this._usesTime =
-      this._uniforms[UNIFORM_TIME_S] != null ||
-      this._uniforms[UNIFORM_SINTIME_S] != null ||
-      this._uniforms[UNIFORM_COSTIME_S] != null;
+      this._uniforms[UniformName.TIME] != null ||
+      this._uniforms[UniformName.SINTIME] != null ||
+      this._uniforms[UniformName.COSTIME] != null;
 
     this.use();
     // Since sample most probably won't change, set it to 0 now.
-    this.setUniformLocationWith1i(this._uniforms[UNIFORM_SAMPLER_S], 0);
+    this.setUniformLocationWith1i(this._uniforms[UniformName.SAMPLER], 0);
   }
 
   _addUniformLocation(name) {
@@ -385,7 +377,7 @@ export default class GLProgram extends BaseClass {
    * @returns {WebGLUniformLocation}
    */
   getUniformMVPMatrix() {
-    return this._uniforms[UNIFORM_MVPMATRIX_S];
+    return this._uniforms[UniformName.MVPMATRIX];
   }
 
   /**
@@ -393,7 +385,7 @@ export default class GLProgram extends BaseClass {
    * @returns {WebGLUniformLocation}
    */
   getUniformSampler() {
-    return this._uniforms[UNIFORM_SAMPLER_S];
+    return this._uniforms[UniformName.SAMPLER];
   }
 
   /**
@@ -788,17 +780,17 @@ export default class GLProgram extends BaseClass {
     Matrix4.multiply(matrixMVP, matrixP, matrixMV);
 
     this.setUniformLocationWithMatrix4fv(
-      this._uniforms[UNIFORM_PMATRIX_S],
+      this._uniforms[UniformName.PMATRIX],
       matrixP.mat,
       1
     );
     this.setUniformLocationWithMatrix4fv(
-      this._uniforms[UNIFORM_MVMATRIX_S],
+      this._uniforms[UniformName.MVMATRIX],
       matrixMV.mat,
       1
     );
     this.setUniformLocationWithMatrix4fv(
-      this._uniforms[UNIFORM_MVPMATRIX_S],
+      this._uniforms[UniformName.MVPMATRIX],
       matrixMVP.mat,
       1
     );
@@ -812,21 +804,21 @@ export default class GLProgram extends BaseClass {
         ServiceLocator.director.getAnimationInterval();
 
       this.setUniformLocationWith4f(
-        this._uniforms[UNIFORM_TIME_S],
+        this._uniforms[UniformName.TIME],
         time / 10.0,
         time,
         time * 2,
         time * 4
       );
       this.setUniformLocationWith4f(
-        this._uniforms[UNIFORM_SINTIME_S],
+        this._uniforms[UniformName.SINTIME],
         time / 8.0,
         time / 4.0,
         time / 2.0,
         Math.sin(time)
       );
       this.setUniformLocationWith4f(
-        this._uniforms[UNIFORM_COSTIME_S],
+        this._uniforms[UniformName.COSTIME],
         time / 8.0,
         time / 4.0,
         time / 2.0,
@@ -834,9 +826,9 @@ export default class GLProgram extends BaseClass {
       );
     }
 
-    if (this._uniforms[UNIFORM_RANDOM01_S] !== -1)
+    if (this._uniforms[UniformName.RANDOM01] !== -1)
       this.setUniformLocationWith4f(
-        this._uniforms[UNIFORM_RANDOM01_S],
+        this._uniforms[UniformName.RANDOM01],
         Math.random(),
         Math.random(),
         Math.random(),
@@ -856,17 +848,17 @@ export default class GLProgram extends BaseClass {
     Matrix4.multiply(matrixMVP, matrixP, node._renderCmd._stackMatrix);
 
     this.setUniformLocationWithMatrix4fv(
-      this._uniforms[UNIFORM_PMATRIX_S],
+      this._uniforms[UniformName.PMATRIX],
       matrixP.mat,
       1
     );
     this.setUniformLocationWithMatrix4fv(
-      this._uniforms[UNIFORM_MVMATRIX_S],
+      this._uniforms[UniformName.MVMATRIX],
       node._renderCmd._stackMatrix.mat,
       1
     );
     this.setUniformLocationWithMatrix4fv(
-      this._uniforms[UNIFORM_MVPMATRIX_S],
+      this._uniforms[UniformName.MVPMATRIX],
       matrixMVP.mat,
       1
     );
@@ -879,21 +871,21 @@ export default class GLProgram extends BaseClass {
       let time = director.getTotalFrames() * director.getAnimationInterval();
 
       this.setUniformLocationWith4f(
-        this._uniforms[UNIFORM_TIME_S],
+        this._uniforms[UniformName.TIME],
         time / 10.0,
         time,
         time * 2,
         time * 4
       );
       this.setUniformLocationWith4f(
-        this._uniforms[UNIFORM_SINTIME_S],
+        this._uniforms[UniformName.SINTIME],
         time / 8.0,
         time / 4.0,
         time / 2.0,
         Math.sin(time)
       );
       this.setUniformLocationWith4f(
-        this._uniforms[UNIFORM_COSTIME_S],
+        this._uniforms[UniformName.COSTIME],
         time / 8.0,
         time / 4.0,
         time / 2.0,
@@ -901,9 +893,9 @@ export default class GLProgram extends BaseClass {
       );
     }
 
-    if (this._uniforms[UNIFORM_RANDOM01_S] !== -1)
+    if (this._uniforms[UniformName.RANDOM01] !== -1)
       this.setUniformLocationWith4f(
-        this._uniforms[UNIFORM_RANDOM01_S],
+        this._uniforms[UniformName.RANDOM01],
         Math.random(),
         Math.random(),
         Math.random(),
@@ -916,7 +908,7 @@ export default class GLProgram extends BaseClass {
    */
   setUniformForModelViewProjectionMatrix() {
     this.setUniformLocationWithMatrix4fv(
-      this._uniforms[UNIFORM_MVPMATRIX_S],
+      this._uniforms[UniformName.MVPMATRIX],
       Matrix4.getMultiplyValue(
         ServiceLocator.kmglMatrix.projectionStack.top,
         ServiceLocator.kmglMatrix.modelViewStack.top
@@ -931,18 +923,18 @@ export default class GLProgram extends BaseClass {
       ServiceLocator.kmglMatrix.modelViewStack.top
     );
     this.setUniformLocationWithMatrix4fv(
-      this._uniforms[UNIFORM_MVPMATRIX_S],
+      this._uniforms[UniformName.MVPMATRIX],
       swapMat4.mat
     );
   }
 
   setUniformForModelViewAndProjectionMatrixWithMat4() {
     this.setUniformLocationWithMatrix4fv(
-      this._uniforms[UNIFORM_MVMATRIX_S],
+      this._uniforms[UniformName.MVMATRIX],
       ServiceLocator.kmglMatrix.modelViewStack.top.mat
     );
     this.setUniformLocationWithMatrix4fv(
-      this._uniforms[UNIFORM_PMATRIX_S],
+      this._uniforms[UniformName.PMATRIX],
       ServiceLocator.kmglMatrix.projectionStack.top.mat
     );
   }
@@ -950,11 +942,11 @@ export default class GLProgram extends BaseClass {
   _setUniformForMVPMatrixWithMat4(modelViewMatrix) {
     if (!modelViewMatrix) throw new Error("modelView matrix is undefined.");
     this.setUniformLocationWithMatrix4fv(
-      this._uniforms[UNIFORM_MVMATRIX_S],
+      this._uniforms[UniformName.MVMATRIX],
       modelViewMatrix.mat
     );
     this.setUniformLocationWithMatrix4fv(
-      this._uniforms[UNIFORM_PMATRIX_S],
+      this._uniforms[UniformName.PMATRIX],
       ServiceLocator.kmglMatrix.projectionStack.top.mat
     );
   }
@@ -963,7 +955,7 @@ export default class GLProgram extends BaseClass {
     const stack = ServiceLocator.kmglMatrix.projectionStack;
     if (stack.lastUpdated !== this._projectionUpdated) {
       this._glContext.uniformMatrix4fv(
-        this._uniforms[UNIFORM_PMATRIX_S],
+        this._uniforms[UniformName.PMATRIX],
         false,
         stack.top.mat
       );

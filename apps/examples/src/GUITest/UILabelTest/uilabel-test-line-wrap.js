@@ -27,7 +27,7 @@
 import { UIMainLayer } from "../uimain-layer";
 import { Text } from '@aspect/ccui';
 
-import { TEXT_ALIGNMENT_CENTER } from "@aspect/core";
+import { TextAlignment } from "@aspect/core";
 export class UILabelTest_LineWrap extends UIMainLayer {
   init() {
     if (super.init()) {
@@ -41,7 +41,7 @@ export class UILabelTest_LineWrap extends UIMainLayer {
       text.boundingWidth = 280;
       text.boundingHeight = 150;
       text.attr({
-        textAlign: TEXT_ALIGNMENT_CENTER,
+        textAlign: TextAlignment.CENTER,
         string: "Label can line wrap",
         font: "32px AmericanTypewriter",
         x: this._widget.width / 2

@@ -89,7 +89,28 @@ LabelTTF.WebGLRenderCmd = LabelTTFWebGLRenderCmd;
 // Named re-exports for direct imports from other packages
 // ======================================================================
 export { Point, Size, Rect, AffineTransform, cardinalSplineAt, getControlPointAt } from "./geometry";
-export { BrowserType, Language, OperatingSystem, Platform } from "./enums";
+export {
+  BrowserType,
+  DebugMode,
+  DensityDPI,
+  DeviceOrientation,
+  GameEvent,
+  GLServerState,
+  GLState,
+  Language,
+  OperatingSystem,
+  Platform,
+  RenderType,
+  ResolutionPolicyType,
+  ShaderName,
+  TextAlignment,
+  Uniform,
+  UniformName,
+  VertexAttribFlag,
+  VertexAttribute,
+  VerticalTextAlignment,
+  AttributeName
+} from "./enums";
 export { Vertex3F, Quad3, V3F_C4B_T2F } from "./platform/types/vertex";
 export {
   rand,
@@ -103,14 +124,6 @@ export { RendererConfig } from "./renderer/renderer-config";
 export { Director, DisplayLinkDirector } from "./director/director";
 export { Sys } from "./boot";
 export { BaseClass, classManager } from "./platform/class";
-export {
-  VERTEX_ATTRIB_POSITION,
-  VERTEX_ATTRIB_COLOR,
-  VERTEX_ATTRIB_TEX_COORDS,
-  SHADER_POSITION_TEXTURE,
-  SHADER_POSITION_LENGTHTEXTURECOLOR,
-  SRC_ALPHA
-} from "./platform/macro/constants";
 export { Texture2D } from "./textures/texture-2d";
 export {
   PIXEL_FORMAT_RGBA8888,
@@ -158,11 +171,7 @@ export type {
 export {
   ACTION_TAG_INVALID,
   FLT_EPSILON,
-  FLT_MAX,
-  ONE,
-  ONE_MINUS_SRC_ALPHA,
-  SHADER_SPRITE_POSITION_TEXTURECOLOR,
-  SHADER_SPRITE_POSITION_TEXTURECOLOR_MULTI
+  FLT_MAX
 } from "./platform/macro/constants";
 export {
   ENABLE_STACKABLE_ACTIONS,
@@ -188,11 +197,6 @@ export { Sprite } from "./sprites/sprite";
 export { Configuration } from "./configuration";
 export { glUseProgram } from "./shaders/CCGLStateCache";
 export { setProgramForNode } from "./shaders/utils";
-export {
-  SHADER_POSITION_TEXTURECOLORALPHATEST,
-  UNIFORM_ALPHA_TEST_VALUE_S,
-  UNIFORM_MVMATRIX_S
-} from "./platform/macro/constants";
 export { isUndefined } from "./boot";
 export { KEY } from "./platform/common";
 export {
@@ -208,11 +212,6 @@ export { LabelTTF } from "./labelttf/label-ttf";
 export { AtlasNode } from "./base-nodes/atlas-node";
 export { SpriteBatchNode } from "./sprites/sprite-batch-node";
 export { default as EventHelper } from "./event-manager/event-helper";
-export {
-  TEXT_ALIGNMENT_LEFT,
-  TEXT_ALIGNMENT_CENTER,
-  TEXT_ALIGNMENT_RIGHT
-} from "./platform/types/color";
 export {
   FIX_ARTIFACTS_BY_STRECHING_TEXEL,
   LABELATLAS_DEBUG_DRAW
@@ -237,11 +236,6 @@ export { SpriteFrame } from "./sprites/sprite-frame";
 export { PolygonInfo, Triangles } from "./sprites/polygon-info";
 export { Component, ComponentContainer } from "./components";
 export { assert, error } from "./boot";
-export {
-  VERTICAL_TEXT_ALIGNMENT_TOP,
-  VERTICAL_TEXT_ALIGNMENT_CENTER,
-  VERTICAL_TEXT_ALIGNMENT_BOTTOM
-} from "./platform/types/color";
 export { FontDefinition } from "./platform/types/font-definition";
 export { default as Touch } from "./event-manager/touch";
 export { default as EventFocus } from "./event-manager/event/event-focus";
@@ -249,7 +243,7 @@ export { NODE_TAG_INVALID, s_globalOrderOfArrival, setGlobalOrderOfArrival } fro
 export { screen } from "./platform/screen";
 export { default as SpriteFrameCache } from "./sprites/sprite-frame-cache";
 export { LayerGradient } from "./layers/layer-gradient";
-export { BLEND_SRC, BLEND_DST, SHADER_SPRITE_POSITION_TEXTURECOLOR_GRAY, DST_COLOR, ONE_MINUS_SRC_COLOR, ONE_MINUS_DST_COLOR, FLT_MIN, BATCH_VERTEX_COUNT, ATTRIBUTE_NAME_COLOR, ATTRIBUTE_NAME_POSITION, ATTRIBUTE_NAME_TEX_COORD, DST_ALPHA, SRC_COLOR, ONE_MINUS_DST_ALPHA, ORIENTATION_LANDSCAPE } from "./platform/macro/constants";
+export { FLT_MIN, BATCH_VERTEX_COUNT } from "./platform/macro/constants";
 export { OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA } from "./platform/config";
 export { INVALID_INDEX, REPEAT_FOREVER } from "./platform/macro/constants";
 export { rectPointsToPixels } from "./platform/macro/utils";
@@ -258,18 +252,15 @@ export { EGLView } from "./platform/egl-view/egl-view";
 export { TextureAtlas } from "./textures/texture-atlas";
 export { isObject } from "./boot";
 export { V3F_C4B_T2F_Quad, V3F_C4B_T2F_QuadZero } from "./platform/types/vertex";
-export { SHADER_POSITION_TEXTURECOLOR } from "./platform/macro/constants";
 export { glBlendFuncForParticle } from "./shaders/CCGLStateCache";
 export { randomMinus1To1 } from "./platform/macro/utils";
 export { FMT_PNG, FMT_TIFF, getImageFormatByData } from "./platform/common";
 export { SAXParser } from "./platform/sax-parser/sax-parser";
 export { _txtLoader } from "./platform/loaders";
-export { SHADER_SPRITE_POSITION_TEXTURECOLORALPHATEST } from "./platform/macro/constants";
 export { default as EventMouse } from "./event-manager/event/event-mouse";
 export { default as EventTouch } from "./event-manager/event/event-touch";
 export { default as EventCustom } from "./event-manager/event/event-custom";
 export { default as EventKeyboard } from "./event-manager/event-extension/event-keyboard";
-export { ZERO, REPEAT, LINEAR } from "./platform/macro/constants";
 export { GLProgram } from "./shaders";
 export { default as AnimationCache } from "./sprites/animation-cache";
 export { InputManager } from "./platform/input-manager";

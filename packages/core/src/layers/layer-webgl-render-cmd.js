@@ -26,13 +26,10 @@ import { WebGLRenderCmd as NodeWebGLRenderCmd } from "../base-nodes/node-webgl-r
 import { Node } from "../base-nodes/node";
 import { Point, Rect, AffineTransform } from "../geometry";
 import Matrix4 from "../kazmath/mat4";
-import {
-  SHADER_POSITION_COLOR,
-  VERTEX_ATTRIB_COLOR,
-  VERTEX_ATTRIB_POSITION
-} from "../platform/macro/constants";
+
 import { radiansToDegrees } from "../platform/macro/utils";
 import { ServiceLocator } from "../service-locator";
+import { ShaderName, VertexAttribute } from "../enums";
 
 /**
  * Layer's WebGL render command
@@ -67,7 +64,7 @@ export class LayerColorWebGLRenderCmd extends LayerWebGLRenderCmd {
     this._vertexBuffer = null;
 
     this._shaderProgram = ServiceLocator.shaderCache.programForKey(
-      SHADER_POSITION_COLOR
+      ShaderName.POSITION_COLOR
     );
   }
 
@@ -144,12 +141,12 @@ export class LayerColorWebGLRenderCmd extends LayerWebGLRenderCmd {
     ServiceLocator.glStateCache.blendFunc(node._blendFunc.src, node._blendFunc.dst);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, this._vertexBuffer);
-    gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
-    gl.enableVertexAttribArray(VERTEX_ATTRIB_COLOR);
+    gl.enableVertexAttribArray(VertexAttribute.POSITION);
+    gl.enableVertexAttribArray(VertexAttribute.COLOR);
 
-    gl.vertexAttribPointer(VERTEX_ATTRIB_POSITION, 3, gl.FLOAT, false, 16, 0);
+    gl.vertexAttribPointer(VertexAttribute.POSITION, 3, gl.FLOAT, false, 16, 0);
     gl.vertexAttribPointer(
-      VERTEX_ATTRIB_COLOR,
+      VertexAttribute.COLOR,
       4,
       gl.UNSIGNED_BYTE,
       true,
@@ -336,12 +333,12 @@ export class LayerGradientWebGLRenderCmd extends LayerColorWebGLRenderCmd {
     ServiceLocator.glStateCache.blendFunc(node._blendFunc.src, node._blendFunc.dst);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, this._vertexBuffer);
-    gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
-    gl.enableVertexAttribArray(VERTEX_ATTRIB_COLOR);
+    gl.enableVertexAttribArray(VertexAttribute.POSITION);
+    gl.enableVertexAttribArray(VertexAttribute.COLOR);
 
-    gl.vertexAttribPointer(VERTEX_ATTRIB_POSITION, 3, gl.FLOAT, false, 16, 0);
+    gl.vertexAttribPointer(VertexAttribute.POSITION, 3, gl.FLOAT, false, 16, 0);
     gl.vertexAttribPointer(
-      VERTEX_ATTRIB_COLOR,
+      VertexAttribute.COLOR,
       4,
       gl.UNSIGNED_BYTE,
       true,

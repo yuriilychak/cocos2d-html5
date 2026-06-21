@@ -1,4 +1,13 @@
-import { Node, Point, Matrix4, KMGLMatrix, ONE, ONE_MINUS_SRC_ALPHA, SRC_ALPHA, DST_COLOR, ONE_MINUS_SRC_COLOR, SHADER_SPRITE_POSITION_TEXTURECOLOR, BATCH_VERTEX_COUNT, ServiceLocator } from "@aspect/core";
+import {
+  Node,
+  Point,
+  Matrix4,
+  KMGLMatrix,
+  BATCH_VERTEX_COUNT,
+  ServiceLocator,
+  GLState,
+  ShaderName
+} from "@aspect/core";
 import {
   RegionAttachment,
   MeshAttachment,
@@ -20,7 +29,7 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
     this.vertexType = ServiceLocator.rendererConfig.renderer.VertexType.CUSTOM;
     this.setShaderProgram(
       ServiceLocator.shaderCache.programForKey(
-        SHADER_SPRITE_POSITION_TEXTURECOLOR
+        ShaderName.SPRITE_POSITION_TEXTURECOLOR
       )
     );
   }
@@ -226,20 +235,20 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
     const ret = this._currBlendFunc;
     switch (blendMode) {
       case BlendMode.Normal:
-        ret.src = premultiAlpha ? ONE : SRC_ALPHA;
-        ret.dst = ONE_MINUS_SRC_ALPHA;
+        ret.src = premultiAlpha ? GLState.ONE : GLState.SRC_ALPHA;
+        ret.dst = GLState.ONE_MINUS_SRC_ALPHA;
         break;
       case BlendMode.Additive:
-        ret.src = premultiAlpha ? ONE : SRC_ALPHA;
-        ret.dst = ONE;
+        ret.src = premultiAlpha ? GLState.ONE : GLState.SRC_ALPHA;
+        ret.dst = GLState.ONE;
         break;
       case BlendMode.Multiply:
-        ret.src = DST_COLOR;
-        ret.dst = ONE_MINUS_SRC_ALPHA;
+        ret.src = GLState.DST_COLOR;
+        ret.dst = GLState.ONE_MINUS_SRC_ALPHA;
         break;
       case BlendMode.Screen:
-        ret.src = ONE;
-        ret.dst = ONE_MINUS_SRC_COLOR;
+        ret.src = GLState.ONE;
+        ret.dst = GLState.ONE_MINUS_SRC_COLOR;
         break;
       default:
         return this._node._blendFunc;

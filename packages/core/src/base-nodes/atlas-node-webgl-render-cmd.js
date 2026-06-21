@@ -28,14 +28,9 @@ import { log, _LogInfos } from "../boot/debugger";
 import { Node } from "./node";
 import Matrix4 from "../kazmath/mat4";
 import { TextureAtlas } from "../textures/texture-atlas";
-import {
-  SHADER_POSITION_TEXTURE_UCOLOR,
-  SRC_ALPHA,
-  ONE_MINUS_SRC_ALPHA,
-  BLEND_SRC,
-  BLEND_DST
-} from "../platform/macro/constants";
+
 import { ServiceLocator } from "../service-locator";
+import { ShaderName, GLState } from "../enums";
 
 /**
  * AtlasNode's rendering objects of WebGL
@@ -54,7 +49,7 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
 
     //shader stuff
     this._shaderProgram = ServiceLocator.shaderCache.programForKey(
-      SHADER_POSITION_TEXTURE_UCOLOR
+      ShaderName.POSITION_TEXTURE_UCOLOR
     );
     this._uniformColor =
       ServiceLocator.rendererConfig.renderContext.getUniformLocation(
@@ -66,8 +61,8 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
   _updateBlendFunc() {
     const node = this._node;
     if (!this._textureAtlas.texture.hasPremultipliedAlpha()) {
-      node._blendFunc.src = SRC_ALPHA;
-      node._blendFunc.dst = ONE_MINUS_SRC_ALPHA;
+      node._blendFunc.src = GLState.SRC_ALPHA;
+      node._blendFunc.dst = GLState.ONE_MINUS_SRC_ALPHA;
     }
   }
 
@@ -104,8 +99,8 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
     this._colorUnmodified = Color.WHITE;
     node.isOpacityModifyRGB = true;
 
-    node._blendFunc.src = BLEND_SRC;
-    node._blendFunc.dst = BLEND_DST;
+    node._blendFunc.src = GLState.BLEND_SRC;
+    node._blendFunc.dst = GLState.BLEND_DST;
 
     const locRealColor = node._realColor;
     this._colorF32Array = new Float32Array([

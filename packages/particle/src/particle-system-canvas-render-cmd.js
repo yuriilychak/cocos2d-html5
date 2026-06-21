@@ -22,7 +22,15 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Node, Point, Rect, BLEND_SRC, BLEND_DST, degreesToRadians, incrementGLDraws, ServiceLocator } from "@aspect/core";
+import {
+  Node,
+  Point,
+  Rect,
+  degreesToRadians,
+  incrementGLDraws,
+  ServiceLocator,
+  GLState
+} from "@aspect/core";
 import { Particle } from "./particle-system/particle";
 
 const TEXTURE_MODE = 1;
@@ -203,8 +211,8 @@ export class ParticleSystemCanvasRenderCmd extends Node.CanvasRenderCmd {
 
   _setBlendAdditive() {
     const locBlendFunc = this._node._blendFunc;
-    locBlendFunc.src = BLEND_SRC;
-    locBlendFunc.dst = BLEND_DST;
+    locBlendFunc.src = GLState.BLEND_SRC;
+    locBlendFunc.dst = GLState.BLEND_DST;
   }
 
   _initWithTotalParticles(totalParticles) {}

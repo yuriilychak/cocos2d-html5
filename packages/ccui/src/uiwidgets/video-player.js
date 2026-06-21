@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BrowserType, Node, log, screen, Sys, Game, OperatingSystem, Path, ServiceLocator } from "@aspect/core";
+import { BrowserType, Node, log, screen, Sys, GameEvent, OperatingSystem, Path, ServiceLocator } from "@aspect/core";
 import { Widget } from "../base-classes/widget";
 
 /**
@@ -56,7 +56,7 @@ export class VideoPlayer extends Widget {
       container.appendChild(cmd._video);
       if (this._listener === null)
         this._listener = ServiceLocator.eventManager.addCustomListener(
-          Game.EVENT_RESIZE,
+          GameEvent.RESIZE,
           function () {
             cmd.resize();
           }
@@ -288,7 +288,7 @@ export class VideoPlayer extends Widget {
 VideoPlayer.elements = [];
 VideoPlayer.pauseElements = [];
 
-ServiceLocator.eventManager.addCustomListener(Game.EVENT_HIDE, function () {
+ServiceLocator.eventManager.addCustomListener(GameEvent.HIDE, function () {
   var list = VideoPlayer.elements;
   for (var node, i = 0; i < list.length; i++) {
     node = list[i];
@@ -298,7 +298,7 @@ ServiceLocator.eventManager.addCustomListener(Game.EVENT_HIDE, function () {
     }
   }
 });
-ServiceLocator.eventManager.addCustomListener(Game.EVENT_SHOW, function () {
+ServiceLocator.eventManager.addCustomListener(GameEvent.SHOW, function () {
   var list = VideoPlayer.pauseElements;
   var node = list.pop();
   while (node) {

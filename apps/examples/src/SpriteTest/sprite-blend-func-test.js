@@ -26,7 +26,7 @@
  ****************************************************************************/
 
 import { SpriteTestDemo } from "./sprite-test-demo";
-import { ONE, ONE_MINUS_SRC_ALPHA, SRC_ALPHA, Size, Sprite, ZERO, DST_COLOR, ONE_MINUS_DST_COLOR, DST_ALPHA, ONE_MINUS_DST_ALPHA, SRC_COLOR, ONE_MINUS_SRC_COLOR, ServiceLocator } from "@aspect/core";
+import { Size, Sprite, ServiceLocator, GLState } from "@aspect/core";
 import { TextBMFont } from "@aspect/ccui";
 import { s_simpleFont_fnt } from "../resources";
 export class SpriteBlendFuncTest extends SpriteTestDemo {
@@ -40,36 +40,36 @@ export class SpriteBlendFuncTest extends SpriteTestDemo {
       (this._subtitle = ""));
 
     var destFactors = [
-        ZERO,
-        ONE,
-        DST_COLOR,
-        ONE_MINUS_DST_COLOR,
-        DST_ALPHA,
-        ONE_MINUS_DST_ALPHA
+        GLState.ZERO,
+        GLState.ONE,
+        GLState.DST_COLOR,
+        GLState.ONE_MINUS_DST_COLOR,
+        GLState.DST_ALPHA,
+        GLState.ONE_MINUS_DST_ALPHA
       ],
       srcFactors = [
-        ZERO,
-        ONE,
-        SRC_COLOR,
-        ONE_MINUS_SRC_COLOR,
-        SRC_ALPHA,
-        ONE_MINUS_SRC_ALPHA
+        GLState.ZERO,
+        GLState.ONE,
+        GLState.SRC_COLOR,
+        GLState.ONE_MINUS_SRC_COLOR,
+        GLState.SRC_ALPHA,
+        GLState.ONE_MINUS_SRC_ALPHA
       ];
     var destTitles = [
-        "ZERO",
-        "ONE",
-        "DST_COLOR",
-        "ONE_MINUS_DST_COLOR",
-        "DST_ALPHA",
-        "ONE_MINUS_DST_ALPHA"
+        "GLState.ZERO",
+        "GLState.ONE",
+        "GLState.DST_COLOR",
+        "GLState.ONE_MINUS_DST_COLOR",
+        "GLState.DST_ALPHA",
+        "GLState.ONE_MINUS_DST_ALPHA"
       ],
       srcTitles = [
-        "ZERO",
-        "ONE",
-        "SRC_COLOR",
-        "ONE_MINUS_SRC_COLOR",
-        "SRC_ALPHA",
-        "ONE_MINUS_SRC_ALPHA"
+        "GLState.ZERO",
+        "GLState.ONE",
+        "GLState.SRC_COLOR",
+        "GLState.ONE_MINUS_SRC_COLOR",
+        "GLState.SRC_ALPHA",
+        "GLState.ONE_MINUS_SRC_ALPHA"
       ];
 
     var sourceImg = "Images/dot.png",

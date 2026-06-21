@@ -24,7 +24,26 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Node, Point, Rect, Color, log, isNumber, isString, isObject, BLEND_SRC, BLEND_DST, SRC_ALPHA, ONE, ONE_MINUS_SRC_ALPHA, Path, Texture2D, degreesToRadians, radiansToDegrees, randomMinus1To1, FMT_PNG, FMT_TIFF, getImageFormatByData, ServiceLocator } from "@aspect/core";
+import {
+  Node,
+  Point,
+  Rect,
+  Color,
+  log,
+  isNumber,
+  isString,
+  isObject,
+  Path,
+  Texture2D,
+  degreesToRadians,
+  radiansToDegrees,
+  randomMinus1To1,
+  FMT_PNG,
+  FMT_TIFF,
+  getImageFormatByData,
+  ServiceLocator,
+  GLState
+} from "@aspect/core";
 import { unzipBase64AsArray } from "@aspect/compression";
 import { Particle, ParticleModeA, ParticleModeB } from "./particle";
 import { PNGReader } from "../png-reader";
@@ -200,7 +219,7 @@ export class ParticleSystem extends Node {
     this.emitterMode = ParticleSystem.MODE_GRAVITY;
     this.modeA = new ParticleSystem.ModeA();
     this.modeB = new ParticleSystem.ModeB();
-    this._blendFunc = { src: BLEND_SRC, dst: BLEND_DST };
+    this._blendFunc = { src: GLState.BLEND_SRC, dst: GLState.BLEND_DST };
 
     this._particles = [];
     this._sourcePosition = new Point(0, 0);
@@ -1353,9 +1372,9 @@ export class ParticleSystem extends Node {
    */
   isBlendAdditive() {
     return (
-      (this._blendFunc.src === SRC_ALPHA &&
-        this._blendFunc.dst === ONE) ||
-      (this._blendFunc.src === ONE && this._blendFunc.dst === ONE)
+      (this._blendFunc.src === GLState.SRC_ALPHA &&
+        this._blendFunc.dst === GLState.ONE) ||
+      (this._blendFunc.src === GLState.ONE && this._blendFunc.dst === GLState.ONE)
     );
   }
 
@@ -1368,8 +1387,8 @@ export class ParticleSystem extends Node {
   setBlendAdditive(isBlendAdditive) {
     var locBlendFunc = this._blendFunc;
     if (isBlendAdditive) {
-      locBlendFunc.src = SRC_ALPHA;
-      locBlendFunc.dst = ONE;
+      locBlendFunc.src = GLState.SRC_ALPHA;
+      locBlendFunc.dst = GLState.ONE;
     } else {
       this._renderCmd._setBlendAdditive();
     }
@@ -1737,8 +1756,8 @@ export class ParticleSystem extends Node {
     this._isActive = true;
 
     // default blend function
-    this._blendFunc.src = BLEND_SRC;
-    this._blendFunc.dst = BLEND_DST;
+    this._blendFunc.src = GLState.BLEND_SRC;
+    this._blendFunc.dst = GLState.BLEND_DST;
 
     // default movement type;
     this.positionType = ParticleSystem.TYPE_FREE;
@@ -2191,14 +2210,14 @@ export class ParticleSystem extends Node {
       this.#opacityModifyRGB = false;
       var locBlendFunc = this._blendFunc;
       if (
-        locBlendFunc.src === BLEND_SRC &&
-        locBlendFunc.dst === BLEND_DST
+        locBlendFunc.src === GLState.BLEND_SRC &&
+        locBlendFunc.dst === GLState.BLEND_DST
       ) {
         if (locTexture.hasPremultipliedAlpha()) {
           this.#opacityModifyRGB = true;
         } else {
-          locBlendFunc.src = SRC_ALPHA;
-          locBlendFunc.dst = ONE_MINUS_SRC_ALPHA;
+          locBlendFunc.src = GLState.SRC_ALPHA;
+          locBlendFunc.dst = GLState.ONE_MINUS_SRC_ALPHA;
         }
       }
     }

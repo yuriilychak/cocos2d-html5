@@ -1,10 +1,7 @@
 import { TEXTURE_ATLAS_USE_TRIANGLE_STRIP } from "../platform/config";
-import {
-  VERTEX_ATTRIB_COLOR,
-  VERTEX_ATTRIB_POSITION,
-  VERTEX_ATTRIB_TEX_COORDS
-} from "../platform/macro/constants";
+
 import { ServiceLocator } from "../service-locator";
+import { VertexAttribute } from "../enums";
 
 export default class TextureAtlasWebGLRenderer {
   constructor(textureAtlas) {
@@ -75,13 +72,13 @@ export default class TextureAtlasWebGLRenderer {
       textureAtlas.dirty = false;
     }
 
-    gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
-    gl.enableVertexAttribArray(VERTEX_ATTRIB_COLOR);
-    gl.enableVertexAttribArray(VERTEX_ATTRIB_TEX_COORDS);
+    gl.enableVertexAttribArray(VertexAttribute.POSITION);
+    gl.enableVertexAttribArray(VertexAttribute.COLOR);
+    gl.enableVertexAttribArray(VertexAttribute.TEX_COORDS);
 
-    gl.vertexAttribPointer(VERTEX_ATTRIB_POSITION, 3, gl.FLOAT, false, 24, 0); // vertices
+    gl.vertexAttribPointer(VertexAttribute.POSITION, 3, gl.FLOAT, false, 24, 0); // vertices
     gl.vertexAttribPointer(
-      VERTEX_ATTRIB_COLOR,
+      VertexAttribute.COLOR,
       4,
       gl.UNSIGNED_BYTE,
       true,
@@ -89,7 +86,7 @@ export default class TextureAtlasWebGLRenderer {
       12
     ); // colors
     gl.vertexAttribPointer(
-      VERTEX_ATTRIB_TEX_COORDS,
+      VertexAttribute.TEX_COORDS,
       2,
       gl.FLOAT,
       false,

@@ -31,7 +31,7 @@
 import { OpenGLTestLayer } from "./open-gltest-layer";
 import { GLNode } from "./glnode-polyfill";
 import { winSize } from "../constants";
-import { VERTEX_ATTRIB_POSITION, VERTEX_ATTRIB_TEX_COORDS, ServiceLocator } from "@aspect/core";
+import { ServiceLocator, VertexAttribute } from "@aspect/core";
 export class TexImage2DTest extends OpenGLTestLayer {
   constructor() {
     super();
@@ -55,13 +55,13 @@ export class TexImage2DTest extends OpenGLTestLayer {
         this.shader.setUniformsForBuiltins();
 
         gl.bindTexture(gl.TEXTURE_2D, this.my_texture);
-        gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
-        gl.enableVertexAttribArray(VERTEX_ATTRIB_TEX_COORDS);
+        gl.enableVertexAttribArray(VertexAttribute.POSITION);
+        gl.enableVertexAttribArray(VertexAttribute.TEX_COORDS);
 
         // Draw fullscreen Square
         gl.bindBuffer(gl.ARRAY_BUFFER, this.squareVertexPositionBuffer);
         gl.vertexAttribPointer(
-          VERTEX_ATTRIB_POSITION,
+          VertexAttribute.POSITION,
           2,
           gl.FLOAT,
           false,
@@ -71,7 +71,7 @@ export class TexImage2DTest extends OpenGLTestLayer {
 
         gl.bindBuffer(gl.ARRAY_BUFFER, this.squareVertexTextureBuffer);
         gl.vertexAttribPointer(
-          VERTEX_ATTRIB_TEX_COORDS,
+          VertexAttribute.TEX_COORDS,
           2,
           gl.FLOAT,
           false,

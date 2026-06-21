@@ -1,9 +1,8 @@
 import { Rect } from "../geometry";
 import { Texture2D } from "./texture-2d";
-import {
-  REPEAT
-} from "../platform/macro/constants";
+
 import { ServiceLocator } from "../service-locator";
+import { GLState } from "../enums";
 
 function renderToCache(image, cache) {
   var w = image.width;
@@ -252,17 +251,17 @@ export default class CanvasTextureRenderer {
         wrapT: wrapT
       };
 
-    if (texParams.wrapS === REPEAT && texParams.wrapT === REPEAT) {
+    if (texParams.wrapS === GLState.REPEAT && texParams.wrapT === GLState.REPEAT) {
       t._pattern = "repeat";
       return;
     }
 
-    if (texParams.wrapS === REPEAT) {
+    if (texParams.wrapS === GLState.REPEAT) {
       t._pattern = "repeat-x";
       return;
     }
 
-    if (texParams.wrapT === REPEAT) {
+    if (texParams.wrapT === GLState.REPEAT) {
       t._pattern = "repeat-y";
       return;
     }

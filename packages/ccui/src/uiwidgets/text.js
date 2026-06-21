@@ -37,8 +37,8 @@ import { ProtectedNode } from "../base-classes/protected-node";
  * @property {String}   font                - The label font with a style string: e.g. "18px Verdana"
  * @property {String}   fontName            - The label font name
  * @property {Number}   fontSize            - The label font size
- * @property {Number}   textAlign           - Horizontal Alignment of label, TEXT_ALIGNMENT_LEFT|TEXT_ALIGNMENT_CENTER|TEXT_ALIGNMENT_RIGHT
- * @property {Number}   verticalAlign       - Vertical Alignment of label: VERTICAL_TEXT_ALIGNMENT_TOP|VERTICAL_TEXT_ALIGNMENT_CENTER|VERTICAL_TEXT_ALIGNMENT_BOTTOM
+ * @property {Number}   textAlign           - Horizontal Alignment of label, TextAlignment.LEFT|TextAlignment.CENTER|TextAlignment.RIGHT
+ * @property {Number}   verticalAlign       - Vertical Alignment of label: VerticalTextAlignment.TOP|VerticalTextAlignment.CENTER|VerticalTextAlignment.BOTTOM
  * @property {Boolean}  touchScaleEnabled   - Indicate whether the label will scale when touching
  */
 export class Text extends Widget {
@@ -265,7 +265,7 @@ export class Text extends Widget {
 
   /**
    * Sets Horizontal Alignment of LabelTTF
-   * @param {TEXT_ALIGNMENT_LEFT|TEXT_ALIGNMENT_CENTER|TEXT_ALIGNMENT_RIGHT} alignment Horizontal Alignment
+   * @param {TextAlignment.LEFT|TextAlignment.CENTER|TextAlignment.RIGHT} alignment Horizontal Alignment
    */
   setTextHorizontalAlignment(alignment) {
     this._setTextHorizontalAlignment(alignment);
@@ -281,7 +281,7 @@ export class Text extends Widget {
 
   /**
    * Returns Horizontal Alignment of label
-   * @returns {TEXT_ALIGNMENT_LEFT|TEXT_ALIGNMENT_CENTER|TEXT_ALIGNMENT_RIGHT}
+   * @returns {TextAlignment.LEFT|TextAlignment.CENTER|TextAlignment.RIGHT}
    */
   getTextHorizontalAlignment() {
     return this._labelRenderer.getHorizontalAlignment();
@@ -289,7 +289,7 @@ export class Text extends Widget {
 
   /**
    * Sets Vertical Alignment of label
-   * @param {VERTICAL_TEXT_ALIGNMENT_TOP|VERTICAL_TEXT_ALIGNMENT_CENTER|VERTICAL_TEXT_ALIGNMENT_BOTTOM} alignment
+   * @param {VerticalTextAlignment.TOP|VerticalTextAlignment.CENTER|VerticalTextAlignment.BOTTOM} alignment
    */
   setTextVerticalAlignment(alignment) {
     this._setTextVerticalAlignment(alignment);
@@ -305,7 +305,7 @@ export class Text extends Widget {
 
   /**
    * Gets text vertical alignment.
-   * @returns {VERTICAL_TEXT_ALIGNMENT_TOP|VERTICAL_TEXT_ALIGNMENT_CENTER|VERTICAL_TEXT_ALIGNMENT_BOTTOM}
+   * @returns {VerticalTextAlignment.TOP|VerticalTextAlignment.CENTER|VerticalTextAlignment.BOTTOM}
    */
   getTextVerticalAlignment() {
     return this._labelRenderer.getVerticalAlignment();

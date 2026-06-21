@@ -11,11 +11,9 @@ import {
   PROJECTION_CUSTOM
 } from "./constants";
 import { log, _LogInfos } from "../boot/debugger";
-import {
-  BLEND_DST,
-  BLEND_SRC
-} from "../platform/macro/constants";
+
 import { ServiceLocator } from "../service-locator";
+import { GLState } from "../enums";
 
 /**
  * OpenGL projection protocol
@@ -169,7 +167,7 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
   }
 
   setAlphaBlending(on) {
-    if (on) ServiceLocator.glStateCache.blendFunc(BLEND_SRC, BLEND_DST);
+    if (on) ServiceLocator.glStateCache.blendFunc(GLState.BLEND_SRC, GLState.BLEND_DST);
     else
       ServiceLocator.glStateCache.blendFunc(
         ServiceLocator.rendererConfig.renderContext.ONE,

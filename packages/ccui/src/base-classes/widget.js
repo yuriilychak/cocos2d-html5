@@ -9,9 +9,8 @@ import {
   log,
   arrayRemoveObject,
   EventFocus,
-  SHADER_SPRITE_POSITION_TEXTURECOLOR,
-  SHADER_SPRITE_POSITION_TEXTURECOLOR_GRAY,
-  ServiceLocator
+  ServiceLocator,
+  ShaderName
 } from "@aspect/core";
 import { ProtectedNode } from "./protected-node.js";
 import {
@@ -1284,12 +1283,12 @@ export class Widget extends ProtectedNode {
   }
   _getNormalGLProgram() {
     return ServiceLocator.shaderCache.programForKey(
-      SHADER_SPRITE_POSITION_TEXTURECOLOR
+      ShaderName.SPRITE_POSITION_TEXTURECOLOR
     );
   }
   _getGrayGLProgram() {
     return ServiceLocator.shaderCache.programForKey(
-      SHADER_SPRITE_POSITION_TEXTURECOLOR_GRAY
+      ShaderName.SPRITE_POSITION_TEXTURECOLOR_GRAY
     );
   }
 

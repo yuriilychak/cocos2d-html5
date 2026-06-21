@@ -22,7 +22,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BlendFunc, GLProgramState, Node, Point, SHADER_SPRITE_POSITION_TEXTURECOLOR, ServiceLocator } from "@aspect/core";
+import {
+  BlendFunc,
+  GLProgramState,
+  Node,
+  Point,
+  ServiceLocator,
+  ShaderName
+} from "@aspect/core";
 
 import { Skin } from "./display/skin.js";
 import { DISPLAY_TYPE_ARMATURE, DISPLAY_TYPE_SPRITE } from "./utils/datas/constants.js";
@@ -125,7 +132,7 @@ import { DISPLAY_TYPE_ARMATURE, DISPLAY_TYPE_SPRITE } from "./utils/datas/consta
         }
 
         initShaderCache() {
-            this._shaderProgram = ServiceLocator.shaderCache.programForKey(SHADER_SPRITE_POSITION_TEXTURECOLOR);
+            this._shaderProgram = ServiceLocator.shaderCache.programForKey(ShaderName.SPRITE_POSITION_TEXTURECOLOR);
         }
 
         setShaderProgram(shaderProgram) {

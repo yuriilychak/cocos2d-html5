@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { LabelTTF, Rect, Size, Color, Sprite, SpriteFrame, VERTICAL_TEXT_ALIGNMENT_CENTER, log, ServiceLocator } from "@aspect/core";
+import { LabelTTF, Rect, Size, Color, Sprite, SpriteFrame, VerticalTextAlignment, log, ServiceLocator } from "@aspect/core";
 import { ScaleTo } from "@aspect/actions";
 import { Widget } from "../base-classes/widget";
 import { ProtectedNode } from "../base-classes/protected-node";
@@ -130,7 +130,7 @@ export class Button extends Widget {
       this._titleRenderer = new LabelTTF("");
       this._titleRenderer.setAnchorPoint(0.5, 0.5);
       this._titleColor = Color.WHITE;
-      this._titleRenderer.setVerticalAlignment(VERTICAL_TEXT_ALIGNMENT_CENTER);
+      this._titleRenderer.setVerticalAlignment(VerticalTextAlignment.CENTER);
       this.addProtectedChild(
         this._titleRenderer,
         Button.TITLE_RENDERER_ZORDER,

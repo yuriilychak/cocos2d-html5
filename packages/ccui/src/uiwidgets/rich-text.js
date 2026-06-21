@@ -34,12 +34,8 @@ import {
   Rect,
   isNumber,
   arrayRemoveObject,
-  TEXT_ALIGNMENT_LEFT,
-  TEXT_ALIGNMENT_CENTER,
-  TEXT_ALIGNMENT_RIGHT,
-  VERTICAL_TEXT_ALIGNMENT_TOP,
-  VERTICAL_TEXT_ALIGNMENT_CENTER,
-  VERTICAL_TEXT_ALIGNMENT_BOTTOM
+  TextAlignment,
+  VerticalTextAlignment
 } from "@aspect/core";
 import { Widget } from "../base-classes/widget";
 
@@ -177,8 +173,8 @@ export class RichText extends Widget {
     this._leftSpaceWidth = 0;
     this._verticalSpace = 0;
     this._lineBreakOnSpace = false;
-    this._textHorizontalAlignment = TEXT_ALIGNMENT_LEFT;
-    this._textVerticalAlignment = VERTICAL_TEXT_ALIGNMENT_TOP;
+    this._textHorizontalAlignment = TextAlignment.LEFT;
+    this._textVerticalAlignment = VerticalTextAlignment.TOP;
   }
 
   _initRenderer() {
@@ -423,11 +419,11 @@ export class RichText extends Widget {
       }
 
       //Text flow horizontal alignment:
-      if (this._textHorizontalAlignment !== TEXT_ALIGNMENT_LEFT) {
+      if (this._textHorizontalAlignment !== TextAlignment.LEFT) {
         offsetX = 0;
-        if (this._textHorizontalAlignment === TEXT_ALIGNMENT_RIGHT)
+        if (this._textHorizontalAlignment === TextAlignment.RIGHT)
           offsetX = this._contentSize.width - nextPosX;
-        else if (this._textHorizontalAlignment === TEXT_ALIGNMENT_CENTER)
+        else if (this._textHorizontalAlignment === TextAlignment.CENTER)
           offsetX = (this._contentSize.width - nextPosX) / 2;
 
         for (j = 0; j < row.length; j++) row[j].x += offsetX;
@@ -472,20 +468,20 @@ export class RichText extends Widget {
         }
         //Text flow alignment(s)
         if (
-          this._textHorizontalAlignment !== TEXT_ALIGNMENT_LEFT ||
-          this._textVerticalAlignment !== VERTICAL_TEXT_ALIGNMENT_TOP
+          this._textHorizontalAlignment !== TextAlignment.LEFT ||
+          this._textVerticalAlignment !== VerticalTextAlignment.TOP
         ) {
           offsetX = 0;
-          if (this._textHorizontalAlignment === TEXT_ALIGNMENT_RIGHT)
+          if (this._textHorizontalAlignment === TextAlignment.RIGHT)
             offsetX = this._contentSize.width - nextPosX;
-          else if (this._textHorizontalAlignment === TEXT_ALIGNMENT_CENTER)
+          else if (this._textHorizontalAlignment === TextAlignment.CENTER)
             offsetX = (this._contentSize.width - nextPosX) / 2;
 
           var offsetY = 0;
-          if (this._textVerticalAlignment === VERTICAL_TEXT_ALIGNMENT_BOTTOM)
+          if (this._textVerticalAlignment === VerticalTextAlignment.BOTTOM)
             offsetY = this._customSize.height - newContentSizeHeight;
           else if (
-            this._textVerticalAlignment === VERTICAL_TEXT_ALIGNMENT_CENTER
+            this._textVerticalAlignment === VerticalTextAlignment.CENTER
           )
             offsetY = (this._customSize.height - newContentSizeHeight) / 2;
 
@@ -631,7 +627,7 @@ export class RichText extends Widget {
    * although it is named TextHorizontalAlignment, it should work with all type of renderer too.
    * NOTE: we should rename this to setHorizontalAlignment directly
    *
-   * @param {Number} value - example TEXT_ALIGNMENT_RIGHT
+   * @param {Number} value - example TextAlignment.RIGHT
    */
   setTextHorizontalAlignment(value) {
     if (value !== this._textHorizontalAlignment) {
@@ -644,7 +640,7 @@ export class RichText extends Widget {
    * Set the renderer vertical flow alignment for the Control
    * although it is named TextVerticalAlignment, it should work with all type of renderer too.
    *
-   * @param {Number} value - example VERTICAL_TEXT_ALIGNMENT_CENTER
+   * @param {Number} value - example VerticalTextAlignment.CENTER
    */
   setTextVerticalAlignment(value) {
     if (value !== this._textVerticalAlignment) {

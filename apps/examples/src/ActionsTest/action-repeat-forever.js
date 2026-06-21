@@ -61,7 +61,6 @@ export class ActionRepeatForever extends ActionsDemo {
         )
         .repeatForever()
     );
-    ServiceLocator.sys.garbageCollect();
   }
   title() {
     return "CallFunc + RepeatForever";

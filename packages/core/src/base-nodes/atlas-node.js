@@ -27,11 +27,9 @@
 import { Node } from "./node";
 import EventHelper from "../event-manager/event-helper";
 import { log, _LogInfos } from "../boot/debugger";
-import {
-  BLEND_DST,
-  BLEND_SRC
-} from "../platform/macro/constants";
+
 import { ServiceLocator } from "../service-locator";
+import { GLState } from "../enums";
 
 /**
  * <p>AtlasNode is a subclass of Node, it knows how to render a TextureAtlas object. </p>
@@ -87,7 +85,7 @@ export class AtlasNode extends EventHelper(Node) {
     this._texture = null;
     this._textureForCanvas = null;
 
-    this._blendFunc = { src: BLEND_SRC, dst: BLEND_DST };
+    this._blendFunc = { src: GLState.BLEND_SRC, dst: GLState.BLEND_DST };
     this._ignoreContentScaleFactor = false;
     itemsToRender !== undefined &&
       this.initWithTileFile(tile, tileWidth, tileHeight, itemsToRender);

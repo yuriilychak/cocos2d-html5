@@ -1,5 +1,5 @@
 import { isObject, formatStr } from './utils';
-import Game from './game';
+import { DebugMode } from "../enums";
 
 let _enableLog = false;
 let _enableWarn = false;
@@ -304,9 +304,9 @@ export function formatString(arg) {
  * @param {Number} mode
  */
 export function initDebugSetting(mode) {
-    _useWebPage = mode > Game.DEBUG_MODE_ERROR;
-    _enableError = mode !== Game.DEBUG_MODE_NONE;
-    _enableWarn = mode === Game.DEBUG_MODE_INFO || mode === Game.DEBUG_MODE_WARN
-        || mode === Game.DEBUG_MODE_INFO_FOR_WEB_PAGE || mode === Game.DEBUG_MODE_WARN_FOR_WEB_PAGE;
-    _enableLog = mode === Game.DEBUG_MODE_INFO || mode === Game.DEBUG_MODE_INFO_FOR_WEB_PAGE;
+    _useWebPage = mode > DebugMode.ERROR;
+    _enableError = mode !== DebugMode.NONE;
+    _enableWarn = mode === DebugMode.INFO || mode === DebugMode.WARN
+        || mode === DebugMode.INFO_FOR_WEB_PAGE || mode === DebugMode.WARN_FOR_WEB_PAGE;
+    _enableLog = mode === DebugMode.INFO || mode === DebugMode.INFO_FOR_WEB_PAGE;
 }

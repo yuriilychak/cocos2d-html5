@@ -26,13 +26,9 @@ import { Point, Rect, AffineTransform } from "../geometry";
 import { Color } from "../platform/types/color";
 import { Region } from "../renderer/dirty-region";
 import { Node } from "./node";
-import {
-  ONE,
-  ONE_MINUS_SRC_ALPHA,
-  SRC_ALPHA,
-  ZERO
-} from "../platform/macro/constants";
+
 import { ServiceLocator } from "../service-locator";
+import { GLState } from "../enums";
 
 //---------------------- Customer render cmd --------------------
 export class CustomRenderCmd {
@@ -642,13 +638,13 @@ CanvasRenderCmd._getCompositeOperationByBlendFunc = function (blendFunc) {
   if (!blendFunc) return "source-over";
   else {
     if (
-      (blendFunc.src === SRC_ALPHA && blendFunc.dst === ONE) ||
-      (blendFunc.src === ONE && blendFunc.dst === ONE)
+      (blendFunc.src === GLState.SRC_ALPHA && blendFunc.dst === GLState.ONE) ||
+      (blendFunc.src === GLState.ONE && blendFunc.dst === GLState.ONE)
     )
       return "lighter";
-    else if (blendFunc.src === ZERO && blendFunc.dst === SRC_ALPHA)
+    else if (blendFunc.src === GLState.ZERO && blendFunc.dst === GLState.SRC_ALPHA)
       return "destination-in";
-    else if (blendFunc.src === ZERO && blendFunc.dst === ONE_MINUS_SRC_ALPHA)
+    else if (blendFunc.src === GLState.ZERO && blendFunc.dst === GLState.ONE_MINUS_SRC_ALPHA)
       return "destination-out";
     else return "source-over";
   }

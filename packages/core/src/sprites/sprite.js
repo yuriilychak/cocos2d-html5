@@ -31,13 +31,14 @@ import { log, assert, _LogInfos } from "../boot/debugger";
 import { Texture2D } from "../textures/texture-2d";
 import { SpriteFrame } from "./sprite-frame";
 import { PolygonInfo } from "./polygon-info";
-import { BLEND_DST, BLEND_SRC } from "../platform/macro/constants";
+
 import {
   sizePointsToPixels,
   rectPointsToPixels,
   pointPointsToPixels
 } from "../platform/macro/utils.js";
 import { ServiceLocator } from "../service-locator";
+import { GLState } from "../enums";
 
 /**
  * <p>Sprite is a 2d image ( http://en.wikipedia.org/wiki/Sprite_(computer_graphics) )  <br/>
@@ -149,7 +150,7 @@ export class Sprite extends EventHelper(Node) {
     self._shouldBeHidden = false;
     self._offsetPosition = new Point(0, 0);
     self._unflippedOffsetPositionFromCenter = new Point(0, 0);
-    self._blendFunc = { src: BLEND_SRC, dst: BLEND_DST };
+    self._blendFunc = { src: GLState.BLEND_SRC, dst: GLState.BLEND_DST };
     self._rect = new Rect(0, 0, 0, 0);
 
     self._softInit(fileName, rect, rotated);
@@ -577,8 +578,8 @@ export class Sprite extends EventHelper(Node) {
     super.init();
     _t.dirty = _t._recursiveDirty = false;
 
-    _t._blendFunc.src = BLEND_SRC;
-    _t._blendFunc.dst = BLEND_DST;
+    _t._blendFunc.src = GLState.BLEND_SRC;
+    _t._blendFunc.dst = GLState.BLEND_DST;
 
     _t.texture = null;
     _t._flippedX = _t._flippedY = false;
@@ -682,8 +683,8 @@ export class Sprite extends EventHelper(Node) {
     this.dirty = false;
     this.isOpacityModifyRGB = true;
 
-    this._blendFunc.src = BLEND_SRC;
-    this._blendFunc.dst = BLEND_DST;
+    this._blendFunc.src = GLState.BLEND_SRC;
+    this._blendFunc.dst = GLState.BLEND_DST;
 
     this._flippedX = this._flippedY = false;
 

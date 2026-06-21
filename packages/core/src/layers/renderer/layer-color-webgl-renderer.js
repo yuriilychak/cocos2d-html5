@@ -23,13 +23,10 @@
  ****************************************************************************/
 
 import LayerWebGLRenderer from "./layer-webgl-renderer";
-import {
-  SHADER_POSITION_COLOR,
-  VERTEX_ATTRIB_COLOR,
-  VERTEX_ATTRIB_POSITION
-} from "../../platform/macro/constants";
+
 import Matrix4 from "../../kazmath/mat4";
 import { ServiceLocator } from "../../service-locator";
+import { ShaderName, VertexAttribute } from "../../enums";
 
 /**
  * LayerColor's WebGL render command
@@ -48,7 +45,7 @@ export default class LayerColorWebGLRenderer extends LayerWebGLRenderer {
     this._vertexBuffer = null;
 
     this._shaderProgram = ServiceLocator.shaderCache.programForKey(
-      SHADER_POSITION_COLOR
+      ShaderName.POSITION_COLOR
     );
   }
 
@@ -125,12 +122,12 @@ export default class LayerColorWebGLRenderer extends LayerWebGLRenderer {
     ServiceLocator.glStateCache.blendFunc(node._blendFunc.src, node._blendFunc.dst);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, this._vertexBuffer);
-    gl.enableVertexAttribArray(VERTEX_ATTRIB_POSITION);
-    gl.enableVertexAttribArray(VERTEX_ATTRIB_COLOR);
+    gl.enableVertexAttribArray(VertexAttribute.POSITION);
+    gl.enableVertexAttribArray(VertexAttribute.COLOR);
 
-    gl.vertexAttribPointer(VERTEX_ATTRIB_POSITION, 3, gl.FLOAT, false, 16, 0);
+    gl.vertexAttribPointer(VertexAttribute.POSITION, 3, gl.FLOAT, false, 16, 0);
     gl.vertexAttribPointer(
-      VERTEX_ATTRIB_COLOR,
+      VertexAttribute.COLOR,
       4,
       gl.UNSIGNED_BYTE,
       true,

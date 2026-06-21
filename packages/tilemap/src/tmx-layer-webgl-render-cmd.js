@@ -1,4 +1,4 @@
-import { SHADER_SPRITE_POSITION_TEXTURECOLORALPHATEST, ServiceLocator } from "@aspect/core";
+import { ServiceLocator, ShaderName } from "@aspect/core";
 import {
   TMX_ORIENTATION_ORTHO,
   TMX_ORIENTATION_ISO,
@@ -21,7 +21,7 @@ export class TMXLayerWebGLRenderCmd extends Node.WebGLRenderCmd {
     ];
     this._color = new Uint32Array(1);
     this._shaderProgram = ServiceLocator.shaderCache.programForKey(
-      SHADER_SPRITE_POSITION_TEXTURECOLORALPHATEST
+      ShaderName.SPRITE_POSITION_TEXTURECOLORALPHATEST
     );
 
     let radian = (Math.PI * 90) / 180;

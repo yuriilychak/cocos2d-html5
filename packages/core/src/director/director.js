@@ -32,6 +32,7 @@ import { ActionManager } from "../action-manager";
 import EventCustom from "../event-manager/event/event-custom";
 import { Node } from "../base-nodes/node";
 import Game from "../boot/game";
+import { GameEvent } from "../enums";
 import {
   EVENT_PROJECTION_CHANGED,
   EVENT_AFTER_UPDATE,
@@ -173,7 +174,7 @@ export class Director extends BaseClass {
 
     if (!this._showEventListenerRegistered) {
       this._showEventListenerRegistered = true;
-      this._eventManager.addCustomListener(Game.EVENT_SHOW, () => {
+      this._eventManager.addCustomListener(GameEvent.SHOW, () => {
         this._lastUpdate = Date.now();
       });
     }

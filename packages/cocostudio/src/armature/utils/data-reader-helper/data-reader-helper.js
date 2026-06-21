@@ -26,7 +26,17 @@
 /**
  * @ignore
  */
-import { BLEND_DST, BLEND_SRC, DST_COLOR, ONE, ONE_MINUS_DST_COLOR, ONE_MINUS_SRC_ALPHA, Path, Point, SAXParser, SRC_ALPHA, arrayRemoveObject, degreesToRadians, isFunction, log, ServiceLocator } from "@aspect/core";
+import {
+  Path,
+  Point,
+  SAXParser,
+  arrayRemoveObject,
+  degreesToRadians,
+  isFunction,
+  log,
+  ServiceLocator,
+  GLState
+} from "@aspect/core";
 
 import { TweenType } from "../../animation/tween-function/constants.js";
 import { VERSION_CHANGE_ROTATION_RANGE, VERSION_COLOR_READING } from "../../armature-define.js";
@@ -765,24 +775,24 @@ export const dataReaderHelper = {
             var blendFunc = frameData.blendFunc;
             switch (blendType) {
                 case BLEND_TYPE_NORMAL:
-                    blendFunc.src = BLEND_SRC;
-                    blendFunc.dst = BLEND_DST;
+                    blendFunc.src = GLState.BLEND_SRC;
+                    blendFunc.dst = GLState.BLEND_DST;
                     break;
                 case BLEND_TYPE_ADD:
-                    blendFunc.src = SRC_ALPHA;
-                    blendFunc.dst = ONE;
+                    blendFunc.src = GLState.SRC_ALPHA;
+                    blendFunc.dst = GLState.ONE;
                     break;
                 case BLEND_TYPE_MULTIPLY:
-                    blendFunc.src = DST_COLOR;
-                    blendFunc.dst = ONE_MINUS_SRC_ALPHA;
+                    blendFunc.src = GLState.DST_COLOR;
+                    blendFunc.dst = GLState.ONE_MINUS_SRC_ALPHA;
                     break;
                 case BLEND_TYPE_SCREEN:
-                    blendFunc.src = ONE;
-                    blendFunc.dst = ONE_MINUS_DST_COLOR;
+                    blendFunc.src = GLState.ONE;
+                    blendFunc.dst = GLState.ONE_MINUS_DST_COLOR;
                     break;
                 default:
-                    frameData.blendFunc.src = BLEND_SRC;
-                    frameData.blendFunc.dst = BLEND_DST;
+                    frameData.blendFunc.src = GLState.BLEND_SRC;
+                    frameData.blendFunc.dst = GLState.BLEND_DST;
                     break;
             }
         }
@@ -855,8 +865,8 @@ export const dataReaderHelper = {
 
         frameData.tweenEasing = json[CONST_A_TWEEN_EASING] || TweenType.LINEAR;
         frameData.displayIndex = json[CONST_A_DISPLAY_INDEX];
-        var bd_src = json[CONST_A_BLEND_SRC] == null ? BLEND_SRC : json[CONST_A_BLEND_SRC];
-        var bd_dst = json[CONST_A_BLEND_DST] == null ? BLEND_DST : json[CONST_A_BLEND_DST];
+        var bd_src = json[CONST_A_BLEND_SRC] == null ? GLState.BLEND_SRC : json[CONST_A_BLEND_SRC];
+        var bd_dst = json[CONST_A_BLEND_DST] == null ? GLState.BLEND_DST : json[CONST_A_BLEND_DST];
         frameData.blendFunc.src = bd_src;
         frameData.blendFunc.dst = bd_dst;
         frameData.isTween = json[CONST_A_TWEEN_FRAME] == null ? true : json[CONST_A_TWEEN_FRAME];

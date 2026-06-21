@@ -12,30 +12,12 @@ import Path from "./path";
 import { log } from "./debugger";
 import { create3DContext } from "./sys";
 import { isUndefined } from "./utils";
+import { GameEvent, RenderType } from "../enums";
 
 /**
  * An object to boot the game.
  */
 export default class Game extends EventHelper(BaseClass) {
-  /**
-   * @returns {Game}
-   */
-  static DEBUG_MODE_NONE = 0;
-  static DEBUG_MODE_INFO = 1;
-  static DEBUG_MODE_WARN = 2;
-  static DEBUG_MODE_ERROR = 3;
-  static DEBUG_MODE_INFO_FOR_WEB_PAGE = 4;
-  static DEBUG_MODE_WARN_FOR_WEB_PAGE = 5;
-  static DEBUG_MODE_ERROR_FOR_WEB_PAGE = 6;
-
-  static EVENT_HIDE = "game_on_hide";
-  static EVENT_SHOW = "game_on_show";
-  static EVENT_RESIZE = "game_on_resize";
-  static EVENT_RENDERER_INITED = "renderer_inited";
-
-  static RENDER_TYPE_CANVAS = 0;
-  static RENDER_TYPE_WEBGL = 1;
-  static RENDER_TYPE_OPENGL = 2;
   static _isContextMenuEnable = false;
 
   static CONFIG_KEY = {
@@ -86,21 +68,6 @@ export default class Game extends EventHelper(BaseClass) {
 
   constructor() {
     super();
-    // Copy static constants to instance for backward compatibility (game.RENDER_TYPE_WEBGL etc.)
-    this.DEBUG_MODE_NONE = Game.DEBUG_MODE_NONE;
-    this.DEBUG_MODE_INFO = Game.DEBUG_MODE_INFO;
-    this.DEBUG_MODE_WARN = Game.DEBUG_MODE_WARN;
-    this.DEBUG_MODE_ERROR = Game.DEBUG_MODE_ERROR;
-    this.DEBUG_MODE_INFO_FOR_WEB_PAGE = Game.DEBUG_MODE_INFO_FOR_WEB_PAGE;
-    this.DEBUG_MODE_WARN_FOR_WEB_PAGE = Game.DEBUG_MODE_WARN_FOR_WEB_PAGE;
-    this.DEBUG_MODE_ERROR_FOR_WEB_PAGE = Game.DEBUG_MODE_ERROR_FOR_WEB_PAGE;
-    this.EVENT_HIDE = Game.EVENT_HIDE;
-    this.EVENT_SHOW = Game.EVENT_SHOW;
-    this.EVENT_RESIZE = Game.EVENT_RESIZE;
-    this.EVENT_RENDERER_INITED = Game.EVENT_RENDERER_INITED;
-    this.RENDER_TYPE_CANVAS = Game.RENDER_TYPE_CANVAS;
-    this.RENDER_TYPE_WEBGL = Game.RENDER_TYPE_WEBGL;
-    this.RENDER_TYPE_OPENGL = Game.RENDER_TYPE_OPENGL;
     this.CONFIG_KEY = Game.CONFIG_KEY;
   }
 
@@ -531,7 +498,7 @@ export default class Game extends EventHelper(BaseClass) {
             element_uint: gl.getExtension("OES_element_index_uint")
           };
     } else {
-      this._rendererConfig.setRenderType(Game.RENDER_TYPE_CANVAS);
+      this._rendererConfig.setRenderType(RenderType.CANVAS);
       this._rendererConfig.setGLVersion("canvas");
       this._rendererConfig.setRenderer(rendererCanvas);
       this._renderContext = new CanvasContextWrapper(
@@ -548,7 +515,7 @@ export default class Game extends EventHelper(BaseClass) {
       if (!Game._isContextMenuEnable) return false;
     };
 
-    this.dispatchEvent(Game.EVENT_RENDERER_INITED, true);
+    this.dispatchEvent(GameEvent.RENDERER_INITED, true);
 
     this._rendererInitialized = true;
 
@@ -560,9 +527,9 @@ export default class Game extends EventHelper(BaseClass) {
     var win = window,
       hidden;
 
-    this._eventHide = this._eventHide || new EventCustom(Game.EVENT_HIDE);
+    this._eventHide = this._eventHide || new EventCustom(GameEvent.HIDE);
     this._eventHide.setUserData(this);
-    this._eventShow = this._eventShow || new EventCustom(Game.EVENT_SHOW);
+    this._eventShow = this._eventShow || new EventCustom(GameEvent.SHOW);
     this._eventShow.setUserData(this);
 
     if (this.config[Game.CONFIG_KEY.registerSystemEvent])
@@ -623,10 +590,10 @@ export default class Game extends EventHelper(BaseClass) {
       win.addEventListener("pageshow", onShow, false);
     }
 
-    this._eventManager.addCustomListener(Game.EVENT_HIDE, () => {
+    this._eventManager.addCustomListener(GameEvent.HIDE, () => {
       this.pause();
     });
-    this._eventManager.addCustomListener(Game.EVENT_SHOW, () => {
+    this._eventManager.addCustomListener(GameEvent.SHOW, () => {
       this.resume();
     });
   }

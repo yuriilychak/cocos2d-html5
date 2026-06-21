@@ -25,7 +25,23 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BaseClass, Rect, Point, Size, NextPOT, log, Texture2D, GLProgramState, SHADER_POSITION_TEXTURE, glBindTexture2D, setProjectionMatrixDirty, Matrix4, KMGLMatrix, PIXEL_FORMAT_RGBA8888, ServiceLocator } from "@aspect/core";
+import {
+  BaseClass,
+  Rect,
+  Point,
+  Size,
+  NextPOT,
+  log,
+  Texture2D,
+  GLProgramState,
+  glBindTexture2D,
+  setProjectionMatrixDirty,
+  Matrix4,
+  KMGLMatrix,
+  PIXEL_FORMAT_RGBA8888,
+  ServiceLocator,
+  ShaderName
+} from "@aspect/core";
 import { Grabber } from "./grabber.js";
 
 /**
@@ -223,7 +239,7 @@ export class GridBase extends BaseClass {
     if (!this._grabber) return false;
     this._grabber.grab(this._texture);
     this._glProgramState = GLProgramState.getOrCreateWithGLProgram(
-      ServiceLocator.shaderCache.programForKey(SHADER_POSITION_TEXTURE)
+      ServiceLocator.shaderCache.programForKey(ShaderName.POSITION_TEXTURE)
     );
     this.calculateVertexPoints();
     return true;

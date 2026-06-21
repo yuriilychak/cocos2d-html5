@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BrowserType, Node, log, Sys, Game, OperatingSystem, ServiceLocator } from "@aspect/core";
+import { BrowserType, Node, log, Sys, GameEvent, OperatingSystem, ServiceLocator } from "@aspect/core";
 import { Widget } from "../base-classes/widget";
 
 /**
@@ -49,7 +49,7 @@ export class WebView extends Widget {
       container.appendChild(div);
       if (this._listener === null)
         this._listener = eventManager.addCustomListener(
-          Game.EVENT_RESIZE,
+          GameEvent.RESIZE,
           function () {
             cmd.resize();
           }
@@ -64,7 +64,7 @@ export class WebView extends Widget {
       if (hasChild) container.removeChild(div);
       var list =
         eventManager._listenersMap[
-          Game.EVENT_RESIZE
+          GameEvent.RESIZE
         ].getFixedPriorityListeners();
       eventManager._removeListenerInVector(list, cmd._listener);
       cmd._listener = null;
@@ -346,7 +346,7 @@ if (Sys.isMobile) {
       else {
         var list =
           eventManager._listenersMap[
-            Game.EVENT_RESIZE
+            GameEvent.RESIZE
           ].getFixedPriorityListeners();
         eventManager._removeListenerInVector(list, this._listener);
         this._listener = null;

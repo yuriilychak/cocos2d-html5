@@ -46,7 +46,18 @@
  * @property {Boolean}              blendDirty              - Indicate whether the blend is dirty
  *
  */
-import { AffineTransform, BLEND_DST, BLEND_SRC, BlendFunc, Color, Node, arrayRemoveObject, assert, degreesToRadians, log, ServiceLocator } from "@aspect/core";
+import {
+  AffineTransform,
+  BlendFunc,
+  Color,
+  Node,
+  arrayRemoveObject,
+  assert,
+  degreesToRadians,
+  log,
+  ServiceLocator,
+  GLState
+} from "@aspect/core";
 
 import { Tween } from "./animation/tween.js";
 import { displayFactory } from "./display/display-factory.js";
@@ -69,7 +80,7 @@ export class Bone extends Node {
 
     this._worldTransform = AffineTransform.make(1, 0, 0, 1, 0, 0);
     this._boneTransformDirty = true;
-    this._blendFunc = new BlendFunc(BLEND_SRC, BLEND_DST);
+    this._blendFunc = new BlendFunc(GLState.BLEND_SRC, GLState.BLEND_DST);
     this.blendDirty = false;
     this._worldInfo = null;
 

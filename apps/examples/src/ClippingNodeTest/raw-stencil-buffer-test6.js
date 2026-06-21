@@ -27,7 +27,14 @@
 
 import { _alphaThreshold } from "./clipping-node-test-helpers";
 import { RawStencilBufferTest } from "./raw-stencil-buffer-test";
-import { Color, Point, SHADER_POSITION_TEXTURECOLORALPHATEST, UNIFORM_ALPHA_TEST_VALUE_S, glUseProgram, ServiceLocator } from "@aspect/core";
+import {
+  Color,
+  Point,
+  glUseProgram,
+  ServiceLocator,
+  ShaderName,
+  UniformName
+} from "@aspect/core";
 export class RawStencilBufferTest6 extends RawStencilBufferTest {
   subtitle() {
     return "6:ManualClear,AlphaTest:ENABLE";
@@ -55,11 +62,11 @@ export class RawStencilBufferTest6 extends RawStencilBufferTest {
     gl.depthMask(false);
 
     var program = ServiceLocator.shaderCache.programForKey(
-      SHADER_POSITION_TEXTURECOLORALPHATEST
+      ShaderName.POSITION_TEXTURECOLORALPHATEST
     );
     var alphaValueLocation = gl.getUniformLocation(
       program.getProgram(),
-      UNIFORM_ALPHA_TEST_VALUE_S
+      UniformName.ALPHA_TEST_VALUE
     );
     glUseProgram(program.getProgram());
     program.setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);

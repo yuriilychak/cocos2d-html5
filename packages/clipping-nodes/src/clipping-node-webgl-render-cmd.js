@@ -1,4 +1,13 @@
-import { Node, CustomRenderCmd, glUseProgram, setProgramForNode, SHADER_POSITION_TEXTURECOLORALPHATEST, UNIFORM_ALPHA_TEST_VALUE_S, UNIFORM_MVMATRIX_S, log, ServiceLocator } from "@aspect/core";
+import {
+  Node,
+  CustomRenderCmd,
+  glUseProgram,
+  setProgramForNode,
+  log,
+  ServiceLocator,
+  ShaderName,
+  UniformName
+} from "@aspect/core";
 import { ClippingNode } from "./clipping-node";
 
 function setProgram(node, program) {
@@ -120,10 +129,10 @@ export class ClippingNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
     gl.clear(gl.STENCIL_BUFFER_BIT);
 
     if (node.alphaThreshold < 1) {
-      const program = ServiceLocator.shaderCache.programForKey(SHADER_POSITION_TEXTURECOLORALPHATEST);
+      const program = ServiceLocator.shaderCache.programForKey(ShaderName.POSITION_TEXTURECOLORALPHATEST);
       glUseProgram(program.getProgram());
-      program.setUniformLocationWith1f(UNIFORM_ALPHA_TEST_VALUE_S, node.alphaThreshold);
-        program.setUniformLocationWithMatrix4fv(UNIFORM_MVMATRIX_S, ServiceLocator.rendererConfig.renderer.mat4Identity.mat);
+      program.setUniformLocationWith1f(UniformName.ALPHA_TEST_VALUE, node.alphaThreshold);
+        program.setUniformLocationWithMatrix4fv(UniformName.MVMATRIX, ServiceLocator.rendererConfig.renderer.mat4Identity.mat);
       setProgramForNode(node._stencil, program);
     }
   }

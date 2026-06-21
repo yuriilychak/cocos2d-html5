@@ -26,7 +26,7 @@
 
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
-import { Size, TEXT_ALIGNMENT_CENTER } from "@aspect/core";
+import { Size, TextAlignment } from "@aspect/core";
 import { Text, Widget } from "@aspect/ccui";
 export class UITextTest_LineWrap extends UIMainLayer {
   init() {
@@ -43,7 +43,7 @@ export class UITextTest_LineWrap extends UIMainLayer {
       );
       text.ignoreContentAdaptWithSize(false);
       text.setContentSize(new Size(280, 150));
-      text.setTextHorizontalAlignment(TEXT_ALIGNMENT_CENTER);
+      text.setTextHorizontalAlignment(TextAlignment.CENTER);
       text.setTouchScaleChangeEnabled(true);
       text.setTouchEnabled(true);
       text.addTouchEventListener(function (sender, type) {

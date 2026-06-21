@@ -1,11 +1,4 @@
-import {
-  Point,
-  Rect,
-  BlendFunc,
-  SRC_ALPHA,
-  ONE_MINUS_SRC_ALPHA,
-  Color
-} from "@aspect/core";
+import { Point, Rect, BlendFunc, Color, GLState } from "@aspect/core";
 import { cardinalSplineAt, getControlPointAt } from "@aspect/core";
 import { DrawNodeElement } from "./draw-node-element";
 
@@ -16,8 +9,8 @@ export class DrawNodeCanvas {
     locCmd._buffer = this._buffer = [];
     locCmd._drawColor = this._drawColor = new Color(255, 255, 255, 255);
     locCmd._blendFunc = this._blendFunc = new BlendFunc(
-      SRC_ALPHA,
-      ONE_MINUS_SRC_ALPHA
+      GLState.SRC_ALPHA,
+      GLState.ONE_MINUS_SRC_ALPHA
     );
 
     this.init();

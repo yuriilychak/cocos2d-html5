@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BLEND_DST, BLEND_SRC, BlendFunc } from "@aspect/core";
+import { BlendFunc, GLState } from "@aspect/core";
 import { BaseData } from "./base-data.js";
 
 import { TweenType } from "../../animation/tween-function/constants.js";
@@ -58,7 +58,7 @@ export class FrameData extends BaseData {
     this.event = "";
     this.sound = "";
     this.soundEffect = "";
-    this.blendFunc = new BlendFunc(BLEND_SRC, BLEND_DST);
+    this.blendFunc = new BlendFunc(GLState.BLEND_SRC, GLState.BLEND_DST);
     this.frameID = 0;
     this.isTween = true;
   }

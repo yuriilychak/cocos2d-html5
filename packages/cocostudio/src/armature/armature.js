@@ -36,7 +36,18 @@
  * @property {Object}                   body            - The body of the armature
  * @property {ColliderFilter}       colliderFilter  - <@writeonly> The collider filter of the armature
  */
-import { AffineTransform, BLEND_DST, BLEND_SRC, BlendFunc, Node, Point, Rect, arrayRemoveObject, assert, log, ServiceLocator } from "@aspect/core";
+import {
+  AffineTransform,
+  BlendFunc,
+  Node,
+  Point,
+  Rect,
+  arrayRemoveObject,
+  assert,
+  log,
+  ServiceLocator,
+  GLState
+} from "@aspect/core";
 import { Widget } from "@aspect/ccui";
 
 import { ArmatureAnimation } from "./animation/armature-animation/armature-animation.js";
@@ -60,7 +71,7 @@ export class Armature extends Node {
     this._armatureIndexDic = {};
     this._offsetPoint = new Point(0, 0);
     this._armatureTransformDirty = true;
-    this._blendFunc = { src: BLEND_SRC, dst: BLEND_DST };
+    this._blendFunc = { src: GLState.BLEND_SRC, dst: GLState.BLEND_DST };
     name && this.init(name, parentBone);
     // Hack way to avoid RendererWebGL from skipping Armature
     this._texture = {};

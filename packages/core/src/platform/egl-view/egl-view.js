@@ -32,14 +32,15 @@ import { visibleRect } from "../visible-rect";
 import { ContainerStrategy } from "./container-strategy";
 import { ContentStrategy } from "./content-strategy";
 import { ResolutionPolicy } from "./resolution-policy";
-import { DENSITYDPI_HIGH } from "./constants";
 import { log, _LogInfos } from "../../boot/debugger";
-import { BrowserType, OperatingSystem } from "../../enums";
 import {
-  ORIENTATION_AUTO,
-  ORIENTATION_LANDSCAPE,
-  ORIENTATION_PORTRAIT
-} from "../macro/constants";
+  BrowserType,
+  DensityDPI,
+  OperatingSystem,
+  ResolutionPolicyType,
+  DeviceOrientation
+} from "../../enums";
+
 
 var __browserGetterInited = false;
 
@@ -205,7 +206,7 @@ export class EGLView extends BaseClass {
       _strategy.FIXED_WIDTH
     );
 
-    _t._targetDensityDPI = DENSITYDPI_HIGH;
+    _t._targetDensityDPI = DensityDPI.HIGH;
   }
 
   injectServices({ director, eventManager, game, rendererConfig, sys }) {
@@ -274,10 +275,10 @@ export class EGLView extends BaseClass {
   /**
    * <p>
    * Sets view's target-densitydpi for android mobile browser. it can be set to:           <br/>
-   *   1. DENSITYDPI_DEVICE, value is "device-dpi"                                      <br/>
-   *   2. DENSITYDPI_HIGH, value is "high-dpi"  (default value)                         <br/>
-   *   3. DENSITYDPI_MEDIUM, value is "medium-dpi" (browser's default value)            <br/>
-   *   4. DENSITYDPI_LOW, value is "low-dpi"                                            <br/>
+   *   1. DensityDPI.DEVICE, value is "device-dpi"                                      <br/>
+   *   2. DensityDPI.HIGH, value is "high-dpi"  (default value)                         <br/>
+   *   3. DensityDPI.MEDIUM, value is "medium-dpi" (browser's default value)            <br/>
+   *   4. DensityDPI.LOW, value is "low-dpi"                                            <br/>
    *   5. Custom value, e.g: "480"                                                         <br/>
    * </p>
    * @param {String} densityDPI
@@ -335,10 +336,10 @@ export class EGLView extends BaseClass {
    * view will automatically rotate the game canvas using CSS.
    * Note that this function doesn't have any effect in native,
    * in native, you need to set the application orientation in native project settings
-   * @param {Number} orientation - Possible values: ORIENTATION_LANDSCAPE | ORIENTATION_PORTRAIT | ORIENTATION_AUTO
+   * @param {Number} orientation - Possible values: DeviceOrientation.LANDSCAPE | DeviceOrientation.PORTRAIT | DeviceOrientation.AUTO
    */
   setOrientation(orientation) {
-    orientation = orientation & ORIENTATION_AUTO;
+    orientation = orientation & DeviceOrientation.AUTO;
     if (orientation && this._orientation !== orientation) {
       this._orientation = orientation;
       if (this._resolutionPolicy) {
@@ -377,8 +378,8 @@ export class EGLView extends BaseClass {
 
     if (
       !this._sys.isMobile ||
-      (isLandscape && this._orientation & ORIENTATION_LANDSCAPE) ||
-      (!isLandscape && this._orientation & ORIENTATION_PORTRAIT)
+      (isLandscape && this._orientation & DeviceOrientation.LANDSCAPE) ||
+      (!isLandscape && this._orientation & DeviceOrientation.PORTRAIT)
     ) {
       locFrameSize.width = w;
       locFrameSize.height = h;
@@ -710,7 +711,7 @@ export class EGLView extends BaseClass {
   /**
    * Sets the current resolution policy
    * @see ResolutionPolicy
-   * @param {ResolutionPolicy|Number} resolutionPolicy
+   * @param {ResolutionPolicy|ResolutionPolicyType} resolutionPolicy
    */
   setResolutionPolicy(resolutionPolicy) {
     var _t = this;
@@ -719,16 +720,15 @@ export class EGLView extends BaseClass {
     }
     // Ensure compatibility with JSB
     else {
-      var _locPolicy = ResolutionPolicy;
-      if (resolutionPolicy === _locPolicy.EXACT_FIT)
+      if (resolutionPolicy === ResolutionPolicyType.EXACT_FIT)
         _t._resolutionPolicy = _t._rpExactFit;
-      if (resolutionPolicy === _locPolicy.SHOW_ALL)
+      if (resolutionPolicy === ResolutionPolicyType.SHOW_ALL)
         _t._resolutionPolicy = _t._rpShowAll;
-      if (resolutionPolicy === _locPolicy.NO_BORDER)
+      if (resolutionPolicy === ResolutionPolicyType.NO_BORDER)
         _t._resolutionPolicy = _t._rpNoBorder;
-      if (resolutionPolicy === _locPolicy.FIXED_HEIGHT)
+      if (resolutionPolicy === ResolutionPolicyType.FIXED_HEIGHT)
         _t._resolutionPolicy = _t._rpFixedHeight;
-      if (resolutionPolicy === _locPolicy.FIXED_WIDTH)
+      if (resolutionPolicy === ResolutionPolicyType.FIXED_WIDTH)
         _t._resolutionPolicy = _t._rpFixedWidth;
     }
   }
