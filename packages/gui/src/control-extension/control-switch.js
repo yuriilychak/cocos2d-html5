@@ -92,9 +92,7 @@ export class ControlSwitch extends Control {
   }
 
   locationFromTouch(touch) {
-    var touchLocation = touch.getLocation();
-    touchLocation = this.convertToNodeSpace(touchLocation);
-    return touchLocation;
+    return this.convertToNodeSpace(touch);
   }
 
   onTouchBegan(touch, event) {

@@ -520,8 +520,7 @@ export class Slider extends Widget {
   }
 
   onTouchMoved(touch, event) {
-    var touchPoint = touch.getLocation();
-    var nsp = this.convertToNodeSpace(touchPoint);
+    var nsp = this.convertToNodeSpace(touch);
     this.setPercent(this._getPercentWithBallPos(nsp.x));
     this._percentChangedEvent();
   }

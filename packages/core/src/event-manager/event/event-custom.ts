@@ -24,40 +24,40 @@
  ****************************************************************************/
 
 import Event from './event';
+import { EventType } from "../../enums";
 
 /**
  * The Custom event
  */
-export default class EventCustom extends Event {
-    constructor(eventName) {
-        super(Event.CUSTOM);
-        this._eventName = null;
-        this._userData = null;
-
-        this._eventName = eventName;
+export default class EventCustom<T = unknown> extends Event {
+    #eventName: string = '';
+    #userData: T | null = null;
+    
+    constructor(eventName: string, userData: T | null = null) {
+        super(EventType.CUSTOM);
+        this.#eventName = eventName;
+        this.#userData = userData;
     }
 
     /**
      * Sets user data
-     * @param {*} data
      */
-    setUserData(data) {
-        this._userData = data;
+    set userData(data: T | null) {
+        this.#userData = data;
     }
 
     /**
      * Gets user data
      * @returns {*}
      */
-    getUserData() {
-        return this._userData;
+    get userData(): T | null {
+        return this.#userData;
     }
 
     /**
      * Gets event name
-     * @returns {String}
      */
-    getEventName() {
-        return this._eventName;
+    get eventName(): string {
+        return this.#eventName;
     }
 }

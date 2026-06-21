@@ -96,27 +96,25 @@ export class TouchAllAtOnce extends EventTest {
     var target = event.getCurrentTarget();
     for (var i = 0; i < touches.length; i++) {
       var touch = touches[i];
-      var pos = touch.getLocation();
-      var id = touch.getID();
+      var id = touch.id;
       log(
         "Touch #" +
           i +
           ". onTouchesBegan at: " +
-          pos.x +
+          touch.x +
           " " +
-          pos.y +
+          touch.y +
           " Id:" +
           id
       );
-      target.new_id(id, pos);
+      target.new_id(id, touch);
     }
   }
   onTouchesMoved(touches, event) {
     var target = event.getCurrentTarget();
     for (var i = 0; i < touches.length; i++) {
       var touch = touches[i];
-      var pos = touch.getLocation();
-      var id = touch.getID();
+      var id = touch.id;
       var force = 0,
         maxForce = 0;
       if (touch.getCurrentForce) {
@@ -127,9 +125,9 @@ export class TouchAllAtOnce extends EventTest {
         "Touch #" +
           i +
           ". onTouchesMoved at: " +
-          pos.x +
+          touch.x +
           " " +
-          pos.y +
+          touch.y +
           " Id:" +
           id +
           " current force:" +
@@ -137,22 +135,21 @@ export class TouchAllAtOnce extends EventTest {
           " maximum postible force:" +
           maxForce
       );
-      target.update_id(id, pos);
+      target.update_id(id, touch);
     }
   }
   onTouchesEnded(touches, event) {
     var target = event.getCurrentTarget();
     for (var i = 0; i < touches.length; i++) {
       var touch = touches[i];
-      var pos = touch.getLocation();
-      var id = touch.getID();
+      var id = touch.id;
       log(
         "Touch #" +
           i +
           ". onTouchesEnded at: " +
-          pos.x +
+          touch.x +
           " " +
-          pos.y +
+          touch.y +
           " Id:" +
           id
       );
@@ -163,15 +160,14 @@ export class TouchAllAtOnce extends EventTest {
     var target = event.getCurrentTarget();
     for (var i = 0; i < touches.length; i++) {
       var touch = touches[i];
-      var pos = touch.getLocation();
-      var id = touch.getID();
+      var id = touch.id;
       log(
         "Touch #" +
           i +
           ". onTouchesCancelled at: " +
-          pos.x +
+          touch.x +
           " " +
-          pos.y +
+          touch.y +
           " Id:" +
           id
       );

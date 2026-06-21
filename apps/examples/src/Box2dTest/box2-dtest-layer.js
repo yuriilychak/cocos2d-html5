@@ -55,9 +55,7 @@ export class Box2DTestLayer extends LayerColor {
       EventListener.create({
         event: EventListener.TOUCH_ALL_AT_ONCE,
         onTouchesEnded: function (touches, event) {
-          var touch = touches[0];
-          var location = touch.getLocation();
-          event.getCurrentTarget().addNewSpriteWithCoords(location);
+          event.getCurrentTarget().addNewSpriteWithCoords(touches[0]);
         }
       }),
       this

@@ -1048,8 +1048,8 @@ export class EGLView extends BaseClass {
       selPrePoint;
     for (var i = 0; i < touches.length; i++) {
       selTouch = touches[i];
-      selPoint = selTouch._point;
-      selPrePoint = selTouch._prevPoint;
+      selPoint = selTouch;
+      selPrePoint = selTouch.previousLocation;
 
       selPoint.x = (selPoint.x - viewport.x) / scaleX;
       selPoint.y = (selPoint.y - viewport.y) / scaleY;

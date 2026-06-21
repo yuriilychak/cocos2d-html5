@@ -23,50 +23,24 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import Event from './event';
+import Event from "./event";
+import { EventType } from "../../enums";
 
 /**
- * The touch event
+ * Focus change event for UI widget
  */
-export default class EventTouch extends Event {
-    constructor(arr) {
-        super(Event.TOUCH);
-        this._eventCode = 0;
-        this._touches = null;
-
-        this._touches = arr || [];
-    }
-
-    /**
-     * Returns event code
-     * @returns {number}
-     */
-    getEventCode() {
-        return this._eventCode;
-    }
-
-    /**
-     * Returns touches of event
-     * @returns {Array}
-     */
-    getTouches() {
-        return this._touches;
-    }
-
-    _setEventCode(eventCode) {
-        this._eventCode = eventCode;
-    }
-
-    _setTouches(touches) {
-        this._touches = touches;
-    }
+export default class EventFocus extends Event {
+  _widgetGetFocus: unknown = null;
+  _widgetLoseFocus: unknown = null;
+  /**
+   * Constructor function.
+   * @param {Widget} widgetLoseFocus
+   * @param {Widget} widgetGetFocus
+   */
+  constructor(widgetLoseFocus: unknown, widgetGetFocus: unknown) {
+      
+    super(EventType.FOCUS);
+    this._widgetGetFocus = widgetGetFocus;
+    this._widgetLoseFocus = widgetLoseFocus;
+  }
 }
-
-/**
- * The maximum touch numbers
- * @constant
- * @type {Number}
- */
-EventTouch.MAX_TOUCHES = 5;
-
-EventTouch.EventCode = {BEGAN: 0, MOVED: 1, ENDED: 2, CANCELLED: 3};

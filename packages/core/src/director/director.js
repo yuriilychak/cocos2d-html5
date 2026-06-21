@@ -135,16 +135,13 @@ export class Director extends BaseClass {
       this._actionManager = null;
     }
 
-    this._eventAfterUpdate = new EventCustom(DirectorEvent.AFTER_UPDATE);
-    this._eventAfterUpdate.setUserData(this);
-    this._eventAfterVisit = new EventCustom(DirectorEvent.AFTER_VISIT);
-    this._eventAfterVisit.setUserData(this);
-    this._eventAfterDraw = new EventCustom(DirectorEvent.AFTER_DRAW);
-    this._eventAfterDraw.setUserData(this);
+    this._eventAfterUpdate = new EventCustom(DirectorEvent.AFTER_UPDATE, this);
+    this._eventAfterVisit = new EventCustom(DirectorEvent.AFTER_VISIT, this);
+    this._eventAfterDraw = new EventCustom(DirectorEvent.AFTER_DRAW, this);
     this._eventProjectionChanged = new EventCustom(
-      DirectorEvent.PROJECTION_CHANGED
+      DirectorEvent.PROJECTION_CHANGED,
+      this
     );
-    this._eventProjectionChanged.setUserData(this);
 
     if (this._rendererConfig.isCanvas) {
       this._rendererDelegate = new DirectorCanvasRenderer(this);

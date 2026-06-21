@@ -336,13 +336,13 @@ export class ParticlesPage extends PresentationBaseLayer {
           event: EventListener.TOUCH_ALL_AT_ONCE,
           onTouchesMoved: function (touches, event) {
             var particle = event.getCurrentTarget().particle;
-            var pos = touches[0].getLocation();
+            var pos = touches[0];
             particle.x = pos.x;
             particle.y = pos.y;
           },
           onTouchesEnded: function (touches, event) {
             var particle = event.getCurrentTarget().particle;
-            var pos = touches[0].getLocation();
+            var pos = touches[0];
             particle.x = pos.x;
             particle.y = pos.y;
           }

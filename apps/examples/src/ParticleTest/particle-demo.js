@@ -38,10 +38,10 @@ import { director } from "../constants";
 import {
   Color,
   EventListener,
-  EventMouse,
   Point,
   Sprite,
-  ServiceLocator
+  ServiceLocator,
+  MouseButton
 } from "@aspect/core";
 import { MoveBy, Sequence } from "@aspect/actions";
 import { ParticleSystem } from "@aspect/particle";
@@ -67,12 +67,12 @@ export class ParticleDemo extends BaseTestLayer {
           onTouchesBegan: function (touches, event) {
             event
               .getCurrentTarget()
-              ._moveToTouchPoint(touches[0].getLocation());
+              ._moveToTouchPoint(touches[0]);
           },
           onTouchesMoved: function (touches, event) {
             event
               .getCurrentTarget()
-              ._moveToTouchPoint(touches[0].getLocation());
+              ._moveToTouchPoint(touches[0]);
           }
         },
         this
@@ -82,11 +82,11 @@ export class ParticleDemo extends BaseTestLayer {
         {
           event: EventListener.MOUSE,
           onMouseDown: function (event) {
-            event.getCurrentTarget()._moveToTouchPoint(event.getLocation());
+            event.getCurrentTarget()._moveToTouchPoint(event);
           },
           onMouseMove: function (event) {
-            if (event.getButton() == EventMouse.BUTTON_LEFT)
-              event.getCurrentTarget()._moveToTouchPoint(event.getLocation());
+            if (event.getButton() == MouseButton.LEFT)
+              event.getCurrentTarget()._moveToTouchPoint(event);
           }
         },
         this

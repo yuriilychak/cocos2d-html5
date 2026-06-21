@@ -25,8 +25,8 @@
 
 import { BaseClass } from "../platform/class";
 import { Node } from "../base-nodes/node";
-import { Event, EventCustom, EventTouch } from "./event";
-import { GameEvent } from "../enums";
+import { EventCustom, EventTouch } from "./event";
+import { EventType, GameEvent } from "../enums";
 import { arrayRemoveObject, copyArray } from "../platform/macro/utils";
 import { isNumber } from "../boot/utils";
 import {
@@ -94,15 +94,14 @@ export class _EventListenerVector extends BaseClass {
 }
 
 function __getListenerID(event) {
-  var eventType = Event,
-    getType = event._type;
-  if (getType === eventType.ACCELERATION)
+  var getType = event.getType();
+  if (getType === EventType.ACCELERATION)
     return _EventListenerAcceleration.LISTENER_ID;
-  if (getType === eventType.CUSTOM) return event._eventName;
-  if (getType === eventType.KEYBOARD) return _EventListenerKeyboard.LISTENER_ID;
-  if (getType === eventType.MOUSE) return _EventListenerMouse.LISTENER_ID;
-  if (getType === eventType.FOCUS) return _EventListenerFocus.LISTENER_ID;
-  if (getType === eventType.TOUCH) {
+  if (getType === EventType.CUSTOM) return event.eventName;
+  if (getType === EventType.KEYBOARD) return _EventListenerKeyboard.LISTENER_ID;
+  if (getType === EventType.MOUSE) return _EventListenerMouse.LISTENER_ID;
+  if (getType === EventType.FOCUS) return _EventListenerFocus.LISTENER_ID;
+  if (getType === EventType.TOUCH) {
     // Touch listener is very special, it contains two kinds of listeners, EventListenerTouchOneByOne and EventListenerTouchAllAtOnce.
     // return UNKNOWN instead.
     log(_LogInfos.__getListenerID);
@@ -1072,7 +1071,7 @@ export default class EventManager {
     this._updateDirtyFlagForSceneGraph();
     this._inDispatch++;
     if (!event || !event.getType) throw new Error("event is undefined");
-    if (event._type === Event.TOUCH) {
+    if (event.getType() === EventType.TOUCH) {
       this._dispatchTouchEvent(event);
       this._inDispatch--;
       return;
@@ -1105,8 +1104,6 @@ export default class EventManager {
    * @param {*} optionalUserData
    */
   dispatchCustomEvent(eventName, optionalUserData) {
-    var ev = new EventCustom(eventName);
-    ev.setUserData(optionalUserData);
-    this.dispatchEvent(ev);
+    this.dispatchEvent(new EventCustom(eventName, optionalUserData));
   }
 }

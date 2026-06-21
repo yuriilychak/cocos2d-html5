@@ -43,7 +43,7 @@ export class GlobalZTouchTest extends EventDispatcherTestDemo {
       onTouchBegan: function (touch, event) {
         var target = event.getCurrentTarget();
 
-        var locationInNode = target.convertToNodeSpace(touch.getLocation());
+        var locationInNode = target.convertToNodeSpace(touch);
         var s = target.getContentSize();
         var rect = new Rect(0, 0, s.width, s.height);
 

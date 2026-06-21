@@ -443,7 +443,7 @@ export class TableView extends GScrollView {
             bb.x = tmpOrigin.x;
             bb.y = tmpOrigin.y;
             var locTableViewDelegate = this._tableViewDelegate;
-            if (Rect.containsPoint(bb, touch.getLocation()) && locTableViewDelegate !== null) {
+            if (Rect.containsPoint(bb, touch) && locTableViewDelegate !== null) {
                 if (locTableViewDelegate.tableCellUnhighlight)
                     locTableViewDelegate.tableCellUnhighlight(this, this._touchedCell);
                 if (locTableViewDelegate.tableCellTouched)

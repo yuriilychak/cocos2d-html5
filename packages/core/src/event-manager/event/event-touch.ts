@@ -24,22 +24,53 @@
  ****************************************************************************/
 
 import Event from "./event";
+import { EventType, TouchEvent } from "../../enums";
+import Touch from "../touch";
 
 /**
- * Focus change event for UI widget
+ * The touch event
  */
-export default class EventFocus extends Event {
-  /**
-   * Constructor function.
-   * @param {Widget} widgetLoseFocus
-   * @param {Widget} widgetGetFocus
-   */
-  constructor(widgetLoseFocus, widgetGetFocus) {
-    super(Event.FOCUS);
-    this._widgetGetFocus = null;
-    this._widgetLoseFocus = null;
+export default class EventTouch extends Event {
+  #touches: Touch[] = [];
 
-    this._widgetGetFocus = widgetGetFocus;
-    this._widgetLoseFocus = widgetLoseFocus;
+  #eventCode: TouchEvent = TouchEvent.NONE;
+
+  constructor(touches: Touch[] = []) {
+    super(EventType.TOUCH);
+    this.#eventCode = TouchEvent.BEGAN;
+    this.#touches = touches;
   }
+
+  /**
+   * Returns event code
+   */
+  getEventCode(): TouchEvent {
+    return this.#eventCode;
+  }
+
+  /**
+   * Returns touches of event
+   */
+  getTouches(): Touch[] {
+    return this.#touches;
+  }
+
+  _setEventCode(eventCode: TouchEvent) {
+    this.#eventCode = eventCode;
+  }
+
+  _setTouches(touches: Touch[]) {
+    this.#touches = touches;
+  }
+
+  /**
+   * The maximum touch numbers
+   * @constant
+   */
+
+  static MAX_TOUCHES: number = 5;
+
+  static EventCode = { BEGAN: 0, MOVED: 1, ENDED: 2, CANCELLED: 3 };
 }
+
+

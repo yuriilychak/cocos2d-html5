@@ -125,7 +125,7 @@ export class RenderTextureZbuffer extends RenderTextureBaseLayer {
     if (!touches || touches.length === 0) return;
 
     for (var i = 0; i < touches.length; i++) {
-      var location = touches[i].getLocation();
+      var location = touches[i];
 
       this.sp1.x = location.x;
       this.sp1.y = location.y;
@@ -152,7 +152,7 @@ export class RenderTextureZbuffer extends RenderTextureBaseLayer {
     if (!touches || touches.length === 0) return;
 
     for (var i = 0; i < touches.length; i++) {
-      var location = touches[i].getLocation();
+      var location = touches[i];
 
       this.sp1.x = location.x;
       this.sp1.y = location.y;

@@ -86,32 +86,28 @@ export class TouchOneByOneTest extends EventTest {
     }
 
     onTouchBegan(touch, event) {
-        var pos = touch.getLocation();
-        var id = touch.getID();
-        log("onTouchBegan at: " + pos.x + " " + pos.y + " Id:" + id );
-        if( pos.x < winSize.width/2) {
-            event.getCurrentTarget().new_id(id,pos);
-            return true;
+        var id = touch.id;
+        log("onTouchBegan at: " + touch.x + " " + touch.y + " Id:" + id);
+        if (touch.x < winSize.width / 2) {
+          event.getCurrentTarget().new_id(id, touch);
+          return true;
         }
         return false;
     }
     onTouchMoved(touch, event) {
-        var pos = touch.getLocation();
-        var id = touch.getID();
-        log("onTouchMoved at: " + pos.x + " " + pos.y + " Id:" + id );
-        event.getCurrentTarget().update_id(id,pos);
+        var id = touch.id;
+        log("onTouchMoved at: " + touch.x + " " + touch.y + " Id:" + id);
+        event.getCurrentTarget().update_id(id, touch);
     }
     onTouchEnded(touch, event) {
-        var pos = touch.getLocation();
-        var id = touch.getID();
-        log("onTouchEnded at: " + pos.x + " " + pos.y + " Id:" + id );
-        event.getCurrentTarget().release_id(id,pos);
+        var id = touch.id;
+        log("onTouchEnded at: " + ptouchos.x + " " + touch.y + " Id:" + id);
+        event.getCurrentTarget().release_id(id, touch);
     }
     onTouchCancelled(touch, event) {
-        var pos = touch.getLocation();
-        var id = touch.getID();
-        log("onTouchCancelled at: " + pos.x + " " + pos.y + " Id:" + id );
-        event.getCurrentTarget().update_id(id,pos);
+        var id = touch.id;
+        log("onTouchCancelled at: " + touch.x + " " + touch.y + " Id:" + id);
+        event.getCurrentTarget().update_id(id, touch);
     }
 
 }

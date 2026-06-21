@@ -115,11 +115,10 @@ export class KeyboardNotificationLayer extends TextInputTest {
     if (touches.length == 0) return;
 
     var touch = touches[0];
-    var point = touch.getLocation();
 
     // decide the trackNode is clicked.
     log(
-      "KeyboardNotificationLayer:clickedAt(" + point.x + "," + point.y + ")"
+      "KeyboardNotificationLayer:clickedAt(" + touch.x + "," + touch.y + ")"
     );
 
     var rect = textInputGetRect(target._trackNode);
@@ -135,7 +134,7 @@ export class KeyboardNotificationLayer extends TextInputTest {
         ")"
     );
 
-    target.onClickTrackNode(Rect.containsPoint(rect, point));
+    target.onClickTrackNode(Rect.containsPoint(rect, touch));
     log("----------------------------------");
   }
 
@@ -143,11 +142,9 @@ export class KeyboardNotificationLayer extends TextInputTest {
     var target = event.getCurrentTarget();
     if (!target._trackNode) return;
 
-    var point = event.getLocation();
-
     // decide the trackNode is clicked.
     log(
-      "KeyboardNotificationLayer:clickedAt(" + point.x + "," + point.y + ")"
+      "KeyboardNotificationLayer:clickedAt(" + touch.x + "," + touch.y + ")"
     );
 
     var rect = textInputGetRect(target._trackNode);
@@ -163,7 +160,7 @@ export class KeyboardNotificationLayer extends TextInputTest {
         ")"
     );
 
-    target.onClickTrackNode(Rect.containsPoint(rect, point));
+    target.onClickTrackNode(Rect.containsPoint(rect, touch));
     log("----------------------------------");
   }
 }

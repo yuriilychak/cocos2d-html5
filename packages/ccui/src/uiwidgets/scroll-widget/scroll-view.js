@@ -1291,9 +1291,9 @@ export class ScrollView extends Layout {
   }
 
   _handleMoveLogic(touch) {
-    var touchPositionInNodeSpace = this.convertToNodeSpace(touch.getLocation()),
+    var touchPositionInNodeSpace = this.convertToNodeSpace(touch),
       previousTouchPositionInNodeSpace = this.convertToNodeSpace(
-        touch.getPreviousLocation()
+        touch.previousLocation
       );
     var delta = Point.sub(
       touchPositionInNodeSpace,
@@ -1305,9 +1305,9 @@ export class ScrollView extends Layout {
   }
 
   _handleReleaseLogic(touch) {
-    var touchPositionInNodeSpace = this.convertToNodeSpace(touch.getLocation()),
+    var touchPositionInNodeSpace = this.convertToNodeSpace(touch),
       previousTouchPositionInNodeSpace = this.convertToNodeSpace(
-        touch.getPreviousLocation()
+        touch.previousLocation
       );
     var delta = Point.sub(
       touchPositionInNodeSpace,
@@ -1403,20 +1403,17 @@ export class ScrollView extends Layout {
 
     if (this._direction === ScrollView.DIR_NONE) return;
 
-    var touchPoint = touch.getLocation();
     switch (event) {
       case Widget.TOUCH_BEGAN:
         this._isInterceptTouch = true;
-        this._touchBeganPosition.x = touchPoint.x;
-        this._touchBeganPosition.y = touchPoint.y;
+        this._touchBeganPosition.set(touch);
         this._handlePressLogic(touch);
         break;
       case Widget.TOUCH_MOVED:
         var offset = Point.vectorLength(
-          Point.sub(sender.getTouchBeganPosition(), touchPoint)
+          Point.sub(sender.getTouchBeganPosition(), touch)
         );
-        this._touchMovePosition.x = touchPoint.x;
-        this._touchMovePosition.y = touchPoint.y;
+        this._touchMovePosition.set(touch);
         if (offset > this._childFocusCancelOffset) {
           sender.setHighlighted(false);
           this._handleMoveLogic(touch);
@@ -1424,8 +1421,7 @@ export class ScrollView extends Layout {
         break;
       case Widget.TOUCH_CANCELED:
       case Widget.TOUCH_ENDED:
-        this._touchEndPosition.x = touchPoint.x;
-        this._touchEndPosition.y = touchPoint.y;
+        this._touchEndPosition.set(touch);
         this._handleReleaseLogic(touch);
         if (sender.isSwallowTouches()) this._isInterceptTouch = false;
         break;

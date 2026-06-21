@@ -233,3 +233,86 @@ export enum DirectorProjection {
   CUSTOM = 3,
   DEFAULT = THREE_D
 }
+
+export enum EventType {
+  NONE = -1,
+  TOUCH = 0,
+  KEYBOARD = 1,
+  ACCELERATION = 2,
+  MOUSE = 3,
+  FOCUS = 4,
+  CUSTOM = 6
+}
+
+export enum MouseEvent {
+  /**
+   * The none event code of  mouse event.
+   */
+  NONE = 0,
+  /**
+   * The event type code of mouse down event.
+   */
+  DOWN = 1,
+  /**
+   * The event type code of mouse up event.
+   */
+  UP = 2,
+  /**
+   * The event type code of mouse move event.
+   */
+  MOVE = 3,
+  /**
+   * The event type code of mouse scroll event.
+   */
+  SCROLL = 4
+}
+
+export enum MouseButton {
+  /**
+   * The tag of Mouse left button
+   */
+  LEFT = 0,
+
+  /**
+   * The tag of Mouse right button  (The right button number is 2 on browser)
+   */
+  RIGHT = 2,
+
+  /**
+   * The tag of Mouse middle button  (The right button number is 1 on browser)
+   */
+  MIDDLE = 1,
+
+  /**
+   * The tag of Mouse button 4
+   */
+  B4 = 3,
+
+  /**
+   * The tag of Mouse button 5
+   */
+  B5 = 4,
+
+  /**
+   * The tag of Mouse button 6
+   */
+  B6 = 5,
+
+  /**
+   * The tag of Mouse button 7
+   */
+  B7 = 6,
+
+  /**
+   * The tag of Mouse button 8
+   */
+  B8 = 7
+}
+
+export enum TouchEvent {
+    NONE = -1,
+    BEGAN = 0, 
+    MOVED = 1, 
+    ENDED = 2, 
+    CANCELLED = 3
+}

@@ -37,7 +37,7 @@ export class SpineTestPerformanceLayer extends SpineTestLayer {
     var listener = EventListener.create({
       event: EventListener.TOUCH_ONE_BY_ONE,
       onTouchBegan: function (touch, event) {
-        var pos = self.convertToNodeSpace(touch.getLocation());
+        var pos = self.convertToNodeSpace(touch);
         var skeletonNode = new SkeletonAnimation(
           "spine/goblins-pro.json",
           "spine/goblins.atlas",

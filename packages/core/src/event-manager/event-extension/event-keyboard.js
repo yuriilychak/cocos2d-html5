@@ -24,13 +24,14 @@
  ****************************************************************************/
 
 import Event from '../event/event';
+import { EventType } from "../../enums";
 
 /**
  * The keyboard event
  */
 export default class EventKeyboard extends Event {
     constructor(keyCode, isPressed) {
-        super(Event.KEYBOARD);
+        super(EventType.KEYBOARD);
         this._keyCode = 0;
         this._isPressed = false;
 

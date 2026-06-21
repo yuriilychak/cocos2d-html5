@@ -59,7 +59,7 @@ export class CustomEventTest extends EventDispatcherTestDemo {
       event: EventListener.CUSTOM,
       eventName: "game_custom_event1",
       callback: function (event) {
-        statusLabel.string = "Custom event 1 received, " + event.getUserData() + " times";
+        statusLabel.string = "Custom event 1 received, " + event.userData + " times";
       }
     });
     ServiceLocator.eventManager.addListener(this._listener1, 1);
@@ -75,7 +75,7 @@ export class CustomEventTest extends EventDispatcherTestDemo {
       event: EventListener.CUSTOM,
       eventName: "game_custom_event2",
       callback: function (event) {
-        statusLabel2.string = "Custom event 2 received, " + event.getUserData() + " times";
+        statusLabel2.string = "Custom event 2 received, " + event.userData + " times";
       }
     });
     ServiceLocator.eventManager.addListener(this._listener2, 1);
@@ -91,13 +91,13 @@ export class CustomEventTest extends EventDispatcherTestDemo {
         switch (i) {
           case 0: {
             const event = new EventCustom("game_custom_event1");
-            event.setUserData((++this._item1Count).toString());
+            event.userData = (++this._item1Count).toString();
             ServiceLocator.eventManager.dispatchEvent(event);
             break;
           }
           case 1: {
             const event = new EventCustom("game_custom_event2");
-            event.setUserData((++this._item2Count).toString());
+            event.userData = (++this._item2Count).toString();
             ServiceLocator.eventManager.dispatchEvent(event);
             break;
           }

@@ -93,7 +93,7 @@ export class ScrollViewDemo extends BaseClippingNodeTest {
 
           var touch = touches[0];
           var clipper = target.getChildByTag(TAG_CLIPPERNODE);
-          var point = clipper.convertToNodeSpace(touch.getLocation());
+          var point = clipper.convertToNodeSpace(touch);
           var rect = new Rect(0, 0, clipper.width, clipper.height);
           target._scrolling = Rect.containsPoint(rect, point);
           target._lastPoint = point;
@@ -106,7 +106,7 @@ export class ScrollViewDemo extends BaseClippingNodeTest {
           if (!touches || touches.length == 0) return;
           var touch = touches[0];
           var clipper = target.getChildByTag(TAG_CLIPPERNODE);
-          var point = clipper.convertToNodeSpace(touch.getLocation());
+          var point = clipper.convertToNodeSpace(touch);
           var diff = Point.sub(point, target._lastPoint);
           var content = clipper.getChildByTag(TAG_CONTENTNODE);
           content.setPosition(Point.add(content.getPosition(), diff));

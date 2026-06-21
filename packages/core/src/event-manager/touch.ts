@@ -24,7 +24,7 @@
  ****************************************************************************/
 
 import { BaseClass } from "../platform/class";
-import { Point } from "../geometry";
+import { Point, type PointLike } from "../geometry";
 import { ServiceLocator } from "../service-locator";
 
 /**
@@ -34,103 +34,72 @@ import { ServiceLocator } from "../service-locator";
  * @param {Number} y
  * @param {Number} id
  */
-export default class Touch extends BaseClass {
-  constructor(x, y, id) {
-    super();
-    this._lastModified = 0;
-    this._point = null;
-    this._prevPoint = null;
-    this._id = 0;
-    this._startPointCaptured = false;
-    this._startPoint = null;
+export default class Touch extends BaseClass implements PointLike {
+  #curr: Point = new Point();
+  #prev: Point = new Point();
+  #start: Point = new Point();
+  #lastModified = 0;
+  #startPointCaptured = false;
+  #id = 0;
 
+  constructor(x: number, y: number, id: number) {
+    super();
     this.setTouchInfo(id, x, y);
   }
-
-  /**
-   * Returns the current touch location in OpenGL coordinates
-   * @return {Point}
-   */
-  getLocation() {
-    //TODO
-    //return director.convertToGL(this._point);
-    return { x: this._point.x, y: this._point.y };
-  }
-
-  /**
-   * Returns X axis location value
-   * @returns {number}
-   */
-  getLocationX() {
-    return this._point.x;
-  }
-
-  /**
-   * Returns Y axis location value
-   * @returns {number}
-   */
-  getLocationY() {
-    return this._point.y;
-  }
-
+  
   /**
    * Returns the previous touch location in OpenGL coordinates
-   * @return {Point}
    */
-  getPreviousLocation() {
+  get previousLocation(): Point {
     //TODO
     //return director.convertToGL(this._prevPoint);
-    return { x: this._prevPoint.x, y: this._prevPoint.y };
+    return this.#prev.clone();
   }
 
   /**
    * Returns the start touch location in OpenGL coordinates
    * @returns {Point}
    */
-  getStartLocation() {
+  get startLocation() {
     //TODO
     //return director.convertToGL(this._startPoint);
-    return { x: this._startPoint.x, y: this._startPoint.y };
+    return this.#start.clone();
   }
 
   /**
    * Returns the delta distance from the previous touche to the current one in screen coordinates
    * @return {Point}
    */
-  getDelta() {
-    return Point.sub(this._point, this._prevPoint);
+  get delta() {
+    return Point.sub(this.#curr, this.#prev);
   }
 
   /**
    * Returns the current touch location in screen coordinates
-   * @return {Point}
    */
-  getLocationInView() {
-    return { x: this._point.x, y: this._point.y };
+  get locationInView(): Point {
+    return this.#curr.clone();
   }
 
   /**
    * Returns the previous touch location in screen coordinates
-   * @return {Point}
    */
-  getPreviousLocationInView() {
-    return { x: this._prevPoint.x, y: this._prevPoint.y };
+  get previousLocationInView(): Point {
+    return this.#prev.clone();
   }
 
   /**
    * Returns the start touch location in screen coordinates
-   * @return {Point}
    */
-  getStartLocationInView() {
-    return { x: this._startPoint.x, y: this._startPoint.y };
+  get startLocationInView(): Point {
+    return this.#start.clone();
   }
 
   /**
    * Returns the id of Touch
-   * @return {Number}
    */
-  getID() {
-    return this._id;
+  get id(): number {
+    return this.#id;
   }
 
   /**
@@ -139,29 +108,65 @@ export default class Touch extends BaseClass {
    * @param  {Number} x
    * @param  {Number} y
    */
-  setTouchInfo(id, x, y) {
-    this._prevPoint = this._point;
-    this._point = new Point(x || 0, y || 0);
-    this._id = id;
-    if (!this._startPointCaptured) {
-      this._startPoint = new Point(this._point);
-      ServiceLocator.eglView._convertPointWithScale(this._startPoint);
-      this._startPointCaptured = true;
+  setTouchInfo(id: number, x: number = 0, y: number = 0) {
+    this.#prev.set(this.#curr);
+    this.#curr.set(x, y);
+    this.#id = id;
+
+    if (!this.#startPointCaptured) {
+      this.#start.set(this.#curr);
+      ServiceLocator.eglView._convertPointWithScale(this.#start);
+      this.#startPointCaptured = true;
     }
   }
 
-  _setPoint(x, y) {
-    if (y === undefined) {
-      this._point.x = x.x;
-      this._point.y = x.y;
-    } else {
-      this._point.x = x;
-      this._point.y = y;
+  clone(): Touch {
+    return new Touch(this.x, this.y, this.id);
+  }
+
+  _setPoint(): void 
+  _setPoint(point: PointLike): void 
+  _setPoint(x: number, y: number): void 
+  _setPoint(xOrPoint: PointLike | number = 0,  y: number = 0) {
+    if (Point.isLike(xOrPoint)) {
+      this.#curr.set(xOrPoint);
+    } else if (typeof xOrPoint === 'number' && typeof y === "number") {
+      this.#curr.set(xOrPoint, y);
     }
   }
 
-  _setPrevPoint(x, y) {
-    if (y === undefined) this._prevPoint = new Point(x.x, x.y);
-    else this._prevPoint = new Point(x || 0, y || 0);
+  _setPrevPoint(): void 
+  _setPrevPoint(point: PointLike): void 
+  _setPrevPoint(x: number, y: number): void 
+  _setPrevPoint(xOrPoint: PointLike | number = 0,  y: number = 0) {
+    if (Point.isLike(xOrPoint)) {
+      this.#prev.set(xOrPoint);
+    } else if (typeof xOrPoint === 'number' && typeof y === "number") {
+      this.#prev.set(xOrPoint, y);
+    }
+  }
+
+  get lastModified(): number {
+    return this.#lastModified;
+  }
+
+  set lastModified(value: number) {
+    this.#lastModified = value;
+  } 
+
+  get x(): number {
+    return this.#curr.x;
+  }
+
+  set x(value: number) {
+    this.#curr.x = value;
+  }
+
+  get y(): number {
+    return this.#curr.y;
+  }
+
+  set y(value: number) {
+    this.#curr.y = value;
   }
 }

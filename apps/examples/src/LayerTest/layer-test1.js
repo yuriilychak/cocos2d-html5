@@ -32,7 +32,7 @@
 //------------------------------------------------------------------
 import { LayerTest } from "./layer-test";
 import { director, winSize } from "../constants";
-import { Color, EventListener, EventMouse, LayerColor, ServiceLocator } from "@aspect/core";
+import { Color, EventListener, MouseButton, LayerColor, ServiceLocator } from "@aspect/core";
 
 import { TAG_LAYER } from "./layer-test-constants";
 export class LayerTest1 extends LayerTest {
@@ -50,7 +50,7 @@ export class LayerTest1 extends LayerTest {
         {
           event: EventListener.TOUCH_ALL_AT_ONCE,
           onTouchesMoved: function (touches, event) {
-            event.getCurrentTarget().updateSize(touches[0].getLocation());
+            event.getCurrentTarget().updateSize(touches[0]);
           }
         },
         this
@@ -60,8 +60,8 @@ export class LayerTest1 extends LayerTest {
         {
           event: EventListener.MOUSE,
           onMouseMove: function (event) {
-            if (event.getButton() == EventMouse.BUTTON_LEFT)
-              event.getCurrentTarget().updateSize(event.getLocation());
+            if (event.getButton() == MouseButton.LEFT)
+              event.getCurrentTarget().updateSize(event);
           }
         },
         this

@@ -31,7 +31,7 @@
 import { RenderTextureBaseLayer } from "./render-texture-base-layer";
 import { s_fire, s_simpleFont_fnt } from "../resources";
 import { winSize } from "../constants";
-import { Color, EventListener, EventMouse, Point, Rect, Sprite, log, ServiceLocator } from "@aspect/core";
+import { Color, EventListener, Point, Rect, Sprite, log, ServiceLocator } from "@aspect/core";
 import { BMButton, Widget } from "@aspect/ccui";
 
 import { RenderTexture, IMAGE_FORMAT_JPEG } from "@aspect/render-texture";
@@ -52,18 +52,18 @@ export class RenderTextureSave extends RenderTextureBaseLayer {
             ServiceLocator.eventManager.addListener({
                 event: EventListener.TOUCH_ALL_AT_ONCE,
                 onTouchesMoved:function (touches, event) {
-                    event.getCurrentTarget().drawInLocation(touches[0].getLocation());
+                    event.getCurrentTarget().drawInLocation(touches[0]);
                 }
             }, this);
         } else if ('mouse' in ServiceLocator.sys.capabilities)
             ServiceLocator.eventManager.addListener({
                 event: EventListener.MOUSE,
                 onMouseDown: function(event){
-                    event.getCurrentTarget()._lastLocation = event.getLocation();
+                    event.getCurrentTarget()._lastLocation = new Point(event);
                 },
                 onMouseMove: function(event){
-                    if(event.getButton() == EventMouse.BUTTON_LEFT)
-                        event.getCurrentTarget().drawInLocation(event.getLocation());
+                    if(event.getButton() == MouseButton.LEFT)
+                        event.getCurrentTarget().drawInLocation(event);
                 }
             }, this);
 

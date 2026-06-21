@@ -30,7 +30,7 @@
 //------------------------------------------------------------------
 import { EventTest } from "./event-test";
 import { s_pathR2 } from "../resources";
-import { Color, EventListener, EventMouse, Sprite, log, ServiceLocator } from "@aspect/core";
+import { Color, EventListener, EventMouse, Sprite, log, ServiceLocator, MouseButton } from "@aspect/core";
 
 export class MouseTest extends EventTest {
   init() {
@@ -51,28 +51,25 @@ export class MouseTest extends EventTest {
         {
           event: EventListener.MOUSE,
           onMouseDown: function (event) {
-            var pos = event.getLocation(),
-              target = event.getCurrentTarget();
-            if (event.getButton() === EventMouse.BUTTON_RIGHT)
-              log("onRightMouseDown at: " + pos.x + " " + pos.y);
-            else if (event.getButton() === EventMouse.BUTTON_LEFT)
-              log("onLeftMouseDown at: " + pos.x + " " + pos.y);
-            target.sprite.x = pos.x;
-            target.sprite.y = pos.y;
+            var target = event.getCurrentTarget();
+            if (event.getButton() === MouseButton.RIGHT)
+              log("onRightMouseDown at: " + event.x + " " + event.y);
+            else if (event.getButton() === BUTTON_LEFT.LEFT)
+              log("onLeftMouseDown at: " + event.x + " " + event.y);
+            target.sprite.x = event.x;
+            target.sprite.y = event.y;
           },
           onMouseMove: function (event) {
-            var pos = event.getLocation(),
-              target = event.getCurrentTarget();
-            log("onMouseMove at: " + pos.x + " " + pos.y);
-            target.sprite.x = pos.x;
-            target.sprite.y = pos.y;
+            var target = event.getCurrentTarget();
+            log("onMouseMove at: " + event.x + " " + event.y);
+            target.sprite.x = event.x;
+            target.sprite.y = event.y;
           },
           onMouseUp: function (event) {
-            var pos = event.getLocation(),
-              target = event.getCurrentTarget();
-            target.sprite.x = pos.x;
-            target.sprite.y = pos.y;
-            log("onMouseUp at: " + pos.x + " " + pos.y);
+            var target = event.getCurrentTarget();
+            target.sprite.x = event.x;
+            target.sprite.y = event.y;
+            log("onMouseUp at: " + event.x + " " + event.y);
           }
         },
         this

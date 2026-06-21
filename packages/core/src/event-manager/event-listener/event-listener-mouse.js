@@ -24,7 +24,7 @@
  ****************************************************************************/
 
 import EventListener from './event-listener';
-import { EventMouse } from '../event';
+import { MouseEvent } from '../../enums';
 
 export default class _EventListenerMouse extends EventListener {
     constructor() {
@@ -38,21 +38,20 @@ export default class _EventListenerMouse extends EventListener {
     }
 
     _callback(event) {
-        var eventType = EventMouse;
-        switch (event._eventType) {
-            case eventType.DOWN:
+        switch (event.eventType) {
+            case MouseEvent.DOWN:
                 if (this.onMouseDown)
                     this.onMouseDown(event);
                 break;
-            case eventType.UP:
+            case MouseEvent.UP:
                 if (this.onMouseUp)
                     this.onMouseUp(event);
                 break;
-            case eventType.MOVE:
+            case MouseEvent.MOVE:
                 if (this.onMouseMove)
                     this.onMouseMove(event);
                 break;
-            case eventType.SCROLL:
+            case MouseEvent.SCROLL:
                 if (this.onMouseScroll)
                     this.onMouseScroll(event);
                 break;

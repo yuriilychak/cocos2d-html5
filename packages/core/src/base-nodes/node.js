@@ -148,6 +148,7 @@ export function setGlobalOrderOfArrival(val) {
  */
 export class Node extends BaseClass {
   #tag = NODE_TAG_INVALID;
+  #userData = null;
   /**
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
    * @function
@@ -175,7 +176,7 @@ export class Node extends BaseClass {
     this._running = false;
     this._parent = null;
     this._ignoreAnchorPointForPosition = false;
-    this.userData = null;
+    this.#userData = null;
     this.userObject = null;
     this._reorderChildDirty = false;
     this.arrivalOrder = 0;
@@ -1053,8 +1054,8 @@ export class Node extends BaseClass {
    * @function
    * @return {object}  A custom user data pointer
    */
-  getUserData() {
-    return this.userData;
+  get userData() {
+    return this.#userData;
   }
 
   /**
@@ -1066,8 +1067,8 @@ export class Node extends BaseClass {
    * @warning Don't forget to release the memory manually in JSB, especially before you change this data pointer, and before this node is autoreleased.
    * @param {object} Var A custom user data
    */
-  setUserData(Var) {
-    this.userData = Var;
+  set userData(Var) {
+    this.#userData = Var;
   }
 
   /**
@@ -2013,8 +2014,7 @@ export class Node extends BaseClass {
    * @return {Point}
    */
   convertTouchToNodeSpace(touch) {
-    var point = touch.getLocation();
-    return this.convertToNodeSpace(point);
+    return this.convertToNodeSpace(touch);
   }
 
   /**
@@ -2024,7 +2024,7 @@ export class Node extends BaseClass {
    * @return {Point}
    */
   convertTouchToNodeSpaceAR(touch) {
-    var point = ServiceLocator.director.convertToGL(touch.getLocation());
+    var point = ServiceLocator.director.convertToGL(touch);
     return this.convertToNodeSpaceAR(point);
   }
 

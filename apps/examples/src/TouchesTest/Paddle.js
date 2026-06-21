@@ -64,12 +64,11 @@ export class Paddle extends Sprite {
     }
 
     containsTouchLocation(touch) {
-        var getPoint = touch.getLocation();
         var myRect = this.rect();
 
         myRect.x += this.x;
         myRect.y += this.y;
-        return Rect.containsPoint(myRect, getPoint);//this.convertTouchToNodeSpaceAR(touch));
+        return Rect.containsPoint(myRect, touch);//this.convertTouchToNodeSpaceAR(touch));
     }
 
     onTouchBegan(touch, event) {
@@ -90,10 +89,9 @@ export class Paddle extends Sprite {
         // in each touchXXX method.
         assert(target._state == PADDLE_STATE_GRABBED, "Paddle - Unexpected state!");
 
-        var touchPoint = touch.getLocation();
         //touchPoint = director.convertToGL( touchPoint );
 
-        target.x = touchPoint.x;
+        target.x = touch.x;
     }
     onTouchEnded(touch, event) {
         var target = event.getCurrentTarget();

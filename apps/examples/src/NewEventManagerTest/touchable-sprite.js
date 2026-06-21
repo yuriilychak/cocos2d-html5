@@ -73,7 +73,7 @@ export class TouchableSprite extends ImageView {
             event: EventListener.TOUCH_ONE_BY_ONE,
             swallowTouches: true,
             onTouchBegan: function (touch, event) {
-                var locationInNode = selfPointer.convertToNodeSpace(touch.getLocation());
+                var locationInNode = selfPointer.convertToNodeSpace(touch);
                 var s = selfPointer.getContentSize();
                 var rect = new Rect(0, 0, s.width, s.height);
 

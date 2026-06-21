@@ -39,14 +39,14 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
       swallowTouches: true,
       onTouchBegan: function (touch, event) {
         // Skip if don't touch top half screen.
-        if (!this._isPointInTopHalfAreaOfScreen(touch.getLocation()))
+        if (!this._isPointInTopHalfAreaOfScreen(touch))
           return false;
 
         var target = event.getCurrentTarget();
         if (target.tag != StopPropagationTest._TAG_BLUE_SPRITE)
           log("Yellow blocks shouldn't response event.");
 
-        if (this._isPointInNode(touch.getLocation(), target)) {
+        if (this._isPointInNode(touch, target)) {
           target.opacity = 180;
           return true;
         }
@@ -64,28 +64,28 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
       event: EventListener.TOUCH_ALL_AT_ONCE,
       onTouchesBegan: function (touches, event) {
         // Skip if don't touch top half screen.
-        if (this._isPointInTopHalfAreaOfScreen(touches[0].getLocation()))
+        if (this._isPointInTopHalfAreaOfScreen(touches[0]))
           return;
 
         var target = event.getCurrentTarget();
         if (target.tag != StopPropagationTest._TAG_BLUE_SPRITE2)
           log("Yellow blocks shouldn't response event.");
 
-        if (this._isPointInNode(touches[0].getLocation(), target))
+        if (this._isPointInNode(touches[0], target))
           target.opacity = 180;
         // Stop propagation, so yellow blocks will not be able to receive event.
         event.stopPropagation();
       }.bind(this),
       onTouchesEnded: function (touches, event) {
         // Skip if don't touch top half screen.
-        if (this._isPointInTopHalfAreaOfScreen(touches[0].getLocation()))
+        if (this._isPointInTopHalfAreaOfScreen(touches[0]))
           return;
 
         var target = event.getCurrentTarget();
         if (target.tag != StopPropagationTest._TAG_BLUE_SPRITE2)
           log("Yellow blocks shouldn't response event.");
 
-        if (this._isPointInNode(touches[0].getLocation(), target))
+        if (this._isPointInNode(touches[0], target))
           target.opacity = 255;
         // Stop propagation, so yellow blocks will not be able to receive event.
         event.stopPropagation();

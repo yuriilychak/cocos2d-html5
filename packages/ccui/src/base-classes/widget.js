@@ -759,9 +759,7 @@ export class Widget extends ProtectedNode {
       this._isAncestorsEnabled() &&
       this._isAncestorsVisible(this)
     ) {
-      var touchPoint = touch.getLocation();
-      this._touchBeganPosition.x = touchPoint.x;
-      this._touchBeganPosition.y = touchPoint.y;
+      this._touchBeganPosition.set(touch);
       if (
         this.hitTest(this._touchBeganPosition) &&
         this.isClippingParentContainsPoint(this._touchBeganPosition)
@@ -788,19 +786,15 @@ export class Widget extends ProtectedNode {
   }
 
   onTouchMoved(touch, event) {
-    var touchPoint = touch.getLocation();
-    this._touchMovePosition.x = touchPoint.x;
-    this._touchMovePosition.y = touchPoint.y;
-    this.setHighlighted(this.hitTest(touchPoint));
+    this._touchMovePosition.set(touch);
+    this.setHighlighted(this.hitTest(touch));
     if (this._propagateTouchEvents)
       this.propagateTouchEvent(Widget.TOUCH_MOVED, this, touch);
     this._moveEvent();
   }
 
   onTouchEnded(touch, event) {
-    var touchPoint = touch.getLocation();
-    this._touchEndPosition.x = touchPoint.x;
-    this._touchEndPosition.y = touchPoint.y;
+    this._touchEndPosition.set(touch);
     if (this._propagateTouchEvents)
       this.propagateTouchEvent(Widget.TOUCH_ENDED, this, touch);
 

@@ -96,6 +96,7 @@ export {
   DeviceOrientation,
   DirectorEvent,
   DirectorProjection,
+  EventType,
   GameEvent,
   GLServerState,
   GLState,
@@ -111,7 +112,10 @@ export {
   VertexAttribFlag,
   VertexAttribute,
   VerticalTextAlignment,
-  AttributeName
+  AttributeName,
+  MouseEvent,
+  MouseButton,
+  TouchEvent
 } from "./enums";
 export { Vertex3F, Quad3, V3F_C4B_T2F } from "./platform/types/vertex";
 export {

@@ -528,9 +528,9 @@ export default class Game extends EventHelper(BaseClass) {
       hidden;
 
     this._eventHide = this._eventHide || new EventCustom(GameEvent.HIDE);
-    this._eventHide.setUserData(this);
+    this._eventHide.userData = this;
     this._eventShow = this._eventShow || new EventCustom(GameEvent.SHOW);
-    this._eventShow.setUserData(this);
+    this._eventShow.userData = this;
 
     if (this.config[Game.CONFIG_KEY.registerSystemEvent])
       this._inputManager.registerSystemEvent(this.canvas);

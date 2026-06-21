@@ -27,7 +27,7 @@
 
 import { TAG_NODE } from "./parallax-test-constants";
 import { s_back, s_power, s_resprefix } from "../resources";
-import { EventListener, EventMouse, Point, Sprite, ServiceLocator } from "@aspect/core";
+import { EventListener, EventMouse, Point, Sprite, ServiceLocator, MouseButton } from "@aspect/core";
 import { TMXTiledMap } from "@aspect/tilemap";
 
 import { ParallaxNode } from "@aspect/parallax";
@@ -60,7 +60,7 @@ export class Parallax2 extends ParallaxDemo {
         {
           event: EventListener.MOUSE,
           onMouseMove: function (event) {
-            if (event.getButton() == EventMouse.BUTTON_LEFT) {
+            if (event.getButton() == MouseButton.LEFT) {
               var node = event.getCurrentTarget().getChildByTag(TAG_NODE);
               node.x += event.getDeltaX();
               node.y += event.getDeltaY();

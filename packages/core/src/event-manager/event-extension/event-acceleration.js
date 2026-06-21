@@ -24,13 +24,14 @@
  ****************************************************************************/
 
 import Event from '../event/event';
+import { EventType } from "../../enums";
 
 /**
  * The acceleration event
  */
 export default class EventAcceleration extends Event {
     constructor(acc) {
-        super(Event.ACCELERATION);
+        super(EventType.ACCELERATION);
         this._acc = null;
 
         this._acc = acc;

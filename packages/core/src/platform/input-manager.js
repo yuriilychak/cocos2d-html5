@@ -31,8 +31,7 @@ import { EventAcceleration } from "../event-manager/event-extension/index";
 import EventKeyboard from "../event-manager/event-extension/event-keyboard";
 import { Acceleration } from "../platform/types/color";
 import { isFunction } from "../boot/utils";
-import { BrowserType } from "../enums";
-
+import { BrowserType, MouseEvent } from "../enums";
 
 /**
  * <p>
@@ -98,9 +97,9 @@ export class InputManager {
         return i;
       } else {
         var touch = this._touches[i];
-        if (now - touch._lastModified > this.TOUCH_TIMEOUT) {
+        if (now - touch.lastModified > this.TOUCH_TIMEOUT) {
           this._removeUsedIndexBit(i);
-          delete this._touchesIntegerDict[touch.getID()];
+          delete this._touchesIntegerDict[touch.id];
           return i;
         }
       }
@@ -149,7 +148,7 @@ export class InputManager {
       now = this._sys.now();
     for (var i = 0, len = touches.length; i < len; i++) {
       selTouch = touches[i];
-      touchID = selTouch.getID();
+      touchID = selTouch.id;
       index = locTouchIntDict[touchID];
 
       if (index == null) {
@@ -159,13 +158,9 @@ export class InputManager {
           continue;
         }
         //curTouch = this._touches[unusedIndex] = selTouch;
-        curTouch = this._touches[unusedIndex] = new Touch(
-          selTouch._point.x,
-          selTouch._point.y,
-          selTouch.getID()
-        );
-        curTouch._lastModified = now;
-        curTouch._setPrevPoint(selTouch._prevPoint);
+        curTouch = this._touches[unusedIndex] = selTouch.clone();
+        curTouch.lastModified = now;
+        curTouch._setPrevPoint(selTouch.previousLocation);
         locTouchIntDict[touchID] = unusedIndex;
         handleTouches.push(curTouch);
       }
@@ -173,7 +168,7 @@ export class InputManager {
     if (handleTouches.length > 0) {
       this._glView._convertTouchesWithScale(handleTouches);
       var touchEvent = new EventTouch(handleTouches);
-      touchEvent._eventCode = EventTouch.EventCode.BEGAN;
+      touchEvent._setEventCode(EventTouch.EventCode.BEGAN);
       this._eventManager.dispatchEvent(touchEvent);
     }
   }
@@ -191,7 +186,7 @@ export class InputManager {
       now = this._sys.now();
     for (var i = 0, len = touches.length; i < len; i++) {
       selTouch = touches[i];
-      touchID = selTouch.getID();
+      touchID = selTouch.id;
       index = this._touchesIntegerDict[touchID];
 
       if (index == null) {
@@ -199,16 +194,16 @@ export class InputManager {
         continue;
       }
       if (locTouches[index]) {
-        locTouches[index]._setPoint(selTouch._point);
-        locTouches[index]._setPrevPoint(selTouch._prevPoint);
-        locTouches[index]._lastModified = now;
+        locTouches[index]._setPoint(selTouch);
+        locTouches[index]._setPrevPoint(selTouch.previousLocation);
+        locTouches[index].lastModified = now;
         handleTouches.push(locTouches[index]);
       }
     }
     if (handleTouches.length > 0) {
       this._glView._convertTouchesWithScale(handleTouches);
       var touchEvent = new EventTouch(handleTouches);
-      touchEvent._eventCode = EventTouch.EventCode.MOVED;
+      touchEvent._setEventCode(EventTouch.EventCode.MOVED);
       this._eventManager.dispatchEvent(touchEvent);
     }
   }
@@ -222,7 +217,7 @@ export class InputManager {
     if (handleTouches.length > 0) {
       this._glView._convertTouchesWithScale(handleTouches);
       var touchEvent = new EventTouch(handleTouches);
-      touchEvent._eventCode = EventTouch.EventCode.ENDED;
+      touchEvent._setEventCode(EventTouch.EventCode.ENDED);
       this._eventManager.dispatchEvent(touchEvent);
     }
   }
@@ -236,7 +231,7 @@ export class InputManager {
     if (handleTouches.length > 0) {
       this._glView._convertTouchesWithScale(handleTouches);
       var touchEvent = new EventTouch(handleTouches);
-      touchEvent._eventCode = EventTouch.EventCode.CANCELLED;
+      touchEvent._setEventCode(EventTouch.EventCode.CANCELLED);
       this._eventManager.dispatchEvent(touchEvent);
     }
   }
@@ -255,15 +250,15 @@ export class InputManager {
       locTouchesIntDict = this._touchesIntegerDict;
     for (var i = 0, len = touches.length; i < len; i++) {
       selTouch = touches[i];
-      touchID = selTouch.getID();
+      touchID = selTouch.id;
       index = locTouchesIntDict[touchID];
 
       if (index == null) {
         continue; //log("if the index doesn't exist, it is an error");
       }
       if (locTouches[index]) {
-        locTouches[index]._setPoint(selTouch._point);
-        locTouches[index]._setPrevPoint(selTouch._prevPoint);
+        locTouches[index]._setPoint(selTouch);
+        locTouches[index]._setPrevPoint(selTouch.previousLocation);
         handleTouches.push(locTouches[index]);
         this._removeUsedIndexBit(index);
         delete locTouchesIntDict[touchID];
@@ -307,9 +302,9 @@ export class InputManager {
   getPreTouch(touch) {
     var preTouch = null;
     var locPreTouchPool = this._preTouchPool;
-    var id = touch.getID();
+    var id = touch.id;
     for (var i = locPreTouchPool.length - 1; i >= 0; i--) {
-      if (locPreTouchPool[i].getID() === id) {
+      if (locPreTouchPool[i].id === id) {
         preTouch = locPreTouchPool[i];
         break;
       }
@@ -325,9 +320,9 @@ export class InputManager {
   setPreTouch(touch) {
     var find = false;
     var locPreTouchPool = this._preTouchPool;
-    var id = touch.getID();
+    var id = touch.id;
     for (var i = locPreTouchPool.length - 1; i >= 0; i--) {
-      if (locPreTouchPool[i].getID() === id) {
+      if (locPreTouchPool[i].id === id) {
         locPreTouchPool[i] = touch;
         find = true;
         break;
@@ -403,7 +398,7 @@ export class InputManager {
   getTouchesByEvent(event, pos) {
     var touchArr = [],
       locView = this._glView;
-    var touch_event, touch, preLocation;
+    var touch_event, touch, preTouch;
     var locPreTouch = this._preTouchPoint;
 
     var length = event.changedTouches.length;
@@ -411,10 +406,7 @@ export class InputManager {
       touch_event = event.changedTouches[i];
       if (touch_event) {
         var location;
-        if (
-          BrowserType.FIREFOX ===
-          this._sys.browserType
-        )
+        if (BrowserType.FIREFOX === this._sys.browserType)
           location = locView.convertToLocationInView(
             touch_event.pageX,
             touch_event.pageY,
@@ -429,8 +421,8 @@ export class InputManager {
         if (touch_event.identifier != null) {
           touch = new Touch(location.x, location.y, touch_event.identifier);
           //use Touch Pool
-          preLocation = this.getPreTouch(touch).getLocation();
-          touch._setPrevPoint(preLocation.x, preLocation.y);
+          preTouch = this.getPreTouch(touch);
+          touch._setPrevPoint(preTouch.x, preTouch.y);
           this.setPreTouch(touch);
         } else {
           touch = new Touch(location.x, location.y);
@@ -500,9 +492,9 @@ export class InputManager {
             var mouseEvent = selfPointer.getMouseEvent(
               location,
               pos,
-              EventMouse.UP
+              MouseEvent.UP
             );
-            mouseEvent.setButton(event.button);
+            mouseEvent.button = event.button;
             selfPointer._eventManager.dispatchEvent(mouseEvent);
           }
         },
@@ -526,9 +518,9 @@ export class InputManager {
           var mouseEvent = selfPointer.getMouseEvent(
             location,
             pos,
-            EventMouse.DOWN
+            MouseEvent.DOWN
           );
-          mouseEvent.setButton(event.button);
+          mouseEvent.button = event.button;
           selfPointer._eventManager.dispatchEvent(mouseEvent);
 
           event.stopPropagation();
@@ -554,9 +546,9 @@ export class InputManager {
           var mouseEvent = selfPointer.getMouseEvent(
             location,
             pos,
-            EventMouse.UP
+            MouseEvent.UP
           );
-          mouseEvent.setButton(event.button);
+          mouseEvent.button = event.button;
           selfPointer._eventManager.dispatchEvent(mouseEvent);
 
           event.stopPropagation();
@@ -580,10 +572,10 @@ export class InputManager {
           var mouseEvent = selfPointer.getMouseEvent(
             location,
             pos,
-            EventMouse.MOVE
+            MouseEvent.MOVE
           );
-          if (selfPointer._mousePressed) mouseEvent.setButton(event.button);
-          else mouseEvent.setButton(null);
+          if (selfPointer._mousePressed) mouseEvent.button = event.button;
+          else mouseEvent.button = -1;
           selfPointer._eventManager.dispatchEvent(mouseEvent);
 
           event.stopPropagation();
@@ -601,9 +593,9 @@ export class InputManager {
           var mouseEvent = selfPointer.getMouseEvent(
             location,
             pos,
-            EventMouse.SCROLL
+            MouseEvent.SCROLL
           );
-          mouseEvent.setButton(event.button);
+          mouseEvent.button = event.button;
           mouseEvent.setScrollData(0, event.wheelDelta);
           selfPointer._eventManager.dispatchEvent(mouseEvent);
 
@@ -623,9 +615,9 @@ export class InputManager {
           var mouseEvent = selfPointer.getMouseEvent(
             location,
             pos,
-            EventMouse.SCROLL
+            MouseEvent.SCROLL
           );
-          mouseEvent.setButton(event.button);
+          mouseEvent.button = event.button;
           mouseEvent.setScrollData(0, event.detail * -120);
           selfPointer._eventManager.dispatchEvent(mouseEvent);
 
@@ -783,9 +775,7 @@ export class InputManager {
     self._game.canvas.addEventListener(
       "keydown",
       function (e) {
-        self._eventManager.dispatchEvent(
-          new EventKeyboard(e.keyCode, true)
-        );
+        self._eventManager.dispatchEvent(new EventKeyboard(e.keyCode, true));
         e.stopPropagation();
         e.preventDefault();
       },
@@ -794,9 +784,7 @@ export class InputManager {
     self._game.canvas.addEventListener(
       "keyup",
       function (e) {
-        self._eventManager.dispatchEvent(
-          new EventKeyboard(e.keyCode, false)
-        );
+        self._eventManager.dispatchEvent(new EventKeyboard(e.keyCode, false));
         e.stopPropagation();
         e.preventDefault();
       },
@@ -815,9 +803,7 @@ export class InputManager {
     _t._accelDeviceEvent = w.DeviceMotionEvent || w.DeviceOrientationEvent;
 
     //TODO fix DeviceMotionEvent bug on QQ Browser version 4.1 and below.
-    if (
-      this._sys.browserType === BrowserType.MOBILE_QQ
-    )
+    if (this._sys.browserType === BrowserType.MOBILE_QQ)
       _t._accelDeviceEvent = window.DeviceOrientationEvent;
 
     var _deviceEventType =
@@ -827,8 +813,7 @@ export class InputManager {
     var ua = navigator.userAgent;
     if (
       /Android/.test(ua) ||
-      (/Adr/.test(ua) &&
-        this._sys.browserType === BrowserType.UC)
+      (/Adr/.test(ua) && this._sys.browserType === BrowserType.UC)
     ) {
       _t._minus = -1;
     }
@@ -880,10 +865,14 @@ export class InputManager {
     if (w.orientation === InputManager.UIInterfaceOrientationLandscapeRight) {
       mAcceleration.x = -mAcceleration.y;
       mAcceleration.y = tmpX;
-    } else if (w.orientation === InputManager.UIInterfaceOrientationLandscapeLeft) {
+    } else if (
+      w.orientation === InputManager.UIInterfaceOrientationLandscapeLeft
+    ) {
       mAcceleration.x = mAcceleration.y;
       mAcceleration.y = -tmpX;
-    } else if (w.orientation === InputManager.UIInterfaceOrientationPortraitUpsideDown) {
+    } else if (
+      w.orientation === InputManager.UIInterfaceOrientationPortraitUpsideDown
+    ) {
       mAcceleration.x = -mAcceleration.x;
       mAcceleration.y = -mAcceleration.y;
     }

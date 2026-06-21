@@ -54,9 +54,7 @@ export class ConvertToNode extends TestNodeDemo {
                 onTouchesEnded:function (touches, event) {
                     var target = event.getCurrentTarget();
                     for (var it = 0; it < touches.length; it++) {
-                        var touch = touches[it];
-                        var location = touch.getLocation();
-                        target.processEvent(location);
+                        target.processEvent(touches[it]);
                     }
                 }
             }), this);
@@ -64,7 +62,7 @@ export class ConvertToNode extends TestNodeDemo {
             ServiceLocator.eventManager.addListener({
                 event: EventListener.MOUSE,
                 onMouseUp: function(event){
-                    event.getCurrentTarget().processEvent(event.getLocation());
+                    event.getCurrentTarget().processEvent(event);
                 }
             }, this);
 

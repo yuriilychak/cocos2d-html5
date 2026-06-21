@@ -67,8 +67,7 @@ export class SpriteBatchNode1 extends SpriteTestDemo {
               var touch = touches[it];
               if (!touch) break;
 
-              var location = touch.getLocation();
-              event.getCurrentTarget().addNewSpriteWithCoords(location);
+              event.getCurrentTarget().addNewSpriteWithCoords(touch);
             }
           }
         },
@@ -81,7 +80,7 @@ export class SpriteBatchNode1 extends SpriteTestDemo {
           onMouseUp: function (event) {
             event
               .getCurrentTarget()
-              .addNewSpriteWithCoords(event.getLocation());
+              .addNewSpriteWithCoords(event);
           }
         },
         this

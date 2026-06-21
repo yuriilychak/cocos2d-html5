@@ -23,50 +23,46 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { EventType } from "../../enums";
 import { BaseClass } from "../../platform/class";
-import * as EventType from "./constants";
 
 /**
  * Base class of all kinds of events.
  */
 export default class Event extends BaseClass {
-  constructor(type) {
-    super();
-    this._type = 0;
-    this._isStopped = false;
-    this._currentTarget = null;
+  #type: EventType = EventType.NONE;
+  #isStopped: boolean = false;
+  #currentTarget: unknown = null;
 
-    this._type = type;
+  constructor(type: EventType) {
+    super();
+    this.#type = type;
   }
 
-  _setCurrentTarget(target) {
-    this._currentTarget = target;
+  _setCurrentTarget(target: unknown) {
+    this.#currentTarget = target;
   }
 
   /**
    * Gets the event type
-   * @function
-   * @returns {Number}
    */
-  getType() {
-    return this._type;
+
+  getType(): EventType {
+    return this.#type;
   }
 
   /**
    * Stops propagation for current event
-   * @function
    */
-  stopPropagation() {
-    this._isStopped = true;
+  stopPropagation(): void {
+    this.#isStopped = true;
   }
 
   /**
    * Checks whether the event has been stopped
-   * @function
-   * @returns {boolean}
    */
-  isStopped() {
-    return this._isStopped;
+  isStopped(): boolean {
+    return this.#isStopped;
   }
 
   /**
@@ -75,17 +71,9 @@ export default class Event extends BaseClass {
    *     note: It only be available when the event listener is associated with node.                <br/>
    *          It returns 0 when the listener is associated with fixed priority.
    * </p>
-   * @function
    * @returns {Node}  The target with which the event associates.
    */
-  getCurrentTarget() {
-    return this._currentTarget;
+  getCurrentTarget(): unknown {
+    return this.#currentTarget;
   }
 }
-
-Event.TOUCH = EventType.TOUCH;
-Event.KEYBOARD = EventType.KEYBOARD;
-Event.ACCELERATION = EventType.ACCELERATION;
-Event.MOUSE = EventType.MOUSE;
-Event.FOCUS = EventType.FOCUS;
-Event.CUSTOM = EventType.CUSTOM;
