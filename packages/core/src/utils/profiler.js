@@ -2,7 +2,7 @@ import {
   DIRECTOR_STATS_POSITION,
   DIRECTOR_FPS_INTERVAL
 } from "../platform/config";
-import { Director } from "../director/director";
+import { DirectorEvent } from "../enums";
 
 export class Profiler {
   static LEVEL_DET_FACTOR = 0.6;
@@ -168,11 +168,10 @@ export class Profiler {
   init() {
     if (!this._inited) {
       this._afterVisitListener = this._eventManager.addCustomListener(
-        Director.EVENT_AFTER_VISIT,
+        DirectorEvent.AFTER_VISIT,
         this._afterVisit
       );
       this._inited = true;
     }
   }
 }
-

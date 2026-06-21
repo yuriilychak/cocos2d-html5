@@ -34,7 +34,7 @@ import { s_resprefix, s_simpleFont_fnt } from "../resources";
 import { director, winSize } from "../constants";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
 import { TMXFixBugLayer } from "./tmxfix-bug-layer";
-import { Director, Point, Sprite, ServiceLocator } from "@aspect/core";
+import { DirectorProjection, Point, Sprite, ServiceLocator } from "@aspect/core";
 import { DelayTime, MoveBy, Sequence } from "@aspect/actions";
 import { TMXTiledMap } from "@aspect/tilemap";
 import { TextBMFont } from "@aspect/ccui";
@@ -87,11 +87,11 @@ export class TMXOrthoVertexZ extends TMXFixBugLayer {
   }
   onEnter() {
     super.onEnter();
-    director.setProjection(Director.PROJECTION_2D);
+    director.setProjection(DirectorProjection.TWO_D);
     director.setDepthTest(true);
   }
   onExit() {
-    director.setProjection(Director.PROJECTION_DEFAULT);
+    director.setProjection(DirectorProjection.DEFAULT);
     director.setDepthTest(false);
     super.onExit();
   }

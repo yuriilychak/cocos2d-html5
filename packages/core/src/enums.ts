@@ -219,3 +219,17 @@ export enum AttributeName {
   TEX_INDEX = "a_texIndex",
   MVMAT = "a_mvMatrix"
 }
+
+export enum DirectorEvent {
+  PROJECTION_CHANGED = "director_projection_changed",
+  AFTER_UPDATE = "director_after_update",
+  AFTER_VISIT = "director_after_visit",
+  AFTER_DRAW = "director_after_draw"
+}
+
+export enum DirectorProjection {
+  TWO_D = 0,
+  THREE_D = 1,
+  CUSTOM = 3,
+  DEFAULT = THREE_D
+}

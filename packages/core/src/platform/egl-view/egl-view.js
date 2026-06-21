@@ -720,16 +720,23 @@ export class EGLView extends BaseClass {
     }
     // Ensure compatibility with JSB
     else {
-      if (resolutionPolicy === ResolutionPolicyType.EXACT_FIT)
-        _t._resolutionPolicy = _t._rpExactFit;
-      if (resolutionPolicy === ResolutionPolicyType.SHOW_ALL)
-        _t._resolutionPolicy = _t._rpShowAll;
-      if (resolutionPolicy === ResolutionPolicyType.NO_BORDER)
-        _t._resolutionPolicy = _t._rpNoBorder;
-      if (resolutionPolicy === ResolutionPolicyType.FIXED_HEIGHT)
-        _t._resolutionPolicy = _t._rpFixedHeight;
-      if (resolutionPolicy === ResolutionPolicyType.FIXED_WIDTH)
-        _t._resolutionPolicy = _t._rpFixedWidth;
+      switch(resolutionPolicy) {
+        case ResolutionPolicyType.EXACT_FIT:
+          _t._resolutionPolicy = _t._rpExactFit;
+          break;
+        case ResolutionPolicyType.SHOW_ALL:
+          _t._resolutionPolicy = _t._rpShowAll;
+          break;
+        case ResolutionPolicyType.NO_BORDER:
+          _t._resolutionPolicy = _t._rpNoBorder;
+          break;
+        case ResolutionPolicyType.FIXED_HEIGHT:
+          _t._resolutionPolicy = _t._rpFixedHeight;
+          break;
+        case ResolutionPolicyType.FIXED_WIDTH:
+          _t._resolutionPolicy = _t._rpFixedWidth;
+          break;
+      }
     }
   }
 
@@ -1010,8 +1017,8 @@ export class EGLView extends BaseClass {
     var x = this._devicePixelRatio * (tx - relatedPos.left);
     var y = this._devicePixelRatio * (relatedPos.top + relatedPos.height - ty);
     return this._isRotated
-      ? { x: this._viewPortRect.width - y, y: x }
-      : { x: x, y: y };
+      ? new Point(this._viewPortRect.width - y, x)
+      : new Point(x, y);
   }
 
   _convertMouseToLocationInView(point, relatedPos) {

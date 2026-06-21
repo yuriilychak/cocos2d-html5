@@ -4,16 +4,10 @@ import Matrix4 from "../kazmath/mat4";
 import Vec3 from "../kazmath/vec3";
 import { KMGLMatrix } from "../kazmath/km-gl-matrix";
 import { DirectorRenderer } from "./director-renderer";
-import {
-  EVENT_PROJECTION_CHANGED,
-  PROJECTION_2D,
-  PROJECTION_3D,
-  PROJECTION_CUSTOM
-} from "./constants";
 import { log, _LogInfos } from "../boot/debugger";
 
 import { ServiceLocator } from "../service-locator";
-import { GLState } from "../enums";
+import { DirectorEvent, DirectorProjection, GLState } from "../enums";
 
 /**
  * OpenGL projection protocol
@@ -45,7 +39,7 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
     }
 
     ServiceLocator.eventManager.addCustomListener(
-      EVENT_PROJECTION_CHANGED,
+      DirectorEvent.PROJECTION_CHANGED,
       () => {
         var stack = this._director._scenesStack;
         for (var i = 0; i < stack.length; i++) recursiveChild(stack[i]);
@@ -64,7 +58,7 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
       oy = view._viewPortRect.y / view._scaleY;
 
     switch (projection) {
-      case PROJECTION_2D:
+      case DirectorProjection.TWO_D:
         ServiceLocator.kmglMatrix.matrixMode(KMGLMatrix.KM_GL_PROJECTION);
         ServiceLocator.kmglMatrix.loadIdentity();
         var orthoMatrix = Matrix4.createOrthographicProjection(
@@ -79,7 +73,7 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
         ServiceLocator.kmglMatrix.matrixMode(KMGLMatrix.KM_GL_MODELVIEW);
         ServiceLocator.kmglMatrix.loadIdentity();
         break;
-      case PROJECTION_3D:
+      case DirectorProjection.THREE_D:
         var zeye = this.getZEye();
         var matrixPerspective = new Matrix4(),
           matrixLookup = new Matrix4();
@@ -104,7 +98,7 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
         ServiceLocator.kmglMatrix.matrixMode(KMGLMatrix.KM_GL_MODELVIEW);
         ServiceLocator.kmglMatrix.loadIdentity();
         break;
-      case PROJECTION_CUSTOM:
+      case DirectorProjection.CUSTOM:
         if (director._projectionDelegate)
           director._projectionDelegate.updateProjection();
         break;

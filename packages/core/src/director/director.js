@@ -32,17 +32,7 @@ import { ActionManager } from "../action-manager";
 import EventCustom from "../event-manager/event/event-custom";
 import { Node } from "../base-nodes/node";
 import Game from "../boot/game";
-import { GameEvent } from "../enums";
-import {
-  EVENT_PROJECTION_CHANGED,
-  EVENT_AFTER_UPDATE,
-  EVENT_AFTER_VISIT,
-  EVENT_AFTER_DRAW,
-  PROJECTION_2D,
-  PROJECTION_3D,
-  PROJECTION_CUSTOM,
-  PROJECTION_DEFAULT
-} from "./constants";
+import { DirectorEvent, DirectorProjection, GameEvent } from "../enums";
 import { Size } from "../geometry";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import { checkGLErrorDebug } from "../platform/macro/utils";
@@ -53,16 +43,6 @@ export const defaultFPS = 60;
  * Director is a singleton object which manage your game's logic flow.
  */
 export class Director extends BaseClass {
-  static EVENT_PROJECTION_CHANGED = EVENT_PROJECTION_CHANGED;
-  static EVENT_AFTER_UPDATE = EVENT_AFTER_UPDATE;
-  static EVENT_AFTER_VISIT = EVENT_AFTER_VISIT;
-  static EVENT_AFTER_DRAW = EVENT_AFTER_DRAW;
-
-  static PROJECTION_2D = PROJECTION_2D;
-  static PROJECTION_3D = PROJECTION_3D;
-  static PROJECTION_CUSTOM = PROJECTION_CUSTOM;
-  static PROJECTION_DEFAULT = PROJECTION_DEFAULT;
-
   constructor() {
     super();
     this.TransitionSceneClass = null;
@@ -129,7 +109,7 @@ export class Director extends BaseClass {
   init() {
     this._oldAnimationInterval = this._animationInterval = 1.0 / defaultFPS;
     this._scenesStack = [];
-    this._projection = Director.PROJECTION_DEFAULT;
+    this._projection = DirectorProjection.DEFAULT;
     this._projectionDelegate = null;
 
     this._totalFrames = 0;
@@ -155,14 +135,14 @@ export class Director extends BaseClass {
       this._actionManager = null;
     }
 
-    this._eventAfterUpdate = new EventCustom(Director.EVENT_AFTER_UPDATE);
+    this._eventAfterUpdate = new EventCustom(DirectorEvent.AFTER_UPDATE);
     this._eventAfterUpdate.setUserData(this);
-    this._eventAfterVisit = new EventCustom(Director.EVENT_AFTER_VISIT);
+    this._eventAfterVisit = new EventCustom(DirectorEvent.AFTER_VISIT);
     this._eventAfterVisit.setUserData(this);
-    this._eventAfterDraw = new EventCustom(Director.EVENT_AFTER_DRAW);
+    this._eventAfterDraw = new EventCustom(DirectorEvent.AFTER_DRAW);
     this._eventAfterDraw.setUserData(this);
     this._eventProjectionChanged = new EventCustom(
-      Director.EVENT_PROJECTION_CHANGED
+      DirectorEvent.PROJECTION_CHANGED
     );
     this._eventProjectionChanged.setUserData(this);
 

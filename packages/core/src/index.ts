@@ -94,6 +94,8 @@ export {
   DebugMode,
   DensityDPI,
   DeviceOrientation,
+  DirectorEvent,
+  DirectorProjection,
   GameEvent,
   GLServerState,
   GLState,

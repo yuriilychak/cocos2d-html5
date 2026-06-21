@@ -29,7 +29,7 @@ import { Point } from "../geometry";
 import { Color } from "../platform/types/color";
 import { visibleRect } from "../platform/visible-rect";
 import { contentScaleFactor } from "../platform/macro/utils";
-import { Director } from "../director/director";
+import { DirectorEvent } from "../enums";
 import { isString } from "../boot/utils";
 import { LayerColor } from "../layers/layer-color";
 import { LabelTTF } from "../labelttf/label-ttf";
@@ -60,7 +60,7 @@ export class LoaderScene extends Scene {
       LoaderScene.#instance = new LoaderScene();
       LoaderScene.#instance.init();
       ServiceLocator.eventManager.addCustomListener(
-        Director.EVENT_PROJECTION_CHANGED,
+        DirectorEvent.PROJECTION_CHANGED,
         function () {
           LoaderScene.#instance._updateTransform();
         }
