@@ -26,11 +26,11 @@
  * Timeline Frame.
  * base class
  */
-import { NewClass } from "@aspect/core";
+import { BaseClass } from "@aspect/core";
 import { _easeBackInObj, _easeBackInOutObj, _easeBackOutObj, _easeBounceInObj, _easeBounceInOutObj, _easeBounceOutObj, _easeCircleActionIn, _easeCircleActionInOut, _easeCircleActionOut, _easeCubicActionIn, _easeCubicActionInOut, _easeCubicActionOut, _easeExponentialInObj, _easeExponentialInOutObj, _easeExponentialOutObj, _easeQuadraticActionIn, _easeQuadraticActionInOut, _easeQuadraticActionOut, _easeQuinticActionIn, _easeQuinticActionInOut, _easeQuinticActionOut, _easeSineInObj, _easeSineInOutObj, _easeSineOutObj, easeElasticIn, easeElasticInOut, easeElasticOut } from "@aspect/actions";
 
 import { FrameEaseType } from "../../action/action-frame/constants.js";
-export class Frame extends NewClass {
+export class Frame extends BaseClass {
   constructor() {
     super();
     this._frameIndex = 0;

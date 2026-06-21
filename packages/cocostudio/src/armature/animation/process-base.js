@@ -29,7 +29,7 @@
  * @constant
  * @type {number}
  */
-import { NewClass } from "@aspect/core";
+import { BaseClass } from "@aspect/core";
 
 import { fmodf } from "../utils/util-math.js";
 import { TweenType } from "./tween-function/constants.js";
@@ -85,7 +85,7 @@ export const ANIMATION_TYPE_MAX = 2;
  * @property {Number}   processScale        - The process scale
  * @property {Boolean}  playing             - <@readonly> Indicate whether the process is playing
  */
-export class ProcessBase extends NewClass {
+export class ProcessBase extends BaseClass {
 
     /**
      * Constructor of ProcessBase

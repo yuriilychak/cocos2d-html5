@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass } from "@aspect/core";
+import { BaseClass } from "@aspect/core";
 
 import { DISPLAY_TYPE_MAX } from "./constants.js";
 /**
@@ -32,7 +32,7 @@ import { DISPLAY_TYPE_MAX } from "./constants.js";
  * @property {Number}         displayType                - the display type
  * @property {String}         displayName                - the display name
  */
-export class DisplayData extends NewClass {
+export class DisplayData extends BaseClass {
   /**
    * Construction of DisplayData
    */

@@ -24,12 +24,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass, log, ServiceLocator } from "@aspect/core";
+import { BaseClass, log, ServiceLocator } from "@aspect/core";
 
 /**
  * FBO class that grabs the the contents of the screen
  */
-export class Grabber extends NewClass {
+export class Grabber extends BaseClass {
   /**
    * constructor of Grabber
    */

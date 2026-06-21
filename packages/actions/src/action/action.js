@@ -5,9 +5,9 @@
  * @property {Node}  originalTarget  - The original target of the action.
  * @property {Number}   tag             - The tag of the action, can be used to find the action.
  */
-import { NewClass, ACTION_TAG_INVALID, log } from "@aspect/core";
+import { BaseClass, ACTION_TAG_INVALID, log } from "@aspect/core";
 
-export default class Action extends NewClass {
+export default class Action extends BaseClass {
   //***********variables*************
   originalTarget = null;
   target = null;

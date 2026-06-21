@@ -28,7 +28,7 @@
 /**
  * The Cocostudio's action node, it contains action target, action frame list and current frame index.  it can be play action by calling playAciton.
  */
-import { Color, NewClass, Node, arrayRemoveObject } from "@aspect/core";
+import { Color, BaseClass, Node, arrayRemoveObject } from "@aspect/core";
 import { Sequence, Spawn } from "@aspect/actions";
 import { helper, Layout, Widget } from "@aspect/ccui";
 
@@ -38,7 +38,7 @@ import { ActionRotationFrame } from "./action-frame/action-rotation-frame.js";
 import { ActionScaleFrame } from "./action-frame/action-scale-frame.js";
 import { ActionTintFrame } from "./action-frame/action-tint-frame.js";
 import { FRAME_TYPE_FADE, FRAME_TYPE_MAX, FRAME_TYPE_MOVE, FRAME_TYPE_ROTATE, FRAME_TYPE_SCALE, FRAME_TYPE_TINT } from "./action-frame/constants.js";
-export class ActionNode extends NewClass {
+export class ActionNode extends BaseClass {
   #unitTime = 0.1;
   #currentFrameIndex = 0;
   #destFrameIndex = 0;

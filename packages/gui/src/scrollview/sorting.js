@@ -1,6 +1,6 @@
-import { NewClass, INVALID_INDEX } from "@aspect/core";
+import { BaseClass, INVALID_INDEX } from "@aspect/core";
 
-export class SortableObject extends NewClass {
+export class SortableObject extends BaseClass {
     setObjectID(objectId) {}
     getObjectID() { return 0; }
 }
@@ -21,7 +21,7 @@ const _compareObject = function (val1, val2) {
     return (val1.getObjectID() - val2.getObjectID());
 };
 
-export class ArrayForObjectSorting extends NewClass {
+export class ArrayForObjectSorting extends BaseClass {
     _saveObjectArr = null;
 
     constructor() {

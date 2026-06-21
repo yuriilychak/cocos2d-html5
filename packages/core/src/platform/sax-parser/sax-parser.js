@@ -24,13 +24,13 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass } from '../class';
+import { BaseClass } from '../class';
 
 /**
  * A SAX Parser
  * @name SAXParser
  */
-export class SAXParser extends NewClass {
+export class SAXParser extends BaseClass {
     /**
      * Constructor of SAXParser
      */

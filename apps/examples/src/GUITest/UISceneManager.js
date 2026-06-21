@@ -132,7 +132,7 @@ import { UITextTest } from "./UITextTest/uitext-test";
 import { UIVideoPlayerTest } from "./UIVideoPlayerTest/UIVideoPlayerTest";
 import { UIWebViewTest } from "./UIWebViewTest/UIWebViewTest";
 import { TestScene } from "../test-scene";
-import { NewClass, ServiceLocator } from "@aspect/core";
+import { BaseClass, ServiceLocator } from "@aspect/core";
 
 var currentTestingArray = null;
 
@@ -830,7 +830,7 @@ if (
 }
 
 var guiTestScene = null;
-export class GUITestScene extends NewClass {
+export class GUITestScene extends BaseClass {
   runThisTest() {
     var scene = new TestScene("UI Test");
     scene.addChild(new UIMainMenuLayer());

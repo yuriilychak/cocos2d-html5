@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass } from '../platform/class';
+import { BaseClass } from '../platform/class';
 import { ListEntry } from './list-entry';
 import { HashUpdateEntry } from './hash-update-entry';
 import { HashTimerEntry } from './hash-timer-entry';
@@ -37,7 +37,7 @@ import {
 /**
  * Scheduler is responsible of triggering the scheduled callbacks.
  */
-export default class Scheduler extends NewClass {
+export default class Scheduler extends BaseClass {
     static PRIORITY_SYSTEM = (-2147483647 - 1);
     static PRIORITY_NON_SYSTEM = Scheduler.PRIORITY_SYSTEM + 1;
 

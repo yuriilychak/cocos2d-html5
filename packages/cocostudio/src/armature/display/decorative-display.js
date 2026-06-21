@@ -26,9 +26,9 @@
 /**
  * Decorative a display node for Cocos Armature
  */
-import { NewClass } from "@aspect/core";
+import { BaseClass } from "@aspect/core";
 
-export class DecorativeDisplay extends NewClass {
+export class DecorativeDisplay extends BaseClass {
   constructor() {
     super();
     this._display = null;

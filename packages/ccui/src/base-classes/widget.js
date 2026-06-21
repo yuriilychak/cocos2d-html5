@@ -1,5 +1,5 @@
 import {
-  NewClass,
+  BaseClass,
   EventListener,
   KEY,
   Point,
@@ -23,7 +23,7 @@ import { LayoutComponent } from "../layouts/layout-component";
 // Layout and ImageView are wired via Widget.LayoutClass / Widget.ImageViewClass in src/index.js
 // to break circular dependencies (layout.js and image-view.js both import Widget)
 
-export class FocusNavigationController extends NewClass {
+export class FocusNavigationController extends BaseClass {
   constructor() {
     super();
     this._keyboardListener = null;

@@ -25,7 +25,7 @@
  ****************************************************************************/
 
 
-import { NewClass, Node, Point, Rect, Size, log, ServiceLocator } from "@aspect/core";
+import { BaseClass, Node, Point, Rect, Size, log, ServiceLocator } from "@aspect/core";
 import { ParticleSystem } from "@aspect/particle";
 
 import { ENABLE_PHYSICS_CHIPMUNK_DETECT, ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX } from "../armature-define.js";
@@ -44,7 +44,7 @@ import { Skin } from "./skin.js";
  * The display manager for CocoStudio Armature bone.
  * @param {Bone} bone The bone for the display manager
  */
-export class DisplayManager extends NewClass {
+export class DisplayManager extends BaseClass {
   constructor(bone) {
     super();
     this._decoDisplayList = [];

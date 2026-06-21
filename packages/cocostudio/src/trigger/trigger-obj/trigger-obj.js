@@ -27,10 +27,10 @@
 /**
  * The trigger object of Cocostudio.
  */
-import { NewClass, log } from "@aspect/core";
+import { BaseClass, log } from "@aspect/core";
 
 import { objectFactory } from "../object-factory/object-factory.js";
-export class TriggerObj extends NewClass {
+export class TriggerObj extends BaseClass {
 
     constructor () {
         super();

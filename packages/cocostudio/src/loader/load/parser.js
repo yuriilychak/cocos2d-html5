@@ -1,6 +1,6 @@
-import { NewClass, log } from "@aspect/core";
+import { BaseClass, log } from "@aspect/core";
 
-export class _parser extends NewClass {
+export class _parser extends BaseClass {
 
     _dirnameReg = /\S*\//;
 

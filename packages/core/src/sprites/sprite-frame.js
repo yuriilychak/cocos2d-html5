@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass } from "../platform/class";
+import { BaseClass } from "../platform/class";
 import EventHelper from "../event-manager/event-helper";
 import { Point, Rect, Size } from "../geometry";
 import { error, _LogInfos } from "../boot/debugger";
@@ -59,7 +59,7 @@ import { ServiceLocator } from "../service-locator";
  * var frame1 = new SpriteFrame(texture, rect(0,0,90,128));
  * var frame2 = new SpriteFrame(texture, rect(0,0,90,128),false,0,size(90,128));
  */
-export class SpriteFrame extends EventHelper(NewClass) {
+export class SpriteFrame extends EventHelper(BaseClass) {
   constructor(filename, rect, rotated, offset, originalSize) {
     super();
     this._offset = null;

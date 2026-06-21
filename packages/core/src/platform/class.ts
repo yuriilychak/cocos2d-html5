@@ -28,19 +28,23 @@
  * @name ClassManager
  */
 class ClassManager {
-    #id = 0 | (Math.random() * 998);
-    #instanceId = 0 | (Math.random() * 998);
+  #id = 0 | (Math.random() * 998);
+  #instanceId = 0 | (Math.random() * 998);
 
-    getNewID() {
-        return this.#id++;
-    };
+  public getNewID(): number {
+    return this.#id++;
+  }
 
-    getNewInstanceId() {
-        return this.#instanceId++;
-    };
+  public getNewInstanceId(): number {
+    return this.#instanceId++;
+  }
 }
 
-export var classManager = new ClassManager();
+export const classManager = new ClassManager();
+
+type BaseClassConstructor = typeof BaseClass & {
+  _pid?: number;
+};
 
 /* Managed JavaScript Inheritance
  * Based on John Resig's Simple JavaScript Inheritance http://ejohn.org/blog/simple-javascript-inheritance/
@@ -48,26 +52,26 @@ export var classManager = new ClassManager();
  */
 
 /**
- * The base Class implementation. 
- * All classes created with Class.extend inherit from this.
+ * The base class implementation.
  * This implementation does nothing and is used for inheritance only.
  */
-export class NewClass {
-  __instanceId;
+export class BaseClass {
+  public __instanceId: number;
 
-  constructor() {
+  public constructor() {
     this.__instanceId = classManager.getNewInstanceId();
   }
 
-  get instanceId() {
+  public get instanceId(): number {
     return this.__instanceId;
   }
 
-  static get __pid() {
-    if (!Object.prototype.hasOwnProperty.call(this, "pid")) {
-      this._pid = classManager.getNewID();
+  public static get __pid(): number {
+    const ctor = this as BaseClassConstructor;
+    if (!Object.prototype.hasOwnProperty.call(ctor, "_pid")) {
+      ctor._pid = classManager.getNewID();
     }
 
-    return this._pid;
+    return ctor._pid!;
   }
 }

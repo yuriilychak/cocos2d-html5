@@ -26,7 +26,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass } from "../platform/class";
+import { BaseClass } from "../platform/class";
 import { log } from "../boot/debugger";
 import {
   UNIFORM_PMATRIX_S,
@@ -46,7 +46,7 @@ import { ServiceLocator } from "../service-locator";
 /**
  * Class that implements a WebGL program
  */
-export default class GLProgram extends NewClass {
+export default class GLProgram extends BaseClass {
   _glContext = null;
   _programObj = null;
   _vertShader = null;

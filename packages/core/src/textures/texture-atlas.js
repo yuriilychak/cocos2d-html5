@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass } from "../platform/class";
+import { BaseClass } from "../platform/class";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import { isString } from "../boot/utils";
 import { TEXTURE_ATLAS_USE_TRIANGLE_STRIP } from "../platform/config";
@@ -50,7 +50,7 @@ import { ServiceLocator } from "../service-locator";
  * @property {Number}   totalQuads      - <@readonly> Quantity of quads that are going to be drawn.
  * @property {Array}    quads           - <@readonly> Quads that are going to be rendered
  */
-export class TextureAtlas extends NewClass {
+export class TextureAtlas extends BaseClass {
   /**
    * <p>Creates a TextureAtlas with an filename and with an initial capacity for Quads. <br />
    * The TextureAtlas capacity can be increased in runtime. </p>

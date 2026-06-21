@@ -1,4 +1,4 @@
-import { Node, NewClass, Size, Point, Rect, arrayRemoveObject, INVALID_INDEX } from "@aspect/core";
+import { Node, BaseClass, Size, Point, Rect, arrayRemoveObject, INVALID_INDEX } from "@aspect/core";
 import {
     GScrollView, ScrollViewDelegate,
     SCROLLVIEW_DIRECTION_NONE, SCROLLVIEW_DIRECTION_HORIZONTAL,
@@ -32,7 +32,7 @@ export class TableViewDelegate extends ScrollViewDelegate {
     tableCellWillRecycle(table, cell) {}
 }
 
-export class TableViewDataSource extends NewClass {
+export class TableViewDataSource extends BaseClass {
     tableCellSizeForIndex(table, idx) {
         return this.cellSizeForTable(table);
     }

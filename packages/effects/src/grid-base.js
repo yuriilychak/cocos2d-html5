@@ -25,13 +25,13 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass, Rect, Point, Size, NextPOT, log, Texture2D, GLProgramState, SHADER_POSITION_TEXTURE, glBindTexture2D, setProjectionMatrixDirty, Matrix4, KMGLMatrix, PIXEL_FORMAT_RGBA8888, ServiceLocator } from "@aspect/core";
+import { BaseClass, Rect, Point, Size, NextPOT, log, Texture2D, GLProgramState, SHADER_POSITION_TEXTURE, glBindTexture2D, setProjectionMatrixDirty, Matrix4, KMGLMatrix, PIXEL_FORMAT_RGBA8888, ServiceLocator } from "@aspect/core";
 import { Grabber } from "./grabber.js";
 
 /**
  * Base class for Grid
  */
-export class GridBase extends NewClass {
+export class GridBase extends BaseClass {
   /**
    * create one GridBase Object
    * Constructor of GridBase

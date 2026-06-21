@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass } from "./platform/class";
+import { BaseClass } from "./platform/class";
 import { Point, cardinalSplineAt, getControlPointAt } from "./geometry";
 import {
   SHADER_POSITION_UCOLOR,
@@ -37,7 +37,7 @@ import { ServiceLocator } from "./service-locator";
 /**
  * Canvas of DrawingPrimitive implement version use for WebGlMode
  */
-export class DrawingPrimitiveWebGL extends NewClass {
+export class DrawingPrimitiveWebGL extends BaseClass {
   constructor(ctx) {
     super();
 

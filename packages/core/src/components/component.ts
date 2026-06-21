@@ -23,63 +23,64 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass } from "../platform/class";
+import { BaseClass } from "../platform/class";
+import type { ComponentOwnerLike } from './types';
+
+type ComponentConstructor = typeof Component & {
+  componentName?: string;
+  NAME?: string;
+};
 
 /**
  * The base class of component in CocoStudio
  */
-export class Component extends NewClass {
-  static componentName;
-  #owner = null;
+export class Component extends BaseClass {
+  public static componentName?: string;
+  protected _name?: string;
+  #owner: ComponentOwnerLike | null = null;
   #name = "";
   #enabled = true;
 
-  constructor() {
+  public constructor() {
     super();
-    this.#owner = null;
-    this.#name = this.constructor.componentName || this.constructor.NAME || "";
-    this.#enabled = true;
+    const ctor = this.constructor as ComponentConstructor;
+    this.#name = ctor.componentName || ctor.NAME || "";
   }
 
-  init() {
+  public init(): boolean {
     return true;
   }
 
-  onEnter() {}
+  public onEnter(): void {}
 
-  onExit() {}
+  public onExit(): void {}
 
-  update(delta) {}
-  
-  serialize(reader) {}
+  public update(_delta: number): void {}
 
-  get enabled() {
+  public serialize(_reader: unknown): void {}
+
+  public get enabled(): boolean {
     return this.#enabled;
   }
 
-  set enabled(enable) {
+  public set enabled(enable: boolean) {
     this.#enabled = enable;
   }
 
-  get name() {
-    return (
-      this.#name ||
-      this.constructor.componentName ||
-      this.constructor.NAME ||
-      this._name ||
-      ""
-    );
+  public get name(): string {
+    const ctor = this.constructor as ComponentConstructor;
+    return this.#name || ctor.componentName || ctor.NAME || this._name || "";
   }
 
-  set name(name) {
+  public set name(name: string) {
     this.#name = name;
   }
 
-  set owner(owner) {
+  public set owner(owner: ComponentOwnerLike | null) {
     this.#owner = owner;
   }
 
-  get owner() {
+  public get owner(): ComponentOwnerLike | null {
     return this.#owner;
   }
 }

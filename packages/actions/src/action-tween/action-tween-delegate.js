@@ -1,9 +1,9 @@
 /**
  *
  */
-import { NewClass } from "@aspect/core";
+import { BaseClass } from "@aspect/core";
 
-export default class ActionTweenDelegate extends NewClass {
+export default class ActionTweenDelegate extends BaseClass {
   /**
    * Update Tween Action.
    * @param value

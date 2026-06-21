@@ -1,4 +1,4 @@
-import { NewClass } from "../platform/class";
+import { BaseClass } from "../platform/class";
 import EventHelper from "../event-manager/event-helper";
 import EventCustom from "../event-manager/event/event-custom";
 import { DrawingPrimitiveCanvas } from "../drawing-primitives-canvas";
@@ -16,7 +16,7 @@ import { isUndefined } from "./utils";
 /**
  * An object to boot the game.
  */
-export default class Game extends EventHelper(NewClass) {
+export default class Game extends EventHelper(BaseClass) {
   /**
    * @returns {Game}
    */

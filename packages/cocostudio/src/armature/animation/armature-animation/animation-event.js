@@ -1,10 +1,10 @@
-import { NewClass } from "@aspect/core";
+import { BaseClass } from "@aspect/core";
 
 /**
  * The animation event class, it has the callback, target and arguments.
  * @deprecated since v3.0.
  */
-export class AnimationEvent extends NewClass {
+export class AnimationEvent extends BaseClass {
 
     /**
      * Constructor of AnimationEvent

@@ -1,4 +1,4 @@
-import { NewClass } from "@aspect/core";
+import { BaseClass } from "@aspect/core";
 
 export const TGA_OK = 0;
 export const TGA_ERROR_FILE_OPEN = 1;
@@ -229,7 +229,7 @@ export function tgaFlipImage(psInfo) {
 /**
  * Binary Stream Reader
  */
-export class BinaryStreamReader extends NewClass {
+export class BinaryStreamReader extends BaseClass {
   constructor(binaryData) {
     super();
     this._binaryData = binaryData;

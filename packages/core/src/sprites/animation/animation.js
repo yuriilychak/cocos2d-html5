@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass } from "../../platform/class";
+import { BaseClass } from "../../platform/class";
 import { AnimationFrame } from "./animation-frame";
 import { SpriteFrame } from "../sprite-frame";
 import { Rect } from "../../geometry";
@@ -68,7 +68,7 @@ import { ServiceLocator } from "../../service-locator";
  * //run animate
  * sprite.runAction(action);
  */
-export class Animation extends NewClass {
+export class Animation extends BaseClass {
   constructor(frames, delay, loops) {
     super();
     this._frames = null;

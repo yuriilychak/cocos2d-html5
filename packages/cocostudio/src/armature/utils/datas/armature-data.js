@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass } from "@aspect/core";
+import { BaseClass } from "@aspect/core";
 
 /**
  * <p>
@@ -36,7 +36,7 @@ import { NewClass } from "@aspect/core";
  * @property {String}                    name                       - the name of armature data
  * @property {Number}                    dataVersion                - the data version of armature data
  */
-export class ArmatureData extends NewClass {
+export class ArmatureData extends BaseClass {
   /**
    * Construction of ArmatureData
    */

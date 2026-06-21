@@ -1,9 +1,9 @@
-import { NewClass } from '@aspect/core';
+import { BaseClass } from '@aspect/core';
 
 /**
  * The armature movement dispatcher for trigger manager.
  */
-export class ArmatureMovementDispatcher extends NewClass {
+export class ArmatureMovementDispatcher extends BaseClass {
 
     /**
      * Constructor of ArmatureMovementDispatcher.

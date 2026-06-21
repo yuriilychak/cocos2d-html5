@@ -1,4 +1,4 @@
-import { NewClass, Point } from "@aspect/core";
+import { BaseClass, Point } from "@aspect/core";
 
 /**
  * TMXObjectGroup represents the TMX object group.
@@ -6,7 +6,7 @@ import { NewClass, Point } from "@aspect/core";
  * @property {Array}    properties  - Properties from the group. They can be added using tilemap editors
  * @property {String}   groupName   - Name of the group
  */
-export class TMXObjectGroup extends NewClass {
+export class TMXObjectGroup extends BaseClass {
   constructor() {
     super();
     this.properties = null;

@@ -24,9 +24,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass } from '../class';
+import { BaseClass } from '../class';
 
-export class _Dictionary extends NewClass {
+export class _Dictionary extends BaseClass {
     constructor() {
         super();
         this._keyMapTb = {};

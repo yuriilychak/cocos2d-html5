@@ -24,7 +24,7 @@
  ****************************************************************************/
 
 import {
-  NewClass,
+  BaseClass,
   Node,
   Color,
   Sprite,
@@ -46,7 +46,7 @@ import { Widget } from "../base-classes/widget";
 /**
  * RichElement is the base class of RichElementText, RichElementImage etc. It has type, tag, color and opacity attributes.
  */
-export class RichElement extends NewClass {
+export class RichElement extends BaseClass {
   /**
    * Constructor of RichElement
    */

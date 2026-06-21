@@ -27,9 +27,9 @@
 /**
  * The base class of trigger action
  */
-import { NewClass } from "@aspect/core";
+import { BaseClass } from "@aspect/core";
 
-export class BaseTriggerAction extends NewClass {
+export class BaseTriggerAction extends BaseClass {
     /**
      * Construction of BaseTriggerAction
      */

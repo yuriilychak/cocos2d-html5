@@ -24,13 +24,13 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass } from "@aspect/core";
+import { BaseClass } from "@aspect/core";
 
 /**
  * Parallax Object. <br />
  * Parallax required attributes are stored.
  */
-export class PointObject extends NewClass {
+export class PointObject extends BaseClass {
     _ratio = null;
     _offset = null;
     _child = null;

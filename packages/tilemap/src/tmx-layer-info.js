@@ -1,10 +1,10 @@
-import { NewClass, Point, Size, Rect } from "@aspect/core";
+import { BaseClass, Point, Size, Rect } from "@aspect/core";
 import { TMX_TILE_FLIPPED_MASK } from "./constants";
 
 /**
  * TMXLayerInfo contains information about TMX layers.
  */
-export class TMXLayerInfo extends NewClass {
+export class TMXLayerInfo extends BaseClass {
   constructor() {
     super();
     this.properties = null;
@@ -48,7 +48,7 @@ TMXLayerInfo.ATTRIB_ZLIB = 1 << 3;
 /**
  * TMXTilesetInfo contains the information about tilesets.
  */
-export class TMXTilesetInfo extends NewClass {
+export class TMXTilesetInfo extends BaseClass {
   constructor() {
     super();
     this.name = "";

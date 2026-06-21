@@ -1,4 +1,4 @@
-import { NewClass, log } from "@aspect/core";
+import { BaseClass, log } from "@aspect/core";
 import { easeBackIn, easeBackInOut, easeBackOut, easeBounceIn, easeBounceInOut, easeBounceOut, easeCircleActionIn, easeCircleActionInOut, easeCircleActionOut, easeCubicActionIn, easeCubicActionInOut, easeCubicActionOut, easeElasticIn, easeElasticInOut, easeElasticOut, easeExponentialIn, easeExponentialInOut, easeExponentialOut, easeQuadraticActionIn, easeQuadraticActionInOut, easeQuadraticActionOut, easeQuarticActionIn, easeQuarticActionInOut, easeQuarticActionOut, easeQuinticActionIn, easeQuinticActionInOut, easeQuinticActionOut, easeSineIn, easeSineInOut, easeSineOut } from "@aspect/actions";
 
 import { FrameEaseType } from "./constants.js";
@@ -10,7 +10,7 @@ import { FrameEaseType } from "./constants.js";
  * @property {Number}               frameIndex              - frame index of ActionFrame
  * @property {Number}               time                    - time of ActionFrame
  */
-export class ActionFrame extends NewClass {
+export class ActionFrame extends BaseClass {
   /**
    * The constructor of ActionFrame.
    */

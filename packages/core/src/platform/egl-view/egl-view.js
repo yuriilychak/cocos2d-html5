@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass } from "../class";
+import { BaseClass } from "../class";
 import { Point, Rect, Size } from "../../geometry";
 import { contentScaleFactor } from "../macro/utils";
 import { screen } from "../screen";
@@ -116,7 +116,7 @@ var _scissorRect = null;
  *  - view.methodName(); <br/>
  * @name EGLView
  */
-export class EGLView extends NewClass {
+export class EGLView extends BaseClass {
 
   /**
    * Constructor of EGLView

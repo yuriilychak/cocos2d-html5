@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass } from "../platform/class";
+import { BaseClass } from "../platform/class";
 import EventHelper from "../event-manager/event-helper";
 import { Size } from "../geometry";
 import CanvasTextureRenderer from "./texture-2d-canvas-renderer";
@@ -98,7 +98,7 @@ export let PVRHaveAlphaPremultiplied_ = false;
  * @property {Number}           maxS            - Texture max S
  * @property {Number}           maxT            - Texture max T
  */
-export class Texture2D extends EventHelper(NewClass) {
+export class Texture2D extends EventHelper(BaseClass) {
   constructor() {
     super();
     this._contentSize = new Size(0, 0);

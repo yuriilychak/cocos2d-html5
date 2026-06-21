@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass } from "@aspect/core";
+import { BaseClass } from "@aspect/core";
 
 /**
  * MovementBoneData saved the name, delay, frame list of Bone's movement.
@@ -34,7 +34,7 @@ import { NewClass } from "@aspect/core";
  * @property {Array}                     frameList         - the frame list of bone's movement.
  * @property {String}                    name              - the name of bone's movement.
  */
-export class MovementBoneData extends NewClass {
+export class MovementBoneData extends BaseClass {
   /**
    * Construction of MovementBoneData.
    */

@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass } from "../platform/class";
+import { BaseClass } from "../platform/class";
 import { DirectorCanvasRenderer } from "./director-canvas";
 import { DirectorWebGLRenderer } from "./director-webgl";
 import Scheduler from "../scheduler/scheduler";
@@ -51,7 +51,7 @@ export const defaultFPS = 60;
 /**
  * Director is a singleton object which manage your game's logic flow.
  */
-export class Director extends NewClass {
+export class Director extends BaseClass {
   static EVENT_PROJECTION_CHANGED = EVENT_PROJECTION_CHANGED;
   static EVENT_AFTER_UPDATE = EVENT_AFTER_UPDATE;
   static EVENT_AFTER_VISIT = EVENT_AFTER_VISIT;

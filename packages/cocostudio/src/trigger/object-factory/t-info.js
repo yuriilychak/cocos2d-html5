@@ -1,7 +1,7 @@
-import { NewClass } from '@aspect/core';
+import { BaseClass } from '@aspect/core';
 
 import { objectFactory } from "./object-factory.js";
-export class TInfo extends NewClass {
+export class TInfo extends BaseClass {
 
     constructor (c, f) {
         super();

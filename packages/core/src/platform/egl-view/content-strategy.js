@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass } from "../class";
+import { BaseClass } from "../class";
 import { Rect } from "../../geometry";
 import { ServiceLocator } from "../../service-locator";
 
@@ -33,7 +33,7 @@ import { ServiceLocator } from "../../service-locator";
  * it controls the behavior of how to scale the scene and setup the viewport for the game</p>
  *
  */
-export class ContentStrategy extends NewClass {
+export class ContentStrategy extends BaseClass {
   constructor() {
     super();
     this._result = {

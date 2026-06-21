@@ -28,9 +28,9 @@
  *  use to calculate the matrix of node from parent node
  * @extend Class
  */
-import { AffineTransform, NewClass, Point } from "@aspect/core";
+import { AffineTransform, BaseClass, Point } from "@aspect/core";
 
-export class TransformHelp extends NewClass {}
+export class TransformHelp extends BaseClass {}
 TransformHelp.helpMatrix1 = AffineTransform.make(1, 0, 0, 1, 0, 0);
 TransformHelp.helpMatrix2 = AffineTransform.make(1, 0, 0, 1, 0, 0);
 TransformHelp.helpPoint1 = new Point(0, 0);

@@ -27,9 +27,9 @@
 /**
  * The Cocostudio's action object.
  */
-import { NewClass, REPEAT_FOREVER, arrayRemoveObject, ServiceLocator } from "@aspect/core";
+import { BaseClass, REPEAT_FOREVER, arrayRemoveObject, ServiceLocator } from "@aspect/core";
 import { ActionNode } from "./action-node.js";
-export class ActionObject extends NewClass {
+export class ActionObject extends BaseClass {
   #name = "";
 
   /**

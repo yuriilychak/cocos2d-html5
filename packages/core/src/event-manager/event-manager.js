@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass } from "../platform/class";
+import { BaseClass } from "../platform/class";
 import { Node } from "../base-nodes/node";
 import { Event, EventCustom, EventTouch } from "./event";
 import Game from "../boot/game";
@@ -46,7 +46,7 @@ import { log, assert, _LogInfos } from "../boot/debugger";
 /**
  * @ignore
  */
-export class _EventListenerVector extends NewClass {
+export class _EventListenerVector extends BaseClass {
   constructor() {
     super();
     this._fixedListeners = [];

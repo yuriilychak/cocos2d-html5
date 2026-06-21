@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass } from "../../platform/class";
+import { BaseClass } from "../../platform/class";
 
 /**
  * <p>
@@ -33,7 +33,7 @@ import { NewClass } from "../../platform/class";
  *      EventListenerTouchOneByOne, EventListenerCustom.
  * </p>
  */
-export default class EventListener extends NewClass {
+export default class EventListener extends BaseClass {
   /**
    * Initializes event with type and callback function
    * @param {number} type

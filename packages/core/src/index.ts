@@ -101,7 +101,7 @@ export { log, warn } from "./boot/debugger";
 export { RendererConfig } from "./renderer/renderer-config";
 export { Director, DisplayLinkDirector } from "./director/director";
 export { Sys } from "./boot";
-export { NewClass, classManager } from "./platform/class";
+export { BaseClass, classManager } from "./platform/class";
 export {
   VERTEX_ATTRIB_POSITION,
   VERTEX_ATTRIB_COLOR,
@@ -234,7 +234,7 @@ export { ContainerStrategy } from "./platform/egl-view/container-strategy";
 export { ContentStrategy } from "./platform/egl-view/content-strategy";
 export { SpriteFrame } from "./sprites/sprite-frame";
 export { PolygonInfo, Triangles } from "./sprites/polygon-info";
-export { Component } from "./components/component";
+export { Component, ComponentContainer } from "./components";
 export { assert, error } from "./boot";
 export {
   VERTICAL_TEXT_ALIGNMENT_TOP,

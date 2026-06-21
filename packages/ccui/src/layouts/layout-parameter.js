@@ -1,6 +1,6 @@
-import { NewClass, isObject } from '@aspect/core';
+import { BaseClass, isObject } from '@aspect/core';
 
-export class Margin extends NewClass {
+export class Margin extends BaseClass {
     constructor(margin, top, right, bottom) {
         super();
         this.left = 0;
@@ -37,7 +37,7 @@ export function MarginZero() {
     return new Margin(0, 0, 0, 0);
 }
 
-export class LayoutParameter extends NewClass {
+export class LayoutParameter extends BaseClass {
     constructor() {
         super();
         this._margin = new Margin();

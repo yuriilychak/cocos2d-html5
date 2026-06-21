@@ -30,9 +30,9 @@
  * @extend Class
  *
  */
-import { NewClass } from "@aspect/core";
+import { BaseClass } from "@aspect/core";
 
-export class ActionTimelineData extends NewClass {
+export class ActionTimelineData extends BaseClass {
   _actionTag = 0;
 
   constructor(actionTag) {

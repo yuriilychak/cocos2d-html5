@@ -31,11 +31,11 @@
  * @property {ColliderFilter}   colliderFilter  - The collider filter of collider body
  *
  */
-import { NewClass } from "@aspect/core";
+import { BaseClass } from "@aspect/core";
 import { ColliderFilter } from "./collider-filter.js";
 
 import { ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX } from "../../armature-define.js";
-export class ColliderBody extends NewClass {
+export class ColliderBody extends BaseClass {
     constructor(contourData) {
         super();
         this.shape = null;

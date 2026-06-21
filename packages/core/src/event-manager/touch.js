@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass } from "../platform/class";
+import { BaseClass } from "../platform/class";
 import { Point } from "../geometry";
 import { ServiceLocator } from "../service-locator";
 
@@ -34,7 +34,7 @@ import { ServiceLocator } from "../service-locator";
  * @param {Number} y
  * @param {Number} id
  */
-export default class Touch extends NewClass {
+export default class Touch extends BaseClass {
   constructor(x, y, id) {
     super();
     this._lastModified = 0;

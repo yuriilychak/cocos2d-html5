@@ -26,9 +26,9 @@
 /**
  * Base class for ColliderFilter
  */
-import { NewClass } from "@aspect/core";
+import { BaseClass } from "@aspect/core";
 
-export class ColliderFilter extends NewClass {
+export class ColliderFilter extends BaseClass {
 
     constructor(collisionType, group) {
         super();

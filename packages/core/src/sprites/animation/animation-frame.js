@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass } from "../../platform/class";
+import { BaseClass } from "../../platform/class";
 
 /**
  * <p>
@@ -38,7 +38,7 @@ import { NewClass } from "../../platform/class";
  * @param delayUnits
  * @param userInfo
  */
-export class AnimationFrame extends NewClass {
+export class AnimationFrame extends BaseClass {
   constructor(spriteFrame, delayUnits, userInfo) {
     super();
     this._spriteFrame = null;

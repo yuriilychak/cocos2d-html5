@@ -1,4 +1,4 @@
-import { NewClass } from "../platform/class";
+import { BaseClass } from "../platform/class";
 import { Node } from "../base-nodes/node";
 import Matrix4 from "../kazmath/mat4";
 import Vec3 from "../kazmath/vec3";
@@ -20,7 +20,7 @@ import { ServiceLocator } from "../service-locator";
 /**
  * OpenGL projection protocol
  */
-export class DirectorDelegate extends NewClass {
+export class DirectorDelegate extends BaseClass {
   updateProjection() {}
 }
 

@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass } from "./platform/class";
+import { BaseClass } from "./platform/class";
 import { Point, cardinalSplineAt, getControlPointAt } from "./geometry";
 import { Color } from "./platform/types/color";
 import { ServiceLocator } from "./service-locator";
@@ -35,7 +35,7 @@ export const PI2 = Math.PI * 2;
  * Canvas of DrawingPrimitive implement version use for canvasMode
  * @param {CanvasRenderingContext2D} renderContext
  */
-export class DrawingPrimitiveCanvas extends NewClass {
+export class DrawingPrimitiveCanvas extends BaseClass {
   constructor(renderContext) {
     super();
     this._cacheArray = [];

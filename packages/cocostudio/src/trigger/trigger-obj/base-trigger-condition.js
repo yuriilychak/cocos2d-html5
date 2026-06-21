@@ -27,9 +27,9 @@
 /**
  * The base class of trigger condition.
  */
-import { NewClass } from "@aspect/core";
+import { BaseClass } from "@aspect/core";
 
-export class BaseTriggerCondition extends NewClass {
+export class BaseTriggerCondition extends BaseClass {
     /**
      * Construction of BaseTriggerCondition
      */

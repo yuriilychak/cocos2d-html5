@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass } from "../class";
+import { BaseClass } from "../class";
 import { ContainerStrategy } from "./container-strategy";
 import { ContentStrategy } from "./content-strategy";
 
@@ -35,7 +35,7 @@ import { ContentStrategy } from "./content-strategy";
  * @param {ContainerStrategy} containerStg The container strategy
  * @param {ContentStrategy} contentStg The content strategy
  */
-export class ResolutionPolicy extends NewClass {
+export class ResolutionPolicy extends BaseClass {
   /**
    * Constructor of ResolutionPolicy
    * @param {ContainerStrategy} containerStg

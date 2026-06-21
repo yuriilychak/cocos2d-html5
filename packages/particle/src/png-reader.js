@@ -26,14 +26,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass } from "@aspect/core";
+import { BaseClass } from "@aspect/core";
 import { inflate } from "@aspect/compression";
 
 /**
  * A png file reader
  * @name PNGReader
  */
-export class PNGReader extends NewClass {
+export class PNGReader extends BaseClass {
   constructor(data) {
     super();
     var chunkSize,

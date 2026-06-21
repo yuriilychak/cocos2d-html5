@@ -23,13 +23,13 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass } from "../../platform/class";
+import { BaseClass } from "../../platform/class";
 import * as EventType from "./constants";
 
 /**
  * Base class of all kinds of events.
  */
-export default class Event extends NewClass {
+export default class Event extends BaseClass {
   constructor(type) {
     super();
     this._type = 0;

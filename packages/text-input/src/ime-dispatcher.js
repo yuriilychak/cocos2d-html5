@@ -1,6 +1,6 @@
-import { NewClass, Point, KEY, arrayRemoveObject, ServiceLocator } from "@aspect/core";
+import { BaseClass, Point, KEY, arrayRemoveObject, ServiceLocator } from "@aspect/core";
 
-export class IMEDispatcher extends NewClass {
+export class IMEDispatcher extends BaseClass {
   static _instance = null;
 
   static getInstance() {

@@ -32,13 +32,13 @@
  * @property {Boolean}              active          - Indicate whether the collider detector is active
  * @property {Object}               body            - The collider body
  */
-import { AffineTransform, NewClass, Point, arrayRemoveObject } from "@aspect/core";
+import { AffineTransform, BaseClass, Point, arrayRemoveObject } from "@aspect/core";
 import { ColliderFilter } from "./collider-filter.js";
 import { ColliderBody } from "./collider-body.js";
 
 import { ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX } from "../../armature-define.js";
 import { ContourVertex2 } from "../../utils/datas/utils.js";
-export class ColliderDetector extends NewClass {
+export class ColliderDetector extends BaseClass {
 
     constructor(bone) {
         super();

@@ -1,4 +1,4 @@
-import { NewClass, arrayRemoveObject } from '@aspect/core';
+import { BaseClass, arrayRemoveObject } from '@aspect/core';
 
 
 /****************************************************************************
@@ -29,7 +29,7 @@ import { NewClass, arrayRemoveObject } from '@aspect/core';
  * timeline object
  * @extend Class
  */
-export class Timeline extends NewClass {
+export class Timeline extends BaseClass {
   constructor() {
     super();
     this._frames = [];

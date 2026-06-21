@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass } from "../platform/class";
+import { BaseClass } from "../platform/class";
 import { dirtyFlags } from "./node-canvas-render-cmd";
 import { Point, Rect, Size, AffineTransform } from "../geometry";
 import { Color } from "../platform/types/color";
@@ -35,7 +35,7 @@ import {
 } from "../platform/macro/constants";
 
 import { arrayRemoveObject } from "../platform/macro/utils";
-import { ComponentContainer } from "../components/component-container";
+import { ComponentContainer } from "../components";
 import Touch from "../event-manager/touch";
 import { CanvasRenderCmd as NodeCanvasRenderCmd } from "./node-canvas-render-cmd";
 import { WebGLRenderCmd as NodeWebGLRenderCmd } from "./node-webgl-render-cmd";
@@ -146,7 +146,7 @@ export function setGlobalOrderOfArrival(val) {
  * @property {GLProgram}         shaderProgram       - The shader program currently used for this node
  * @property {Number}               glServerState       - The state of OpenGL server side
  */
-export class Node extends NewClass {
+export class Node extends BaseClass {
   #tag = NODE_TAG_INVALID;
   /**
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.

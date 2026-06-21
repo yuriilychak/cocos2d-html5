@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass } from "./platform/class";
+import { BaseClass } from "./platform/class";
 import { log, assert, _LogInfos } from "./boot/debugger";
 import { ACTION_TAG_INVALID } from "./platform/macro/constants";
 import { ServiceLocator } from "./service-locator";
@@ -53,7 +53,7 @@ export var HashElement = function () {
  * @example
  * var mng = new ActionManager();
  */
-export class ActionManager extends NewClass {
+export class ActionManager extends BaseClass {
   _searchElementByTarget(arr, target) {
     for (var k = 0; k < arr.length; k++) {
       if (target === arr[k].target) return arr[k];

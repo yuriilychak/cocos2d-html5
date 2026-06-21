@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { NewClass } from "../class";
+import { BaseClass } from "../class";
 import { ServiceLocator } from "../../service-locator";
 
 /**
@@ -32,7 +32,7 @@ import { ServiceLocator } from "../../service-locator";
  * it controls the behavior of how to scale the container and _canvas object</p>
  *
  */
-export class ContainerStrategy extends NewClass {
+export class ContainerStrategy extends BaseClass {
   /**
    * Manipulation before appling the strategy
    * @param {view} view The target view

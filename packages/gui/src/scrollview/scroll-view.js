@@ -1,7 +1,7 @@
 import {
   Layer,
   Node,
-  NewClass,
+  BaseClass,
   Point,
   Size,
   Rect,
@@ -28,7 +28,7 @@ export function convertDistanceFromPointToInch(pointDis) {
   return (pointDis * factor) / 160;
 }
 
-export class ScrollViewDelegate extends NewClass {
+export class ScrollViewDelegate extends BaseClass {
   scrollViewDidScroll(view) {}
   scrollViewDidZoom(view) {}
 }
