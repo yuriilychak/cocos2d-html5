@@ -89,6 +89,7 @@ LabelTTF.WebGLRenderCmd = LabelTTFWebGLRenderCmd;
 // Named re-exports for direct imports from other packages
 // ======================================================================
 export { Point, Size, Rect, AffineTransform, cardinalSplineAt, getControlPointAt } from "./geometry";
+export { BrowserType, Language, OperatingSystem, Platform } from "./enums";
 export { Vertex3F, Quad3, V3F_C4B_T2F } from "./platform/types/vertex";
 export {
   rand,

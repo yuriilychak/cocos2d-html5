@@ -1,4 +1,5 @@
 import { log, warn } from "./debugger";
+import { BrowserType, Language, OperatingSystem, Platform } from "../enums";
 
 export function create3DContext(canvas, opt_attribs) {
   var names = ["webgl2", "webgl", "experimental-webgl", "webkit-3d", "moz-webgl"];
@@ -25,73 +26,6 @@ export default class Sys {
   }
 
   constructor() {
-    this.LANGUAGE_ENGLISH = "en";
-    this.LANGUAGE_CHINESE = "zh";
-    this.LANGUAGE_FRENCH = "fr";
-    this.LANGUAGE_ITALIAN = "it";
-    this.LANGUAGE_GERMAN = "de";
-    this.LANGUAGE_SPANISH = "es";
-    this.LANGUAGE_DUTCH = "du";
-    this.LANGUAGE_RUSSIAN = "ru";
-    this.LANGUAGE_KOREAN = "ko";
-    this.LANGUAGE_JAPANESE = "ja";
-    this.LANGUAGE_HUNGARIAN = "hu";
-    this.LANGUAGE_PORTUGUESE = "pt";
-    this.LANGUAGE_ARABIC = "ar";
-    this.LANGUAGE_NORWEGIAN = "no";
-    this.LANGUAGE_POLISH = "pl";
-    this.LANGUAGE_UNKNOWN = "unkonwn";
-
-    this.OS_IOS = "iOS";
-    this.OS_ANDROID = "Android";
-    this.OS_WINDOWS = "Windows";
-    this.OS_MARMALADE = "Marmalade";
-    this.OS_LINUX = "Linux";
-    this.OS_BADA = "Bada";
-    this.OS_BLACKBERRY = "Blackberry";
-    this.OS_OSX = "OS X";
-    this.OS_WP8 = "WP8";
-    this.OS_WINRT = "WINRT";
-    this.OS_UNKNOWN = "Unknown";
-
-    this.UNKNOWN = -1;
-    this.WIN32 = 0;
-    this.LINUX = 1;
-    this.MACOS = 2;
-    this.ANDROID = 3;
-    this.IPHONE = 4;
-    this.IPAD = 5;
-    this.BLACKBERRY = 6;
-    this.NACL = 7;
-    this.EMSCRIPTEN = 8;
-    this.TIZEN = 9;
-    this.WINRT = 10;
-    this.WP8 = 11;
-    this.MOBILE_BROWSER = 100;
-    this.DESKTOP_BROWSER = 101;
-
-    this.BROWSER_TYPE_WECHAT = "wechat";
-    this.BROWSER_TYPE_ANDROID = "androidbrowser";
-    this.BROWSER_TYPE_IE = "ie";
-    this.BROWSER_TYPE_QQ_APP = "qq";
-    this.BROWSER_TYPE_QQ = "qqbrowser";
-    this.BROWSER_TYPE_MOBILE_QQ = "mqqbrowser";
-    this.BROWSER_TYPE_UC = "ucbrowser";
-    this.BROWSER_TYPE_360 = "360browser";
-    this.BROWSER_TYPE_BAIDU_APP = "baiduboxapp";
-    this.BROWSER_TYPE_BAIDU = "baidubrowser";
-    this.BROWSER_TYPE_MAXTHON = "maxthon";
-    this.BROWSER_TYPE_OPERA = "opera";
-    this.BROWSER_TYPE_OUPENG = "oupeng";
-    this.BROWSER_TYPE_MIUI = "miuibrowser";
-    this.BROWSER_TYPE_FIREFOX = "firefox";
-    this.BROWSER_TYPE_SAFARI = "safari";
-    this.BROWSER_TYPE_CHROME = "chrome";
-    this.BROWSER_TYPE_LIEBAO = "liebao";
-    this.BROWSER_TYPE_QZONE = "qzone";
-    this.BROWSER_TYPE_SOUGOU = "sogou";
-    this.BROWSER_TYPE_UNKNOWN = "unknown";
-
     this.isNative = false;
 
     var win = window,
@@ -101,13 +35,13 @@ export default class Sys {
     var ua = nav.userAgent.toLowerCase();
 
     this.isMobile = /mobile|android|iphone|ipad/.test(ua);
-    this.platform = this.isMobile ? this.MOBILE_BROWSER : this.DESKTOP_BROWSER;
+    this.platform = this.isMobile ? Platform.MOBILE_BROWSER : Platform.DESKTOP_BROWSER;
 
     var currLanguage = nav.language;
     currLanguage = currLanguage ? currLanguage : nav.browserLanguage;
     currLanguage = currLanguage
       ? currLanguage.split("-")[0]
-      : this.LANGUAGE_ENGLISH;
+      : Language.ENGLISH;
     this.language = currLanguage;
 
     // Detect OS
@@ -134,24 +68,24 @@ export default class Sys {
       osMainVersion = 0;
     }
 
-    var osName = this.OS_UNKNOWN;
-    if (nav.appVersion.indexOf("Win") !== -1) osName = this.OS_WINDOWS;
-    else if (iOS) osName = this.OS_IOS;
-    else if (nav.appVersion.indexOf("Mac") !== -1) osName = this.OS_OSX;
+    var osName = OperatingSystem.UNKNOWN;
+    if (nav.appVersion.indexOf("Win") !== -1) osName = OperatingSystem.WINDOWS;
+    else if (iOS) osName = OperatingSystem.IOS;
+    else if (nav.appVersion.indexOf("Mac") !== -1) osName = OperatingSystem.OSX;
     else if (
       nav.appVersion.indexOf("X11") !== -1 &&
       nav.appVersion.indexOf("Linux") === -1
     )
-      osName = this.OS_UNIX;
-    else if (isAndroid) osName = this.OS_ANDROID;
-    else if (nav.appVersion.indexOf("Linux") !== -1) osName = this.OS_LINUX;
+      osName = OperatingSystem.UNKNOWN;
+    else if (isAndroid) osName = OperatingSystem.ANDROID;
+    else if (nav.appVersion.indexOf("Linux") !== -1) osName = OperatingSystem.LINUX;
 
     this.os = osName;
     this.osVersion = osVersion;
     this.osMainVersion = osMainVersion;
 
     // Detect browser type
-    this.browserType = this.BROWSER_TYPE_UNKNOWN;
+    this.browserType = BrowserType.UNKNOWN;
     var self = this;
     (function () {
       var typeReg1 =
@@ -161,17 +95,17 @@ export default class Sys {
       if (!browserTypes) browserTypes = typeReg2.exec(ua);
       var browserType = browserTypes
         ? browserTypes[0]
-        : self.BROWSER_TYPE_UNKNOWN;
+        : BrowserType.UNKNOWN;
       if (browserType === "micromessenger")
-        browserType = self.BROWSER_TYPE_WECHAT;
+        browserType = BrowserType.WECHAT;
       else if (browserType === "safari" && isAndroid)
-        browserType = self.BROWSER_TYPE_ANDROID;
-      else if (browserType === "trident") browserType = self.BROWSER_TYPE_IE;
+        browserType = BrowserType.ANDROID;
+      else if (browserType === "trident") browserType = BrowserType.IE;
       else if (browserType === "360 aphone")
-        browserType = self.BROWSER_TYPE_360;
+        browserType = BrowserType.BROWSER_360;
       else if (browserType === "mxbrowser")
-        browserType = self.BROWSER_TYPE_MAXTHON;
-      else if (browserType === "opr") browserType = self.BROWSER_TYPE_OPERA;
+        browserType = BrowserType.MAXTHON;
+      else if (browserType === "opr") browserType = BrowserType.OPERA;
       self.browserType = browserType;
     })();
 
@@ -267,7 +201,7 @@ export default class Sys {
 
         if (
           _supportWebGL &&
-          this.os === this.OS_IOS &&
+          this.os === OperatingSystem.IOS &&
           this.osMainVersion === 9
         ) {
           if (!window.indexedDB) {
@@ -275,34 +209,34 @@ export default class Sys {
           }
         }
 
-        if (_supportWebGL && this.os === this.OS_ANDROID) {
+        if (_supportWebGL && this.os === OperatingSystem.ANDROID) {
           var browserVer = parseFloat(this.browserVersion);
           switch (this.browserType) {
-            case this.BROWSER_TYPE_MOBILE_QQ:
-            case this.BROWSER_TYPE_BAIDU:
-            case this.BROWSER_TYPE_BAIDU_APP:
+            case BrowserType.MOBILE_QQ:
+            case BrowserType.BAIDU:
+            case BrowserType.BAIDU_APP:
               if (browserVer >= 6.2) {
                 _supportWebGL = true;
               } else {
                 _supportWebGL = false;
               }
               break;
-            case this.BROWSER_TYPE_CHROME:
+            case BrowserType.CHROME:
               if (browserVer >= 30.0) {
                 _supportWebGL = true;
               } else {
                 _supportWebGL = false;
               }
               break;
-            case this.BROWSER_TYPE_ANDROID:
+            case BrowserType.ANDROID:
               if (this.osMainVersion && this.osMainVersion >= 5) {
                 _supportWebGL = true;
               }
               break;
-            case this.BROWSER_TYPE_UNKNOWN:
-            case this.BROWSER_TYPE_360:
-            case this.BROWSER_TYPE_MIUI:
-            case this.BROWSER_TYPE_UC:
+            case BrowserType.UNKNOWN:
+            case BrowserType.BROWSER_360:
+            case BrowserType.MIUI:
+            case BrowserType.UC:
               _supportWebGL = false;
           }
         }
@@ -324,22 +258,6 @@ export default class Sys {
     if (docEle["onkeyup"] !== undefined) capabilities["keyboard"] = true;
     if (win.DeviceMotionEvent || win.DeviceOrientationEvent)
       capabilities["accelerometer"] = true;
-  }
-
-  garbageCollect() {
-    // N/A in cocos2d-html5
-  }
-
-  dumpRoot() {
-    // N/A in cocos2d-html5
-  }
-
-  restartVM() {
-    // N/A in cocos2d-html5
-  }
-
-  cleanScript(jsfile) {
-    // N/A in cocos2d-html5
   }
 
   isObjectValid(obj) {

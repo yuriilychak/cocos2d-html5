@@ -24,7 +24,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-import { ServiceLocator } from "@aspect/core";
+import { Language, ServiceLocator } from "@aspect/core";
 import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
 import { TextBMFont } from "@aspect/ccui";
 import { s_simpleFont_fnt } from "../resources";
@@ -43,25 +43,25 @@ export class CurrentLanguageTest extends BaseTestLayer {
 
         var currentLanguageType = ServiceLocator.sys.language;
         switch (currentLanguageType) {
-            case ServiceLocator.sys.LANGUAGE_ENGLISH:
+            case Language.ENGLISH:
                 labelLanguage.string = "current language is English";
                 break;
-            case ServiceLocator.sys.LANGUAGE_CHINESE:
+            case Language.CHINESE:
                 labelLanguage.string = "current language is Chinese";
                 break;
-            case ServiceLocator.sys.LANGUAGE_FRENCH:
+            case Language.FRENCH:
                 labelLanguage.string = "current language is French";
                 break;
-            case ServiceLocator.sys.LANGUAGE_GERMAN:
+            case Language.GERMAN:
                 labelLanguage.string = "current language is German";
                 break;
-            case ServiceLocator.sys.LANGUAGE_ITALIAN:
+            case Language.ITALIAN:
                 labelLanguage.string = "current language is Italian";
                 break;
-            case ServiceLocator.sys.LANGUAGE_RUSSIAN:
+            case Language.RUSSIAN:
                 labelLanguage.string = "current language is Russian";
                 break;
-            case ServiceLocator.sys.LANGUAGE_SPANISH:
+            case Language.SPANISH:
                 labelLanguage.string = "current language is Spanish";
                 break;
         }

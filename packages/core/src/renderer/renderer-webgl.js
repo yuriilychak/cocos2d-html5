@@ -35,6 +35,7 @@ import {
 import { GLProgramState } from "../shaders/CCGLProgramState";
 import Matrix4 from "../kazmath/mat4";
 import { ServiceLocator } from "../service-locator";
+import { OperatingSystem } from "../enums";
 
 // Internal variables
 // Batching general informations
@@ -172,7 +173,7 @@ var rendererWebGL = {
     this.mat4Identity = new Matrix4();
     this.mat4Identity.identity();
     initQuadBuffer(BATCH_VERTEX_COUNT);
-    if (ServiceLocator.sys.os === ServiceLocator.sys.OS_IOS) {
+    if (ServiceLocator.sys.os === OperatingSystem.IOS) {
       _IS_IOS = true;
     }
   },

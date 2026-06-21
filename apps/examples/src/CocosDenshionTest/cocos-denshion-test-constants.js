@@ -46,13 +46,13 @@ import {
   subMusicVolume,
   unloadEffect
 } from "./cocos-denshion-test-helpers";
-import { ServiceLocator } from "@aspect/core";
+import { OperatingSystem, ServiceLocator } from "@aspect/core";
 
 export var MUSIC_FILE =
-  ServiceLocator.sys.os == ServiceLocator.sys.OS_WINRT ? "background.wav" : "background.mp3";
+  ServiceLocator.sys.os == OperatingSystem.WINRT ? "background.wav" : "background.mp3";
 
 export var EFFECT_FILE =
-  ServiceLocator.sys.os == ServiceLocator.sys.OS_WINRT ? "effect1.wav" : "effect2.mp3";
+  ServiceLocator.sys.os == OperatingSystem.WINRT ? "effect1.wav" : "effect2.mp3";
 
 export var _DenshionTests = ["Music Test"];
 

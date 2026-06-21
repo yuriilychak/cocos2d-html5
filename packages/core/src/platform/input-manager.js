@@ -31,6 +31,7 @@ import { EventAcceleration } from "../event-manager/event-extension/index";
 import EventKeyboard from "../event-manager/event-extension/event-keyboard";
 import { Acceleration } from "../platform/types/color";
 import { isFunction } from "../boot/utils";
+import { BrowserType } from "../enums";
 
 
 /**
@@ -411,7 +412,7 @@ export class InputManager {
       if (touch_event) {
         var location;
         if (
-          this._sys.BROWSER_TYPE_FIREFOX ===
+          BrowserType.FIREFOX ===
           this._sys.browserType
         )
           location = locView.convertToLocationInView(
@@ -815,7 +816,7 @@ export class InputManager {
 
     //TODO fix DeviceMotionEvent bug on QQ Browser version 4.1 and below.
     if (
-      this._sys.browserType === this._sys.BROWSER_TYPE_MOBILE_QQ
+      this._sys.browserType === BrowserType.MOBILE_QQ
     )
       _t._accelDeviceEvent = window.DeviceOrientationEvent;
 
@@ -827,7 +828,7 @@ export class InputManager {
     if (
       /Android/.test(ua) ||
       (/Adr/.test(ua) &&
-        this._sys.browserType === this._sys.BROWSER_TYPE_UC)
+        this._sys.browserType === BrowserType.UC)
     ) {
       _t._minus = -1;
     }

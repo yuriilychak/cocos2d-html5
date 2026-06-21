@@ -36,7 +36,7 @@ import {
   _setAutoTestCurrentTestName
 } from "./constants";
 import { testNames } from "./tests-main-helpers";
-import { LoaderScene, ServiceLocator } from "@aspect/core";
+import { LoaderScene, OperatingSystem, ServiceLocator } from "@aspect/core";
 import { MenuTestLayer } from "./menu-test-layer";
 
 export class TestController extends MenuTestLayer {
@@ -89,13 +89,13 @@ export class TestController extends MenuTestLayer {
       }
       return !!(testCase.platforms & PLATFORM_HTML5);
     }
-    if (ServiceLocator.sys.os == ServiceLocator.sys.OS_ANDROID) {
+    if (ServiceLocator.sys.os == OperatingSystem.ANDROID) {
       return !!(testCase.platforms & (PLATFORM_JSB | PLATFROM_ANDROID));
     }
-    if (ServiceLocator.sys.os == ServiceLocator.sys.OS_IOS) {
+    if (ServiceLocator.sys.os == OperatingSystem.IOS) {
       return !!(testCase.platforms & (PLATFORM_JSB | PLATFROM_IOS));
     }
-    if (ServiceLocator.sys.os == ServiceLocator.sys.OS_OSX) {
+    if (ServiceLocator.sys.os == OperatingSystem.OSX) {
       return !!(testCase.platforms & (PLATFORM_JSB | PLATFORM_MAC));
     }
     return !!(testCase.platforms & PLATFORM_JSB);

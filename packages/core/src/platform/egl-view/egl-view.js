@@ -34,6 +34,7 @@ import { ContentStrategy } from "./content-strategy";
 import { ResolutionPolicy } from "./resolution-policy";
 import { DENSITYDPI_HIGH } from "./constants";
 import { log, _LogInfos } from "../../boot/debugger";
+import { BrowserType, OperatingSystem } from "../../enums";
 import {
   ORIENTATION_AUTO,
   ORIENTATION_LANDSCAPE,
@@ -70,21 +71,21 @@ function __initBrowserGetter(sys, view) {
   __BrowserGetter.adaptationType = sys.browserType;
 
   if (window.navigator.userAgent.indexOf("OS 8_1_") > -1)
-    __BrowserGetter.adaptationType = sys.BROWSER_TYPE_MIUI;
+    __BrowserGetter.adaptationType = BrowserType.MIUI;
 
-  if (sys.os === sys.OS_IOS)
-    __BrowserGetter.adaptationType = sys.BROWSER_TYPE_SAFARI;
+  if (sys.os === OperatingSystem.IOS)
+    __BrowserGetter.adaptationType = BrowserType.SAFARI;
 
   switch (__BrowserGetter.adaptationType) {
-    case sys.BROWSER_TYPE_SAFARI:
+    case BrowserType.SAFARI:
       __BrowserGetter.meta["minimal-ui"] = "true";
       break;
-    case sys.BROWSER_TYPE_CHROME:
+    case BrowserType.CHROME:
       __BrowserGetter.__defineGetter__("target-densitydpi", function () {
         return view._targetDensityDPI;
       });
       break;
-    case sys.BROWSER_TYPE_MIUI:
+    case BrowserType.MIUI:
       __BrowserGetter.init = function (view) {
         if (view.__resizeWithBrowserSize) return;
         var resize = function () {

@@ -1,4 +1,4 @@
-import { screen, visibleRect, Point, ServiceLocator } from "@aspect/core";
+import { BrowserType, OperatingSystem, screen, visibleRect, Point, ServiceLocator } from "@aspect/core";
 import { EditBoxInputBase } from './edit-box-input-base';
 
 const SCROLLY = 40;
@@ -12,9 +12,9 @@ const TIMER_NAME = 400;
  */
 export const editBoxPolyfill = { zoomInvalid: false };
 if (
-    ServiceLocator.sys.OS_ANDROID === ServiceLocator.sys.os &&
-    (ServiceLocator.sys.browserType === ServiceLocator.sys.BROWSER_TYPE_SOUGOU ||
-        ServiceLocator.sys.browserType === ServiceLocator.sys.BROWSER_TYPE_360)
+    OperatingSystem.ANDROID === ServiceLocator.sys.os &&
+    (ServiceLocator.sys.browserType === BrowserType.SOUGOU ||
+        ServiceLocator.sys.browserType === BrowserType.BROWSER_360)
 ) {
     editBoxPolyfill.zoomInvalid = true;
 }

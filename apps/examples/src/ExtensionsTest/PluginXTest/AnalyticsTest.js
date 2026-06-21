@@ -25,7 +25,7 @@
 
 import { PluginXTest } from "./PluginXTest";
 import { director } from "../../constants";
-import { Color, Point, log, ServiceLocator } from "@aspect/core";
+import { Color, Language, OperatingSystem, Point, log, ServiceLocator } from "@aspect/core";
 import { ButtonLayout } from "../../button-layout";
 import { TextBMFont } from "@aspect/ccui";
 import { s_simpleFont_fnt } from "../../resources";
@@ -62,16 +62,16 @@ export function loadAnalyticsPlugin() {
   var umengKey = "";
   var flurryKey = "";
 
-  if (ServiceLocator.sys.os == ServiceLocator.sys.OS_IOS) {
+  if (ServiceLocator.sys.os == OperatingSystem.IOS) {
     umengKey = UMENG_KEY_IOS;
     flurryKey = FLURRY_KEY_IOS;
-  } else if (ServiceLocator.sys.os == ServiceLocator.sys.OS_ANDROID) {
+  } else if (ServiceLocator.sys.os == OperatingSystem.ANDROID) {
     umengKey = UMENG_KEY_ANDROID;
     flurryKey = FLURRY_KEY_ANDROID;
   }
 
   var pluginManager = plugin.PluginManager.getInstance();
-  if (ServiceLocator.sys.LANGUAGE_CHINESE == langType) {
+  if (Language.CHINESE == langType) {
     g_pAnalytics = pluginManager.loadPlugin("AnalyticsUmeng");
     s_strAppKey = umengKey;
   } else {
@@ -134,7 +134,7 @@ export class AnalyticsTestLayer extends PluginXTest {
     super();
     this._title = "Plugin-x Test";
     this._subtitle =
-      ServiceLocator.sys.LANGUAGE_CHINESE == ServiceLocator.sys.language ? "umeng" : "flurry"; //Application.getInstance().getCurrentLanguage() ? "umeng" : "flurry";
+      Language.CHINESE == ServiceLocator.sys.language ? "umeng" : "flurry"; //Application.getInstance().getCurrentLanguage() ? "umeng" : "flurry";
   }
 
   onEnter() {

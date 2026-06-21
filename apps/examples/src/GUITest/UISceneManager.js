@@ -132,7 +132,7 @@ import { UITextTest } from "./UITextTest/uitext-test";
 import { UIVideoPlayerTest } from "./UIVideoPlayerTest/UIVideoPlayerTest";
 import { UIWebViewTest } from "./UIWebViewTest/UIWebViewTest";
 import { TestScene } from "../test-scene";
-import { BaseClass, ServiceLocator } from "@aspect/core";
+import { BaseClass, OperatingSystem, ServiceLocator } from "@aspect/core";
 
 var currentTestingArray = null;
 
@@ -806,8 +806,8 @@ if (ServiceLocator.sys.isNative) {
 }
 
 if (
-  ServiceLocator.sys.os == ServiceLocator.sys.OS_ANDROID ||
-  ServiceLocator.sys.os == ServiceLocator.sys.OS_IOS ||
+  ServiceLocator.sys.os == OperatingSystem.ANDROID ||
+  ServiceLocator.sys.os == OperatingSystem.IOS ||
   !ServiceLocator.sys.isNative
 ) {
   testingItems["UIVideoPlayer"] = [

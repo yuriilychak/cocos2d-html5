@@ -25,11 +25,11 @@
 
 import { AnalyticsTestLayer } from "./AnalyticsTest";
 import { IAPTestLayer } from "./IOSIAPTest";
-import { Scene, ServiceLocator } from "@aspect/core";
+import { OperatingSystem, Scene, ServiceLocator } from "@aspect/core";
 
 export var pluginXTestItemNames = [];
 
-if (ServiceLocator.sys.isMobile && ServiceLocator.sys.os == ServiceLocator.sys.OS_IOS) {
+if (ServiceLocator.sys.isMobile && ServiceLocator.sys.os == OperatingSystem.IOS) {
   pluginXTestItemNames.push({
     itemTitle: "Analytics Test",
     testLayer: function () {
@@ -37,7 +37,7 @@ if (ServiceLocator.sys.isMobile && ServiceLocator.sys.os == ServiceLocator.sys.O
     }
   });
 }
-if (ServiceLocator.sys.isMobile && ServiceLocator.sys.os == ServiceLocator.sys.OS_IOS) {
+if (ServiceLocator.sys.isMobile && ServiceLocator.sys.os == OperatingSystem.IOS) {
   pluginXTestItemNames.push({
     itemTitle: "iOS IAP Test",
     testLayer: function () {

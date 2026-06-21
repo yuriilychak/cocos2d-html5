@@ -12,7 +12,7 @@
  * May be modifications for a few browser version
  */
 
-import { ServiceLocator } from "@aspect/core";
+import { BrowserType, OperatingSystem, ServiceLocator } from "@aspect/core";
 
 const sys = ServiceLocator.sys;
 
@@ -30,17 +30,17 @@ export const audioSupport = {
   ONE_SOURCE: false
 };
 
-if (sys.browserType === sys.BROWSER_TYPE_FIREFOX) {
+if (sys.browserType === BrowserType.FIREFOX) {
   audioSupport.DELAY_CREATE_CTX = true;
   audioSupport.USE_LOADER_EVENT = "canplay";
 }
 
-if (sys.os === sys.OS_IOS) {
+if (sys.os === OperatingSystem.IOS) {
   audioSupport.USE_LOADER_EVENT = "loadedmetadata";
 }
 
-if (sys.os === sys.OS_ANDROID) {
-  if (sys.browserType === sys.BROWSER_TYPE_UC) {
+if (sys.os === OperatingSystem.ANDROID) {
+  if (sys.browserType === BrowserType.UC) {
     audioSupport.ONE_SOURCE = true;
   }
 }

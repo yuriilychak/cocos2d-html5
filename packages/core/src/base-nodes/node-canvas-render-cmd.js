@@ -86,8 +86,8 @@ export class RenderCmd {
 
   constructor(renderable) {
     this._node = renderable;
-    this._anchorPointInPoints = { x: 0, y: 0 };
-    this._displayedColor = new Color(255, 255, 255, 255);
+    this._anchorPointInPoints = new Point();
+    this._displayedColor = Color.WHITE;
   }
 
   needDraw() {
