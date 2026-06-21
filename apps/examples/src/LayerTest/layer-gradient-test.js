@@ -69,7 +69,7 @@ export class LayerGradientTest extends LayerTest {
             event.getCurrentTarget().updateGradient(event);
           },
           onMouseMove: function (event) {
-            if (event.getButton() == MouseButton.LEFT)
+            if (event.button == MouseButton.LEFT)
               event.getCurrentTarget().updateGradient(event);
           }
         },

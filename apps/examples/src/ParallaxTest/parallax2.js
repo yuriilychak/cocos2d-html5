@@ -27,7 +27,14 @@
 
 import { TAG_NODE } from "./parallax-test-constants";
 import { s_back, s_power, s_resprefix } from "../resources";
-import { EventListener, EventMouse, Point, Sprite, ServiceLocator, MouseButton } from "@aspect/core";
+import {
+  EventListener,
+  EventMouse,
+  Point,
+  Sprite,
+  ServiceLocator,
+  MouseButton
+} from "@aspect/core";
 import { TMXTiledMap } from "@aspect/tilemap";
 
 import { ParallaxNode } from "@aspect/parallax";
@@ -60,7 +67,7 @@ export class Parallax2 extends ParallaxDemo {
         {
           event: EventListener.MOUSE,
           onMouseMove: function (event) {
-            if (event.getButton() == MouseButton.LEFT) {
+            if (event.button == MouseButton.LEFT) {
               var node = event.getCurrentTarget().getChildByTag(TAG_NODE);
               node.x += event.getDeltaX();
               node.y += event.getDeltaY();
@@ -105,23 +112,13 @@ export class Parallax2 extends ParallaxDemo {
     // NOW add the 3 layers to the 'void' node
 
     // background image is moved at a ratio of 0.4x, 0.5y
-    voidNode.addChild(
-      background,
-      -1,
-      new Point(0.4, 0.5),
-      new Point(0, 0)
-    );
+    voidNode.addChild(background, -1, new Point(0.4, 0.5), new Point(0, 0));
 
     // tiles are moved at a ratio of 1.0, 1.0y
     voidNode.addChild(tilemap, 1, new Point(1.0, 1.0), new Point(0, 0));
 
     // top image is moved at a ratio of 3.0x, 2.5y
-    voidNode.addChild(
-      cocosImage,
-      2,
-      new Point(3.0, 2.5),
-      new Point(0, 0)
-    );
+    voidNode.addChild(cocosImage, 2, new Point(3.0, 2.5), new Point(0, 0));
     this.addChild(voidNode, 0, TAG_NODE);
   }
 

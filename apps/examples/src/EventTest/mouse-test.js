@@ -52,9 +52,9 @@ export class MouseTest extends EventTest {
           event: EventListener.MOUSE,
           onMouseDown: function (event) {
             var target = event.getCurrentTarget();
-            if (event.getButton() === MouseButton.RIGHT)
+            if (event.button === MouseButton.RIGHT)
               log("onRightMouseDown at: " + event.x + " " + event.y);
-            else if (event.getButton() === BUTTON_LEFT.LEFT)
+            else if (event.button === BUTTON_LEFT.LEFT)
               log("onLeftMouseDown at: " + event.x + " " + event.y);
             target.sprite.x = event.x;
             target.sprite.y = event.y;

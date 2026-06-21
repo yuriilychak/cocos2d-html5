@@ -66,7 +66,7 @@ export class TileDemo extends BaseTestLayer {
         {
           event: EventListener.MOUSE,
           onMouseMove: function (event) {
-            if (event.getButton() == MouseButton.LEFT) {
+            if (event.button == MouseButton.LEFT) {
               var node = event.getCurrentTarget().getChildByTag(TAG_TILE_MAP);
               node.x += event.getDeltaX();
               node.y += event.getDeltaY();
