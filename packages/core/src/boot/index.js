@@ -1,6 +1,3 @@
-// Side-effect: sets up cc namespace, window props, log stubs, polyfills
-import './init';
-
 // Re-export boot modules
 export {
     each, isFunction, isNumber, isString, isArray,

@@ -26,7 +26,7 @@
 
 import { SysTestBase } from "./sys-test-base";
 import { s_simpleFont_fnt } from "../resources";
-import { EventListener, ServiceLocator } from "@aspect/core";
+import { EventListener, EventListenerType, ServiceLocator } from "@aspect/core";
 import { TextBMFont } from "@aspect/ccui";
 import { winSize } from "../constants";
 
@@ -47,7 +47,7 @@ export class OpenURLTest extends SysTestBase {
 
     ServiceLocator.eventManager.addListener(
       {
-        event: EventListener.TOUCH_ONE_BY_ONE,
+        event: EventListenerType.TOUCH_ONE_BY_ONE,
         swallowTouches: true,
         onTouchBegan: function () {
           return true;

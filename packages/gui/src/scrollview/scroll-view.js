@@ -5,7 +5,7 @@ import {
   Point,
   Size,
   Rect,
-  EventListener,
+  EventListener, EventListenerType,
   ServiceLocator
 } from "@aspect/core";
 import { MoveTo, CallFunc, Sequence, ActionTween } from "@aspect/actions";
@@ -595,7 +595,7 @@ export class GScrollView extends Layer {
       this._touches.length = 0;
     } else {
       var listener = EventListener.create({
-        event: EventListener.TOUCH_ONE_BY_ONE
+        event: EventListenerType.TOUCH_ONE_BY_ONE
       });
       if (this.onTouchBegan)
         listener.onTouchBegan = this.onTouchBegan.bind(this);

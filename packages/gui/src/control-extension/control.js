@@ -1,4 +1,4 @@
-import { Layer, Node, Color, Rect, EventListener, arrayRemoveObject, ServiceLocator } from "@aspect/core";
+import { Layer, Node, Color, Rect, EventListener, EventListenerType, arrayRemoveObject, ServiceLocator } from "@aspect/core";
 import { Invocation } from "./invocation";
 import {
   CONTROL_STATE_NORMAL,
@@ -46,7 +46,7 @@ export class Control extends Layer {
     this._highlighted = false;
 
     var listener = EventListener.create({
-      event: EventListener.TOUCH_ONE_BY_ONE,
+      event: EventListenerType.TOUCH_ONE_BY_ONE,
       swallowTouches: true
     });
     if (this.onTouchBegan) listener.onTouchBegan = this.onTouchBegan.bind(this);

@@ -25,7 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Color, EventListener, Rect, ServiceLocator } from "@aspect/core";
+import { Color, EventListener, EventListenerType, Rect, ServiceLocator } from "@aspect/core";
 import { ImageView, Widget } from "@aspect/ccui";
 
 const SQUARE_SIZE = 80;
@@ -70,7 +70,7 @@ export class TouchableSprite extends ImageView {
 
         var selfPointer = this;
         var listener = EventListener.create({
-            event: EventListener.TOUCH_ONE_BY_ONE,
+            event: EventListenerType.TOUCH_ONE_BY_ONE,
             swallowTouches: true,
             onTouchBegan: function (touch, event) {
                 var locationInNode = selfPointer.convertToNodeSpace(touch);

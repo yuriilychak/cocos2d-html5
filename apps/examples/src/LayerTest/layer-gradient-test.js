@@ -27,7 +27,7 @@
 
 import { LayerTest } from "./layer-test";
 import { director, winSize } from "../constants";
-import { Color, EventListener, MouseButton, LayerGradient, Point, ServiceLocator } from "@aspect/core";
+import { Color, EventListener, EventListenerType, MouseButton, LayerGradient, Point, ServiceLocator } from "@aspect/core";
 import { ButtonLayout } from "../button-layout";
 
 import { TAG_LAYER } from "./layer-test-constants";
@@ -51,7 +51,7 @@ export class LayerGradientTest extends LayerTest {
     if ("touches" in ServiceLocator.sys.capabilities) {
       ServiceLocator.eventManager.addListener(
         {
-          event: EventListener.TOUCH_ALL_AT_ONCE,
+          event: EventListenerType.TOUCH_ALL_AT_ONCE,
           onTouchesBegan: function (touches, event) {
             event.getCurrentTarget().updateGradient(touches[0]);
           },
@@ -64,7 +64,7 @@ export class LayerGradientTest extends LayerTest {
     } else if ("mouse" in ServiceLocator.sys.capabilities) {
       ServiceLocator.eventManager.addListener(
         {
-          event: EventListener.MOUSE,
+          event: EventListenerType.MOUSE,
           onMouseDown: function (event) {
             event.getCurrentTarget().updateGradient(event);
           },

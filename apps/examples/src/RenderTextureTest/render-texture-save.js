@@ -33,7 +33,7 @@ import { s_fire, s_simpleFont_fnt } from "../resources";
 import { winSize } from "../constants";
 import {
   Color,
-  EventListener,
+  EventListener, EventListenerType,
   Point,
   Rect,
   Sprite,
@@ -58,7 +58,7 @@ export class RenderTextureSave extends RenderTextureBaseLayer {
     if ("touches" in ServiceLocator.sys.capabilities) {
       ServiceLocator.eventManager.addListener(
         {
-          event: EventListener.TOUCH_ALL_AT_ONCE,
+          event: EventListenerType.TOUCH_ALL_AT_ONCE,
           onTouchesMoved: function (touches, event) {
             event.getCurrentTarget().drawInLocation(touches[0]);
           }
@@ -68,7 +68,7 @@ export class RenderTextureSave extends RenderTextureBaseLayer {
     } else if ("mouse" in ServiceLocator.sys.capabilities)
       ServiceLocator.eventManager.addListener(
         {
-          event: EventListener.MOUSE,
+          event: EventListenerType.MOUSE,
           onMouseDown: function (event) {
             event.getCurrentTarget()._lastLocation = new Point(event);
           },

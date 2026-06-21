@@ -1,4 +1,4 @@
-import { Node, Color, Point, Rect, EventListener, warn, ServiceLocator } from "@aspect/core";
+import { Node, Color, Point, Rect, EventListener, EventListenerType, warn, ServiceLocator } from "@aspect/core";
 import {
   EDITBOX_INPUT_MODE_ANY,
   EDITBOX_INPUT_FLAG_SENSITIVE,
@@ -51,7 +51,7 @@ export class EditBox extends Node {
     this.initWithSizeAndBackgroundSprite(size, normal9SpriteBg);
 
     this._touchListener = EventListener.create({
-      event: EventListener.TOUCH_ONE_BY_ONE,
+      event: EventListenerType.TOUCH_ONE_BY_ONE,
       swallowTouches: true,
       onTouchBegan: this._onTouchBegan.bind(this),
       onTouchEnded: this._onTouchEnded.bind(this)

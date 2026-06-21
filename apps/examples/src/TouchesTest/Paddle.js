@@ -25,7 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { EventListener, Rect, Sprite, Texture2D, assert, ServiceLocator } from "@aspect/core";
+import { EventListener, EventListenerType, Rect, Sprite, Texture2D, assert, ServiceLocator } from "@aspect/core";
 export var PADDLE_STATE_GRABBED = 0;
 export var PADDLE_STATE_UNGRABBED = 1;
 
@@ -40,7 +40,7 @@ export class Paddle extends Sprite {
 
         this._rect = null;
         ServiceLocator.eventManager.addListener({
-            event: EventListener.TOUCH_ONE_BY_ONE,
+            event: EventListenerType.TOUCH_ONE_BY_ONE,
             swallowTouches: true,
             onTouchBegan: this.onTouchBegan,
             onTouchMoved: this.onTouchMoved,

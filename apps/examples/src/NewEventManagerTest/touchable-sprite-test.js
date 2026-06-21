@@ -28,7 +28,7 @@
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { createColoredView } from "./touchable-sprite";
 import { director } from "../constants";
-import { Color, EventListener, Node, Rect, log, ServiceLocator } from "@aspect/core";
+import { Color, EventListener, EventListenerType, Node, Rect, log, ServiceLocator } from "@aspect/core";
 import { ButtonLayout } from "../button-layout";
 
 export class TouchableSpriteTest extends EventDispatcherTestDemo {
@@ -58,7 +58,7 @@ export class TouchableSpriteTest extends EventDispatcherTestDemo {
 
     // Make sprite1 touchable
     var listener1 = EventListener.create({
-      event: EventListener.TOUCH_ONE_BY_ONE,
+      event: EventListenerType.TOUCH_ONE_BY_ONE,
       swallowTouches: true,
       onTouchBegan: function (touch, event) {
         var target = event.getCurrentTarget();
@@ -112,7 +112,7 @@ export class TouchableSpriteTest extends EventDispatcherTestDemo {
         switch (i) {
           case 0:
             layout.setLabelText(0, "Only Next item could be clicked");
-            ServiceLocator.eventManager.removeListeners(EventListener.TOUCH_ONE_BY_ONE);
+            ServiceLocator.eventManager.removeListeners(EventListenerType.TOUCH_ONE_BY_ONE);
             layout.showButton(1);
             break;
           case 1:

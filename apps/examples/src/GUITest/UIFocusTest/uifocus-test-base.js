@@ -24,7 +24,7 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
-import { Color, EventKeyboard, EventListener, KEY, log, ServiceLocator } from "@aspect/core";
+import { Color, EventKeyboard, EventListener, EventListenerType, KEY, log, ServiceLocator } from "@aspect/core";
 import { Button, Widget } from "@aspect/ccui";
 import { ButtonLayout } from "../../button-layout";
 
@@ -72,7 +72,7 @@ export class UIFocusTestBase extends UIMainLayer {
       Widget.enableDpadNavigation(true);
 
       this._eventListener = EventListener.create({
-        event: EventListener.FOCUS, //TODO Need add focus event in JSB
+        event: EventListenerType.FOCUS, //TODO Need add focus event in JSB
         onFocusChanged: this.onFocusChanged.bind(this)
       });
       ServiceLocator.eventManager.addListener(this._eventListener, 1);

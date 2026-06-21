@@ -25,7 +25,7 @@
 
 import { RenderTextureBaseLayer } from "./render-texture-base-layer";
 import { s_circle_plist, s_circle_png, s_simpleFont_fnt } from "../resources";
-import { Color, EventListener, Sprite, SpriteBatchNode, ServiceLocator } from "@aspect/core";
+import { Color, EventListener, EventListenerType, Sprite, SpriteBatchNode, ServiceLocator } from "@aspect/core";
 import { FadeTo, Hide, Sequence } from "@aspect/actions";
 import { TextBMFont } from "@aspect/ccui";
 
@@ -56,7 +56,7 @@ export class RenderTextureZbuffer extends RenderTextureBaseLayer {
 
     ServiceLocator.eventManager.addListener(
       {
-        event: EventListener.TOUCH_ALL_AT_ONCE,
+        event: EventListenerType.TOUCH_ALL_AT_ONCE,
         onTouchesBegan: this.onTouchesBegan.bind(this),
         onTouchesEnded: this.onTouchesEnded.bind(this),
         onTouchesMoved: this.onTouchesMoved.bind(this)

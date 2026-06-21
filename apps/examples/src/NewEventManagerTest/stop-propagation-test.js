@@ -27,7 +27,7 @@
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { createColoredView } from "./touchable-sprite";
-import { Color, EventListener, Rect, log, visibleRect, ServiceLocator } from "@aspect/core";
+import { Color, EventListener, EventListenerType, Rect, log, visibleRect, ServiceLocator } from "@aspect/core";
 
 export class StopPropagationTest extends EventDispatcherTestDemo {
   constructor() {
@@ -35,7 +35,7 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
     super();
 
     var touchOneByOneListener = EventListener.create({
-      event: EventListener.TOUCH_ONE_BY_ONE,
+      event: EventListenerType.TOUCH_ONE_BY_ONE,
       swallowTouches: true,
       onTouchBegan: function (touch, event) {
         // Skip if don't touch top half screen.
@@ -61,7 +61,7 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
     });
 
     var touchAllAtOnceListener = EventListener.create({
-      event: EventListener.TOUCH_ALL_AT_ONCE,
+      event: EventListenerType.TOUCH_ALL_AT_ONCE,
       onTouchesBegan: function (touches, event) {
         // Skip if don't touch top half screen.
         if (this._isPointInTopHalfAreaOfScreen(touches[0]))
@@ -93,7 +93,7 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
     });
 
     var keyboardEventListener = EventListener.create({
-      event: EventListener.KEYBOARD,
+      event: EventListenerType.KEYBOARD,
       onKeyPressed: function (key, event) {
         var target = event.getCurrentTarget();
         if (

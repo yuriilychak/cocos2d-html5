@@ -24,10 +24,11 @@
  ****************************************************************************/
 
 import EventListener from './event-listener';
+import { EventListenerType } from '../../enums';
 
 export default class _EventListenerCustom extends EventListener {
     constructor(listenerId, callback, target) {
-        super(EventListener.CUSTOM, listenerId, null);
+        super(EventListenerType.CUSTOM, listenerId, null);
         this._onCustomEvent = null;
         this._target = undefined;
 

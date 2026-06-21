@@ -28,7 +28,7 @@
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { s_simpleFont_fnt } from "../resources";
 import { director } from "../constants";
-import { Color, EventCustom, EventListener, ServiceLocator } from "@aspect/core";
+import { Color, EventCustom, EventListener, EventListenerType, ServiceLocator } from "@aspect/core";
 import { TextBMFont } from "@aspect/ccui";
 import { ButtonLayout } from "../button-layout";
 
@@ -56,7 +56,7 @@ export class CustomEventTest extends EventDispatcherTestDemo {
     this.addChild(statusLabel);
 
     this._listener1 = EventListener.create({
-      event: EventListener.CUSTOM,
+      event: EventListenerType.CUSTOM,
       eventName: "game_custom_event1",
       callback: function (event) {
         statusLabel.string = "Custom event 1 received, " + event.userData + " times";
@@ -72,7 +72,7 @@ export class CustomEventTest extends EventDispatcherTestDemo {
     this.addChild(statusLabel2);
 
     this._listener2 = EventListener.create({
-      event: EventListener.CUSTOM,
+      event: EventListenerType.CUSTOM,
       eventName: "game_custom_event2",
       callback: function (event) {
         statusLabel2.string = "Custom event 2 received, " + event.userData + " times";

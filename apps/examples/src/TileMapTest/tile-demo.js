@@ -40,7 +40,7 @@ import {
   restartTileMapTest
 } from "./tile-map-test-helpers";
 import { TileMapTestScene } from "./tile-map-test-scene";
-import { EventListener, MouseButton, ServiceLocator } from "@aspect/core";
+import { EventListener, EventListenerType, MouseButton, ServiceLocator } from "@aspect/core";
 
 export class TileDemo extends BaseTestLayer {
   constructor() {
@@ -49,7 +49,7 @@ export class TileDemo extends BaseTestLayer {
     if ("touches" in ServiceLocator.sys.capabilities) {
       ServiceLocator.eventManager.addListener(
         {
-          event: EventListener.TOUCH_ALL_AT_ONCE,
+          event: EventListenerType.TOUCH_ALL_AT_ONCE,
           onTouchesMoved: function (touches, event) {
             var touch = touches[0];
             var delta = touch.getDelta();
@@ -64,7 +64,7 @@ export class TileDemo extends BaseTestLayer {
     } else if ("mouse" in ServiceLocator.sys.capabilities)
       ServiceLocator.eventManager.addListener(
         {
-          event: EventListener.MOUSE,
+          event: EventListenerType.MOUSE,
           onMouseMove: function (event) {
             if (event.button == MouseButton.LEFT) {
               var node = event.getCurrentTarget().getChildByTag(TAG_TILE_MAP);

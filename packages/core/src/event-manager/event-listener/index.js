@@ -32,6 +32,7 @@ import _EventListenerFocus from './event-listener-focus';
 import _EventListenerKeyboard from '../event-extension/event-listener-keyboard';
 import _EventListenerAcceleration from '../event-extension/event-listener-acceleration';
 import { assert, _LogInfos } from '../../boot/debugger';
+import { EventListenerType } from '../../enums';
 
 /**
  * Create a EventListener object by json object
@@ -42,7 +43,7 @@ import { assert, _LogInfos } from '../../boot/debugger';
  * todo: It should be the direct use new
  * @example
  * EventListener.create({
- *       event: EventListener.TOUCH_ONE_BY_ONE,
+ *       event: EventListenerType.TOUCH_ONE_BY_ONE,
  *       swallowTouches: true,
  *       onTouchBegan: function (touch, event) {
  *           //do something
@@ -58,22 +59,22 @@ EventListener.create = function(argObj){
     delete argObj.event;
 
     var listener = null;
-    if(listenerType === EventListener.TOUCH_ONE_BY_ONE)
+    if(listenerType === EventListenerType.TOUCH_ONE_BY_ONE)
         listener = new _EventListenerTouchOneByOne();
-    else if(listenerType === EventListener.TOUCH_ALL_AT_ONCE)
+    else if(listenerType === EventListenerType.TOUCH_ALL_AT_ONCE)
         listener = new _EventListenerTouchAllAtOnce();
-    else if(listenerType === EventListener.MOUSE)
+    else if(listenerType === EventListenerType.MOUSE)
         listener = new _EventListenerMouse();
-    else if(listenerType === EventListener.CUSTOM){
+    else if(listenerType === EventListenerType.CUSTOM){
         listener = new _EventListenerCustom(argObj.eventName, argObj.callback);
         delete argObj.eventName;
         delete argObj.callback;
-    } else if(listenerType === EventListener.KEYBOARD)
+    } else if(listenerType === EventListenerType.KEYBOARD)
         listener = new _EventListenerKeyboard();
-    else if(listenerType === EventListener.ACCELERATION){
+    else if(listenerType === EventListenerType.ACCELERATION){
         listener = new _EventListenerAcceleration(argObj.callback);
         delete argObj.callback;
-    } else if(listenerType === EventListener.FOCUS)
+    } else if(listenerType === EventListenerType.FOCUS)
         listener = new _EventListenerFocus();
 
     for(var key in argObj) {

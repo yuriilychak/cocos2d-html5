@@ -25,10 +25,11 @@
 
 import EventListener from './event-listener';
 import { log, _LogInfos } from '../../boot/debugger';
+import { EventListenerType } from '../../enums';
 
 export default class _EventListenerTouchAllAtOnce extends EventListener {
     constructor() {
-        super(EventListener.TOUCH_ALL_AT_ONCE, _EventListenerTouchAllAtOnce.LISTENER_ID, null);
+        super(EventListenerType.TOUCH_ALL_AT_ONCE, _EventListenerTouchAllAtOnce.LISTENER_ID, null);
         this.onTouchesBegan = null;
         this.onTouchesMoved = null;
         this.onTouchesEnded = null;

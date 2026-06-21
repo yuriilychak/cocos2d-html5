@@ -28,7 +28,7 @@
 import { TAG_NODE } from "./parallax-test-constants";
 import { s_back, s_power, s_resprefix } from "../resources";
 import {
-  EventListener,
+  EventListener, EventListenerType,
   EventMouse,
   Point,
   Sprite,
@@ -52,7 +52,7 @@ export class Parallax2 extends ParallaxDemo {
     if ("touches" in ServiceLocator.sys.capabilities) {
       ServiceLocator.eventManager.addListener(
         {
-          event: EventListener.TOUCH_ALL_AT_ONCE,
+          event: EventListenerType.TOUCH_ALL_AT_ONCE,
           onTouchesMoved: function (touches, event) {
             var touch = touches[0];
             var node = event.getCurrentTarget().getChildByTag(TAG_NODE);
@@ -65,7 +65,7 @@ export class Parallax2 extends ParallaxDemo {
     } else if ("mouse" in ServiceLocator.sys.capabilities) {
       ServiceLocator.eventManager.addListener(
         {
-          event: EventListener.MOUSE,
+          event: EventListenerType.MOUSE,
           onMouseMove: function (event) {
             if (event.button == MouseButton.LEFT) {
               var node = event.getCurrentTarget().getChildByTag(TAG_NODE);

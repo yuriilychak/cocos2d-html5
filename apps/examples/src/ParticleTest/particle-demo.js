@@ -37,7 +37,7 @@ import { s_back3 } from "../resources";
 import { director } from "../constants";
 import {
   Color,
-  EventListener,
+  EventListener, EventListenerType,
   Point,
   Sprite,
   ServiceLocator,
@@ -63,7 +63,7 @@ export class ParticleDemo extends BaseTestLayer {
     if ("touches" in ServiceLocator.sys.capabilities) {
       ServiceLocator.eventManager.addListener(
         {
-          event: EventListener.TOUCH_ALL_AT_ONCE,
+          event: EventListenerType.TOUCH_ALL_AT_ONCE,
           onTouchesBegan: function (touches, event) {
             event.getCurrentTarget()._moveToTouchPoint(touches[0]);
           },
@@ -76,7 +76,7 @@ export class ParticleDemo extends BaseTestLayer {
     } else if ("mouse" in ServiceLocator.sys.capabilities)
       ServiceLocator.eventManager.addListener(
         {
-          event: EventListener.MOUSE,
+          event: EventListenerType.MOUSE,
           onMouseDown: function (event) {
             event.getCurrentTarget()._moveToTouchPoint(event);
           },

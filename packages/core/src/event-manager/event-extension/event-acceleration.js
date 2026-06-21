@@ -30,10 +30,10 @@ import { EventType } from "../../enums";
  * The acceleration event
  */
 export default class EventAcceleration extends Event {
+    _acc = null;
+
     constructor(acc) {
         super(EventType.ACCELERATION);
-        this._acc = null;
-
         this._acc = acc;
     }
 }

@@ -29,7 +29,7 @@ import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { createColoredView } from "./touchable-sprite";
 import { s_simpleFont_fnt } from "../resources";
 import { director } from "../constants";
-import { Color, EventListener, Rect, ServiceLocator } from "@aspect/core";
+import { Color, EventListener, EventListenerType, Rect, ServiceLocator } from "@aspect/core";
 import { TextBMFont } from "@aspect/ccui";
 import { ButtonLayout } from "../button-layout";
 
@@ -47,7 +47,7 @@ export class RemoveListenerWhenDispatching extends EventDispatcherTestDemo {
 
     // Make sprite1 touchable
     var listener1 = EventListener.create({
-      event: EventListener.TOUCH_ONE_BY_ONE,
+      event: EventListenerType.TOUCH_ONE_BY_ONE,
       swallowTouches: true,
       onTouchBegan: function (touch, event) {
         var locationInNode = sprite1.convertToNodeSpace(touch);

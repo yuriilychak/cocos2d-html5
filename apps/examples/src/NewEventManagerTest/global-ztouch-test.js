@@ -27,7 +27,7 @@
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { createColoredView } from "./touchable-sprite";
-import { Color, EventListener, Rect, log, visibleRect, ServiceLocator } from "@aspect/core";
+import { Color, EventListener, EventListenerType, Rect, log, visibleRect, ServiceLocator } from "@aspect/core";
 
 export class GlobalZTouchTest extends EventDispatcherTestDemo {
   constructor() {
@@ -38,7 +38,7 @@ export class GlobalZTouchTest extends EventDispatcherTestDemo {
     this._accum = null;
 
     var listener = EventListener.create({
-      event: EventListener.TOUCH_ONE_BY_ONE,
+      event: EventListenerType.TOUCH_ONE_BY_ONE,
       swallowTouches: true,
       onTouchBegan: function (touch, event) {
         var target = event.getCurrentTarget();

@@ -28,7 +28,7 @@
 import { SkeletonAnimation, ANIMATION_EVENT_TYPE } from "@aspect/extensions";
 import { SpineTestLayer } from "./spine-test-layer";
 import { director } from "../constants";
-import { Color, EventListener, Point, log, ServiceLocator } from "@aspect/core";
+import { Color, EventListener, EventListenerType, Point, log, ServiceLocator } from "@aspect/core";
 import { ButtonLayout } from "../button-layout";
 
 export class SpineTestLayerNormal extends SpineTestLayer {
@@ -100,7 +100,7 @@ export class SpineTestLayerNormal extends SpineTestLayer {
 
     ServiceLocator.eventManager.addListener(
       {
-        event: EventListener.TOUCH_ALL_AT_ONCE,
+        event: EventListenerType.TOUCH_ALL_AT_ONCE,
         onTouchesBegan: function (touches, event) {
           if (spineBoy.getTimeScale() === 1.0) spineBoy.setTimeScale(0.3);
           else spineBoy.setTimeScale(1);

@@ -27,7 +27,7 @@
 
 import { SkeletonAnimation } from "@aspect/extensions";
 import { SpineTestLayer } from "./spine-test-layer";
-import { Color, EventListener, ServiceLocator } from "@aspect/core";
+import { Color, EventListener, EventListenerType, ServiceLocator } from "@aspect/core";
 
 export class SpineTestLayerFFD extends SpineTestLayer {
   constructor() {
@@ -47,7 +47,7 @@ export class SpineTestLayerFFD extends SpineTestLayer {
     this.addChild(skeletonNode);
 
     var listener = EventListener.create({
-      event: EventListener.TOUCH_ONE_BY_ONE,
+      event: EventListenerType.TOUCH_ONE_BY_ONE,
       onTouchBegan: function (touch, event) {
         if (!skeletonNode.getDebugBonesEnabled())
           skeletonNode.setDebugBonesEnabled(true);

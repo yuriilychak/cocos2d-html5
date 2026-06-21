@@ -26,7 +26,7 @@
  ****************************************************************************/
 
 import { PTM_RATIO } from "./box2d-test-constants";
-import { Color, EventListener, LayerColor, Point, Rect, radiansToDegrees, ServiceLocator } from "@aspect/core";
+import { Color, EventListener, EventListenerType, LayerColor, Point, Rect, radiansToDegrees, ServiceLocator } from "@aspect/core";
 import { BMButton, TextBMFont, Widget } from "@aspect/ccui";
 import { s_simpleFont_fnt } from "../resources";
 
@@ -53,7 +53,7 @@ export class Box2DTestLayer extends LayerColor {
 
     ServiceLocator.eventManager.addListener(
       EventListener.create({
-        event: EventListener.TOUCH_ALL_AT_ONCE,
+        event: EventListenerType.TOUCH_ALL_AT_ONCE,
         onTouchesEnded: function (touches, event) {
           event.getCurrentTarget().addNewSpriteWithCoords(touches[0]);
         }

@@ -31,7 +31,7 @@
 import { EventTest } from "./event-test";
 import { s_pathR2 } from "../resources";
 import { winSize } from "../constants";
-import { Color, EventListener, Sprite, log, ServiceLocator } from "@aspect/core";
+import { Color, EventListener, EventListenerType, Sprite, log, ServiceLocator } from "@aspect/core";
 
 export class TouchOneByOneTest extends EventTest {
     init() {
@@ -41,7 +41,7 @@ export class TouchOneByOneTest extends EventTest {
 
         if( 'touches' in ServiceLocator.sys.capabilities ) {
             ServiceLocator.eventManager.addListener({
-                event: EventListener.TOUCH_ONE_BY_ONE,
+                event: EventListenerType.TOUCH_ONE_BY_ONE,
                 swallowTouches: true,
                 onTouchBegan: this.onTouchBegan,
                 onTouchMoved: this.onTouchMoved,

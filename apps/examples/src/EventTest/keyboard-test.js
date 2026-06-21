@@ -30,7 +30,7 @@
 //------------------------------------------------------------------
 import { EventTest } from "./event-test";
 import { s_simpleFont_fnt } from "../resources";
-import { EventListener, KEY, log, ServiceLocator } from "@aspect/core";
+import { EventListener, EventListenerType, KEY, log, ServiceLocator } from "@aspect/core";
 import { TextBMFont } from "@aspect/ccui";
 export class KeyboardTest extends EventTest {
   init() {
@@ -43,7 +43,7 @@ export class KeyboardTest extends EventTest {
     if ("keyboard" in ServiceLocator.sys.capabilities) {
       ServiceLocator.eventManager.addListener(
         {
-          event: EventListener.KEYBOARD,
+          event: EventListenerType.KEYBOARD,
           onKeyPressed: function (key, event) {
             var strTemp = "Key down:" + key;
             var keyStr = self.getKeyStr(key);

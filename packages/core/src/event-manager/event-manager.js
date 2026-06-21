@@ -26,7 +26,7 @@
 import { BaseClass } from "../platform/class";
 import { Node } from "../base-nodes/node";
 import { EventCustom, EventTouch } from "./event";
-import { EventType, GameEvent } from "../enums";
+import { EventListenerType, EventType, GameEvent } from "../enums";
 import { arrayRemoveObject, copyArray } from "../platform/macro/utils";
 import { isNumber } from "../boot/utils";
 import {
@@ -975,21 +975,21 @@ export default class EventManager {
           _t.removeListeners(locChildren[i], true);
       }
     } else {
-      if (listenerType === EventListener.TOUCH_ONE_BY_ONE)
+      if (listenerType === EventListenerType.TOUCH_ONE_BY_ONE)
         _t._removeListenersForListenerID(
           _EventListenerTouchOneByOne.LISTENER_ID
         );
-      else if (listenerType === EventListener.TOUCH_ALL_AT_ONCE)
+      else if (listenerType === EventListenerType.TOUCH_ALL_AT_ONCE)
         _t._removeListenersForListenerID(
           _EventListenerTouchAllAtOnce.LISTENER_ID
         );
-      else if (listenerType === EventListener.MOUSE)
+      else if (listenerType === EventListenerType.MOUSE)
         _t._removeListenersForListenerID(_EventListenerMouse.LISTENER_ID);
-      else if (listenerType === EventListener.ACCELERATION)
+      else if (listenerType === EventListenerType.ACCELERATION)
         _t._removeListenersForListenerID(
           _EventListenerAcceleration.LISTENER_ID
         );
-      else if (listenerType === EventListener.KEYBOARD)
+      else if (listenerType === EventListenerType.KEYBOARD)
         _t._removeListenersForListenerID(_EventListenerKeyboard.LISTENER_ID);
       else log(_LogInfos.eventManager_removeListeners);
     }

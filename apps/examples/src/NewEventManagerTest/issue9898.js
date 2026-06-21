@@ -26,7 +26,7 @@
  ****************************************************************************/
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
-import { Color, EventCustom, EventListener, Node, ServiceLocator } from "@aspect/core";
+import { Color, EventCustom, EventListener, EventListenerType, Node, ServiceLocator } from "@aspect/core";
 import { ButtonLayout } from "../button-layout";
 
 export class Issue9898 extends EventDispatcherTestDemo {
@@ -46,7 +46,7 @@ export class Issue9898 extends EventDispatcherTestDemo {
     this.addChild(node);
 
     var _listener = EventListener.create({
-      event: EventListener.CUSTOM,
+      event: EventListenerType.CUSTOM,
       eventName: "Issue9898",
       callback: function (event) {
         ServiceLocator.eventManager.removeListener(_listener);

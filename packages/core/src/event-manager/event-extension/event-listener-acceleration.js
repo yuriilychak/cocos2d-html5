@@ -25,18 +25,21 @@
 
 import EventListener from '../event-listener/event-listener';
 import { assert, _LogInfos } from '../../boot/debugger';
+import { EventListenerType } from '../../enums';
 
 export default class _EventListenerAcceleration extends EventListener {
+    _onAccelerationEvent = null;
+
     constructor(callback) {
-        var selfPointer;
-        var listener = function (event) {
-            selfPointer._onAccelerationEvent(event._acc, event);
+        let self;
+        var listener = (event) => {
+            self._onAccelerationEvent(event._acc, event);
         };
-        super(EventListener.ACCELERATION, _EventListenerAcceleration.LISTENER_ID, listener);
-        this._onAccelerationEvent = null;
+        super(EventListenerType.ACCELERATION, _EventListenerAcceleration.LISTENER_ID, listener);
+
 
         this._onAccelerationEvent = callback;
-        selfPointer = this;
+        self = this;
     }
 
     checkAvailable() {
@@ -49,10 +52,6 @@ export default class _EventListenerAcceleration extends EventListener {
     clone() {
         return new _EventListenerAcceleration(this._onAccelerationEvent);
     }
+
+    static LISTENER_ID = "__cc_acceleration";
 }
-
-_EventListenerAcceleration.LISTENER_ID = "__cc_acceleration";
-
-_EventListenerAcceleration.create = function (callback) {
-    return new _EventListenerAcceleration(callback);
-};

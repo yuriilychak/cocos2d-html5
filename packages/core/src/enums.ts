@@ -244,6 +244,17 @@ export enum EventType {
   CUSTOM = 6
 }
 
+export enum EventListenerType {
+  UNKNOWN = 0,
+  TOUCH_ONE_BY_ONE = 1,
+  TOUCH_ALL_AT_ONCE = 2,
+  KEYBOARD = 3,
+  MOUSE = 4,
+  ACCELERATION = 6,
+  FOCUS = 7,
+  CUSTOM = 8
+}
+
 export enum MouseEvent {
   /**
    * The none event code of  mouse event.
@@ -310,9 +321,9 @@ export enum MouseButton {
 }
 
 export enum TouchEvent {
-    NONE = -1,
-    BEGAN = 0, 
-    MOVED = 1, 
-    ENDED = 2, 
-    CANCELLED = 3
+  NONE = -1,
+  BEGAN = 0,
+  MOVED = 1,
+  ENDED = 2,
+  CANCELLED = 3
 }

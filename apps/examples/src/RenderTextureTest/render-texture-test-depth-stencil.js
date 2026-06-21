@@ -25,7 +25,7 @@
 
 import { RenderTextureBaseLayer } from "./render-texture-base-layer";
 import { s_fire, s_simpleFont_fnt } from "../resources";
-import { Color, EventListener, Rect, Sprite, Texture2D, ServiceLocator } from "@aspect/core";
+import { Color, EventListener, EventListenerType, Rect, Sprite, Texture2D, ServiceLocator } from "@aspect/core";
 import { BMButton, Widget } from "@aspect/ccui";
 
 import { RenderTexture } from "@aspect/render-texture";
@@ -96,7 +96,7 @@ export class RenderTextureTestDepthStencil extends RenderTextureBaseLayer {
     this._rend.beginWithClear(0, 0, 0, 0, 0, 0);
 
     gl.stencilMask(0xff);
-    ServiceLocator.eventManager.removeListeners(EventListener.TOUCH_ONE_BY_ONE);
+    ServiceLocator.eventManager.removeListeners(EventListenerType.TOUCH_ONE_BY_ONE);
     gl.stencilFunc(gl.NEVER, 1, 0xff);
     gl.stencilOp(gl.REPLACE, gl.REPLACE, gl.REPLACE);
     gl.enable(gl.STENCIL_TEST);

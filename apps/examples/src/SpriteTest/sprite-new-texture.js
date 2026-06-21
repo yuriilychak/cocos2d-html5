@@ -37,7 +37,7 @@ import {
   s_grossini_dance_atlas_mono
 } from "../resources";
 import { winSize } from "../constants";
-import { EventListener, Node, Point, Rect, Sprite, ServiceLocator } from "@aspect/core";
+import { EventListener, EventListenerType, Node, Point, Rect, Sprite, ServiceLocator } from "@aspect/core";
 import {
   Blink,
   FadeOut,
@@ -67,7 +67,7 @@ export class SpriteNewTexture extends SpriteTestDemo {
     if ("touches" in ServiceLocator.sys.capabilities) {
       ServiceLocator.eventManager.addListener(
         {
-          event: EventListener.TOUCH_ALL_AT_ONCE,
+          event: EventListenerType.TOUCH_ALL_AT_ONCE,
           onTouchesEnded: function (touches, event) {
             event.getCurrentTarget().onChangeTexture();
           }
@@ -77,7 +77,7 @@ export class SpriteNewTexture extends SpriteTestDemo {
     } else if ("mouse" in ServiceLocator.sys.capabilities)
       ServiceLocator.eventManager.addListener(
         {
-          event: EventListener.MOUSE,
+          event: EventListenerType.MOUSE,
           onMouseUp: function (event) {
             event.getCurrentTarget().onChangeTexture();
           }

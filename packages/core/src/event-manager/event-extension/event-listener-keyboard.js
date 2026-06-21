@@ -25,11 +25,12 @@
 
 import EventListener from '../event-listener/event-listener';
 import { log, _LogInfos } from '../../boot/debugger';
+import { EventListenerType } from '../../enums';
 
 export default class _EventListenerKeyboard extends EventListener {
     constructor() {
         var selfPointer;
-        var listener = function (event) {
+        var listener = (event) => {
             if (event._isPressed) {
                 if (selfPointer.onKeyPressed)
                     selfPointer.onKeyPressed(event._keyCode, event);
@@ -38,7 +39,7 @@ export default class _EventListenerKeyboard extends EventListener {
                     selfPointer.onKeyReleased(event._keyCode, event);
             }
         };
-        super(EventListener.KEYBOARD, _EventListenerKeyboard.LISTENER_ID, listener);
+        super(EventListenerType.KEYBOARD, _EventListenerKeyboard.LISTENER_ID, listener);
         this.onKeyPressed = null;
         this.onKeyReleased = null;
 
@@ -59,10 +60,6 @@ export default class _EventListenerKeyboard extends EventListener {
         }
         return true;
     }
+
+    static LISTENER_ID = "__cc_keyboard";
 }
-
-_EventListenerKeyboard.LISTENER_ID = "__cc_keyboard";
-
-_EventListenerKeyboard.create = function () {
-    return new _EventListenerKeyboard();
-};

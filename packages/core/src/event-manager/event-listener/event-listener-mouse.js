@@ -24,11 +24,11 @@
  ****************************************************************************/
 
 import EventListener from './event-listener';
-import { MouseEvent } from '../../enums';
+import { EventListenerType, MouseEvent } from '../../enums';
 
 export default class _EventListenerMouse extends EventListener {
     constructor() {
-        super(EventListener.MOUSE, _EventListenerMouse.LISTENER_ID, null);
+        super(EventListenerType.MOUSE, _EventListenerMouse.LISTENER_ID, null);
         this.onMouseDown = null;
         this.onMouseUp = null;
         this.onMouseMove = null;

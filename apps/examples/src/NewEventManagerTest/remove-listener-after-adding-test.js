@@ -26,7 +26,7 @@
  ****************************************************************************/
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
-import { Color, EventListener, assert, ServiceLocator } from "@aspect/core";
+import { Color, EventListener, EventListenerType, assert, ServiceLocator } from "@aspect/core";
 import { ButtonLayout } from "../button-layout";
 
 export class RemoveListenerAfterAddingTest extends EventDispatcherTestDemo {
@@ -47,7 +47,7 @@ export class RemoveListenerAfterAddingTest extends EventDispatcherTestDemo {
         switch (i) {
           case 0: {
             var listener = EventListener.create({
-              event: EventListener.TOUCH_ONE_BY_ONE,
+              event: EventListenerType.TOUCH_ONE_BY_ONE,
               onTouchBegan: function (touch, event) {
                 assert(false, "Should not come here!");
                 return true;
@@ -59,20 +59,20 @@ export class RemoveListenerAfterAddingTest extends EventDispatcherTestDemo {
           }
           case 1: {
             var listener = EventListener.create({
-              event: EventListener.TOUCH_ONE_BY_ONE,
+              event: EventListenerType.TOUCH_ONE_BY_ONE,
               onTouchBegan: function (touch, event) {
                 assert("Should not come here!");
                 return true;
               }
             });
             ServiceLocator.eventManager.addListener(listener, -1);
-            ServiceLocator.eventManager.removeListeners(EventListener.TOUCH_ONE_BY_ONE);
+            ServiceLocator.eventManager.removeListeners(EventListenerType.TOUCH_ONE_BY_ONE);
             layout.showButton(3);
             break;
           }
           case 2: {
             var listener = EventListener.create({
-              event: EventListener.TOUCH_ONE_BY_ONE,
+              event: EventListenerType.TOUCH_ONE_BY_ONE,
               onTouchBegan: function (touch, event) {
                 assert(false, "Should not come here!");
                 return true;

@@ -43,7 +43,7 @@ export function associateWithNative(jsObj, superclass) {
  * @type {Object}
  * @example
  ServiceLocator.eventManager.addListener({
-        event: EventListener.KEYBOARD,
+        event: EventListenerType.KEYBOARD,
         onKeyPressed:  function(keyCode, event){
             if (KEY["a"] == keyCode) {
                 log("A is pressed");

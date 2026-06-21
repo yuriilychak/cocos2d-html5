@@ -96,6 +96,7 @@ export {
   DeviceOrientation,
   DirectorEvent,
   DirectorProjection,
+  EventListenerType,
   EventType,
   GameEvent,
   GLServerState,

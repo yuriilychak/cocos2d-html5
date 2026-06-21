@@ -30,7 +30,7 @@
 //////////////////////////////////////////////////////////////////////////
 import { textInputGetRect } from "./text-input-test-constants";
 import { TextInputTest } from "./text-input-test";
-import { EventListener, Rect, log, ServiceLocator } from "@aspect/core";
+import { EventListener, EventListenerType, Rect, log, ServiceLocator } from "@aspect/core";
 
 export class KeyboardNotificationLayer extends TextInputTest {
   constructor() {
@@ -43,7 +43,7 @@ export class KeyboardNotificationLayer extends TextInputTest {
     if ("touches" in ServiceLocator.sys.capabilities) {
       ServiceLocator.eventManager.addListener(
         {
-          event: EventListener.TOUCH_ALL_AT_ONCE,
+          event: EventListenerType.TOUCH_ALL_AT_ONCE,
           onTouchesEnded: this.onTouchesEnded
         },
         this
@@ -51,7 +51,7 @@ export class KeyboardNotificationLayer extends TextInputTest {
     } else if ("mouse" in ServiceLocator.sys.capabilities)
       ServiceLocator.eventManager.addListener(
         {
-          event: EventListener.MOUSE,
+          event: EventListenerType.MOUSE,
           onMouseUp: this.onMouseUp
         },
         this

@@ -93,7 +93,7 @@ export default class Sys {
       var typeReg2 = /qqbrowser|qq|chrome|safari|firefox|opr|oupeng|opera/i;
       var browserTypes = typeReg1.exec(ua);
       if (!browserTypes) browserTypes = typeReg2.exec(ua);
-      var browserType = browserTypes
+      let browserType = browserTypes
         ? browserTypes[0]
         : BrowserType.UNKNOWN;
       if (browserType === "micromessenger")

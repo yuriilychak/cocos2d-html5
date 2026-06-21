@@ -30,7 +30,7 @@
 //------------------------------------------------------------------
 import { EventTest } from "./event-test";
 import { s_pathR2 } from "../resources";
-import { Color, EventListener, EventMouse, Sprite, log, ServiceLocator, MouseButton } from "@aspect/core";
+import { Color, EventListener, EventListenerType, EventMouse, Sprite, log, ServiceLocator, MouseButton } from "@aspect/core";
 
 export class MouseTest extends EventTest {
   init() {
@@ -49,7 +49,7 @@ export class MouseTest extends EventTest {
     if ("mouse" in ServiceLocator.sys.capabilities) {
       ServiceLocator.eventManager.addListener(
         {
-          event: EventListener.MOUSE,
+          event: EventListenerType.MOUSE,
           onMouseDown: function (event) {
             var target = event.getCurrentTarget();
             if (event.button === MouseButton.RIGHT)

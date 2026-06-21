@@ -25,10 +25,11 @@
 
 import EventListener from './event-listener';
 import { log } from '../../boot/debugger';
+import { EventListenerType } from '../../enums';
 
 export default class _EventListenerFocus extends EventListener {
     constructor() {
-        super(EventListener.FOCUS, _EventListenerFocus.LISTENER_ID, null);
+        super(EventListenerType.FOCUS, _EventListenerFocus.LISTENER_ID, null);
         this.onFocusChanged = null;
 
         this._onEvent = this._callback;

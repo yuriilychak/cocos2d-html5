@@ -1,6 +1,6 @@
 import {
   BaseClass,
-  EventListener,
+  EventListener, EventListenerType,
   KEY,
   Point,
   Size,
@@ -76,7 +76,7 @@ export class FocusNavigationController extends BaseClass {
   _addKeyboardEventListener() {
     if (!this._keyboardListener) {
       this._keyboardListener = EventListener.create({
-        event: EventListener.KEYBOARD,
+        event: EventListenerType.KEYBOARD,
         onKeyReleased: this._onKeyPressed.bind(this)
       });
       ServiceLocator.eventManager.addListener(
@@ -611,7 +611,7 @@ export class Widget extends ProtectedNode {
     if (this._touchEnabled) {
       if (!this._touchListener)
         this._touchListener = EventListener.create({
-          event: EventListener.TOUCH_ONE_BY_ONE,
+          event: EventListenerType.TOUCH_ONE_BY_ONE,
           swallowTouches: true,
           onTouchBegan: this.onTouchBegan.bind(this),
           onTouchMoved: this.onTouchMoved.bind(this),

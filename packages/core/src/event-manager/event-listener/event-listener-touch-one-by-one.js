@@ -25,10 +25,11 @@
 
 import EventListener from './event-listener';
 import { log, _LogInfos } from '../../boot/debugger';
+import { EventListenerType } from '../../enums';
 
 export default class _EventListenerTouchOneByOne extends EventListener {
     constructor() {
-        super(EventListener.TOUCH_ONE_BY_ONE, _EventListenerTouchOneByOne.LISTENER_ID, null);
+        super(EventListenerType.TOUCH_ONE_BY_ONE, _EventListenerTouchOneByOne.LISTENER_ID, null);
         this._claimedTouches = null;
         this.swallowTouches = false;
         this.onTouchBegan = null;
