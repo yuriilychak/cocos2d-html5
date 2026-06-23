@@ -1,4 +1,3 @@
-
 /****************************************************************************
  Copyright (c) 2011-2012 cocos2d-x.org
  Copyright (c) 2013-2014 Chukong Technologies Inc.
@@ -69,7 +68,7 @@ export class Armature extends Node {
     this._name = "";
     this._topBoneList = [];
     this._armatureIndexDic = {};
-    this._offsetPoint = new Point(0, 0);
+    this._offsetPoint = new Point();
     this._armatureTransformDirty = true;
     this._blendFunc = { src: GLState.BLEND_SRC, dst: GLState.BLEND_DST };
     name && this.init(name, parentBone);
@@ -441,10 +440,7 @@ export class Armature extends Node {
     var locChildren = this._children;
     for (var i = locChildren.length - 1; i >= 0; i--) {
       var child = locChildren[i];
-      if (
-        child instanceof Bone &&
-        child.getDisplayManager().containPoint(x, y)
-      )
+      if (child instanceof Bone && child.getDisplayManager().containPoint(x, y))
         return child;
     }
     return null;
@@ -485,7 +481,11 @@ export class Armature extends Node {
       for (var i = 0; i < bodyList.length; i++) {
         var body = bodyList[i];
         var vertexList = body.getCalculatedVertexList();
-        ServiceLocator.game.drawingUtil.drawPoly(vertexList, vertexList.length, true);
+        ServiceLocator.game.drawingUtil.drawPoly(
+          vertexList,
+          vertexList.length,
+          true
+        );
       }
     }
   }
@@ -597,4 +597,4 @@ export class Armature extends Node {
       return new this.constructor.CanvasRenderCmd(this);
     else return new this.constructor.WebGLRenderCmd(this);
   }
-};
+}

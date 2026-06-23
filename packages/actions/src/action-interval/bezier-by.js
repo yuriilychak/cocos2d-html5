@@ -23,8 +23,8 @@ export default class BezierBy extends ActionInterval {
   constructor(t, c) {
     super();
     this._config = [];
-    this._startPosition = new Point(0, 0);
-    this._previousPosition = new Point(0, 0);
+    this._startPosition = new Point();
+    this._previousPosition = new Point();
 
     c && this.initWithDuration(t, c);
   }

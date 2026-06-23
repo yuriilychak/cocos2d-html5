@@ -46,8 +46,8 @@ export class ControlButton extends Control {
 
     constructor(label, backgroundSprite, fontSize) {
         super();
-        this._preferredSize = new Size(0, 0);
-        this._labelAnchorPoint = new Point(0, 0);
+        this._preferredSize = new Size();
+        this._labelAnchorPoint = new Point();
         this._currentTitle = "";
         this._currentTitleColor = Color.WHITE;
         this._titleDispatchTable = {};
@@ -94,7 +94,7 @@ export class ControlButton extends Control {
         if (locBackgroundSprite)
             locBackgroundSprite.setPosition(locContentSize.width / 2, locContentSize.height / 2);
 
-        var titleLabelSize = new Size(0, 0);
+        var titleLabelSize = new Size();
         if (label) {
             var boundingBox = label.boundingBox;
             titleLabelSize.width = boundingBox.width;

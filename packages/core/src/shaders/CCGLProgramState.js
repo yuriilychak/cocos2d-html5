@@ -25,18 +25,8 @@
  ****************************************************************************/
 
 import { log } from "../boot/debugger";
+import { UniformValueType } from "../enums";
 import { ServiceLocator } from "../service-locator";
-
-const types = {
-  GL_FLOAT: 0,
-  GL_INT: 1,
-  GL_FLOAT_VEC2: 2,
-  GL_FLOAT_VEC3: 3,
-  GL_FLOAT_VEC4: 4,
-  GL_FLOAT_MAT4: 5,
-  GL_CALLBACK: 6,
-  GL_TEXTURE: 7
-};
 
 export class UniformValue {
   _uniform = null;
@@ -52,102 +42,102 @@ export class UniformValue {
 
   setFloat(value) {
     this._value = value;
-    this._type = types.GL_FLOAT;
+    this._type = UniformValueType.GL_FLOAT;
   }
 
   setInt(value) {
     this._value = value;
-    this._type = types.GL_INT;
+    this._type = UniformValueType.GL_INT;
   }
 
   setVec2(v1, v2) {
     this._value = [v1, v2];
-    this._type = types.GL_FLOAT_VEC2;
+    this._type = UniformValueType.GL_FLOAT_VEC2;
   }
 
   setVec2v(value) {
     this._value = value.slice(0);
-    this._type = types.GL_FLOAT_VEC2;
+    this._type = UniformValueType.GL_FLOAT_VEC2;
   }
 
   setVec3(v1, v2, v3) {
     this._value = [v1, v2, v3];
-    this._type = types.GL_FLOAT_VEC3;
+    this._type = UniformValueType.GL_FLOAT_VEC3;
   }
 
   setVec3v(value) {
     this._value = value.slice(0);
-    this._type = types.GL_FLOAT_VEC3;
+    this._type = UniformValueType.GL_FLOAT_VEC3;
   }
 
   setVec4(v1, v2, v3, v4) {
     this._value = [v1, v2, v3, v4];
-    this._type = types.GL_FLOAT_VEC4;
+    this._type = UniformValueType.GL_FLOAT_VEC4;
   }
 
   setVec4v(value) {
     this._value = value.slice(0);
-    this._type = types.GL_FLOAT_VEC4;
+    this._type = UniformValueType.GL_FLOAT_VEC4;
   }
 
   setMat4(value) {
     this._value = value.slice(0);
-    this._type = types.GL_FLOAT_MAT4;
+    this._type = UniformValueType.GL_FLOAT_MAT4;
   }
 
   setCallback(fn) {
     this._value = fn;
-    this._type = types.GL_CALLBACK;
+    this._type = UniformValueType.GL_CALLBACK;
   }
 
   setTexture(textureId, textureUnit) {
     this._value = textureUnit;
     this._textureId = textureId;
-    this._type = types.GL_TEXTURE;
+    this._type = UniformValueType.GL_TEXTURE;
   }
 
   apply() {
     switch (this._type) {
-      case types.GL_INT:
+      case UniformValueType.GL_INT:
         this._glprogram.setUniformLocationWith1i(
           this._uniform._location,
           this._value
         );
         break;
-      case types.GL_FLOAT:
+      case UniformValueType.GL_FLOAT:
         this._glprogram.setUniformLocationWith1f(
           this._uniform._location,
           this._value
         );
         break;
-      case types.GL_FLOAT_VEC2:
+      case UniformValueType.GL_FLOAT_VEC2:
         this._glprogram.setUniformLocationWith2fv(
           this._uniform._location,
           this._value
         );
         break;
-      case types.GL_FLOAT_VEC3:
+      case UniformValueType.GL_FLOAT_VEC3:
         this._glprogram.setUniformLocationWith3fv(
           this._uniform._location,
           this._value
         );
         break;
-      case types.GL_FLOAT_VEC4:
+      case UniformValueType.GL_FLOAT_VEC4:
         this._glprogram.setUniformLocationWith4fv(
           this._uniform._location,
           this._value
         );
         break;
-      case types.GL_FLOAT_MAT4:
+      case UniformValueType.GL_FLOAT_MAT4:
         this._glprogram.setUniformLocationWithMatrix4fv(
           this._uniform._location,
           this._value
         );
         break;
-      case types.GL_CALLBACK:
+      case UniformValueType.GL_CALLBACK:
         this._value(this._glprogram, this._uniform);
         break;
-      case types.GL_TEXTURE:
+      case UniformValueType.GL_TEXTURE:
         this._glprogram.setUniformLocationWith1i(
           this._uniform._location,
           this._value

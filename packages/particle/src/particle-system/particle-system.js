@@ -38,8 +38,7 @@ import {
   degreesToRadians,
   radiansToDegrees,
   randomMinus1To1,
-  FMT_PNG,
-  FMT_TIFF,
+  ImageFormat,
   getImageFormatByData,
   ServiceLocator,
   GLState
@@ -154,7 +153,7 @@ export class ParticleSystem extends Node {
   modeB = null;
 
   //private POINTZERO for ParticleSystem
-  _pointZeroForParticle = new Point(0, 0);
+  _pointZeroForParticle = new Point();
 
   //! Array of particles
   _particles = null;
@@ -222,8 +221,8 @@ export class ParticleSystem extends Node {
     this._blendFunc = { src: GLState.BLEND_SRC, dst: GLState.BLEND_DST };
 
     this._particles = [];
-    this._sourcePosition = new Point(0, 0);
-    this._posVar = new Point(0, 0);
+    this._sourcePosition = new Point();
+    this._posVar = new Point();
 
     this._startColor = Color.WHITE;
     this._startColorVar = Color.WHITE;
@@ -233,7 +232,7 @@ export class ParticleSystem extends Node {
     this._plistFile = "";
     this._elapsed = 0;
     this._dontTint = false;
-    this._pointZeroForParticle = new Point(0, 0);
+    this._pointZeroForParticle = new Point();
     this._emitCounter = 0;
     this._particleIdx = 0;
     this._batchNode = null;
@@ -671,9 +670,7 @@ export class ParticleSystem extends Node {
    */
   getGravity() {
     if (this.emitterMode !== ParticleSystem.MODE_GRAVITY)
-      log(
-        "ParticleBatchNode.getGravity() : Particle Mode should be Gravity"
-      );
+      log("ParticleBatchNode.getGravity() : Particle Mode should be Gravity");
     var locGravity = this.modeA.gravity;
     return new Point(locGravity.x, locGravity.y);
   }
@@ -684,9 +681,7 @@ export class ParticleSystem extends Node {
    */
   setGravity(gravity) {
     if (this.emitterMode !== ParticleSystem.MODE_GRAVITY)
-      log(
-        "ParticleBatchNode.setGravity() : Particle Mode should be Gravity"
-      );
+      log("ParticleBatchNode.setGravity() : Particle Mode should be Gravity");
     this.modeA.gravity = gravity;
   }
 
@@ -696,9 +691,7 @@ export class ParticleSystem extends Node {
    */
   getSpeed() {
     if (this.emitterMode !== ParticleSystem.MODE_GRAVITY)
-      log(
-        "ParticleBatchNode.getSpeed() : Particle Mode should be Gravity"
-      );
+      log("ParticleBatchNode.getSpeed() : Particle Mode should be Gravity");
     return this.modeA.speed;
   }
 
@@ -708,9 +701,7 @@ export class ParticleSystem extends Node {
    */
   setSpeed(speed) {
     if (this.emitterMode !== ParticleSystem.MODE_GRAVITY)
-      log(
-        "ParticleBatchNode.setSpeed() : Particle Mode should be Gravity"
-      );
+      log("ParticleBatchNode.setSpeed() : Particle Mode should be Gravity");
     this.modeA.speed = speed;
   }
 
@@ -720,9 +711,7 @@ export class ParticleSystem extends Node {
    */
   getSpeedVar() {
     if (this.emitterMode !== ParticleSystem.MODE_GRAVITY)
-      log(
-        "ParticleBatchNode.getSpeedVar() : Particle Mode should be Gravity"
-      );
+      log("ParticleBatchNode.getSpeedVar() : Particle Mode should be Gravity");
     return this.modeA.speedVar;
   }
 
@@ -732,9 +721,7 @@ export class ParticleSystem extends Node {
    */
   setSpeedVar(speedVar) {
     if (this.emitterMode !== ParticleSystem.MODE_GRAVITY)
-      log(
-        "ParticleBatchNode.setSpeedVar() : Particle Mode should be Gravity"
-      );
+      log("ParticleBatchNode.setSpeedVar() : Particle Mode should be Gravity");
     this.modeA.speedVar = speedVar;
   }
 
@@ -913,9 +900,7 @@ export class ParticleSystem extends Node {
    */
   getEndRadius() {
     if (this.emitterMode !== ParticleSystem.MODE_RADIUS)
-      log(
-        "ParticleBatchNode.getEndRadius() : Particle Mode should be Radius"
-      );
+      log("ParticleBatchNode.getEndRadius() : Particle Mode should be Radius");
     return this.modeB.endRadius;
   }
 
@@ -925,9 +910,7 @@ export class ParticleSystem extends Node {
    */
   setEndRadius(endRadius) {
     if (this.emitterMode !== ParticleSystem.MODE_RADIUS)
-      log(
-        "ParticleBatchNode.setEndRadius() : Particle Mode should be Radius"
-      );
+      log("ParticleBatchNode.setEndRadius() : Particle Mode should be Radius");
     this.modeB.endRadius = endRadius;
   }
 
@@ -1374,7 +1357,8 @@ export class ParticleSystem extends Node {
     return (
       (this._blendFunc.src === GLState.SRC_ALPHA &&
         this._blendFunc.dst === GLState.ONE) ||
-      (this._blendFunc.src === GLState.ONE && this._blendFunc.dst === GLState.ONE)
+      (this._blendFunc.src === GLState.ONE &&
+        this._blendFunc.dst === GLState.ONE)
     );
   }
 
@@ -1482,7 +1466,12 @@ export class ParticleSystem extends Node {
    * @return {Rect}
    */
   getBoundingBoxToWorld() {
-    return new Rect(0, 0, ServiceLocator.game.canvas.width, ServiceLocator.game.canvas.height);
+    return new Rect(
+      0,
+      0,
+      ServiceLocator.game.canvas.width,
+      ServiceLocator.game.canvas.height
+    );
   }
 
   /**
@@ -1698,13 +1687,16 @@ export class ParticleSystem extends Node {
 
             var imageFormat = getImageFormatByData(buffer);
 
-            if (imageFormat !== FMT_TIFF && imageFormat !== FMT_PNG) {
+            if (
+              imageFormat !== ImageFormat.TIFF &&
+              imageFormat !== ImageFormat.PNG
+            ) {
               log("ParticleSystem: unknown image format with Data");
               return false;
             }
 
             var canvasObj = document.createElement("canvas");
-            if (imageFormat === FMT_PNG) {
+            if (imageFormat === ImageFormat.PNG) {
               var myPngObj = new PNGReader(buffer);
               myPngObj.render(canvasObj);
             } else {
@@ -1714,7 +1706,8 @@ export class ParticleSystem extends Node {
 
             ServiceLocator.textureCache.cacheImage(imgPath, canvasObj);
 
-            var addTexture = ServiceLocator.textureCache.getTextureForKey(imgPath);
+            var addTexture =
+              ServiceLocator.textureCache.getTextureForKey(imgPath);
             if (!addTexture)
               log(
                 "ParticleSystem.initWithDictionary() : error loading the texture"
@@ -1905,9 +1898,7 @@ export class ParticleSystem extends Node {
     }
 
     // direction
-    var a = degreesToRadians(
-      this.angle + this.angleVar * locRandomMinus11()
-    );
+    var a = degreesToRadians(this.angle + this.angleVar * locRandomMinus11());
 
     // Mode Gravity: A
     if (this.emitterMode === ParticleSystem.MODE_GRAVITY) {
@@ -1947,8 +1938,7 @@ export class ParticleSystem extends Node {
 
       locParitlceModeB.radius = startRadius;
       locParitlceModeB.deltaRadius =
-        locModeB.endRadius ===
-        ParticleSystem.START_RADIUS_EQUAL_TO_END_RADIUS
+        locModeB.endRadius === ParticleSystem.START_RADIUS_EQUAL_TO_END_RADIUS
           ? 0
           : (endRadius - startRadius) / locParticleTimeToLive;
 
@@ -2199,9 +2189,7 @@ export class ParticleSystem extends Node {
 
   _updateBlendFunc() {
     if (this._batchNode) {
-      log(
-        "Can't change blending functions when the particle is being batched"
-      );
+      log("Can't change blending functions when the particle is being batched");
       return;
     }
 
@@ -2369,7 +2357,7 @@ export class ParticleSystem extends Node {
   listenBackToForeground(obj) {
     //do nothing
   }
-};
+}
 
 // Different modes
 /**
@@ -2395,7 +2383,7 @@ export function ParticleSystemModeA(
   rotationIsDir
 ) {
   /** Gravity value. Only available in 'Gravity' mode. */
-  this.gravity = gravity ? gravity : new Point(0, 0);
+  this.gravity = gravity ? gravity : new Point();
   /** speed of each particle. Only available in 'Gravity' mode.  */
   this.speed = speed || 0;
   /** speed variance of each particle. Only available in 'Gravity' mode. */
@@ -2410,7 +2398,7 @@ export function ParticleSystemModeA(
   this.radialAccelVar = radialAccelVar || 0;
   /** set the rotation of each particle to its direction Only available in 'Gravity' mode. */
   this.rotationIsDir = rotationIsDir || false;
-};
+}
 
 /**
  * Mode B: circular movement (gravity, radial accel and tangential accel don't are not used in this mode)
@@ -2442,7 +2430,7 @@ export function ParticleSystemModeB(
   this.rotatePerSecond = rotatePerSecond || 0;
   /** Variance in degrees for rotatePerSecond. Only available in 'Radius' mode. */
   this.rotatePerSecondVar = rotatePerSecondVar || 0;
-};
+}
 
 /**
  * Shape Mode of Particle Draw

@@ -1,9 +1,11 @@
 import ActionInterval from "../action-interval/action-interval";
+import { cloneControlPoints, reverseControlPoints } from "../action/utils";
 import {
-  cloneControlPoints,
-  reverseControlPoints
-} from "../action/utils";
-import { cardinalSplineAt, getControlPointAt, Point, ENABLE_STACKABLE_ACTIONS } from "@aspect/core";
+  cardinalSplineAt,
+  getControlPointAt,
+  Point,
+  ENABLE_STACKABLE_ACTIONS
+} from "@aspect/core";
 
 /**
  * Cardinal Spline path. {@link http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline}
@@ -86,11 +88,8 @@ export default class CardinalSplineTo extends ActionInterval {
     super.startWithTarget(target);
     // Issue #1441 from cocos2d-iphone
     this._deltaT = 1 / (this._points.length - 1);
-    this._previousPosition = new Point(
-      this.target.x,
-      this.target.y
-    );
-    this._accumulatedDiff = new Point(0, 0);
+    this._previousPosition = new Point(this.target.x, this.target.y);
+    this._accumulatedDiff = new Point();
   }
 
   /**

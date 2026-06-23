@@ -42,10 +42,10 @@ export class Slider extends Widget {
    */
   constructor(barTextureName, normalBallTextureName, resType) {
     super();
-    this._barTextureSize = new Size(0, 0);
-    this._progressBarTextureSize = new Size(0, 0);
-    this._capInsetsBarRenderer = new Rect(0, 0, 0, 0);
-    this._capInsetsProgressBarRenderer = new Rect(0, 0, 0, 0);
+    this._barTextureSize = new Size();
+    this._progressBarTextureSize = new Size();
+    this._capInsetsBarRenderer = new Rect();
+    this._capInsetsProgressBarRenderer = new Rect();
 
     this._barLength = 0;
     this._percent = 0;

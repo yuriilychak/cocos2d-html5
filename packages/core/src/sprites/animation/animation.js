@@ -132,7 +132,7 @@ export class Animation extends BaseClass {
    */
   addSpriteFrameWithFile(fileName) {
     var texture = ServiceLocator.textureCache.addImage(fileName);
-    var rect = new Rect(0, 0, 0, 0);
+    var rect = new Rect();
     rect.width = texture.width;
     rect.height = texture.height;
     var frame = new SpriteFrame(texture, rect);

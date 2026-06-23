@@ -41,7 +41,6 @@ import {
   DeviceOrientation
 } from "../../enums";
 
-
 var __browserGetterInited = false;
 
 var __BrowserGetter = {
@@ -119,7 +118,6 @@ var _scissorRect = null;
  * @name EGLView
  */
 export class EGLView extends BaseClass {
-
   /**
    * Constructor of EGLView
    */
@@ -483,7 +481,7 @@ export class EGLView extends BaseClass {
       this._game.container.parentNode === d.body
         ? d.documentElement
         : this._game.container.parentNode;
-    this._frameSize = new Size(0, 0);
+    this._frameSize = new Size();
     this._initFrameSize();
 
     var w = this._game.canvas.width,
@@ -575,9 +573,7 @@ export class EGLView extends BaseClass {
    * @return {Boolean}
    */
   isOpenGLReady() {
-    return (
-      this._game.canvas && this._rendererConfig.renderContext
-    );
+    return this._game.canvas && this._rendererConfig.renderContext;
   }
 
   /*
@@ -720,7 +716,7 @@ export class EGLView extends BaseClass {
     }
     // Ensure compatibility with JSB
     else {
-      switch(resolutionPolicy) {
+      switch (resolutionPolicy) {
         case ResolutionPolicyType.EXACT_FIT:
           _t._resolutionPolicy = _t._rpExactFit;
           break;
@@ -932,9 +928,7 @@ export class EGLView extends BaseClass {
    * @return {Boolean}
    */
   isScissorEnabled() {
-    return this._rendererConfig.renderContext.isEnabled(
-      gl.SCISSOR_TEST
-    );
+    return this._rendererConfig.renderContext.isEnabled(gl.SCISSOR_TEST);
   }
 
   /**

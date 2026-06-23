@@ -26,7 +26,7 @@ export default class CardinalSplineBy extends CardinalSplineTo {
    */
   constructor(duration, points, tension) {
     super();
-    this._startPosition = new Point(0, 0);
+    this._startPosition = new Point();
 
     tension !== undefined && this.initWithDuration(duration, points, tension);
   }

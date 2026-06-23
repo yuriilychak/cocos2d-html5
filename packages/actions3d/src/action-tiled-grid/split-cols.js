@@ -30,7 +30,7 @@ export default class SplitCols extends TiledGrid3DAction {
     const locGridSizeWidth = this._gridSize.width;
     const locWinSizeHeight = this._winSize.height;
     let coords, direction;
-    const locPos = new Point(0, 0);
+    const locPos = new Point();
     for (let i = 0; i < locGridSizeWidth; ++i) {
       locPos.x = i;
       coords = this.getOriginalTile(locPos);

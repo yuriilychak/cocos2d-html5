@@ -26,7 +26,7 @@ export default class JumpTo extends JumpBy {
    */
   constructor(duration, position, y, height, jumps) {
     super();
-    this._endPosition = new Point(0, 0);
+    this._endPosition = new Point();
 
     height !== undefined &&
       this.initWithDuration(duration, position, y, height, jumps);

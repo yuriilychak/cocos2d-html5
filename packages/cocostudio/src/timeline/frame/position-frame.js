@@ -25,7 +25,6 @@
 import { Point } from "@aspect/core";
 import { Frame } from "./frame.js";
 
-
 /**
  * Position frame
  * @extend Frame
@@ -33,7 +32,7 @@ import { Frame } from "./frame.js";
 export class PositionFrame extends Frame {
   constructor() {
     super();
-    this._position = new Point(0, 0);
+    this._position = new Point();
   }
 
   /**
@@ -57,7 +56,7 @@ export class PositionFrame extends Frame {
    */
   _onApply(percent) {
     if (this._node && (this._betweenX !== 0 || this._betweenY !== 0)) {
-      var p = new Point(0, 0);
+      var p = new Point();
       p.x = this._position.x + this._betweenX * percent;
       p.y = this._position.y + this._betweenY * percent;
 
@@ -126,5 +125,4 @@ export class PositionFrame extends Frame {
   getY() {
     return this._position.y;
   }
-};
-
+}

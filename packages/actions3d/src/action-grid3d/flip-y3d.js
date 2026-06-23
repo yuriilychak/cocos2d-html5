@@ -28,7 +28,7 @@ export default class FlipY3D extends FlipX3D {
 
     const diff = new Vertex3F();
 
-    const tempP = new Point(0, 0);
+    const tempP = new Point();
     tempP.x = tempP.y = 1;
     const v0 = this.getOriginalVertex(tempP);
     tempP.x = tempP.y = 0;
@@ -40,14 +40,14 @@ export default class FlipY3D extends FlipX3D {
 
     if (y0 > y1) {
       // Normal Grid
-      a = new Point(0, 0);
+      a = new Point();
       b = new Point(0, 1);
       c = new Point(1, 0);
       d = new Point(1, 1);
       y = y0;
     } else {
       // Reversed Grid
-      b = new Point(0, 0);
+      b = new Point();
       a = new Point(0, 1);
       d = new Point(1, 0);
       c = new Point(1, 1);

@@ -1,4 +1,10 @@
-import { BaseClass, Point, KEY, arrayRemoveObject, ServiceLocator } from "@aspect/core";
+import {
+  BaseClass,
+  Point,
+  KEY,
+  arrayRemoveObject,
+  ServiceLocator
+} from "@aspect/core";
 
 export class IMEDispatcher extends BaseClass {
   static _instance = null;
@@ -19,7 +25,7 @@ export class IMEDispatcher extends BaseClass {
   constructor() {
     super();
     this._delegateList = [];
-    this._lastClickPosition = new Point(0, 0);
+    this._lastClickPosition = new Point();
   }
 
   init() {

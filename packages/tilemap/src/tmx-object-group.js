@@ -15,7 +15,7 @@ export class TMXObjectGroup extends BaseClass {
     this._objects = null;
 
     this.groupName = "";
-    this._positionOffset = new Point(0, 0);
+    this._positionOffset = new Point();
     this.properties = [];
     this._objects = [];
   }

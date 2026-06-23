@@ -65,7 +65,7 @@ export default class Follow extends Action {
     this.rightBoundary = 0.0;
     this.topBoundary = 0.0;
     this.bottomBoundary = 0.0;
-    this._worldRect = new Rect(0, 0, 0, 0);
+    this._worldRect = new Rect();
 
     if (followedNode)
       rect
@@ -116,7 +116,7 @@ export default class Follow extends Action {
     if (!followedNode)
       throw new Error("Follow.initWithAction(): followedNode must be non nil");
 
-    rect = rect || new Rect(0, 0, 0, 0);
+    rect = rect || new Rect();
     this._followedNode = followedNode;
     this._worldRect = rect;
 

@@ -101,7 +101,7 @@ export let PVRHaveAlphaPremultiplied_ = false;
 export class Texture2D extends EventHelper(BaseClass) {
   constructor() {
     super();
-    this._contentSize = new Size(0, 0);
+    this._contentSize = new Size();
     this._textureLoaded = false;
     this._htmlElementObj = null;
     this.url = null;

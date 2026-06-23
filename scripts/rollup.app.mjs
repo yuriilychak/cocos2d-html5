@@ -180,7 +180,7 @@ export function createAppConfig({ outputFile = 'dist/cocos2d.min.js' } = {}) {
           passes: 2
         },
         mangle: {
-          reserved: ['cc', 'gl', 'WebGLRenderingContext']
+          reserved: ['gl', 'WebGLRenderingContext']
         },
         format: {
           comments: false
@@ -198,16 +198,15 @@ export function createAppConfig({ outputFile = 'dist/cocos2d.min.js' } = {}) {
 
 /**
  * Workspace packages that are resolved to their src/index.ts or src/index.js and inlined
- * in the test bundle instead of being treated as cc.* externals.
- * - 'core' is NOT in this set — it lives in the engine bundle as cc.* globals.
+ * in the test bundle instead of being treated as runtime globals.
  */
-const INLINE_PACKAGES_EXCLUDE = new Set(['core']);
+const INLINE_PACKAGES_EXCLUDE = new Set();
 
 /**
  * Maps @aspect/* package names to their runtime global variable.
  * Only valid where the exported symbol names exactly match the global's
  * property names (e.g. sp.SkeletonAnimation === exported SkeletonAnimation).
- * Packages with renamed globals (e.g. gui's GScrollView → cc.ScrollView)
+ * Packages with renamed globals (e.g. gui's GScrollView → ScrollView)
  * must NOT be added here until they are fully migrated to consistent naming.
  */
 const ASPECT_GLOBALS = {
@@ -221,7 +220,7 @@ const ASPECT_GLOBALS = {
  * Supports direct `import { X } from "@aspect/pkg"` in source files:
  * - Meta-packages (no dist) are resolved to their src and inlined.
  * - All other @aspect/* packages (already in engine bundle) are treated as
- *   externals mapped to their runtime global (ccs, cc).
+ *   externals mapped to their runtime global.
  *
  * Use this for apps that have migrated to a real ES module entry
  * (typically `src/index.js` or `src/index.ts`).
@@ -268,7 +267,7 @@ export function createTestsBundleConfig({
           passes: 2
         },
         mangle: {
-          reserved: ['cc', 'gl', 'WebGLRenderingContext']
+          reserved: ['gl', 'WebGLRenderingContext']
         },
         format: {
           comments: false
@@ -284,9 +283,7 @@ export function createTestsBundleConfig({
       globals(id) {
         if (!id.startsWith('@aspect/')) return undefined;
         const pkgName = id.replace('@aspect/', '');
-        // Only core and spine are externals; everything else is inlined.
-        if (pkgName === 'core') return 'cc';
-        return ASPECT_GLOBALS[pkgName] ?? 'cc';
+        return ASPECT_GLOBALS[pkgName];
       }
     }
   };
@@ -335,7 +332,7 @@ export function createStandaloneConfig({
           passes: 2
         },
         mangle: {
-          reserved: ['cc', 'gl', 'WebGLRenderingContext']
+          reserved: ['gl', 'WebGLRenderingContext']
         },
         format: {
           comments: false

@@ -30,9 +30,9 @@ export default class JumpBy extends ActionInterval {
    */
   constructor(duration, position, y, height, jumps) {
     super();
-    this._startPosition = new Point(0, 0);
-    this._previousPosition = new Point(0, 0);
-    this._delta = new Point(0, 0);
+    this._startPosition = new Point();
+    this._previousPosition = new Point();
+    this._delta = new Point();
 
     height !== undefined &&
       this.initWithDuration(duration, position, y, height, jumps);

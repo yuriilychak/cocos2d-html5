@@ -51,7 +51,7 @@ export class Text extends Widget {
   constructor(textContent, fontName, fontSize) {
     super();
     this._type = Text.Type.SYSTEM;
-    this._textAreaSize = new Size(0, 0);
+    this._textAreaSize = new Size();
     this._touchScaleChangeEnabled = false;
     this._normalScaleValueX = 1;
     this._normalScaleValueY = 1;
@@ -335,8 +335,10 @@ export class Text extends Widget {
 
   _onPressStateChangedToPressed() {
     if (!this._touchScaleChangeEnabled) return;
-    this._labelRenderer.scaleX = this._normalScaleValueX + this._onSelectedScaleOffset;
-    this._labelRenderer.scaleY = this._normalScaleValueY + this._onSelectedScaleOffset;
+    this._labelRenderer.scaleX =
+      this._normalScaleValueX + this._onSelectedScaleOffset;
+    this._labelRenderer.scaleY =
+      this._normalScaleValueY + this._onSelectedScaleOffset;
   }
 
   _onPressStateChangedToDisabled() {}
@@ -496,7 +498,7 @@ export class Text extends Widget {
     this._adaptRenderers();
   }
 
-   set color(color) {
+  set color(color) {
     super.color = color;
     this._labelRenderer.color = color;
   }

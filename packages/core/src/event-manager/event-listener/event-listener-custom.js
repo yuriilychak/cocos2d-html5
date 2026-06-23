@@ -50,7 +50,3 @@ export default class _EventListenerCustom extends EventListener {
         return new _EventListenerCustom(this._listenerID, this._onCustomEvent);
     }
 }
-
-_EventListenerCustom.create = function (eventName, callback) {
-    return new _EventListenerCustom(eventName, callback);
-};

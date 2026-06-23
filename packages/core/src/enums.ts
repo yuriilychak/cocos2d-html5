@@ -255,6 +255,15 @@ export enum EventListenerType {
   CUSTOM = 8
 }
 
+export enum ImageFormat {
+  JPG = 0,
+  PNG = 1,
+  TIFF = 2,
+  RAWDATA = 3,
+  WEBP = 4,
+  UNKNOWN = 5
+}
+
 export enum MouseEvent {
   /**
    * The none event code of  mouse event.
@@ -326,4 +335,15 @@ export enum TouchEvent {
   MOVED = 1,
   ENDED = 2,
   CANCELLED = 3
+}
+
+export enum UniformValueType {
+  GL_FLOAT = 0,
+  GL_INT = 1,
+  GL_FLOAT_VEC2 = 2,
+  GL_FLOAT_VEC3 = 3,
+  GL_FLOAT_VEC4 = 4,
+  GL_FLOAT_MAT4 = 5,
+  GL_CALLBACK = 6,
+  GL_TEXTURE = 7
 }

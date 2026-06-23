@@ -34,27 +34,26 @@ import { BaseClass } from "../../platform/class";
  * </p>
  */
 export default class EventListener extends BaseClass {
+  _onEvent = null;
+  _type = 0;
+  _listenerID = null;
+  _registered = false;
+  _fixedPriority = 0;
+  _node = null;
+  _paused = true;
+  _isEnabled = true;
+
   /**
    * Initializes event with type and callback function
    * @param {number} type
    * @param {string} listenerID
    * @param {function} callback
    */
-  constructor(type, listenerID, callback) {
+  constructor(type = '', listenerID = '', callback = null) {
     super();
-    this._onEvent = null;
-    this._type = 0;
-    this._listenerID = null;
-    this._registered = false;
-
-    this._fixedPriority = 0;
-    this._node = null;
-    this._paused = true;
-    this._isEnabled = true;
-
     this._onEvent = callback;
-    this._type = type || 0;
-    this._listenerID = listenerID || "";
+    this._type = type;
+    this._listenerID = listenerID;
   }
 
   /**

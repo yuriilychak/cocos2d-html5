@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BrowserType, Node, log, Sys, GameEvent, OperatingSystem, ServiceLocator } from "@aspect/core";
+import { BrowserType, Node, log, GameEvent, OperatingSystem, ServiceLocator } from "@aspect/core";
 import { Widget } from "../base-classes/widget";
 
 /**
@@ -254,14 +254,15 @@ const _polyfill = (WebView._polyfill = {
   enableDiv: false
 });
 
-if (Sys.os === OperatingSystem.IOS) _polyfill.enableDiv = true;
+const webViewSys = ServiceLocator.sys;
+if (webViewSys.os === OperatingSystem.IOS) _polyfill.enableDiv = true;
 
-if (Sys.isMobile) {
-  if (Sys.browserType === BrowserType.FIREFOX) {
+if (webViewSys.isMobile) {
+  if (webViewSys.browserType === BrowserType.FIREFOX) {
     _polyfill.enableBG = true;
   }
 } else {
-  if (Sys.browserType === BrowserType.IE) {
+  if (webViewSys.browserType === BrowserType.IE) {
     _polyfill.closeHistory = true;
   }
 }

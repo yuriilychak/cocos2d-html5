@@ -29,8 +29,8 @@ import Path from "../boot/path";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import { Texture2D } from "../textures/texture-2d";
 import { SpriteFrame } from "./sprite-frame";
-import { Sprite } from './sprite';
-import { PolygonInfo, Triangles } from './polygon-info';
+import { Sprite } from "./sprite";
+import { PolygonInfo, Triangles } from "./polygon-info";
 import { isString } from "../boot/utils";
 
 /**
@@ -65,7 +65,7 @@ export default class SpriteFrameCache {
 
   _rectFromString(content) {
     var result = this._CCNS_REG2.exec(content);
-    if (!result) return new Rect(0, 0, 0, 0);
+    if (!result) return new Rect();
     return new Rect(
       parseFloat(result[1]),
       parseFloat(result[2]),
@@ -76,13 +76,13 @@ export default class SpriteFrameCache {
 
   _pointFromString(content) {
     var result = this._CCNS_REG1.exec(content);
-    if (!result) return new Point(0, 0);
+    if (!result) return new Point();
     return new Point(parseFloat(result[1]), parseFloat(result[2]));
   }
 
   _sizeFromString(content) {
     var result = this._CCNS_REG1.exec(content);
-    if (!result) return new Size(0, 0);
+    if (!result) return new Size();
     return new Size(parseFloat(result[1]), parseFloat(result[2]));
   }
 
@@ -214,7 +214,7 @@ export default class SpriteFrameCache {
           tmpFrame["h"]
         );
         tempFrame.rotated = frameDict["rotated"] || false;
-        tempFrame.offset = new Point(0, 0);
+        tempFrame.offset = new Point();
         tempFrame.size = new Size(tmpSourceSize["w"], tmpSourceSize["h"]);
       }
       frames[key] = tempFrame;
@@ -305,10 +305,7 @@ export default class SpriteFrameCache {
           }
         }
 
-        if (
-          this._rendererConfig.isCanvas &&
-          spriteFrame.isRotated()
-        ) {
+        if (this._rendererConfig.isCanvas && spriteFrame.isRotated()) {
           //clip to canvas
           var locTexture = spriteFrame.getTexture();
           if (locTexture.isLoaded()) {

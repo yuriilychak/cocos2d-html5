@@ -1,4 +1,3 @@
-
 /****************************************************************************
  Copyright (c) 2011-2012 cocos2d-x.org
  Copyright (c) 2013-2014 Chukong Technologies Inc.
@@ -24,15 +23,28 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-
-import { BaseClass, Node, Point, Rect, Size, log, ServiceLocator } from "@aspect/core";
+import {
+  BaseClass,
+  Node,
+  Point,
+  Rect,
+  Size,
+  log,
+  ServiceLocator
+} from "@aspect/core";
 import { ParticleSystem } from "@aspect/particle";
 
-import { ENABLE_PHYSICS_CHIPMUNK_DETECT, ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX } from "../armature-define.js";
+import {
+  ENABLE_PHYSICS_CHIPMUNK_DETECT,
+  ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+} from "../armature-define.js";
 import { Armature } from "../armature.js";
 import { ArmatureDisplayData } from "../utils/datas/armature-display-data.js";
 import { BaseData } from "../utils/datas/base-data.js";
-import { DISPLAY_TYPE_MAX, DISPLAY_TYPE_SPRITE } from "../utils/datas/constants.js";
+import {
+  DISPLAY_TYPE_MAX,
+  DISPLAY_TYPE_SPRITE
+} from "../utils/datas/constants.js";
 import { DisplayData } from "../utils/datas/display-data.js";
 import { ParticleDisplayData } from "../utils/datas/particle-display-data.js";
 import { SpriteDisplayData } from "../utils/datas/sprite-display-data.js";
@@ -434,22 +446,22 @@ export class DisplayManager extends BaseClass {
   }
 
   getContentSize() {
-    if (!this._displayRenderNode) return new Size(0, 0);
+    if (!this._displayRenderNode) return new Size();
     return this._displayRenderNode.getContentSize();
   }
 
   get boundingBox() {
-    if (!this._displayRenderNode) return new Rect(0, 0, 0, 0);
+    if (!this._displayRenderNode) return new Rect();
     return this._displayRenderNode.boundingBox;
   }
 
   getAnchorPoint() {
-    if (!this._displayRenderNode) return new Point(0, 0);
+    if (!this._displayRenderNode) return new Point();
     return this._displayRenderNode.getAnchorPoint();
   }
 
   getAnchorPointInPoints() {
-    if (!this._displayRenderNode) return new Point(0, 0);
+    if (!this._displayRenderNode) return new Point();
     return this._displayRenderNode.getAnchorPointInPoints();
   }
 
@@ -464,4 +476,4 @@ export class DisplayManager extends BaseClass {
       this._displayRenderNode = null;
     }
   }
-};
+}

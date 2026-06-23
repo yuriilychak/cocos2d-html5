@@ -27,7 +27,7 @@
 import { Point } from "@aspect/core";
 
 export function ParticleModeA(dir, radialAccel, tangentialAccel) {
-  this.dir = dir ? dir : new Point(0, 0);
+  this.dir = dir ? dir : new Point();
   this.radialAccel = radialAccel || 0;
   this.tangentialAccel = tangentialAccel || 0;
 }
@@ -53,8 +53,8 @@ export function Particle(
   modeA,
   modeB
 ) {
-  this.pos = pos ? pos : new Point(0, 0);
-  this.startPos = startPos ? startPos : new Point(0, 0);
+  this.pos = pos ? pos : new Point();
+  this.startPos = startPos ? startPos : new Point();
   this.color = color ? color : { r: 0, g: 0, b: 0, a: 255 };
   this.deltaColor = deltaColor ? deltaColor : { r: 0, g: 0, b: 0, a: 255 };
   this.size = size || 0;
@@ -66,14 +66,9 @@ export function Particle(
   this.modeA = modeA ? modeA : new ParticleModeA();
   this.modeB = modeB ? modeB : new ParticleModeB();
   this.isChangeColor = false;
-  this.drawPos = new Point(0, 0);
+  this.drawPos = new Point();
 }
 
 Particle.ModeA = ParticleModeA;
 Particle.ModeB = ParticleModeB;
-Particle.TemporaryPoints = [
-  new Point(),
-  new Point(),
-  new Point(),
-  new Point()
-];
+Particle.TemporaryPoints = [new Point(), new Point(), new Point(), new Point()];

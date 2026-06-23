@@ -148,10 +148,10 @@ export class Sprite extends EventHelper(Node) {
 
     self._loader = new Sprite.LoadManager();
     self._shouldBeHidden = false;
-    self._offsetPosition = new Point(0, 0);
-    self._unflippedOffsetPositionFromCenter = new Point(0, 0);
+    self._offsetPosition = new Point();
+    self._unflippedOffsetPositionFromCenter = new Point();
     self._blendFunc = { src: GLState.BLEND_SRC, dst: GLState.BLEND_DST };
-    self._rect = new Rect(0, 0, 0, 0);
+    self._rect = new Rect();
 
     self._softInit(fileName, rect, rotated);
   }
@@ -659,7 +659,7 @@ export class Sprite extends EventHelper(Node) {
     if (!this._textureLoaded) {
       this._loader.once(
         texture,
-         () => {
+        () => {
           this.initWithTexture(texture, rect, rotated, counterclockwise);
           this.dispatchEvent("load");
         },

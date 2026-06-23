@@ -25,8 +25,8 @@
 
 import { BaseClass } from "../platform/class";
 import { Node } from "../base-nodes/node";
-import { EventCustom, EventTouch } from "./event";
-import { EventListenerType, EventType, GameEvent } from "../enums";
+import { EventCustom } from "./event";
+import { EventListenerType, EventType, GameEvent, TouchEvent } from "../enums";
 import { arrayRemoveObject, copyArray } from "../platform/macro/utils";
 import { isNumber } from "../boot/utils";
 import {
@@ -505,9 +505,8 @@ export default class EventManager {
 
     var isClaimed = false,
       removedIdx;
-    var getCode = event.getEventCode(),
-      eventCode = EventTouch.EventCode;
-    if (getCode === eventCode.BEGAN) {
+    var getCode = event.getEventCode();
+    if (getCode === TouchEvent.BEGAN) {
       if (listener.onTouchBegan) {
         isClaimed = listener.onTouchBegan(selTouch, event);
         if (isClaimed && listener._registered)
@@ -518,13 +517,13 @@ export default class EventManager {
       (removedIdx = listener._claimedTouches.indexOf(selTouch)) !== -1
     ) {
       isClaimed = true;
-      if (getCode === eventCode.MOVED && listener.onTouchMoved) {
+      if (getCode === TouchEvent.MOVED && listener.onTouchMoved) {
         listener.onTouchMoved(selTouch, event);
-      } else if (getCode === eventCode.ENDED) {
+      } else if (getCode === TouchEvent.ENDED) {
         if (listener.onTouchEnded) listener.onTouchEnded(selTouch, event);
         if (listener._registered)
           listener._claimedTouches.splice(removedIdx, 1);
-      } else if (getCode === eventCode.CANCELLED) {
+      } else if (getCode === TouchEvent.CANCELLED) {
         if (listener.onTouchCancelled)
           listener.onTouchCancelled(selTouch, event);
         if (listener._registered)
@@ -601,18 +600,17 @@ export default class EventManager {
     // Skip if the listener was removed.
     if (!listener._registered) return false;
 
-    var eventCode = EventTouch.EventCode,
-      event = callbackParams.event,
+    var event = callbackParams.event,
       touches = callbackParams.touches,
       getCode = event.getEventCode();
     event._setCurrentTarget(listener._node);
-    if (getCode === eventCode.BEGAN && listener.onTouchesBegan)
+    if (getCode === TouchEvent.BEGAN && listener.onTouchesBegan)
       listener.onTouchesBegan(touches, event);
-    else if (getCode === eventCode.MOVED && listener.onTouchesMoved)
+    else if (getCode === TouchEvent.MOVED && listener.onTouchesMoved)
       listener.onTouchesMoved(touches, event);
-    else if (getCode === eventCode.ENDED && listener.onTouchesEnded)
+    else if (getCode === TouchEvent.ENDED && listener.onTouchesEnded)
       listener.onTouchesEnded(touches, event);
-    else if (getCode === eventCode.CANCELLED && listener.onTouchesCancelled)
+    else if (getCode === TouchEvent.CANCELLED && listener.onTouchesCancelled)
       listener.onTouchesCancelled(touches, event);
 
     // If the event was stopped, return directly.

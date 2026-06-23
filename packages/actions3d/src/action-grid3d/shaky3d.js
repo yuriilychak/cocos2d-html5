@@ -44,7 +44,7 @@ export default class Shaky3D extends Grid3DAction {
     const locGridSizeHeight = this._gridSize.height;
     const locRandRange = this._randRange;
     const locShakeZ = this._shakeZ;
-    const locP = new Point(0, 0);
+    const locP = new Point();
     let v;
     for (let i = 0; i < locGridSizeWidth + 1; ++i) {
       for (let j = 0; j < locGridSizeHeight + 1; ++j) {

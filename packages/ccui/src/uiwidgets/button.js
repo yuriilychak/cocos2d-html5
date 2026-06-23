@@ -24,7 +24,17 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { LabelTTF, Rect, Size, Color, Sprite, SpriteFrame, VerticalTextAlignment, log, ServiceLocator } from "@aspect/core";
+import {
+  LabelTTF,
+  Rect,
+  Size,
+  Color,
+  Sprite,
+  SpriteFrame,
+  VerticalTextAlignment,
+  log,
+  ServiceLocator
+} from "@aspect/core";
 import { ScaleTo } from "@aspect/actions";
 import { Widget } from "../base-classes/widget";
 import { ProtectedNode } from "../base-classes/protected-node";
@@ -54,8 +64,8 @@ export class Button extends Widget {
    */
   constructor(normalImage, selectedImage, disableImage, texType) {
     super();
-    this._capInsetsNormal = new Rect(0, 0, 0, 0);
-    this._normalTextureSize = new Size(0, 0);
+    this._capInsetsNormal = new Rect();
+    this._normalTextureSize = new Size();
     this._buttonNormalSpriteFrame = null;
     this._buttonClickedSpriteFrame = null;
     this._buttonDisableSpriteFrame = null;

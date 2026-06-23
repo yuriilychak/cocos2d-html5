@@ -91,7 +91,7 @@ export default class ShuffleTiles extends TiledGrid3DAction {
     const locTiles = this._tiles;
     locTiles.length = 0;
     let tileIndex = 0;
-    const tempSize = new Size(0, 0);
+    const tempSize = new Size();
     for (let i = 0; i < locGridSize.width; ++i) {
       for (let j = 0; j < locGridSize.height; ++j) {
         locTiles[tileIndex] = new Tile();
@@ -110,7 +110,7 @@ export default class ShuffleTiles extends TiledGrid3DAction {
     const locGridSize = this._gridSize;
     const locTiles = this._tiles;
     let selTile;
-    const locPos = new Point(0, 0);
+    const locPos = new Point();
     for (let i = 0; i < locGridSize.width; ++i) {
       for (let j = 0; j < locGridSize.height; ++j) {
         locPos.x = i;

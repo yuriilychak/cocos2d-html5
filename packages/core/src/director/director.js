@@ -118,7 +118,7 @@ export class Director extends BaseClass {
     this._paused = false;
     this._purgeDirectorInNextLoop = false;
 
-    this._winSizeInPoints = new Size(0, 0);
+    this._winSizeInPoints = new Size();
 
     this._openGLView = null;
     this._contentScaleFactor = 1.0;
@@ -306,8 +306,7 @@ export class Director extends BaseClass {
   purgeDirector() {
     this.getScheduler().unscheduleAll();
 
-    if (this._eventManager)
-      this._eventManager.enabled = false;
+    if (this._eventManager) this._eventManager.enabled = false;
 
     if (this._runningScene) {
       this._runningScene._performRecursive(

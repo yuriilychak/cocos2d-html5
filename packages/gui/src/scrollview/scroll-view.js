@@ -5,7 +5,8 @@ import {
   Point,
   Size,
   Rect,
-  EventListener, EventListenerType,
+  EventListener,
+  EventListenerType,
   ServiceLocator
 } from "@aspect/core";
 import { MoveTo, CallFunc, Sequence, ActionTween } from "@aspect/actions";
@@ -107,15 +108,15 @@ export class GScrollView extends Layer {
 
   constructor(size, container) {
     super();
-    this._contentOffset = new Point(0, 0);
-    this._maxInset = new Point(0, 0);
-    this._minInset = new Point(0, 0);
-    this._scrollDistance = new Point(0, 0);
-    this._touchPoint = new Point(0, 0);
+    this._contentOffset = new Point();
+    this._maxInset = new Point();
+    this._minInset = new Point();
+    this._scrollDistance = new Point();
+    this._touchPoint = new Point();
     this._touches = [];
-    this._viewSize = new Size(0, 0);
-    this._parentScissorRect = new Rect(0, 0, 0, 0);
-    this._tmpViewRect = new Rect(0, 0, 0, 0);
+    this._viewSize = new Size();
+    this._parentScissorRect = new Rect();
+    this._tmpViewRect = new Rect();
 
     if (container !== undefined) this.initWithViewSize(size, container);
     else this.initWithViewSize(new Size(200, 200), null);
@@ -126,7 +127,7 @@ export class GScrollView extends Layer {
   }
 
   initWithViewSize(size, container) {
-    var pZero = new Point(0, 0);
+    var pZero = new Point();
     if (super.init()) {
       if (!container && !this._container) {
         container = new Layer();
@@ -546,7 +547,7 @@ export class GScrollView extends Layer {
 
   getContentSize() {
     if (this._container) return this._container.getContentSize();
-    return new Size(0, 0);
+    return new Size();
   }
 
   updateInset() {

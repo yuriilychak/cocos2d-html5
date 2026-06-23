@@ -69,8 +69,5 @@ export default class EventTouch extends Event {
    */
 
   static MAX_TOUCHES: number = 5;
-
-  static EventCode = { BEGAN: 0, MOVED: 1, ENDED: 2, CANCELLED: 3 };
 }
-
 

@@ -35,8 +35,8 @@ export default class LayerGradientCanvasRenderer extends LayerColorCanvasRendere
   constructor(renderable) {
     super(renderable);
     this._needDraw = true;
-    this._startPoint = new Point(0, 0);
-    this._endPoint = new Point(0, 0);
+    this._startPoint = new Point();
+    this._endPoint = new Point();
     this._startStopStr = null;
     this._endStopStr = null;
   }
@@ -123,7 +123,7 @@ export default class LayerGradientCanvasRenderer extends LayerColorCanvasRendere
       Math.round(locStartColor.g),
       Math.round(locStartColor.b),
       startOpacity.toFixed(4) * 255
-      );
+    );
     this._endStopStr = Color.toRgba(
       Math.round(locEndColor.r),
       Math.round(locEndColor.g),

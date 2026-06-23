@@ -24,7 +24,15 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Rect, Size, Color, Sprite, SpriteFrame, log, ServiceLocator } from "@aspect/core";
+import {
+  Rect,
+  Size,
+  Color,
+  Sprite,
+  SpriteFrame,
+  log,
+  ServiceLocator
+} from "@aspect/core";
 import { LabelBMFont } from "@aspect/labels";
 import { ScaleTo, TintTo } from "@aspect/actions";
 import { Widget } from "../base-classes/widget";
@@ -50,8 +58,8 @@ export class BMButton extends Widget {
    */
   constructor(normalImage, selectedImage, disableImage, texType) {
     super();
-    this._capInsetsNormal = new Rect(0, 0, 0, 0);
-    this._normalTextureSize = new Size(0, 0);
+    this._capInsetsNormal = new Rect();
+    this._normalTextureSize = new Size();
     this._buttonNormalSpriteFrame = null;
     this._buttonClickedSpriteFrame = null;
     this._buttonDisableSpriteFrame = null;
@@ -651,7 +659,10 @@ export class BMButton extends Widget {
    */
   setNormalBgColor(color) {
     this._normalBgColor = color;
-    if (this._brightStyle === Widget.BRIGHT_STYLE_NORMAL && this._buttonScale9Renderer) {
+    if (
+      this._brightStyle === Widget.BRIGHT_STYLE_NORMAL &&
+      this._buttonScale9Renderer
+    ) {
       this._buttonScale9Renderer.color = color;
     }
   }
@@ -670,7 +681,10 @@ export class BMButton extends Widget {
    */
   setPressedBgColor(color) {
     this._pressedBgColor = color;
-    if (this._brightStyle === Widget.BRIGHT_STYLE_HIGH_LIGHT && this._buttonScale9Renderer) {
+    if (
+      this._brightStyle === Widget.BRIGHT_STYLE_HIGH_LIGHT &&
+      this._buttonScale9Renderer
+    ) {
       this._buttonScale9Renderer.color = color;
     }
   }

@@ -111,7 +111,8 @@ export class ListView extends ScrollView {
     switch (this.direction) {
       case ScrollView.DIR_VERTICAL:
         length = locItems.length;
-        var totalHeight = (length - 1) * this._itemsMargin + this._scrollPadding * 2;
+        var totalHeight =
+          (length - 1) * this._itemsMargin + this._scrollPadding * 2;
         for (i = 0; i < length; i++) {
           totalHeight += locItems[i].getContentSize().height;
         }
@@ -121,7 +122,8 @@ export class ListView extends ScrollView {
         break;
       case ScrollView.DIR_HORIZONTAL:
         length = locItems.length;
-        var totalWidth = (length - 1) * this._itemsMargin + this._scrollPadding * 2;
+        var totalWidth =
+          (length - 1) * this._itemsMargin + this._scrollPadding * 2;
         for (i = 0; i < length; i++) {
           totalWidth += locItems[i].getContentSize().width;
         }
@@ -175,7 +177,8 @@ export class ListView extends ScrollView {
       default:
         break;
     }
-    if (0 === itemIndex) layoutParameter.setMargin(new Margin(0.0, this._scrollPadding, 0.0, 0.0));
+    if (0 === itemIndex)
+      layoutParameter.setMargin(new Margin(0.0, this._scrollPadding, 0.0, 0.0));
     else
       layoutParameter.setMargin(new Margin(0.0, this._itemsMargin, 0.0, 0.0));
   }
@@ -197,7 +200,8 @@ export class ListView extends ScrollView {
       default:
         break;
     }
-    if (0 === itemIndex) layoutParameter.setMargin(new Margin(this._scrollPadding, 0.0, 0.0, 0.0));
+    if (0 === itemIndex)
+      layoutParameter.setMargin(new Margin(this._scrollPadding, 0.0, 0.0, 0.0));
     else
       layoutParameter.setMargin(new Margin(this._itemsMargin, 0.0, 0.0, 0.0));
   }
@@ -460,7 +464,7 @@ export class ListView extends ScrollView {
   }
 
   _getHowMuchOutOfBoundary(addition) {
-    if (addition === undefined) addition = new Point(0, 0);
+    if (addition === undefined) addition = new Point();
 
     if (!this._magneticAllowedOutOfBoundary || this._items.length === 0) {
       return super._getHowMuchOutOfBoundary(addition);
@@ -485,8 +489,8 @@ export class ListView extends ScrollView {
 
     var lastItemIndex = this._items.length - 1;
     var contentSize = this.getContentSize();
-    var firstItemAdjustment = new Point(0, 0);
-    var lastItemAdjustment = new Point(0, 0);
+    var firstItemAdjustment = new Point();
+    var lastItemAdjustment = new Point();
 
     switch (this._magneticType) {
       case ListView.MAGNETIC_CENTER:
@@ -520,7 +524,7 @@ export class ListView extends ScrollView {
     bottomBoundary += lastItemAdjustment.y;
 
     // Calculate the actual amount
-    var outOfBoundaryAmount = new Point(0, 0);
+    var outOfBoundaryAmount = new Point();
 
     if (this._innerContainer.getLeftBoundary() + addition.x > leftBoundary) {
       outOfBoundaryAmount.x =
@@ -592,7 +596,9 @@ export class ListView extends ScrollView {
       items[midIndex],
       itemAnchorPoint
     );
-    var distanceFromMid = Point.vectorLength(Point.sub(targetPosition, itemPosition));
+    var distanceFromMid = Point.vectorLength(
+      Point.sub(targetPosition, itemPosition)
+    );
 
     if (distanceFromFirst <= distanceFromLast) {
       // Left half
@@ -752,7 +758,7 @@ export class ListView extends ScrollView {
 
   _calculateItemDestination(positionRatioInView, item, itemAnchorPoint) {
     var contentSize = this.getContentSize();
-    var positionInView = new Point(0, 0);
+    var positionInView = new Point();
     positionInView.x += contentSize.width * positionRatioInView.x;
     positionInView.y += contentSize.height * positionRatioInView.y;
 
@@ -1072,7 +1078,7 @@ export class ListView extends ScrollView {
   _getAnchorPointByMagneticType(magneticType) {
     switch (magneticType) {
       case ListView.MAGNETIC_NONE:
-        return new Point(0, 0);
+        return new Point();
       case ListView.MAGNETIC_BOTH_END:
         return new Point(0, 1);
       case ListView.MAGNETIC_CENTER:
@@ -1087,7 +1093,7 @@ export class ListView extends ScrollView {
         return new Point(0.5, 0);
     }
 
-    return new Point(0, 0);
+    return new Point();
   }
 
   _startMagneticScroll() {

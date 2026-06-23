@@ -30,7 +30,7 @@ export default class SplitRows extends TiledGrid3DAction {
     const locGridSize = this._gridSize;
     const locWinSizeWidth = this._winSize.width;
     let coords, direction;
-    const locPos = new Point(0, 0);
+    const locPos = new Point();
     for (let j = 0; j < locGridSize.height; ++j) {
       locPos.y = j;
       coords = this.getOriginalTile(locPos);

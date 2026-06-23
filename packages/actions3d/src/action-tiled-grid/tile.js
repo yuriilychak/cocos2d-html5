@@ -7,7 +7,7 @@ import { Point } from "@aspect/core";
  * @param {Size} [delta]
  */
 export default function Tile(position, startPosition, delta) {
-  this.position = position || new Point(0, 0);
-  this.startPosition = startPosition || new Point(0, 0);
-  this.delta = delta || new Point(0, 0);
+  this.position = position || new Point();
+  this.startPosition = startPosition || new Point();
+  this.delta = delta || new Point();
 }

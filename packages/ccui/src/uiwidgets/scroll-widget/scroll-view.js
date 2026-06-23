@@ -101,10 +101,10 @@ export class ScrollView extends Layout {
     this._childFocusCancelOffset = 5;
     this.inertiaScrollEnabled = true;
 
-    this._outOfBoundaryAmount = new Point(0, 0);
-    this._autoScrollTargetDelta = new Point(0, 0);
-    this._autoScrollStartPosition = new Point(0, 0);
-    this._autoScrollBrakingStartPosition = new Point(0, 0);
+    this._outOfBoundaryAmount = new Point();
+    this._autoScrollTargetDelta = new Point();
+    this._autoScrollStartPosition = new Point();
+    this._autoScrollBrakingStartPosition = new Point();
     this._touchMoveDisplacements = [];
     this._touchMoveTimeDeltas = [];
     this._touchMovePreviousTimestamp = 0;
@@ -555,14 +555,14 @@ export class ScrollView extends Layout {
   }
 
   _flattenVectorByDirection(vector) {
-    var result = new Point(0, 0);
+    var result = new Point();
     result.x = this._direction === ScrollView.DIR_VERTICAL ? 0 : vector.x;
     result.y = this._direction === ScrollView.DIR_HORIZONTAL ? 0 : vector.y;
     return result;
   }
 
   _getHowMuchOutOfBoundary(addition) {
-    if (addition === undefined) addition = new Point(0, 0);
+    if (addition === undefined) addition = new Point();
 
     if (
       addition.x === 0 &&
@@ -572,7 +572,7 @@ export class ScrollView extends Layout {
       return this._outOfBoundaryAmount;
     }
 
-    var outOfBoundaryAmount = new Point(0, 0);
+    var outOfBoundaryAmount = new Point();
 
     if (
       this._innerContainer.getLeftBoundary() + addition.x >
@@ -663,10 +663,10 @@ export class ScrollView extends Layout {
       totalTime += this._touchMoveTimeDeltas[i];
     }
     if (totalTime == 0 || totalTime >= this._touchTotalTimeThreshold) {
-      return new Point(0, 0);
+      return new Point();
     }
 
-    var totalMovement = new Point(0, 0);
+    var totalMovement = new Point();
 
     for (var i = 0; i < this._touchMoveDisplacements.length; ++i) {
       totalMovement.x += this._touchMoveDisplacements[i].x;
@@ -742,7 +742,7 @@ export class ScrollView extends Layout {
     this._autoScrollTotalTime = timeInSec;
     this._autoScrollAccumulatedTime = 0;
     this._autoScrollBraking = false;
-    this._autoScrollBrakingStartPosition = new Point(0, 0);
+    this._autoScrollBrakingStartPosition = new Point();
 
     // If the destination is also out of boundary of same side, start brake from beggining.
     var currentOutOfBoundary = this._getHowMuchOutOfBoundary();
@@ -1078,10 +1078,7 @@ export class ScrollView extends Layout {
       this._contentSize.height - this._innerContainer.getContentSize().height;
     var h = -minY;
     this._startAutoScrollToDestination(
-      new Point(
-        this._innerContainer.x,
-        minY + (percent * h) / 100
-      ),
+      new Point(this._innerContainer.x, minY + (percent * h) / 100),
       time,
       attenuated
     );
@@ -1219,10 +1216,7 @@ export class ScrollView extends Layout {
     var minY =
       this._contentSize.height - this._innerContainer.getContentSize().height;
     var h = -minY;
-    this._jumpToDestination(
-      this._innerContainer.x,
-      minY + (percent * h) / 100
-    );
+    this._jumpToDestination(this._innerContainer.x, minY + (percent * h) / 100);
   }
 
   /**
@@ -1232,10 +1226,7 @@ export class ScrollView extends Layout {
   jumpToPercentHorizontal(percent) {
     var w =
       this._innerContainer.getContentSize().width - this._contentSize.width;
-    this._jumpToDestination(
-      -((percent * w) / 100),
-      this._innerContainer.y
-    );
+    this._jumpToDestination(-((percent * w) / 100), this._innerContainer.y);
   }
 
   /**

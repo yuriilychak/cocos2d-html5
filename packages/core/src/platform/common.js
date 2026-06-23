@@ -32,6 +32,7 @@
  */
 import EventManager from '../event-manager/event-manager';
 import { log } from '../boot/debugger';
+import { ImageFormat } from '../enums';
 
 export function associateWithNative(jsObj, superclass) {
 }
@@ -178,48 +179,6 @@ export const KEY = {
 };
 
 /**
- * Image Format:JPG
- * @constant
- * @type {Number}
- */
-export const FMT_JPG = 0;
-
-/**
- * Image Format:PNG
- * @constant
- * @type {Number}
- */
-export const FMT_PNG = 1;
-
-/**
- * Image Format:TIFF
- * @constant
- * @type {Number}
- */
-export const FMT_TIFF = 2;
-
-/**
- * Image Format:RAWDATA
- * @constant
- * @type {Number}
- */
-export const FMT_RAWDATA = 3;
-
-/**
- * Image Format:WEBP
- * @constant
- * @type {Number}
- */
-export const FMT_WEBP = 4;
-
-/**
- * Image Format:UNKNOWN
- * @constant
- * @type {Number}
- */
-export const FMT_UNKNOWN = 5;
-
-/**
  * get image format by image data
  * @function
  * @param {Array} imgData
@@ -235,14 +194,14 @@ export function getImageFormatByData(imgData) {
         && imgData[5] === 0x0A
         && imgData[6] === 0x1A
         && imgData[7] === 0x0A) {
-        return FMT_PNG;
+        return ImageFormat.PNG;
     }
 
     // if it is a tiff file buffer.
     if (imgData.length > 2 && ((imgData[0] === 0x49 && imgData[1] === 0x49)
         || (imgData[0] === 0x4d && imgData[1] === 0x4d)
         || (imgData[0] === 0xff && imgData[1] === 0xd8))) {
-        return FMT_TIFF;
+        return ImageFormat.TIFF;
     }
-    return FMT_UNKNOWN;
+    return ImageFormat.UNKNOWN;
 }

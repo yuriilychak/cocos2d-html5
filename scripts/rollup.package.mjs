@@ -43,7 +43,7 @@ function stripWorkspaceImportsPlugin() {
       // Replace import statements that reference @aspect/* packages.
       // Non-renamed specifiers are already accessible in the concat'd scope.
       // Renamed specifiers (e.g. "Node as Node$1") need explicit var declarations
-      // so the renamed binding resolves to the correct cc.* global.
+      // so the renamed binding resolves to the package's lexical export binding.
       const regex =
         /^import\s*\{([^}]*)\}\s*from\s*['"]@aspect\/[^'"]*['"]\s*;?[ \t]*\n?/gm;
       let match;
@@ -57,8 +57,8 @@ function stripWorkspaceImportsPlugin() {
           .map(spec => {
             const asMatch = spec.match(/^(\S+)\s+as\s+(\S+)$/);
             if (asMatch) {
-              // "Node as Node$1" → "var Node$1 = cc.Node;"
-              return `var ${asMatch[2]} = cc.${asMatch[1]};`;
+              // "Node as Node$1" → "var Node$1 = Node;"
+              return `var ${asMatch[2]} = ${asMatch[1]};`;
             }
             return null;
           })

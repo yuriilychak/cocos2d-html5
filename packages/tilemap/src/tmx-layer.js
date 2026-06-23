@@ -51,8 +51,8 @@ export class TMXLayer extends SpriteBatchNode {
 
     this._descendants = [];
 
-    this._layerSize = new Size(0, 0);
-    this._mapTileSize = new Size(0, 0);
+    this._layerSize = new Size();
+    this._mapTileSize = new Size();
     this._spriteTiles = {};
 
     if (mapInfo !== undefined)
@@ -405,8 +405,7 @@ export class TMXLayer extends SpriteBatchNode {
     if (currentGID !== gid || currentFlags !== flags) {
       var gidAndFlags = (gid | flags) >>> 0;
       if (gid === 0) this.removeTileAt(pos);
-      else if (currentGID === 0)
-        this._updateTileForGID(gidAndFlags, pos);
+      else if (currentGID === 0) this._updateTileForGID(gidAndFlags, pos);
       else {
         var z = pos.x + pos.y * this._layerSize.width;
         var sprite = this.getChildByTag(z);
@@ -502,7 +501,7 @@ export class TMXLayer extends SpriteBatchNode {
 
   getPositionAt(pos, y) {
     if (y !== undefined) pos = new Point(pos, y);
-    var ret = new Point(0, 0);
+    var ret = new Point();
     switch (this.layerOrientation) {
       case TMX_ORIENTATION_ORTHO:
         ret = this._positionForOrthoAt(pos);
@@ -542,7 +541,7 @@ export class TMXLayer extends SpriteBatchNode {
   }
 
   _calculateLayerOffset(pos) {
-    var ret = new Point(0, 0);
+    var ret = new Point();
     switch (this.layerOrientation) {
       case TMX_ORIENTATION_ORTHO:
         ret = new Point(
@@ -616,8 +615,7 @@ export class TMXLayer extends SpriteBatchNode {
       );
 
       var flag =
-        (gid &
-          ((TMX_TILE_HORIZONTAL_FLAG | TMX_TILE_VERTICAL_FLAG) >>> 0)) >>>
+        (gid & ((TMX_TILE_HORIZONTAL_FLAG | TMX_TILE_VERTICAL_FLAG) >>> 0)) >>>
         0;
       if (flag === TMX_TILE_HORIZONTAL_FLAG) sprite.rotation = 90;
       else if (flag === TMX_TILE_VERTICAL_FLAG) sprite.rotation = 270;

@@ -51,7 +51,7 @@ export default class FlipX3D extends Grid3DAction {
     const mx = Math.cos(angle);
 
     const diff = new Vertex3F();
-    const tempVer = new Point(0, 0);
+    const tempVer = new Point();
     tempVer.x = tempVer.y = 1;
     const v0 = this.getOriginalVertex(tempVer);
     tempVer.x = tempVer.y = 0;
@@ -63,14 +63,14 @@ export default class FlipX3D extends Grid3DAction {
 
     if (x0 > x1) {
       // Normal Grid
-      a = new Point(0, 0);
+      a = new Point();
       b = new Point(0, 1);
       c = new Point(1, 0);
       d = new Point(1, 1);
       x = x0;
     } else {
       // Reversed Grid
-      c = new Point(0, 0);
+      c = new Point();
       d = new Point(0, 1);
       a = new Point(1, 0);
       b = new Point(1, 1);

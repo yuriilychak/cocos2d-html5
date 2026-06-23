@@ -9,6 +9,8 @@ import "./boot";
 // Renderer & Utils
 // ======================================================================
 import { ServiceLocator } from "./service-locator";
+import { KMGLMatrix } from "./kazmath";
+import type { Mat4Like } from "./kazmath";
 
 // ======================================================================
 // Base Nodes
@@ -99,6 +101,7 @@ export {
   EventListenerType,
   EventType,
   GameEvent,
+  ImageFormat,
   GLServerState,
   GLState,
   Language,
@@ -116,7 +119,8 @@ export {
   AttributeName,
   MouseEvent,
   MouseButton,
-  TouchEvent
+  TouchEvent,
+  UniformValueType
 } from "./enums";
 export { Vertex3F, Quad3, V3F_C4B_T2F } from "./platform/types/vertex";
 export {
@@ -161,6 +165,21 @@ export {
   Matrix4,
   KMGLMatrix
 } from "./kazmath";
+export const KM_GL_MODELVIEW = KMGLMatrix.KM_GL_MODELVIEW;
+export const KM_GL_PROJECTION = KMGLMatrix.KM_GL_PROJECTION;
+export const KM_GL_TEXTURE = KMGLMatrix.KM_GL_TEXTURE;
+export function kmGLMatrixMode(mode: number): void {
+  ServiceLocator.kmglMatrix.matrixMode(mode);
+}
+export function kmGLPushMatrix(): void {
+  ServiceLocator.kmglMatrix.pushMatrix();
+}
+export function kmGLPopMatrix(): void {
+  ServiceLocator.kmglMatrix.popMatrix();
+}
+export function kmGLLoadMatrix(matrix: Mat4Like): void {
+  ServiceLocator.kmglMatrix.loadMatrix(matrix);
+}
 export type {
   AABBLike,
   Mat3Like,
@@ -261,7 +280,7 @@ export { isObject } from "./boot";
 export { V3F_C4B_T2F_Quad, V3F_C4B_T2F_QuadZero } from "./platform/types/vertex";
 export { glBlendFuncForParticle } from "./shaders/CCGLStateCache";
 export { randomMinus1To1 } from "./platform/macro/utils";
-export { FMT_PNG, FMT_TIFF, getImageFormatByData } from "./platform/common";
+export { getImageFormatByData } from "./platform/common";
 export { SAXParser } from "./platform/sax-parser/sax-parser";
 export { _txtLoader } from "./platform/loaders";
 export { default as EventMouse } from "./event-manager/event/event-mouse";

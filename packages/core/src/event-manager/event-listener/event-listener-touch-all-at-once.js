@@ -28,12 +28,14 @@ import { log, _LogInfos } from '../../boot/debugger';
 import { EventListenerType } from '../../enums';
 
 export default class _EventListenerTouchAllAtOnce extends EventListener {
+    onTouchesBegan = null;
+    onTouchesMoved = null;
+    onTouchesEnded = null;
+    onTouchesCancelled = null;
+
     constructor() {
         super(EventListenerType.TOUCH_ALL_AT_ONCE, _EventListenerTouchAllAtOnce.LISTENER_ID, null);
-        this.onTouchesBegan = null;
-        this.onTouchesMoved = null;
-        this.onTouchesEnded = null;
-        this.onTouchesCancelled = null;
+        
     }
 
     clone() {
@@ -53,10 +55,7 @@ export default class _EventListenerTouchAllAtOnce extends EventListener {
         }
         return true;
     }
+
+    static LISTENER_ID = "__cc_touch_all_at_once";
 }
 
-_EventListenerTouchAllAtOnce.LISTENER_ID = "__cc_touch_all_at_once";
-
-_EventListenerTouchAllAtOnce.create = function(){
-     return new _EventListenerTouchAllAtOnce();
-};

@@ -46,7 +46,7 @@ export class ParticleSystemCanvasRenderCmd extends Node.CanvasRenderCmd {
     this._drawMode = TEXTURE_MODE;
     this._shapeType = BALL_SHAPE;
 
-    this._pointRect = new Rect(0, 0, 0, 0);
+    this._pointRect = new Rect();
     this._tintCache = null;
   }
 

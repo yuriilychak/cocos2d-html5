@@ -31,7 +31,7 @@ import { EventAcceleration } from "../event-manager/event-extension/index";
 import EventKeyboard from "../event-manager/event-extension/event-keyboard";
 import { Acceleration } from "../platform/types/color";
 import { isFunction } from "../boot/utils";
-import { BrowserType, MouseEvent } from "../enums";
+import { BrowserType, MouseEvent, TouchEvent } from "../enums";
 
 /**
  * <p>
@@ -67,8 +67,8 @@ export class InputManager {
 
   _isRegisterEvent = false;
 
-  _preTouchPoint = new Point(0, 0);
-  _prevMousePoint = new Point(0, 0);
+  _preTouchPoint = new Point();
+  _prevMousePoint = new Point();
 
   _preTouchPool = [];
   _preTouchPoolPointer = 0;
@@ -89,7 +89,7 @@ export class InputManager {
 
   _getUnUsedIndex() {
     var temp = this._indexBitsUsed;
-    var now = this._sys.now();
+    var now = Date.now();
 
     for (var i = 0; i < this._maxTouches; i++) {
       if (!(temp & 0x00000001)) {
@@ -145,7 +145,7 @@ export class InputManager {
       touchID,
       handleTouches = [],
       locTouchIntDict = this._touchesIntegerDict,
-      now = this._sys.now();
+      now = Date.now();
     for (var i = 0, len = touches.length; i < len; i++) {
       selTouch = touches[i];
       touchID = selTouch.id;
@@ -168,7 +168,7 @@ export class InputManager {
     if (handleTouches.length > 0) {
       this._glView._convertTouchesWithScale(handleTouches);
       var touchEvent = new EventTouch(handleTouches);
-      touchEvent._setEventCode(EventTouch.EventCode.BEGAN);
+      touchEvent._setEventCode(TouchEvent.BEGAN);
       this._eventManager.dispatchEvent(touchEvent);
     }
   }
@@ -183,7 +183,7 @@ export class InputManager {
       touchID,
       handleTouches = [],
       locTouches = this._touches,
-      now = this._sys.now();
+      now = Date.now();
     for (var i = 0, len = touches.length; i < len; i++) {
       selTouch = touches[i];
       touchID = selTouch.id;
@@ -203,7 +203,7 @@ export class InputManager {
     if (handleTouches.length > 0) {
       this._glView._convertTouchesWithScale(handleTouches);
       var touchEvent = new EventTouch(handleTouches);
-      touchEvent._setEventCode(EventTouch.EventCode.MOVED);
+      touchEvent._setEventCode(TouchEvent.MOVED);
       this._eventManager.dispatchEvent(touchEvent);
     }
   }
@@ -217,7 +217,7 @@ export class InputManager {
     if (handleTouches.length > 0) {
       this._glView._convertTouchesWithScale(handleTouches);
       var touchEvent = new EventTouch(handleTouches);
-      touchEvent._setEventCode(EventTouch.EventCode.ENDED);
+      touchEvent._setEventCode(TouchEvent.ENDED);
       this._eventManager.dispatchEvent(touchEvent);
     }
   }
@@ -231,7 +231,7 @@ export class InputManager {
     if (handleTouches.length > 0) {
       this._glView._convertTouchesWithScale(handleTouches);
       var touchEvent = new EventTouch(handleTouches);
-      touchEvent._setEventCode(EventTouch.EventCode.CANCELLED);
+      touchEvent._setEventCode(TouchEvent.CANCELLED);
       this._eventManager.dispatchEvent(touchEvent);
     }
   }

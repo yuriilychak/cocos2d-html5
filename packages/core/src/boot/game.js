@@ -10,7 +10,7 @@ import {
 import { rendererWebGL } from "../renderer/renderer-webgl";
 import Path from "./path";
 import { log } from "./debugger";
-import { create3DContext } from "./sys";
+import Sys from "./sys";
 import { isUndefined } from "./utils";
 import { GameEvent, RenderType } from "../enums";
 
@@ -461,7 +461,7 @@ export default class Game extends EventHelper(BaseClass) {
     localCanvas.setAttribute("tabindex", 99);
 
     if (this._rendererConfig.isWebGL) {
-      this._renderContext = create3DContext(localCanvas, {
+      this._renderContext = Sys.create3DContext(localCanvas, {
         stencil: true,
         alpha: false
       });

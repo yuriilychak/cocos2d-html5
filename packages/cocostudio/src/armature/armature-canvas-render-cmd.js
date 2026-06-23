@@ -22,180 +22,201 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { AffineTransform, BlendFunc, CustomRenderCmd, Node, Point, ServiceLocator } from "@aspect/core";
+import {
+  AffineTransform,
+  BlendFunc,
+  CustomRenderCmd,
+  Node,
+  Point,
+  ServiceLocator
+} from "@aspect/core";
 
-import { DISPLAY_TYPE_ARMATURE, DISPLAY_TYPE_SPRITE } from "./utils/datas/constants.js";
-    export class ArmatureCanvasRenderCmd extends Node.CanvasRenderCmd {
-        constructor(renderableObject) {
-            super(renderableObject);
-            this._needDraw = true;
+import {
+  DISPLAY_TYPE_ARMATURE,
+  DISPLAY_TYPE_SPRITE
+} from "./utils/datas/constants.js";
+export class ArmatureCanvasRenderCmd extends Node.CanvasRenderCmd {
+  constructor(renderableObject) {
+    super(renderableObject);
+    this._needDraw = true;
 
-            this._realAnchorPointInPoints = new Point(0, 0);
-            this._canUseDirtyRegion = true;
-            this._startRenderCmd = new CustomRenderCmd(this, this._startCmdCallback);
-            this._RestoreRenderCmd = new CustomRenderCmd(this, this._RestoreCmdCallback);
-            this._startRenderCmd._canUseDirtyRegion = true;
-            this._RestoreRenderCmd._canUseDirtyRegion = true;
+    this._realAnchorPointInPoints = new Point();
+    this._canUseDirtyRegion = true;
+    this._startRenderCmd = new CustomRenderCmd(this, this._startCmdCallback);
+    this._RestoreRenderCmd = new CustomRenderCmd(
+      this,
+      this._RestoreCmdCallback
+    );
+    this._startRenderCmd._canUseDirtyRegion = true;
+    this._RestoreRenderCmd._canUseDirtyRegion = true;
 
-            this._transform = {a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0};
-            this._worldTransform = {a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0};
+    this._transform = { a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0 };
+    this._worldTransform = { a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0 };
+  }
+
+  _updateAnchorPointInPoint() {
+    var node = this._node;
+    var contentSize = node._contentSize,
+      anchorPoint = node._anchorPoint,
+      offsetPoint = node._offsetPoint;
+    this._anchorPointInPoints.x =
+      contentSize.width * anchorPoint.x - offsetPoint.x;
+    this._anchorPointInPoints.y =
+      contentSize.height * anchorPoint.y - offsetPoint.y;
+
+    this._realAnchorPointInPoints.x = contentSize.width * anchorPoint.x;
+    this._realAnchorPointInPoints.y = contentSize.height * anchorPoint.y;
+    this.setDirtyFlag(Node._dirtyFlags.transformDirty);
+  }
+
+  getAnchorPointInPoints() {
+    return new Point(this._realAnchorPointInPoints);
+  }
+
+  _startCmdCallback(ctx, scaleX, scaleY) {
+    var node = this._node,
+      parent = node._parent;
+    this.transform(parent ? parent._renderCmd : null);
+
+    var wrapper = ctx || ServiceLocator.rendererConfig.renderContext;
+    wrapper.save();
+    wrapper._switchToArmatureMode(true, this._worldTransform, scaleX, scaleY);
+  }
+
+  transform(parentCmd, recursive) {
+    this.originTransform(parentCmd, recursive);
+
+    var locChildren = this._node._children;
+    for (var i = 0, len = locChildren.length; i < len; i++) {
+      var selBone = locChildren[i];
+      var boneCmd = selBone._renderCmd;
+      if (selBone && selBone.getDisplayRenderNode) {
+        var boneType = selBone.getDisplayRenderNodeType();
+        var selNode = selBone.getDisplayRenderNode();
+        if (selNode && selNode._renderCmd) {
+          var cmd = selNode._renderCmd;
+          cmd.transform(null);
+          if (
+            boneType !== DISPLAY_TYPE_ARMATURE &&
+            boneType !== DISPLAY_TYPE_SPRITE
+          ) {
+            AffineTransform.concatIn(
+              cmd._worldTransform,
+              selBone._worldTransform
+            );
+          }
+
+          var flags = Node._dirtyFlags,
+            locFlag = cmd._dirtyFlag,
+            boneFlag = boneCmd._dirtyFlag;
+          var colorDirty = boneFlag & flags.colorDirty,
+            opacityDirty = boneFlag & flags.opacityDirty;
+          if (colorDirty) boneCmd._updateDisplayColor(this._displayedColor);
+          if (opacityDirty)
+            boneCmd._updateDisplayOpacity(this._displayedOpacity);
+          if (colorDirty || opacityDirty) boneCmd._updateColor();
+
+          var parentColor = selBone._renderCmd._displayedColor,
+            parentOpacity = selBone._renderCmd._displayedOpacity;
+          colorDirty = locFlag & flags.colorDirty;
+          opacityDirty = locFlag & flags.opacityDirty;
+          if (colorDirty) cmd._updateDisplayColor(parentColor);
+          if (opacityDirty) cmd._updateDisplayOpacity(parentOpacity);
+          if (colorDirty || opacityDirty) {
+            cmd._updateColor();
+          }
         }
+      }
+    }
+  }
 
-        _updateAnchorPointInPoint() {
-            var node = this._node;
-            var contentSize = node._contentSize, anchorPoint = node._anchorPoint, offsetPoint = node._offsetPoint;
-            this._anchorPointInPoints.x = contentSize.width * anchorPoint.x - offsetPoint.x;
-            this._anchorPointInPoints.y = contentSize.height * anchorPoint.y - offsetPoint.y;
+  _RestoreCmdCallback(wrapper) {
+    this._cacheDirty = false;
+    wrapper._switchToArmatureMode(false);
+    wrapper.restore();
+  }
 
-            this._realAnchorPointInPoints.x = contentSize.width * anchorPoint.x;
-            this._realAnchorPointInPoints.y = contentSize.height * anchorPoint.y;
-            this.setDirtyFlag(Node._dirtyFlags.transformDirty);
+  initShaderCache() {}
+
+  setShaderProgram() {}
+
+  updateChildPosition(dis, bone) {
+    dis.visit();
+  }
+
+  rendering(ctx, scaleX, scaleY) {
+    var node = this._node;
+    var locChildren = node._children;
+    var alphaPremultiplied = BlendFunc.ALPHA_PREMULTIPLIED,
+      alphaNonPremultipled = BlendFunc.ALPHA_NON_PREMULTIPLIED;
+    for (var i = 0, len = locChildren.length; i < len; i++) {
+      var selBone = locChildren[i];
+      if (selBone && selBone.getDisplayRenderNode) {
+        var selNode = selBone.getDisplayRenderNode();
+        if (null === selNode) continue;
+
+        selBone._renderCmd._syncStatus(this);
+        switch (selBone.getDisplayRenderNodeType()) {
+          case DISPLAY_TYPE_SPRITE:
+            selNode.visit(selBone);
+            break;
+          case DISPLAY_TYPE_ARMATURE:
+            selNode._renderCmd.rendering(ctx, scaleX, scaleY);
+            break;
+          default:
+            selNode.visit(selBone);
+            break;
         }
+      } else if (selBone instanceof Node) {
+        this._visitNormalChild(selBone);
+      }
+    }
+  }
 
-        getAnchorPointInPoints() {
-            return new Point(this._realAnchorPointInPoints);
-        }
+  _visitNormalChild(childNode) {
+    if (!childNode) return;
 
-        _startCmdCallback(ctx, scaleX, scaleY) {
-            var node = this._node, parent = node._parent;
-            this.transform(parent ? parent._renderCmd : null);
+    var cmd = childNode._renderCmd;
+    if (!childNode._visible) return;
+    cmd._curLevel = this._curLevel + 1;
 
-            var wrapper = ctx || ServiceLocator.rendererConfig.renderContext;
-            wrapper.save();
-            wrapper._switchToArmatureMode(true, this._worldTransform, scaleX, scaleY);
-        }
+    var i,
+      children = childNode._children,
+      child;
+    cmd._syncStatus(this);
+    cmd.transform(null);
 
-        transform(parentCmd, recursive) {
-            this.originTransform(parentCmd, recursive);
+    var len = children.length;
+    if (len > 0) {
+      childNode.sortAllChildren();
+      for (i = 0; i < len; i++) {
+        child = children[i];
+        if (child._localZOrder < 0) child.visit(childNode);
+        else break;
+      }
+      ServiceLocator.rendererConfig.renderer.pushRenderCommand(cmd);
+      for (; i < len; i++) children[i].visit(childNode);
+    } else {
+      ServiceLocator.rendererConfig.renderer.pushRenderCommand(cmd);
+    }
+    this._dirtyFlag = 0;
+  }
 
-            var locChildren = this._node._children;
-            for (var i = 0, len = locChildren.length; i < len; i++) {
-                var selBone = locChildren[i];
-                var boneCmd = selBone._renderCmd;
-                if (selBone && selBone.getDisplayRenderNode) {
-                    var boneType = selBone.getDisplayRenderNodeType();
-                    var selNode = selBone.getDisplayRenderNode();
-                    if (selNode && selNode._renderCmd) {
-                        var cmd = selNode._renderCmd;
-                        cmd.transform(null);
-                        if (boneType !== DISPLAY_TYPE_ARMATURE && boneType !== DISPLAY_TYPE_SPRITE) {
-                            AffineTransform.concatIn(cmd._worldTransform, selBone._worldTransform);
-                        }
+  visit(parentCmd) {
+    var node = this._node;
+    if (!node._visible) return;
 
-                        var flags = Node._dirtyFlags, locFlag = cmd._dirtyFlag, boneFlag = boneCmd._dirtyFlag;
-                        var colorDirty = boneFlag & flags.colorDirty,
-                            opacityDirty = boneFlag & flags.opacityDirty;
-                        if (colorDirty)
-                            boneCmd._updateDisplayColor(this._displayedColor);
-                        if (opacityDirty)
-                            boneCmd._updateDisplayOpacity(this._displayedOpacity);
-                        if (colorDirty || opacityDirty)
-                            boneCmd._updateColor();
+    this._syncStatus(parentCmd);
+    node.sortAllChildren();
 
-                        var parentColor = selBone._renderCmd._displayedColor, parentOpacity = selBone._renderCmd._displayedOpacity;
-                        colorDirty = locFlag & flags.colorDirty;
-                        opacityDirty = locFlag & flags.opacityDirty;
-                        if (colorDirty)
-                            cmd._updateDisplayColor(parentColor);
-                        if (opacityDirty)
-                            cmd._updateDisplayOpacity(parentOpacity);
-                        if (colorDirty || opacityDirty) {
-                            cmd._updateColor();
-                        }
-                    }
-                }
-            }
-        }
+    ServiceLocator.rendererConfig.renderer.pushRenderCommand(
+      this._startRenderCmd
+    );
+    this.rendering();
+    ServiceLocator.rendererConfig.renderer.pushRenderCommand(
+      this._RestoreRenderCmd
+    );
 
-        _RestoreCmdCallback(wrapper) {
-            this._cacheDirty = false;
-            wrapper._switchToArmatureMode(false);
-            wrapper.restore();
-        }
-
-        initShaderCache() {
-        }
-
-        setShaderProgram() {
-        }
-
-        updateChildPosition(dis, bone) {
-            dis.visit();
-        }
-
-        rendering(ctx, scaleX, scaleY) {
-            var node = this._node;
-            var locChildren = node._children;
-            var alphaPremultiplied = BlendFunc.ALPHA_PREMULTIPLIED, alphaNonPremultipled = BlendFunc.ALPHA_NON_PREMULTIPLIED;
-            for (var i = 0, len = locChildren.length; i < len; i++) {
-                var selBone = locChildren[i];
-                if (selBone && selBone.getDisplayRenderNode) {
-                    var selNode = selBone.getDisplayRenderNode();
-                    if (null === selNode)
-                        continue;
-
-                    selBone._renderCmd._syncStatus(this);
-                    switch (selBone.getDisplayRenderNodeType()) {
-                        case DISPLAY_TYPE_SPRITE:
-                            selNode.visit(selBone);
-                            break;
-                        case DISPLAY_TYPE_ARMATURE:
-                            selNode._renderCmd.rendering(ctx, scaleX, scaleY);
-                            break;
-                        default:
-                            selNode.visit(selBone);
-                            break;
-                    }
-                } else if (selBone instanceof Node) {
-                    this._visitNormalChild(selBone);
-                }
-            }
-        }
-
-        _visitNormalChild(childNode) {
-            if (!childNode)
-                return;
-
-            var cmd = childNode._renderCmd;
-            if (!childNode._visible)
-                return;
-            cmd._curLevel = this._curLevel + 1;
-
-            var i, children = childNode._children, child;
-            cmd._syncStatus(this);
-            cmd.transform(null);
-
-            var len = children.length;
-            if (len > 0) {
-                childNode.sortAllChildren();
-                for (i = 0; i < len; i++) {
-                    child = children[i];
-                    if (child._localZOrder < 0)
-                        child.visit(childNode);
-                    else
-                        break;
-                }
-                ServiceLocator.rendererConfig.renderer.pushRenderCommand(cmd);
-                for (; i < len; i++)
-                    children[i].visit(childNode);
-            } else {
-                ServiceLocator.rendererConfig.renderer.pushRenderCommand(cmd);
-            }
-            this._dirtyFlag = 0;
-        }
-
-        visit(parentCmd) {
-            var node = this._node;
-            if (!node._visible)
-                return;
-
-            this._syncStatus(parentCmd);
-            node.sortAllChildren();
-
-            ServiceLocator.rendererConfig.renderer.pushRenderCommand(this._startRenderCmd);
-            this.rendering();
-            ServiceLocator.rendererConfig.renderer.pushRenderCommand(this._RestoreRenderCmd);
-
-            this._cacheDirty = false;
-        }
-    };
+    this._cacheDirty = false;
+  }
+}

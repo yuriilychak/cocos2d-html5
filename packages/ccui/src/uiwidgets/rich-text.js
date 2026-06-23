@@ -133,7 +133,7 @@ export class RichElementImage extends RichElement {
     this._textureType = 0;
     this._type = RichElement.IMAGE;
     this._filePath = filePath || "";
-    this._textureRect = new Rect(0, 0, 0, 0);
+    this._textureRect = new Rect();
     this._textureType = 0;
   }
 }
@@ -233,7 +233,8 @@ export class RichText extends Widget {
                 elementRenderer = new LabelTTF(
                   element._text,
                   element._fontDefinition
-                ); //todo: There may be ambiguous
+                );
+              //todo: There may be ambiguous
               else
                 elementRenderer = new LabelTTF(
                   element._text,
@@ -480,9 +481,7 @@ export class RichText extends Widget {
           var offsetY = 0;
           if (this._textVerticalAlignment === VerticalTextAlignment.BOTTOM)
             offsetY = this._customSize.height - newContentSizeHeight;
-          else if (
-            this._textVerticalAlignment === VerticalTextAlignment.CENTER
-          )
+          else if (this._textVerticalAlignment === VerticalTextAlignment.CENTER)
             offsetY = (this._customSize.height - newContentSizeHeight) / 2;
 
           for (j = 0; j < row.length; j++) {

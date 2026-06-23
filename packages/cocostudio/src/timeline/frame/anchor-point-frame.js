@@ -25,7 +25,6 @@
 import { Point } from "@aspect/core";
 import { Frame } from "./frame.js";
 
-
 /**
  * AnchorPoint frame
  * @extend Frame
@@ -33,7 +32,7 @@ import { Frame } from "./frame.js";
 export class AnchorPointFrame extends Frame {
   constructor() {
     super();
-    this._anchorPoint = new Point(0, 0);
+    this._anchorPoint = new Point();
   }
 
   /**
@@ -73,5 +72,4 @@ export class AnchorPointFrame extends Frame {
   getAnchorPoint() {
     return this._anchorPoint;
   }
-};
-
+}

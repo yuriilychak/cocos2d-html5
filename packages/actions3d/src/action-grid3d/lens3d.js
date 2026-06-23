@@ -28,7 +28,7 @@ export default class Lens3D extends Grid3DAction {
    */
   constructor(duration, gridSize, position, radius) {
     super();
-    this._position = new Point(0, 0);
+    this._position = new Point();
     radius !== undefined &&
       this.initWithDuration(duration, gridSize, position, radius);
   }
@@ -83,8 +83,8 @@ export default class Lens3D extends Grid3DAction {
       const locGridSizeHeight = this._gridSize.height;
       const locRadius = this._radius;
       const locLensEffect = this._lensEffect;
-      const locPos = new Point(0, 0);
-      const vect = new Point(0, 0);
+      const locPos = new Point();
+      const vect = new Point();
       let v, r, l, new_r, pre_log;
       for (let i = 0; i < locGridSizeWidth + 1; ++i) {
         for (let j = 0; j < locGridSizeHeight + 1; ++j) {

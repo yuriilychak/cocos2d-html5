@@ -29,7 +29,7 @@ export default class Ripple3D extends Grid3DAction {
    */
   constructor(duration, gridSize, position, radius, waves, amplitude) {
     super();
-    this._position = new Point(0, 0);
+    this._position = new Point();
     amplitude !== undefined &&
       this.initWithDuration(
         duration,
@@ -90,13 +90,13 @@ export default class Ripple3D extends Grid3DAction {
   update(dt) {
     const locGridSizeWidth = this._gridSize.width;
     const locGridSizeHeight = this._gridSize.height;
-    const locPos = new Point(0, 0);
+    const locPos = new Point();
     const locRadius = this._radius;
     const locWaves = this._waves;
     const locAmplitude = this._amplitude;
     const locAmplitudeRate = this._amplitudeRate;
     let v, r;
-    const tempPos = new Point(0, 0);
+    const tempPos = new Point();
     for (let i = 0; i < locGridSizeWidth + 1; ++i) {
       for (let j = 0; j < locGridSizeHeight + 1; ++j) {
         locPos.x = i;

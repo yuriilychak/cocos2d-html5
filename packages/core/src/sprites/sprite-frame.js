@@ -29,7 +29,12 @@ import EventHelper from "../event-manager/event-helper";
 import { Point, Rect, Size } from "../geometry";
 import { error, _LogInfos } from "../boot/debugger";
 import { Texture2D } from "../textures/texture-2d";
-import { rectPixelsToPoints, rectPointsToPixels, _pointPixelsToPointsOut, _sizePixelsToPointsOut } from "../platform/macro/utils";
+import {
+  rectPixelsToPoints,
+  rectPointsToPixels,
+  _pointPixelsToPointsOut,
+  _sizePixelsToPointsOut
+} from "../platform/macro/utils";
 import { SpriteCanvasRenderCmd } from "./sprite-canvas-render-cmd";
 import { PolygonInfo } from "./polygon-info";
 import { ServiceLocator } from "../service-locator";
@@ -73,11 +78,11 @@ export class SpriteFrame extends EventHelper(BaseClass) {
     this._textureFilename = "";
     this._textureLoaded = false;
     this._polygonInfo = null;
-    this._offset = new Point(0, 0);
-    this._offsetInPixels = new Point(0, 0);
-    this._originalSize = new Size(0, 0);
+    this._offset = new Point();
+    this._offsetInPixels = new Point();
+    this._originalSize = new Size();
     this._rotated = false;
-    this._originalSizeInPixels = new Size(0, 0);
+    this._originalSizeInPixels = new Size();
     this._textureFilename = "";
     this._texture = null;
     this._textureLoaded = false;
@@ -121,7 +126,7 @@ export class SpriteFrame extends EventHelper(BaseClass) {
    */
   setRectInPixels(rectInPixels) {
     if (!this._rectInPixels) {
-      this._rectInPixels = new Rect(0, 0, 0, 0);
+      this._rectInPixels = new Rect();
     }
     this._rectInPixels.x = rectInPixels.x;
     this._rectInPixels.y = rectInPixels.y;
@@ -161,7 +166,7 @@ export class SpriteFrame extends EventHelper(BaseClass) {
    */
   setRect(rect) {
     if (!this._rect) {
-      this._rect = new Rect(0, 0, 0, 0);
+      this._rect = new Rect();
     }
     this._rect.x = rect.x;
     this._rect.y = rect.y;
@@ -390,7 +395,7 @@ export class SpriteFrame extends EventHelper(BaseClass) {
   initWithTexture(texture, rect, rotated, offset, originalSize) {
     if (arguments.length === 2) rect = rectPointsToPixels(rect);
 
-    offset = offset || new Point(0, 0);
+    offset = offset || new Point();
     originalSize = originalSize || rect;
     rotated = rotated || false;
 

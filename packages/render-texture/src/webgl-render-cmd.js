@@ -22,7 +22,20 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Node, Texture2D, Size, Rect, Sprite, log, NextPOT, contentScaleFactor, Matrix4, KMGLMatrix, PIXEL_FORMAT_A8, ServiceLocator } from "@aspect/core";
+import {
+  Node,
+  Texture2D,
+  Size,
+  Rect,
+  Sprite,
+  log,
+  NextPOT,
+  contentScaleFactor,
+  Matrix4,
+  KMGLMatrix,
+  PIXEL_FORMAT_A8,
+  ServiceLocator
+} from "@aspect/core";
 
 const NodeWebGLRenderCmd = Node.WebGLRenderCmd;
 
@@ -295,7 +308,7 @@ export class RenderTextureWebGLRenderCmd extends NodeWebGLRenderCmd {
     ServiceLocator.kmglMatrix.multMatrix(orthoMatrix);
 
     //calculate viewport
-    const viewport = new Rect(0, 0, 0, 0);
+    const viewport = new Rect();
     viewport.width = this._fullViewport.width;
     viewport.height = this._fullViewport.height;
     const viewPortRectWidthRatio = viewport.width / this._fullRect.width;
@@ -376,7 +389,9 @@ export class RenderTextureWebGLRenderCmd extends NodeWebGLRenderCmd {
 
   end() {
     const node = this._node;
-    ServiceLocator.rendererConfig.renderer._renderingToBuffer(node.__instanceId);
+    ServiceLocator.rendererConfig.renderer._renderingToBuffer(
+      node.__instanceId
+    );
 
     const gl = ServiceLocator.rendererConfig.renderContext;
     const director = ServiceLocator.director;

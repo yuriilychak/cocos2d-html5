@@ -32,231 +32,243 @@
  * @property {Boolean}              active          - Indicate whether the collider detector is active
  * @property {Object}               body            - The collider body
  */
-import { AffineTransform, BaseClass, Point, arrayRemoveObject } from "@aspect/core";
+import {
+  AffineTransform,
+  BaseClass,
+  Point,
+  arrayRemoveObject
+} from "@aspect/core";
 import { ColliderFilter } from "./collider-filter.js";
 import { ColliderBody } from "./collider-body.js";
 
 import { ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX } from "../../armature-define.js";
 import { ContourVertex2 } from "../../utils/datas/utils.js";
 export class ColliderDetector extends BaseClass {
+  constructor(bone) {
+    super();
+    this._colliderBodyList = [];
+    this._bone = null;
+    this._body = null;
+    this._active = false;
+    this._filter = null;
 
-    constructor(bone) {
-        super();
-        this._colliderBodyList = [];
-        this._bone = null;
-        this._body = null;
-        this._active = false;
-        this._filter = null;
+    this.init(bone);
+  }
 
-        this.init(bone);
+  get colliderFilter() {
+    return this.getColliderFilter();
+  }
+  set colliderFilter(v) {
+    this.setColliderFilter(v);
+  }
+
+  get active() {
+    return this.getActive();
+  }
+  set active(v) {
+    this.setActive(v);
+  }
+
+  get body() {
+    return this.getBody();
+  }
+  set body(v) {
+    this.setBody(v);
+  }
+  init(bone) {
+    this._colliderBodyList.length = 0;
+    if (bone) this._bone = bone;
+    this._filter = new ColliderFilter();
+    return true;
+  }
+
+  /**
+   *  add contourData
+   * @param {ContourData} contourData
+   */
+  addContourData(contourData) {
+    var colliderBody = new ColliderBody(contourData);
+    this._colliderBodyList.push(colliderBody);
+
+    if (ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX) {
+      var calculatedVertexList = colliderBody.getCalculatedVertexList();
+      var vertexList = contourData.vertexList;
+      for (var i = 0; i < vertexList.length; i++) {
+        var newVertex = new ContourVertex2(0, 0);
+        calculatedVertexList.push(newVertex);
+      }
+    }
+  }
+
+  /**
+   * add contourData
+   * @param {Array} contourDataList
+   */
+  addContourDataList(contourDataList) {
+    for (var i = 0; i < contourDataList.length; i++) {
+      this.addContourData(contourDataList[i]);
+    }
+  }
+
+  /**
+   * remove contourData
+   * @param contourData
+   */
+  removeContourData(contourData) {
+    var eraseList = [],
+      i,
+      locBodyList = this._colliderBodyList;
+    for (i = 0; i < locBodyList.length; i++) {
+      var body = locBodyList[i];
+      if (body && body.getContourData() === contourData) eraseList.push(body);
     }
 
-    get colliderFilter() { return this.getColliderFilter(); }
-    set colliderFilter(v) { this.setColliderFilter(v); }
+    for (i = 0; i < eraseList.length; i++)
+      arrayRemoveObject(locBodyList, eraseList[i]);
+  }
 
-    get active() { return this.getActive(); }
-    set active(v) { this.setActive(v); }
+  /**
+   * remove all body
+   */
+  removeAll() {
+    this._colliderBodyList.length = 0;
+  }
 
-    get body() { return this.getBody(); }
-    set body(v) { this.setBody(v); }
-    init(bone) {
-        this._colliderBodyList.length = 0;
-        if (bone)
-            this._bone = bone;
-        this._filter = new ColliderFilter();
-        return true;
+  setActive(active) {
+    if (this._active === active) return;
+    this._active = active;
+
+    var locBody = this._body;
+    var locShape;
+    if (locBody) {
+      var colliderBody = null;
+      if (this._active) {
+        for (var i = 0; i < this._colliderBodyList.length; i++) {
+          colliderBody = this._colliderBodyList[i];
+          locShape = colliderBody.getShape();
+          locBody.space.addShape(locShape);
+        }
+      } else {
+        for (var i = 0; i < this._colliderBodyList.length; i++) {
+          colliderBody = this._colliderBodyList[i];
+          locShape = colliderBody.getShape();
+          locBody.space.removeShape(locShape);
+        }
+      }
     }
+  }
 
-    /**
-     *  add contourData
-     * @param {ContourData} contourData
-     */
-    addContourData(contourData) {
-        var colliderBody = new ColliderBody(contourData);
-        this._colliderBodyList.push(colliderBody);
+  getActive() {
+    return this._active;
+  }
+
+  getColliderBodyList() {
+    return this._colliderBodyList;
+  }
+
+  /**
+   * set colliderFilter
+   * @param {ColliderFilter} filter
+   */
+  setColliderFilter(filter) {
+    this._filter = filter;
+    var locBodyList = this._colliderBodyList;
+    for (var i = 0; i < locBodyList.length; i++) {
+      var colliderBody = locBodyList[i];
+      colliderBody.setColliderFilter(filter);
+      if (colliderBody.getShape())
+        colliderBody.getColliderFilter().updateShape(colliderBody.getShape());
+    }
+  }
+
+  /**
+   * get colliderFilter
+   * @returns {ColliderFilter}
+   */
+  getColliderFilter() {
+    return this._filter;
+  }
+
+  updateTransform(t) {
+    if (!this._active) return;
+
+    var colliderBody = null;
+    var locBody = this._body;
+    var locHelpPoint = this.helpPoint;
+    for (var i = 0; i < this._colliderBodyList.length; i++) {
+      colliderBody = this._colliderBodyList[i];
+      var contourData = colliderBody.getContourData();
+
+      //default physics engine: Chipmunk
+      var shape = null;
+      if (locBody) {
+        //Box2d shape = (b2PolygonShape *)colliderBody->getB2Fixture()->GetShape();
+        shape = colliderBody.getShape();
+      }
+
+      var vs = contourData.vertexList;
+      var cvs = colliderBody.getCalculatedVertexList();
+
+      for (var j = 0; j < vs.length; j++) {
+        locHelpPoint.x = vs[j].x;
+        locHelpPoint.y = vs[j].y;
+        locHelpPoint = AffineTransform.applyToPoint(locHelpPoint, t);
 
         if (ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX) {
-            var calculatedVertexList = colliderBody.getCalculatedVertexList();
-            var vertexList = contourData.vertexList;
-            for (var i = 0; i < vertexList.length; i++) {
-                var newVertex = new ContourVertex2(0, 0);
-                calculatedVertexList.push(newVertex);
-            }
-        }
-    }
-
-    /**
-     * add contourData
-     * @param {Array} contourDataList
-     */
-    addContourDataList(contourDataList) {
-        for (var i = 0; i < contourDataList.length; i++) {
-            this.addContourData(contourDataList[i]);
-        }
-    }
-
-    /**
-     * remove contourData
-     * @param contourData
-     */
-    removeContourData(contourData) {
-        var eraseList = [], i, locBodyList = this._colliderBodyList;
-        for (i = 0; i < locBodyList.length; i++) {
-            var body = locBodyList[i];
-            if (body && body.getContourData() === contourData)
-                eraseList.push(body);
+          var v = new Point();
+          v.x = locHelpPoint.x;
+          v.y = locHelpPoint.y;
+          cvs[j] = v;
         }
 
-        for (i=0; i<eraseList.length; i++)
-            arrayRemoveObject(locBodyList, eraseList[i]);
-    }
-
-    /**
-     * remove all body
-     */
-    removeAll() {
-        this._colliderBodyList.length = 0;
-    }
-
-    setActive(active) {
-        if (this._active === active)
-            return;
-        this._active = active;
-
-        var locBody = this._body;
-        var locShape;
-        if (locBody) {
-            var colliderBody = null;
-            if (this._active) {
-                for (var i = 0; i < this._colliderBodyList.length; i++) {
-                    colliderBody = this._colliderBodyList[i];
-                    locShape = colliderBody.getShape();
-                    locBody.space.addShape(locShape);
-                }
-            } else {
-                for (var i = 0; i < this._colliderBodyList.length; i++) {
-                    colliderBody = this._colliderBodyList[i];
-                    locShape = colliderBody.getShape();
-                    locBody.space.removeShape(locShape);
-                }
-            }
+        if (shape) {
+          shape.verts[j * 2] = locHelpPoint.x;
+          shape.verts[j * 2 + 1] = locHelpPoint.y;
         }
-    }
+      }
+      if (shape) {
+        for (var j = 0; j < vs.length; j++) {
+          var b = shape.verts[(j + 1) % shape.verts.length];
+          var n = cp.v.normalize(cp.v.perp(cp.v.sub(b, shape.verts[j])));
 
-    getActive() {
-        return this._active;
-    }
-
-    getColliderBodyList(){
-        return this._colliderBodyList;
-    }
-
-    /**
-     * set colliderFilter
-     * @param {ColliderFilter} filter
-     */
-    setColliderFilter(filter) {
-        this._filter = filter;
-        var locBodyList = this._colliderBodyList;
-        for(var i=0; i< locBodyList.length; i++){
-            var colliderBody = locBodyList[i];
-            colliderBody.setColliderFilter(filter);
-            if (colliderBody.getShape())
-                colliderBody.getColliderFilter().updateShape(colliderBody.getShape());
+          if (shape.planes) {
+            shape.planes[j].n = n;
+            shape.planes[j].d = cp.v.dot(n, shape.verts[j]);
+          }
+          //                    var b = shape.verts[(i + 1) % shape.numVerts];
+          //                    var n = cp.v.normalize(cp.v.perp(cp.v.sub(b, shape.verts[i])));
+          //
+          //                    shape.planes[i].n = n;
+          //                    shape.planes[i].d = cp.v.dot(n, shape.verts[i]);
         }
+      }
     }
+  }
 
-    /**
-     * get colliderFilter
-     * @returns {ColliderFilter}
-     */
-    getColliderFilter() {
-        return this._filter;
+  setBody(body) {
+    this._body = body;
+    var colliderBody,
+      locBodyList = this._colliderBodyList;
+    for (var i = 0; i < locBodyList.length; i++) {
+      colliderBody = locBodyList[i];
+      var contourData = colliderBody.getContourData(),
+        verts = [];
+      var vs = contourData.vertexList;
+      for (var j = 0; j < vs.length; j++) {
+        var v = vs[j];
+        verts.push(v.x);
+        verts.push(v.y);
+      }
+      var shape = new cp.PolyShape(this._body, verts, cp.vzero);
+      shape.sensor = true;
+      shape.data = this._bone;
+      if (this._active) this._body.space.addShape(shape);
+      colliderBody.setShape(shape);
+      colliderBody.getColliderFilter().updateShape(shape);
     }
+  }
 
-    updateTransform(t) {
-        if (!this._active)
-            return;
-
-        var colliderBody = null;
-        var locBody = this._body;
-        var locHelpPoint = this.helpPoint;
-        for (var i = 0; i < this._colliderBodyList.length; i++) {
-
-            colliderBody = this._colliderBodyList[i];
-            var contourData = colliderBody.getContourData();
-
-            //default physics engine: Chipmunk
-            var shape = null;
-            if (locBody) {
-                //Box2d shape = (b2PolygonShape *)colliderBody->getB2Fixture()->GetShape();
-                shape = colliderBody.getShape();
-            }
-
-            var vs = contourData.vertexList;
-            var cvs = colliderBody.getCalculatedVertexList();
-
-            for (var j = 0; j < vs.length; j++) {
-                locHelpPoint.x = vs[j].x;
-                locHelpPoint.y = vs[j].y;
-                locHelpPoint = AffineTransform.applyToPoint(locHelpPoint, t);
-
-                if (ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX) {
-                    var v = new Point(0, 0);
-                    v.x = locHelpPoint.x;
-                    v.y = locHelpPoint.y;
-                    cvs[j] = v;
-                }
-
-                if (shape) {
-                    shape.verts[j * 2] = locHelpPoint.x;
-                    shape.verts[j * 2 + 1] = locHelpPoint.y;
-                }
-            }
-            if (shape) {
-                for (var j = 0; j < vs.length; j++) {
-                    var b = shape.verts[(j + 1) % shape.verts.length];
-                    var n = cp.v.normalize(cp.v.perp(cp.v.sub(b, shape.verts[j])));
-
-                    if(shape.planes){
-                        shape.planes[j].n = n;
-                        shape.planes[j].d = cp.v.dot(n, shape.verts[j]);
-                    }
-//                    var b = shape.verts[(i + 1) % shape.numVerts];
-//                    var n = cp.v.normalize(cp.v.perp(cp.v.sub(b, shape.verts[i])));
-//
-//                    shape.planes[i].n = n;
-//                    shape.planes[i].d = cp.v.dot(n, shape.verts[i]);
-                }
-            }
-        }
-    }
-
-    setBody(body) {
-        this._body = body;
-        var colliderBody, locBodyList = this._colliderBodyList;
-        for (var i = 0; i < locBodyList.length; i++) {
-            colliderBody = locBodyList[i];
-            var contourData = colliderBody.getContourData(), verts = [];
-            var vs = contourData.vertexList;
-            for (var j = 0; j < vs.length; j++) {
-                var v = vs[j];
-                verts.push(v.x);
-                verts.push(v.y);
-            }
-            var shape = new cp.PolyShape(this._body, verts, cp.vzero);
-            shape.sensor = true;
-            shape.data = this._bone;
-            if (this._active)
-                this._body.space.addShape(shape);
-            colliderBody.setShape(shape);
-            colliderBody.getColliderFilter().updateShape(shape);
-        }
-    }
-
-    getBody() {
-        return this._body;
-    }
-
+  getBody() {
+    return this._body;
+  }
 }
-

@@ -54,6 +54,6 @@ export default class _EventListenerFocus extends EventListener {
             this.onFocusChanged(event._widgetLoseFocus, event._widgetGetFocus);
         }
     }
-}
 
-_EventListenerFocus.LISTENER_ID = "__cc_focus_event";
+    static LISTENER_ID = "__cc_focus_event";
+}

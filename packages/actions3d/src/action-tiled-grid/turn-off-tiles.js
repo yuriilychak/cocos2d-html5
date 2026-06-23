@@ -67,7 +67,7 @@ export default class TurnOffTiles extends TiledGrid3DAction {
     const l = 0 | (dt * this._tilesCount);
     const locGridSize = this._gridSize;
     let t;
-    const tilePos = new Point(0, 0);
+    const tilePos = new Point();
     const locTilesOrder = this._tilesOrder;
     for (let i = 0; i < this._tilesCount; i++) {
       t = locTilesOrder[i];

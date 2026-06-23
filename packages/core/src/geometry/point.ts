@@ -257,7 +257,7 @@ export default class Point implements PointLike {
   }
 
   public static segmentIntersect(A: PointLike, B: PointLike, C: PointLike, D: PointLike): boolean {
-    const retP = new Point(0, 0);
+    const retP = new Point();
     if (Point.lineIntersect(A, B, C, D, retP)) {
       if (retP.x >= 0.0 && retP.x <= 1.0 && retP.y >= 0.0 && retP.y <= 1.0) return true;
     }
@@ -265,14 +265,14 @@ export default class Point implements PointLike {
   }
 
   public static intersectPoint(A: PointLike, B: PointLike, C: PointLike, D: PointLike): Point {
-    const retP = new Point(0, 0);
+    const retP = new Point();
     if (Point.lineIntersect(A, B, C, D, retP)) {
-      const p = new Point(0, 0);
+      const p = new Point();
       p.x = A.x + retP.x * (B.x - A.x);
       p.y = A.y + retP.x * (B.y - A.y);
       return p;
     }
-    return new Point(0, 0);
+    return new Point();
   }
 
   public static sameAs(A: PointLike | null | undefined, B: PointLike | null | undefined): boolean {

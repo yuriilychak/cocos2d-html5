@@ -14,7 +14,7 @@
 
 import { BrowserType, OperatingSystem, ServiceLocator } from "@aspect/core";
 
-const sys = ServiceLocator.sys;
+const audioSupportSys = ServiceLocator.sys;
 
 // check if browser supports Web Audio
 const supportWebAudio = !!(
@@ -30,17 +30,17 @@ export const audioSupport = {
   ONE_SOURCE: false
 };
 
-if (sys.browserType === BrowserType.FIREFOX) {
+if (audioSupportSys.browserType === BrowserType.FIREFOX) {
   audioSupport.DELAY_CREATE_CTX = true;
   audioSupport.USE_LOADER_EVENT = "canplay";
 }
 
-if (sys.os === OperatingSystem.IOS) {
+if (audioSupportSys.os === OperatingSystem.IOS) {
   audioSupport.USE_LOADER_EVENT = "loadedmetadata";
 }
 
-if (sys.os === OperatingSystem.ANDROID) {
-  if (sys.browserType === BrowserType.UC) {
+if (audioSupportSys.os === OperatingSystem.ANDROID) {
+  if (audioSupportSys.browserType === BrowserType.UC) {
     audioSupport.ONE_SOURCE = true;
   }
 }

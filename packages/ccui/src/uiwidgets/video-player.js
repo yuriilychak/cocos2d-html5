@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BrowserType, Node, log, screen, Sys, GameEvent, OperatingSystem, Path, ServiceLocator } from "@aspect/core";
+import { BrowserType, Node, log, screen, GameEvent, OperatingSystem, Path, ServiceLocator } from "@aspect/core";
 import { Widget } from "../base-classes/widget";
 
 /**
@@ -346,11 +346,12 @@ VideoPlayer._polyfill = {
     VideoPlayer._polyfill.canPlayType.push(".webm");
 })();
 
-if (OperatingSystem.IOS === Sys.os) {
+const videoPlayerSys = ServiceLocator.sys;
+if (OperatingSystem.IOS === videoPlayerSys.os) {
   VideoPlayer._polyfill.devicePixelRatio = true;
   VideoPlayer._polyfill.event = "progress";
 }
-if (Sys.browserType === BrowserType.FIREFOX) {
+if (videoPlayerSys.browserType === BrowserType.FIREFOX) {
   VideoPlayer._polyfill.autoplayAfterOperation = true;
 }
 

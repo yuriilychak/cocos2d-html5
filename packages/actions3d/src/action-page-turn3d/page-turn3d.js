@@ -48,7 +48,7 @@ export default class PageTurn3D extends Grid3DAction {
     const cosTheta = Math.cos(theta);
 
     const locGridSize = this._gridSize;
-    const locVer = new Point(0, 0);
+    const locVer = new Point();
     for (let i = 0; i <= locGridSize.width; ++i) {
       for (let j = 0; j <= locGridSize.height; ++j) {
         locVer.x = i;

@@ -26,7 +26,7 @@ export default class Twirl extends Grid3DAction {
    */
   constructor(duration, gridSize, position, twirls, amplitude) {
     super();
-    this._position = new Point(0, 0);
+    this._position = new Point();
     amplitude !== undefined &&
       this.initWithDuration(duration, gridSize, position, twirls, amplitude);
   }
@@ -71,11 +71,11 @@ export default class Twirl extends Grid3DAction {
     const c = this._position;
     const locSizeWidth = this._gridSize.width;
     const locSizeHeight = this._gridSize.height;
-    const locPos = new Point(0, 0);
+    const locPos = new Point();
     const amp = 0.1 * this._amplitude * this._amplitudeRate;
     const locTwirls = this._twirls;
     let v, a, dX, dY;
-    const avg = new Point(0, 0);
+    const avg = new Point();
     for (let i = 0; i < locSizeWidth + 1; ++i) {
       for (let j = 0; j < locSizeHeight + 1; ++j) {
         locPos.x = i;

@@ -1,5 +1,8 @@
-import { isObject, formatStr } from './utils';
+import { isObject, isString, formatStr } from './utils';
 import { DebugMode } from "../enums";
+
+declare const _canvas: HTMLCanvasElement | null;
+declare let _logList: HTMLTextAreaElement | null;
 
 let _enableLog = false;
 let _enableWarn = false;
@@ -203,38 +206,41 @@ export const _LogInfos = {
     EventManager__updateListeners_2: "_inDispatch should be 1 here."
 };
 
-export function log() {
+export function log(...args: any[]): void {
     if (!_enableLog) return;
-    if (_useWebPage) {
-        logToWebPage(formatStr.apply(null, arguments));
+    if (_useWebPage && isString(args[0])) {
+        const [template, ...rest] = args;
+        logToWebPage(formatStr(template as string, ...rest));
     } else {
-        console.log.apply(console, arguments);
+        console.log(...args);
     }
 }
 
-export function warn() {
+export function warn(...args: any[]): void {
     if (!_enableWarn) return;
-    if (_useWebPage) {
-        logToWebPage("WARN :  " + formatStr.apply(null, arguments));
+    if (_useWebPage && isString(args[0])) {
+        const [template, ...rest] = args;
+        logToWebPage(formatStr(`WARN :  ${template}`, ...rest));
     } else {
-        console.warn.apply(console, arguments);
+        console.warn(...args);
     }
 }
 
-export function error() {
+export function error(...args: any[]): void {
     if (!_enableError) return;
-    if (_useWebPage) {
-        logToWebPage("ERROR :  " + formatStr.apply(null, arguments));
+    if (_useWebPage && isString(args[0])) {
+        const [template, ...rest] = args;
+        logToWebPage(formatStr(`ERROR :  ${template}`, ...rest));
     } else {
-        console.error.apply(console, arguments);
+        console.error(...args);
     }
 }
 
-export function assert(cond, msg) {
+export function assert(cond: unknown, msg?: string, ...args: any[]): void {
     if (!_enableError || cond) return;
     if (msg) {
-        for (var i = 2; i < arguments.length; i++)
-            msg = msg.replace(/(%s)|(%d)/, formatString(arguments[i]));
+        for (var i = 0; i < args.length; i++)
+            msg = msg.replace(/(%s)|(%d)/, formatString(args[i]));
     }
     if (_useWebPage) {
         logToWebPage("Assert: " + msg);
@@ -245,7 +251,7 @@ export function assert(cond, msg) {
     }
 }
 
-export function logToWebPage(msg) {
+export function logToWebPage(msg: string): void {
     if (!_canvas)
         return;
 
@@ -256,9 +262,9 @@ export function logToWebPage(msg) {
         var logDivStyle = logDiv.style;
 
         logDiv.setAttribute("id", "logInfoDiv");
-        _canvas.parentNode.appendChild(logDiv);
+        _canvas.parentNode!.appendChild(logDiv);
         logDiv.setAttribute("width", "200");
-        logDiv.setAttribute("height", _canvas.height);
+        logDiv.setAttribute("height", String(_canvas.height));
         logDivStyle.zIndex = "99999";
         logDivStyle.position = "absolute";
         logDivStyle.top = "0";
@@ -269,7 +275,7 @@ export function logToWebPage(msg) {
 
         logList.setAttribute("rows", "20");
         logList.setAttribute("cols", "30");
-        logList.setAttribute("disabled", true);
+        logList.setAttribute("disabled", "true");
         logDiv.appendChild(logList);
         logListStyle.backgroundColor = "transparent";
         logListStyle.borderBottom = "1px solid #cccccc";
@@ -280,14 +286,14 @@ export function logToWebPage(msg) {
         logListStyle.borderRightStyle = "none";
         logListStyle.borderLeftStyle = "none";
         logListStyle.padding = "0px";
-        logListStyle.margin = 0;
+        logListStyle.margin = "0";
 
     }
     logList.value = logList.value + msg + "\r\n";
     logList.scrollTop = logList.scrollHeight;
 }
 
-export function formatString(arg) {
+export function formatString(arg: any): any {
     if (isObject(arg)) {
         try {
             return JSON.stringify(arg);
@@ -303,7 +309,7 @@ export function formatString(arg) {
  * @function
  * @param {Number} mode
  */
-export function initDebugSetting(mode) {
+export function initDebugSetting(mode: DebugMode): void {
     _useWebPage = mode > DebugMode.ERROR;
     _enableError = mode !== DebugMode.NONE;
     _enableWarn = mode === DebugMode.INFO || mode === DebugMode.WARN

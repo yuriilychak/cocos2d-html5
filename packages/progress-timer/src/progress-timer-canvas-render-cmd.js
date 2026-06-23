@@ -1,4 +1,11 @@
-import { Node, Point, Rect, Size, incrementGLDraws, ServiceLocator } from "@aspect/core";
+import {
+  Node,
+  Point,
+  Rect,
+  Size,
+  incrementGLDraws,
+  ServiceLocator
+} from "@aspect/core";
 import { TYPE_BAR, TYPE_RADIAL } from "./constants";
 
 /**
@@ -10,8 +17,8 @@ export class ProgressTimerCanvasRenderCmd extends Node.CanvasRenderCmd {
     this._needDraw = true;
 
     this._PI180 = Math.PI / 180;
-    this._barRect = new Rect(0, 0, 0, 0);
-    this._origin = new Point(0, 0);
+    this._barRect = new Rect();
+    this._origin = new Point();
     this._radius = 0;
     this._startAngle = 270;
     this._endAngle = 270;

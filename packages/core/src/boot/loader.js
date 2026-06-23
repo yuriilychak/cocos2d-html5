@@ -2,7 +2,6 @@ import ImagePool from "./image-pool";
 import Async from "./async";
 import AsyncPool from "./async-pool";
 import Path from "./path";
-import Sys from "./sys";
 import { error, log } from "./debugger";
 import { RendererConfig } from "../renderer/renderer-config";
 
@@ -597,7 +596,7 @@ export default class Loader {
     if (!(resources instanceof Array)) resources = [resources];
     var asyncPool = new AsyncPool(
       resources,
-      Sys.isMobile ? 20 : 0,
+      this._sys.isMobile ? 20 : 0,
       (value, index, AsyncPoolCallback, aPool) => {
         this._loadResIterator(value, index, (err, ...rest) => {
           if (option.trigger)

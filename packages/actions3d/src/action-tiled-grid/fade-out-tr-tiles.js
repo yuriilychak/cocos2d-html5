@@ -44,7 +44,7 @@ export default class FadeOutTRTiles extends TiledGrid3DAction {
 
   update(dt) {
     const locGridSize = this._gridSize;
-    const locPos = new Point(0, 0);
+    const locPos = new Point();
     let distance;
     for (let i = 0; i < locGridSize.width; ++i) {
       for (let j = 0; j < locGridSize.height; ++j) {

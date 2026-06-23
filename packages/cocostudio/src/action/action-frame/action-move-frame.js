@@ -12,7 +12,7 @@ export class ActionMoveFrame extends ActionFrame {
    */
   constructor() {
     super();
-    this._position = new Point(0, 0);
+    this._position = new Point();
     this.frameType = FRAME_TYPE_MOVE;
   }
 
@@ -47,5 +47,4 @@ export class ActionMoveFrame extends ActionFrame {
   getAction(duration) {
     return this._getEasingAction(new MoveTo(duration, this._position));
   }
-};
-
+}

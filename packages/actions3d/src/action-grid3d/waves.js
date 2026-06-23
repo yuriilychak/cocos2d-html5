@@ -82,7 +82,7 @@ export default class Waves extends Grid3DAction {
   update(dt) {
     const locSizeWidth = this._gridSize.width;
     const locSizeHeight = this._gridSize.height;
-    const locPos = new Point(0, 0);
+    const locPos = new Point();
     const locVertical = this._vertical;
     const locHorizontal = this._horizontal;
     const locWaves = this._waves;

@@ -113,7 +113,7 @@ export class WebSocketTestLayer extends BaseTestLayer {
 
     this._wsiSendText.onerror = function (evt) {
       log("_wsiSendText Error was fired");
-      if (ServiceLocator.sys.isObjectValid(self)) {
+      if (self) {
         self._errorStatus.string = "an error was fired";
       } else {
         log("WebSocket test layer was destroyed!");
@@ -156,7 +156,7 @@ export class WebSocketTestLayer extends BaseTestLayer {
 
     this._wsiSendBinary.onerror = function (evt) {
       log("_wsiSendBinary Error was fired");
-      if (ServiceLocator.sys.isObjectValid(self)) {
+      if (self) {
         self._errorStatus.string = "an error was fired";
       } else {
         log("WebSocket test layer was destroyed!");
@@ -173,7 +173,7 @@ export class WebSocketTestLayer extends BaseTestLayer {
     this._wsiError.onmessage = function (evt) {};
     this._wsiError.onerror = function (evt) {
       log("_wsiError Error was fired");
-      if (ServiceLocator.sys.isObjectValid(self)) {
+      if (self) {
         self._errorStatus.string = "an error was fired";
       } else {
         log("WebSocket test layer was destroyed!");
@@ -240,4 +240,3 @@ export function runWebSocketTest() {
   scene.addChild(layer);
   ServiceLocator.director.runScene(scene);
 }
-

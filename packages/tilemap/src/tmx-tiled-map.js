@@ -15,8 +15,8 @@ export class TMXTiledMap extends Node {
     this._tileProperties = null;
     this._className = "TMXTiledMap";
 
-    this._mapSize = new Size(0, 0);
-    this._tileSize = new Size(0, 0);
+    this._mapSize = new Size();
+    this._tileSize = new Size();
 
     if (resourcePath !== undefined) {
       this.initWithXML(tmxFile, resourcePath);
@@ -242,10 +242,7 @@ export class TMXTiledMap extends Node {
               var pos = x + size.width * y;
               var gid = layerInfo._tiles[pos];
               if (gid !== 0) {
-                if (
-                  (gid & TMX_TILE_FLIPPED_MASK) >>> 0 >=
-                  tileset.firstGid
-                ) {
+                if ((gid & TMX_TILE_FLIPPED_MASK) >>> 0 >= tileset.firstGid) {
                   return tileset;
                 }
               }

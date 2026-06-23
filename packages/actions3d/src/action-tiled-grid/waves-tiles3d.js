@@ -55,7 +55,7 @@ export default class WavesTiles3D extends TiledGrid3DAction {
     const locWaves = this._waves;
     const locAmplitude = this._amplitude;
     const locAmplitudeRate = this._amplitudeRate;
-    const locPos = new Point(0, 0);
+    const locPos = new Point();
     let coords;
     for (let i = 0; i < locGridSize.width; i++) {
       for (let j = 0; j < locGridSize.height; j++) {

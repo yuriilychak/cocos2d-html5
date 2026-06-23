@@ -1,4 +1,12 @@
-import { SAXParser, Size, Point, Path, log, _txtLoader, ServiceLocator } from "@aspect/core";
+import {
+  SAXParser,
+  Size,
+  Point,
+  Path,
+  log,
+  _txtLoader,
+  ServiceLocator
+} from "@aspect/core";
 import {
   unzipBase64AsArray,
   inflate,
@@ -35,8 +43,8 @@ export class TMXMapInfo extends SAXParser {
     this._resources = "";
     this._currentFirstGID = 0;
 
-    this._mapSize = new Size(0, 0);
-    this._tileSize = new Size(0, 0);
+    this._mapSize = new Size();
+    this._tileSize = new Size();
     this._layers = [];
     this._tilesets = [];
     this._objectGroups = [];
@@ -229,12 +237,12 @@ export class TMXMapInfo extends SAXParser {
       else if (orientationStr !== null)
         log("cocos2d: TMXFomat: Unsupported orientation:" + orientationStr);
 
-      var mapSize = new Size(0, 0);
+      var mapSize = new Size();
       mapSize.width = parseFloat(map.getAttribute("width"));
       mapSize.height = parseFloat(map.getAttribute("height"));
       this.setMapSize(mapSize);
 
-      mapSize = new Size(0, 0);
+      mapSize = new Size();
       mapSize.width = parseFloat(map.getAttribute("tilewidth"));
       mapSize.height = parseFloat(map.getAttribute("tileheight"));
       this.setTileSize(mapSize);
@@ -272,7 +280,7 @@ export class TMXMapInfo extends SAXParser {
         tileset.spacing = parseInt(selTileset.getAttribute("spacing")) || 0;
         tileset.margin = parseInt(selTileset.getAttribute("margin")) || 0;
 
-        var tilesetSize = new Size(0, 0);
+        var tilesetSize = new Size();
         tilesetSize.width = parseFloat(selTileset.getAttribute("tilewidth"));
         tilesetSize.height = parseFloat(selTileset.getAttribute("tileheight"));
         tileset._tileSize = tilesetSize;
@@ -319,7 +327,7 @@ export class TMXMapInfo extends SAXParser {
         var layer = new TMXLayerInfo();
         layer.name = selLayer.getAttribute("name");
 
-        var layerSize = new Size(0, 0);
+        var layerSize = new Size();
         layerSize.width = parseFloat(selLayer.getAttribute("width"));
         layerSize.height = parseFloat(selLayer.getAttribute("height"));
         layer._layerSize = layerSize;
@@ -345,9 +353,7 @@ export class TMXMapInfo extends SAXParser {
         var compression = data.getAttribute("compression");
         var encoding = data.getAttribute("encoding");
         if (compression && compression !== "gzip" && compression !== "zlib") {
-          log(
-            "TMXMapInfo.parseXMLFile(): unsupported compression method"
-          );
+          log("TMXMapInfo.parseXMLFile(): unsupported compression method");
           return null;
         }
         var tiles;
@@ -357,9 +363,7 @@ export class TMXMapInfo extends SAXParser {
             break;
           case "zlib":
             tiles = uint8ArrayToUint32Array(
-              inflate(
-                new Uint8Array(Codec.Base64.decodeAsArray(nodeValue, 1))
-              )
+              inflate(new Uint8Array(Codec.Base64.decodeAsArray(nodeValue, 1)))
             );
             break;
           case null:
@@ -430,7 +434,8 @@ export class TMXMapInfo extends SAXParser {
         }
 
         var objects = selGroup.querySelectorAll("object");
-        var getContentScaleFactor = ServiceLocator.director.getContentScaleFactor();
+        var getContentScaleFactor =
+          ServiceLocator.director.getContentScaleFactor();
         if (objects) {
           for (j = 0; j < objects.length; j++) {
             var selObj = objects[j];

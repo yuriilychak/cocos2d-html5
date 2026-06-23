@@ -295,7 +295,7 @@ export default class CanvasTextureRenderer {
   }
 
   _generateColorTexture(r, g, b, rect, canvas) {
-    if (ServiceLocator.sys._supportCanvasNewBlendModes) {
+    if (ServiceLocator.sys.supportCanvasNewBlendModes) {
       return generateColorTextureMultiply(this._texture, r, g, b, rect, canvas);
     } else {
       return generateColorTextureFourChannel(

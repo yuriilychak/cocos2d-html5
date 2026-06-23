@@ -28,16 +28,15 @@ import { log, _LogInfos } from '../../boot/debugger';
 import { EventListenerType } from '../../enums';
 
 export default class _EventListenerTouchOneByOne extends EventListener {
-    constructor() {
-        super(EventListenerType.TOUCH_ONE_BY_ONE, _EventListenerTouchOneByOne.LISTENER_ID, null);
-        this._claimedTouches = null;
-        this.swallowTouches = false;
-        this.onTouchBegan = null;
-        this.onTouchMoved = null;
-        this.onTouchEnded = null;
-        this.onTouchCancelled = null;
+    _claimedTouches = [];
+    swallowTouches = false;
+    onTouchBegan = null;
+    onTouchMoved = null;
+    onTouchEnded = null;
+    onTouchCancelled = null;
 
-        this._claimedTouches = [];
+    constructor() {
+        super(EventListenerType.TOUCH_ONE_BY_ONE, _EventListenerTouchOneByOne.LISTENER_ID, null); 
     }
 
     setSwallowTouches(needSwallow) {
@@ -65,10 +64,7 @@ export default class _EventListenerTouchOneByOne extends EventListener {
         }
         return true;
     }
+
+    static LISTENER_ID = "__cc_touch_one_by_one";
 }
 
-_EventListenerTouchOneByOne.LISTENER_ID = "__cc_touch_one_by_one";
-
-_EventListenerTouchOneByOne.create = function () {
-    return new _EventListenerTouchOneByOne();
-};

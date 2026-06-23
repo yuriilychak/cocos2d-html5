@@ -229,7 +229,7 @@ export default class Rect implements RectLike {
   }
 
   public static union(rectA: RectLike, rectB: RectLike): Rect {
-    const r = new Rect(0, 0, 0, 0);
+    const r = new Rect();
     r.x = Math.min(rectA.x, rectB.x);
     r.y = Math.min(rectA.y, rectB.y);
     r.width = Math.max(rectA.x + rectA.width, rectB.x + rectB.width) - r.x;

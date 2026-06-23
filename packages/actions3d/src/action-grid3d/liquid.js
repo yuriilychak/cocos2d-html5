@@ -65,7 +65,7 @@ export default class Liquid extends Grid3DAction {
   update(dt) {
     const locSizeWidth = this._gridSize.width;
     const locSizeHeight = this._gridSize.height;
-    const locPos = new Point(0, 0);
+    const locPos = new Point();
     const locWaves = this._waves;
     const locAmplitude = this._amplitude;
     const locAmplitudeRate = this._amplitudeRate;

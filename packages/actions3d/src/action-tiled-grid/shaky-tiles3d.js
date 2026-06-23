@@ -42,7 +42,7 @@ export default class ShakyTiles3D extends TiledGrid3DAction {
   update(dt) {
     const locGridSize = this._gridSize;
     const locRandRange = this._randRange;
-    const locPos = new Point(0, 0);
+    const locPos = new Point();
     for (let i = 0; i < locGridSize.width; ++i) {
       for (let j = 0; j < locGridSize.height; ++j) {
         locPos.x = i;

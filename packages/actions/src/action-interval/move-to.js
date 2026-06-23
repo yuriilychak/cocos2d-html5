@@ -22,7 +22,7 @@ export default class MoveTo extends MoveBy {
    */
   constructor(duration, position, y) {
     super();
-    this._endPosition = new Point(0, 0);
+    this._endPosition = new Point();
 
     position !== undefined && this.initWithDuration(duration, position, y);
   }

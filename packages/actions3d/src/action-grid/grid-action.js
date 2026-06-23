@@ -18,7 +18,7 @@ export default class GridAction extends ActionInterval {
   constructor(duration, gridSize) {
     ServiceLocator.sys._checkWebGLRenderMode();
     super();
-    this._gridSize = new Size(0, 0);
+    this._gridSize = new Size();
 
     gridSize && this.initWithDuration(duration, gridSize);
   }

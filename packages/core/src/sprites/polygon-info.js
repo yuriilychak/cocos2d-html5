@@ -35,7 +35,7 @@ export class Triangles {
 
 export class PolygonInfo {
   constructor() {
-    this.rect = new Rect(0, 0, 0, 0);
+    this.rect = new Rect();
     this.filename = "";
     this.triangles = new Triangles([], []);
     this.isVertsZeroed = false;

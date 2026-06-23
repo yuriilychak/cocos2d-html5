@@ -88,7 +88,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
    */
   constructor(str, fntFile, width, alignment, imageOffset, fontSize) {
     super();
-    this._imageOffset = new Point(0, 0);
+    this._imageOffset = new Point();
     this._cascadeColorEnabled = true;
     this._cascadeOpacityEnabled = true;
     if (str !== undefined && fntFile !== undefined)
@@ -205,7 +205,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
 
     if (this.initWithTexture(texture, theString.length)) {
       this._alignment = alignment || TextAlignment.LEFT;
-      this._imageOffset = imageOffset || new Point(0, 0);
+      this._imageOffset = imageOffset || new Point();
       this._width = width === undefined ? -1 : width;
       this._fontSize = fontSize > 0 ? fontSize : 0;
 
@@ -237,7 +237,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
 
     var nextFontPositionX = 0;
 
-    var tmpSize = new Size(0, 0);
+    var tmpSize = new Size();
 
     var longestLine = 0;
 

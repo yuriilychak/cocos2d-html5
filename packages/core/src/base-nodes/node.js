@@ -194,10 +194,10 @@ export class Node extends BaseClass {
     this._cascadeColorEnabled = false;
     this._cascadeOpacityEnabled = false;
     this._renderCmd = null;
-    this._anchorPoint = new Point(0, 0);
-    this._contentSize = new Size(0, 0);
-    this._position = new Point(0, 0);
-    this._normalizedPosition = new Point(0, 0);
+    this._anchorPoint = new Point();
+    this._contentSize = new Size();
+    this._position = new Point();
+    this._normalizedPosition = new Point();
     this._children = [];
 
     this._additionalTransform = AffineTransform.makeIdentity();
@@ -1969,7 +1969,7 @@ export class Node extends BaseClass {
    * @return {Point}
    */
   convertToWorldSpace(nodePoint) {
-    nodePoint = nodePoint || new Point(0, 0);
+    nodePoint = nodePoint || new Point();
     return AffineTransform.applyToPoint(
       nodePoint,
       this.getNodeToWorldTransform()
@@ -1998,7 +1998,7 @@ export class Node extends BaseClass {
    * @return {Point}
    */
   convertToWorldSpaceAR(nodePoint) {
-    nodePoint = nodePoint || new Point(0, 0);
+    nodePoint = nodePoint || new Point();
     var pt = Point.add(nodePoint, this._renderCmd.getAnchorPointInPoints());
     return this.convertToWorldSpace(pt);
   }

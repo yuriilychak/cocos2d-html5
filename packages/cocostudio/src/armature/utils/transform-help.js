@@ -1,4 +1,3 @@
-
 /****************************************************************************
  Copyright (c) 2011-2012 cocos2d-x.org
  Copyright (c) 2013-2014 Chukong Technologies Inc.
@@ -33,8 +32,8 @@ import { AffineTransform, BaseClass, Point } from "@aspect/core";
 export class TransformHelp extends BaseClass {}
 TransformHelp.helpMatrix1 = AffineTransform.make(1, 0, 0, 1, 0, 0);
 TransformHelp.helpMatrix2 = AffineTransform.make(1, 0, 0, 1, 0, 0);
-TransformHelp.helpPoint1 = new Point(0, 0);
-TransformHelp.helpPoint2 = new Point(0, 0);
+TransformHelp.helpPoint1 = new Point();
+TransformHelp.helpPoint2 = new Point();
 TransformHelp.helpParentNode = {};
 
 /**
@@ -49,10 +48,7 @@ TransformHelp.transformFromParent = function (bone, parentNode) {
   this.nodeToMatrix(parentNode, this.helpMatrix2);
 
   this.helpMatrix2 = AffineTransform.invert(this.helpMatrix2);
-  this.helpMatrix1 = AffineTransform.concat(
-    this.helpMatrix1,
-    this.helpMatrix2
-  );
+  this.helpMatrix1 = AffineTransform.concat(this.helpMatrix1, this.helpMatrix2);
 
   this.matrixToNode(this.helpMatrix1, bone);
 };
@@ -61,18 +57,12 @@ TransformHelp.transformToParent = function (node, parentNode) {
   this.nodeToMatrix(node, this.helpMatrix1);
   this.nodeToMatrix(parentNode, this.helpMatrix2);
 
-  this.helpMatrix1 = AffineTransform.concat(
-    this.helpMatrix1,
-    this.helpMatrix2
-  );
+  this.helpMatrix1 = AffineTransform.concat(this.helpMatrix1, this.helpMatrix2);
 
   this.matrixToNode(this.helpMatrix1, node);
 };
 
-TransformHelp.transformFromParentWithoutScale = function (
-  node,
-  parentNode
-) {
+TransformHelp.transformFromParentWithoutScale = function (node, parentNode) {
   //    this.helpParentNode.copy(&parentNode);
 
   for (var p in parentNode) {
@@ -85,10 +75,7 @@ TransformHelp.transformFromParentWithoutScale = function (
   this.nodeToMatrix(this.helpParentNode, this.helpMatrix2);
 
   this.helpMatrix2 = AffineTransform.invert(this.helpMatrix2);
-  this.helpMatrix1 = AffineTransform.concat(
-    this.helpMatrix1,
-    this.helpMatrix2
-  );
+  this.helpMatrix1 = AffineTransform.concat(this.helpMatrix1, this.helpMatrix2);
 
   this.matrixToNode(this.helpMatrix1, node);
 };
@@ -103,10 +90,7 @@ TransformHelp.transformToParentWithoutScale = function (node, parentNode) {
   this.nodeToMatrix(node, this.helpMatrix1);
   this.nodeToMatrix(this.helpParentNode, this.helpMatrix2);
 
-  this.helpMatrix1 = AffineTransform.concat(
-    this.helpMatrix1,
-    this.helpMatrix2
-  );
+  this.helpMatrix1 = AffineTransform.concat(this.helpMatrix1, this.helpMatrix2);
 
   this.matrixToNode(this.helpMatrix1, node);
 };

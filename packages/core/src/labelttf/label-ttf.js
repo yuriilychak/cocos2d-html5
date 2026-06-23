@@ -102,14 +102,14 @@ export class LabelTTF extends Sprite {
     this._fontWeight = "normal";
     this._lineHeight = "normal";
 
-    this._dimensions = new Size(0, 0);
+    this._dimensions = new Size();
     this._hAlignment = TextAlignment.LEFT;
     this._vAlignment = VerticalTextAlignment.TOP;
     this.isOpacityModifyRGB = false;
     this._fontName = "Arial";
 
     this._shadowEnabled = false;
-    this._shadowOffset = new Point(0, 0);
+    this._shadowOffset = new Point();
     this._shadowOpacity = 0;
     this._shadowBlur = 0;
 

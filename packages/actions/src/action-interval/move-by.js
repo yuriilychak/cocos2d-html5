@@ -28,9 +28,9 @@ export default class MoveBy extends ActionInterval {
   constructor(duration, deltaPos, deltaY) {
     super();
 
-    this._positionDelta = new Point(0, 0);
-    this._startPosition = new Point(0, 0);
-    this._previousPosition = new Point(0, 0);
+    this._positionDelta = new Point();
+    this._startPosition = new Point();
+    this._previousPosition = new Point();
 
     deltaPos !== undefined && this.initWithDuration(duration, deltaPos, deltaY);
   }

@@ -72,10 +72,8 @@ export default class _EventListenerMouse extends EventListener {
     checkAvailable() {
         return true;
     }
+
+    static LISTENER_ID = "__cc_mouse";
 }
 
-_EventListenerMouse.LISTENER_ID = "__cc_mouse";
 
-_EventListenerMouse.create = function () {
-    return new _EventListenerMouse();
-};

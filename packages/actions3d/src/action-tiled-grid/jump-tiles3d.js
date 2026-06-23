@@ -63,7 +63,7 @@ export default class JumpTiles3D extends TiledGrid3DAction {
     const locGridSize = this._gridSize;
     const locGrid = this.target.grid;
     let coords;
-    const locPos = new Point(0, 0);
+    const locPos = new Point();
     for (let i = 0; i < locGridSize.width; i++) {
       for (let j = 0; j < locGridSize.height; j++) {
         locPos.x = i;

@@ -28,7 +28,7 @@ export class TMXLayerInfo extends BaseClass {
     this.ownTiles = true;
     this._minGID = 100000;
     this._maxGID = 0;
-    this.offset = new Point(0, 0);
+    this.offset = new Point();
   }
 
   getProperties() {
@@ -59,12 +59,12 @@ export class TMXTilesetInfo extends BaseClass {
     this.sourceImage = "";
     this.imageSize = null;
 
-    this._tileSize = new Size(0, 0);
-    this.imageSize = new Size(0, 0);
+    this._tileSize = new Size();
+    this.imageSize = new Size();
   }
 
   rectForGID(gid, result) {
-    var rect = result || new Rect(0, 0, 0, 0);
+    var rect = result || new Rect();
     rect.width = this._tileSize.width;
     rect.height = this._tileSize.height;
     gid &= TMX_TILE_FLIPPED_MASK;

@@ -1,4 +1,13 @@
-import { Node, Color, Point, Rect, EventListener, EventListenerType, warn, ServiceLocator } from "@aspect/core";
+import {
+  Node,
+  Color,
+  Point,
+  Rect,
+  EventListener,
+  EventListenerType,
+  warn,
+  ServiceLocator
+} from "@aspect/core";
 import {
   EDITBOX_INPUT_MODE_ANY,
   EDITBOX_INPUT_FLAG_SENSITIVE,
@@ -23,7 +32,7 @@ export class EditBox extends Node {
     super();
 
     this._backgroundSprite = null;
-    this._backgroundPadding = backgroundPadding || new Rect(0, 0, 0, 0);
+    this._backgroundPadding = backgroundPadding || new Rect();
     this._delegate = null;
     this._editBoxInputMode = EDITBOX_INPUT_MODE_ANY;
     this._editBoxInputFlag = EDITBOX_INPUT_FLAG_SENSITIVE;
@@ -204,8 +213,6 @@ export class EditBox extends Node {
     super.visit(parent);
     if (this._input) this._input.updateMatrix(this._renderCmd._worldTransform);
   }
-
-
 
   setContentSize(width, height) {
     if (width.width !== undefined && width.height !== undefined) {

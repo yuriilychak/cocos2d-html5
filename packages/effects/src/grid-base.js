@@ -64,7 +64,7 @@ export class GridBase extends BaseClass {
     this._gridSize = null;
     this._gridRect = new Rect();
     this._texture = null;
-    this._step = new Point(0, 0);
+    this._step = new Point();
     this._grabber = null;
     this._isTextureFlipped = false;
     this._glProgramState = null;
@@ -281,9 +281,7 @@ export class GridBase extends BaseClass {
   }
 
   calculateVertexPoints() {
-    log(
-      "GridBase.calculateVertexPoints(): Shall be overridden in subclass."
-    );
+    log("GridBase.calculateVertexPoints(): Shall be overridden in subclass.");
   }
 
   set2DProjection() {
