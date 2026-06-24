@@ -23,7 +23,6 @@ import { DisplayLinkDirector } from "./director/director";
 import { Sys } from "./sys";
 import Loader from "./boot/loader";
 import Game from "./boot/game";
-import { Engine } from "./boot/engine";
 import EventManager from "./event-manager/event-manager";
 import { EGLView } from "./platform/egl-view/egl-view";
 import TextureCache from "./textures/texture-cache";
@@ -57,7 +56,6 @@ export class ServiceLocator {
   static #sys;
   static #loader;
   static #game;
-  static #engine;
   static #eventManager;
   static #eglView;
   static #textureCache;
@@ -100,7 +98,6 @@ export class ServiceLocator {
     ServiceLocator.#sys = new Sys();
     ServiceLocator.#loader = new Loader();
     ServiceLocator.#game = new Game();
-    ServiceLocator.#engine = new Engine();
     ServiceLocator.#eventManager = new EventManager();
     ServiceLocator.#eglView = new EGLView();
     ServiceLocator.#textureCache = new TextureCache();
@@ -136,17 +133,11 @@ export class ServiceLocator {
     ServiceLocator.#game.injectServices({
       director: ServiceLocator.#director,
       eglView: ServiceLocator.#eglView,
-      engine: ServiceLocator.#engine,
       eventManager: ServiceLocator.#eventManager,
       inputManager: ServiceLocator.#inputManager,
       loader: ServiceLocator.#loader,
       rendererConfig: renderingConfig,
       textureCache: ServiceLocator.#textureCache
-    });
-
-    ServiceLocator.#engine.injectServices({
-      game: ServiceLocator.#game,
-      rendererConfig: renderingConfig
     });
 
     ServiceLocator.#eventManager.injectServices({
@@ -248,10 +239,6 @@ export class ServiceLocator {
 
   static get game() {
     return ServiceLocator.#game;
-  }
-
-  static get engine() {
-    return ServiceLocator.#engine;
   }
 
   static get eventManager() {

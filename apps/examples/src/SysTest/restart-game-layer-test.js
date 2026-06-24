@@ -30,7 +30,7 @@
 //
 //------------------------------------------------------------------
 import { SysTestBase } from "./sys-test-base";
-import { Color, Game, ServiceLocator } from "@aspect/core";
+import { Color, ServiceLocator } from "@aspect/core";
 import { ButtonLayout } from "../button-layout";
 
 export class RestartGameLayerTest extends SysTestBase {

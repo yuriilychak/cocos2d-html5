@@ -9,9 +9,10 @@ import {
 } from "../renderer/renderer-canvas";
 import { rendererWebGL } from "../renderer/renderer-webgl";
 import Path from "./path";
-import { log } from "./debugger";
+import { initDebugSetting, log } from "./debugger";
 import { Sys } from "../sys";
 import { isUndefined } from "./utils";
+import { ENGINE_VERSION } from "../platform/config";
 import {
   CONFIG_KEY,
   GLVersion,
@@ -31,7 +32,6 @@ export default class Game extends EventHelper(BaseClass) {
 
   _director = null;
   _eglView = null;
-  _engine = null;
   _eventManager = null;
   _inputManager = null;
   _loader = null;
@@ -41,7 +41,6 @@ export default class Game extends EventHelper(BaseClass) {
   injectServices({
     director,
     eglView,
-    engine,
     eventManager,
     inputManager,
     loader,
@@ -50,7 +49,6 @@ export default class Game extends EventHelper(BaseClass) {
   }) {
     this._director = director;
     this._eglView = eglView;
-    this._engine = engine;
     this._eventManager = eventManager;
     this._inputManager = inputManager;
     this._loader = loader;
@@ -66,6 +64,7 @@ export default class Game extends EventHelper(BaseClass) {
   // states
   _paused = true;
   _configLoaded = false;
+  _engineLoaded = false;
   _prepareCalled = false;
   _prepared = false;
   _rendererInitialized = false;
@@ -208,7 +207,7 @@ export default class Game extends EventHelper(BaseClass) {
     if (this._prepareCalled) {
       return;
     }
-    if (this._engine.loaded) {
+    if (this._engineLoaded) {
       this._prepareCalled = true;
 
       this._initRenderer(config[CONFIG_KEY.width], config[CONFIG_KEY.height]);
@@ -240,9 +239,8 @@ export default class Game extends EventHelper(BaseClass) {
       return;
     }
 
-    this._engine.init(this.config, () => {
-      this.prepare(cb);
-    });
+    this._initEngine();
+    this.prepare(cb);
   }
 
   /**
@@ -268,6 +266,13 @@ export default class Game extends EventHelper(BaseClass) {
     }
 
     this.prepare(this.onStart && this.onStart.bind(this));
+  }
+
+  _initEngine() {
+    this._rendererConfig.determineRenderType(this.config);
+    initDebugSetting(this.config[CONFIG_KEY.debugMode]);
+    this._engineLoaded = true;
+    console.log(ENGINE_VERSION);
   }
 
   _setAnimFrame() {

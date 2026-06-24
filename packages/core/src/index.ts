@@ -277,7 +277,7 @@ export { FLT_MIN, BATCH_VERTEX_COUNT } from "./platform/macro/constants";
 export { OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA } from "./platform/config";
 export { INVALID_INDEX, REPEAT_FOREVER } from "./platform/macro/constants";
 export { rectPointsToPixels } from "./platform/macro/utils";
-export { Path, Game, Loader, Engine } from "./boot";
+export { Path, Loader } from "./boot";
 export { EGLView } from "./platform/egl-view/egl-view";
 export { TextureAtlas } from "./textures/texture-atlas";
 export { isObject } from "./boot";
