@@ -34,7 +34,12 @@ import { s_resprefix, s_simpleFont_fnt } from "../resources";
 import { director, winSize } from "../constants";
 import { TAG_TILE_MAP } from "./tile-map-test-constants";
 import { TMXFixBugLayer } from "./tmxfix-bug-layer";
-import { DirectorProjection, Point, Sprite, ServiceLocator } from "@aspect/core";
+import {
+  DirectorProjection,
+  Point,
+  Sprite,
+  ServiceLocator
+} from "@aspect/core";
 import { DelayTime, MoveBy, Sequence } from "@aspect/actions";
 import { TMXTiledMap } from "@aspect/tilemap";
 import { TextBMFont } from "@aspect/ccui";
@@ -67,9 +72,12 @@ export class TMXOrthoVertexZ extends TMXFixBugLayer {
 
     if (
       !ServiceLocator.sys.isNative &&
-      !("opengl" in ServiceLocator.sys.capabilities)
+      !ServiceLocator.sys.capabilities.opengl
     ) {
-      var label = new TextBMFont("Not supported on HTML5-canvas", s_simpleFont_fnt);
+      var label = new TextBMFont(
+        "Not supported on HTML5-canvas",
+        s_simpleFont_fnt
+      );
       this.addChild(label);
       label.x = winSize.width / 2;
       label.y = winSize.height / 2;
@@ -104,7 +112,7 @@ export class TMXOrthoVertexZ extends TMXFixBugLayer {
       var layer = this.tamara.parent;
       this.tamara.vertexZ =
         layer.vertexZ +
-        (ServiceLocator.rendererConfig.renderer.assignedZStep *
+        (ServiceLocator.sys.rendererConfig.renderer.assignedZStep *
           Math.floor(12 - this.tamara.y / 81)) /
           12;
     }

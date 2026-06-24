@@ -33,7 +33,16 @@ import {
   _set_stencilBits
 } from "./clipping-node-test-helpers";
 import { s_pathGrossini } from "../resources";
-import { Color, CustomRenderCmd, Point, Sprite, kmGLPopMatrix, kmGLPushMatrix, log, ServiceLocator } from "@aspect/core";
+import {
+  Color,
+  CustomRenderCmd,
+  Point,
+  Sprite,
+  kmGLPopMatrix,
+  kmGLPushMatrix,
+  log,
+  ServiceLocator
+} from "@aspect/core";
 export class RawStencilBufferTest extends BaseClippingNodeTest {
   constructor() {
     super();
@@ -54,8 +63,8 @@ export class RawStencilBufferTest extends BaseClippingNodeTest {
 
   setup() {
     _set_stencilBits(
-      ServiceLocator.rendererConfig.renderContext.getParameter(
-        ServiceLocator.rendererConfig.renderContext.STENCIL_BITS
+      ServiceLocator.sys.rendererConfig.renderContext.getParameter(
+        ServiceLocator.sys.rendererConfig.renderContext.STENCIL_BITS
       )
     );
     if (_stencilBits < 3)
@@ -69,7 +78,7 @@ export class RawStencilBufferTest extends BaseClippingNodeTest {
   }
 
   draw(ctx) {
-    var gl = ctx || ServiceLocator.rendererConfig.renderContext;
+    var gl = ctx || ServiceLocator.sys.rendererConfig.renderContext;
     var winPoint = Point.fromSize(ServiceLocator.director.getWinSize());
     var planeSize = Point.mult(winPoint, 1.0 / _PLANE_COUNT);
 
@@ -119,7 +128,7 @@ export class RawStencilBufferTest extends BaseClippingNodeTest {
   }
 
   setupStencilForClippingOnPlane(plane) {
-    var gl = ServiceLocator.rendererConfig.renderContext;
+    var gl = ServiceLocator.sys.rendererConfig.renderContext;
     var planeMask = 0x1 << plane;
     gl.stencilMask(planeMask);
     gl.clearStencil(0x0);
@@ -130,7 +139,7 @@ export class RawStencilBufferTest extends BaseClippingNodeTest {
   }
 
   setupStencilForDrawingOnPlane(plane) {
-    var gl = ServiceLocator.rendererConfig.renderContext;
+    var gl = ServiceLocator.sys.rendererConfig.renderContext;
     var planeMask = 0x1 << plane;
     var equalOrLessPlanesMask = planeMask | (planeMask - 1);
     gl.stencilFunc(gl.EQUAL, equalOrLessPlanesMask, equalOrLessPlanesMask);

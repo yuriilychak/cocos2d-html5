@@ -47,7 +47,7 @@ export class DrawingPrimitiveWebGL extends BaseClass {
     this._pointSizeLocation = "u_pointSize";
     this._pointSize = -1;
 
-    if (ctx == null) ctx = ServiceLocator.rendererConfig.renderContext;
+    if (ctx == null) ctx = ServiceLocator.sys.rendererConfig.renderContext;
 
     if ((!ctx) instanceof WebGLRenderingContext)
       throw new Error(

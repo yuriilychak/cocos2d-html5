@@ -10,7 +10,7 @@ export default class TextureAtlasWebGLRenderer {
 
   setupVBO() {
     var textureAtlas = this._textureAtlas;
-    var gl = ServiceLocator.rendererConfig.renderContext;
+    var gl = ServiceLocator.sys.rendererConfig.renderContext;
     //create WebGLBuffer
     textureAtlas._buffersVBO[0] = gl.createBuffer();
     textureAtlas._buffersVBO[1] = gl.createBuffer();
@@ -21,7 +21,7 @@ export default class TextureAtlasWebGLRenderer {
 
   mapBuffers() {
     var textureAtlas = this._textureAtlas;
-    var gl = ServiceLocator.rendererConfig.renderContext;
+    var gl = ServiceLocator.sys.rendererConfig.renderContext;
 
     gl.bindBuffer(gl.ARRAY_BUFFER, textureAtlas._quadsWebBuffer);
     gl.bufferData(
@@ -52,7 +52,7 @@ export default class TextureAtlasWebGLRenderer {
     if (0 === n || !textureAtlas.texture || !textureAtlas.texture.isLoaded())
       return;
 
-    var gl = ServiceLocator.rendererConfig.renderContext;
+    var gl = ServiceLocator.sys.rendererConfig.renderContext;
     ServiceLocator.glStateCache.bindTexture2D(textureAtlas.texture);
 
     //
@@ -111,13 +111,13 @@ export default class TextureAtlasWebGLRenderer {
         start * 6 * textureAtlas._indices.BYTES_PER_ELEMENT
       );
 
-    ServiceLocator.rendererConfig.incrementDrawCount();
+    ServiceLocator.sys.rendererConfig.incrementDrawCount();
     //checkGLErrorDebug();
   }
 
   releaseBuffer() {
     var textureAtlas = this._textureAtlas;
-    var gl = ServiceLocator.rendererConfig.renderContext;
+    var gl = ServiceLocator.sys.rendererConfig.renderContext;
     if (textureAtlas._buffersVBO) {
       if (textureAtlas._buffersVBO[0])
         gl.deleteBuffer(textureAtlas._buffersVBO[0]);

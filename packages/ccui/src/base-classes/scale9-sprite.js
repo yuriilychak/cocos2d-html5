@@ -388,7 +388,7 @@ export class Scale9Sprite extends EventHelper(Node) {
     }
 
     if (webgl === undefined) {
-      webgl = ServiceLocator.rendererConfig.isWebGL;
+      webgl = ServiceLocator.sys.rendererConfig.isWebGL;
     }
   }
 
@@ -645,7 +645,7 @@ export class Scale9Sprite extends EventHelper(Node) {
         }
         self._textureLoaded = true;
         self._renderCmd.setDirtyFlag(Node._dirtyFlags.contentDirty);
-        ServiceLocator.rendererConfig.renderer.childrenOrderDirty = true;
+        ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty = true;
       };
       self._textureLoaded = spriteFrame.textureLoaded();
       if (self._textureLoaded) {
@@ -833,7 +833,7 @@ export class Scale9Sprite extends EventHelper(Node) {
   }
 
   _createRenderCmd() {
-    if (ServiceLocator.rendererConfig.isCanvas)
+    if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new this.constructor.CanvasRenderCmd(this);
     else return new this.constructor.WebGLRenderCmd(this);
   }

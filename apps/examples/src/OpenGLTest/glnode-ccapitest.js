@@ -36,12 +36,14 @@ export class GLNodeCCAPITest extends OpenGLTestLayer {
   constructor() {
     super();
 
-    if ("opengl" in ServiceLocator.sys.capabilities) {
+    if (ServiceLocator.sys.capabilities.opengl) {
       var glnode = new GLNode();
       this.addChild(glnode, 10);
       this.glnode = glnode;
 
-      this.shader = ServiceLocator.shaderCache.getProgram("ShaderPositionColor");
+      this.shader = ServiceLocator.shaderCache.getProgram(
+        "ShaderPositionColor"
+      );
       this.initBuffers();
 
       glnode.draw = function () {
@@ -62,14 +64,7 @@ export class GLNodeCCAPITest extends OpenGLTestLayer {
         );
 
         gl.bindBuffer(gl.ARRAY_BUFFER, this.squareVertexColorBuffer);
-        gl.vertexAttribPointer(
-          VertexAttribute.COLOR,
-          4,
-          gl.FLOAT,
-          false,
-          0,
-          0
-        );
+        gl.vertexAttribPointer(VertexAttribute.COLOR, 4, gl.FLOAT, false, 0, 0);
 
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
@@ -85,14 +80,7 @@ export class GLNodeCCAPITest extends OpenGLTestLayer {
         );
 
         gl.bindBuffer(gl.ARRAY_BUFFER, this.triangleVertexColorBuffer);
-        gl.vertexAttribPointer(
-          VertexAttribute.COLOR,
-          4,
-          gl.FLOAT,
-          false,
-          0,
-          0
-        );
+        gl.vertexAttribPointer(VertexAttribute.COLOR, 4, gl.FLOAT, false, 0, 0);
 
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 3);
 

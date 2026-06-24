@@ -119,7 +119,7 @@ export class ParticleBatchNode extends Node {
   }
 
   _createRenderCmd() {
-    if (ServiceLocator.rendererConfig.isCanvas)
+    if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new ParticleBatchNode.CanvasRenderCmd(this);
     else return new ParticleBatchNode.WebGLRenderCmd(this);
   }
@@ -174,7 +174,7 @@ export class ParticleBatchNode extends Node {
     }
 
     cmd.visit(parentCmd);
-    ServiceLocator.rendererConfig.renderer.pushRenderCommand(cmd);
+    ServiceLocator.sys.rendererConfig.renderer.pushRenderCommand(cmd);
     cmd._dirtyFlag = 0;
   }
 
@@ -316,9 +316,7 @@ export class ParticleBatchNode extends Node {
         "ParticleBatchNode.reorderChild(): only supports QuadParticleSystems as children"
       );
     if (this._children.indexOf(child) === -1) {
-      log(
-        "ParticleBatchNode.reorderChild(): Child doesn't belong to batch"
-      );
+      log("ParticleBatchNode.reorderChild(): Child doesn't belong to batch");
       return;
     }
 
@@ -583,4 +581,4 @@ export class ParticleBatchNode extends Node {
   setTextureAtlas(textureAtlas) {
     this.textureAtlas = textureAtlas;
   }
-};
+}

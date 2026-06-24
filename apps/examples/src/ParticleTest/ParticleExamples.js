@@ -27,7 +27,6 @@
 import { Color, Point, ServiceLocator } from "@aspect/core";
 import { ParticleSystem } from "@aspect/particle";
 
-
 /**
  * A fire particle system
  *
@@ -35,76 +34,73 @@ import { ParticleSystem } from "@aspect/particle";
  * var emitter = new ParticleFire();
  */
 export class ParticleFire extends ParticleSystem {
-    /**
-     * <p>The ParticleFire's constructor. <br/>
-     * This function will automatically be invoked when you create a node using new construction: "var node = new ParticleFire()".<br/>
-     * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
-     */
-    constructor() {
-        super((ServiceLocator.rendererConfig.isWebGL) ? 300 : 150);
+  /**
+   * <p>The ParticleFire's constructor. <br/>
+   * This function will automatically be invoked when you create a node using new construction: "var node = new ParticleFire()".<br/>
+   * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
+   */
+  constructor() {
+    super(ServiceLocator.sys.rendererConfig.isWebGL ? 300 : 150);
+  }
+
+  /**
+   * initialize a fire particle system with number Of Particles
+   * @param {Number} numberOfParticles
+   * @return {Boolean}
+   */
+  initWithTotalParticles(numberOfParticles) {
+    if (super.initWithTotalParticles(numberOfParticles)) {
+      // duration
+      this.setDuration(ParticleSystem.DURATION_INFINITY);
+
+      // Gravity Mode
+      this.setEmitterMode(ParticleSystem.MODE_GRAVITY);
+
+      // Gravity Mode: gravity
+      this.setGravity(new Point(0, 0));
+
+      // Gravity Mode: radial acceleration
+      this.setRadialAccel(0);
+      this.setRadialAccelVar(0);
+
+      // Gravity Mode: speed of particles
+      this.setSpeed(60);
+      this.setSpeedVar(20);
+
+      // starting angle
+      this.setAngle(90);
+      this.setAngleVar(10);
+
+      // emitter position
+      var winSize = ServiceLocator.director.getWinSize();
+      this.setPosition(winSize.width / 2, 60);
+      this.setPosVar(new Point(40, 20));
+
+      // life of particles
+      this.setLife(3);
+      this.setLifeVar(0.25);
+
+      // size, in pixels
+      this.setStartSize(54.0);
+      this.setStartSizeVar(10.0);
+      this.setEndSize(ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
+
+      // emits per frame
+      this.setEmissionRate(this.getTotalParticles() / this.getLife());
+
+      // color of particles
+      this.setStartColor(new Color(194, 64, 31, 255));
+      this.setStartColorVar(new Color(0, 0, 0, 0));
+      this.setEndColor(new Color(0, 0, 0, 255));
+      this.setEndColorVar(new Color(0, 0, 0, 0));
+
+      // additive
+      this.setBlendAdditive(true);
+      return true;
     }
-
-    /**
-     * initialize a fire particle system with number Of Particles
-     * @param {Number} numberOfParticles
-     * @return {Boolean}
-     */
-    initWithTotalParticles(numberOfParticles) {
-        if (super.initWithTotalParticles(numberOfParticles)) {
-            // duration
-            this.setDuration(ParticleSystem.DURATION_INFINITY);
-
-            // Gravity Mode
-            this.setEmitterMode(ParticleSystem.MODE_GRAVITY);
-
-
-            // Gravity Mode: gravity
-            this.setGravity(new Point(0, 0));
-
-            // Gravity Mode: radial acceleration
-            this.setRadialAccel(0);
-            this.setRadialAccelVar(0);
-
-            // Gravity Mode: speed of particles
-            this.setSpeed(60);
-            this.setSpeedVar(20);
-
-            // starting angle
-            this.setAngle(90);
-            this.setAngleVar(10);
-
-            // emitter position
-            var winSize = ServiceLocator.director.getWinSize();
-            this.setPosition(winSize.width / 2, 60);
-            this.setPosVar(new Point(40, 20));
-
-            // life of particles
-            this.setLife(3);
-            this.setLifeVar(0.25);
-
-
-            // size, in pixels
-            this.setStartSize(54.0);
-            this.setStartSizeVar(10.0);
-            this.setEndSize(ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
-
-            // emits per frame
-            this.setEmissionRate(this.getTotalParticles() / this.getLife());
-
-            // color of particles
-            this.setStartColor(new Color(194,64,31,255));
-            this.setStartColorVar(new Color(0,0,0,0));
-            this.setEndColor(new Color(0,0,0,255));
-            this.setEndColorVar(new Color(0,0,0,0));
-
-            // additive
-            this.setBlendAdditive(true);
-            return true;
-        }
-        return false;
-    }
-};
-
+    return false;
+  }
+}
 
 /**
  * A fireworks particle system
@@ -113,73 +109,72 @@ export class ParticleFire extends ParticleSystem {
  * var emitter = new ParticleFireworks();
  */
 export class ParticleFireworks extends ParticleSystem {
-    /**
-     * <p>The ParticleFireworks's constructor. <br/>
-     * This function will automatically be invoked when you create a node using new construction: "var node = new ParticleFireworks()".<br/>
-     * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
-     */
-    constructor() {
-        super((ServiceLocator.rendererConfig.isWebGL) ? 1500 : 150);
+  /**
+   * <p>The ParticleFireworks's constructor. <br/>
+   * This function will automatically be invoked when you create a node using new construction: "var node = new ParticleFireworks()".<br/>
+   * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
+   */
+  constructor() {
+    super(ServiceLocator.sys.rendererConfig.isWebGL ? 1500 : 150);
+  }
+
+  /**
+   * initialize a fireworks particle system with number Of Particles
+   * @param {Number} numberOfParticles
+   * @return {Boolean}
+   */
+  initWithTotalParticles(numberOfParticles) {
+    if (super.initWithTotalParticles(numberOfParticles)) {
+      // duration
+      this.setDuration(ParticleSystem.DURATION_INFINITY);
+
+      // Gravity Mode
+      this.setEmitterMode(ParticleSystem.MODE_GRAVITY);
+
+      // Gravity Mode: gravity
+      this.setGravity(new Point(0, -90));
+
+      // Gravity Mode:  radial
+      this.setRadialAccel(0);
+      this.setRadialAccelVar(0);
+
+      //  Gravity Mode: speed of particles
+      this.setSpeed(180);
+      this.setSpeedVar(50);
+
+      // emitter position
+      var winSize = ServiceLocator.director.getWinSize();
+      this.setPosition(winSize.width / 2, winSize.height / 2);
+
+      // angle
+      this.setAngle(90);
+      this.setAngleVar(20);
+
+      // life of particles
+      this.setLife(3.5);
+      this.setLifeVar(1);
+
+      // emits per frame
+      this.setEmissionRate(this.getTotalParticles() / this.getLife());
+
+      // color of particles
+      this.setStartColor(new Color(128, 128, 128, 255));
+      this.setStartColorVar(new Color(128, 128, 128, 255));
+      this.setEndColor(new Color(26, 26, 26, 51));
+      this.setEndColorVar(new Color(26, 26, 26, 51));
+
+      // size, in pixels
+      this.setStartSize(8.0);
+      this.setStartSizeVar(2.0);
+      this.setEndSize(ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
+
+      // additive
+      this.setBlendAdditive(false);
+      return true;
     }
-
-    /**
-     * initialize a fireworks particle system with number Of Particles
-     * @param {Number} numberOfParticles
-     * @return {Boolean}
-     */
-    initWithTotalParticles(numberOfParticles) {
-        if (super.initWithTotalParticles(numberOfParticles)) {
-            // duration
-            this.setDuration(ParticleSystem.DURATION_INFINITY);
-
-            // Gravity Mode
-            this.setEmitterMode(ParticleSystem.MODE_GRAVITY);
-
-            // Gravity Mode: gravity
-            this.setGravity(new Point(0, -90));
-
-            // Gravity Mode:  radial
-            this.setRadialAccel(0);
-            this.setRadialAccelVar(0);
-
-            //  Gravity Mode: speed of particles
-            this.setSpeed(180);
-            this.setSpeedVar(50);
-
-            // emitter position
-            var winSize = ServiceLocator.director.getWinSize();
-            this.setPosition(winSize.width / 2, winSize.height / 2);
-
-            // angle
-            this.setAngle(90);
-            this.setAngleVar(20);
-
-            // life of particles
-            this.setLife(3.5);
-            this.setLifeVar(1);
-
-            // emits per frame
-            this.setEmissionRate(this.getTotalParticles() / this.getLife());
-
-            // color of particles
-            this.setStartColor(new Color(128,128,128,255));
-            this.setStartColorVar(new Color(128,128,128,255));
-            this.setEndColor(new Color(26,26,26,51));
-            this.setEndColorVar(new Color(26,26,26,51));
-
-            // size, in pixels
-            this.setStartSize(8.0);
-            this.setStartSizeVar(2.0);
-            this.setEndSize(ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
-
-            // additive
-            this.setBlendAdditive(false);
-            return true;
-        }
-        return false;
-    }
-};
-
+    return false;
+  }
+}
 
 /**
  * A sun particle system
@@ -188,75 +183,74 @@ export class ParticleFireworks extends ParticleSystem {
  * var emitter = new ParticleSun();
  */
 export class ParticleSun extends ParticleSystem {
-    /**
-     * <p>The ParticleSun's constructor. <br/>
-     * This function will automatically be invoked when you create a node using new construction: "var node = new ParticleSun()".<br/>
-     * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
-     */
-    constructor() {
-        super((ServiceLocator.rendererConfig.isWebGL) ? 350 : 150);
+  /**
+   * <p>The ParticleSun's constructor. <br/>
+   * This function will automatically be invoked when you create a node using new construction: "var node = new ParticleSun()".<br/>
+   * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
+   */
+  constructor() {
+    super(ServiceLocator.sys.rendererConfig.isWebGL ? 350 : 150);
+  }
+
+  /**
+   * initialize a sun particle system with number Of Particles
+   * @param {Number} numberOfParticles
+   * @return {Boolean}
+   */
+  initWithTotalParticles(numberOfParticles) {
+    if (super.initWithTotalParticles(numberOfParticles)) {
+      // additive
+      this.setBlendAdditive(true);
+
+      // duration
+      this.setDuration(ParticleSystem.DURATION_INFINITY);
+
+      // Gravity Mode
+      this.setEmitterMode(ParticleSystem.MODE_GRAVITY);
+
+      // Gravity Mode: gravity
+      this.setGravity(new Point(0, 0));
+
+      // Gravity mode: radial acceleration
+      this.setRadialAccel(0);
+      this.setRadialAccelVar(0);
+
+      // Gravity mode: speed of particles
+      this.setSpeed(20);
+      this.setSpeedVar(5);
+
+      // angle
+      this.setAngle(90);
+      this.setAngleVar(360);
+
+      // emitter position
+      var winSize = ServiceLocator.director.getWinSize();
+      this.setPosition(winSize.width / 2, winSize.height / 2);
+      this.setPosVar(new Point(0, 0));
+
+      // life of particles
+      this.setLife(1);
+      this.setLifeVar(0.5);
+
+      // size, in pixels
+      this.setStartSize(30.0);
+      this.setStartSizeVar(10.0);
+      this.setEndSize(ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
+
+      // emits per seconds
+      this.setEmissionRate(this.getTotalParticles() / this.getLife());
+
+      // color of particles
+      this.setStartColor(new Color(194, 64, 31, 255));
+      this.setStartColorVar(new Color(0, 0, 0, 0));
+      this.setEndColor(new Color(0, 0, 0, 255));
+      this.setEndColorVar(new Color(0, 0, 0, 0));
+
+      return true;
     }
-
-    /**
-     * initialize a sun particle system with number Of Particles
-     * @param {Number} numberOfParticles
-     * @return {Boolean}
-     */
-    initWithTotalParticles(numberOfParticles) {
-        if (super.initWithTotalParticles(numberOfParticles)) {
-            // additive
-            this.setBlendAdditive(true);
-
-            // duration
-            this.setDuration(ParticleSystem.DURATION_INFINITY);
-
-            // Gravity Mode
-            this.setEmitterMode(ParticleSystem.MODE_GRAVITY);
-
-            // Gravity Mode: gravity
-            this.setGravity(new Point(0, 0));
-
-            // Gravity mode: radial acceleration
-            this.setRadialAccel(0);
-            this.setRadialAccelVar(0);
-
-            // Gravity mode: speed of particles
-            this.setSpeed(20);
-            this.setSpeedVar(5);
-
-            // angle
-            this.setAngle(90);
-            this.setAngleVar(360);
-
-            // emitter position
-            var winSize = ServiceLocator.director.getWinSize();
-            this.setPosition(winSize.width / 2, winSize.height / 2);
-            this.setPosVar(new Point(0,0));
-
-            // life of particles
-            this.setLife(1);
-            this.setLifeVar(0.5);
-
-            // size, in pixels
-            this.setStartSize(30.0);
-            this.setStartSizeVar(10.0);
-            this.setEndSize(ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
-
-            // emits per seconds
-            this.setEmissionRate(this.getTotalParticles() / this.getLife());
-
-            // color of particles
-            this.setStartColor(new Color(194, 64, 31, 255));
-            this.setStartColorVar(new Color(0, 0, 0, 0));
-            this.setEndColor(new Color(0, 0, 0, 255));
-            this.setEndColorVar(new Color(0, 0, 0, 0));
-
-            return true;
-        }
-        return false;
-    }
-};
-
+    return false;
+  }
+}
 
 //! @brief A  particle system
 /**
@@ -266,77 +260,77 @@ export class ParticleSun extends ParticleSystem {
  * var emitter = new ParticleGalaxy();
  */
 export class ParticleGalaxy extends ParticleSystem {
-    /**
-     * <p>The ParticleGalaxy's constructor. <br/>
-     * This function will automatically be invoked when you create a node using new construction: "var node = new ParticleGalaxy()".<br/>
-     * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
-     */
-    constructor() {
-        super((ServiceLocator.rendererConfig.isWebGL) ? 200 : 100);
+  /**
+   * <p>The ParticleGalaxy's constructor. <br/>
+   * This function will automatically be invoked when you create a node using new construction: "var node = new ParticleGalaxy()".<br/>
+   * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
+   */
+  constructor() {
+    super(ServiceLocator.sys.rendererConfig.isWebGL ? 200 : 100);
+  }
+
+  /**
+   * initialize a galaxy particle system with number Of Particles
+   * @param {Number} numberOfParticles
+   * @return {Boolean}
+   */
+  initWithTotalParticles(numberOfParticles) {
+    if (super.initWithTotalParticles(numberOfParticles)) {
+      // duration
+      this.setDuration(ParticleSystem.DURATION_INFINITY);
+
+      // Gravity Mode
+      this.setEmitterMode(ParticleSystem.MODE_GRAVITY);
+
+      // Gravity Mode: gravity
+      this.setGravity(new Point(0, 0));
+
+      // Gravity Mode: speed of particles
+      this.setSpeed(60);
+      this.setSpeedVar(10);
+
+      // Gravity Mode: radial
+      this.setRadialAccel(-80);
+      this.setRadialAccelVar(0);
+
+      // Gravity Mode: tangential
+      this.setTangentialAccel(80);
+      this.setTangentialAccelVar(0);
+
+      // angle
+      this.setAngle(90);
+      this.setAngleVar(360);
+
+      // emitter position
+      var winSize = ServiceLocator.director.getWinSize();
+      this.setPosition(winSize.width / 2, winSize.height / 2);
+      this.setPosVar(new Point(0, 0));
+
+      // life of particles
+      this.setLife(4);
+      this.setLifeVar(1);
+
+      // size, in pixels
+      this.setStartSize(37.0);
+      this.setStartSizeVar(10.0);
+      this.setEndSize(ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
+
+      // emits per second
+      this.setEmissionRate(this.getTotalParticles() / this.getLife());
+
+      // color of particles
+      this.setStartColor(new Color(31, 64, 194, 255));
+      this.setStartColorVar(new Color(0, 0, 0, 0));
+      this.setEndColor(new Color(0, 0, 0, 255));
+      this.setEndColorVar(new Color(0, 0, 0, 0));
+
+      // additive
+      this.setBlendAdditive(true);
+      return true;
     }
-
-    /**
-     * initialize a galaxy particle system with number Of Particles
-     * @param {Number} numberOfParticles
-     * @return {Boolean}
-     */
-    initWithTotalParticles(numberOfParticles) {
-        if (super.initWithTotalParticles(numberOfParticles)) {
-            // duration
-            this.setDuration(ParticleSystem.DURATION_INFINITY);
-
-            // Gravity Mode
-            this.setEmitterMode(ParticleSystem.MODE_GRAVITY);
-
-            // Gravity Mode: gravity
-            this.setGravity(new Point(0, 0));
-
-            // Gravity Mode: speed of particles
-            this.setSpeed(60);
-            this.setSpeedVar(10);
-
-            // Gravity Mode: radial
-            this.setRadialAccel(-80);
-            this.setRadialAccelVar(0);
-
-            // Gravity Mode: tangential
-            this.setTangentialAccel(80);
-            this.setTangentialAccelVar(0);
-
-            // angle
-            this.setAngle(90);
-            this.setAngleVar(360);
-
-            // emitter position
-            var winSize = ServiceLocator.director.getWinSize();
-            this.setPosition(winSize.width / 2, winSize.height / 2);
-            this.setPosVar(new Point(0,0));
-
-            // life of particles
-            this.setLife(4);
-            this.setLifeVar(1);
-
-            // size, in pixels
-            this.setStartSize(37.0);
-            this.setStartSizeVar(10.0);
-            this.setEndSize(ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
-
-            // emits per second
-            this.setEmissionRate(this.getTotalParticles() / this.getLife());
-
-            // color of particles
-            this.setStartColor(new Color(31, 64, 194, 255));
-            this.setStartColorVar(new Color(0, 0, 0, 0));
-            this.setEndColor(new Color(0, 0, 0, 255));
-            this.setEndColorVar(new Color(0, 0, 0, 0));
-
-            // additive
-            this.setBlendAdditive(true);
-            return true;
-        }
-        return false;
-    }
-};
+    return false;
+  }
+}
 
 /**
  * A flower particle system
@@ -345,78 +339,77 @@ export class ParticleGalaxy extends ParticleSystem {
  * var emitter = new ParticleFlower();
  */
 export class ParticleFlower extends ParticleSystem {
-    /**
-     * <p>The ParticleFlower's constructor. <br/>
-     * This function will automatically be invoked when you create a node using new construction: "var node = new ParticleFlower()".<br/>
-     * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
-     */
-    constructor() {
-        super((ServiceLocator.rendererConfig.isWebGL) ? 250 : 100);
+  /**
+   * <p>The ParticleFlower's constructor. <br/>
+   * This function will automatically be invoked when you create a node using new construction: "var node = new ParticleFlower()".<br/>
+   * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
+   */
+  constructor() {
+    super(ServiceLocator.sys.rendererConfig.isWebGL ? 250 : 100);
+  }
+
+  /**
+   * initialize a flower particle system with number Of Particles
+   * @param {Number} numberOfParticles
+   * @return {Boolean}
+   */
+  initWithTotalParticles(numberOfParticles) {
+    if (super.initWithTotalParticles(numberOfParticles)) {
+      // duration
+      this.setDuration(ParticleSystem.DURATION_INFINITY);
+
+      // Gravity Mode
+      this.setEmitterMode(ParticleSystem.MODE_GRAVITY);
+
+      // Gravity Mode: gravity
+      this.setGravity(new Point(0, 0));
+
+      // Gravity Mode: speed of particles
+      this.setSpeed(80);
+      this.setSpeedVar(10);
+
+      // Gravity Mode: radial
+      this.setRadialAccel(-60);
+      this.setRadialAccelVar(0);
+
+      // Gravity Mode: tangential
+      this.setTangentialAccel(15);
+      this.setTangentialAccelVar(0);
+
+      // angle
+      this.setAngle(90);
+      this.setAngleVar(360);
+
+      // emitter position
+      var winSize = ServiceLocator.director.getWinSize();
+      this.setPosition(winSize.width / 2, winSize.height / 2);
+      this.setPosVar(new Point(0, 0));
+
+      // life of particles
+      this.setLife(4);
+      this.setLifeVar(1);
+
+      // size, in pixels
+      this.setStartSize(30.0);
+      this.setStartSizeVar(10.0);
+      this.setEndSize(ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
+
+      // emits per second
+      this.setEmissionRate(this.getTotalParticles() / this.getLife());
+
+      // color of particles
+      this.setStartColor(new Color(128, 128, 128, 255));
+      this.setStartColorVar(new Color(128, 128, 128, 128));
+      this.setEndColor(new Color(0, 0, 0, 255));
+      this.setEndColorVar(new Color(0, 0, 0, 0));
+
+      // additive
+      this.setBlendAdditive(true);
+      return true;
     }
-
-    /**
-     * initialize a flower particle system with number Of Particles
-     * @param {Number} numberOfParticles
-     * @return {Boolean}
-     */
-    initWithTotalParticles(numberOfParticles) {
-        if (super.initWithTotalParticles(numberOfParticles)) {
-            // duration
-            this.setDuration(ParticleSystem.DURATION_INFINITY);
-
-            // Gravity Mode
-            this.setEmitterMode(ParticleSystem.MODE_GRAVITY);
-
-            // Gravity Mode: gravity
-            this.setGravity(new Point(0, 0));
-
-            // Gravity Mode: speed of particles
-            this.setSpeed(80);
-            this.setSpeedVar(10);
-
-            // Gravity Mode: radial
-            this.setRadialAccel(-60);
-            this.setRadialAccelVar(0);
-
-            // Gravity Mode: tangential
-            this.setTangentialAccel(15);
-            this.setTangentialAccelVar(0);
-
-            // angle
-            this.setAngle(90);
-            this.setAngleVar(360);
-
-            // emitter position
-            var winSize = ServiceLocator.director.getWinSize();
-            this.setPosition(winSize.width / 2, winSize.height / 2);
-            this.setPosVar(new Point(0,0));
-
-            // life of particles
-            this.setLife(4);
-            this.setLifeVar(1);
-
-            // size, in pixels
-            this.setStartSize(30.0);
-            this.setStartSizeVar(10.0);
-            this.setEndSize(ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
-
-            // emits per second
-            this.setEmissionRate(this.getTotalParticles() / this.getLife());
-
-            // color of particles
-            this.setStartColor(new Color(128, 128, 128, 255));
-            this.setStartColorVar(new Color(128, 128, 128, 128));
-            this.setEndColor(new Color(0, 0, 0, 255));
-            this.setEndColorVar(new Color(0, 0, 0, 0));
-
-            // additive
-            this.setBlendAdditive(true);
-            return true;
-        }
-        return false;
-    }
-};
-
+    return false;
+  }
+}
 
 //! @brief A meteor particle system
 /**
@@ -426,78 +419,77 @@ export class ParticleFlower extends ParticleSystem {
  * var emitter = new ParticleMeteor();
  */
 export class ParticleMeteor extends ParticleSystem {
-    /**
-     * <p>The ParticleMeteor's constructor. <br/>
-     * This function will automatically be invoked when you create a node using new construction: "var node = new ParticleMeteor()".<br/>
-     * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
-     */
-    constructor() {
-        super((ServiceLocator.rendererConfig.isWebGL) ? 150 : 100);
+  /**
+   * <p>The ParticleMeteor's constructor. <br/>
+   * This function will automatically be invoked when you create a node using new construction: "var node = new ParticleMeteor()".<br/>
+   * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
+   */
+  constructor() {
+    super(ServiceLocator.sys.rendererConfig.isWebGL ? 150 : 100);
+  }
+
+  /**
+   * initialize a meteor particle system with number Of Particles
+   * @param {Number} numberOfParticles
+   * @return {Boolean}
+   */
+  initWithTotalParticles(numberOfParticles) {
+    if (super.initWithTotalParticles(numberOfParticles)) {
+      // duration
+      this.setDuration(ParticleSystem.DURATION_INFINITY);
+
+      // Gravity Mode
+      this.setEmitterMode(ParticleSystem.MODE_GRAVITY);
+
+      // Gravity Mode: gravity
+      this.setGravity(new Point(-200, 200));
+
+      // Gravity Mode: speed of particles
+      this.setSpeed(15);
+      this.setSpeedVar(5);
+
+      // Gravity Mode: radial
+      this.setRadialAccel(0);
+      this.setRadialAccelVar(0);
+
+      // Gravity Mode: tangential
+      this.setTangentialAccel(0);
+      this.setTangentialAccelVar(0);
+
+      // angle
+      this.setAngle(90);
+      this.setAngleVar(360);
+
+      // emitter position
+      var winSize = ServiceLocator.director.getWinSize();
+      this.setPosition(winSize.width / 2, winSize.height / 2);
+      this.setPosVar(new Point(0, 0));
+
+      // life of particles
+      this.setLife(2);
+      this.setLifeVar(1);
+
+      // size, in pixels
+      this.setStartSize(60.0);
+      this.setStartSizeVar(10.0);
+      this.setEndSize(ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
+
+      // emits per second
+      this.setEmissionRate(this.getTotalParticles() / this.getLife());
+
+      // color of particles
+      this.setStartColor(new Color(51, 102, 179));
+      this.setStartColorVar(new Color(0, 0, 51, 26));
+      this.setEndColor(new Color(0, 0, 0, 255));
+      this.setEndColorVar(new Color(0, 0, 0, 0));
+
+      // additive
+      this.setBlendAdditive(true);
+      return true;
     }
-
-    /**
-     * initialize a meteor particle system with number Of Particles
-     * @param {Number} numberOfParticles
-     * @return {Boolean}
-     */
-    initWithTotalParticles(numberOfParticles) {
-        if (super.initWithTotalParticles(numberOfParticles)) {
-            // duration
-            this.setDuration(ParticleSystem.DURATION_INFINITY);
-
-            // Gravity Mode
-            this.setEmitterMode(ParticleSystem.MODE_GRAVITY);
-
-            // Gravity Mode: gravity
-            this.setGravity(new Point(-200, 200));
-
-            // Gravity Mode: speed of particles
-            this.setSpeed(15);
-            this.setSpeedVar(5);
-
-            // Gravity Mode: radial
-            this.setRadialAccel(0);
-            this.setRadialAccelVar(0);
-
-            // Gravity Mode: tangential
-            this.setTangentialAccel(0);
-            this.setTangentialAccelVar(0);
-
-            // angle
-            this.setAngle(90);
-            this.setAngleVar(360);
-
-            // emitter position
-            var winSize = ServiceLocator.director.getWinSize();
-            this.setPosition(winSize.width / 2, winSize.height / 2);
-            this.setPosVar(new Point(0,0));
-
-            // life of particles
-            this.setLife(2);
-            this.setLifeVar(1);
-
-            // size, in pixels
-            this.setStartSize(60.0);
-            this.setStartSizeVar(10.0);
-            this.setEndSize(ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
-
-            // emits per second
-            this.setEmissionRate(this.getTotalParticles() / this.getLife());
-
-            // color of particles
-            this.setStartColor(new Color(51, 102, 179));
-            this.setStartColorVar(new Color(0, 0, 51, 26));
-            this.setEndColor(new Color(0, 0, 0, 255));
-            this.setEndColorVar(new Color(0, 0, 0, 0));
-
-            // additive
-            this.setBlendAdditive(true);
-            return true;
-        }
-        return false;
-    }
-};
-
+    return false;
+  }
+}
 
 /**
  * A spiral particle system
@@ -506,79 +498,77 @@ export class ParticleMeteor extends ParticleSystem {
  * var emitter = new ParticleSpiral();
  */
 export class ParticleSpiral extends ParticleSystem {
+  /**
+   * <p>The ParticleSpiral's constructor. <br/>
+   * This function will automatically be invoked when you create a node using new construction: "var node = new ParticleSpiral()".<br/>
+   * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
+   */
+  constructor() {
+    super(ServiceLocator.sys.rendererConfig.isWebGL ? 500 : 100);
+  }
 
-    /**
-     * <p>The ParticleSpiral's constructor. <br/>
-     * This function will automatically be invoked when you create a node using new construction: "var node = new ParticleSpiral()".<br/>
-     * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
-     */
-    constructor() {
-        super((ServiceLocator.rendererConfig.isWebGL) ? 500 : 100);
+  /**
+   * initialize a spiral particle system with number Of Particles
+   * @param {Number} numberOfParticles
+   * @return {Boolean}
+   */
+  initWithTotalParticles(numberOfParticles) {
+    if (super.initWithTotalParticles(numberOfParticles)) {
+      // duration
+      this.setDuration(ParticleSystem.DURATION_INFINITY);
+
+      // Gravity Mode
+      this.setEmitterMode(ParticleSystem.MODE_GRAVITY);
+
+      // Gravity Mode: gravity
+      this.setGravity(new Point(0, 0));
+
+      // Gravity Mode: speed of particles
+      this.setSpeed(150);
+      this.setSpeedVar(0);
+
+      // Gravity Mode: radial
+      this.setRadialAccel(-380);
+      this.setRadialAccelVar(0);
+
+      // Gravity Mode: tangential
+      this.setTangentialAccel(45);
+      this.setTangentialAccelVar(0);
+
+      // angle
+      this.setAngle(90);
+      this.setAngleVar(0);
+
+      // emitter position
+      var winSize = ServiceLocator.director.getWinSize();
+      this.setPosition(winSize.width / 2, winSize.height / 2);
+      this.setPosVar(new Point(0, 0));
+
+      // life of particles
+      this.setLife(12);
+      this.setLifeVar(0);
+
+      // size, in pixels
+      this.setStartSize(20.0);
+      this.setStartSizeVar(0.0);
+      this.setEndSize(ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
+
+      // emits per second
+      this.setEmissionRate(this.getTotalParticles() / this.getLife());
+
+      // color of particles
+      this.setStartColor(new Color(128, 128, 128, 255));
+      this.setStartColorVar(new Color(128, 128, 128, 0));
+      this.setEndColor(new Color(128, 128, 128, 255));
+      this.setEndColorVar(new Color(128, 128, 128, 0));
+
+      // additive
+      this.setBlendAdditive(false);
+      return true;
     }
-
-    /**
-     * initialize a spiral particle system with number Of Particles
-     * @param {Number} numberOfParticles
-     * @return {Boolean}
-     */
-    initWithTotalParticles(numberOfParticles) {
-        if (super.initWithTotalParticles(numberOfParticles)) {
-            // duration
-            this.setDuration(ParticleSystem.DURATION_INFINITY);
-
-            // Gravity Mode
-            this.setEmitterMode(ParticleSystem.MODE_GRAVITY);
-
-            // Gravity Mode: gravity
-            this.setGravity(new Point(0, 0));
-
-            // Gravity Mode: speed of particles
-            this.setSpeed(150);
-            this.setSpeedVar(0);
-
-            // Gravity Mode: radial
-            this.setRadialAccel(-380);
-            this.setRadialAccelVar(0);
-
-            // Gravity Mode: tangential
-            this.setTangentialAccel(45);
-            this.setTangentialAccelVar(0);
-
-            // angle
-            this.setAngle(90);
-            this.setAngleVar(0);
-
-            // emitter position
-            var winSize = ServiceLocator.director.getWinSize();
-            this.setPosition(winSize.width / 2, winSize.height / 2);
-            this.setPosVar(new Point(0,0));
-
-            // life of particles
-            this.setLife(12);
-            this.setLifeVar(0);
-
-            // size, in pixels
-            this.setStartSize(20.0);
-            this.setStartSizeVar(0.0);
-            this.setEndSize(ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
-
-            // emits per second
-            this.setEmissionRate(this.getTotalParticles() / this.getLife());
-
-            // color of particles
-            this.setStartColor(new Color(128,128,128,255));
-            this.setStartColorVar(new Color(128,128,128,0));
-            this.setEndColor(new Color(128,128,128,255));
-            this.setEndColorVar(new Color(128,128,128,0));
-
-            // additive
-            this.setBlendAdditive(false);
-            return true;
-        }
-        return false;
-    }
-};
-
+    return false;
+  }
+}
 
 /**
  * An explosion particle system
@@ -587,77 +577,76 @@ export class ParticleSpiral extends ParticleSystem {
  * var emitter = new ParticleExplosion();
  */
 export class ParticleExplosion extends ParticleSystem {
-    /**
-     * <p>The ParticleExplosion's constructor. <br/>
-     * This function will automatically be invoked when you create a node using new construction: "var node = new ParticleExplosion()".<br/>
-     * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
-     */
-    constructor() {
-        super((ServiceLocator.rendererConfig.isWebGL) ? 700 : 300);
+  /**
+   * <p>The ParticleExplosion's constructor. <br/>
+   * This function will automatically be invoked when you create a node using new construction: "var node = new ParticleExplosion()".<br/>
+   * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
+   */
+  constructor() {
+    super(ServiceLocator.sys.rendererConfig.isWebGL ? 700 : 300);
+  }
+
+  /**
+   * initialize an explosion particle system with number Of Particles
+   * @param {Number} numberOfParticles
+   * @return {Boolean}
+   */
+  initWithTotalParticles(numberOfParticles) {
+    if (super.initWithTotalParticles(numberOfParticles)) {
+      // duration
+      this.setDuration(0.1);
+
+      this.setEmitterMode(ParticleSystem.MODE_GRAVITY);
+
+      // Gravity Mode: gravity
+      this.setGravity(new Point(0, 0));
+
+      // Gravity Mode: speed of particles
+      this.setSpeed(70);
+      this.setSpeedVar(40);
+
+      // Gravity Mode: radial
+      this.setRadialAccel(0);
+      this.setRadialAccelVar(0);
+
+      // Gravity Mode: tangential
+      this.setTangentialAccel(0);
+      this.setTangentialAccelVar(0);
+
+      // angle
+      this.setAngle(90);
+      this.setAngleVar(360);
+
+      // emitter position
+      var winSize = ServiceLocator.director.getWinSize();
+      this.setPosition(winSize.width / 2, winSize.height / 2);
+      this.setPosVar(new Point(0, 0));
+
+      // life of particles
+      this.setLife(5.0);
+      this.setLifeVar(2);
+
+      // size, in pixels
+      this.setStartSize(15.0);
+      this.setStartSizeVar(10.0);
+      this.setEndSize(ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
+
+      // emits per second
+      this.setEmissionRate(this.getTotalParticles() / this.getDuration());
+
+      // color of particles
+      this.setStartColor(new Color(179, 26, 51, 255));
+      this.setStartColorVar(new Color(128, 128, 128, 0));
+      this.setEndColor(new Color(128, 128, 128, 0));
+      this.setEndColorVar(new Color(128, 128, 128, 0));
+
+      // additive
+      this.setBlendAdditive(false);
+      return true;
     }
-
-    /**
-     * initialize an explosion particle system with number Of Particles
-     * @param {Number} numberOfParticles
-     * @return {Boolean}
-     */
-    initWithTotalParticles(numberOfParticles) {
-        if (super.initWithTotalParticles(numberOfParticles)) {
-            // duration
-            this.setDuration(0.1);
-
-            this.setEmitterMode(ParticleSystem.MODE_GRAVITY);
-
-            // Gravity Mode: gravity
-            this.setGravity(new Point(0, 0));
-
-            // Gravity Mode: speed of particles
-            this.setSpeed(70);
-            this.setSpeedVar(40);
-
-            // Gravity Mode: radial
-            this.setRadialAccel(0);
-            this.setRadialAccelVar(0);
-
-            // Gravity Mode: tangential
-            this.setTangentialAccel(0);
-            this.setTangentialAccelVar(0);
-
-            // angle
-            this.setAngle(90);
-            this.setAngleVar(360);
-
-            // emitter position
-            var winSize = ServiceLocator.director.getWinSize();
-            this.setPosition(winSize.width / 2, winSize.height / 2);
-            this.setPosVar(new Point(0,0));
-
-            // life of particles
-            this.setLife(5.0);
-            this.setLifeVar(2);
-
-            // size, in pixels
-            this.setStartSize(15.0);
-            this.setStartSizeVar(10.0);
-            this.setEndSize(ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
-
-            // emits per second
-            this.setEmissionRate(this.getTotalParticles() / this.getDuration());
-
-            // color of particles
-            this.setStartColor(new Color(179, 26, 51, 255));
-            this.setStartColorVar(new Color(128, 128, 128, 0));
-            this.setEndColor(new Color(128, 128, 128, 0));
-            this.setEndColorVar(new Color(128, 128, 128, 0));
-
-            // additive
-            this.setBlendAdditive(false);
-            return true;
-        }
-        return false;
-    }
-};
-
+    return false;
+  }
+}
 
 /**
  * A smoke particle system
@@ -666,75 +655,73 @@ export class ParticleExplosion extends ParticleSystem {
  * var emitter = new ParticleSmoke();
  */
 export class ParticleSmoke extends ParticleSystem {
+  /**
+   * <p>The ParticleSmoke's constructor. <br/>
+   * This function will automatically be invoked when you create a node using new construction: "var node = new ParticleSmoke()".<br/>
+   * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
+   */
+  constructor() {
+    super(ServiceLocator.sys.rendererConfig.isWebGL ? 200 : 100);
+  }
 
-    /**
-     * <p>The ParticleSmoke's constructor. <br/>
-     * This function will automatically be invoked when you create a node using new construction: "var node = new ParticleSmoke()".<br/>
-     * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
-     */
-    constructor() {
-        super((ServiceLocator.rendererConfig.isWebGL) ? 200 : 100);
+  /**
+   * initialize a smoke particle system with number Of Particles
+   * @param {Number} numberOfParticles
+   * @return {Boolean}
+   */
+  initWithTotalParticles(numberOfParticles) {
+    if (super.initWithTotalParticles(numberOfParticles)) {
+      // duration
+      this.setDuration(ParticleSystem.DURATION_INFINITY);
+
+      // Emitter mode: Gravity Mode
+      this.setEmitterMode(ParticleSystem.MODE_GRAVITY);
+
+      // Gravity Mode: gravity
+      this.setGravity(new Point(0, 0));
+
+      // Gravity Mode: radial acceleration
+      this.setRadialAccel(0);
+      this.setRadialAccelVar(0);
+
+      // Gravity Mode: speed of particles
+      this.setSpeed(25);
+      this.setSpeedVar(10);
+
+      // angle
+      this.setAngle(90);
+      this.setAngleVar(5);
+
+      // emitter position
+      var winSize = ServiceLocator.director.getWinSize();
+      this.setPosition(winSize.width / 2, 0);
+      this.setPosVar(new Point(20, 0));
+
+      // life of particles
+      this.setLife(4);
+      this.setLifeVar(1);
+
+      // size, in pixels
+      this.setStartSize(60.0);
+      this.setStartSizeVar(10.0);
+      this.setEndSize(ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
+
+      // emits per frame
+      this.setEmissionRate(this.getTotalParticles() / this.getLife());
+
+      // color of particles
+      this.setStartColor(new Color(204, 204, 204, 255));
+      this.setStartColorVar(new Color(5, 5, 5, 0));
+      this.setEndColor(new Color(0, 0, 0, 255));
+      this.setEndColorVar(new Color(0, 0, 0, 0));
+
+      // additive
+      this.setBlendAdditive(false);
+      return true;
     }
-
-    /**
-     * initialize a smoke particle system with number Of Particles
-     * @param {Number} numberOfParticles
-     * @return {Boolean}
-     */
-    initWithTotalParticles(numberOfParticles) {
-        if (super.initWithTotalParticles(numberOfParticles)) {
-            // duration
-            this.setDuration(ParticleSystem.DURATION_INFINITY);
-
-            // Emitter mode: Gravity Mode
-            this.setEmitterMode(ParticleSystem.MODE_GRAVITY);
-
-            // Gravity Mode: gravity
-            this.setGravity(new Point(0, 0));
-
-            // Gravity Mode: radial acceleration
-            this.setRadialAccel(0);
-            this.setRadialAccelVar(0);
-
-            // Gravity Mode: speed of particles
-            this.setSpeed(25);
-            this.setSpeedVar(10);
-
-            // angle
-            this.setAngle(90);
-            this.setAngleVar(5);
-
-            // emitter position
-            var winSize = ServiceLocator.director.getWinSize();
-            this.setPosition(winSize.width / 2, 0);
-            this.setPosVar(new Point(20, 0));
-
-            // life of particles
-            this.setLife(4);
-            this.setLifeVar(1);
-
-            // size, in pixels
-            this.setStartSize(60.0);
-            this.setStartSizeVar(10.0);
-            this.setEndSize(ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
-
-            // emits per frame
-            this.setEmissionRate(this.getTotalParticles() / this.getLife());
-
-            // color of particles
-            this.setStartColor(new Color(204, 204, 204, 255));
-            this.setStartColorVar(new Color(5, 5, 5, 0));
-            this.setEndColor(new Color(0, 0, 0, 255));
-            this.setEndColorVar(new Color(0, 0, 0, 0));
-
-            // additive
-            this.setBlendAdditive(false);
-            return true;
-        }
-        return false;
-    }
-};
-
+    return false;
+  }
+}
 
 /**
  * A snow particle system
@@ -743,79 +730,77 @@ export class ParticleSmoke extends ParticleSystem {
  * var emitter = new ParticleSnow();
  */
 export class ParticleSnow extends ParticleSystem {
+  /**
+   * <p>The ParticleSnow's constructor. <br/>
+   * This function will automatically be invoked when you create a node using new construction: "var node = new ParticleSnow()".<br/>
+   * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
+   */
+  constructor() {
+    super(ServiceLocator.sys.rendererConfig.isWebGL ? 700 : 250);
+  }
 
-    /**
-     * <p>The ParticleSnow's constructor. <br/>
-     * This function will automatically be invoked when you create a node using new construction: "var node = new ParticleSnow()".<br/>
-     * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
-     */
-    constructor() {
-        super((ServiceLocator.rendererConfig.isWebGL) ? 700 : 250);
+  /**
+   * initialize a snow particle system with number Of Particles
+   * @param {Number} numberOfParticles
+   * @return {Boolean}
+   */
+  initWithTotalParticles(numberOfParticles) {
+    if (super.initWithTotalParticles(numberOfParticles)) {
+      // duration
+      this.setDuration(ParticleSystem.DURATION_INFINITY);
+
+      // set gravity mode.
+      this.setEmitterMode(ParticleSystem.MODE_GRAVITY);
+
+      // Gravity Mode: gravity
+      this.setGravity(new Point(0, -1));
+
+      // Gravity Mode: speed of particles
+      this.setSpeed(5);
+      this.setSpeedVar(1);
+
+      // Gravity Mode: radial
+      this.setRadialAccel(0);
+      this.setRadialAccelVar(1);
+
+      // Gravity mode: tangential
+      this.setTangentialAccel(0);
+      this.setTangentialAccelVar(1);
+
+      // emitter position
+      var winSize = ServiceLocator.director.getWinSize();
+      this.setPosition(winSize.width / 2, winSize.height + 10);
+      this.setPosVar(new Point(winSize.width / 2, 0));
+
+      // angle
+      this.setAngle(-90);
+      this.setAngleVar(5);
+
+      // life of particles
+      this.setLife(45);
+      this.setLifeVar(15);
+
+      // size, in pixels
+      this.setStartSize(10.0);
+      this.setStartSizeVar(5.0);
+      this.setEndSize(ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
+
+      // emits per second
+      this.setEmissionRate(10);
+
+      // color of particles
+      this.setStartColor(new Color(255, 255, 255, 255));
+      this.setStartColorVar(new Color(0, 0, 0, 0));
+      this.setEndColor(new Color(255, 255, 255, 0));
+      this.setEndColorVar(new Color(0, 0, 0, 0));
+
+      // additive
+      this.setBlendAdditive(false);
+      return true;
     }
-
-    /**
-     * initialize a snow particle system with number Of Particles
-     * @param {Number} numberOfParticles
-     * @return {Boolean}
-     */
-    initWithTotalParticles(numberOfParticles) {
-        if (super.initWithTotalParticles(numberOfParticles)) {
-            // duration
-            this.setDuration(ParticleSystem.DURATION_INFINITY);
-
-            // set gravity mode.
-            this.setEmitterMode(ParticleSystem.MODE_GRAVITY);
-
-            // Gravity Mode: gravity
-            this.setGravity(new Point(0, -1));
-
-            // Gravity Mode: speed of particles
-            this.setSpeed(5);
-            this.setSpeedVar(1);
-
-            // Gravity Mode: radial
-            this.setRadialAccel(0);
-            this.setRadialAccelVar(1);
-
-            // Gravity mode: tangential
-            this.setTangentialAccel(0);
-            this.setTangentialAccelVar(1);
-
-            // emitter position
-            var winSize = ServiceLocator.director.getWinSize();
-            this.setPosition(winSize.width / 2, winSize.height + 10);
-            this.setPosVar(new Point(winSize.width / 2, 0));
-
-            // angle
-            this.setAngle(-90);
-            this.setAngleVar(5);
-
-            // life of particles
-            this.setLife(45);
-            this.setLifeVar(15);
-
-            // size, in pixels
-            this.setStartSize(10.0);
-            this.setStartSizeVar(5.0);
-            this.setEndSize(ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
-
-            // emits per second
-            this.setEmissionRate(10);
-
-            // color of particles
-            this.setStartColor(new Color(255, 255, 255, 255));
-            this.setStartColorVar(new Color(0, 0, 0, 0));
-            this.setEndColor(new Color(255, 255, 255, 0));
-            this.setEndColorVar(new Color(0, 0, 0, 0));
-
-            // additive
-            this.setBlendAdditive(false);
-            return true;
-        }
-        return false;
-    }
-};
-
+    return false;
+  }
+}
 
 //! @brief A rain particle system
 /**
@@ -825,76 +810,73 @@ export class ParticleSnow extends ParticleSystem {
  * var emitter = new ParticleRain();
  */
 export class ParticleRain extends ParticleSystem {
+  /**
+   * <p>The ParticleRain's constructor. <br/>
+   * This function will automatically be invoked when you create a node using new construction: "var node = new ParticleRain()".<br/>
+   * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
+   */
+  constructor() {
+    super(ServiceLocator.sys.rendererConfig.isWebGL ? 1000 : 300);
+  }
 
-    /**
-     * <p>The ParticleRain's constructor. <br/>
-     * This function will automatically be invoked when you create a node using new construction: "var node = new ParticleRain()".<br/>
-     * Override it to extend its behavior, remember to call "this._super()" in the extended "ctor" function.</p>
-     */
-    constructor() {
-        super((ServiceLocator.rendererConfig.isWebGL) ? 1000 : 300);
+  /**
+   * initialize a rain particle system with number Of Particles
+   * @param {Number} numberOfParticles
+   * @return {Boolean}
+   */
+  initWithTotalParticles(numberOfParticles) {
+    if (super.initWithTotalParticles(numberOfParticles)) {
+      // duration
+      this.setDuration(ParticleSystem.DURATION_INFINITY);
+
+      this.setEmitterMode(ParticleSystem.MODE_GRAVITY);
+
+      // Gravity Mode: gravity
+      this.setGravity(new Point(10, -10));
+
+      // Gravity Mode: radial
+      this.setRadialAccel(0);
+      this.setRadialAccelVar(1);
+
+      // Gravity Mode: tangential
+      this.setTangentialAccel(0);
+      this.setTangentialAccelVar(1);
+
+      // Gravity Mode: speed of particles
+      this.setSpeed(130);
+      this.setSpeedVar(30);
+
+      // angle
+      this.setAngle(-90);
+      this.setAngleVar(5);
+
+      // emitter position
+      var winSize = ServiceLocator.director.getWinSize();
+      this.setPosition(winSize.width / 2, winSize.height);
+      this.setPosVar(new Point(winSize.width / 2, 0));
+
+      // life of particles
+      this.setLife(4.5);
+      this.setLifeVar(0);
+
+      // size, in pixels
+      this.setStartSize(4.0);
+      this.setStartSizeVar(2.0);
+      this.setEndSize(ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
+
+      // emits per second
+      this.setEmissionRate(20);
+
+      // color of particles
+      this.setStartColor(new Color(179, 204, 255, 255));
+      this.setStartColorVar(new Color(0, 0, 0, 0));
+      this.setEndColor(new Color(179, 204, 255, 128));
+      this.setEndColorVar(new Color(0, 0, 0, 0));
+
+      // additive
+      this.setBlendAdditive(false);
+      return true;
     }
-
-    /**
-     * initialize a rain particle system with number Of Particles
-     * @param {Number} numberOfParticles
-     * @return {Boolean}
-     */
-    initWithTotalParticles(numberOfParticles) {
-        if (super.initWithTotalParticles(numberOfParticles)) {
-            // duration
-            this.setDuration(ParticleSystem.DURATION_INFINITY);
-
-            this.setEmitterMode(ParticleSystem.MODE_GRAVITY);
-
-            // Gravity Mode: gravity
-            this.setGravity(new Point(10, -10));
-
-            // Gravity Mode: radial
-            this.setRadialAccel(0);
-            this.setRadialAccelVar(1);
-
-            // Gravity Mode: tangential
-            this.setTangentialAccel(0);
-            this.setTangentialAccelVar(1);
-
-            // Gravity Mode: speed of particles
-            this.setSpeed(130);
-            this.setSpeedVar(30);
-
-            // angle
-            this.setAngle(-90);
-            this.setAngleVar(5);
-
-
-            // emitter position
-            var winSize = ServiceLocator.director.getWinSize();
-            this.setPosition(winSize.width / 2, winSize.height);
-            this.setPosVar(new Point(winSize.width / 2, 0));
-
-            // life of particles
-            this.setLife(4.5);
-            this.setLifeVar(0);
-
-            // size, in pixels
-            this.setStartSize(4.0);
-            this.setStartSizeVar(2.0);
-            this.setEndSize(ParticleSystem.START_SIZE_EQUAL_TO_END_SIZE);
-
-            // emits per second
-            this.setEmissionRate(20);
-
-            // color of particles
-            this.setStartColor(new Color(179, 204, 255, 255));
-            this.setStartColorVar(new Color(0, 0, 0, 0));
-            this.setEndColor(new Color(179, 204, 255, 128));
-            this.setEndColorVar(new Color(0, 0, 0, 0));
-
-            // additive
-            this.setBlendAdditive(false);
-            return true;
-        }
-        return false;
-    }
-};
-
+    return false;
+  }
+}

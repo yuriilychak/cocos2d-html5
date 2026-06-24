@@ -799,7 +799,7 @@ export class Node extends BaseClass {
       this._visible = visible;
       //if(visible)
       this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
-      ServiceLocator.rendererConfig.renderer.childrenOrderDirty = true;
+      ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty = true;
     }
   }
 
@@ -1330,7 +1330,7 @@ export class Node extends BaseClass {
     if (this._children.indexOf(child) > -1) this._detachChild(child, cleanup);
 
     //this._renderCmd.setDirtyFlag(dirtyFlags.visibleDirty);
-    ServiceLocator.rendererConfig.renderer.childrenOrderDirty = true;
+    ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty = true;
   }
 
   /**
@@ -1387,7 +1387,7 @@ export class Node extends BaseClass {
         }
       }
       this._children.length = 0;
-      ServiceLocator.rendererConfig.renderer.childrenOrderDirty = true;
+      ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty = true;
     }
   }
 
@@ -1410,7 +1410,7 @@ export class Node extends BaseClass {
   }
 
   _insertChild(child, z) {
-    ServiceLocator.rendererConfig.renderer.childrenOrderDirty =
+    ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty =
       this._reorderChildDirty = true;
     this._children.push(child);
     child._setLocalZOrder(z);
@@ -1432,7 +1432,7 @@ export class Node extends BaseClass {
       log(_LogInfos.Node_reorderChild_2);
       return;
     }
-    ServiceLocator.rendererConfig.renderer.childrenOrderDirty =
+    ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty =
       this._reorderChildDirty = true;
     child.arrivalOrder = s_globalOrderOfArrival;
     setGlobalOrderOfArrival(s_globalOrderOfArrival + 1);
@@ -2114,7 +2114,7 @@ export class Node extends BaseClass {
       return;
     }
 
-    var renderer = ServiceLocator.rendererConfig.renderer;
+    var renderer = ServiceLocator.sys.rendererConfig.renderer;
     cmd.visit(parentCmd);
 
     var i,
@@ -2410,7 +2410,7 @@ export class Node extends BaseClass {
   }
 
   _createRenderCmd() {
-    if (ServiceLocator.rendererConfig.isCanvas)
+    if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new NodeCanvasRenderCmd(this);
     else return new NodeWebGLRenderCmd(this);
   }

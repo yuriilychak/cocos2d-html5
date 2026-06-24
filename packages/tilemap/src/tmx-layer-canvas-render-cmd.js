@@ -17,7 +17,7 @@ export class TMXLayerCanvasRenderCmd extends Node.CanvasRenderCmd {
 
   visit(parentCmd) {
     const node = this._node,
-      renderer = ServiceLocator.rendererConfig.renderer;
+      renderer = ServiceLocator.sys.rendererConfig.renderer;
 
     parentCmd = parentCmd || this.getParentRenderCmd();
     if (parentCmd) {
@@ -80,7 +80,7 @@ export class TMXLayerCanvasRenderCmd extends Node.CanvasRenderCmd {
 
     const director = ServiceLocator.director;
     const winSize = director.getWinSize();
-    const rendererConfig = ServiceLocator.rendererConfig;
+    const rendererConfig = ServiceLocator.sys.rendererConfig;
 
     const maptw = node._mapTileSize.width,
       mapth = node._mapTileSize.height,

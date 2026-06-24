@@ -1,29 +1,37 @@
-import { CONFIG_KEY, GLVersion, RenderType, UserRenderMode } from "../enums";
+import {
+  CONFIG_KEY,
+  GLVersion,
+  RenderType,
+  UserRenderMode
+} from "../enums";
+
+import type SysCapabilities from "./sys-capabilities";
+import type { RenderContext } from './types';
 
 export class RendererConfig {
-  #renderType = RenderType.CANVAS;
-  #supportRender = false;
-  #renderContext = null;
-  #renderer = null;
-  #numberOfDraws = 0;
-  #glVersion = GLVersion.CANVAS;
-  #maxBatchTextures = 0;
-  #sys = null;
+  #renderType: RenderType = RenderType.CANVAS;
+  #supportRender: boolean = false;
+  #renderContext: RenderContext = null;
+  #renderer: unknown = null;
+  #numberOfDraws: number = 0;
+  #glVersion: GLVersion = GLVersion.CANVAS;
+  #maxBatchTextures: number = 0;
+  #capabilities: SysCapabilities;
 
-  injectServices({ sys }) {
-    this.#sys = sys;
+  constructor(capabilities: SysCapabilities) {
+    this.#capabilities = capabilities;
   }
 
-  incrementDrawCount(n = 1) {
+  public incrementDrawCount(n: number = 1): void {
     this.#numberOfDraws += n;
   }
 
-  resetDrawCount() {
+  public resetDrawCount(): void {
     this.#numberOfDraws = 0;
   }
 
-  determineRenderType(config) {
-    let mode = parseInt(config[CONFIG_KEY.renderMode], 10);
+  public determineRenderType(config: Record<CONFIG_KEY, unknown>): void {
+    let mode = parseInt(String(config[CONFIG_KEY.renderMode]), 10);
 
     const allModes = [
       UserRenderMode.AUTO,
@@ -38,23 +46,23 @@ export class RendererConfig {
 
     switch (mode) {
       case UserRenderMode.AUTO: {
-        this.#renderType = this.#sys.capabilities.opengl
+        this.#renderType = this.#capabilities.opengl
           ? RenderType.WEBGL
           : RenderType.CANVAS;
         this.#supportRender =
-          this.#sys.capabilities.opengl || this.#sys.capabilities.canvas;
+          this.#capabilities.opengl || this.#capabilities.canvas;
         break;
       }
       case UserRenderMode.CANVAS: {
         this.#renderType = RenderType.CANVAS;
-        this.#supportRender = this.#sys.capabilities.canvas;
+        this.#supportRender = this.#capabilities.canvas;
         break;
       }
       case UserRenderMode.WEBGL: {
-        this.#renderType = this.#sys.capabilities.opengl
+        this.#renderType = this.#capabilities.opengl
           ? RenderType.WEBGL
           : RenderType.CANVAS;
-        this.#supportRender = this.#sys.capabilities.opengl;
+        this.#supportRender = this.#capabilities.opengl;
         break;
       }
       default:
@@ -63,27 +71,23 @@ export class RendererConfig {
     }
   }
 
-  get renderContext() {
+  public get renderContext(): RenderContext {
     return this.#renderContext;
   }
 
-  set renderContext(context) {
+  public set renderContext(context: RenderContext) {
     if (this.#renderContext !== context) {
       this.#renderContext = context;
       this.#maxBatchTextures = 0;
     }
   }
 
-  get glVersion() {
+  public get glVersion(): GLVersion {
     return this.#glVersion;
   }
 
-  set glVersion(version) {
+  public set glVersion(version: GLVersion) {
     this.#glVersion = version;
-  }
-
-  get isWebGL2() {
-    return this.#glVersion === GLVersion.WEBGL2;
   }
 
   /**
@@ -91,11 +95,10 @@ export class RendererConfig {
    * single draw call. Resolved lazily from MAX_TEXTURE_IMAGE_UNITS and capped at
    * HARD_MAX_BATCH_TEXTURES. Returns 1 on WebGL1/Canvas (single-texture path).
    */
-  get maxBatchTextures() {
+  public get maxBatchTextures(): number {
     if (this.#maxBatchTextures === 0) {
       if (this.isWebGL2 && this.#renderContext) {
-        const gl = this.#renderContext;
-        const units = gl.getParameter(gl.MAX_TEXTURE_IMAGE_UNITS) || 8;
+        const units = this.#renderContext.getParameter(this.#renderContext.MAX_TEXTURE_IMAGE_UNITS) || RendererConfig.HARD_MAX_BATCH_TEXTURES;
         this.#maxBatchTextures = Math.max(
           1,
           Math.min(units, RendererConfig.HARD_MAX_BATCH_TEXTURES)
@@ -107,43 +110,49 @@ export class RendererConfig {
     return this.#maxBatchTextures;
   }
 
-  get renderer() {
+  public get renderer(): unknown {
     return this.#renderer;
   }
 
-  set renderer(value) {
+  public set renderer(value: unknown) {
     this.#renderer = value;
   }
 
-  get drawCount() {
+  public get drawCount(): number {
     return this.#numberOfDraws;
   }
 
-  get isWebGL() {
+  public get isWebGL2(): boolean {
+    return this.#glVersion === GLVersion.WEBGL2;
+  }
+
+  public get isWebGL(): boolean {
     return this.#renderType === RenderType.WEBGL;
   }
 
-  get isCanvas() {
+  public get isCanvas(): boolean {
     return this.#renderType === RenderType.CANVAS;
   }
 
-  get supportRenderer() {
+  public get supportRenderer(): boolean {
     return this.#supportRender;
   }
 
-  set supportRenderer(val) {
+  public set supportRenderer(val: boolean) {
     this.#supportRender = val;
   }
 
-  get renderType() {
+  public get renderType(): RenderType {
     return this.#renderType;
   }
 
-  set renderType(type) {
+  public set renderType(type: RenderType) {
     this.#renderType = type;
   }
 
-  static ENABLE_IMAGE_POOL = true;
+  static ENABLE_IMAGE_POOL: boolean = true;
 
-  static HARD_MAX_BATCH_TEXTURES = 8;
+  static HARD_MAX_BATCH_TEXTURES: number = 8;
 }
+
+export default RendererConfig;

@@ -157,7 +157,7 @@ var rendererCanvas = {
     var dirtyRegion = (this._dirtyRegion =
       this._dirtyRegion || new DirtyRegion());
     var viewport = ServiceLocator.game.canvas;
-    var wrapper = ctxWrapper || ServiceLocator.rendererConfig.renderContext;
+    var wrapper = ctxWrapper || ServiceLocator.sys.rendererConfig.renderContext;
     var ctx = wrapper.getContext();
 
     var scaleX = ServiceLocator.eglView.getScaleX(),

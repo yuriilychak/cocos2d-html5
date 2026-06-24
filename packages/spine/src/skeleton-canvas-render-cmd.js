@@ -13,7 +13,7 @@ export class SkeletonCanvasRenderCmd extends Node.CanvasRenderCmd {
 
   rendering(wrapper, scaleX, scaleY) {
     const node = this._node;
-    wrapper = wrapper || ServiceLocator.rendererConfig.renderContext;
+    wrapper = wrapper || ServiceLocator.sys.rendererConfig.renderContext;
 
     const locSkeleton = node._skeleton;
     const drawOrder = locSkeleton.drawOrder;
@@ -231,7 +231,7 @@ export class SkeletonCanvasRenderCmd extends Node.CanvasRenderCmd {
         slotNode.visible = false;
         continue;
       }
-      slotNode.visible =  true;
+      slotNode.visible = true;
     }
   }
 }

@@ -57,7 +57,8 @@ export class TMXBug987 extends TileDemo {
     for (var i = 0, len = childs.length; i < len; i++) {
       node = childs[i];
       if (!node) break;
-      if ("opengl" in ServiceLocator.sys.capabilities) node.texture.setAliasTexParameters();
+      if (ServiceLocator.sys.capabilities.opengl)
+        node.texture.setAliasTexParameters();
     }
 
     map.anchorX = 0;

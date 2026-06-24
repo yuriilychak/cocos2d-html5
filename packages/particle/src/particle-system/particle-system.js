@@ -437,7 +437,7 @@ export class ParticleSystem extends Node {
   }
 
   _createRenderCmd() {
-    if (ServiceLocator.rendererConfig.isCanvas)
+    if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new ParticleSystem.CanvasRenderCmd(this);
     else return new ParticleSystem.WebGLRenderCmd(this);
   }

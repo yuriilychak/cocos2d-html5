@@ -85,7 +85,7 @@ export class SpriteBlendFuncTest extends SpriteTestDemo {
     this.addChild(sourceSprite);
     this.addChild(destSprite);
 
-    if (ServiceLocator.rendererConfig.isCanvas) {
+    if (ServiceLocator.sys.rendererConfig.isCanvas) {
       var info = new TextBMFont("support is not complete on canvas", s_simpleFont_fnt);
       info.x = 680;
       info.y = 250;

@@ -14,7 +14,7 @@ export default class StopGrid extends ActionInstant {
    */
   startWithTarget(target) {
     super.startWithTarget(target);
-    ServiceLocator.rendererConfig.renderer.childrenOrderDirty = true;
+    ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty = true;
     const grid = this.target.grid;
     if (grid && grid.isActive()) grid.setActive(false);
   }

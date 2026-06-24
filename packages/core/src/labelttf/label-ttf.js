@@ -690,7 +690,7 @@ export class LabelTTF extends Sprite {
       (!this._string || this._string === "") &&
       this._string !== this._originalText
     )
-      ServiceLocator.rendererConfig.renderer.childrenOrderDirty = true;
+      ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty = true;
     this._string = this._originalText;
   }
   /**
@@ -865,7 +865,7 @@ export class LabelTTF extends Sprite {
     this._onCacheCanvasMode = onCacheMode;
   }
   _createRenderCmd() {
-    if (ServiceLocator.rendererConfig.isWebGL)
+    if (ServiceLocator.sys.rendererConfig.isWebGL)
       return new LabelTTF.WebGLRenderCmd(this);
     else if (this._onCacheCanvasMode)
       return new LabelTTF.CacheCanvasRenderCmd(this);

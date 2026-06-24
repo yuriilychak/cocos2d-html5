@@ -593,7 +593,7 @@ export class Armature extends Node {
   }
 
   _createRenderCmd() {
-    if (ServiceLocator.rendererConfig.isCanvas)
+    if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new this.constructor.CanvasRenderCmd(this);
     else return new this.constructor.WebGLRenderCmd(this);
   }

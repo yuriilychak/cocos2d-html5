@@ -37,7 +37,7 @@ export class GLClearTest extends OpenGLTestLayer {
   constructor() {
     super();
 
-    if ("opengl" in ServiceLocator.sys.capabilities) {
+    if (ServiceLocator.sys.capabilities.opengl) {
       var blue = new LayerColor(new Color(0, 0, 255, 255));
       this.addChild(blue, 1);
 

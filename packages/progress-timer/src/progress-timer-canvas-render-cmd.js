@@ -27,7 +27,7 @@ export class ProgressTimerCanvasRenderCmd extends Node.CanvasRenderCmd {
   }
 
   rendering(ctx, scaleX, scaleY) {
-    const wrapper = ctx || ServiceLocator.rendererConfig.renderContext;
+    const wrapper = ctx || ServiceLocator.sys.rendererConfig.renderContext;
     const context = wrapper.getContext();
     const node = this._node;
     const locSprite = node._sprite;

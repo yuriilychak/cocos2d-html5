@@ -21,7 +21,7 @@ export class NodeGridWebGLRenderCmd extends Node.WebGLRenderCmd {
     this._syncStatus(parentCmd);
     currentStack.push(this._stackMatrix);
 
-    ServiceLocator.rendererConfig.renderer.pushRenderCommand(this._gridBeginCommand);
+    ServiceLocator.sys.rendererConfig.renderer.pushRenderCommand(this._gridBeginCommand);
 
     if (node._target)
       node._target.visit();
@@ -36,7 +36,7 @@ export class NodeGridWebGLRenderCmd extends Node.WebGLRenderCmd {
       }
     }
 
-    ServiceLocator.rendererConfig.renderer.pushRenderCommand(this._gridEndCommand);
+    ServiceLocator.sys.rendererConfig.renderer.pushRenderCommand(this._gridEndCommand);
 
     this._dirtyFlag = 0;
     currentStack.pop();

@@ -81,7 +81,7 @@ export class TextureAtlas extends BaseClass {
     this._quadsReader = null;
 
     // Initialize renderer based on render type
-    this._renderer = ServiceLocator.rendererConfig.isCanvas
+    this._renderer = ServiceLocator.sys.rendererConfig.isCanvas
       ? new TextureAtlasCanvasRenderer(this)
       : new TextureAtlasWebGLRenderer(this);
 

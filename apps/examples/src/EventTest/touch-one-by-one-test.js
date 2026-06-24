@@ -31,83 +31,96 @@
 import { EventTest } from "./event-test";
 import { s_pathR2 } from "../resources";
 import { winSize } from "../constants";
-import { Color, EventListener, EventListenerType, Sprite, log, ServiceLocator } from "@aspect/core";
+import {
+  Color,
+  EventListener,
+  EventListenerType,
+  Sprite,
+  log,
+  ServiceLocator
+} from "@aspect/core";
 
 export class TouchOneByOneTest extends EventTest {
-    init() {
-        super.init();
-        this.ids = {};
-        this.unused_sprites = [];
+  init() {
+    super.init();
+    this.ids = {};
+    this.unused_sprites = [];
 
-        if( 'touches' in ServiceLocator.sys.capabilities ) {
-            ServiceLocator.eventManager.addListener({
-                event: EventListenerType.TOUCH_ONE_BY_ONE,
-                swallowTouches: true,
-                onTouchBegan: this.onTouchBegan,
-                onTouchMoved: this.onTouchMoved,
-                onTouchEnded: this.onTouchEnded,
-                onTouchCancelled: this.onTouchCancelled
-            }, this);
-        } else {
-            log("TOUCH-ONE-BY-ONE test is not supported on desktop");
-        }
-
-        for( var i=0; i < 5;i++) {
-            var sprite = this.sprite = new Sprite(s_pathR2);
-            this.addChild(sprite,i+10);
-            sprite.x = 0;
-            sprite.y = 0;
-            sprite.scale = 1;
-            sprite.color = new Color( Math.random()*200+55, Math.random()*200+55, Math.random()*200+55 );
-            this.unused_sprites.push(sprite);
-        }
-    }
-    subtitle() {
-        return "Touches One by One. Touch the left / right and see console";
+    if (ServiceLocator.sys.capabilities.touches) {
+      ServiceLocator.eventManager.addListener(
+        {
+          event: EventListenerType.TOUCH_ONE_BY_ONE,
+          swallowTouches: true,
+          onTouchBegan: this.onTouchBegan,
+          onTouchMoved: this.onTouchMoved,
+          onTouchEnded: this.onTouchEnded,
+          onTouchCancelled: this.onTouchCancelled
+        },
+        this
+      );
+    } else {
+      log("TOUCH-ONE-BY-ONE test is not supported on desktop");
     }
 
-    new_id( id, pos) {
-        var s = this.unused_sprites.pop();
-        this.ids[ id ] = s;
-        s.x = pos.x;
-        s.y = pos.y;
+    for (var i = 0; i < 5; i++) {
+      var sprite = (this.sprite = new Sprite(s_pathR2));
+      this.addChild(sprite, i + 10);
+      sprite.x = 0;
+      sprite.y = 0;
+      sprite.scale = 1;
+      sprite.color = new Color(
+        Math.random() * 200 + 55,
+        Math.random() * 200 + 55,
+        Math.random() * 200 + 55
+      );
+      this.unused_sprites.push(sprite);
     }
-    update_id(id, pos) {
-        var s = this.ids[ id ];
-        s.x = pos.x;
-        s.y = pos.y;
-    }
-    release_id(id, pos) {
-        var s = this.ids[ id ];
-        this.ids[ id ] = null;
-        this.unused_sprites.push( s );
-        s.x = 0;
-        s.y = 0;
-    }
+  }
+  subtitle() {
+    return "Touches One by One. Touch the left / right and see console";
+  }
 
-    onTouchBegan(touch, event) {
-        var id = touch.id;
-        log("onTouchBegan at: " + touch.x + " " + touch.y + " Id:" + id);
-        if (touch.x < winSize.width / 2) {
-          event.getCurrentTarget().new_id(id, touch);
-          return true;
-        }
-        return false;
-    }
-    onTouchMoved(touch, event) {
-        var id = touch.id;
-        log("onTouchMoved at: " + touch.x + " " + touch.y + " Id:" + id);
-        event.getCurrentTarget().update_id(id, touch);
-    }
-    onTouchEnded(touch, event) {
-        var id = touch.id;
-        log("onTouchEnded at: " + ptouchos.x + " " + touch.y + " Id:" + id);
-        event.getCurrentTarget().release_id(id, touch);
-    }
-    onTouchCancelled(touch, event) {
-        var id = touch.id;
-        log("onTouchCancelled at: " + touch.x + " " + touch.y + " Id:" + id);
-        event.getCurrentTarget().update_id(id, touch);
-    }
+  new_id(id, pos) {
+    var s = this.unused_sprites.pop();
+    this.ids[id] = s;
+    s.x = pos.x;
+    s.y = pos.y;
+  }
+  update_id(id, pos) {
+    var s = this.ids[id];
+    s.x = pos.x;
+    s.y = pos.y;
+  }
+  release_id(id, pos) {
+    var s = this.ids[id];
+    this.ids[id] = null;
+    this.unused_sprites.push(s);
+    s.x = 0;
+    s.y = 0;
+  }
 
+  onTouchBegan(touch, event) {
+    var id = touch.id;
+    log("onTouchBegan at: " + touch.x + " " + touch.y + " Id:" + id);
+    if (touch.x < winSize.width / 2) {
+      event.getCurrentTarget().new_id(id, touch);
+      return true;
+    }
+    return false;
+  }
+  onTouchMoved(touch, event) {
+    var id = touch.id;
+    log("onTouchMoved at: " + touch.x + " " + touch.y + " Id:" + id);
+    event.getCurrentTarget().update_id(id, touch);
+  }
+  onTouchEnded(touch, event) {
+    var id = touch.id;
+    log("onTouchEnded at: " + ptouchos.x + " " + touch.y + " Id:" + id);
+    event.getCurrentTarget().release_id(id, touch);
+  }
+  onTouchCancelled(touch, event) {
+    var id = touch.id;
+    log("onTouchCancelled at: " + touch.x + " " + touch.y + " Id:" + id);
+    event.getCurrentTarget().update_id(id, touch);
+  }
 }

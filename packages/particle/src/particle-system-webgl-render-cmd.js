@@ -85,7 +85,7 @@ export class ParticleSystemWebGLRenderCmd extends Node.WebGLRenderCmd {
           node.atlasIndex
         );
 
-        ServiceLocator.rendererConfig.renderContext.deleteBuffer(
+        ServiceLocator.sys.rendererConfig.renderContext.deleteBuffer(
           this._buffersVBO[1]
         );
       }
@@ -197,7 +197,7 @@ export class ParticleSystemWebGLRenderCmd extends Node.WebGLRenderCmd {
     const node = this._node;
     if (!node._texture) return;
 
-    const gl = ctx || ServiceLocator.rendererConfig.renderContext;
+    const gl = ctx || ServiceLocator.sys.rendererConfig.renderContext;
 
     if (!this._matrix) {
       this._matrix = new Matrix4();
@@ -240,12 +240,7 @@ export class ParticleSystemWebGLRenderCmd extends Node.WebGLRenderCmd {
     );
 
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this._buffersVBO[1]);
-    gl.drawElements(
-      gl.TRIANGLES,
-      node._particleIdx * 6,
-      gl.UNSIGNED_SHORT,
-      0
-    );
+    gl.drawElements(gl.TRIANGLES, node._particleIdx * 6, gl.UNSIGNED_SHORT, 0);
   }
 
   initTexCoordsWithRect(pointRect) {
@@ -360,7 +355,7 @@ export class ParticleSystemWebGLRenderCmd extends Node.WebGLRenderCmd {
   }
 
   _setupVBO() {
-    const gl = ServiceLocator.rendererConfig.renderContext;
+    const gl = ServiceLocator.sys.rendererConfig.renderContext;
 
     this._buffersVBO[0] = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, this._buffersVBO[0]);
@@ -405,7 +400,7 @@ export class ParticleSystemWebGLRenderCmd extends Node.WebGLRenderCmd {
   }
 
   postStep() {
-    const gl = ServiceLocator.rendererConfig.renderContext;
+    const gl = ServiceLocator.sys.rendererConfig.renderContext;
     gl.bindBuffer(gl.ARRAY_BUFFER, this._buffersVBO[0]);
     gl.bufferSubData(gl.ARRAY_BUFFER, 0, this._quadsArrayBuffer);
   }

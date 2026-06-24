@@ -25,7 +25,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Node, Texture2D, Color, log, PIXEL_FORMAT_RGBA8888, ServiceLocator } from "@aspect/core";
+import {
+  Node,
+  Texture2D,
+  Color,
+  log,
+  PIXEL_FORMAT_RGBA8888,
+  ServiceLocator
+} from "@aspect/core";
 
 export const IMAGE_FORMAT_JPEG = 0;
 export const IMAGE_FORMAT_PNG = 1;
@@ -99,7 +106,7 @@ export class RenderTexture extends Node {
   }
 
   _createRenderCmd() {
-    if (ServiceLocator.rendererConfig.isCanvas)
+    if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new RenderTexture.CanvasRenderCmd(this);
     else return new RenderTexture.WebGLRenderCmd(this);
   }
@@ -114,7 +121,7 @@ export class RenderTexture extends Node {
       return;
     }
 
-    var renderer = ServiceLocator.rendererConfig.renderer;
+    var renderer = ServiceLocator.sys.rendererConfig.renderer;
 
     cmd.visit(parentCmd);
     renderer.pushRenderCommand(cmd);
@@ -177,7 +184,9 @@ export class RenderTexture extends Node {
    * starts grabbing
    */
   begin() {
-    ServiceLocator.rendererConfig.renderer._turnToCacheMode(this.__instanceId);
+    ServiceLocator.sys.rendererConfig.renderer._turnToCacheMode(
+      this.__instanceId
+    );
     this._renderCmd.begin();
   }
 
@@ -192,7 +201,7 @@ export class RenderTexture extends Node {
    * @param {Number} [stencilValue=]
    */
   beginWithClear(r, g, b, a, depthValue, stencilValue) {
-    var gl = ServiceLocator.rendererConfig.renderContext;
+    var gl = ServiceLocator.sys.rendererConfig.renderContext;
     depthValue = depthValue || gl.COLOR_BUFFER_BIT;
     stencilValue = stencilValue || gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT;
 

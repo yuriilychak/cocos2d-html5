@@ -65,7 +65,7 @@ export class Layer extends Node {
       return;
     }
 
-    var renderer = ServiceLocator.rendererConfig.renderer;
+    var renderer = ServiceLocator.sys.rendererConfig.renderer;
     cmd.visit(parentCmd);
 
     if (cmd._isBaked) {
@@ -106,7 +106,7 @@ export class Layer extends Node {
   }
 
   _createRenderCmd() {
-    if (ServiceLocator.rendererConfig.isCanvas)
+    if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new LayerCanvasRenderer(this);
     else return new LayerWebGLRenderer(this);
   }

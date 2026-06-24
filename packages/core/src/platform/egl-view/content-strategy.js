@@ -55,7 +55,7 @@ export class ContentStrategy extends BaseClass {
     );
 
     // Translate the content
-    if (ServiceLocator.rendererConfig.isCanvas) {
+    if (ServiceLocator.sys.rendererConfig.isCanvas) {
       //TODO: modify something for setTransform
       //_renderContext.translate(viewport.x, viewport.y + contentH);
     }

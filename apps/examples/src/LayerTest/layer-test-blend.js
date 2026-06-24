@@ -33,63 +33,72 @@
 import { LayerTest } from "./layer-test";
 import { s_pathSister1, s_pathSister2, s_simpleFont_fnt } from "../resources";
 import { winSize } from "../constants";
-import { Color, LayerColor, Sprite, ServiceLocator, GLState } from "@aspect/core";
+import {
+  Color,
+  LayerColor,
+  Sprite,
+  ServiceLocator,
+  GLState
+} from "@aspect/core";
 import { TAG_LAYER } from "./layer-test-constants";
 import { TextBMFont } from "@aspect/ccui";
 export class LayerTestBlend extends LayerTest {
+  constructor() {
+    //----start2----ctor
+    super();
 
-    constructor() {
-        //----start2----ctor
-        super();
+    this._blend = true;
+    var layer1 = new LayerColor(new Color(255, 255, 255, 80));
 
+    var sister1 = new Sprite(s_pathSister1);
+    var sister2 = new Sprite(s_pathSister2);
 
-        this._blend = true;
-        var layer1 = new LayerColor(new Color(255, 255, 255, 80));
+    this.addChild(sister1);
+    this.addChild(sister2);
+    this.addChild(layer1, 100, TAG_LAYER);
 
-        var sister1 = new Sprite(s_pathSister1);
-        var sister2 = new Sprite(s_pathSister2);
+    sister1.x = winSize.width / 3;
 
-        this.addChild(sister1);
-        this.addChild(sister2);
-        this.addChild(layer1, 100, TAG_LAYER);
+    sister1.y = winSize.height / 2;
+    sister2.x = (winSize.width / 3) * 2;
+    sister2.y = winSize.height / 2;
 
-        sister1.x = winSize.width/3;
-
-        sister1.y = winSize.height / 2;
-        sister2.x = winSize.width/3 * 2;
-        sister2.y = winSize.height / 2;
-
-        if (!ServiceLocator.sys.isNative && !("opengl" in ServiceLocator.sys.capabilities)) {
-            var label = new TextBMFont("Not supported on HTML5-canvas", s_simpleFont_fnt);
-            this.addChild(label);
-            label.x = winSize.width / 2;
-            label.y = winSize.height / 2;
-        }
-
-        this.schedule(this.onNewBlend, 1.0);
-        this._blend = true;
-        //----end2----
-    }
-    onNewBlend(dt) {
-        //----start2----onNewBlend
-        var layer = this.getChildByTag(TAG_LAYER);
-
-        var src;
-        var dst;
-
-        if (this._blend) {
-            src = GLState.SRC_ALPHA;
-            dst = GLState.ONE_MINUS_SRC_ALPHA;
-        } else {
-            src = GLState.ONE_MINUS_DST_COLOR;
-            dst = GLState.ZERO;
-        }
-        layer.setBlendFunc( src, dst );
-        this._blend = ! this._blend;
-        //----end2----
-    }
-    title() {
-        return "ColorLayer: blend";
+    if (
+      !ServiceLocator.sys.isNative &&
+      !ServiceLocator.sys.capabilities.opengl
+    ) {
+      var label = new TextBMFont(
+        "Not supported on HTML5-canvas",
+        s_simpleFont_fnt
+      );
+      this.addChild(label);
+      label.x = winSize.width / 2;
+      label.y = winSize.height / 2;
     }
 
+    this.schedule(this.onNewBlend, 1.0);
+    this._blend = true;
+    //----end2----
+  }
+  onNewBlend(dt) {
+    //----start2----onNewBlend
+    var layer = this.getChildByTag(TAG_LAYER);
+
+    var src;
+    var dst;
+
+    if (this._blend) {
+      src = GLState.SRC_ALPHA;
+      dst = GLState.ONE_MINUS_SRC_ALPHA;
+    } else {
+      src = GLState.ONE_MINUS_DST_COLOR;
+      dst = GLState.ZERO;
+    }
+    layer.setBlendFunc(src, dst);
+    this._blend = !this._blend;
+    //----end2----
+  }
+  title() {
+    return "ColorLayer: blend";
+  }
 }

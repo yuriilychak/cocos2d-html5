@@ -330,7 +330,7 @@ export class DisplayManager extends BaseClass {
       this._displayType = this._currentDecoDisplay.getDisplayData().displayType;
     } else this._displayType = DISPLAY_TYPE_MAX;
 
-    ServiceLocator.rendererConfig.renderer.childrenOrderDirty = true;
+    ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty = true;
   }
 
   /**

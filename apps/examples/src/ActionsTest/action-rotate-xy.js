@@ -62,8 +62,14 @@ export class ActionRotateXY extends ActionsDemo {
       new Sequence(actionBy2, delay.clone(), actionBy2.reverse())
     );
 
-    if (!ServiceLocator.sys.isNative && !("opengl" in ServiceLocator.sys.capabilities)) {
-      var label = new TextBMFont("Not support Actions on HTML5-canvas", s_simpleFont_fnt);
+    if (
+      !ServiceLocator.sys.isNative &&
+      !ServiceLocator.sys.capabilities.opengl
+    ) {
+      var label = new TextBMFont(
+        "Not support Actions on HTML5-canvas",
+        s_simpleFont_fnt
+      );
       label.x = winSize.width / 2;
       label.y = winSize.height / 2 + 50;
       this.addChild(label, 100);

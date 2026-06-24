@@ -45,7 +45,7 @@ export default class SplitCols extends TiledGrid3DAction {
 
       this.setTile(locPos, coords);
     }
-    ServiceLocator.rendererConfig.renderer.childrenOrderDirty = true;
+    ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty = true;
   }
 
   startWithTarget(target) {

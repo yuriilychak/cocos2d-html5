@@ -85,7 +85,7 @@ export class TMXLayer extends SpriteBatchNode {
   }
 
   _createRenderCmd() {
-    if (ServiceLocator.rendererConfig.isCanvas)
+    if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new TMXLayer.CanvasRenderCmd(this);
     else return new TMXLayer.WebGLRenderCmd(this);
   }
@@ -431,7 +431,7 @@ export class TMXLayer extends SpriteBatchNode {
       this._spriteTiles[tag] = child;
       child._vertexZ =
         this._vertexZ +
-        (ServiceLocator.rendererConfig.renderer.assignedZStep * tag) /
+        (ServiceLocator.sys.rendererConfig.renderer.assignedZStep * tag) /
           this.tiles.length;
     }
   }
@@ -583,7 +583,7 @@ export class TMXLayer extends SpriteBatchNode {
         var alphaFuncValue = 0;
         if (alphaFuncVal) alphaFuncValue = parseFloat(alphaFuncVal);
 
-        if (ServiceLocator.rendererConfig.isWebGL) {
+        if (ServiceLocator.sys.rendererConfig.isWebGL) {
           this.shaderProgram = ServiceLocator.shaderCache.programForKey(
             ShaderName.SPRITE_POSITION_TEXTURECOLORALPHATEST
           );

@@ -195,7 +195,7 @@ export var arrayOfTransitionsTest = [
   }
 ];
 
-if (!ServiceLocator.rendererConfig.isCanvas) {
+if (!ServiceLocator.sys.rendererConfig.isCanvas) {
   arrayOfTransitionsTest = arrayOfTransitionsTest.concat([
     {
       title: "PageTransitionForward",

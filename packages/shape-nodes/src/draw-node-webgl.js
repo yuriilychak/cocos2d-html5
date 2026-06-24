@@ -66,7 +66,7 @@ export class DrawNodeWebGL {
 
     if (!_sharedBuffer) {
       _sharedBuffer = new GlobalVertexBuffer(
-        ServiceLocator.rendererConfig.renderContext,
+        ServiceLocator.sys.rendererConfig.renderContext,
         DRAWNODE_TOTAL_VERTICES * VERTEX_BYTE
       );
     }
@@ -74,7 +74,10 @@ export class DrawNodeWebGL {
     this._renderCmd._shaderProgram = ServiceLocator.shaderCache.programForKey(
       ShaderName.POSITION_LENGTHTEXTURECOLOR
     );
-    this._blendFunc = new BlendFunc(GLState.SRC_ALPHA, GLState.ONE_MINUS_SRC_ALPHA);
+    this._blendFunc = new BlendFunc(
+      GLState.SRC_ALPHA,
+      GLState.ONE_MINUS_SRC_ALPHA
+    );
     this._drawColor = new Color(255, 255, 255, 255);
 
     this._bufferCapacity = capacity || 64;
@@ -325,7 +328,7 @@ export class DrawNodeWebGL {
   }
 
   _render() {
-    var gl = ServiceLocator.rendererConfig.renderContext;
+    var gl = ServiceLocator.sys.rendererConfig.renderContext;
     if (this._offset < 0 || this._vertexCount <= 0) return;
 
     if (this._dirty) {

@@ -22,7 +22,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BrowserType, Node, log, GameEvent, OperatingSystem, ServiceLocator } from "@aspect/core";
+import {
+  BrowserType,
+  Node,
+  log,
+  GameEvent,
+  OperatingSystem,
+  ServiceLocator
+} from "@aspect/core";
 import { Widget } from "../base-classes/widget";
 
 /**
@@ -255,7 +262,8 @@ const _polyfill = (WebView._polyfill = {
 });
 
 const webViewSys = ServiceLocator.sys;
-if (webViewSys.specification.os === OperatingSystem.IOS) _polyfill.enableDiv = true;
+if (webViewSys.specification.os === OperatingSystem.IOS)
+  _polyfill.enableDiv = true;
 
 if (webViewSys.specification.isMobile) {
   if (webViewSys.specification.browserType === BrowserType.FIREFOX) {
@@ -269,7 +277,7 @@ if (webViewSys.specification.isMobile) {
 
 {
   const polyfill = WebView._polyfill;
-  const RenderCmd = ServiceLocator.rendererConfig.isWebGL
+  const RenderCmd = ServiceLocator.sys.rendererConfig.isWebGL
     ? Node.WebGLRenderCmd
     : Node.CanvasRenderCmd;
   WebView.RenderCmd = class extends RenderCmd {

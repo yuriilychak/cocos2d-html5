@@ -74,13 +74,16 @@ export class ContainerStrategy extends BaseClass {
     // Setup canvas
     locCanvas.width = w * devicePixelRatio;
     locCanvas.height = h * devicePixelRatio;
-    ServiceLocator.rendererConfig.renderContext.resetCache &&
-      ServiceLocator.rendererConfig.renderContext.resetCache();
+    ServiceLocator.sys.rendererConfig.renderContext.resetCache &&
+      ServiceLocator.sys.rendererConfig.renderContext.resetCache();
   }
 
   _fixContainer() {
     // Add container to document body
-    document.body.insertBefore(ServiceLocator.game.container, document.body.firstChild);
+    document.body.insertBefore(
+      ServiceLocator.game.container,
+      document.body.firstChild
+    );
     // Set body's width height to window's size, and forbid overflow, so that game will be centered
     var bs = document.body.style;
     bs.width = window.innerWidth + "px";
@@ -183,7 +186,11 @@ class ProportionalToWindow extends ProportionalToFrame {
  */
 class OriginalContainer extends ContainerStrategy {
   apply(view) {
-    this._setupContainer(view, ServiceLocator.game.canvas.width, ServiceLocator.game.canvas.height);
+    this._setupContainer(
+      view,
+      ServiceLocator.game.canvas.width,
+      ServiceLocator.game.canvas.height
+    );
   }
 }
 

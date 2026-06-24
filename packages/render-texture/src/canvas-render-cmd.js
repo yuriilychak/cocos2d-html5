@@ -99,7 +99,7 @@ export class RenderTextureCanvasRenderCmd extends Node.CanvasRenderCmd {
     const node = this._node;
 
     const scale = contentScaleFactor();
-    ServiceLocator.rendererConfig.renderer._renderingToCacheCanvas(
+    ServiceLocator.sys.rendererConfig.renderer._renderingToCacheCanvas(
       this._cacheContext,
       node.__instanceId,
       scale,

@@ -102,20 +102,28 @@ export enum GameEvent {
   RENDERER_INITED = "renderer_inited"
 }
 
-export const CONFIG_KEY = {
-  width: "width",
-  height: "height",
-  engineDir: "engineDir",
-  modules: "modules",
-  debugMode: "debugMode",
-  exposeClassName: "exposeClassName",
-  showFPS: "showFPS",
-  frameRate: "frameRate",
-  id: "id",
-  renderMode: "renderMode",
-  jsList: "jsList",
-  registerSystemEvent: "registerSystemEvent"
-};
+export enum CONFIG_KEY {
+  width = "width",
+  height = "height",
+  engineDir = "engineDir",
+  modules = "modules",
+  debugMode = "debugMode",
+  exposeClassName = "exposeClassName",
+  showFPS = "showFPS",
+  frameRate = "frameRate",
+  id = "id",
+  renderMode = "renderMode",
+  jsList = "jsList",
+  registerSystemEvent = "registerSystemEvent"
+}
+
+export enum ConfigurationValueType {
+  ERROR = 0,
+  STRING = 1,
+  INT = 2,
+  DOUBLE = 3,
+  BOOLEAN = 4
+}
 
 export enum RenderType {
   CANVAS = 0,

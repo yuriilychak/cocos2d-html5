@@ -37,69 +37,75 @@ import { OpenGLTestLayer } from "./open-gltest-layer";
 import { ccbjs } from "../resources";
 import { winSize } from "../constants";
 import { LabelBMFont } from "@aspect/labels";
-import { GLProgram, ServiceLocator, VertexAttribute, AttributeName } from "@aspect/core";
+import {
+  GLProgram,
+  ServiceLocator,
+  VertexAttribute,
+  AttributeName
+} from "@aspect/core";
 export class ShaderRetroEffect extends OpenGLTestLayer {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        if( 'opengl' in ServiceLocator.sys.capabilities ) {
-            var program = new GLProgram(ccbjs + "Shaders/example_ColorBars.vsh", ccbjs + "Shaders/example_ColorBars.fsh");
-            program.addAttribute(AttributeName.POSITION, VertexAttribute.POSITION);
-            program.addAttribute(AttributeName.TEX_COORD, VertexAttribute.TEX_COORDS);
-            program.link();
-            program.updateUniforms();
+    if (ServiceLocator.sys.capabilities.opengl) {
+      var program = new GLProgram(
+        ccbjs + "Shaders/example_ColorBars.vsh",
+        ccbjs + "Shaders/example_ColorBars.fsh"
+      );
+      program.addAttribute(AttributeName.POSITION, VertexAttribute.POSITION);
+      program.addAttribute(AttributeName.TEX_COORD, VertexAttribute.TEX_COORDS);
+      program.link();
+      program.updateUniforms();
 
-            var label = new LabelBMFont("RETRO EFFECT","fonts/west_england-64.fnt");
-            
-            if(ServiceLocator.sys.isNative)
-                label.children[0].shaderProgram = program;
-            else
-                label.shaderProgram = program;
-            
-            label.x = winSize.width/2;
+      var label = new LabelBMFont("RETRO EFFECT", "fonts/west_england-64.fnt");
 
-            label.y = winSize.height/2;
-            this.addChild(label);
+      if (ServiceLocator.sys.isNative)
+        label.children[0].shaderProgram = program;
+      else label.shaderProgram = program;
 
-            this.scheduleUpdate();
+      label.x = winSize.width / 2;
 
-            this.label = label;
-            this.accum = 0;
-        }
+      label.y = winSize.height / 2;
+      this.addChild(label);
+
+      this.scheduleUpdate();
+
+      this.label = label;
+      this.accum = 0;
     }
-    update(dt) {
-        this.accum += dt;
+  }
+  update(dt) {
+    this.accum += dt;
 
-        if(ServiceLocator.sys.isNative){
-            var letters = this.label.children[0];
-            for(var i = 0; i< letters.getStringLength(); ++i){
-                var sprite = letters.getLetter(i);
-                sprite.y = Math.sin( this.accum * 2 + i/2.0) * 20;
-                sprite.scaleY  = ( Math.sin( this.accum * 2 + i/2.0 + 0.707) );       
-            }
-        }else{
-            var children = this.label.children;
+    if (ServiceLocator.sys.isNative) {
+      var letters = this.label.children[0];
+      for (var i = 0; i < letters.getStringLength(); ++i) {
+        var sprite = letters.getLetter(i);
+        sprite.y = Math.sin(this.accum * 2 + i / 2.0) * 20;
+        sprite.scaleY = Math.sin(this.accum * 2 + i / 2.0 + 0.707);
+      }
+    } else {
+      var children = this.label.children;
 
-            for( var i in children ) {
-                var sprite = children[i];
-                sprite.y = Math.sin( this.accum * 2 + i/2.0) * 20;
+      for (var i in children) {
+        var sprite = children[i];
+        sprite.y = Math.sin(this.accum * 2 + i / 2.0) * 20;
 
-                // add fabs() to prevent negative scaling
-                var scaleY = ( Math.sin( this.accum * 2 + i/2.0 + 0.707) );
+        // add fabs() to prevent negative scaling
+        var scaleY = Math.sin(this.accum * 2 + i / 2.0 + 0.707);
 
-                sprite.scaleY = scaleY;
-            }
-        }
+        sprite.scaleY = scaleY;
+      }
     }
-    title() {
-        return "Shader Retro Effect";
-    }
-    subtitle() {
-        return "Should see moving colors, and a sin effect on the letters";
-    }
+  }
+  title() {
+    return "Shader Retro Effect";
+  }
+  subtitle() {
+    return "Should see moving colors, and a sin effect on the letters";
+  }
 
-    //
-    // Automation
-    //
-
+  //
+  // Automation
+  //
 }

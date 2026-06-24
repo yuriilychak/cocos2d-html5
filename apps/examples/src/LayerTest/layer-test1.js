@@ -34,7 +34,8 @@ import { LayerTest } from "./layer-test";
 import { director, winSize } from "../constants";
 import {
   Color,
-  EventListener, EventListenerType,
+  EventListener,
+  EventListenerType,
   MouseButton,
   LayerColor,
   ServiceLocator
@@ -51,7 +52,7 @@ export class LayerTest1 extends LayerTest {
     //----start0----onEnter
     super.onEnter();
 
-    if ("touches" in ServiceLocator.sys.capabilities)
+    if (ServiceLocator.sys.capabilities.touches)
       ServiceLocator.eventManager.addListener(
         {
           event: EventListenerType.TOUCH_ALL_AT_ONCE,
@@ -61,7 +62,7 @@ export class LayerTest1 extends LayerTest {
         },
         this
       );
-    else if ("mouse" in ServiceLocator.sys.capabilities)
+    else if (ServiceLocator.sys.capabilities.mouse)
       ServiceLocator.eventManager.addListener(
         {
           event: EventListenerType.MOUSE,

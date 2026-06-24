@@ -25,7 +25,15 @@
 
 import { RenderTextureBaseLayer } from "./render-texture-base-layer";
 import { s_fire, s_simpleFont_fnt } from "../resources";
-import { Color, EventListener, EventListenerType, Rect, Sprite, Texture2D, ServiceLocator } from "@aspect/core";
+import {
+  Color,
+  EventListener,
+  EventListenerType,
+  Rect,
+  Sprite,
+  Texture2D,
+  ServiceLocator
+} from "@aspect/core";
 import { BMButton, Widget } from "@aspect/ccui";
 
 import { RenderTexture } from "@aspect/render-texture";
@@ -45,14 +53,10 @@ export class RenderTextureTestDepthStencil extends RenderTextureBaseLayer {
 
     this._spriteDraw.x =
       this._spriteDraw.x +
-      this._spriteDraw.getContentSize().width *
-        this._spriteDraw.scale *
-        0.5;
+      this._spriteDraw.getContentSize().width * this._spriteDraw.scale * 0.5;
     this._spriteDraw.y =
       this._spriteDraw.y +
-      this._spriteDraw.getContentSize().height *
-        this._spriteDraw.scale *
-        0.5;
+      this._spriteDraw.getContentSize().height * this._spriteDraw.scale * 0.5;
 
     this._rend = new RenderTexture(
       winSize.width,
@@ -63,7 +67,12 @@ export class RenderTextureTestDepthStencil extends RenderTextureBaseLayer {
     this._rend.x = winSize.width * 0.5;
     this._rend.y = winSize.height * 0.5;
     this.addChild(this._rend);
-    const clickBtn = new BMButton("default_theme/rounded_shadow_2.png", "default_theme/rounded_shadow_2.png", "default_theme/rounded_shadow_2.png", Widget.PLIST_TEXTURE);
+    const clickBtn = new BMButton(
+      "default_theme/rounded_shadow_2.png",
+      "default_theme/rounded_shadow_2.png",
+      "default_theme/rounded_shadow_2.png",
+      Widget.PLIST_TEXTURE
+    );
     clickBtn.setScale9Enabled(true);
     clickBtn.setCapInsets(new Rect(12, 12, 12, 12));
     clickBtn.setContentSize(196, 32);
@@ -82,7 +91,7 @@ export class RenderTextureTestDepthStencil extends RenderTextureBaseLayer {
   }
 
   releaseMask() {
-    var gl = ServiceLocator.rendererConfig.renderContext;
+    var gl = ServiceLocator.sys.rendererConfig.renderContext;
     gl.stencilFunc(gl.NOTEQUAL, 1, 0xff);
     gl.stencilOp(gl.KEEP, gl.KEEP, gl.KEEP);
     gl.disable(gl.STENCIL_TEST);
@@ -90,13 +99,15 @@ export class RenderTextureTestDepthStencil extends RenderTextureBaseLayer {
   }
 
   maskTest(sender) {
-    var gl = ServiceLocator.rendererConfig.renderContext;
+    var gl = ServiceLocator.sys.rendererConfig.renderContext;
 
     gl.clear(gl.STENCIL_BUFFER_BIT);
     this._rend.beginWithClear(0, 0, 0, 0, 0, 0);
 
     gl.stencilMask(0xff);
-    ServiceLocator.eventManager.removeListeners(EventListenerType.TOUCH_ONE_BY_ONE);
+    ServiceLocator.eventManager.removeListeners(
+      EventListenerType.TOUCH_ONE_BY_ONE
+    );
     gl.stencilFunc(gl.NEVER, 1, 0xff);
     gl.stencilOp(gl.REPLACE, gl.REPLACE, gl.REPLACE);
     gl.enable(gl.STENCIL_TEST);

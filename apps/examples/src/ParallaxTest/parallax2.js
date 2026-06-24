@@ -28,7 +28,8 @@
 import { TAG_NODE } from "./parallax-test-constants";
 import { s_back, s_power, s_resprefix } from "../resources";
 import {
-  EventListener, EventListenerType,
+  EventListener,
+  EventListenerType,
   EventMouse,
   Point,
   Sprite,
@@ -49,7 +50,7 @@ export class Parallax2 extends ParallaxDemo {
 
     this._streak = null;
 
-    if ("touches" in ServiceLocator.sys.capabilities) {
+    if (ServiceLocator.sys.capabilities.touches) {
       ServiceLocator.eventManager.addListener(
         {
           event: EventListenerType.TOUCH_ALL_AT_ONCE,
@@ -62,7 +63,7 @@ export class Parallax2 extends ParallaxDemo {
         },
         this
       );
-    } else if ("mouse" in ServiceLocator.sys.capabilities) {
+    } else if (ServiceLocator.sys.capabilities.mouse) {
       ServiceLocator.eventManager.addListener(
         {
           event: EventListenerType.MOUSE,

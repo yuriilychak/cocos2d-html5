@@ -257,7 +257,7 @@ export class SpriteFrame extends EventHelper(BaseClass) {
           "load",
           function (sender) {
             this._textureLoaded = true;
-            if (this._rotated && ServiceLocator.rendererConfig.isCanvas) {
+            if (this._rotated && ServiceLocator.sys.rendererConfig.isCanvas) {
               var tempElement = sender.getHtmlElementObj();
               tempElement = SpriteCanvasRenderCmd._cutRotateImageToCanvas(
                 tempElement,

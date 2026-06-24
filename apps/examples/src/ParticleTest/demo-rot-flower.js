@@ -35,7 +35,7 @@ export class DemoRotFlower extends ParticleDemo {
     super.onEnter();
 
     this._emitter = new ParticleSystem(
-      "opengl" in ServiceLocator.sys.capabilities ? 300 : 150
+      ServiceLocator.sys.capabilities.opengl ? 300 : 150
     );
 
     this._background.addChild(this._emitter, 10);

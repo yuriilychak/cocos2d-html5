@@ -12,8 +12,7 @@ export class TransitionProgressRadialCW extends TransitionProgress {
     var size = ServiceLocator.director.getWinSize();
 
     var pNode = new ProgressTimer(texture.sprite);
-    if (ServiceLocator.rendererConfig.isWebGL)
-      pNode.sprite.flippedY = true;
+    if (ServiceLocator.sys.rendererConfig.isWebGL) pNode.sprite.flippedY = true;
     pNode.type = ProgressTimer.TYPE_RADIAL;
     pNode.reverseDir = true;
     pNode.percentage = 100;

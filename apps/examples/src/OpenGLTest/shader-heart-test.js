@@ -35,37 +35,39 @@ import { winSize } from "../constants";
 import { ServiceLocator } from "@aspect/core";
 
 export class ShaderHeartTest extends OpenGLTestLayer {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        if( 'opengl' in ServiceLocator.sys.capabilities ) {
-            var shaderNode = new ShaderNode(ccbjs + "Shaders/example_Heart.vsh", ccbjs + "Shaders/example_Heart.fsh");
-            this.addChild(shaderNode,10);
-            shaderNode.x = winSize.width/2;
-            shaderNode.y = winSize.height/2;
-        }
+    if (ServiceLocator.sys.capabilities.opengl) {
+      var shaderNode = new ShaderNode(
+        ccbjs + "Shaders/example_Heart.vsh",
+        ccbjs + "Shaders/example_Heart.fsh"
+      );
+      this.addChild(shaderNode, 10);
+      shaderNode.x = winSize.width / 2;
+      shaderNode.y = winSize.height / 2;
     }
+  }
 
-    title() {
-        return "Shader Heart Test";
-    }
-    subtitle() {
-        return "You should see a heart in the center";
-    }
+  title() {
+    return "Shader Heart Test";
+  }
+  subtitle() {
+    return "You should see a heart in the center";
+  }
 
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        // redish pixel
-        var ret = {"0":255,"1":0,"2":0,"3":255};
-        return JSON.stringify(ret);
-    }
-    getCurrentResult() {
-        var ret = this.readPixels(winSize.width/2, winSize.height/2,  1, 1);
-        ret[0] = ret[0] > 240 ? 255 : 0;
-        ret[3] = ret[3] > 240 ? 255 : 0;
-        return JSON.stringify(ret);
-    }
-
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    // redish pixel
+    var ret = { 0: 255, 1: 0, 2: 0, 3: 255 };
+    return JSON.stringify(ret);
+  }
+  getCurrentResult() {
+    var ret = this.readPixels(winSize.width / 2, winSize.height / 2, 1, 1);
+    ret[0] = ret[0] > 240 ? 255 : 0;
+    ret[3] = ret[3] > 240 ? 255 : 0;
+    return JSON.stringify(ret);
+  }
 }

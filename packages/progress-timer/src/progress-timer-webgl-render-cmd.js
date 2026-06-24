@@ -57,7 +57,7 @@ export class ProgressTimerWebGLRenderCmd extends Node.WebGLRenderCmd {
 
   rendering(ctx) {
     const node = this._node;
-    const context = ctx || ServiceLocator.rendererConfig.renderContext;
+    const context = ctx || ServiceLocator.sys.rendererConfig.renderContext;
     if (this._vertexDataCount === 0 || !node._sprite) return;
 
     this._glProgramState.apply();
@@ -231,7 +231,7 @@ export class ProgressTimerWebGLRenderCmd extends Node.WebGLRenderCmd {
     if (this._vertexData) {
       const webglBuffer = this._vertexWebGLBuffer;
       setTimeout(function () {
-        ServiceLocator.rendererConfig.renderContext.deleteBuffer(webglBuffer);
+        ServiceLocator.sys.rendererConfig.renderContext.deleteBuffer(webglBuffer);
       }, 0.1);
       this._vertexWebGLBuffer = null;
       this._vertexData = null;
@@ -243,7 +243,7 @@ export class ProgressTimerWebGLRenderCmd extends Node.WebGLRenderCmd {
 
   initCmd() {
     if (!this._vertexData) {
-      const gl = ServiceLocator.rendererConfig.renderContext;
+      const gl = ServiceLocator.sys.rendererConfig.renderContext;
       this._vertexWebGLBuffer = gl.createBuffer();
 
       const vertexDataLen = V3F_C4B_T2F.BYTES_PER_ELEMENT;

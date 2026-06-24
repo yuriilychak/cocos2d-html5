@@ -97,7 +97,7 @@ export default class LayerCanvasRenderer extends NodeCanvasRenderCmd {
   bake() {
     if (!this._isBaked) {
       this._needDraw = true;
-      ServiceLocator.rendererConfig.renderer.childrenOrderDirty = true;
+      ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty = true;
       this._isBaked = this._cacheDirty = true;
       if (this._updateCache === 0) this._updateCache = 2;
 
@@ -114,7 +114,7 @@ export default class LayerCanvasRenderer extends NodeCanvasRenderCmd {
 
   unbake() {
     if (this._isBaked) {
-      ServiceLocator.rendererConfig.renderer.childrenOrderDirty = true;
+      ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty = true;
       this._needDraw = false;
       this._isBaked = false;
       this._cacheDirty = true;
@@ -154,7 +154,7 @@ export default class LayerCanvasRenderer extends NodeCanvasRenderCmd {
           ctx.canvas.height - boundingBox.height + boundingBox.y
         );
         node.sortAllChildren();
-        const _r = ServiceLocator.rendererConfig.renderer;
+        const _r = ServiceLocator.sys.rendererConfig.renderer;
         _r._turnToCacheMode(this.__instanceId);
         for (let i = 0, len = children.length; i < len; i++) {
           children[i].visit(this);

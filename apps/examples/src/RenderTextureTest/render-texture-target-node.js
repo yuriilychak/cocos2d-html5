@@ -85,7 +85,8 @@ export class RenderTextureTargetNode extends RenderTextureBaseLayer {
     renderTexture.addChild(this._sprite1);
     renderTexture.addChild(this._sprite2);
     renderTexture.clearColorVal = new Color(0, 0, 0, 0);
-    renderTexture.clearFlags = ServiceLocator.rendererConfig.renderContext.COLOR_BUFFER_BIT;
+    renderTexture.clearFlags =
+      ServiceLocator.sys.rendererConfig.renderContext.COLOR_BUFFER_BIT;
 
     /* add the render texture to the scene */
     this.addChild(renderTexture);
@@ -95,7 +96,12 @@ export class RenderTextureTargetNode extends RenderTextureBaseLayer {
     this.scheduleUpdate();
 
     // Toggle clear on / off
-    const clearOnOffBtn = new BMButton("default_theme/rounded_shadow_2.png", "default_theme/rounded_shadow_2.png", "default_theme/rounded_shadow_2.png", Widget.PLIST_TEXTURE);
+    const clearOnOffBtn = new BMButton(
+      "default_theme/rounded_shadow_2.png",
+      "default_theme/rounded_shadow_2.png",
+      "default_theme/rounded_shadow_2.png",
+      Widget.PLIST_TEXTURE
+    );
     clearOnOffBtn.setScale9Enabled(true);
     clearOnOffBtn.setCapInsets(new Rect(12, 12, 12, 12));
     clearOnOffBtn.setContentSize(196, 32);
@@ -135,7 +141,7 @@ export class RenderTextureTargetNode extends RenderTextureBaseLayer {
   touched(sender) {
     if (this._renderTexture.clearFlags == 0)
       this._renderTexture.clearFlags =
-        ServiceLocator.rendererConfig.renderContext.COLOR_BUFFER_BIT;
+        ServiceLocator.sys.rendererConfig.renderContext.COLOR_BUFFER_BIT;
     else {
       this._renderTexture.clearFlags = 0;
       this._renderTexture.clearColorVal = new Color(

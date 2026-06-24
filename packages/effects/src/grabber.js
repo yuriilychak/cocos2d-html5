@@ -36,7 +36,7 @@ export class Grabber extends BaseClass {
   constructor() {
     ServiceLocator.sys._checkWebGLRenderMode();
     super();
-    this._gl = ServiceLocator.rendererConfig.renderContext;
+    this._gl = ServiceLocator.sys.rendererConfig.renderContext;
     this._oldClearColor = [0, 0, 0, 0];
     this._oldFBO = null;
     // generate FBO

@@ -287,7 +287,7 @@ export class GridBase extends BaseClass {
   set2DProjection() {
     const winSize = ServiceLocator.director.getWinSizeInPixels();
 
-    const gl = ServiceLocator.rendererConfig.renderContext;
+    const gl = ServiceLocator.sys.rendererConfig.renderContext;
     gl.viewport(0, 0, winSize.width, winSize.height);
     ServiceLocator.kmglMatrix.matrixMode(KMGLMatrix.KM_GL_PROJECTION);
     ServiceLocator.kmglMatrix.loadIdentity();

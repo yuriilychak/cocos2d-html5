@@ -62,7 +62,7 @@ export class TMXReadWriteTest extends TileDemo {
     this.addChild(map, 0, TAG_TILE_MAP);
 
     var layer = map.getLayer("Layer 0");
-    if ("opengl" in ServiceLocator.sys.capabilities)
+    if (ServiceLocator.sys.capabilities.opengl)
       layer.texture.setAntiAliasTexParameters();
 
     map.scale = 1;

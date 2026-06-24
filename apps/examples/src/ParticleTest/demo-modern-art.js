@@ -32,67 +32,69 @@ import { Color, Point, ServiceLocator } from "@aspect/core";
 import { ParticleSystem } from "@aspect/particle";
 
 export class DemoModernArt extends ParticleDemo {
-    onEnter() {
-        super.onEnter();
+  onEnter() {
+    super.onEnter();
 
-        this._emitter = new ParticleSystem(("opengl" in ServiceLocator.sys.capabilities) ? 1000 : 200);
+    this._emitter = new ParticleSystem(
+      ServiceLocator.sys.capabilities.opengl ? 1000 : 200
+    );
 
-        this._background.addChild(this._emitter, 10);
+    this._background.addChild(this._emitter, 10);
 
-        var winSize = director.getWinSize();
+    var winSize = director.getWinSize();
 
-        // duration
-        this._emitter.duration = -1;
+    // duration
+    this._emitter.duration = -1;
 
-        // gravity
-        this._emitter.gravity = new Point(0, 0);
+    // gravity
+    this._emitter.gravity = new Point(0, 0);
 
-        // angle
-        this._emitter.angle = 0;
-        this._emitter.angleVar = 360;
+    // angle
+    this._emitter.angle = 0;
+    this._emitter.angleVar = 360;
 
-        // radial
-        this._emitter.radialAccel = 70;
-        this._emitter.radialAccelVar = 10;
+    // radial
+    this._emitter.radialAccel = 70;
+    this._emitter.radialAccelVar = 10;
 
-        // tangential
-        this._emitter.tangentialAccel = 80;
-        this._emitter.tangentialAccelVar = 0;
+    // tangential
+    this._emitter.tangentialAccel = 80;
+    this._emitter.tangentialAccelVar = 0;
 
-        // speed of particles
-        this._emitter.speed = 50;
-        this._emitter.speedVar = 10;
+    // speed of particles
+    this._emitter.speed = 50;
+    this._emitter.speedVar = 10;
 
-        // life of particles
-        this._emitter.life = 2.0;
-        this._emitter.lifeVar = 0.3;
+    // life of particles
+    this._emitter.life = 2.0;
+    this._emitter.lifeVar = 0.3;
 
-        // emits per frame
-        this._emitter.emissionRate = this._emitter.totalParticles / this._emitter.life;
+    // emits per frame
+    this._emitter.emissionRate =
+      this._emitter.totalParticles / this._emitter.life;
 
-        // color of particles
-        this._emitter.startColor = new Color(128, 128, 128, 255);
-        this._emitter.startColorVar = new Color(128, 128, 128, 255);
-        this._emitter.endColor = new Color(26, 26, 26, 50);
-        this._emitter.endColorVar = new Color(26, 26, 26, 50);
+    // color of particles
+    this._emitter.startColor = new Color(128, 128, 128, 255);
+    this._emitter.startColorVar = new Color(128, 128, 128, 255);
+    this._emitter.endColor = new Color(26, 26, 26, 50);
+    this._emitter.endColorVar = new Color(26, 26, 26, 50);
 
-        // size, in pixels
-        this._emitter.startSize = 1.0;
-        this._emitter.startSizeVar = 1.0;
-        this._emitter.endSize = 32.0;
-        this._emitter.endSizeVar = 8.0;
+    // size, in pixels
+    this._emitter.startSize = 1.0;
+    this._emitter.startSizeVar = 1.0;
+    this._emitter.endSize = 32.0;
+    this._emitter.endSizeVar = 8.0;
 
-        // texture
-        this._emitter.texture = ServiceLocator.textureCache.addImage(s_fire);
-        this._emitter.shapeType = ParticleSystem.BALL_SHAPE;
+    // texture
+    this._emitter.texture = ServiceLocator.textureCache.addImage(s_fire);
+    this._emitter.shapeType = ParticleSystem.BALL_SHAPE;
 
-        // additive
-        this._emitter.setBlendAdditive(false);
+    // additive
+    this._emitter.setBlendAdditive(false);
 
-        this.setEmitterPosition();
-    }
-    title() {
-        return "Varying size";
-    }
-
+    this.setEmitterPosition();
+  }
+  title() {
+    return "Varying size";
+  }
 }

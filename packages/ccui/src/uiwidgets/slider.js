@@ -688,7 +688,7 @@ export class Slider extends Widget {
       this._sliderBallNormalTextureScaleX,
       this._sliderBallNormalTextureScaleY
     );
-    if (ServiceLocator.rendererConfig.isWebGL) {
+    if (ServiceLocator.sys.rendererConfig.isWebGL) {
       this._slidBallNormalRenderer._renderCmd._shaderProgram =
         this._getNormalGLProgram();
     } else {
@@ -707,7 +707,7 @@ export class Slider extends Widget {
       this._slidBallPressedRenderer.visible = true;
       this._slidBallDisabledRenderer.visible = false;
     }
-    if (ServiceLocator.rendererConfig.isWebGL) {
+    if (ServiceLocator.sys.rendererConfig.isWebGL) {
       this._slidBallNormalRenderer._renderCmd._shaderProgram =
         this._getNormalGLProgram();
     } else {
@@ -721,7 +721,7 @@ export class Slider extends Widget {
       this._slidBallDisabledRenderer.visible = true;
     } else {
       this._slidBallNormalRenderer.visible = true;
-      if (ServiceLocator.rendererConfig.isWebGL) {
+      if (ServiceLocator.sys.rendererConfig.isWebGL) {
         this._slidBallNormalRenderer._renderCmd._shaderProgram =
           this._getGrayGLProgram();
       } else {

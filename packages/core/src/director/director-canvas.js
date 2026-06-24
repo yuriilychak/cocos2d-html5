@@ -11,7 +11,7 @@ export class DirectorCanvasRenderer extends DirectorRenderer {
   }
 
   setClearColor(clearColor) {
-    const renderer = ServiceLocator.rendererConfig.renderer;
+    const renderer = ServiceLocator.sys.rendererConfig.renderer;
     renderer._clearColor = clearColor;
     renderer._clearFillStyle =
       "rgb(" + clearColor.r + "," + clearColor.g + "," + clearColor.b + ")";

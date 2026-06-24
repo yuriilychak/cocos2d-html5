@@ -1,6 +1,7 @@
 import {
   BaseClass,
-  EventListener, EventListenerType,
+  EventListener,
+  EventListenerType,
   KEY,
   Point,
   Size,
@@ -229,7 +230,6 @@ export class Widget extends ProtectedNode {
   set actionTag(v) {
     this.setActionTag(v);
   }
-
 
   init() {
     this._layoutParameterDictionary = {};
@@ -745,7 +745,7 @@ export class Widget extends ProtectedNode {
   _onPressStateChangedToPressed() {}
   _onPressStateChangedToDisabled() {}
   _updateChildrenDisplayedRGBA() {
-    this.color =this.color;
+    this.color = this.color;
     this.opacity = this.opacity;
   }
 
@@ -1064,7 +1064,7 @@ export class Widget extends ProtectedNode {
     return this._bright;
   }
 
- get enabled() {
+  get enabled() {
     return this._enabled;
   }
 
@@ -1300,7 +1300,7 @@ export class Widget extends ProtectedNode {
     this._nodes.length = 0;
   }
   _findLayout() {
-    ServiceLocator.rendererConfig.renderer.childrenOrderDirty = true;
+    ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty = true;
     var layout = this._parent;
     while (layout) {
       if (layout._doLayout) {
@@ -1370,7 +1370,7 @@ export class Widget extends ProtectedNode {
     return this._usingLayoutComponent;
   }
   _createRenderCmd() {
-    if (ServiceLocator.rendererConfig.isWebGL)
+    if (ServiceLocator.sys.rendererConfig.isWebGL)
       return new WidgetWebGLRenderCmd(this);
     else return new WidgetCanvasRenderCmd(this);
   }

@@ -88,7 +88,8 @@ export const LabelRenderMixin = (Base) =>
         this._fontClientHeight =
           LabelTTF.__getFontHeightByDiv(fontNameOrFontDef);
       } else {
-        const deviceFontSize = fontSize * ServiceLocator.eglView.getDevicePixelRatio();
+        const deviceFontSize =
+          fontSize * ServiceLocator.eglView.getDevicePixelRatio();
         this._fontStyleStr =
           fontStyle +
           " " +
@@ -437,7 +438,7 @@ export const LabelRenderMixin = (Base) =>
       this._originSyncStatus(parentCmd);
 
       if (
-        ServiceLocator.rendererConfig.isWebGL ||
+        ServiceLocator.sys.rendererConfig.isWebGL ||
         locFlag & flags.transformDirty
       )
         this.transform(parentCmd);
@@ -482,7 +483,7 @@ export const LabelRenderMixin = (Base) =>
         }
         context.fillText(line, xOffset, yOffsetArray[i]);
       }
-      ServiceLocator.rendererConfig.incrementDrawCount();
+      ServiceLocator.sys.rendererConfig.incrementDrawCount();
     }
   };
 
@@ -567,7 +568,8 @@ export class CanvasRenderCmd extends LabelRenderMixin(SpriteCanvasRenderCmd) {
 
   _measure(text) {
     if (text) {
-      const context = ServiceLocator.rendererConfig.renderContext.getContext();
+      const context =
+        ServiceLocator.sys.rendererConfig.renderContext.getContext();
       context.font = this._fontStyleStr;
       return context.measureText(text).width;
     } else {
@@ -595,7 +597,7 @@ export class CanvasRenderCmd extends LabelRenderMixin(SpriteCanvasRenderCmd) {
   rendering(ctx) {
     const scaleX = ServiceLocator.eglView.scaleX,
       scaleY = ServiceLocator.eglView.scaleY;
-    const wrapper = ctx || ServiceLocator.rendererConfig.renderContext,
+    const wrapper = ctx || ServiceLocator.sys.rendererConfig.renderContext,
       context = wrapper.getContext();
     if (!context) return;
     const node = this._node;

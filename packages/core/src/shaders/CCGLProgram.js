@@ -157,7 +157,8 @@ export default class GLProgram extends BaseClass {
     super();
     this._uniforms = {};
     this._hashForUniforms = {};
-    this._glContext = glContext || ServiceLocator.rendererConfig.renderContext;
+    this._glContext =
+      glContext || ServiceLocator.sys.rendererConfig.renderContext;
 
     vShaderFileName &&
       fShaderFileName &&
@@ -1039,7 +1040,7 @@ export default class GLProgram extends BaseClass {
   }
 
   static _isHighpSupported() {
-    let ctx = ServiceLocator.rendererConfig.renderContext;
+    let ctx = ServiceLocator.sys.rendererConfig.renderContext;
     if (ctx.getShaderPrecisionFormat && GLProgram._highpSupported == null) {
       let highp = ctx.getShaderPrecisionFormat(
         ctx.FRAGMENT_SHADER,

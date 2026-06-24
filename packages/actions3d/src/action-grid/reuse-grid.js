@@ -33,7 +33,7 @@ export default class ReuseGrid extends ActionInstant {
    */
   startWithTarget(target) {
     super.startWithTarget(target);
-    ServiceLocator.rendererConfig.renderer.childrenOrderDirty = true;
+    ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty = true;
     if (this.target.grid && this.target.grid.isActive())
       this.target.grid.setReuseGrid(
         this.target.grid.getReuseGrid() + this._times

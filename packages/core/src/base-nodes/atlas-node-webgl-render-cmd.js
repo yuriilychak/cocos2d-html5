@@ -52,7 +52,7 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
       ShaderName.POSITION_TEXTURE_UCOLOR
     );
     this._uniformColor =
-      ServiceLocator.rendererConfig.renderContext.getUniformLocation(
+      ServiceLocator.sys.rendererConfig.renderContext.getUniformLocation(
         this._shaderProgram.getProgram(),
         "u_color"
       );
@@ -72,7 +72,7 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
   }
 
   rendering(ctx) {
-    const context = ctx || ServiceLocator.rendererConfig.renderContext,
+    const context = ctx || ServiceLocator.sys.rendererConfig.renderContext,
       node = this._node;
 
     const wt = this._worldTransform;
@@ -85,7 +85,10 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
 
     this._glProgramState.apply(this._matrix);
 
-    ServiceLocator.glStateCache.blendFunc(node._blendFunc.src, node._blendFunc.dst);
+    ServiceLocator.glStateCache.blendFunc(
+      node._blendFunc.src,
+      node._blendFunc.dst
+    );
     if (this._uniformColor && this._colorF32Array) {
       context.uniform4fv(this._uniformColor, this._colorF32Array);
       this._textureAtlas.drawNumberOfQuads(node.quadsToDraw, 0);

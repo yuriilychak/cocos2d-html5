@@ -27,14 +27,19 @@
 
 import { _alphaThreshold } from "./clipping-node-test-helpers";
 import { RawStencilBufferTest } from "./raw-stencil-buffer-test";
-import { glUseProgram, ServiceLocator, ShaderName, UniformName } from "@aspect/core";
+import {
+  glUseProgram,
+  ServiceLocator,
+  ShaderName,
+  UniformName
+} from "@aspect/core";
 export class RawStencilBufferTest5 extends RawStencilBufferTest {
   subtitle() {
     return "5:DepthTest:DISABLE,DepthMask:FALSE,AlphaTest:ENABLE";
   }
 
   setupStencilForClippingOnPlane(plane) {
-    var gl = ServiceLocator.rendererConfig.renderContext;
+    var gl = ServiceLocator.sys.rendererConfig.renderContext;
     super.setupStencilForClippingOnPlane(plane);
     gl.disable(gl.DEPTH_TEST);
     gl.depthMask(false);
@@ -52,7 +57,7 @@ export class RawStencilBufferTest5 extends RawStencilBufferTest {
   }
 
   setupStencilForDrawingOnPlane(plane) {
-    ServiceLocator.rendererConfig.renderContext.depthMask(true);
+    ServiceLocator.sys.rendererConfig.renderContext.depthMask(true);
     //rendererConfig.renderContext.enable(rendererConfig.renderContext.DEPTH_TEST);
     super.setupStencilForDrawingOnPlane(plane);
   }

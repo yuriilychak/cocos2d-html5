@@ -36,7 +36,7 @@ export class GLReadPixelsTest extends OpenGLTestLayer {
   constructor() {
     super();
 
-    if ("opengl" in ServiceLocator.sys.capabilities) {
+    if (ServiceLocator.sys.capabilities.opengl) {
       var x = winSize.width;
       var y = winSize.height;
 

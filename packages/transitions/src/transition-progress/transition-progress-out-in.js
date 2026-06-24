@@ -11,8 +11,7 @@ export class TransitionProgressOutIn extends TransitionProgress {
   _progressTimerNodeWithRenderTexture(texture) {
     var size = ServiceLocator.director.getWinSize();
     var pNode = new ProgressTimer(texture.sprite);
-    if (ServiceLocator.rendererConfig.isWebGL)
-      pNode.sprite.flippedY = true;
+    if (ServiceLocator.sys.rendererConfig.isWebGL) pNode.sprite.flippedY = true;
     pNode.type = ProgressTimer.TYPE_BAR;
     pNode.midPoint = new Point(0.5, 0.5);
     pNode.barChangeRate = new Point(1, 1);

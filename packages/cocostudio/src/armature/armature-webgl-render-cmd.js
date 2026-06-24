@@ -108,7 +108,7 @@ export class ArmatureWebGLRenderCmd extends Node.WebGLRenderCmd {
                   selNode.setBlendFunc(node._blendFunc);
                 }
               }
-              ServiceLocator.rendererConfig.renderer._uploadBufferData(cmd);
+              ServiceLocator.sys.rendererConfig.renderer._uploadBufferData(cmd);
             }
             break;
           case DISPLAY_TYPE_ARMATURE:
@@ -120,10 +120,10 @@ export class ArmatureWebGLRenderCmd extends Node.WebGLRenderCmd {
             boneCmd._syncStatus(parentCmd);
             cmd._syncStatus(boneCmd);
             if (cmd.uploadData) {
-              ServiceLocator.rendererConfig.renderer._uploadBufferData(cmd);
+              ServiceLocator.sys.rendererConfig.renderer._uploadBufferData(cmd);
             } else if (cmd.rendering) {
-              ServiceLocator.rendererConfig.renderer._batchRendering();
-              cmd.rendering(ServiceLocator.rendererConfig.renderContext);
+              ServiceLocator.sys.rendererConfig.renderer._batchRendering();
+              cmd.rendering(ServiceLocator.sys.rendererConfig.renderContext);
             }
             break;
         }
@@ -131,10 +131,10 @@ export class ArmatureWebGLRenderCmd extends Node.WebGLRenderCmd {
         selBone.setShaderProgram(this._shaderProgram);
         boneCmd._syncStatus(parentCmd);
         if (boneCmd.uploadData) {
-          ServiceLocator.rendererConfig.renderer._uploadBufferData(boneCmd);
+          ServiceLocator.sys.rendererConfig.renderer._uploadBufferData(boneCmd);
         } else if (boneCmd.rendering) {
-          ServiceLocator.rendererConfig.renderer._batchRendering();
-          boneCmd.rendering(ServiceLocator.rendererConfig.renderContext);
+          ServiceLocator.sys.rendererConfig.renderer._batchRendering();
+          boneCmd.rendering(ServiceLocator.sys.rendererConfig.renderContext);
         }
       }
     }
@@ -176,7 +176,7 @@ export class ArmatureWebGLRenderCmd extends Node.WebGLRenderCmd {
     this._syncStatus(parentCmd);
 
     node.sortAllChildren();
-    var renderer = ServiceLocator.rendererConfig.renderer,
+    var renderer = ServiceLocator.sys.rendererConfig.renderer,
       children = node._children,
       child,
       i,

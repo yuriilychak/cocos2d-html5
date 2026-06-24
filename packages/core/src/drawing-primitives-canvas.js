@@ -204,7 +204,7 @@ export class DrawingPrimitiveCanvas extends BaseClass {
   }
 
   drawCardinalSpline(config, tension, segments) {
-    ServiceLocator.rendererConfig.renderContext.setStrokeStyle(
+    ServiceLocator.sys.rendererConfig.renderContext.setStrokeStyle(
       Color.toRgba()
     );
     var points = this._cacheArray;
@@ -274,9 +274,7 @@ export class DrawingPrimitiveCanvas extends BaseClass {
   drawStar(ctx, radius, color) {
     var wrapper = ctx || this._renderContext;
     var context = wrapper.getContext();
-    wrapper.setFillStyle(
-      Color.toRgba(0 | color.r, 0 | color.g, 0 | color.b)
-    );
+    wrapper.setFillStyle(Color.toRgba(0 | color.r, 0 | color.g, 0 | color.b));
     var subRadius = radius / 10;
 
     context.beginPath();
@@ -326,7 +324,10 @@ export class DrawingPrimitiveCanvas extends BaseClass {
       0.6,
       Color.toRgba(0 | color.r, 0 | color.g, 0 | color.b, 100)
     );
-    g1.addColorStop(1.0, Color.toRgba(0 | color.r, 0 | color.g, 0 | color.b, 0));
+    g1.addColorStop(
+      1.0,
+      Color.toRgba(0 | color.r, 0 | color.g, 0 | color.b, 0)
+    );
     wrapper.setFillStyle(g1);
     context.beginPath();
     var startAngle_1 = 0;

@@ -112,7 +112,7 @@ export class LayerColorWebGLRenderCmd extends LayerWebGLRenderCmd {
   }
 
   rendering(ctx) {
-    const gl = ctx || ServiceLocator.rendererConfig.renderContext;
+    const gl = ctx || ServiceLocator.sys.rendererConfig.renderContext;
     const node = this._node;
 
     if (!this._matrix) {
@@ -138,7 +138,10 @@ export class LayerColorWebGLRenderCmd extends LayerWebGLRenderCmd {
     }
 
     this._glProgramState.apply(this._matrix);
-    ServiceLocator.glStateCache.blendFunc(node._blendFunc.src, node._blendFunc.dst);
+    ServiceLocator.glStateCache.blendFunc(
+      node._blendFunc.src,
+      node._blendFunc.dst
+    );
 
     gl.bindBuffer(gl.ARRAY_BUFFER, this._vertexBuffer);
     gl.enableVertexAttribArray(VertexAttribute.POSITION);
@@ -295,7 +298,7 @@ export class LayerGradientWebGLRenderCmd extends LayerColorWebGLRenderCmd {
   }
 
   rendering(ctx) {
-    const context = ctx || ServiceLocator.rendererConfig.renderContext,
+    const context = ctx || ServiceLocator.sys.rendererConfig.renderContext,
       node = this._node;
 
     if (!this._matrix) {
@@ -330,7 +333,10 @@ export class LayerGradientWebGLRenderCmd extends LayerColorWebGLRenderCmd {
     }
 
     this._glProgramState.apply(this._matrix);
-    ServiceLocator.glStateCache.blendFunc(node._blendFunc.src, node._blendFunc.dst);
+    ServiceLocator.glStateCache.blendFunc(
+      node._blendFunc.src,
+      node._blendFunc.dst
+    );
 
     gl.bindBuffer(gl.ARRAY_BUFFER, this._vertexBuffer);
     gl.enableVertexAttribArray(VertexAttribute.POSITION);

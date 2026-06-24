@@ -10,7 +10,7 @@
 //   2. Injection — dependencies are injected lazily, per service, the first
 //      time that service is accessed (`injectServices`, assignment-only). By
 //      the time injection runs every instance already exists, so the cyclic
-//      service graph (e.g. game<->eglView, sys<->rendererConfig) resolves to
+//      service graph (e.g. game<->eglView, sys<->renderingConfig) resolves to
 //      the already-constructed singletons without re-entrant construction.
 //
 // IMPORTANT: construction/injection are deferred to the first runtime access,
@@ -20,7 +20,6 @@
 // methods/constructors is safe.
 
 import { DisplayLinkDirector } from "./director/director";
-import { RendererConfig } from "./renderer/renderer-config";
 import { Sys } from "./sys";
 import Loader from "./boot/loader";
 import Game from "./boot/game";
@@ -33,7 +32,6 @@ import AnimationCache from "./sprites/animation-cache";
 import ShaderCache from "./shaders/CCShaderCache";
 import { GLStateCache } from "./shaders/CCGLStateCache";
 import { KMGLMatrix } from "./kazmath/km-gl-matrix";
-import { Configuration } from "./configuration";
 import { Profiler } from "./utils/profiler";
 import { InputManager } from "./platform/input-manager";
 
@@ -51,17 +49,11 @@ import {
   _fontLoader,
   _csbLoader
 } from "./platform/loaders";
-import {
-  _LogInfos,
-  _loadingImage,
-  _fpsImage,
-  _loaderImage
-} from "./boot";
+import { _LogInfos, _loadingImage, _fpsImage, _loaderImage } from "./boot";
 import { initBinaryLoader } from "./utils/binary-loader";
 
 export class ServiceLocator {
   static #director;
-  static #rendererConfig;
   static #sys;
   static #loader;
   static #game;
@@ -74,7 +66,6 @@ export class ServiceLocator {
   static #shaderCache;
   static #glStateCache;
   static #kmglMatrix;
-  static #configuration;
   static #profiler;
   static #inputManager;
 
@@ -89,14 +80,14 @@ export class ServiceLocator {
   // field initializers run at class-definition (module-evaluation) time, but
   // the services and this locator form a circular import graph, so a service
   // constructor can transitively reference another service class that is still
-  // in its temporal dead zone — e.g. `new RendererConfig()` throws "Cannot
+  // in its temporal dead zone — e.g. `new Sys()` throws "Cannot
   // access 'Game' before initialization". Deferring to a method called after
   // all modules have evaluated avoids this.
   //
   // The phases must stay ordered: constructors only initialise their own fields
   // (no constructor reads another service), so every instance exists before
   // injection; injection is assignment-only, so the cyclic service graph (e.g.
-  // game<->eglView, sys<->rendererConfig, director<->eventManager) resolves to
+  // game<->eglView, sys<->renderingConfig, director<->eventManager) resolves to
   // the already-constructed singletons; configuration runs last because it
   // touches live services. Idempotent.
   static construct() {
@@ -106,7 +97,6 @@ export class ServiceLocator {
     ServiceLocator.#constructed = true;
 
     ServiceLocator.#director = new DisplayLinkDirector();
-    ServiceLocator.#rendererConfig = new RendererConfig();
     ServiceLocator.#sys = new Sys();
     ServiceLocator.#loader = new Loader();
     ServiceLocator.#game = new Game();
@@ -119,9 +109,10 @@ export class ServiceLocator {
     ServiceLocator.#shaderCache = new ShaderCache();
     ServiceLocator.#glStateCache = new GLStateCache();
     ServiceLocator.#kmglMatrix = new KMGLMatrix();
-    ServiceLocator.#configuration = new Configuration();
     ServiceLocator.#profiler = new Profiler();
     ServiceLocator.#inputManager = new InputManager();
+
+    const renderingConfig = ServiceLocator.#sys.rendererConfig;
 
     // Wire dependencies (assignment-only). Every instance already exists,
     // so the cyclic service graph resolves to the constructed singletons.
@@ -131,23 +122,15 @@ export class ServiceLocator {
       eventManager: ServiceLocator.#eventManager,
       game: ServiceLocator.#game,
       profiler: ServiceLocator.#profiler,
-      rendererConfig: ServiceLocator.#rendererConfig,
+      rendererConfig: renderingConfig,
       spriteFrameCache: ServiceLocator.#spriteFrameCache,
-      textureCache: ServiceLocator.#textureCache,
-    });
-
-    ServiceLocator.#rendererConfig.injectServices({
-      sys: ServiceLocator.#sys,
-    });
-
-    ServiceLocator.#sys.injectServices({
-      rendererConfig: ServiceLocator.#rendererConfig,
+      textureCache: ServiceLocator.#textureCache
     });
 
     ServiceLocator.#loader.injectServices({
       game: ServiceLocator.#game,
-      rendererConfig: ServiceLocator.#rendererConfig,
-      sys: ServiceLocator.#sys,
+      rendererConfig: renderingConfig,
+      sys: ServiceLocator.#sys
     });
 
     ServiceLocator.#game.injectServices({
@@ -157,17 +140,17 @@ export class ServiceLocator {
       eventManager: ServiceLocator.#eventManager,
       inputManager: ServiceLocator.#inputManager,
       loader: ServiceLocator.#loader,
-      rendererConfig: ServiceLocator.#rendererConfig,
-      textureCache: ServiceLocator.#textureCache,
+      rendererConfig: renderingConfig,
+      textureCache: ServiceLocator.#textureCache
     });
 
     ServiceLocator.#engine.injectServices({
       game: ServiceLocator.#game,
-      rendererConfig: ServiceLocator.#rendererConfig,
+      rendererConfig: renderingConfig
     });
 
     ServiceLocator.#eventManager.injectServices({
-      director: ServiceLocator.#director,
+      director: ServiceLocator.#director
     });
 
     // eglView.initialize() needs game.container and is invoked later from
@@ -176,49 +159,44 @@ export class ServiceLocator {
       director: ServiceLocator.#director,
       eventManager: ServiceLocator.#eventManager,
       game: ServiceLocator.#game,
-      rendererConfig: ServiceLocator.#rendererConfig,
-      sys: ServiceLocator.#sys,
+      rendererConfig: renderingConfig,
+      sys: ServiceLocator.#sys
     });
 
     ServiceLocator.#textureCache.injectServices({
       loader: ServiceLocator.#loader,
-      rendererConfig: ServiceLocator.#rendererConfig,
+      rendererConfig: renderingConfig
     });
 
     ServiceLocator.#spriteFrameCache.injectServices({
       loader: ServiceLocator.#loader,
-      rendererConfig: ServiceLocator.#rendererConfig,
-      textureCache: ServiceLocator.#textureCache,
+      rendererConfig: renderingConfig,
+      textureCache: ServiceLocator.#textureCache
     });
 
     ServiceLocator.#animationCache.injectServices({
       loader: ServiceLocator.#loader,
-      spriteFrameCache: ServiceLocator.#spriteFrameCache,
+      spriteFrameCache: ServiceLocator.#spriteFrameCache
     });
 
     ServiceLocator.#shaderCache.injectServices({
-      rendererConfig: ServiceLocator.#rendererConfig,
+      rendererConfig: renderingConfig
     });
 
     ServiceLocator.#glStateCache.injectServices({
       kmglMatrix: ServiceLocator.#kmglMatrix,
-      rendererConfig: ServiceLocator.#rendererConfig,
+      rendererConfig: renderingConfig
     });
 
     ServiceLocator.#kmglMatrix.injectServices({
-      director: ServiceLocator.#director,
-    });
-
-    ServiceLocator.#configuration.injectServices({
-      loader: ServiceLocator.#loader,
-      rendererConfig: ServiceLocator.#rendererConfig,
+      director: ServiceLocator.#director
     });
 
     ServiceLocator.#profiler.injectServices({
       director: ServiceLocator.#director,
       eventManager: ServiceLocator.#eventManager,
       game: ServiceLocator.#game,
-      rendererConfig: ServiceLocator.#rendererConfig,
+      rendererConfig: renderingConfig
     });
 
     ServiceLocator.#inputManager.injectServices({
@@ -226,7 +204,7 @@ export class ServiceLocator {
       eglView: ServiceLocator.#eglView,
       eventManager: ServiceLocator.#eventManager,
       game: ServiceLocator.#game,
-      sys: ServiceLocator.#sys,
+      sys: ServiceLocator.#sys
     });
 
     // Configure services: register the loader's file-type handlers and boot
@@ -258,10 +236,6 @@ export class ServiceLocator {
 
   static get director() {
     return ServiceLocator.#director;
-  }
-
-  static get rendererConfig() {
-    return ServiceLocator.#rendererConfig;
   }
 
   static get sys() {
@@ -310,10 +284,6 @@ export class ServiceLocator {
 
   static get kmglMatrix() {
     return ServiceLocator.#kmglMatrix;
-  }
-
-  static get configuration() {
-    return ServiceLocator.#configuration;
   }
 
   static get profiler() {

@@ -12,8 +12,7 @@ export class TransitionProgressHorizontal extends TransitionProgress {
     var size = ServiceLocator.director.getWinSize();
 
     var pNode = new ProgressTimer(texture.sprite);
-    if (ServiceLocator.rendererConfig.isWebGL)
-      pNode.sprite.flippedY = true;
+    if (ServiceLocator.sys.rendererConfig.isWebGL) pNode.sprite.flippedY = true;
     pNode.type = ProgressTimer.TYPE_BAR;
     pNode.midPoint = new Point(1, 0);
     pNode.barChangeRate = new Point(1, 0);

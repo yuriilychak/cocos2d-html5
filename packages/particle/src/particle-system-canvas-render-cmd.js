@@ -82,7 +82,7 @@ export class ParticleSystemCanvasRenderCmd extends Node.CanvasRenderCmd {
 
   rendering(ctx, scaleX, scaleY) {
     //TODO: need refactor rendering for performance
-    const wrapper = ctx || ServiceLocator.rendererConfig.renderContext,
+    const wrapper = ctx || ServiceLocator.sys.rendererConfig.renderContext,
       context = wrapper.getContext(),
       node = this._node,
       pointRect = this._pointRect;

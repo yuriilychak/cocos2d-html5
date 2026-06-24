@@ -55,7 +55,7 @@ export class TMXOrthoFromXMLTest extends TileDemo {
 
     log("ContentSize: " + map.width + ", " + map.height);
 
-    if ("opengl" in ServiceLocator.sys.capabilities) {
+    if (ServiceLocator.sys.capabilities.opengl) {
       var mapChildren = map.children;
       for (var i = 0; i < mapChildren.length; i++) {
         var child = mapChildren[i];

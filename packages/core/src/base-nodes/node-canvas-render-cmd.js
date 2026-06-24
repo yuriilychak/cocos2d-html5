@@ -136,7 +136,7 @@ export class RenderCmd {
 
   setDirtyFlag(dirtyFlag) {
     if (this._dirtyFlag === 0 && dirtyFlag !== 0)
-      ServiceLocator.rendererConfig.renderer.pushDirtyNode(this);
+      ServiceLocator.sys.rendererConfig.renderer.pushDirtyNode(this);
     this._dirtyFlag |= dirtyFlag;
   }
 
@@ -303,7 +303,7 @@ export class RenderCmd {
 
   visit(parentCmd) {
     const node = this._node,
-      renderer = ServiceLocator.rendererConfig.renderer;
+      renderer = ServiceLocator.sys.rendererConfig.renderer;
 
     parentCmd = parentCmd || this.getParentRenderCmd();
     if (parentCmd) this._curLevel = parentCmd._curLevel + 1;
@@ -642,9 +642,15 @@ CanvasRenderCmd._getCompositeOperationByBlendFunc = function (blendFunc) {
       (blendFunc.src === GLState.ONE && blendFunc.dst === GLState.ONE)
     )
       return "lighter";
-    else if (blendFunc.src === GLState.ZERO && blendFunc.dst === GLState.SRC_ALPHA)
+    else if (
+      blendFunc.src === GLState.ZERO &&
+      blendFunc.dst === GLState.SRC_ALPHA
+    )
       return "destination-in";
-    else if (blendFunc.src === GLState.ZERO && blendFunc.dst === GLState.ONE_MINUS_SRC_ALPHA)
+    else if (
+      blendFunc.src === GLState.ZERO &&
+      blendFunc.dst === GLState.ONE_MINUS_SRC_ALPHA
+    )
       return "destination-out";
     else return "source-over";
   }

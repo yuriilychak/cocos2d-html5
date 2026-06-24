@@ -74,7 +74,7 @@ export class Issue1464 extends RenderTextureBaseLayer {
 
     if (
       !ServiceLocator.sys.isNative &&
-      !("opengl" in ServiceLocator.sys.capabilities)
+      !ServiceLocator.sys.capabilities.opengl
     ) {
       var label = new TextBMFont(
         "Not support Actions on HTML5-canvas",

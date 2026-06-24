@@ -27,7 +27,12 @@ export function drawShape(shape, renderer) {
   switch (shape.collisionCode) {
     case cp.CircleShape.prototype.collisionCode:
       this.drawDot(shape.tc, Math.max(shape.r, 1.0), c);
-      this.drawSegment(shape.tc, cp.v.add(shape.tc, cp.v.mult(body.rot, shape.r)), 1.0, c);
+      this.drawSegment(
+        shape.tc,
+        cp.v.add(shape.tc, cp.v.mult(body.rot, shape.r)),
+        1.0,
+        c
+      );
       break;
     case cp.SegmentShape.prototype.collisionCode:
       this.drawSegment(shape.ta, shape.tb, Math.max(shape.r, 2.0), c);
@@ -92,8 +97,7 @@ export class PhysicsDebugNode extends DrawNode {
   }
 
   draw(context) {
-    if (!this._space)
-      return;
+    if (!this._space) return;
     this._space.eachShape(drawShape.bind(this));
     this._space.eachConstraint(drawConstraint.bind(this));
     super.draw(context);
@@ -101,9 +105,8 @@ export class PhysicsDebugNode extends DrawNode {
   }
 
   _createRenderCmd() {
-    if (ServiceLocator.rendererConfig.isCanvas)
+    if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new PhysicsDebugNode.CanvasRenderCmd(this);
-    else
-      return new PhysicsDebugNode.WebGLRenderCmd(this);
+    else return new PhysicsDebugNode.WebGLRenderCmd(this);
   }
 }

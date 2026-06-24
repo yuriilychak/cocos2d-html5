@@ -47,7 +47,7 @@ export class ShaderOutlineEffect extends OpenGLTestLayer {
   constructor() {
     super();
 
-    if ("opengl" in ServiceLocator.sys.capabilities) {
+    if (ServiceLocator.sys.capabilities.opengl) {
       if (ServiceLocator.sys.isNative) {
         this.shader = new GLProgram(
           ccbjs + "Shaders/example_Outline_noMVP.vsh",
@@ -118,14 +118,11 @@ export class ShaderOutlineEffect extends OpenGLTestLayer {
     }
   }
   update(dt) {
-    if ("opengl" in ServiceLocator.sys.capabilities) {
+    if (ServiceLocator.sys.capabilities.opengl) {
       if (ServiceLocator.sys.isNative) {
         this.sprite
           .getGLProgramState()
-          .setUniformFloat(
-            "u_radius",
-            Math.abs(this.sprite.rotation / 500)
-          );
+          .setUniformFloat("u_radius", Math.abs(this.sprite.rotation / 500));
       } else {
         this.shader.use();
         this.shader.setUniformLocationWith1f(

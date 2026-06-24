@@ -11,7 +11,10 @@ export class ClippingNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
 
     this._rendererSaveCmd = new CustomRenderCmd(this, this._saveCmdCallback);
     this._rendererClipCmd = new CustomRenderCmd(this, this._clipCmdCallback);
-    this._rendererRestoreCmd = new CustomRenderCmd(this, this._restoreCmdCallback);
+    this._rendererRestoreCmd = new CustomRenderCmd(
+      this,
+      this._restoreCmdCallback
+    );
   }
 
   resetProgramByStencil() {}
@@ -45,7 +48,8 @@ export class ClippingNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
   }
 
   _saveCmdCallback(ctx, scaleX, scaleY) {
-    const wrapper = ctx || ServiceLocator.rendererConfig.renderContext, context = wrapper.getContext();
+    const wrapper = ctx || ServiceLocator.sys.rendererConfig.renderContext,
+      context = wrapper.getContext();
 
     if (this._clipElemType) {
       const locCache = ClippingNodeCanvasRenderCmd._getSharedCache();
@@ -70,7 +74,9 @@ export class ClippingNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
     if (!stencil) return;
     const node = this._node;
     if (stencil._renderCmd && stencil._renderCmd._blendFuncStr)
-      stencil._renderCmd._blendFuncStr = (node.inverted ? "destination-out" : "destination-in");
+      stencil._renderCmd._blendFuncStr = node.inverted
+        ? "destination-out"
+        : "destination-in";
 
     if (!stencil._children) return;
     const children = stencil._children;
@@ -81,7 +87,8 @@ export class ClippingNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
 
   _clipCmdCallback(ctx) {
     const node = this._node;
-    const wrapper = ctx || ServiceLocator.rendererConfig.renderContext, context = wrapper.getContext();
+    const wrapper = ctx || ServiceLocator.sys.rendererConfig.renderContext,
+      context = wrapper.getContext();
 
     if (this._clipElemType) {
       this._setStencilCompositionOperation(node._stencil);
@@ -105,7 +112,8 @@ export class ClippingNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
 
   _restoreCmdCallback(ctx) {
     const locCache = ClippingNodeCanvasRenderCmd._getSharedCache();
-    const wrapper = ctx || ServiceLocator.rendererConfig.renderContext, context = wrapper.getContext();
+    const wrapper = ctx || ServiceLocator.sys.rendererConfig.renderContext,
+      context = wrapper.getContext();
     if (this._clipElemType) {
       context.save();
       context.setTransform(1, 0, 0, 1, 0, 0);
@@ -138,20 +146,25 @@ export class ClippingNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
     parentCmd = parentCmd || this.getParentRenderCmd();
     this.visit(parentCmd);
 
-    this._clipElemType = !(!this._cangodhelpme() && node._stencil instanceof DrawNode);
+    this._clipElemType = !(
+      !this._cangodhelpme() && node._stencil instanceof DrawNode
+    );
     if (!node._stencil || !node._stencil.visible) {
-      if (this.inverted)
-        node._visitChildren();
+      if (this.inverted) node._visitChildren();
       return;
     }
 
-    ServiceLocator.rendererConfig.renderer.pushRenderCommand(this._rendererSaveCmd);
+    ServiceLocator.sys.rendererConfig.renderer.pushRenderCommand(
+      this._rendererSaveCmd
+    );
     if (this._clipElemType) {
       node._visitChildren();
     } else {
       node._stencil.visit(node);
     }
-    ServiceLocator.rendererConfig.renderer.pushRenderCommand(this._rendererClipCmd);
+    ServiceLocator.sys.rendererConfig.renderer.pushRenderCommand(
+      this._rendererClipCmd
+    );
 
     if (this._clipElemType) {
       node._stencil.visit(node);
@@ -162,18 +175,23 @@ export class ClippingNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
       const len = children.length;
       if (len > 0) {
         node.sortAllChildren();
-        for (i = 0; i < len; i++)
-          children[i].visit(node);
+        for (i = 0; i < len; i++) children[i].visit(node);
       }
       this._cangodhelpme(false);
     }
 
-    ServiceLocator.rendererConfig.renderer.pushRenderCommand(this._rendererRestoreCmd);
+    ServiceLocator.sys.rendererConfig.renderer.pushRenderCommand(
+      this._rendererRestoreCmd
+    );
     this._dirtyFlag = 0;
   }
 }
 
 ClippingNodeCanvasRenderCmd._sharedCache = null;
 ClippingNodeCanvasRenderCmd._getSharedCache = function () {
-  return ClippingNodeCanvasRenderCmd._sharedCache || (ClippingNodeCanvasRenderCmd._sharedCache = document.createElement("canvas"));
+  return (
+    ClippingNodeCanvasRenderCmd._sharedCache ||
+    (ClippingNodeCanvasRenderCmd._sharedCache =
+      document.createElement("canvas"))
+  );
 };

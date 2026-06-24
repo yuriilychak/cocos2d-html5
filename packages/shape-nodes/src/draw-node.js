@@ -24,7 +24,7 @@ export class DrawNode extends Node {
   }
 
   _initDrawNode() {
-    const Renderer = ServiceLocator.rendererConfig.isCanvas
+    const Renderer = ServiceLocator.sys.rendererConfig.isCanvas
       ? DrawNodeCanvas
       : DrawNodeWebGL;
     const proto = Renderer.prototype;

@@ -41,12 +41,12 @@ export class RawStencilBufferTest6 extends RawStencilBufferTest {
   }
 
   setup() {
-    ServiceLocator.rendererConfig.renderContext.stencilMask(~0);
+    ServiceLocator.sys.rendererConfig.renderContext.stencilMask(~0);
     super.setup();
   }
 
   setupStencilForClippingOnPlane(plane) {
-    var gl = ServiceLocator.rendererConfig.renderContext;
+    var gl = ServiceLocator.sys.rendererConfig.renderContext;
     var planeMask = 0x1 << plane;
     gl.stencilMask(planeMask);
     gl.stencilFunc(gl.NEVER, 0, planeMask);
@@ -76,7 +76,7 @@ export class RawStencilBufferTest6 extends RawStencilBufferTest {
   }
 
   setupStencilForDrawingOnPlane(plane) {
-    var gl = ServiceLocator.rendererConfig.renderContext;
+    var gl = ServiceLocator.sys.rendererConfig.renderContext;
     gl.depthMask(true);
     //gl.enable(gl.DEPTH_TEST);
     super.setupStencilForDrawingOnPlane(plane);

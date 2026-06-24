@@ -160,7 +160,7 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
     )
       return;
 
-    const wrapper = ctx || ServiceLocator.rendererConfig.renderContext,
+    const wrapper = ctx || ServiceLocator.sys.rendererConfig.renderContext,
       context = wrapper.getContext();
     let locX = node._offsetPosition.x;
     const locHeight = node._rect.height,
@@ -209,7 +209,8 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
         // doesn't natively support textured triangle lists, so we use
         // the polygon as a clip mask around the standard atlas blit.
         const polyInfo = node._polygonInfo;
-        const hasPoly = polyInfo && node.hasPolygonInfo && node.hasPolygonInfo();
+        const hasPoly =
+          polyInfo && node.hasPolygonInfo && node.hasPolygonInfo();
         if (hasPoly) {
           wrapper.save();
           this._tracePolygonPath(context, x, y, w, h, polyInfo);
@@ -222,9 +223,7 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
       const contentSize = node._contentSize;
       if (locTextureCoord.validRect) {
         const curColor = this._displayedColor;
-        wrapper.setFillStyle(
-          Color.toRgba(curColor.r, curColor.g, curColor.b)
-        );
+        wrapper.setFillStyle(Color.toRgba(curColor.r, curColor.g, curColor.b));
         context.fillRect(
           x,
           y,
@@ -234,7 +233,7 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
       }
     }
     if (node._flippedX || node._flippedY) wrapper.restore();
-    ServiceLocator.rendererConfig.incrementDrawCount();
+    ServiceLocator.sys.rendererConfig.incrementDrawCount();
   }
 
   _tracePolygonPath(context, x, y, w, h, polyInfo) {

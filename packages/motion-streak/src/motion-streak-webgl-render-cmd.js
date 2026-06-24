@@ -24,7 +24,7 @@ export class MotionStreakWebGLRenderCmd extends Node.WebGLRenderCmd {
     if (node._nuPoints <= 1) return;
 
     if (node.texture && node.texture.isLoaded()) {
-      ctx = ctx || ServiceLocator.rendererConfig.renderContext;
+      ctx = ctx || ServiceLocator.sys.rendererConfig.renderContext;
 
       const wt = this._worldTransform;
       this._matrix.mat[0] = wt.a;
@@ -79,7 +79,7 @@ export class MotionStreakWebGLRenderCmd extends Node.WebGLRenderCmd {
       );
 
       ctx.drawArrays(ctx.TRIANGLE_STRIP, 0, node._nuPoints * 2);
-      ServiceLocator.rendererConfig.incrementDrawCount();
+      ServiceLocator.sys.rendererConfig.incrementDrawCount();
     }
   }
 }

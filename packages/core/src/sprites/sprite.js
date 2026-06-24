@@ -945,7 +945,7 @@ export class Sprite extends EventHelper(Node) {
   }
 
   _createRenderCmd() {
-    if (ServiceLocator.rendererConfig.isCanvas)
+    if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new Sprite.CanvasRenderCmd(this);
     else return new Sprite.WebGLRenderCmd(this);
   }

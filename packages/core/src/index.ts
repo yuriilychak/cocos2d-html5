@@ -101,6 +101,7 @@ export {
   EventListenerType,
   EventType,
   CONFIG_KEY,
+  ConfigurationValueType,
   GameEvent,
   ImageFormat,
   GLServerState,
@@ -134,7 +135,7 @@ export {
   contentScaleFactor
 } from "./platform/macro/utils";
 export { log, warn } from "./boot/debugger";
-export { RendererConfig } from "./renderer/renderer-config";
+export { RendererConfig } from "./sys/renderer-config";
 export { Director, DisplayLinkDirector } from "./director/director";
 export { Sys } from "./sys";
 export { BaseClass, classManager } from "./platform/class";
@@ -223,7 +224,7 @@ export {
 export { WebGLRenderCmd as NodeWebGLRenderCmd } from "./base-nodes/node-webgl-render-cmd";
 export { CanvasContextWrapper } from "./renderer/renderer-canvas";
 export { Sprite } from "./sprites/sprite";
-export { Configuration } from "./configuration";
+export { Configuration } from "./sys/configuration";
 export { glUseProgram } from "./shaders/CCGLStateCache";
 export { setProgramForNode } from "./shaders/utils";
 export { isUndefined } from "./boot";

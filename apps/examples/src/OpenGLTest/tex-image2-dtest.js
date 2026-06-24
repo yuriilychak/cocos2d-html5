@@ -36,7 +36,7 @@ export class TexImage2DTest extends OpenGLTestLayer {
   constructor() {
     super();
 
-    if ("opengl" in ServiceLocator.sys.capabilities) {
+    if (ServiceLocator.sys.capabilities.opengl) {
       var glnode = new GLNode();
       this.addChild(glnode, 10);
       this.glnode = glnode;
@@ -47,7 +47,9 @@ export class TexImage2DTest extends OpenGLTestLayer {
       glnode.anchorX = 0.5;
       glnode.anchorY = 0.5;
 
-      this.shader = ServiceLocator.shaderCache.getProgram("ShaderPositionTexture");
+      this.shader = ServiceLocator.shaderCache.getProgram(
+        "ShaderPositionTexture"
+      );
       this.initGL();
 
       glnode.draw = function () {

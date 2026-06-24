@@ -74,7 +74,7 @@ var _batchedInfo = {
 // Inspired from @Heishe's gotta-batch-them-all branch
 // https://github.com/Talisca/cocos2d-html5/commit/de731f16414eb9bcaa20480006897ca6576d362c
 function updateBuffer(numVertex) {
-  var gl = ServiceLocator.rendererConfig.renderContext;
+  var gl = ServiceLocator.sys.rendererConfig.renderContext;
   // Update index buffer size
   if (_indexBuffer) {
     var indexCount = Math.ceil(numVertex / 4) * 6;
@@ -110,7 +110,7 @@ function updateBuffer(numVertex) {
 // Inspired from @Heishe's gotta-batch-them-all branch
 // https://github.com/Talisca/cocos2d-html5/commit/de731f16414eb9bcaa20480006897ca6576d362c
 function initQuadBuffer(numVertex) {
-  var gl = ServiceLocator.rendererConfig.renderContext;
+  var gl = ServiceLocator.sys.rendererConfig.renderContext;
   if (_indexBuffer === null) {
     // TODO do user need to release the memory ?
     _vertexBuffer = gl.createBuffer();
@@ -144,15 +144,15 @@ var rendererWebGL = {
   _clearColor: new Color(0, 0, 0, 255), //background color,default BLACK
 
   init: function () {
-    var gl = ServiceLocator.rendererConfig.renderContext;
+    var gl = ServiceLocator.sys.rendererConfig.renderContext;
     gl.disable(gl.CULL_FACE);
     gl.disable(gl.DEPTH_TEST);
 
     // Enable the WebGL2 multi-texture batcher when available.
-    _multiTexture = ServiceLocator.rendererConfig.isWebGL2;
+    _multiTexture = ServiceLocator.sys.rendererConfig.isWebGL2;
     _sizePerVertex = _multiTexture ? 7 : 6;
     if (_multiTexture) {
-      _maxBatchTextures = ServiceLocator.rendererConfig.maxBatchTextures;
+      _maxBatchTextures = ServiceLocator.sys.rendererConfig.maxBatchTextures;
       _textureUnits = new Int32Array(_maxBatchTextures);
       for (var t = 0; t < _maxBatchTextures; ++t) {
         _textureUnits[t] = t;
@@ -292,7 +292,7 @@ var rendererWebGL = {
   _renderingToBuffer: function (renderTextureId) {
     renderTextureId = renderTextureId || this._currentID;
     var locCmds = this._cacheToBufferCmds[renderTextureId];
-    var ctx = ServiceLocator.rendererConfig.renderContext;
+    var ctx = ServiceLocator.sys.rendererConfig.renderContext;
     this.rendering(ctx, locCmds);
     this._removeCache(renderTextureId);
 
@@ -342,7 +342,7 @@ var rendererWebGL = {
   },
 
   clear: function () {
-    var gl = ServiceLocator.rendererConfig.renderContext;
+    var gl = ServiceLocator.sys.rendererConfig.renderContext;
     gl.clearColor(
       this._clearColor.r / 255,
       this._clearColor.g / 255,
@@ -353,7 +353,7 @@ var rendererWebGL = {
   },
 
   setDepthTest: function (enable) {
-    var gl = ServiceLocator.rendererConfig.renderContext;
+    var gl = ServiceLocator.sys.rendererConfig.renderContext;
     if (enable) {
       gl.clearDepth(1.0);
       gl.enable(gl.DEPTH_TEST);
@@ -536,7 +536,7 @@ var rendererWebGL = {
       return;
     }
 
-    var gl = ServiceLocator.rendererConfig.renderContext;
+    var gl = ServiceLocator.sys.rendererConfig.renderContext;
     var glProgramState = _batchedInfo.glProgramState;
     var uploadAll = _batchingSize > _maxVertexSize * 0.5;
 
@@ -545,7 +545,10 @@ var rendererWebGL = {
       glProgramState.getGLProgram()._updateProjectionUniform();
     }
 
-    ServiceLocator.glStateCache.blendFunc(_batchedInfo.blendSrc, _batchedInfo.blendDst);
+    ServiceLocator.glStateCache.blendFunc(
+      _batchedInfo.blendSrc,
+      _batchedInfo.blendDst
+    );
 
     if (_batchedInfo.isMulti) {
       // Bind every accumulated texture to its own unit, then pad the remaining
@@ -579,7 +582,14 @@ var rendererWebGL = {
     gl.enableVertexAttribArray(VertexAttribute.POSITION);
     gl.enableVertexAttribArray(VertexAttribute.COLOR);
     gl.enableVertexAttribArray(VertexAttribute.TEX_COORDS);
-    gl.vertexAttribPointer(VertexAttribute.POSITION, 3, gl.FLOAT, false, stride, 0);
+    gl.vertexAttribPointer(
+      VertexAttribute.POSITION,
+      3,
+      gl.FLOAT,
+      false,
+      stride,
+      0
+    );
     gl.vertexAttribPointer(
       VertexAttribute.COLOR,
       4,
@@ -622,7 +632,7 @@ var rendererWebGL = {
     }
     gl.drawElements(gl.TRIANGLES, _indexSize, gl.UNSIGNED_SHORT, 0);
 
-    ServiceLocator.rendererConfig.incrementDrawCount();
+    ServiceLocator.sys.rendererConfig.incrementDrawCount();
 
     if (_pureQuad) {
       _prevIndexSize = _indexSize;
@@ -643,7 +653,7 @@ var rendererWebGL = {
       i,
       len,
       cmd,
-      context = ctx || ServiceLocator.rendererConfig.renderContext;
+      context = ctx || ServiceLocator.sys.rendererConfig.renderContext;
 
     // Reset buffer for rendering
     context.bindBuffer(gl.ARRAY_BUFFER, null);

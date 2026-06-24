@@ -159,7 +159,10 @@ export var particleSceneArr = [
   }
 ];
 
-if ("opengl" in ServiceLocator.sys.capabilities && ServiceLocator.rendererConfig.isWebGL) {
+if (
+  ServiceLocator.sys.capabilities.opengl &&
+  ServiceLocator.sys.rendererConfig.isWebGL
+) {
   particleSceneArr.push(function () {
     return new ParallaxParticle();
   });

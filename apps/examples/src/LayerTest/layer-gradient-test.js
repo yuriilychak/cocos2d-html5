@@ -27,7 +27,15 @@
 
 import { LayerTest } from "./layer-test";
 import { director, winSize } from "../constants";
-import { Color, EventListener, EventListenerType, MouseButton, LayerGradient, Point, ServiceLocator } from "@aspect/core";
+import {
+  Color,
+  EventListener,
+  EventListenerType,
+  MouseButton,
+  LayerGradient,
+  Point,
+  ServiceLocator
+} from "@aspect/core";
 import { ButtonLayout } from "../button-layout";
 
 import { TAG_LAYER } from "./layer-test-constants";
@@ -48,7 +56,7 @@ export class LayerGradientTest extends LayerTest {
     );
     this.addChild(layer1, 0, TAG_LAYER);
 
-    if ("touches" in ServiceLocator.sys.capabilities) {
+    if (ServiceLocator.sys.capabilities.touches) {
       ServiceLocator.eventManager.addListener(
         {
           event: EventListenerType.TOUCH_ALL_AT_ONCE,
@@ -61,7 +69,7 @@ export class LayerGradientTest extends LayerTest {
         },
         this
       );
-    } else if ("mouse" in ServiceLocator.sys.capabilities) {
+    } else if (ServiceLocator.sys.capabilities.mouse) {
       ServiceLocator.eventManager.addListener(
         {
           event: EventListenerType.MOUSE,
@@ -79,13 +87,23 @@ export class LayerGradientTest extends LayerTest {
 
     let isEnabled = true;
     const layout = new ButtonLayout(
-      [{ label: "Compressed: Enabled", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) }],
-      196, "Options",
+      [
+        {
+          label: "Compressed: Enabled",
+          tintDefault: new Color(0x44, 0x55, 0x77),
+          tintPressed: new Color(0x22, 0x33, 0x55)
+        }
+      ],
+      196,
+      "Options",
       () => {
         const gradient = this.getChildByTag(TAG_LAYER);
         isEnabled = !isEnabled;
         gradient.setCompressedInterpolation(isEnabled);
-        layout.setLabelText(0, isEnabled ? "Compressed: Enabled" : "Compressed: Disabled");
+        layout.setLabelText(
+          0,
+          isEnabled ? "Compressed: Enabled" : "Compressed: Disabled"
+        );
       }
     );
     this.addChild(layout);
@@ -94,10 +112,7 @@ export class LayerGradientTest extends LayerTest {
 
   updateGradient(pos) {
     //----start7----updateGradient
-    var diff = Point.sub(
-      new Point(winSize.width / 2, winSize.height / 2),
-      pos
-    );
+    var diff = Point.sub(new Point(winSize.width / 2, winSize.height / 2), pos);
     diff = Point.normalize(diff);
 
     var gradient = this.getChildByTag(1);

@@ -25,7 +25,10 @@
 import { WebGLRenderCmd as NodeWebGLRenderCmd } from "../base-nodes/node-webgl-render-cmd";
 import { Rect, Point } from "../geometry";
 import { log, error, _LogInfos } from "../boot/debugger";
-import { rectPointsToPixels, contentScaleFactor } from "../platform/macro/utils";
+import {
+  rectPointsToPixels,
+  contentScaleFactor
+} from "../platform/macro/utils";
 
 import { FIX_ARTIFACTS_BY_STRECHING_TEXEL } from "../platform/config";
 import { ServiceLocator } from "../service-locator";
@@ -54,7 +57,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
     this._polyUVDirty = true;
 
     this._shaderProgram = ServiceLocator.shaderCache.programForKey(
-      ServiceLocator.rendererConfig.isWebGL2
+      ServiceLocator.sys.rendererConfig.isWebGL2
         ? ShaderName.SPRITE_POSITION_TEXTURECOLOR_MULTI
         : ShaderName.SPRITE_POSITION_TEXTURECOLOR
     );
@@ -62,8 +65,13 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
 
   _onPolygonInfoChanged() {
     const node = this._node;
-    const renderer = ServiceLocator.rendererConfig.renderer;
-    if (node && node._polygonInfo && node.hasPolygonInfo && node.hasPolygonInfo()) {
+    const renderer = ServiceLocator.sys.rendererConfig.renderer;
+    if (
+      node &&
+      node._polygonInfo &&
+      node.hasPolygonInfo &&
+      node.hasPolygonInfo()
+    ) {
       this.vertexType = renderer.VertexType.CUSTOM;
       const tris = node._polygonInfo.triangles;
       // Use a typed array of indices for the batcher.
@@ -128,10 +136,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
     return (
       Rect.equalTo(frame.getRect(), node._rect) &&
       frame.getTexture().name === node._texture.name &&
-      Point.equalTo(
-        frame.getOffset(),
-        node._unflippedOffsetPositionFromCenter
-      )
+      Point.equalTo(frame.getOffset(), node._unflippedOffsetPositionFromCenter)
     );
   }
 
@@ -156,7 +161,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
     this.dispatchEvent("load");
 
     // Force refresh the render command list
-    ServiceLocator.rendererConfig.renderer.childrenOrderDirty = true;
+    ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty = true;
   }
 
   _setTextureCoords(rect, needConvert) {
@@ -254,12 +259,18 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
     const node = this._node,
       blendFunc = node._blendFunc;
     if (!node._texture || !node._texture.hasPremultipliedAlpha()) {
-      if (blendFunc.src === GLState.ONE && blendFunc.dst === GLState.BLEND_DST) {
+      if (
+        blendFunc.src === GLState.ONE &&
+        blendFunc.dst === GLState.BLEND_DST
+      ) {
         blendFunc.src = GLState.SRC_ALPHA;
       }
       node.isOpacityModifyRGB = false;
     } else {
-      if (blendFunc.src === GLState.SRC_ALPHA && blendFunc.dst === GLState.BLEND_DST) {
+      if (
+        blendFunc.src === GLState.SRC_ALPHA &&
+        blendFunc.dst === GLState.BLEND_DST
+      ) {
         blendFunc.src = GLState.ONE;
       }
       node.isOpacityModifyRGB = true;
@@ -274,7 +285,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
       this._updateBlendFunc();
 
       if (node._textureLoaded) {
-        ServiceLocator.rendererConfig.renderer.childrenOrderDirty = true;
+        ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty = true;
       }
     }
   }
@@ -408,7 +419,8 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
       );
     }
 
-    const stride = ServiceLocator.rendererConfig.renderer.getSizePerVertex();
+    const stride =
+      ServiceLocator.sys.rendererConfig.renderer.getSizePerVertex();
     const vertices = this._vertices;
     const len = vertices.length;
     const ti = texIndex || 0;
@@ -481,7 +493,8 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
 
     let offset = vertexDataOffset;
     const color = this._color[0];
-    const stride = ServiceLocator.rendererConfig.renderer.getSizePerVertex();
+    const stride =
+      ServiceLocator.sys.rendererConfig.renderer.getSizePerVertex();
     const ti = texIndex || 0;
 
     for (let i = 0; i < vertCount; i++) {

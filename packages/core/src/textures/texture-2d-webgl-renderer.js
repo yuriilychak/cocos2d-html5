@@ -1,4 +1,4 @@
-import { RendererConfig } from "../renderer/renderer-config";
+import { RendererConfig } from "../sys/renderer-config";
 import { Size } from "../geometry";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import { NextPOT } from "../platform/macro/utils";
@@ -36,7 +36,7 @@ export default class WebGLTextureRenderer {
     if (!element) return;
     var t = this._texture;
     this._webTextureObj =
-      ServiceLocator.rendererConfig.renderContext.createTexture();
+      ServiceLocator.sys.rendererConfig.renderContext.createTexture();
     t._htmlElementObj = element;
     t._pixelsWide = t._contentSize.width = element.width;
     t._pixelsHigh = t._contentSize.height = element.height;
@@ -52,7 +52,7 @@ export default class WebGLTextureRenderer {
     if (!t._htmlElementObj) return;
     if (!t._htmlElementObj.width || !t._htmlElementObj.height) return;
 
-    var gl = ServiceLocator.rendererConfig.renderContext;
+    var gl = ServiceLocator.sys.rendererConfig.renderContext;
 
     ServiceLocator.glStateCache.bindTexture2D(t);
 
@@ -100,7 +100,7 @@ export default class WebGLTextureRenderer {
   releaseTexture() {
     var t = this._texture;
     if (this._webTextureObj)
-      ServiceLocator.rendererConfig.renderContext.deleteTexture(
+      ServiceLocator.sys.rendererConfig.renderContext.deleteTexture(
         this._webTextureObj
       );
     t._htmlElementObj = null;
@@ -165,7 +165,7 @@ export default class WebGLTextureRenderer {
 
   initWithData(data, pixelFormat, pixelsWide, pixelsHigh, contentSize) {
     var t = this._texture;
-    var gl = ServiceLocator.rendererConfig.renderContext;
+    var gl = ServiceLocator.sys.rendererConfig.renderContext;
     var format = gl.RGBA,
       type = gl.UNSIGNED_BYTE;
 
@@ -261,7 +261,7 @@ export default class WebGLTextureRenderer {
         this._maxS,
         0.0
       ],
-      gl = ServiceLocator.rendererConfig.renderContext;
+      gl = ServiceLocator.sys.rendererConfig.renderContext;
 
     var width = t._pixelsWide * this._maxS,
       height = t._pixelsHigh * this._maxT;
@@ -337,7 +337,7 @@ export default class WebGLTextureRenderer {
 
     ServiceLocator.glStateCache.bindTexture2D(t);
 
-    var gl = ServiceLocator.rendererConfig.renderContext;
+    var gl = ServiceLocator.sys.rendererConfig.renderContext;
     gl.enableVertexAttribArray(VertexAttribute.POSITION);
     gl.enableVertexAttribArray(VertexAttribute.TEX_COORDS);
     gl.vertexAttribPointer(
@@ -369,7 +369,7 @@ export default class WebGLTextureRenderer {
     var imageWidth = uiImage.getWidth();
     var imageHeight = uiImage.getHeight();
 
-    var maxTextureSize = ServiceLocator.configuration.getMaxTextureSize();
+    var maxTextureSize = ServiceLocator.sys.configuration.maxTextureSize;
     if (imageWidth > maxTextureSize || imageHeight > maxTextureSize) {
       log(
         _LogInfos.Texture2D_initWithImage_2,
@@ -396,7 +396,7 @@ export default class WebGLTextureRenderer {
 
   setTexParameters(texParams, magFilter, wrapS, wrapT) {
     var t = this._texture;
-    var gl = ServiceLocator.rendererConfig.renderContext;
+    var gl = ServiceLocator.sys.rendererConfig.renderContext;
 
     if (magFilter !== undefined)
       texParams = {
@@ -422,7 +422,7 @@ export default class WebGLTextureRenderer {
   }
 
   setAntiAliasTexParameters() {
-    var gl = ServiceLocator.rendererConfig.renderContext;
+    var gl = ServiceLocator.sys.rendererConfig.renderContext;
     var t = this._texture;
 
     ServiceLocator.glStateCache.bindTexture2D(t);
@@ -438,7 +438,7 @@ export default class WebGLTextureRenderer {
   }
 
   setAliasTexParameters() {
-    var gl = ServiceLocator.rendererConfig.renderContext;
+    var gl = ServiceLocator.sys.rendererConfig.renderContext;
     var t = this._texture;
 
     ServiceLocator.glStateCache.bindTexture2D(t);
@@ -462,8 +462,8 @@ export default class WebGLTextureRenderer {
     );
 
     ServiceLocator.glStateCache.bindTexture2D(t);
-    ServiceLocator.rendererConfig.renderContext.generateMipmap(
-      ServiceLocator.rendererConfig.renderContext.TEXTURE_2D
+    ServiceLocator.sys.rendererConfig.renderContext.generateMipmap(
+      ServiceLocator.sys.rendererConfig.renderContext.TEXTURE_2D
     );
     this._hasMipmaps = true;
   }

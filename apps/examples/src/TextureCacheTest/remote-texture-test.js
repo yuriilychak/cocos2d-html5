@@ -40,7 +40,10 @@ export class RemoteTextureTest extends TextureCacheTestBase {
 
   onEnter() {
     super.onEnter();
-    if ("opengl" in ServiceLocator.sys.capabilities && !ServiceLocator.sys.isNative) {
+    if (
+      ServiceLocator.sys.capabilities.opengl &&
+      !ServiceLocator.sys.isNative
+    ) {
       var label = new TextBMFont(
         "Not support Loading texture from remote site on HTML5-WebGL",
         s_simpleFont_fnt
@@ -60,7 +63,11 @@ export class RemoteTextureTest extends TextureCacheTestBase {
     ];
 
     for (var i = 0; i < imageUrlArray.length; i++) {
-      ServiceLocator.textureCache.addImageAsync(imageUrlArray[i], this.texLoaded, this);
+      ServiceLocator.textureCache.addImageAsync(
+        imageUrlArray[i],
+        this.texLoaded,
+        this
+      );
     }
 
     ServiceLocator.loader.loadImg(

@@ -35,7 +35,7 @@ export class ShaderNode extends GLNode {
     super();
     this.init();
 
-    if ("opengl" in ServiceLocator.sys.capabilities) {
+    if (ServiceLocator.sys.capabilities.opengl) {
       this.width = 256;
       this.height = 256;
       this.anchorX = 0.5;

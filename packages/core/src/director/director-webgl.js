@@ -109,15 +109,15 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
     director._projection = projection;
     ServiceLocator.eventManager.dispatchEvent(director._eventProjectionChanged);
     ServiceLocator.glStateCache.setProjectionMatrixDirty();
-    ServiceLocator.rendererConfig.renderer.childrenOrderDirty = true;
+    ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty = true;
   }
 
   setDepthTest(on) {
-    ServiceLocator.rendererConfig.renderer.setDepthTest(on);
+    ServiceLocator.sys.rendererConfig.renderer.setDepthTest(on);
   }
 
   setClearColor(clearColor) {
-    ServiceLocator.rendererConfig.renderer._clearColor = clearColor;
+    ServiceLocator.sys.rendererConfig.renderer._clearColor = clearColor;
   }
 
   setOpenGLView(openGLView) {
@@ -126,7 +126,7 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
     director._winSizeInPoints.height = ServiceLocator.game.canvas.height;
     director._openGLView = openGLView || ServiceLocator.eglView;
 
-    var conf = ServiceLocator.configuration;
+    var conf = ServiceLocator.sys.configuration;
     conf.gatherGPUInfo();
     conf.dumpInfo();
 
@@ -161,17 +161,26 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
   }
 
   setAlphaBlending(on) {
-    if (on) ServiceLocator.glStateCache.blendFunc(GLState.BLEND_SRC, GLState.BLEND_DST);
+    if (on)
+      ServiceLocator.glStateCache.blendFunc(
+        GLState.BLEND_SRC,
+        GLState.BLEND_DST
+      );
     else
       ServiceLocator.glStateCache.blendFunc(
-        ServiceLocator.rendererConfig.renderContext.ONE,
-        ServiceLocator.rendererConfig.renderContext.ZERO
+        ServiceLocator.sys.rendererConfig.renderContext.ONE,
+        ServiceLocator.sys.rendererConfig.renderContext.ZERO
       );
   }
 
   setGLDefaultValues() {
     this.setAlphaBlending(true);
     this.setProjection(this._director._projection);
-    ServiceLocator.rendererConfig.renderContext.clearColor(0.0, 0.0, 0.0, 0.0);
+    ServiceLocator.sys.rendererConfig.renderContext.clearColor(
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    );
   }
 }

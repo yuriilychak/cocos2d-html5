@@ -162,7 +162,7 @@ export function disableDefaultGLStates() {
  * @function
  */
 export function incrementGLDraws(addNumber) {
-  ServiceLocator.rendererConfig.incrementDrawCount(addNumber);
+  ServiceLocator.sys.rendererConfig.incrementDrawCount(addNumber);
 }
 
 /**
@@ -285,8 +285,8 @@ export function NextPOT(x) {
  * @function
  */
 export function checkGLErrorDebug() {
-  if (ServiceLocator.rendererConfig.isWebGL) {
-    var _error = ServiceLocator.rendererConfig.renderContext.getError();
+  if (ServiceLocator.sys.rendererConfig.isWebGL) {
+    var _error = ServiceLocator.sys.rendererConfig.renderContext.getError();
     if (_error) {
       log(_LogInfos.checkGLErrorDebug, _error);
     }

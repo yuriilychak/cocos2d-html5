@@ -2,25 +2,10 @@ import { log, warn as debugWarn } from "../boot/debugger";
 import { Size } from "../geometry";
 import SysCapabilities from './sys-capabilities';
 import SysSpecification from './sys-specification';
+import RendererConfig from './renderer-config';
+import { Configuration } from './configuration';
 
-import type { BrowserNavigator, BrowserEnvironment } from './types';
-
-type WebGLContext = WebGLRenderingContext | WebGL2RenderingContext;
-
-type RendererConfigLike = {
-  isWebGL: boolean;
-};
-
-type SysServices = {
-  rendererConfig: RendererConfigLike;
-};
-
-type StorageLike = {
-  getItem(...args: any[]): any;
-  setItem(...args: any[]): any;
-  removeItem(...args: any[]): any;
-  clear(...args: any[]): any;
-};
+import type { BrowserNavigator, BrowserEnvironment, BrowserWindow, WebGLContext, StorageLike } from './types';
 
 /**
  * System variables singleton.
@@ -34,76 +19,43 @@ export default class Sys {
     "moz-webgl"
   ];
 
-  #rendererConfig: RendererConfigLike | null = null;
-  #windowPixelResolution: Size = new Size();
+  #windowPixelResolution: Size;
   #localStorage: StorageLike;
   #capabilities: SysCapabilities;
   #specification: SysSpecification;
+  #rendererConfig: RendererConfig;
+  #configuration: Configuration;
 
   readonly #env: BrowserEnvironment;
 
   constructor() {
     this.#env = Sys.#getBrowserEnvironment();
-
-    const win = this.#env.window,
-      nav = this.#env.navigator,
-      doc = this.#env.document;
-
-    this.#specification = new SysSpecification(nav);
-
-    const w = win.innerWidth || doc.documentElement.clientWidth;
-    const h = win.innerHeight || doc.documentElement.clientHeight;
-    const ratio = win.devicePixelRatio || 1;
-
-    this.#windowPixelResolution = new Size(ratio * w, ratio * h);
-    try {
-      this.#localStorage = win.localStorage;
-      this.#localStorage.setItem("storage", "");
-      this.#localStorage.removeItem("storage");
-    } catch (e) {
-      const warn = () =>
-        debugWarn(
-          "Warning: localStorage isn't enabled. Please confirm browser cookie or privacy option"
-        );
-      this.#localStorage = {
-        getItem: warn,
-        setItem: warn,
-        removeItem: warn,
-        clear: warn
-      };
-    }
-
-    this.#capabilities = new SysCapabilities(win, doc, nav, this.#detectWebGLSupport());
+    this.#specification = new SysSpecification(this.#env.navigator);
+    this.#capabilities = new SysCapabilities(this.#env.window, this.#env.document, this.#env.navigator, this.#detectWebGLSupport());
+    this.#rendererConfig = new RendererConfig(this.#capabilities);
+    this.#configuration = new Configuration(this.#rendererConfig);
+    this.#localStorage = Sys.#detectLocalStorage(this.#env.window);
+    this.#windowPixelResolution = Sys.#getWindowPixelResolution(this.#env.window, this.#env.document);
 
     // Adjust mobile css settings
     if (this.#specification.isMobile) {
-      const fontStyle = doc.createElement("style");
-      fontStyle.type = "text/css";
-      doc.body.appendChild(fontStyle);
-
-      fontStyle.textContent =
-        "body,canvas,div{ -moz-user-select: none;-webkit-user-select: none;-ms-user-select: none;-khtml-user-select: none;" +
-        "-webkit-tap-highlight-color:rgba(0,0,0,0);}";
+      Sys.#adjustMobileCssSettings(this.#env.document);
     }
   }
 
-  injectServices({ rendererConfig }: SysServices): void {
-    this.#rendererConfig = rendererConfig;
-  }
-
-  toString(): string {
+  public toString(): string {
     return [
         this.#specification.toString(),
         `capabilities : " ${this.#capabilities.toString()}`,
-        `Using ${this.#rendererConfig?.isWebGL ? "WEBGL" : "CANVAS"} renderer.`
+        `Using ${this.#rendererConfig.isWebGL ? "WEBGL" : "CANVAS"} renderer.`
       ].join("\r\n")
   }
 
-  dump(): void {
+  public dump(): void {
     log(this.toString());
   }
 
-  openURL(url: string): void {
+  public openURL(url: string): void {
     this.#env.window.open(url);
   }
 
@@ -124,31 +76,39 @@ export default class Sys {
     }
   }
 
-  get windowPixelResolution(): Size {
+  public get windowPixelResolution(): Size {
     return this.#windowPixelResolution;
   }
 
-  get localStorage(): StorageLike {
+  public get localStorage(): StorageLike {
     return this.#localStorage;
   }
 
-  get capabilities(): SysCapabilities {
+  public get capabilities(): SysCapabilities {
     return this.#capabilities;
   }
 
-  get specification(): SysSpecification {
+  public get specification(): SysSpecification {
     return this.#specification;
   }
 
-  static create3DContext(
+  public get rendererConfig(): RendererConfig {
+    return this.#rendererConfig;
+  }
+
+  public get configuration(): Configuration {
+    return this.#configuration;
+  }
+
+  public static create3DContext(
     canvas: HTMLCanvasElement,
-    opt_attribs?: WebGLContextAttributes
+    optAttribs?: WebGLContextAttributes
   ): WebGLContext | null {
     for (let i = 0; i < Sys.#webGLContextNames.length; ++i) {
       try {
         const context = canvas.getContext(
           Sys.#webGLContextNames[i] as any,
-          opt_attribs
+          optAttribs
         ) as WebGLContext | null;
         if (context) {
           return context;
@@ -164,5 +124,42 @@ export default class Sys {
       document,
       navigator: window.navigator as BrowserNavigator
     };
+  }
+
+  static #getWindowPixelResolution(window: BrowserWindow, document: Document): Size {
+    const w = window.innerWidth || document.documentElement.clientWidth;
+    const h = window.innerHeight || document.documentElement.clientHeight;
+    const ratio = window.devicePixelRatio || 1;
+
+    return new Size(ratio * w, ratio * h);
+  }
+
+  static #detectLocalStorage(window: BrowserWindow): StorageLike {
+    try {
+      window.localStorage.setItem("storage", "");
+      window.localStorage.removeItem("storage");
+
+      return window.localStorage;
+    } catch (e) {
+      const warn = () =>
+        debugWarn(
+          "Warning: localStorage isn't enabled. Please confirm browser cookie or privacy option"
+        );
+      return {
+        getItem: warn,
+        setItem: warn,
+        removeItem: warn,
+        clear: warn
+      };
+    }
+  }
+
+  static #adjustMobileCssSettings(document: Document): void {
+    const fontStyle = document.createElement("style");
+    fontStyle.textContent =
+      "body,canvas,div{ -moz-user-select: none;-webkit-user-select: none;-ms-user-select: none;-khtml-user-select: none;" +
+      "-webkit-tap-highlight-color:rgba(0,0,0,0);}";
+
+    document.body.appendChild(fontStyle);
   }
 }

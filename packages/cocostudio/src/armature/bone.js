@@ -1,4 +1,3 @@
-
 /****************************************************************************
  Copyright (c) 2011-2012 cocos2d-x.org
  Copyright (c) 2013-2014 Chukong Technologies Inc.
@@ -328,10 +327,7 @@ export class Bone extends Node {
    */
   addChildBone(child) {
     assert(child, "Argument must be non-nil");
-    assert(
-      !child.parentBone,
-      "child already added. It can't be added again"
-    );
+    assert(!child.parentBone, "child already added. It can't be added again");
 
     if (this._children.indexOf(child) < 0) {
       this._children.push(child);
@@ -692,116 +688,117 @@ export class Bone extends Node {
   }
 
   _createRenderCmd() {
-    if (ServiceLocator.rendererConfig.isCanvas) return new Bone.CanvasRenderCmd(this);
+    if (ServiceLocator.sys.rendererConfig.isCanvas)
+      return new Bone.CanvasRenderCmd(this);
     else return new Bone.WebGLRenderCmd(this);
   }
-};
+}
 
 class BoneCanvasRenderCmd extends Node.CanvasRenderCmd {
-    constructor(renderable) {
-      super(renderable);
-      this._needDraw = false;
+  constructor(renderable) {
+    super(renderable);
+    this._needDraw = false;
+  }
+
+  _updateColor() {
+    var node = this._node;
+    var display = node._displayManager.getDisplayRenderNode();
+    if (display !== null) {
+      var displayCmd = display._renderCmd;
+      display.color = this._displayedColor;
+      display.opacity = this._displayedOpacity;
+      displayCmd._syncDisplayColor(node._tweenData);
+      displayCmd._syncDisplayOpacity(node._tweenData.a);
+      displayCmd._updateColor();
+    }
+  }
+
+  transform(parentCmd, recursive) {
+    if (!this._transform) {
+      this._transform = { a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0 };
+      this._worldTransform = { a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0 };
     }
 
-    _updateColor() {
-      var node = this._node;
-      var display = node._displayManager.getDisplayRenderNode();
-      if (display !== null) {
-        var displayCmd = display._renderCmd;
-        display.color = this._displayedColor;
-        display.opacity = this._displayedOpacity;
-        displayCmd._syncDisplayColor(node._tweenData);
-        displayCmd._syncDisplayOpacity(node._tweenData.a);
-        displayCmd._updateColor();
-      }
+    var node = this._node,
+      t = this._transform,
+      wt = this._worldTransform,
+      pt = parentCmd ? parentCmd._worldTransform : null;
+
+    if (pt) {
+      this.originTransform();
+      AffineTransform.concatIn(t, node._worldTransform);
     }
 
-    transform(parentCmd, recursive) {
-      if (!this._transform) {
-        this._transform = { a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0 };
-        this._worldTransform = { a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0 };
-      }
-
-      var node = this._node,
-        t = this._transform,
-        wt = this._worldTransform,
-        pt = parentCmd ? parentCmd._worldTransform : null;
-
-      if (pt) {
-        this.originTransform();
-        AffineTransform.concatIn(t, node._worldTransform);
-      }
-
-      if (pt) {
-        wt.a = t.a * pt.a + t.b * pt.c;
-        wt.b = t.a * pt.b + t.b * pt.d;
-        wt.c = t.c * pt.a + t.d * pt.c;
-        wt.d = t.c * pt.b + t.d * pt.d;
-        wt.tx = t.tx * pt.a + t.ty * pt.c + pt.tx;
-        wt.ty = t.tx * pt.b + t.ty * pt.d + pt.ty;
-      } else {
-        wt.a = t.a;
-        wt.b = t.b;
-        wt.c = t.c;
-        wt.d = t.d;
-        wt.tx = t.tx;
-        wt.ty = t.ty;
-      }
+    if (pt) {
+      wt.a = t.a * pt.a + t.b * pt.c;
+      wt.b = t.a * pt.b + t.b * pt.d;
+      wt.c = t.c * pt.a + t.d * pt.c;
+      wt.d = t.c * pt.b + t.d * pt.d;
+      wt.tx = t.tx * pt.a + t.ty * pt.c + pt.tx;
+      wt.ty = t.tx * pt.b + t.ty * pt.d + pt.ty;
+    } else {
+      wt.a = t.a;
+      wt.b = t.b;
+      wt.c = t.c;
+      wt.d = t.d;
+      wt.tx = t.tx;
+      wt.ty = t.ty;
     }
-  };
+  }
+}
 
 class BoneWebGLRenderCmd extends Node.WebGLRenderCmd {
-    constructor(renderable) {
-      super(renderable);
-      this._needDraw = false;
+  constructor(renderable) {
+    super(renderable);
+    this._needDraw = false;
+  }
+
+  _updateColor() {
+    var node = this._node;
+    var display = node._displayManager.getDisplayRenderNode();
+    if (display !== null) {
+      var displayCmd = display._renderCmd;
+      display.color = this._displayedColor;
+      display.opacity = this._displayedOpacity;
+      displayCmd._syncDisplayColor(node._tweenData);
+      displayCmd._syncDisplayOpacity(node._tweenData.a);
+      displayCmd._updateColor();
+    }
+  }
+
+  transform(parentCmd, recursive) {
+    if (!this._transform) {
+      this._transform = { a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0 };
+      this._worldTransform = { a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0 };
     }
 
-    _updateColor() {
-      var node = this._node;
-      var display = node._displayManager.getDisplayRenderNode();
-      if (display !== null) {
-        var displayCmd = display._renderCmd;
-        display.color = this._displayedColor;
-        display.opacity = this._displayedOpacity;
-        displayCmd._syncDisplayColor(node._tweenData);
-        displayCmd._syncDisplayOpacity(node._tweenData.a);
-        displayCmd._updateColor();
-      }
+    var node = this._node,
+      t = this._transform,
+      wt = this._worldTransform,
+      pt = parentCmd ? parentCmd._worldTransform : null;
+
+    if (pt) {
+      this.originTransform();
+      AffineTransform.concatIn(t, node._worldTransform);
     }
 
-    transform(parentCmd, recursive) {
-      if (!this._transform) {
-        this._transform = { a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0 };
-        this._worldTransform = { a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0 };
-      }
-
-      var node = this._node,
-        t = this._transform,
-        wt = this._worldTransform,
-        pt = parentCmd ? parentCmd._worldTransform : null;
-
-      if (pt) {
-        this.originTransform();
-        AffineTransform.concatIn(t, node._worldTransform);
-      }
-
-      if (pt) {
-        wt.a = t.a * pt.a + t.b * pt.c;
-        wt.b = t.a * pt.b + t.b * pt.d;
-        wt.c = t.c * pt.a + t.d * pt.c;
-        wt.d = t.c * pt.b + t.d * pt.d;
-        wt.tx = t.tx * pt.a + t.ty * pt.c + pt.tx;
-        wt.ty = t.tx * pt.b + t.ty * pt.d + pt.ty;
-      } else {
-        wt.a = t.a;
-        wt.b = t.b;
-        wt.c = t.c;
-        wt.d = t.d;
-        wt.tx = t.tx;
-        wt.ty = t.ty;
-      }
+    if (pt) {
+      wt.a = t.a * pt.a + t.b * pt.c;
+      wt.b = t.a * pt.b + t.b * pt.d;
+      wt.c = t.c * pt.a + t.d * pt.c;
+      wt.d = t.c * pt.b + t.d * pt.d;
+      wt.tx = t.tx * pt.a + t.ty * pt.c + pt.tx;
+      wt.ty = t.tx * pt.b + t.ty * pt.d + pt.ty;
+    } else {
+      wt.a = t.a;
+      wt.b = t.b;
+      wt.c = t.c;
+      wt.d = t.d;
+      wt.tx = t.tx;
+      wt.ty = t.ty;
     }
-  };
+  }
+}
 
 Bone.CanvasRenderCmd = BoneCanvasRenderCmd;
 Bone.WebGLRenderCmd = BoneWebGLRenderCmd;

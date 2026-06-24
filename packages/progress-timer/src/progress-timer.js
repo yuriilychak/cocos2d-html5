@@ -86,14 +86,14 @@ export class ProgressTimer extends Node {
 
   onEnter() {
     super.onEnter();
-    if (ServiceLocator.rendererConfig.isWebGL) {
+    if (ServiceLocator.sys.rendererConfig.isWebGL) {
       this._renderCmd.initCmd();
       this._renderCmd._updateProgress();
     }
   }
 
   cleanup() {
-    if (ServiceLocator.rendererConfig.isWebGL) {
+    if (ServiceLocator.sys.rendererConfig.isWebGL) {
       this._renderCmd.releaseData();
     }
     super.cleanup();
@@ -304,7 +304,7 @@ export class ProgressTimer extends Node {
   }
 
   _createRenderCmd() {
-    if (ServiceLocator.rendererConfig.isCanvas)
+    if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new this.constructor.CanvasRenderCmd(this);
     else return new this.constructor.WebGLRenderCmd(this);
   }

@@ -93,7 +93,7 @@ export default class LayerColorWebGLRenderer extends LayerWebGLRenderer {
   }
 
   rendering(ctx) {
-    const gl = ctx || ServiceLocator.rendererConfig.renderContext;
+    const gl = ctx || ServiceLocator.sys.rendererConfig.renderContext;
     const node = this._node;
 
     if (!this._matrix) {
@@ -119,7 +119,10 @@ export default class LayerColorWebGLRenderer extends LayerWebGLRenderer {
     }
 
     this._glProgramState.apply(this._matrix);
-    ServiceLocator.glStateCache.blendFunc(node._blendFunc.src, node._blendFunc.dst);
+    ServiceLocator.glStateCache.blendFunc(
+      node._blendFunc.src,
+      node._blendFunc.dst
+    );
 
     gl.bindBuffer(gl.ARRAY_BUFFER, this._vertexBuffer);
     gl.enableVertexAttribArray(VertexAttribute.POSITION);

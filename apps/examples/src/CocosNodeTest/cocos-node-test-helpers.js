@@ -63,7 +63,7 @@ export var arrayOfNodeTest = [
   ConvertToNode
 ];
 
-if ("opengl" in ServiceLocator.sys.capabilities) {
+if (ServiceLocator.sys.capabilities.opengl) {
   arrayOfNodeTest.push(NodeOpaqueTest);
   arrayOfNodeTest.push(NodeNonOpaqueTest);
 }

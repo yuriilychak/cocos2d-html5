@@ -35,36 +35,36 @@ import { winSize } from "../constants";
 import { ServiceLocator } from "@aspect/core";
 
 export class ShaderJuliaTest extends OpenGLTestLayer {
+  constructor() {
+    super();
 
-    constructor() {
-        super();
+    if (ServiceLocator.sys.capabilities.opengl) {
+      var shaderNode = new ShaderNode(
+        ccbjs + "Shaders/example_Julia.vsh",
+        ccbjs + "Shaders/example_Julia.fsh"
+      );
+      this.addChild(shaderNode, 10);
+      shaderNode.x = winSize.width / 2;
+      shaderNode.y = winSize.height / 2;
+    }
+  }
+  title() {
+    return "Shader Julia Test";
+  }
+  subtitle() {
+    return "You should see Julia effect";
+  }
 
-        if( 'opengl' in ServiceLocator.sys.capabilities ) {
-
-            var shaderNode = new ShaderNode(ccbjs + "Shaders/example_Julia.vsh", ccbjs + "Shaders/example_Julia.fsh");
-            this.addChild(shaderNode,10);
-            shaderNode.x = winSize.width/2;
-            shaderNode.y = winSize.height/2;
-        }
-    }
-    title() {
-        return "Shader Julia Test";
-    }
-    subtitle() {
-        return "You should see Julia effect";
-    }
-
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        // redish pixel
-        return JSON.stringify(true);
-    }
-    getCurrentResult() {
-        var ret = this.readPixels(winSize.width/2, winSize.height/2,  1, 1);
-        var sum = ret[0] + ret[1] + ret[2];
-        return JSON.stringify(sum>300);
-    }
-
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    // redish pixel
+    return JSON.stringify(true);
+  }
+  getCurrentResult() {
+    var ret = this.readPixels(winSize.width / 2, winSize.height / 2, 1, 1);
+    var sum = ret[0] + ret[1] + ret[2];
+    return JSON.stringify(sum > 300);
+  }
 }

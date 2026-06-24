@@ -37,7 +37,7 @@ export class GLNodeWebGLAPITest extends OpenGLTestLayer {
   constructor() {
     super();
 
-    if ("opengl" in ServiceLocator.sys.capabilities) {
+    if (ServiceLocator.sys.capabilities.opengl) {
       // simple shader example taken from:
       // http://learningwebgl.com/blog/?p=134
       var vsh =

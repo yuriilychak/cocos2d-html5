@@ -34,120 +34,124 @@ import { PointObject } from "./point-object";
  * @property {Array}    parallaxArray   - Parallax nodes array
  */
 export class ParallaxNode extends Node {
-    parallaxArray = null;
+  parallaxArray = null;
 
-    _lastPosition = null;
-    _className = "ParallaxNode";
+  _lastPosition = null;
+  _className = "ParallaxNode";
 
-    /**
-     * Gets the parallax array.
-     * @return {Array}
-     */
-    getParallaxArray() {
-        return this.parallaxArray;
+  /**
+   * Gets the parallax array.
+   * @return {Array}
+   */
+  getParallaxArray() {
+    return this.parallaxArray;
+  }
+
+  /**
+   * Set parallax array.
+   * @param {Array} value
+   */
+  setParallaxArray(value) {
+    this.parallaxArray = value;
+  }
+
+  /**
+   * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
+   */
+  constructor() {
+    super();
+    this.parallaxArray = [];
+    this._lastPosition = new Point(-100, -100);
+  }
+
+  /**
+   * Adds a child to the container with a z-order, a parallax ratio and a position offset
+   * It returns self, so you can chain several addChilds.
+   * @param {Node} child
+   * @param {Number} z
+   * @param {Point} ratio
+   * @param {Point} offset
+   * @example
+   * //example
+   * voidNode.addChild(background, -1, new Point(0.4, 0.5), new Point(0,0));
+   */
+  addChild(child, z, ratio, offset) {
+    if (arguments.length === 3) {
+      log("ParallaxNode: use addChild(child, z, ratio, offset) instead");
+      return;
     }
+    if (!child)
+      throw new Error("ParallaxNode.addChild(): child should be non-null");
+    var obj = new PointObject(ratio, offset);
+    obj.setChild(child);
+    this.parallaxArray.push(obj);
 
-    /**
-     * Set parallax array.
-     * @param {Array} value
-     */
-    setParallaxArray(value) {
-        this.parallaxArray = value;
+    child.setPosition(
+      this._position.x * ratio.x + offset.x,
+      this._position.y * ratio.y + offset.y
+    );
+
+    super.addChild(child, z, child.tag);
+  }
+
+  /**
+   *  Remove Child
+   * @param {Node} child
+   * @param {Boolean} cleanup
+   * @example
+   * //example
+   * voidNode.removeChild(background,true);
+   */
+  removeChild(child, cleanup) {
+    var locParallaxArray = this.parallaxArray;
+    for (var i = 0; i < locParallaxArray.length; i++) {
+      var point = locParallaxArray[i];
+      if (point.getChild() === child) {
+        locParallaxArray.splice(i, 1);
+        break;
+      }
     }
+    super.removeChild(child, cleanup);
+  }
 
-    /**
-     * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
-     */
-    constructor() {
-        super();
-        this.parallaxArray = [];
-        this._lastPosition = new Point(-100, -100);
+  /**
+   *  Remove all children with cleanup
+   * @param {Boolean} [cleanup=true]
+   */
+  removeAllChildren(cleanup) {
+    this.parallaxArray.length = 0;
+    super.removeAllChildren(cleanup);
+  }
+
+  _updateParallaxPosition() {
+    var pos = this._absolutePosition();
+    if (!Point.equalTo(pos, this._lastPosition)) {
+      var locParallaxArray = this.parallaxArray;
+      for (var i = 0, len = locParallaxArray.length; i < len; i++) {
+        var point = locParallaxArray[i];
+        var child = point.getChild();
+        child.setPosition(
+          -pos.x + pos.x * point.getRatio().x + point.getOffset().x,
+          -pos.y + pos.y * point.getRatio().y + point.getOffset().y
+        );
+      }
+      this._lastPosition = pos;
     }
+  }
 
-    /**
-     * Adds a child to the container with a z-order, a parallax ratio and a position offset
-     * It returns self, so you can chain several addChilds.
-     * @param {Node} child
-     * @param {Number} z
-     * @param {Point} ratio
-     * @param {Point} offset
-     * @example
-     * //example
-     * voidNode.addChild(background, -1, new Point(0.4, 0.5), new Point(0,0));
-     */
-    addChild(child, z, ratio, offset) {
-        if (arguments.length === 3) {
-            log("ParallaxNode: use addChild(child, z, ratio, offset) instead");
-            return;
-        }
-        if(!child)
-            throw new Error("ParallaxNode.addChild(): child should be non-null");
-        var obj = new PointObject(ratio, offset);
-        obj.setChild(child);
-        this.parallaxArray.push(obj);
-
-        child.setPosition(this._position.x * ratio.x + offset.x, this._position.y * ratio.y + offset.y);
-
-        super.addChild(child, z, child.tag);
+  _absolutePosition() {
+    var ret = this._position;
+    var cn = this;
+    while (cn.parent !== null) {
+      cn = cn.parent;
+      ret = Point.add(ret, cn.getPosition());
     }
+    return ret;
+  }
 
-    /**
-     *  Remove Child
-     * @param {Node} child
-     * @param {Boolean} cleanup
-     * @example
-     * //example
-     * voidNode.removeChild(background,true);
-     */
-    removeChild(child, cleanup) {
-        var locParallaxArray = this.parallaxArray;
-        for (var i = 0; i < locParallaxArray.length; i++) {
-            var point = locParallaxArray[i];
-            if (point.getChild() === child) {
-                locParallaxArray.splice(i, 1);
-                break;
-            }
-        }
-        super.removeChild(child, cleanup);
-    }
-
-    /**
-     *  Remove all children with cleanup
-     * @param {Boolean} [cleanup=true]
-     */
-    removeAllChildren(cleanup) {
-        this.parallaxArray.length = 0;
-        super.removeAllChildren(cleanup);
-    }
-
-    _updateParallaxPosition() {
-        var pos = this._absolutePosition();
-        if (!Point.equalTo(pos, this._lastPosition)) {
-            var locParallaxArray = this.parallaxArray;
-            for (var i = 0, len = locParallaxArray.length; i < len; i++) {
-                var point = locParallaxArray[i];
-                var child = point.getChild();
-                child.setPosition(-pos.x + pos.x * point.getRatio().x + point.getOffset().x,
-                        -pos.y + pos.y * point.getRatio().y + point.getOffset().y);
-            }
-            this._lastPosition = pos;
-        }
-    }
-
-    _absolutePosition() {
-        var ret = this._position;
-        var cn = this;
-        while (cn.parent !== null) {
-            cn = cn.parent;
-            ret = Point.add(ret, cn.getPosition());
-        }
-        return ret;
-    }
-
-    _createRenderCmd() {
-        if(ServiceLocator.rendererConfig.isCanvas)
-            return new this.constructor.CanvasRenderCmd(this);
-        else
-            return new this.constructor.WebGLRenderCmd(this);
-    }
+  _createRenderCmd() {
+    if (ServiceLocator.sys.rendererConfig.isCanvas)
+      return new this.constructor.CanvasRenderCmd(this);
+    else return new this.constructor.WebGLRenderCmd(this);
+  }
 }

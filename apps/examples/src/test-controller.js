@@ -81,7 +81,7 @@ export class TestController extends MenuTestLayer {
 
   static _isTestEnabled(testCase) {
     if (!ServiceLocator.sys.isNative) {
-      if (!ServiceLocator.rendererConfig.isCanvas) {
+      if (!ServiceLocator.sys.rendererConfig.isCanvas) {
         return !!(
           (testCase.platforms & PLATFORM_HTML5) |
           (testCase.platforms & PLATFORM_HTML5_WEBGL)

@@ -893,7 +893,7 @@ const _fntLoader = {
     var commonObj = self._parseStrToObj(fntStr.match(self.COMMON_EXP)[0]);
     fnt.commonHeight = commonObj["lineHeight"];
     if (RendererConfig.isWebGL) {
-      var texSize = ServiceLocator.configuration.getMaxTextureSize();
+      var texSize = ServiceLocator.sys.configuration.maxTextureSize;
       if (
         commonObj["scaleW"] > texSize.width ||
         commonObj["scaleH"] > texSize.height

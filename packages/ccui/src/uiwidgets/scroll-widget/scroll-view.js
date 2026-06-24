@@ -153,7 +153,7 @@ export class ScrollView extends Layout {
   }
 
   onExit() {
-    ServiceLocator.rendererConfig.renderer._removeCache(this.__instanceId);
+    ServiceLocator.sys.rendererConfig.renderer._removeCache(this.__instanceId);
     super.onExit();
   }
 
@@ -170,7 +170,7 @@ export class ScrollView extends Layout {
     this._adaptRenderers();
     this._doLayout();
 
-    var renderer = ServiceLocator.rendererConfig.renderer;
+    var renderer = ServiceLocator.sys.rendererConfig.renderer;
     cmd.visit(parentCmd);
 
     renderer.pushRenderCommand(cmd);
@@ -269,7 +269,7 @@ export class ScrollView extends Layout {
   }
 
   _createRenderCmd() {
-    if (ServiceLocator.rendererConfig.isWebGL)
+    if (ServiceLocator.sys.rendererConfig.isWebGL)
       return new ScrollViewWebGLRenderCmd(this);
     else return new ScrollViewCanvasRenderCmd(this);
   }

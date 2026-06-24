@@ -48,7 +48,7 @@ export default class GridAction extends ActionInterval {
    */
   startWithTarget(target) {
     super.startWithTarget(target);
-    ServiceLocator.rendererConfig.renderer.childrenOrderDirty = true;
+    ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty = true;
     this._cacheTargetAsGridNode(target);
 
     const newGrid = this.getGrid();

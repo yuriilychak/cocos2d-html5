@@ -1,4 +1,13 @@
-import { Sprite, Texture2D, radiansToDegrees, degreesToRadians, isString, isObject, SpriteFrame, ServiceLocator } from "@aspect/core";
+import {
+  Sprite,
+  Texture2D,
+  radiansToDegrees,
+  degreesToRadians,
+  isString,
+  isObject,
+  SpriteFrame,
+  ServiceLocator
+} from "@aspect/core";
 
 export class PhysicsSprite extends Sprite {
   constructor(fileName, rect) {
@@ -12,7 +21,8 @@ export class PhysicsSprite extends Sprite {
     } else if (isString(fileName)) {
       if (fileName[0] === "#") {
         var frameName = fileName.substr(1, fileName.length - 1);
-        var spriteFrame = ServiceLocator.spriteFrameCache.getSpriteFrame(frameName);
+        var spriteFrame =
+          ServiceLocator.spriteFrameCache.getSpriteFrame(frameName);
         this.initWithSpriteFrame(spriteFrame);
       } else {
         this.init(fileName, rect);
@@ -25,16 +35,28 @@ export class PhysicsSprite extends Sprite {
       }
     }
 
-    ServiceLocator.rendererConfig.renderer.pushRenderCommand(this._renderCmd);
+    ServiceLocator.sys.rendererConfig.renderer.pushRenderCommand(
+      this._renderCmd
+    );
   }
 
-  get body() { return this.getBody(); }
-  set body(v) { this.setBody(v); }
-  get dirty() { return this.isDirty(); }
-  set dirty(v) { this.setDirty(v); }
+  get body() {
+    return this.getBody();
+  }
+  set body(v) {
+    this.setBody(v);
+  }
+  get dirty() {
+    return this.isDirty();
+  }
+  set dirty(v) {
+    this.setDirty(v);
+  }
 
   visit() {
-    ServiceLocator.rendererConfig.renderer.pushRenderCommand(this._renderCmd);
+    ServiceLocator.sys.rendererConfig.renderer.pushRenderCommand(
+      this._renderCmd
+    );
     super.visit();
   }
 
@@ -121,7 +143,7 @@ export class PhysicsSprite extends Sprite {
   }
 
   _createRenderCmd() {
-    if (ServiceLocator.rendererConfig.isCanvas)
+    if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new PhysicsSprite.CanvasRenderCmd(this);
     else return new PhysicsSprite.WebGLRenderCmd(this);
   }

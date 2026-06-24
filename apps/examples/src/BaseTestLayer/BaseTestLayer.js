@@ -264,14 +264,14 @@ export class BaseTestLayer extends LayerGradient {
   }
 
   readPixels(x, y, w, h) {
-    if ("opengl" in ServiceLocator.sys.capabilities) {
+    if (ServiceLocator.sys.capabilities.opengl) {
       var size = 4 * w * h;
       var array = new Uint8Array(size);
       gl.readPixels(x, y, w, h, gl.RGBA, gl.UNSIGNED_BYTE, array);
       return array;
     } else {
       // implement a canvas-html5 readpixels
-      return ServiceLocator.rendererConfig.renderContext.getImageData(
+      return ServiceLocator.sys.rendererConfig.renderContext.getImageData(
         x,
         winSize.height - y - h,
         w,

@@ -16,7 +16,7 @@ export class DrawNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
   }
 
   rendering(ctx, scaleX, scaleY) {
-    const wrapper = ctx || ServiceLocator.rendererConfig.renderContext,
+    const wrapper = ctx || ServiceLocator.sys.rendererConfig.renderContext,
       context = wrapper.getContext(),
       node = this._node;
     const alpha = this._displayedOpacity / 255;

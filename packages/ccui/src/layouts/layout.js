@@ -53,7 +53,7 @@ export class Layout extends Widget {
     this.__passFocusToChild = true;
     this._isFocusPassing = false;
     this._isInterceptTouch = false;
-new Size();
+    new Size();
     this._layoutType = Layout.ABSOLUTE;
     this._widgetType = Widget.TYPE_CONTAINER;
     this._clippingType = Layout.CLIPPING_STENCIL;
@@ -120,7 +120,7 @@ new Size();
     this._adaptRenderers();
     this._doLayout();
 
-    var renderer = ServiceLocator.rendererConfig.renderer;
+    var renderer = ServiceLocator.sys.rendererConfig.renderer;
     cmd.visit(parentCmd);
 
     var stencilClipping =
@@ -1207,7 +1207,7 @@ new Size();
   }
 
   _createRenderCmd() {
-    if (ServiceLocator.rendererConfig.isWebGL)
+    if (ServiceLocator.sys.rendererConfig.isWebGL)
       return new LayoutWebGLRenderCmd(this);
     else return new LayoutCanvasRenderCmd(this);
   }

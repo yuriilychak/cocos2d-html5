@@ -36,7 +36,7 @@ export class GetSupportedExtensionsTest extends OpenGLTestLayer {
   constructor() {
     super();
 
-    if ("opengl" in ServiceLocator.sys.capabilities) {
+    if (ServiceLocator.sys.capabilities.opengl) {
       if (!autoTestEnabled) {
         var array = gl.getSupportedExtensions();
         log(JSON.stringify(array));

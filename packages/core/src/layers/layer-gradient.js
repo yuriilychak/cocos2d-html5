@@ -244,7 +244,7 @@ export class LayerGradient extends LayerColor {
   }
 
   _createRenderCmd() {
-    if (ServiceLocator.rendererConfig.isCanvas)
+    if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new LayerGradientCanvasRenderer(this);
     else return new LayerGradientWebGLRenderer(this);
   }

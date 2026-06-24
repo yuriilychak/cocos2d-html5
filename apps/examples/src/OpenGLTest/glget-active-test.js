@@ -36,7 +36,7 @@ export class GLGetActiveTest extends OpenGLTestLayer {
   constructor() {
     super();
 
-    if ("opengl" in ServiceLocator.sys.capabilities) {
+    if (ServiceLocator.sys.capabilities.opengl) {
       var sprite = (this.sprite = new Sprite("Images/grossini.png"));
       sprite.x = winSize.width / 2;
       sprite.y = winSize.height / 2;

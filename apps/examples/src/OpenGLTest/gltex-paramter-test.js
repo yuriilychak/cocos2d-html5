@@ -34,56 +34,55 @@ import { autoTestEnabled } from "../constants";
 import { log, ServiceLocator } from "@aspect/core";
 
 export class GLTexParamterTest extends OpenGLTestLayer {
+  constructor() {
+    super();
 
-    constructor() {
-        super();
-
-        if( 'opengl' in ServiceLocator.sys.capabilities ) {
-            if( ! autoTestEnabled ) {
-                log( "[Max, MIN, WRAP_S, WRAP_T]" );
-                log( this.getTexValues() );
-            }
-        }
+    if (ServiceLocator.sys.capabilities.opengl) {
+      if (!autoTestEnabled) {
+        log("[Max, MIN, WRAP_S, WRAP_T]");
+        log(this.getTexValues());
+      }
     }
+  }
 
-    title() {
-        return "GLTexParamterTest";
+  title() {
+    return "GLTexParamterTest";
+  }
+  subtitle() {
+    return "tests texParameter()\n See the Console";
+  }
+  getTexValues() {
+    if (!ServiceLocator.sys.isNative) {
+      var texture2d =
+        ServiceLocator.textureCache.getTextureForKey(s_pathGrossini);
+      gl.bindTexture(gl.TEXTURE_2D, texture2d.name);
+    } else {
+      gl.bindTexture(gl.TEXTURE_2D, null);
     }
-    subtitle() {
-        return "tests texParameter()\n See the Console";
-    }
-    getTexValues() {
-        if(!ServiceLocator.sys.isNative){
-            var texture2d = ServiceLocator.textureCache.getTextureForKey(s_pathGrossini);
-            gl.bindTexture(gl.TEXTURE_2D, texture2d.name);
-        } else {
-            gl.bindTexture(gl.TEXTURE_2D, null);
-        }
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-        gl.texParameteri( gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE );
-        gl.texParameteri( gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE );
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
 
-        var mag = gl.getTexParameter(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER);
-        var min = gl.getTexParameter(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER);
-        var w_s = gl.getTexParameter(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S);
-        var w_t = gl.getTexParameter(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T);
+    var mag = gl.getTexParameter(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER);
+    var min = gl.getTexParameter(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER);
+    var w_s = gl.getTexParameter(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S);
+    var w_t = gl.getTexParameter(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T);
 
-        var a = [mag, min, w_s, w_t];
-        return a;
-    }
+    var a = [mag, min, w_s, w_t];
+    return a;
+  }
 
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        var ret = [9728,9728,33071,33071];
-        return JSON.stringify(ret);
-    }
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    var ret = [9728, 9728, 33071, 33071];
+    return JSON.stringify(ret);
+  }
 
-    getCurrentResult() {
-        var ret = this.getTexValues();
-        return JSON.stringify(ret);
-    }
-
+  getCurrentResult() {
+    var ret = this.getTexValues();
+    return JSON.stringify(ret);
+  }
 }

@@ -114,7 +114,7 @@ export class Grid3D extends GridBase {
 
   beforeBlit() {
     if (this._needDepthTestForBlit) {
-      const gl = ServiceLocator.rendererConfig.renderContext;
+      const gl = ServiceLocator.sys.rendererConfig.renderContext;
       this._oldDepthTestValue = gl.isEnabled(gl.DEPTH_TEST);
       this._oldDepthWriteValue = gl.getParameter(gl.DEPTH_WRITEMASK);
       //CHECK_GL_ERROR_DEBUG();
@@ -125,7 +125,7 @@ export class Grid3D extends GridBase {
 
   afterBlit() {
     if (this._needDepthTestForBlit) {
-      const gl = ServiceLocator.rendererConfig.renderContext;
+      const gl = ServiceLocator.sys.rendererConfig.renderContext;
       if (this._oldDepthTestValue) gl.enable(gl.DEPTH_TEST);
       else gl.disable(gl.DEPTH_TEST);
       gl.depthMask(this._oldDepthWriteValue);
@@ -145,7 +145,7 @@ export class Grid3D extends GridBase {
 
     this._glProgramState.apply(this._matrix);
 
-    const gl = ServiceLocator.rendererConfig.renderContext;
+    const gl = ServiceLocator.sys.rendererConfig.renderContext;
     const locDirty = this._dirty;
 
     gl.enableVertexAttribArray(VertexAttribute.POSITION);
@@ -163,7 +163,14 @@ export class Grid3D extends GridBase {
     gl.bindBuffer(gl.ARRAY_BUFFER, this._texCoordinateBuffer);
     if (locDirty)
       gl.bufferData(gl.ARRAY_BUFFER, this._texCoordinates, gl.DYNAMIC_DRAW);
-    gl.vertexAttribPointer(VertexAttribute.TEX_COORDS, 2, gl.FLOAT, false, 0, 0);
+    gl.vertexAttribPointer(
+      VertexAttribute.TEX_COORDS,
+      2,
+      gl.FLOAT,
+      false,
+      0,
+      0
+    );
 
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this._indicesBuffer);
     if (locDirty)
@@ -184,7 +191,7 @@ export class Grid3D extends GridBase {
   }
 
   calculateVertexPoints() {
-    const gl = ServiceLocator.rendererConfig.renderContext;
+    const gl = ServiceLocator.sys.rendererConfig.renderContext;
 
     const width = this._texture.pixelsWidth;
     const height = this._texture.pixelsHeight;

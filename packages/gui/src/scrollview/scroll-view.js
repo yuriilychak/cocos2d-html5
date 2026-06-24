@@ -162,7 +162,7 @@ export class GScrollView extends Layer {
       return;
     }
 
-    var renderer = ServiceLocator.rendererConfig.renderer;
+    var renderer = ServiceLocator.sys.rendererConfig.renderer;
     cmd.visit(parentCmd);
 
     if (this._clippingToBounds) {
@@ -739,7 +739,7 @@ export class GScrollView extends Layer {
   }
 
   _createRenderCmd() {
-    if (ServiceLocator.rendererConfig.isCanvas) {
+    if (ServiceLocator.sys.rendererConfig.isCanvas) {
       return new this.constructor.CanvasRenderCmd(this);
     } else {
       return new this.constructor.WebGLRenderCmd(this);

@@ -25,7 +25,10 @@
 import LayerCanvasRenderer from "./layer-canvas-renderer";
 import { Rect, AffineTransform } from "../../geometry";
 import { Color } from "../../platform/types/color";
-import { CustomRenderCmd, CanvasRenderCmd as NodeCanvasRenderCmd } from "../../base-nodes/node-canvas-render-cmd";
+import {
+  CustomRenderCmd,
+  CanvasRenderCmd as NodeCanvasRenderCmd
+} from "../../base-nodes/node-canvas-render-cmd";
 import { ServiceLocator } from "../../service-locator";
 
 /**
@@ -45,7 +48,7 @@ export default class LayerColorCanvasRenderer extends LayerCanvasRenderer {
   }
 
   rendering(ctx, scaleX, scaleY) {
-    const wrapper = ctx || ServiceLocator.rendererConfig.renderContext,
+    const wrapper = ctx || ServiceLocator.sys.rendererConfig.renderContext,
       context = wrapper.getContext(),
       node = this._node,
       curColor = this._displayedColor,
@@ -64,7 +67,7 @@ export default class LayerColorCanvasRenderer extends LayerCanvasRenderer {
     wrapper.setTransform(this._worldTransform, scaleX, scaleY);
     context.fillRect(0, 0, locWidth, -locHeight);
 
-    ServiceLocator.rendererConfig.incrementDrawCount();
+    ServiceLocator.sys.rendererConfig.incrementDrawCount();
   }
 
   updateBlendFunc(blendFunc) {
@@ -103,7 +106,7 @@ export default class LayerColorCanvasRenderer extends LayerCanvasRenderer {
         );
 
         let child;
-        const _r = ServiceLocator.rendererConfig.renderer;
+        const _r = ServiceLocator.sys.rendererConfig.renderer;
         _r._turnToCacheMode(this.__instanceId);
         if (len > 0) {
           node.sortAllChildren();

@@ -45,7 +45,7 @@ export class TMXLayerWebGLRenderCmd extends Node.WebGLRenderCmd {
     const view = ServiceLocator.eglView;
     const director = ServiceLocator.director;
     const winSize = director.getWinSize();
-    const rendererConfig = ServiceLocator.rendererConfig;
+    const rendererConfig = ServiceLocator.sys.rendererConfig;
     const stride = rendererConfig.renderer.getSizePerVertex();
     const ti = texIndex || 0;
 
@@ -168,8 +168,7 @@ export class TMXLayerWebGLRenderCmd extends Node.WebGLRenderCmd {
             bottom = (mapth / 2) * (rows * 2 - col - row - 2);
             z =
               node._vertexZ +
-              (rendererConfig.renderer.assignedZStep *
-                (node.height - bottom)) /
+              (rendererConfig.renderer.assignedZStep * (node.height - bottom)) /
                 node.height;
             break;
           case TMX_ORIENTATION_HEX:
@@ -178,8 +177,7 @@ export class TMXLayerWebGLRenderCmd extends Node.WebGLRenderCmd {
               (rows - row - 1) * mapth + (col % 2 === 1 ? -mapth / 2 : 0);
             z =
               node._vertexZ +
-              (rendererConfig.renderer.assignedZStep *
-                (node.height - bottom)) /
+              (rendererConfig.renderer.assignedZStep * (node.height - bottom)) /
                 node.height;
             break;
         }

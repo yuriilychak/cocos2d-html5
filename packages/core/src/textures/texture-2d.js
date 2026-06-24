@@ -109,7 +109,7 @@ export class Texture2D extends EventHelper(BaseClass) {
     this._pixelsWide = 0;
     this._pixelsHigh = 0;
 
-    this._renderer = ServiceLocator.rendererConfig.isCanvas
+    this._renderer = ServiceLocator.sys.rendererConfig.isCanvas
       ? new CanvasTextureRenderer(this)
       : new WebGLTextureRenderer(this);
   }

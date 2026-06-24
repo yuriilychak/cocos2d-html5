@@ -50,7 +50,7 @@ export class TMXTilesetTest extends TileDemo {
     var map = new TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test5.tmx");
     this.addChild(map, 0, TAG_TILE_MAP);
 
-    if ("opengl" in ServiceLocator.sys.capabilities) {
+    if (ServiceLocator.sys.capabilities.opengl) {
       var layer;
       layer = map.getLayer("Layer 0");
       layer.texture.setAntiAliasTexParameters();

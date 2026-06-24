@@ -35,32 +35,34 @@ import { winSize } from "../constants";
 import { ServiceLocator } from "@aspect/core";
 
 export class ShaderMandelbrotTest extends OpenGLTestLayer {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        if( 'opengl' in ServiceLocator.sys.capabilities ) {
-            var shaderNode = new ShaderNode(ccbjs + "Shaders/example_Mandelbrot.vsh", ccbjs + "Shaders/example_Mandelbrot.fsh");
-            this.addChild(shaderNode,10);
-            shaderNode.x = winSize.width/2;
-            shaderNode.y = winSize.height/2;
-        }
+    if (ServiceLocator.sys.capabilities.opengl) {
+      var shaderNode = new ShaderNode(
+        ccbjs + "Shaders/example_Mandelbrot.vsh",
+        ccbjs + "Shaders/example_Mandelbrot.fsh"
+      );
+      this.addChild(shaderNode, 10);
+      shaderNode.x = winSize.width / 2;
+      shaderNode.y = winSize.height / 2;
     }
+  }
 
-    title() {
-        return "Shader Mandelbrot Test";
-    }
-    subtitle() {
-        return "Mandelbrot shader with Zoom";
-    }
+  title() {
+    return "Shader Mandelbrot Test";
+  }
+  subtitle() {
+    return "Mandelbrot shader with Zoom";
+  }
 
-    //
-    // Automation
-    //
-    getExpectedResult() {
-        throw "Automation Test Not implemented yet";
-    }
-    getCurrentResult() {
-        throw "Automation Test Not implemented yet";
-    }
-
+  //
+  // Automation
+  //
+  getExpectedResult() {
+    throw "Automation Test Not implemented yet";
+  }
+  getCurrentResult() {
+    throw "Automation Test Not implemented yet";
+  }
 }

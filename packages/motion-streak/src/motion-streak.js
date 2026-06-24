@@ -372,7 +372,7 @@ export class MotionStreak extends Node {
   }
 
   _createRenderCmd() {
-    if (ServiceLocator.rendererConfig.isWebGL)
+    if (ServiceLocator.sys.rendererConfig.isWebGL)
       return new MotionStreak.WebGLRenderCmd(this);
     else return null; // MotionStreak doesn't support Canvas mode
   }

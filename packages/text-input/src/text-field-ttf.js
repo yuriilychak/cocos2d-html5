@@ -162,7 +162,8 @@ export class TextFieldTTF extends LabelTTF {
       super.string = this._inputText;
       if (this._colorText) this.color = this._colorText;
     }
-    if (ServiceLocator.rendererConfig.isCanvas) this._renderCmd._updateTexture();
+    if (ServiceLocator.sys.rendererConfig.isCanvas)
+      this._renderCmd._updateTexture();
     this._charCount = this._inputText.length;
   }
 
@@ -201,7 +202,7 @@ export class TextFieldTTF extends LabelTTF {
    * @param {CanvasRenderingContext2D | WebGLRenderingContext} ctx The render context
    */
   draw(ctx) {
-    var context = ctx || ServiceLocator.rendererConfig.renderContext;
+    var context = ctx || ServiceLocator.sys.rendererConfig.renderContext;
     if (this.delegate && this.delegate.onDraw(this)) return;
 
     super.draw(context);

@@ -34,7 +34,15 @@ import { TAG_SPRITE_BATCH_NODE } from "./sprite-test-constants";
 import { SpriteTestDemo } from "./sprite-test-demo";
 import { s_grossini_dance_atlas } from "../resources";
 import { winSize } from "../constants";
-import { EventListener, EventListenerType, Point, Rect, Sprite, SpriteBatchNode, ServiceLocator } from "@aspect/core";
+import {
+  EventListener,
+  EventListenerType,
+  Point,
+  Rect,
+  Sprite,
+  SpriteBatchNode,
+  ServiceLocator
+} from "@aspect/core";
 import {
   Blink,
   FadeOut,
@@ -58,7 +66,7 @@ export class SpriteBatchNode1 extends SpriteTestDemo {
     this.pixel = { 0: 51, 1: 0, 2: 51, 3: 255 };
 
     this.testSprite = null;
-    if ("touches" in ServiceLocator.sys.capabilities) {
+    if (ServiceLocator.sys.capabilities.touches) {
       ServiceLocator.eventManager.addListener(
         {
           event: EventListenerType.TOUCH_ALL_AT_ONCE,
@@ -73,14 +81,12 @@ export class SpriteBatchNode1 extends SpriteTestDemo {
         },
         this
       );
-    } else if ("mouse" in ServiceLocator.sys.capabilities)
+    } else if (ServiceLocator.sys.capabilities.mouse)
       ServiceLocator.eventManager.addListener(
         {
           event: EventListenerType.MOUSE,
           onMouseUp: function (event) {
-            event
-              .getCurrentTarget()
-              .addNewSpriteWithCoords(event);
+            event.getCurrentTarget().addNewSpriteWithCoords(event);
           }
         },
         this

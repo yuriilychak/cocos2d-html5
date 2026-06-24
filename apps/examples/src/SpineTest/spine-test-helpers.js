@@ -56,7 +56,7 @@ SpineTestScene.testLayers = [
   //SpineTestPerformanceLayer //it doesn't support mesh on Canvas.
 ];
 
-if (ServiceLocator.sys.isNative || ServiceLocator.rendererConfig.isWebGL) {
+if (ServiceLocator.sys.isNative || ServiceLocator.sys.rendererConfig.isWebGL) {
   SpineTestScene.testLayers.push(SpineTestLayerFFD);
   SpineTestScene.testLayers.push(SpineTestPerformanceLayer);
 }

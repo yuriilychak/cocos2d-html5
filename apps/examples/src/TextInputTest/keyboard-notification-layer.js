@@ -30,7 +30,13 @@
 //////////////////////////////////////////////////////////////////////////
 import { textInputGetRect } from "./text-input-test-constants";
 import { TextInputTest } from "./text-input-test";
-import { EventListener, EventListenerType, Rect, log, ServiceLocator } from "@aspect/core";
+import {
+  EventListener,
+  EventListenerType,
+  Rect,
+  log,
+  ServiceLocator
+} from "@aspect/core";
 
 export class KeyboardNotificationLayer extends TextInputTest {
   constructor() {
@@ -40,7 +46,7 @@ export class KeyboardNotificationLayer extends TextInputTest {
 
     this._beginPos = null;
 
-    if ("touches" in ServiceLocator.sys.capabilities) {
+    if (ServiceLocator.sys.capabilities.touches) {
       ServiceLocator.eventManager.addListener(
         {
           event: EventListenerType.TOUCH_ALL_AT_ONCE,
@@ -48,7 +54,7 @@ export class KeyboardNotificationLayer extends TextInputTest {
         },
         this
       );
-    } else if ("mouse" in ServiceLocator.sys.capabilities)
+    } else if (ServiceLocator.sys.capabilities.mouse)
       ServiceLocator.eventManager.addListener(
         {
           event: EventListenerType.MOUSE,
@@ -117,9 +123,7 @@ export class KeyboardNotificationLayer extends TextInputTest {
     var touch = touches[0];
 
     // decide the trackNode is clicked.
-    log(
-      "KeyboardNotificationLayer:clickedAt(" + touch.x + "," + touch.y + ")"
-    );
+    log("KeyboardNotificationLayer:clickedAt(" + touch.x + "," + touch.y + ")");
 
     var rect = textInputGetRect(target._trackNode);
     log(
@@ -143,9 +147,7 @@ export class KeyboardNotificationLayer extends TextInputTest {
     if (!target._trackNode) return;
 
     // decide the trackNode is clicked.
-    log(
-      "KeyboardNotificationLayer:clickedAt(" + touch.x + "," + touch.y + ")"
-    );
+    log("KeyboardNotificationLayer:clickedAt(" + touch.x + "," + touch.y + ")");
 
     var rect = textInputGetRect(target._trackNode);
     log(

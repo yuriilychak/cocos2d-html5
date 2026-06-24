@@ -14,8 +14,7 @@ function setProgram(node, program) {
   node.shaderProgram = program;
   const children = node.children;
   if (!children) return;
-  for (let i = 0; i < children.length; i++)
-    setProgram(children[i], program);
+  for (let i = 0; i < children.length; i++) setProgram(children[i], program);
 }
 
 export class ClippingNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
@@ -24,7 +23,10 @@ export class ClippingNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
     this._needDraw = false;
 
     this._beforeVisitCmd = new CustomRenderCmd(this, this._onBeforeVisit);
-    this._afterDrawStencilCmd = new CustomRenderCmd(this, this._onAfterDrawStencil);
+    this._afterDrawStencilCmd = new CustomRenderCmd(
+      this,
+      this._onAfterDrawStencil
+    );
     this._afterVisitCmd = new CustomRenderCmd(this, this._onAfterVisit);
 
     this._currentStencilEnabled = null;
@@ -34,10 +36,11 @@ export class ClippingNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
   initStencilBits() {
     ClippingNodeWebGLRenderCmd._init_once = true;
     if (ClippingNodeWebGLRenderCmd._init_once) {
-        const bits = ServiceLocator.rendererConfig.renderContext.getParameter(ServiceLocator.rendererConfig.renderContext.STENCIL_BITS);
+      const bits = ServiceLocator.sys.rendererConfig.renderContext.getParameter(
+        ServiceLocator.sys.rendererConfig.renderContext.STENCIL_BITS
+      );
       ClippingNode.stencilBits = bits;
-      if (bits <= 0)
-        log("Stencil buffer is not enabled.");
+      if (bits <= 0) log("Stencil buffer is not enabled.");
       ClippingNodeWebGLRenderCmd._init_once = false;
     }
   }
@@ -62,24 +65,31 @@ export class ClippingNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
     }
 
     if (!node._stencil || !node._stencil.visible) {
-      if (node.inverted)
-        node._visitChildren();
+      if (node.inverted) node._visitChildren();
       return;
     }
 
     if (ClippingNodeWebGLRenderCmd._layer + 1 === ClippingNode.stencilBits) {
       ClippingNodeWebGLRenderCmd._visit_once = true;
       if (ClippingNodeWebGLRenderCmd._visit_once) {
-        log("Nesting more than " + ClippingNode.stencilBits + "stencils is not supported. Everything will be drawn without stencil for this node and its children.");
+        log(
+          "Nesting more than " +
+            ClippingNode.stencilBits +
+            "stencils is not supported. Everything will be drawn without stencil for this node and its children."
+        );
         ClippingNodeWebGLRenderCmd._visit_once = false;
       }
       node._visitChildren();
       return;
     }
 
-      ServiceLocator.rendererConfig.renderer.pushRenderCommand(this._beforeVisitCmd);
-      node._stencil.visit(node);
-      ServiceLocator.rendererConfig.renderer.pushRenderCommand(this._afterDrawStencilCmd);
+    ServiceLocator.sys.rendererConfig.renderer.pushRenderCommand(
+      this._beforeVisitCmd
+    );
+    node._stencil.visit(node);
+    ServiceLocator.sys.rendererConfig.renderer.pushRenderCommand(
+      this._afterDrawStencilCmd
+    );
 
     const locChildren = node._children;
     if (locChildren && locChildren.length > 0) {
@@ -90,17 +100,17 @@ export class ClippingNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
       }
     }
 
-      ServiceLocator.rendererConfig.renderer.pushRenderCommand(this._afterVisitCmd);
+    ServiceLocator.sys.rendererConfig.renderer.pushRenderCommand(
+      this._afterVisitCmd
+    );
     this._dirtyFlag = 0;
   }
 
   setStencil(stencil) {
     const node = this._node;
-    if (node._stencil)
-      node._stencil._parent = null;
+    if (node._stencil) node._stencil._parent = null;
     node._stencil = stencil;
-    if (node._stencil)
-      node._stencil._parent = node;
+    if (node._stencil) node._stencil._parent = node;
   }
 
   resetProgramByStencil() {
@@ -112,10 +122,11 @@ export class ClippingNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
   }
 
   _onBeforeVisit(ctx) {
-      const gl = ctx || ServiceLocator.rendererConfig.renderContext, node = this._node;
-      ClippingNodeWebGLRenderCmd._layer++;
+    const gl = ctx || ServiceLocator.sys.rendererConfig.renderContext,
+      node = this._node;
+    ClippingNodeWebGLRenderCmd._layer++;
 
-      const mask_layer = 0x1 << ClippingNodeWebGLRenderCmd._layer;
+    const mask_layer = 0x1 << ClippingNodeWebGLRenderCmd._layer;
     const mask_layer_l = mask_layer - 1;
     this._mask_layer_le = mask_layer | mask_layer_l;
     this._currentStencilEnabled = gl.isEnabled(gl.STENCIL_TEST);
@@ -129,27 +140,39 @@ export class ClippingNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
     gl.clear(gl.STENCIL_BUFFER_BIT);
 
     if (node.alphaThreshold < 1) {
-      const program = ServiceLocator.shaderCache.programForKey(ShaderName.POSITION_TEXTURECOLORALPHATEST);
+      const program = ServiceLocator.shaderCache.programForKey(
+        ShaderName.POSITION_TEXTURECOLORALPHATEST
+      );
       glUseProgram(program.getProgram());
-      program.setUniformLocationWith1f(UniformName.ALPHA_TEST_VALUE, node.alphaThreshold);
-        program.setUniformLocationWithMatrix4fv(UniformName.MVMATRIX, ServiceLocator.rendererConfig.renderer.mat4Identity.mat);
+      program.setUniformLocationWith1f(
+        UniformName.ALPHA_TEST_VALUE,
+        node.alphaThreshold
+      );
+      program.setUniformLocationWithMatrix4fv(
+        UniformName.MVMATRIX,
+        ServiceLocator.sys.rendererConfig.renderer.mat4Identity.mat
+      );
       setProgramForNode(node._stencil, program);
     }
   }
 
   _onAfterDrawStencil(ctx) {
-    const gl = ctx || ServiceLocator.rendererConfig.renderContext;
+    const gl = ctx || ServiceLocator.sys.rendererConfig.renderContext;
     gl.depthMask(true);
-    gl.stencilFunc(!this._node.inverted ? gl.EQUAL : gl.NOTEQUAL, this._mask_layer_le, this._mask_layer_le);
+    gl.stencilFunc(
+      !this._node.inverted ? gl.EQUAL : gl.NOTEQUAL,
+      this._mask_layer_le,
+      this._mask_layer_le
+    );
     gl.stencilOp(gl.KEEP, gl.KEEP, gl.KEEP);
   }
 
   _onAfterVisit(ctx) {
-      const gl = ctx || ServiceLocator.rendererConfig.renderContext;
-      ClippingNodeWebGLRenderCmd._layer--;
+    const gl = ctx || ServiceLocator.sys.rendererConfig.renderContext;
+    ClippingNodeWebGLRenderCmd._layer--;
 
-      if (this._currentStencilEnabled) {
-        const mask_layer = 0x1 << ClippingNodeWebGLRenderCmd._layer;
+    if (this._currentStencilEnabled) {
+      const mask_layer = 0x1 << ClippingNodeWebGLRenderCmd._layer;
       const mask_layer_l = mask_layer - 1;
       const mask_layer_le = mask_layer | mask_layer_l;
       gl.stencilMask(mask_layer);

@@ -45,7 +45,7 @@ export class NodeGrid extends Node {
   }
 
   _createRenderCmd() {
-    if (ServiceLocator.rendererConfig.isWebGL)
+    if (ServiceLocator.sys.rendererConfig.isWebGL)
       return new this.constructor.WebGLRenderCmd(this);
     else
       return new Node.CanvasRenderCmd(this);

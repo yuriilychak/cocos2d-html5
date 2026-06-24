@@ -82,7 +82,7 @@ export class LayerColor extends Layer {
       return;
     }
 
-    var renderer = ServiceLocator.rendererConfig.renderer;
+    var renderer = ServiceLocator.sys.rendererConfig.renderer;
     cmd.visit(parentCmd);
 
     if (cmd._isBaked) {
@@ -148,7 +148,7 @@ export class LayerColor extends Layer {
   }
 
   _createRenderCmd() {
-    if (ServiceLocator.rendererConfig.isCanvas)
+    if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new LayerColorCanvasRenderer(this);
     else return new LayerColorWebGLRenderer(this);
   }

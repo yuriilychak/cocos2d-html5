@@ -37,7 +37,8 @@ import { s_back3 } from "../resources";
 import { director } from "../constants";
 import {
   Color,
-  EventListener, EventListenerType,
+  EventListener,
+  EventListenerType,
   Point,
   Sprite,
   ServiceLocator,
@@ -60,7 +61,7 @@ export class ParticleDemo extends BaseTestLayer {
     this._movementIdx = 0;
     this._isTexture = true;
 
-    if ("touches" in ServiceLocator.sys.capabilities) {
+    if (ServiceLocator.sys.capabilities.touches) {
       ServiceLocator.eventManager.addListener(
         {
           event: EventListenerType.TOUCH_ALL_AT_ONCE,
@@ -73,7 +74,7 @@ export class ParticleDemo extends BaseTestLayer {
         },
         this
       );
-    } else if ("mouse" in ServiceLocator.sys.capabilities)
+    } else if (ServiceLocator.sys.capabilities.mouse)
       ServiceLocator.eventManager.addListener(
         {
           event: EventListenerType.MOUSE,
@@ -114,7 +115,7 @@ export class ParticleDemo extends BaseTestLayer {
     );
     this.addChild(this._layout, 100);
 
-    if ("opengl" in ServiceLocator.sys.capabilities) {
+    if (ServiceLocator.sys.capabilities.opengl) {
       if (this._layout.getButton(2)) {
         this._layout.getButton(2).enabled = false;
       }

@@ -3,7 +3,7 @@ import Async from "./async";
 import AsyncPool from "./async-pool";
 import Path from "./path";
 import { error, log } from "./debugger";
-import { RendererConfig } from "../renderer/renderer-config";
+import { RendererConfig } from "../sys/renderer-config";
 
 const _isNodeJs = typeof process !== "undefined" && process.versions != null && process.versions.node != null;
 

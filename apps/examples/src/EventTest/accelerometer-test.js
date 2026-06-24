@@ -31,71 +31,86 @@
 import { EventTest } from "./event-test";
 import { s_pathR2 } from "../resources";
 import { winSize } from "../constants";
-import { EventListener, EventListenerType, Sprite, log, ServiceLocator } from "@aspect/core";
+import {
+  EventListener,
+  EventListenerType,
+  Sprite,
+  log,
+  ServiceLocator
+} from "@aspect/core";
 export class AccelerometerTest extends EventTest {
-    constructor() {
-        super();
-        this._logIndex = 0;
+  constructor() {
+    super();
+    this._logIndex = 0;
+  }
+
+  init() {
+    super.init();
+
+    if (ServiceLocator.sys.capabilities.accelerometer) {
+      var self = this;
+      // call is called 30 times per second
+      ServiceLocator.inputManager.setAccelerometerInterval(1 / 30);
+      ServiceLocator.inputManager.setAccelerometerEnabled(true);
+      ServiceLocator.eventManager.addListener(
+        {
+          event: EventListenerType.ACCELERATION,
+          callback: function (accelEvent, event) {
+            var target = event.getCurrentTarget();
+            self._logIndex++;
+            if (self._logIndex > 20) {
+              log(
+                "Accel x: " +
+                  accelEvent.x +
+                  " y:" +
+                  accelEvent.y +
+                  " z:" +
+                  accelEvent.z +
+                  " time:" +
+                  accelEvent.timestamp
+              );
+              self._logIndex = 0;
+            }
+
+            var w = winSize.width;
+            var h = winSize.height;
+
+            var x = w * accelEvent.x + w / 2;
+            var y = h * accelEvent.y + h / 2;
+
+            // Low pass filter
+            x = x * 0.2 + target.prevX * 0.8;
+            y = y * 0.2 + target.prevY * 0.8;
+
+            target.prevX = x;
+            target.prevY = y;
+            target.sprite.x = x;
+            target.sprite.y = y;
+          }
+        },
+        this
+      );
+
+      var sprite = (this.sprite = new Sprite(s_pathR2));
+      this.addChild(sprite);
+      sprite.x = winSize.width / 2;
+      sprite.y = winSize.height / 2;
+
+      // for low-pass filter
+      this.prevX = 0;
+      this.prevY = 0;
+    } else {
+      log("ACCELEROMETER not supported");
     }
+  }
 
-    init() {
-        super.init();
+  onExit() {
+    super.onExit();
+    if (ServiceLocator.sys.capabilities.accelerometer)
+      ServiceLocator.inputManager.setAccelerometerEnabled(false);
+  }
 
-        if( 'accelerometer' in ServiceLocator.sys.capabilities ) {
-            var self = this;
-            // call is called 30 times per second
-            ServiceLocator.inputManager.setAccelerometerInterval(1/30);
-            ServiceLocator.inputManager.setAccelerometerEnabled(true);
-            ServiceLocator.eventManager.addListener({
-                event: EventListenerType.ACCELERATION,
-                callback: function(accelEvent, event){
-                    var target = event.getCurrentTarget();
-                    self._logIndex++;
-                    if (self._logIndex > 20)
-                    {
-                        log('Accel x: '+ accelEvent.x + ' y:' + accelEvent.y + ' z:' + accelEvent.z + ' time:' + accelEvent.timestamp );    
-                        self._logIndex = 0;
-                    }
-                    
-
-                    var w = winSize.width;
-                    var h = winSize.height;
-
-                    var x = w * accelEvent.x + w/2;
-                    var y = h * accelEvent.y + h/2;
-
-                    // Low pass filter
-                    x = x*0.2 + target.prevX*0.8;
-                    y = y*0.2 + target.prevY*0.8;
-
-                    target.prevX = x;
-                    target.prevY = y;
-                    target.sprite.x = x;
-                    target.sprite.y = y ;
-                }
-            }, this);
-
-            var sprite = this.sprite = new Sprite(s_pathR2);
-            this.addChild( sprite );
-            sprite.x = winSize.width/2;
-            sprite.y = winSize.height/2;
-
-            // for low-pass filter
-            this.prevX = 0;
-            this.prevY = 0;
-        } else {
-            log("ACCELEROMETER not supported");
-        }
-    }
-
-    onExit(){
-        super.onExit();
-        if( 'accelerometer' in ServiceLocator.sys.capabilities )
-            ServiceLocator.inputManager.setAccelerometerEnabled(false);
-    }
-
-    subtitle() {
-        return "Accelerometer test. Move device and see console";
-    }
-
+  subtitle() {
+    return "Accelerometer test. Move device and see console";
+  }
 }

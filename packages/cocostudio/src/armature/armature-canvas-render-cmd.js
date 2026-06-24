@@ -78,7 +78,7 @@ export class ArmatureCanvasRenderCmd extends Node.CanvasRenderCmd {
       parent = node._parent;
     this.transform(parent ? parent._renderCmd : null);
 
-    var wrapper = ctx || ServiceLocator.rendererConfig.renderContext;
+    var wrapper = ctx || ServiceLocator.sys.rendererConfig.renderContext;
     wrapper.save();
     wrapper._switchToArmatureMode(true, this._worldTransform, scaleX, scaleY);
   }
@@ -194,10 +194,10 @@ export class ArmatureCanvasRenderCmd extends Node.CanvasRenderCmd {
         if (child._localZOrder < 0) child.visit(childNode);
         else break;
       }
-      ServiceLocator.rendererConfig.renderer.pushRenderCommand(cmd);
+      ServiceLocator.sys.rendererConfig.renderer.pushRenderCommand(cmd);
       for (; i < len; i++) children[i].visit(childNode);
     } else {
-      ServiceLocator.rendererConfig.renderer.pushRenderCommand(cmd);
+      ServiceLocator.sys.rendererConfig.renderer.pushRenderCommand(cmd);
     }
     this._dirtyFlag = 0;
   }
@@ -209,11 +209,11 @@ export class ArmatureCanvasRenderCmd extends Node.CanvasRenderCmd {
     this._syncStatus(parentCmd);
     node.sortAllChildren();
 
-    ServiceLocator.rendererConfig.renderer.pushRenderCommand(
+    ServiceLocator.sys.rendererConfig.renderer.pushRenderCommand(
       this._startRenderCmd
     );
     this.rendering();
-    ServiceLocator.rendererConfig.renderer.pushRenderCommand(
+    ServiceLocator.sys.rendererConfig.renderer.pushRenderCommand(
       this._RestoreRenderCmd
     );
 

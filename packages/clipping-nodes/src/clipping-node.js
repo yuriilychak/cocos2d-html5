@@ -23,10 +23,18 @@ export class ClippingNode extends Node {
     this._renderCmd.initStencilBits();
   }
 
-  get stencil() { return this.getStencil(); }
-  set stencil(v) { this.setStencil(v); }
-  get alphaThreshold() { return this.getAlphaThreshold(); }
-  set alphaThreshold(v) { this.setAlphaThreshold(v); }
+  get stencil() {
+    return this.getStencil();
+  }
+  set stencil(v) {
+    this.setStencil(v);
+  }
+  get alphaThreshold() {
+    return this.getAlphaThreshold();
+  }
+  set alphaThreshold(v) {
+    this.setAlphaThreshold(v);
+  }
 
   onEnter() {
     super.onEnter();
@@ -59,7 +67,7 @@ export class ClippingNode extends Node {
   }
 
   _visitChildren() {
-    const renderer = ServiceLocator.rendererConfig.renderer;
+    const renderer = ServiceLocator.sys.rendererConfig.renderer;
     if (this._reorderChildDirty) {
       this.sortAllChildren();
     }
@@ -103,7 +111,7 @@ export class ClippingNode extends Node {
   }
 
   _createRenderCmd() {
-    if (ServiceLocator.rendererConfig.isCanvas)
+    if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new this.constructor.CanvasRenderCmd(this);
     else return new this.constructor.WebGLRenderCmd(this);
   }

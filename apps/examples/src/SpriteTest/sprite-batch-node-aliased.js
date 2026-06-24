@@ -88,11 +88,14 @@ export class SpriteBatchNodeAliased extends SpriteTestDemo {
     if (
       !ServiceLocator.sys.isNative &&
       !(
-        "opengl" in ServiceLocator.sys.capabilities &&
-        ServiceLocator.rendererConfig.isWebGL
+        ServiceLocator.sys.capabilities.opengl &&
+        ServiceLocator.sys.rendererConfig.isWebGL
       )
     ) {
-      var label = new TextBMFont("Not supported on HTML5-canvas", s_simpleFont_fnt);
+      var label = new TextBMFont(
+        "Not supported on HTML5-canvas",
+        s_simpleFont_fnt
+      );
       this.addChild(label);
       label.x = winSize.width / 2;
       label.y = winSize.height / 2;
@@ -106,8 +109,8 @@ export class SpriteBatchNodeAliased extends SpriteTestDemo {
     //----start25----onExit
     if (
       ServiceLocator.sys.isNative ||
-      ("opengl" in ServiceLocator.sys.capabilities &&
-        ServiceLocator.rendererConfig.isWebGL)
+      (ServiceLocator.sys.capabilities.opengl &&
+        ServiceLocator.sys.rendererConfig.isWebGL)
     ) {
       var sprite = this.getChildByTag(TAG_SPRITE_BATCH_NODE);
       sprite.texture.setAntiAliasTexParameters();

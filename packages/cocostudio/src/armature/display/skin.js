@@ -1,4 +1,3 @@
-
 /****************************************************************************
  Copyright (c) 2011-2012 cocos2d-x.org
  Copyright (c) 2013-2014 Chukong Technologies Inc.
@@ -35,7 +34,13 @@
  * @property {String}   displayName - <@readonly> The displayed name of skin
  *
  */
-import { AffineTransform, Sprite, log, radiansToDegrees, ServiceLocator } from "@aspect/core";
+import {
+  AffineTransform,
+  Sprite,
+  log,
+  radiansToDegrees,
+  ServiceLocator
+} from "@aspect/core";
 
 export class Skin extends Sprite {
   constructor(fileName, rect) {
@@ -75,7 +80,8 @@ export class Skin extends Sprite {
    */
   initWithSpriteFrameName(spriteFrameName) {
     if (spriteFrameName === "") return false;
-    var pFrame = ServiceLocator.spriteFrameCache.getSpriteFrame(spriteFrameName);
+    var pFrame =
+      ServiceLocator.spriteFrameCache.getSpriteFrame(spriteFrameName);
     var ret = true;
     if (pFrame) this.initWithSpriteFrame(pFrame);
     else {
@@ -172,7 +178,8 @@ export class Skin extends Sprite {
   }
 
   _createRenderCmd() {
-    if (ServiceLocator.rendererConfig.isCanvas) return new this.constructor.CanvasRenderCmd(this);
+    if (ServiceLocator.sys.rendererConfig.isCanvas)
+      return new this.constructor.CanvasRenderCmd(this);
     else return new this.constructor.WebGLRenderCmd(this);
   }
-};
+}

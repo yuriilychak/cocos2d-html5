@@ -40,8 +40,8 @@ import { ServiceLocator } from "@aspect/core";
 export var arrayOfRenderTextureTest = [RenderTextureSave, Issue1464];
 
 if (
-  "opengl" in ServiceLocator.sys.capabilities &&
-  ServiceLocator.rendererConfig.isWebGL &&
+  ServiceLocator.sys.capabilities.opengl &&
+  ServiceLocator.sys.rendererConfig.isWebGL &&
   !ServiceLocator.sys.isNative
 ) {
   arrayOfRenderTextureTest.push(RenderTextureIssue937);

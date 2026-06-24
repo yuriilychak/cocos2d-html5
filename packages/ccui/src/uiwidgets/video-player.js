@@ -22,7 +22,16 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BrowserType, Node, log, screen, GameEvent, OperatingSystem, Path, ServiceLocator } from "@aspect/core";
+import {
+  BrowserType,
+  Node,
+  log,
+  screen,
+  GameEvent,
+  OperatingSystem,
+  Path,
+  ServiceLocator
+} from "@aspect/core";
 import { Widget } from "../base-classes/widget";
 
 /**
@@ -364,7 +373,7 @@ document.head.appendChild(style);
 
 {
   const polyfill = VideoPlayer._polyfill;
-  const RenderCmd = ServiceLocator.rendererConfig.isWebGL
+  const RenderCmd = ServiceLocator.sys.rendererConfig.isWebGL
     ? Node.WebGLRenderCmd
     : Node.CanvasRenderCmd;
   VideoPlayer.RenderCmd = class extends RenderCmd {

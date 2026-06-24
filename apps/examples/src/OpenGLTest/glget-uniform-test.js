@@ -36,7 +36,7 @@ export class GLGetUniformTest extends OpenGLTestLayer {
   constructor() {
     super();
 
-    if ("opengl" in ServiceLocator.sys.capabilities) {
+    if (ServiceLocator.sys.capabilities.opengl) {
       if (!autoTestEnabled) {
         log(JSON.stringify(this.runTest()));
       }
@@ -50,7 +50,9 @@ export class GLGetUniformTest extends OpenGLTestLayer {
     return "tests texParameter()\n See the Console";
   }
   runTest() {
-    var shader = ServiceLocator.shaderCache.getProgram("ShaderPositionTextureColor");
+    var shader = ServiceLocator.shaderCache.getProgram(
+      "ShaderPositionTextureColor"
+    );
     var program = shader.getProgram();
     shader.use();
 

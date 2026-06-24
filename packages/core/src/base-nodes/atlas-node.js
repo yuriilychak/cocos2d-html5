@@ -75,7 +75,7 @@ export class AtlasNode extends EventHelper(Node) {
     //! height of each char
     this._itemHeight = 0;
     // protocol variables
-    
+
     this._blendFunc = null;
 
     // This variable is only used for LabelAtlas FPS display. So plz don't modify its value.
@@ -92,7 +92,7 @@ export class AtlasNode extends EventHelper(Node) {
   }
 
   _createRenderCmd() {
-    if (ServiceLocator.rendererConfig.isCanvas)
+    if (ServiceLocator.sys.rendererConfig.isCanvas)
       this._renderCmd = new AtlasNode.CanvasRenderCmd(this);
     else this._renderCmd = new AtlasNode.WebGLRenderCmd(this);
   }
@@ -112,7 +112,9 @@ export class AtlasNode extends EventHelper(Node) {
    * @return {Color}
    */
   get color() {
-    return this.#opacityModifyRGB ? this._renderCmd._colorUnmodified : super.color;
+    return this.#opacityModifyRGB
+      ? this._renderCmd._colorUnmodified
+      : super.color;
   }
 
   /**

@@ -57,7 +57,7 @@ export var _planeColor = [
 
 export var arrayOfClippingNodeTest = [ScrollViewDemo, ShapeTest, SpriteTest];
 
-if (!ServiceLocator.sys.isNative && !ServiceLocator.rendererConfig.isCanvas) {
+if (!ServiceLocator.sys.isNative && !ServiceLocator.sys.rendererConfig.isCanvas) {
   arrayOfClippingNodeTest.push(
     ShapeInvertedTest,
     SpriteNoAlphaTest,

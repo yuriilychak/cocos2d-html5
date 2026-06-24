@@ -27,7 +27,14 @@
 
 import { s_pathGrossini, s_simpleFont_fnt } from "../resources";
 import { director } from "../constants";
-import { Color, EventListener, EventListenerType, LayerColor, Sprite, ServiceLocator } from "@aspect/core";
+import {
+  Color,
+  EventListener,
+  EventListenerType,
+  LayerColor,
+  Sprite,
+  ServiceLocator
+} from "@aspect/core";
 import { RotateBy } from "@aspect/actions";
 import { TextBMFont } from "@aspect/ccui";
 
@@ -56,7 +63,7 @@ export class SceneTestLayer3 extends LayerColor {
   }
 
   onEnterTransitionDidFinish() {
-    if ("touches" in ServiceLocator.sys.capabilities) {
+    if (ServiceLocator.sys.capabilities.touches) {
       ServiceLocator.eventManager.addListener(
         {
           event: EventListenerType.TOUCH_ALL_AT_ONCE,
@@ -66,7 +73,7 @@ export class SceneTestLayer3 extends LayerColor {
         },
         this
       );
-    } else if ("mouse" in ServiceLocator.sys.capabilities)
+    } else if (ServiceLocator.sys.capabilities.mouse)
       ServiceLocator.eventManager.addListener(
         {
           event: EventListenerType.MOUSE,

@@ -171,7 +171,7 @@ export class TiledGrid3D extends GridBase {
     //
     // Attributes
     //
-    const gl = ServiceLocator.rendererConfig.renderContext;
+    const gl = ServiceLocator.sys.rendererConfig.renderContext;
     const locDirty = this._dirty;
     gl.enableVertexAttribArray(VertexAttribute.POSITION);
     gl.enableVertexAttribArray(VertexAttribute.TEX_COORDS);
@@ -231,7 +231,7 @@ export class TiledGrid3D extends GridBase {
     this._texCoordinates = new Float32Array(numQuads * 8);
     this._indices = new Uint16Array(numQuads * 6);
 
-    const gl = ServiceLocator.rendererConfig.renderContext;
+    const gl = ServiceLocator.sys.rendererConfig.renderContext;
     if (this._verticesBuffer) gl.deleteBuffer(this._verticesBuffer);
     this._verticesBuffer = gl.createBuffer();
     if (this._texCoordinateBuffer) gl.deleteBuffer(this._texCoordinateBuffer);

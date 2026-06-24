@@ -41,7 +41,10 @@ export class TextureLoadImgTest extends TextureCacheTestBase {
 
     this._labelSecond = null;
 
-    if ("opengl" in ServiceLocator.sys.capabilities && !ServiceLocator.sys.isNative) {
+    if (
+      ServiceLocator.sys.capabilities.opengl &&
+      !ServiceLocator.sys.isNative
+    ) {
       var label = new TextBMFont(
         "Not support Loading texture from remote site on HTML5-WebGL",
         s_simpleFont_fnt
