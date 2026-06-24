@@ -12,9 +12,9 @@ const TIMER_NAME = 400;
  */
 export const editBoxPolyfill = { zoomInvalid: false };
 if (
-    OperatingSystem.ANDROID === ServiceLocator.sys.os &&
-    (ServiceLocator.sys.browserType === BrowserType.SOUGOU ||
-        ServiceLocator.sys.browserType === BrowserType.BROWSER_360)
+    OperatingSystem.ANDROID === ServiceLocator.sys.specification.os &&
+    (ServiceLocator.sys.specification.browserType === BrowserType.SOUGOU ||
+        ServiceLocator.sys.specification.browserType === BrowserType.BROWSER_360)
 ) {
     editBoxPolyfill.zoomInvalid = true;
 }

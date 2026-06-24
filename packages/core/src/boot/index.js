@@ -8,7 +8,6 @@ export { default as AsyncPool } from './async-pool';
 export { default as Async } from './async';
 export { default as Path } from './path';
 export { default as Loader } from './loader';
-export { default as Sys } from './sys';
 export { Engine } from './engine';
 export { default as Game } from './game';
 export { _LogInfos, log, warn, error, assert, logToWebPage, formatString, initDebugSetting } from './debugger';

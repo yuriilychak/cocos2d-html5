@@ -31,8 +31,12 @@ import Scheduler from "../scheduler/scheduler";
 import { ActionManager } from "../action-manager";
 import EventCustom from "../event-manager/event/event-custom";
 import { Node } from "../base-nodes/node";
-import Game from "../boot/game";
-import { DirectorEvent, DirectorProjection, GameEvent } from "../enums";
+import {
+  CONFIG_KEY,
+  DirectorEvent,
+  DirectorProjection,
+  GameEvent
+} from "../enums";
 import { Size } from "../geometry";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import { checkGLErrorDebug } from "../platform/macro/utils";
@@ -170,7 +174,7 @@ export class Director extends BaseClass {
     }
 
     if (
-      this._game.config[Game.CONFIG_KEY.debugMode] > 0 &&
+      this._game.config[CONFIG_KEY.debugMode] > 0 &&
       this._deltaTime > 0.2
     )
       this._deltaTime = 1 / 60.0;

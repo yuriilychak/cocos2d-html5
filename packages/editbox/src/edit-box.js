@@ -51,7 +51,7 @@ export class EditBox extends Node {
     this._textColor = Color.WHITE;
     this._placeholderColor = Color.GRAY;
 
-    this._input = ServiceLocator.sys.isMobile
+    this._input = ServiceLocator.sys.specification.isMobile
       ? new MobileEditBoxInput(this)
       : new DesktopEditBoxInput(this);
 

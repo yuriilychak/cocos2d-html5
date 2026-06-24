@@ -68,12 +68,12 @@ var __BrowserGetter = {
 function __initBrowserGetter(sys, view) {
   if (__browserGetterInited) return;
   __browserGetterInited = true;
-  __BrowserGetter.adaptationType = sys.browserType;
+  __BrowserGetter.adaptationType = sys.specification.browserType;
 
   if (window.navigator.userAgent.indexOf("OS 8_1_") > -1)
     __BrowserGetter.adaptationType = BrowserType.MIUI;
 
-  if (sys.os === OperatingSystem.IOS)
+  if (sys.specification.os === OperatingSystem.IOS)
     __BrowserGetter.adaptationType = BrowserType.SAFARI;
 
   switch (__BrowserGetter.adaptationType) {
@@ -226,7 +226,7 @@ export class EGLView extends BaseClass {
     var prevFrameW = view._frameSize.width,
       prevFrameH = view._frameSize.height,
       prevRotated = view._isRotated;
-    if (this._sys.isMobile) {
+    if (this._sys.specification.isMobile) {
       var containerStyle = this._game.container.style,
         margin = containerStyle.margin;
       containerStyle.margin = "0";
@@ -261,7 +261,7 @@ export class EGLView extends BaseClass {
 
   _orientationChange() {
     this._orientationChanging = true;
-    if (this._sys.isMobile) {
+    if (this._sys.specification.isMobile) {
       this._game.container.style.display = "none";
     }
     setTimeout(() => {
@@ -375,7 +375,7 @@ export class EGLView extends BaseClass {
     var isLandscape = w >= h;
 
     if (
-      !this._sys.isMobile ||
+      !this._sys.specification.isMobile ||
       (isLandscape && this._orientation & DeviceOrientation.LANDSCAPE) ||
       (!isLandscape && this._orientation & DeviceOrientation.PORTRAIT)
     ) {
@@ -495,7 +495,7 @@ export class EGLView extends BaseClass {
 
     visibleRect && visibleRect.init(this._visibleRect);
 
-    if (this._sys.isMobile) {
+    if (this._sys.specification.isMobile) {
       window.addEventListener(
         "orientationchange",
         this._orientationChange.bind(this)
@@ -547,7 +547,7 @@ export class EGLView extends BaseClass {
     if (
       enabled &&
       enabled !== this._autoFullScreen &&
-      this._sys.isMobile &&
+      this._sys.specification.isMobile &&
       this._frame === document.documentElement
     ) {
       // Automatically full screen when user touches on mobile version
@@ -763,7 +763,7 @@ export class EGLView extends BaseClass {
     }
 
     // Reinit frame size
-    if (this._sys.isMobile) this._adjustViewportMeta();
+    if (this._sys.specification.isMobile) this._adjustViewportMeta();
 
     // If resizing, then frame size is already initialized, this logic should be improved
     if (!this._resizing) this._initFrameSize();

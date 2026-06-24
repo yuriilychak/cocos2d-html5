@@ -406,7 +406,7 @@ export class InputManager {
       touch_event = event.changedTouches[i];
       if (touch_event) {
         var location;
-        if (BrowserType.FIREFOX === this._sys.browserType)
+        if (BrowserType.FIREFOX === this._sys.specification.browserType)
           location = locView.convertToLocationInView(
             touch_event.pageX,
             touch_event.pageY,
@@ -456,7 +456,7 @@ export class InputManager {
     //  miui
     //  WECHAT
     var prohibition = false;
-    if (this._sys.isMobile) prohibition = true;
+    if (this._sys.specification.isMobile) prohibition = true;
 
     //register touch event
     if (supportMouse) {
@@ -803,7 +803,7 @@ export class InputManager {
     _t._accelDeviceEvent = w.DeviceMotionEvent || w.DeviceOrientationEvent;
 
     //TODO fix DeviceMotionEvent bug on QQ Browser version 4.1 and below.
-    if (this._sys.browserType === BrowserType.MOBILE_QQ)
+    if (this._sys.specification.browserType === BrowserType.MOBILE_QQ)
       _t._accelDeviceEvent = window.DeviceOrientationEvent;
 
     var _deviceEventType =
@@ -813,7 +813,7 @@ export class InputManager {
     var ua = navigator.userAgent;
     if (
       /Android/.test(ua) ||
-      (/Adr/.test(ua) && this._sys.browserType === BrowserType.UC)
+      (/Adr/.test(ua) && this._sys.specification.browserType === BrowserType.UC)
     ) {
       _t._minus = -1;
     }

@@ -244,7 +244,7 @@ parser.initParticle = function (json, resourcePath) {
     node = new ParticleSystem(path);
     self.generalAttributes(node, json);
     node.setPositionType(ParticleSystem.TYPE_GROUPED);
-    !ServiceLocator.sys.isNative &&
+    !ServiceLocator.sys.specification.isNative &&
       node.setDrawMode(ParticleSystem.TEXTURE_MODE);
 
     var blendData = json["BlendFunc"];
@@ -579,7 +579,7 @@ parser.initText = function (json, resourcePath) {
     var path = fontResource["Path"];
     //resoutceType = fontResource["Type"];
     if (path != null) {
-      if (ServiceLocator.sys.isNative) {
+      if (ServiceLocator.sys.specification.isNative) {
         fontName = Path.join(ServiceLocator.loader.resPath, resourcePath, path);
       } else {
         fontName = path.match(/([^\/]+)\.(\S+)/);
@@ -662,7 +662,7 @@ parser.initButton = function (json, resourcePath) {
     var path = fontResource["Path"];
     //resoutceType = fontResource["Type"];
     if (path != null) {
-      if (ServiceLocator.sys.isNative) {
+      if (ServiceLocator.sys.specification.isNative) {
         fontName = Path.join(ServiceLocator.loader.resPath, resourcePath, path);
       } else {
         fontName = path.match(/([^\/]+)\.(\S+)/);
@@ -1159,7 +1159,7 @@ parser.initTextField = function (json, resourcePath) {
     var path = fontResource["Path"];
     //resoutceType = fontResource["Type"];
     if (path != null) {
-      if (ServiceLocator.sys.isNative) {
+      if (ServiceLocator.sys.specification.isNative) {
         fontName = Path.join(ServiceLocator.loader.resPath, resourcePath, path);
       } else {
         fontName = path.match(/([^\/]+)\.(\S+)/);
@@ -1177,7 +1177,7 @@ parser.initTextField = function (json, resourcePath) {
 
   if (!widget.isIgnoreContentAdaptWithSize()) {
     setContentSize(widget, json["Size"]);
-    if (ServiceLocator.sys.isNative)
+    if (ServiceLocator.sys.specification.isNative)
       widget.getVirtualRenderer().setLineBreakWithoutSpace(true);
   }
 

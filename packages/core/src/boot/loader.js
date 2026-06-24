@@ -564,7 +564,7 @@ export default class Loader {
       url = this._langPathCache[url] =
         url.substring(0, url.length - extname.length) +
         "_" +
-        this._sys.language +
+        this._sys.specification.language +
         extname;
     }
     return url;
@@ -596,7 +596,7 @@ export default class Loader {
     if (!(resources instanceof Array)) resources = [resources];
     var asyncPool = new AsyncPool(
       resources,
-      this._sys.isMobile ? 20 : 0,
+      this._sys.specification.isMobile ? 20 : 0,
       (value, index, AsyncPoolCallback, aPool) => {
         this._loadResIterator(value, index, (err, ...rest) => {
           if (option.trigger)

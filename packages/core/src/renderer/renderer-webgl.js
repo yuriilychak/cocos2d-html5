@@ -152,7 +152,7 @@ var rendererWebGL = {
     _multiTexture = ServiceLocator.rendererConfig.isWebGL2;
     _sizePerVertex = _multiTexture ? 7 : 6;
     if (_multiTexture) {
-      _maxBatchTextures = ServiceLocator.rendererConfig.getMaxBatchTextures();
+      _maxBatchTextures = ServiceLocator.rendererConfig.maxBatchTextures;
       _textureUnits = new Int32Array(_maxBatchTextures);
       for (var t = 0; t < _maxBatchTextures; ++t) {
         _textureUnits[t] = t;
@@ -166,7 +166,7 @@ var rendererWebGL = {
     this.mat4Identity = new Matrix4();
     this.mat4Identity.identity();
     initQuadBuffer(BATCH_VERTEX_COUNT);
-    if (ServiceLocator.sys.os === OperatingSystem.IOS) {
+    if (ServiceLocator.sys.specification.os === OperatingSystem.IOS) {
       _IS_IOS = true;
     }
   },

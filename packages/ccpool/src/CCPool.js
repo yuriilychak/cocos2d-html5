@@ -136,7 +136,7 @@ export class Pool {
       // User implementation for re-enable the object
       obj.reuse && obj.reuse(...args);
       // JSB release to avoid memory leak
-      ServiceLocator.sys.isNative && obj.release && this._autoRelease(obj);
+      ServiceLocator.sys.specification.isNative && obj.release && this._autoRelease(obj);
       return obj;
     }
   }

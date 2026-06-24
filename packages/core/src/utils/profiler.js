@@ -116,7 +116,7 @@ export class Profiler {
         const mode = rendererConfig.isCanvas ? "\n canvas" : "\n webgl";
         this._SPFLabel.innerHTML = this._lastSPF.toFixed(3);
         this._FPSLabel.innerHTML = this._frameRate.toFixed(1).toString() + mode;
-        this._drawsLabel.innerHTML = (0 | rendererConfig.numberOfDraws).toString();
+        this._drawsLabel.innerHTML = (0 | rendererConfig.drawCount).toString();
       }
     }
   };

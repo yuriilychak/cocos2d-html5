@@ -21,7 +21,7 @@
 
 import { DisplayLinkDirector } from "./director/director";
 import { RendererConfig } from "./renderer/renderer-config";
-import Sys from "./boot/sys";
+import { Sys } from "./sys";
 import Loader from "./boot/loader";
 import Game from "./boot/game";
 import { Engine } from "./boot/engine";

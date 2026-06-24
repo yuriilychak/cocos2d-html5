@@ -30,17 +30,17 @@ export const audioSupport = {
   ONE_SOURCE: false
 };
 
-if (audioSupportSys.browserType === BrowserType.FIREFOX) {
+if (audioSupportSys.specification.browserType === BrowserType.FIREFOX) {
   audioSupport.DELAY_CREATE_CTX = true;
   audioSupport.USE_LOADER_EVENT = "canplay";
 }
 
-if (audioSupportSys.os === OperatingSystem.IOS) {
+if (audioSupportSys.specification.os === OperatingSystem.IOS) {
   audioSupport.USE_LOADER_EVENT = "loadedmetadata";
 }
 
-if (audioSupportSys.os === OperatingSystem.ANDROID) {
-  if (audioSupportSys.browserType === BrowserType.UC) {
+if (audioSupportSys.specification.os === OperatingSystem.ANDROID) {
+  if (audioSupportSys.specification.browserType === BrowserType.UC) {
     audioSupport.ONE_SOURCE = true;
   }
 }

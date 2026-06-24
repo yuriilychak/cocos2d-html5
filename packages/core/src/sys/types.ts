@@ -11,3 +11,9 @@ export type BrowserWindow = Window & {
   DeviceMotionEvent?: unknown;
   DeviceOrientationEvent?: unknown;
 };
+
+export type BrowserEnvironment = {
+  window: BrowserWindow;
+  document: Document;
+  navigator: BrowserNavigator;
+};

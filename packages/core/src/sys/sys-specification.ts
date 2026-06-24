@@ -1,45 +1,11 @@
-import { log, warn as debugWarn } from "./debugger";
 import { BrowserType, Language, OperatingSystem, Platform } from "../enums";
-import { Size } from "../geometry";
-import { isUndefined } from "./utils";
-import SysCapabilities from './sys-capabilities';
 
-import type { BrowserWindow, BrowserNavigator } from './types';
-
-type WebGLContext = WebGLRenderingContext | WebGL2RenderingContext;
-
-type RendererConfigLike = {
-  isWebGL: boolean;
-};
-
-type SysServices = {
-  rendererConfig: RendererConfigLike;
-};
-
-type BrowserEnvironment = {
-  window: BrowserWindow;
-  document: Document;
-  navigator: BrowserNavigator;
-};
-
-type StorageLike = {
-  getItem(...args: any[]): any;
-  setItem(...args: any[]): any;
-  removeItem(...args: any[]): any;
-  clear(...args: any[]): any;
-};
+import type { BrowserNavigator, BrowserWindow } from './types';
 
 /**
  * System variables singleton.
  */
-export default class Sys {
-  static readonly #webGLContextNames = [
-    "webgl2",
-    "webgl",
-    "experimental-webgl",
-    "webkit-3d",
-    "moz-webgl"
-  ];
+export default class SysSpecification {
   static readonly #primaryBrowserTypePattern =
     /micromessenger|mqqbrowser|sogou|qzone|liebao|ucbrowser|360 aphone|360browser|baiduboxapp|baidubrowser|maxthon|mxbrowser|trident|miuibrowser/i;
   static readonly #secondaryBrowserTypePattern =
@@ -49,7 +15,6 @@ export default class Sys {
   static readonly #secondaryBrowserVersionPattern =
     /(msie |rv:|firefox|chrome|ucbrowser|qq|oupeng|opera|opr|safari|miui)(mobile)?(browser)?\/?([\d.]+)/i;
 
-  #rendererConfig: RendererConfigLike | null = null;
   #isNative: boolean = false;
   #isMobile: boolean = false;
   #os: OperatingSystem = OperatingSystem.UNKNOWN;
@@ -59,18 +24,8 @@ export default class Sys {
   #osMainVersion = 0;
   #browserType: BrowserType = BrowserType.UNKNOWN;
   #browserVersion = "";
-  #windowPixelResolution: Size = new Size();
-  #localStorage: StorageLike;
-  #capabilities: SysCapabilities;
 
-  readonly #env: BrowserEnvironment;
-
-  constructor() {
-    this.#env = Sys.#getBrowserEnvironment();
-
-    const win = this.#env.window,
-      nav = this.#env.navigator,
-      doc = this.#env.document;
+  constructor(nav: BrowserNavigator) {
     const ua = nav.userAgent.toLowerCase();
 
     this.#isMobile = /mobile|android|iphone|ipad/.test(ua);
@@ -83,106 +38,45 @@ export default class Sys {
     this.#language = currLanguage.split("-")[0];
 
     const [isIOSValue, isAndroidValue, osVersion, osMainVersionValue] =
-      Sys.#detectMobileOperatingSystemVersion(ua, nav.platform);
+      SysSpecification.#detectMobileOperatingSystemVersion(ua, nav.platform);
     const isIOS = isIOSValue === "true";
     const isAndroid = isAndroidValue === "true";
 
-    this.#os = Sys.#detectOperatingSystem(nav.appVersion, isAndroid, isIOS);
+    this.#os = SysSpecification.#detectOperatingSystem(nav.appVersion, isAndroid, isIOS);
     this.#osVersion = osVersion;
     this.#osMainVersion = parseInt(osMainVersionValue) || 0;
-    this.#browserType = Sys.#detectBrowserType(ua, isAndroid);
-    this.#browserVersion = Sys.#detectBrowserVersion(ua);
-
-    const w = win.innerWidth || doc.documentElement.clientWidth;
-    const h = win.innerHeight || doc.documentElement.clientHeight;
-    const ratio = win.devicePixelRatio || 1;
-
-    this.#windowPixelResolution = new Size(ratio * w, ratio * h);
-    try {
-      this.#localStorage = win.localStorage;
-      this.#localStorage.setItem("storage", "");
-      this.#localStorage.removeItem("storage");
-    } catch (e) {
-      const warn = () =>
-        debugWarn(
-          "Warning: localStorage isn't enabled. Please confirm browser cookie or privacy option"
-        );
-      this.#localStorage = {
-        getItem: warn,
-        setItem: warn,
-        removeItem: warn,
-        clear: warn
-      };
-    }
-
-    this.#capabilities = new SysCapabilities(win, doc, nav, this.#detectWebGLSupport());
-
-    // Adjust mobile css settings
-    if (this.isMobile) {
-      const fontStyle = doc.createElement("style");
-      fontStyle.type = "text/css";
-      doc.body.appendChild(fontStyle);
-
-      fontStyle.textContent =
-        "body,canvas,div{ -moz-user-select: none;-webkit-user-select: none;-ms-user-select: none;-khtml-user-select: none;" +
-        "-webkit-tap-highlight-color:rgba(0,0,0,0);}";
-    }
+    this.#browserType = SysSpecification.#detectBrowserType(ua, isAndroid);
+    this.#browserVersion = SysSpecification.#detectBrowserVersion(ua);
   }
 
-  injectServices({ rendererConfig }: SysServices): void {
-    this.#rendererConfig = rendererConfig;
-  }
-
-  toString(): string {
+  public toString(): string {
     return [
         `isMobile : ${this.#isMobile}`,
         `language : ${this.#language}`,
         `browserType : ${this.#browserType}`,
         `browserVersion : ${this.#browserVersion}`,
-        `capabilities : " ${this.#capabilities.toString()}`,
         `os : ${this.#os}`,
         `osVersion : ${this.#osVersion}`,
         `platform : ${this.#platform}`,
-        `Using ${this.#rendererConfig?.isWebGL ? "WEBGL" : "CANVAS"} renderer.`
       ].join("\r\n")
   }
 
-  dump(): void {
-    log(this.toString());
-  }
-
-  openURL(url: string): void {
-    this.#env.window.open(url);
-  }
-
-  #detectWebGLSupport(): boolean {
-    const win = this.#env.window;
-    const doc = this.#env.document;
-    if (!win.WebGLRenderingContext) {
-      return false;
-    }
-
-    const tmpCanvas = doc.createElement("canvas");
+  public detectWebGLSupport(win: BrowserWindow): boolean {
     try {
-      const context = Sys.create3DContext(tmpCanvas);
-      if (!context) {
-        return false;
-      }
-
       if (
-        this.os === OperatingSystem.IOS &&
-        this.osMainVersion === 9 &&
+        this.#os === OperatingSystem.IOS &&
+        this.#osMainVersion === 9 &&
         !win.indexedDB
       ) {
         return false;
       }
 
-      if (this.os !== OperatingSystem.ANDROID) {
+      if (this.#os !== OperatingSystem.ANDROID) {
         return true;
       }
 
-      const browserVer = parseFloat(this.browserVersion);
-      switch (this.browserType) {
+      const browserVer = parseFloat(this.#browserVersion);
+      switch (this.#browserType) {
         case BrowserType.MOBILE_QQ:
         case BrowserType.BAIDU:
         case BrowserType.BAIDU_APP:
@@ -239,48 +133,6 @@ export default class Sys {
     return this.#browserVersion;
   }
 
-  get windowPixelResolution(): Size {
-    return this.#windowPixelResolution;
-  }
-
-  get supportCanvasNewBlendModes(): boolean {
-    return this.capabilities.newBlendModes;
-  }
-
-  get localStorage(): StorageLike {
-    return this.#localStorage;
-  }
-
-  get capabilities(): SysCapabilities {
-    return this.#capabilities;
-  }
-
-  static create3DContext(
-    canvas: HTMLCanvasElement,
-    opt_attribs?: WebGLContextAttributes
-  ): WebGLContext | null {
-    for (let i = 0; i < Sys.#webGLContextNames.length; ++i) {
-      try {
-        const context = canvas.getContext(
-          Sys.#webGLContextNames[i] as any,
-          opt_attribs
-        ) as WebGLContext | null;
-        if (context) {
-          return context;
-        }
-      } catch (e) {}
-    }
-    return null;
-  }
-
-  static #getBrowserEnvironment(): BrowserEnvironment {
-    return {
-      window,
-      document,
-      navigator: window.navigator as BrowserNavigator
-    };
-  }
-
   static #detectOperatingSystem(
     appVersion: string,
     isAndroid: boolean,
@@ -333,8 +185,8 @@ export default class Sys {
     isAndroid: boolean
   ): BrowserType {
     const browserTypes =
-      Sys.#primaryBrowserTypePattern.exec(userAgent) ||
-      Sys.#secondaryBrowserTypePattern.exec(userAgent) ||
+      SysSpecification.#primaryBrowserTypePattern.exec(userAgent) ||
+      SysSpecification.#secondaryBrowserTypePattern.exec(userAgent) ||
       [];
     const browserType = browserTypes[0] || BrowserType.UNKNOWN;
 
@@ -358,8 +210,8 @@ export default class Sys {
 
   static #detectBrowserVersion(userAgent: string): string {
     const browserVersion =
-      userAgent.match(Sys.#primaryBrowserVersionPattern) ||
-      userAgent.match(Sys.#secondaryBrowserVersionPattern);
+      userAgent.match(SysSpecification.#primaryBrowserVersionPattern) ||
+      userAgent.match(SysSpecification.#secondaryBrowserVersionPattern);
 
     return browserVersion ? browserVersion[4] : "";
   }

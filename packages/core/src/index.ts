@@ -100,6 +100,7 @@ export {
   DirectorProjection,
   EventListenerType,
   EventType,
+  CONFIG_KEY,
   GameEvent,
   ImageFormat,
   GLServerState,
@@ -107,6 +108,7 @@ export {
   Language,
   OperatingSystem,
   Platform,
+  GLVersion,
   RenderType,
   ResolutionPolicyType,
   ShaderName,
@@ -120,6 +122,7 @@ export {
   MouseEvent,
   MouseButton,
   TouchEvent,
+  UserRenderMode,
   UniformValueType
 } from "./enums";
 export { Vertex3F, Quad3, V3F_C4B_T2F } from "./platform/types/vertex";
@@ -133,7 +136,7 @@ export {
 export { log, warn } from "./boot/debugger";
 export { RendererConfig } from "./renderer/renderer-config";
 export { Director, DisplayLinkDirector } from "./director/director";
-export { Sys } from "./boot";
+export { Sys } from "./sys";
 export { BaseClass, classManager } from "./platform/class";
 export { Texture2D } from "./textures/texture-2d";
 export {

@@ -29,7 +29,7 @@ export class IMEDispatcher extends BaseClass {
   }
 
   init() {
-    if (ServiceLocator.sys.isMobile) return;
+    if (ServiceLocator.sys.specification.isMobile) return;
     this._domInputControl = document.getElementById("imeDispatcherInput");
     if (!this._domInputControl) {
       this._domInputControl = document.createElement("input");
@@ -175,7 +175,7 @@ export class IMEDispatcher extends BaseClass {
   }
 
   _focusDomInput(delegate) {
-    if (ServiceLocator.sys.isMobile) {
+    if (ServiceLocator.sys.specification.isMobile) {
       this._delegateWithIme = delegate;
       delegate.didAttachWithIME();
       this._currentInputString = delegate.string || "";

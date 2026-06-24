@@ -347,11 +347,11 @@ VideoPlayer._polyfill = {
 })();
 
 const videoPlayerSys = ServiceLocator.sys;
-if (OperatingSystem.IOS === videoPlayerSys.os) {
+if (OperatingSystem.IOS === videoPlayerSys.specification.os) {
   VideoPlayer._polyfill.devicePixelRatio = true;
   VideoPlayer._polyfill.event = "progress";
 }
-if (videoPlayerSys.browserType === BrowserType.FIREFOX) {
+if (videoPlayerSys.specification.browserType === BrowserType.FIREFOX) {
   VideoPlayer._polyfill.autoplayAfterOperation = true;
 }
 

@@ -56,7 +56,7 @@ export class ContainerStrategy extends BaseClass {
   _setupContainer(view, w, h) {
     var locCanvas = ServiceLocator.game.canvas,
       locContainer = ServiceLocator.game.container;
-    if (ServiceLocator.sys.os === OperatingSystem.ANDROID) {
+    if (ServiceLocator.sys.specification.os === OperatingSystem.ANDROID) {
       document.body.style.width = (view._isRotated ? h : w) + "px";
       document.body.style.height = (view._isRotated ? w : h) + "px";
     }

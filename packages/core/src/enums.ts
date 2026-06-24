@@ -102,10 +102,37 @@ export enum GameEvent {
   RENDERER_INITED = "renderer_inited"
 }
 
+export const CONFIG_KEY = {
+  width: "width",
+  height: "height",
+  engineDir: "engineDir",
+  modules: "modules",
+  debugMode: "debugMode",
+  exposeClassName: "exposeClassName",
+  showFPS: "showFPS",
+  frameRate: "frameRate",
+  id: "id",
+  renderMode: "renderMode",
+  jsList: "jsList",
+  registerSystemEvent: "registerSystemEvent"
+};
+
 export enum RenderType {
   CANVAS = 0,
   WEBGL = 1,
   OPENGL = 2
+}
+
+export enum UserRenderMode {
+  AUTO = 0,
+  CANVAS = 1,
+  WEBGL = 2
+}
+
+export enum GLVersion {
+  CANVAS = "canvas",
+  WEBGL = "webgl",
+  WEBGL2 = "webgl2"
 }
 
 export enum DensityDPI {

@@ -1,135 +1,148 @@
-import Game from "../boot/game";
-import { RenderType } from "../enums";
+import { CONFIG_KEY, GLVersion, RenderType, UserRenderMode } from "../enums";
 
 export class RendererConfig {
-  _renderType = RenderType.CANVAS;
-  _supportRender = false;
-  _renderContext = null;
-  _renderer = null;
-  _numberOfDraws = 0;
-  _glVersion = "canvas";
-  _maxBatchTextures = 0;
-  _sys = null;
+  #renderType = RenderType.CANVAS;
+  #supportRender = false;
+  #renderContext = null;
+  #renderer = null;
+  #numberOfDraws = 0;
+  #glVersion = GLVersion.CANVAS;
+  #maxBatchTextures = 0;
+  #sys = null;
 
   injectServices({ sys }) {
-    this._sys = sys;
+    this.#sys = sys;
+  }
+
+  incrementDrawCount(n = 1) {
+    this.#numberOfDraws += n;
+  }
+
+  resetDrawCount() {
+    this.#numberOfDraws = 0;
+  }
+
+  determineRenderType(config) {
+    let mode = parseInt(config[CONFIG_KEY.renderMode], 10);
+
+    const allModes = [
+      UserRenderMode.AUTO,
+      UserRenderMode.CANVAS,
+      UserRenderMode.WEBGL
+    ];
+
+    if (!allModes.includes(mode)) {
+      mode = UserRenderMode.AUTO;
+      config[CONFIG_KEY.renderMode] = UserRenderMode.AUTO;
+    }
+
+    switch (mode) {
+      case UserRenderMode.AUTO: {
+        this.#renderType = this.#sys.capabilities.opengl
+          ? RenderType.WEBGL
+          : RenderType.CANVAS;
+        this.#supportRender =
+          this.#sys.capabilities.opengl || this.#sys.capabilities.canvas;
+        break;
+      }
+      case UserRenderMode.CANVAS: {
+        this.#renderType = RenderType.CANVAS;
+        this.#supportRender = this.#sys.capabilities.canvas;
+        break;
+      }
+      case UserRenderMode.WEBGL: {
+        this.#renderType = this.#sys.capabilities.opengl
+          ? RenderType.WEBGL
+          : RenderType.CANVAS;
+        this.#supportRender = this.#sys.capabilities.opengl;
+        break;
+      }
+      default:
+        this.#renderType = RenderType.CANVAS;
+        this.#supportRender = false;
+    }
   }
 
   get renderContext() {
-    return this._renderContext;
+    return this.#renderContext;
   }
 
-  initRenderContext(context) {
-    this._renderContext = context;
+  set renderContext(context) {
+    if (this.#renderContext !== context) {
+      this.#renderContext = context;
+      this.#maxBatchTextures = 0;
+    }
   }
 
   get glVersion() {
-    return this._glVersion;
+    return this.#glVersion;
   }
 
-  setGLVersion(version) {
-    this._glVersion = version;
+  set glVersion(version) {
+    this.#glVersion = version;
   }
 
   get isWebGL2() {
-    return this._glVersion === "webgl2";
+    return this.#glVersion === GLVersion.WEBGL2;
   }
 
   /**
    * Number of distinct textures the WebGL2 multi-texture batcher may bind in a
    * single draw call. Resolved lazily from MAX_TEXTURE_IMAGE_UNITS and capped at
    * HARD_MAX_BATCH_TEXTURES. Returns 1 on WebGL1/Canvas (single-texture path).
-   * @returns {Number}
    */
-  getMaxBatchTextures() {
-    if (this._maxBatchTextures === 0) {
-      if (this.isWebGL2 && this._renderContext) {
-        const gl = this._renderContext;
+  get maxBatchTextures() {
+    if (this.#maxBatchTextures === 0) {
+      if (this.isWebGL2 && this.#renderContext) {
+        const gl = this.#renderContext;
         const units = gl.getParameter(gl.MAX_TEXTURE_IMAGE_UNITS) || 8;
-        this._maxBatchTextures = Math.max(
+        this.#maxBatchTextures = Math.max(
           1,
           Math.min(units, RendererConfig.HARD_MAX_BATCH_TEXTURES)
         );
       } else {
-        this._maxBatchTextures = 1;
+        this.#maxBatchTextures = 1;
       }
     }
-    return this._maxBatchTextures;
+    return this.#maxBatchTextures;
   }
 
   get renderer() {
-    return this._renderer;
+    return this.#renderer;
   }
 
-  setRenderer(renderer) {
-    this._renderer = renderer;
+  set renderer(value) {
+    this.#renderer = value;
   }
 
-  get numberOfDraws() {
-    return this._numberOfDraws;
-  }
-
-  incrementDrawCount(n) {
-    this._numberOfDraws += n === undefined ? 1 : n;
-  }
-
-  resetDrawCount() {
-    this._numberOfDraws = 0;
+  get drawCount() {
+    return this.#numberOfDraws;
   }
 
   get isWebGL() {
-    return this._renderType === RenderType.WEBGL;
+    return this.#renderType === RenderType.WEBGL;
   }
 
   get isCanvas() {
-    return this._renderType === RenderType.CANVAS;
+    return this.#renderType === RenderType.CANVAS;
   }
 
-  get isSupportRenderer() {
-    return this._supportRender;
+  get supportRenderer() {
+    return this.#supportRender;
   }
 
-  setRenderType(type) {
-    this._renderType = type;
+  set supportRenderer(val) {
+    this.#supportRender = val;
   }
 
-  setSupportRender(val) {
-    this._supportRender = val;
+  get renderType() {
+    return this.#renderType;
   }
 
-  determineRenderType(config) {
-    var CONFIG_KEY = Game.CONFIG_KEY,
-      userRenderMode = parseInt(config[CONFIG_KEY.renderMode]) || 0;
-
-    if (isNaN(userRenderMode) || userRenderMode > 2 || userRenderMode < 0)
-      config[CONFIG_KEY.renderMode] = 0;
-
-    this._renderType = RenderType.CANVAS;
-    this._supportRender = false;
-
-    if (userRenderMode === 0) {
-      if (this._sys.capabilities["opengl"]) {
-        this._renderType = RenderType.WEBGL;
-        this._supportRender = true;
-      } else if (this._sys.capabilities["canvas"]) {
-        this._renderType = RenderType.CANVAS;
-        this._supportRender = true;
-      }
-    } else if (
-      userRenderMode === 1 &&
-      this._sys.capabilities["canvas"]
-    ) {
-      this._renderType = RenderType.CANVAS;
-      this._supportRender = true;
-    } else if (
-      userRenderMode === 2 &&
-      this._sys.capabilities["opengl"]
-    ) {
-      this._renderType = RenderType.WEBGL;
-      this._supportRender = true;
-    }
+  set renderType(type) {
+    this.#renderType = type;
   }
-  
+
   static ENABLE_IMAGE_POOL = true;
 
   static HARD_MAX_BATCH_TEXTURES = 8;

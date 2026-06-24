@@ -10,29 +10,21 @@ import {
 import { rendererWebGL } from "../renderer/renderer-webgl";
 import Path from "./path";
 import { log } from "./debugger";
-import Sys from "./sys";
+import { Sys } from "../sys";
 import { isUndefined } from "./utils";
-import { GameEvent, RenderType } from "../enums";
+import {
+  CONFIG_KEY,
+  GLVersion,
+  GameEvent,
+  RenderType,
+  UserRenderMode
+} from "../enums";
 
 /**
  * An object to boot the game.
  */
 export default class Game extends EventHelper(BaseClass) {
   static _isContextMenuEnable = false;
-
-  static CONFIG_KEY = {
-    width: "width",
-    height: "height",
-    engineDir: "engineDir",
-    modules: "modules",
-    debugMode: "debugMode",
-    exposeClassName: "exposeClassName",
-    showFPS: "showFPS",
-    frameRate: "frameRate",
-    id: "id",
-    renderMode: "renderMode",
-    jsList: "jsList"
-  };
 
   _eventHide = null;
   _eventShow = null;
@@ -68,7 +60,7 @@ export default class Game extends EventHelper(BaseClass) {
 
   constructor() {
     super();
-    this.CONFIG_KEY = Game.CONFIG_KEY;
+    this.CONFIG_KEY = CONFIG_KEY;
   }
 
   // states
@@ -131,8 +123,7 @@ export default class Game extends EventHelper(BaseClass) {
    * @param frameRate
    */
   setFrameRate(frameRate) {
-    var config = this.config,
-      CONFIG_KEY = Game.CONFIG_KEY;
+    var config = this.config;
     config[CONFIG_KEY.frameRate] = frameRate;
     if (this._intervalId) window.cancelAnimationFrame(this._intervalId);
     this._intervalId = 0;
@@ -201,8 +192,7 @@ export default class Game extends EventHelper(BaseClass) {
    * @param cb
    */
   prepare(cb) {
-    var config = this.config,
-      CONFIG_KEY = Game.CONFIG_KEY;
+    var config = this.config;
 
     if (!this._configLoaded) {
       this._loadConfig(() => {
@@ -267,7 +257,7 @@ export default class Game extends EventHelper(BaseClass) {
       if (config) {
         if (typeof config === "string") {
           if (!this.config) this._loadConfig();
-          this.config[Game.CONFIG_KEY.id] = config;
+          this.config[CONFIG_KEY.id] = config;
         } else {
           this.config = config;
         }
@@ -282,7 +272,7 @@ export default class Game extends EventHelper(BaseClass) {
 
   _setAnimFrame() {
     this._lastTime = new Date();
-    var frameRate = this.config[Game.CONFIG_KEY.frameRate];
+    var frameRate = this.config[CONFIG_KEY.frameRate];
     this._frameTime = 1000 / frameRate;
     if (frameRate !== 60 && frameRate !== 30) {
       window.requestAnimFrame = this._stTime;
@@ -326,7 +316,6 @@ export default class Game extends EventHelper(BaseClass) {
 
   _runMainLoop() {
     var config = this.config,
-      CONFIG_KEY = Game.CONFIG_KEY,
       director = this._director,
       skip = true,
       frameRate = config[CONFIG_KEY.frameRate];
@@ -386,8 +375,7 @@ export default class Game extends EventHelper(BaseClass) {
   }
 
   _initConfig(config) {
-    var CONFIG_KEY = Game.CONFIG_KEY,
-      modules = config[CONFIG_KEY.modules];
+    var modules = config[CONFIG_KEY.modules];
 
     config[CONFIG_KEY.showFPS] =
       typeof config[CONFIG_KEY.showFPS] === "undefined"
@@ -399,7 +387,7 @@ export default class Game extends EventHelper(BaseClass) {
     config[CONFIG_KEY.exposeClassName] = !!config[CONFIG_KEY.exposeClassName];
     config[CONFIG_KEY.frameRate] = config[CONFIG_KEY.frameRate] || 60;
     if (config[CONFIG_KEY.renderMode] == null)
-      config[CONFIG_KEY.renderMode] = 0;
+      config[CONFIG_KEY.renderMode] = UserRenderMode.AUTO;
     if (config[CONFIG_KEY.registerSystemEvent] == null)
       config[CONFIG_KEY.registerSystemEvent] = true;
 
@@ -412,14 +400,14 @@ export default class Game extends EventHelper(BaseClass) {
   _initRenderer(width, height) {
     if (this._rendererInitialized) return;
 
-    if (!this._rendererConfig.isSupportRenderer) {
+    if (!this._rendererConfig.supportRenderer) {
       throw new Error(
         "The renderer doesn't support the renderMode " +
-          this.config[Game.CONFIG_KEY.renderMode]
+          this.config[CONFIG_KEY.renderMode]
       );
     }
 
-    var el = this.config[Game.CONFIG_KEY.id],
+    var el = this.config[CONFIG_KEY.id],
       win = window,
       element = document.getElementById(el),
       localCanvas,
@@ -465,7 +453,7 @@ export default class Game extends EventHelper(BaseClass) {
         stencil: true,
         alpha: false
       });
-      this._rendererConfig.initRenderContext(this._renderContext);
+      this._rendererConfig.renderContext = this._renderContext;
     }
     if (this._renderContext) {
       win.gl = this._renderContext;
@@ -473,8 +461,10 @@ export default class Game extends EventHelper(BaseClass) {
       const isWebGL2 =
         typeof WebGL2RenderingContext !== "undefined" &&
         gl instanceof WebGL2RenderingContext;
-      this._rendererConfig.setGLVersion(isWebGL2 ? "webgl2" : "webgl");
-      this._rendererConfig.setRenderer(rendererWebGL);
+      this._rendererConfig.glVersion = isWebGL2
+        ? GLVersion.WEBGL2
+        : GLVersion.WEBGL;
+      this._rendererConfig.renderer = rendererWebGL;
       this._rendererConfig.renderer.init();
       this.drawingUtil = new DrawingPrimitiveWebGL(this._renderContext);
       this.glExt = isWebGL2
@@ -498,13 +488,13 @@ export default class Game extends EventHelper(BaseClass) {
             element_uint: gl.getExtension("OES_element_index_uint")
           };
     } else {
-      this._rendererConfig.setRenderType(RenderType.CANVAS);
-      this._rendererConfig.setGLVersion("canvas");
-      this._rendererConfig.setRenderer(rendererCanvas);
+      this._rendererConfig.renderType = RenderType.CANVAS;
+      this._rendererConfig.glVersion = GLVersion.CANVAS;
+      this._rendererConfig.renderer = rendererCanvas;
       this._renderContext = new CanvasContextWrapper(
         localCanvas.getContext("2d")
       );
-      this._rendererConfig.initRenderContext(this._renderContext);
+      this._rendererConfig.renderContext = this._renderContext;
       this.drawingUtil = DrawingPrimitiveCanvas
         ? new DrawingPrimitiveCanvas(this._renderContext)
         : null;
@@ -532,7 +522,7 @@ export default class Game extends EventHelper(BaseClass) {
     this._eventShow = this._eventShow || new EventCustom(GameEvent.SHOW);
     this._eventShow.userData = this;
 
-    if (this.config[Game.CONFIG_KEY.registerSystemEvent])
+    if (this.config[CONFIG_KEY.registerSystemEvent])
       this._inputManager.registerSystemEvent(this.canvas);
 
     if (!isUndefined(document.hidden)) {

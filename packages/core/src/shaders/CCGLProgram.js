@@ -33,7 +33,7 @@ import Matrix4 from "../kazmath/mat4";
 import { KMGLMatrix } from "../kazmath/km-gl-matrix";
 import { checkGLErrorDebug } from "../platform/macro/utils";
 import { ServiceLocator } from "../service-locator";
-import { UniformName } from "../enums";
+import { CONFIG_KEY, UniformName } from "../enums";
 
 /**
  * Class that implements a WebGL program
@@ -294,7 +294,7 @@ export default class GLProgram extends BaseClass {
     this._vertShader = null;
     this._fragShader = null;
 
-    if (ServiceLocator.game.config[ServiceLocator.game.CONFIG_KEY.debugMode]) {
+    if (ServiceLocator.game.config[CONFIG_KEY.debugMode]) {
       let status = this._glContext.getProgramParameter(
         this._programObj,
         this._glContext.LINK_STATUS

@@ -1,6 +1,6 @@
-import Game from "./game";
 import Path from "./path";
 import { initDebugSetting } from "./debugger";
+import { CONFIG_KEY } from "../enums";
 import { ENGINE_VERSION } from "../platform/config";
 
 export class Engine {
@@ -37,7 +37,7 @@ export class Engine {
   }
 
   #afterEngineLoaded(config) {
-    initDebugSetting(config[Game.CONFIG_KEY.debugMode]);
+    initDebugSetting(config[CONFIG_KEY.debugMode]);
     this.loaded = true;
     console.log(ENGINE_VERSION);
     if (this.#engineLoadedCallback) this.#engineLoadedCallback();

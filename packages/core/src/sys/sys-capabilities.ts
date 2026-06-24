@@ -1,4 +1,4 @@
-import { isUndefined } from './utils';
+import { isUndefined } from '../boot/utils';
 
 import type { BrowserNavigator, BrowserWindow } from './types';
 

@@ -255,14 +255,14 @@ const _polyfill = (WebView._polyfill = {
 });
 
 const webViewSys = ServiceLocator.sys;
-if (webViewSys.os === OperatingSystem.IOS) _polyfill.enableDiv = true;
+if (webViewSys.specification.os === OperatingSystem.IOS) _polyfill.enableDiv = true;
 
-if (webViewSys.isMobile) {
-  if (webViewSys.browserType === BrowserType.FIREFOX) {
+if (webViewSys.specification.isMobile) {
+  if (webViewSys.specification.browserType === BrowserType.FIREFOX) {
     _polyfill.enableBG = true;
   }
 } else {
-  if (webViewSys.browserType === BrowserType.IE) {
+  if (webViewSys.specification.browserType === BrowserType.IE) {
     _polyfill.closeHistory = true;
   }
 }

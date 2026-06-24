@@ -217,7 +217,7 @@ export default class ShaderCache {
             case ShaderName.SPRITE_POSITION_TEXTURECOLOR_MULTI:
                 program.initWithVertexShaderByteArray(
                     buildSpriteMultiTextureVert(),
-                    buildSpriteMultiTextureFrag(this._rendererConfig.getMaxBatchTextures())
+                    buildSpriteMultiTextureFrag(this._rendererConfig.maxBatchTextures)
                 );
                 program.addAttribute(AttributeName.POSITION, VertexAttribute.POSITION);
                 program.addAttribute(AttributeName.COLOR, VertexAttribute.COLOR);
