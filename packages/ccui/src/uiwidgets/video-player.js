@@ -26,7 +26,6 @@ import {
   BrowserType,
   Node,
   log,
-  screen,
   GameEvent,
   OperatingSystem,
   Path,
@@ -220,8 +219,8 @@ export class VideoPlayer extends Widget {
   setFullScreenEnabled(enable) {
     var video = this._renderCmd._video;
     if (video) {
-      if (enable) screen.requestFullScreen(video);
-      else screen.exitFullScreen(video);
+      if (enable) ServiceLocator.screen.requestFullScreen(video);
+      else ServiceLocator.screen.exitFullScreen(video);
     }
   }
 

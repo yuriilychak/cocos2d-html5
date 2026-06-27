@@ -1,4 +1,4 @@
-import { BrowserType, OperatingSystem, screen, visibleRect, Point, ServiceLocator } from "@aspect/core";
+import { BrowserType, OperatingSystem, visibleRect, Point, ServiceLocator } from "@aspect/core";
 import { EditBoxInputBase } from './edit-box-input-base';
 
 const SCROLLY = 40;
@@ -61,7 +61,7 @@ export class MobileEditBoxInput extends EditBoxInputBase {
         if (ServiceLocator.eglView.isAutoFullScreenEnabled()) {
             this.__fullscreen = true;
             ServiceLocator.eglView.enableAutoFullScreen(false);
-            screen.exitFullScreen();
+            ServiceLocator.screen.exitFullScreen();
         } else {
             this.__fullscreen = false;
         }

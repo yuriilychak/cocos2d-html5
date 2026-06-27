@@ -27,7 +27,6 @@
 import { BaseClass } from "../class";
 import { Point, Rect, Size } from "../../geometry";
 import { contentScaleFactor } from "../macro/utils";
-import { screen } from "../screen";
 import { visibleRect } from "../visible-rect";
 import { ContainerStrategy } from "./container-strategy";
 import { ContentStrategy } from "./content-strategy";
@@ -175,6 +174,7 @@ export class EGLView extends BaseClass {
     this._eventManager = null;
     this._game = null;
     this._rendererConfig = null;
+    this._screen = null;
     this._sys = null;
     this._resizeEvent = this._resizeEvent.bind(this);
 
@@ -207,11 +207,12 @@ export class EGLView extends BaseClass {
     _t._targetDensityDPI = DensityDPI.HIGH;
   }
 
-  injectServices({ director, eventManager, game, rendererConfig, sys }) {
+  injectServices({ director, eventManager, game, rendererConfig, screen, sys }) {
     this._director = director;
     this._eventManager = eventManager;
     this._game = game;
     this._rendererConfig = rendererConfig;
+    this._screen = screen;
     this._sys = sys;
   }
 
@@ -552,7 +553,7 @@ export class EGLView extends BaseClass {
     ) {
       // Automatically full screen when user touches on mobile version
       this._autoFullScreen = true;
-      screen.autoFullScreen(this._frame);
+      this._screen.autoFullScreen(this._frame);
     } else {
       this._autoFullScreen = false;
     }

@@ -1,4 +1,16 @@
-import { ServiceLocator } from "../service-locator";
+type FullscreenApiMap = {
+    requestFullscreen: string;
+    exitFullscreen: string;
+    fullscreenchange: string;
+    fullscreenEnabled: string;
+    fullscreenElement: string;
+};
+
+type FullscreenDocument = Document & Record<string, unknown>;
+type FullscreenElement = Element & Record<string, () => unknown>;
+type GameLike = {
+    canvas?: EventTarget | null;
+};
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
@@ -29,16 +41,16 @@ import { ServiceLocator } from "../service-locator";
 /**
  * The fullscreen API provides an easy way for web content to be presented using the user's entire screen.
  * It's invalid on safari, QQbrowser and android browser
- * @name screen
  */
-export const screen = {
-    _supportsFullScreen: false,
+export class Screen {
+    #game: GameLike;
+    #supportsFullScreen: boolean;
     // the pre fullscreenchange function
-    _preOnFullScreenChange: null,
-    _touchEvent: "",
-    _fn: null,
+    #preOnFullScreenChange: EventListener | null = null;
+    #touchEvent: string;
+    #fn: Partial<FullscreenApiMap>;
     // Function mapping for cross browser support
-    _fnMap: [
+    static #fnMap = [
         [
             'requestFullscreen',
             'exitFullscreen',
@@ -74,89 +86,84 @@ export const screen = {
             'msFullscreenEnabled',
             'msFullscreenElement'
         ]
-    ],
-    
-    /**
-     * initialize
-     * @function
-     */
-    init: function () {
-        this._fn = {};
-        var i, val, map = this._fnMap, valL;
-        for (i = 0, l = map.length; i < l; i++) {
-            val = map[i];
+    ];
+
+    constructor(game: GameLike) {
+        this.#game = game;
+
+        const fn: Partial<FullscreenApiMap> = {};
+        const map = Screen.#fnMap;
+        for (let i = 0, l = map.length; i < l; i++) {
+            const val = map[i];
             if (val && val[1] in document) {
-                for (i = 0, valL = val.length; i < valL; i++) {
-                    this._fn[map[0][i]] = val[i];
+                for (let j = 0, valL = val.length; j < valL; j++) {
+                    fn[map[0][j] as keyof FullscreenApiMap] = val[j];
                 }
                 break;
             }
         }
 
-        this._supportsFullScreen = (typeof this._fn.requestFullscreen !== 'undefined');
-        this._touchEvent = ('ontouchstart' in window) ? 'touchstart' : 'mousedown';
-    },
-    
+        this.#fn = fn;
+        this.#supportsFullScreen = (typeof this.#fn.requestFullscreen !== 'undefined');
+        this.#touchEvent = ('ontouchstart' in window) ? 'touchstart' : 'mousedown';
+    }
+
     /**
      * return true if it's full now.
-     * @returns {Boolean}
      */
-    fullScreen: function () {
-        if(!this._supportsFullScreen)   return false;
-        else if( document[this._fn.fullscreenElement] === undefined || document[this._fn.fullscreenElement] === null )
-            return false;
-        else
-            return true;
-    },
-    
+    public get fullScreen(): boolean {
+        const fullscreenElement = this.#fn.fullscreenElement;
+        return this.#supportsFullScreen
+            && fullscreenElement != null
+            && (document as FullscreenDocument)[fullscreenElement] != null;
+    }
+
     /**
      * change the screen to full mode.
-     * @param {Element} element
-     * @param {Function} onFullScreenChange
      */
-    requestFullScreen: function (element, onFullScreenChange) {
-        if (!this._supportsFullScreen) {
+    public requestFullScreen(element?: Element, onFullScreenChange?: EventListener): unknown {
+        const requestFullscreen = this.#fn.requestFullscreen;
+        if (!this.#supportsFullScreen || !requestFullscreen) {
             return;
         }
 
         element = element || document.documentElement;
 
-        if (onFullScreenChange) {
-            var eventName = this._fn.fullscreenchange;
-            if (this._preOnFullScreenChange) {
-                document.removeEventListener(eventName, this._preOnFullScreenChange);
+        const eventName = this.#fn.fullscreenchange;
+        if (onFullScreenChange && eventName) {
+            if (this.#preOnFullScreenChange) {
+                document.removeEventListener(eventName, this.#preOnFullScreenChange);
             }
-            this._preOnFullScreenChange = onFullScreenChange;
+            this.#preOnFullScreenChange = onFullScreenChange;
             document.addEventListener(eventName, onFullScreenChange, false);
         }
 
-        return element[this._fn.requestFullscreen]();
-    },
-    
+        return (element as FullscreenElement)[requestFullscreen]();
+    }
+
     /**
      * exit the full mode.
-     * @return {Boolean}
      */
-    exitFullScreen: function () {
-        return this._supportsFullScreen ? document[this._fn.exitFullscreen]() : true;
-    },
-    
+    public exitFullScreen(): boolean | unknown {
+        const exitFullscreen = this.#fn.exitFullscreen;
+        const exitFullScreen = exitFullscreen
+            ? (document as FullscreenDocument)[exitFullscreen] as (() => unknown) | undefined
+            : undefined;
+        return !this.#supportsFullScreen || !exitFullScreen || exitFullScreen();
+    }
+
     /**
      * Automatically request full screen with a touch/click event
-     * @param {Element} element
-     * @param {Function} onFullScreenChange
      */
-    autoFullScreen: function (element, onFullScreenChange) {
-        element = element || document.body;
-        var touchTarget = ServiceLocator.game.canvas || element;
-        var theScreen = this;
+    public autoFullScreen(element?: Element, onFullScreenChange?: EventListener): void {
+        const fullScreenElement = element || document.body;
+        const touchTarget: EventTarget = this.#game.canvas || fullScreenElement;
         // Function bind will be too complicated here because we need the callback function's reference to remove the listener
-        function callback() {
-            touchTarget.removeEventListener(theScreen._touchEvent, callback);
-            theScreen.requestFullScreen(element, onFullScreenChange);
-        }
-        this.requestFullScreen(element, onFullScreenChange);
-        touchTarget.addEventListener(this._touchEvent, callback);
+        const callback = () => {
+            touchTarget.removeEventListener(this.#touchEvent, callback);
+            this.requestFullScreen(fullScreenElement, onFullScreenChange);
+        };
+        this.requestFullScreen(fullScreenElement, onFullScreenChange);
+        touchTarget.addEventListener(this.#touchEvent, callback);
     }
-};
-screen.init();
+}

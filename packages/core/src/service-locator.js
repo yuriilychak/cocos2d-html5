@@ -33,6 +33,7 @@ import { GLStateCache } from "./shaders/CCGLStateCache";
 import { KMGLMatrix } from "./kazmath/km-gl-matrix";
 import { Profiler } from "./utils/profiler";
 import { InputManager } from "./platform/input-manager";
+import { Screen } from "./platform/screen";
 
 // Service configuration data: loader handlers and base64 boot images. Imported
 // here (not in index.js) so all service wiring lives in the locator. These are
@@ -66,6 +67,7 @@ export class ServiceLocator {
   static #kmglMatrix;
   static #profiler;
   static #inputManager;
+  static #screen;
 
   static #constructed = false;
 
@@ -108,6 +110,7 @@ export class ServiceLocator {
     ServiceLocator.#kmglMatrix = new KMGLMatrix();
     ServiceLocator.#profiler = new Profiler();
     ServiceLocator.#inputManager = new InputManager();
+    ServiceLocator.#screen = new Screen(ServiceLocator.#game);
 
     const renderingConfig = ServiceLocator.#sys.rendererConfig;
 
@@ -151,6 +154,7 @@ export class ServiceLocator {
       eventManager: ServiceLocator.#eventManager,
       game: ServiceLocator.#game,
       rendererConfig: renderingConfig,
+      screen: ServiceLocator.#screen,
       sys: ServiceLocator.#sys
     });
 
@@ -279,6 +283,10 @@ export class ServiceLocator {
 
   static get inputManager() {
     return ServiceLocator.#inputManager;
+  }
+
+  static get screen() {
+    return ServiceLocator.#screen;
   }
 }
 

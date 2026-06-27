@@ -270,7 +270,7 @@ export { FontDefinition } from "./platform/types/font-definition";
 export { default as Touch } from "./event-manager/touch";
 export { default as EventFocus } from "./event-manager/event/event-focus";
 export { NODE_TAG_INVALID, s_globalOrderOfArrival, setGlobalOrderOfArrival } from "./base-nodes/node";
-export { screen } from "./platform/screen";
+export { Screen } from "./platform/screen";
 export { default as SpriteFrameCache } from "./sprites/sprite-frame-cache";
 export { LayerGradient } from "./layers/layer-gradient";
 export { FLT_MIN, BATCH_VERTEX_COUNT } from "./platform/macro/constants";
