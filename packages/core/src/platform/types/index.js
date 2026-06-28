@@ -8,15 +8,9 @@ export {
   Quad3,
   V3F_C4B_T2F,
   V3F_C4B_T2F_Quad,
-  V3F_C4B_T2F_QuadZero,
-  V3F_C4B_T2F_QuadCopy,
-  V3F_C4B_T2F_QuadsCopy,
   V2F_C4B_T2F,
-  V2F_C4B_T2F_Triangle,
-  vertex2,
-  vertex3,
-  tex2
+  V2F_C4B_T2F_Triangle
 } from "./vertex";
-export { BlendFunc, blendFuncDisable } from "./blend-func";
+export { BlendFunc } from "./blend-func";
 export { FontDefinition } from "./font-definition";
 export { _Dictionary } from "./dictionary";

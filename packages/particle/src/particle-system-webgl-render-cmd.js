@@ -29,7 +29,6 @@ import {
   glBindTexture2D,
   glBlendFuncForParticle,
   V3F_C4B_T2F_Quad,
-  V3F_C4B_T2F_QuadZero,
   contentScaleFactor,
   degreesToRadians,
   log,
@@ -293,7 +292,7 @@ export class ParticleSystemWebGLRenderCmd extends Node.WebGLRenderCmd {
     }
 
     for (let i = start; i < end; i++) {
-      if (!quads[i]) quads[i] = V3F_C4B_T2F_QuadZero();
+      if (!quads[i]) quads[i] = V3F_C4B_T2F_Quad.zero();
 
       const selQuad = quads[i];
       selQuad.bl.texCoords.u = left;

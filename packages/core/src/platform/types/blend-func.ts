@@ -1,5 +1,3 @@
-import { GLState } from "../../enums";
-
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
@@ -26,39 +24,49 @@ import { GLState } from "../../enums";
  THE SOFTWARE.
  ****************************************************************************/
 
+ import { GLState } from "../../enums";
+
 /**
  * Blend Function used for textures
- * @Constructor
- * @param {Number} src1 source blend function
- * @param {Number} dst1 destination blend function
  */
 export class BlendFunc {
-    constructor(src1, dst1) {
-        this.src = src1;
-        this.dst = dst1;
+    #src: GLState;
+    #dst: GLState;
+
+    constructor(src1: GLState, dst1: GLState) {
+        this.#src = src1;
+        this.#dst = dst1;
     }
 
-    static get DISABLE() {
+    get src(): GLState {
+        return this.#src;
+    }
+
+    set src(value: GLState) {
+        this.#src = value;
+    }
+
+    get dst(): GLState {
+        return this.#dst;
+    }
+
+    set dst(value: GLState) {
+        this.#dst = value;
+    }
+
+    static get DISABLE(): BlendFunc {
         return new BlendFunc(GLState.ONE, GLState.ZERO);
     }
 
-    static get ALPHA_PREMULTIPLIED() {
+    static get ALPHA_PREMULTIPLIED(): BlendFunc {
         return new BlendFunc(GLState.ONE, GLState.ONE_MINUS_SRC_ALPHA);
     }
 
-    static get ALPHA_NON_PREMULTIPLIED() {
+    static get ALPHA_NON_PREMULTIPLIED(): BlendFunc {
         return new BlendFunc(GLState.SRC_ALPHA, GLState.ONE_MINUS_SRC_ALPHA);
     }
 
-    static get ADDITIVE() {
+    static get ADDITIVE(): BlendFunc {
         return new BlendFunc(GLState.SRC_ALPHA, GLState.ONE);
     }
-}
-
-/**
- * @function
- * @returns {BlendFunc}
- */
-export function blendFuncDisable() {
-    return new BlendFunc(GLState.ONE, GLState.ZERO);
 }

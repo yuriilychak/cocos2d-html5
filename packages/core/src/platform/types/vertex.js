@@ -26,33 +26,99 @@
 
 import { BYTE } from "../../constants";
 
-class WebGLColor {
-    static BYTES_PER_ELEMENT = 4;
+class BufferBackedType {
+  #arrayBuffer;
+  #offset;
 
-    constructor(r, g, b, a, arrayBuffer, offset) {
-        this._arrayBuffer = arrayBuffer || new ArrayBuffer(WebGLColor.BYTES_PER_ELEMENT);
-        this._offset = offset || 0;
-        this._view = new Uint8Array(this._arrayBuffer, this._offset, 4);
-        this._view[0] = r || 0;
-        this._view[1] = g || 0;
-        this._view[2] = b || 0;
-        this._view[3] = (a == null) ? BYTE : a;
+  constructor(
+    arrayBuffer = new ArrayBuffer(new.target.BYTES_PER_ELEMENT),
+    offset = 0
+  ) {
+    this.#arrayBuffer =
+      arrayBuffer ?? new ArrayBuffer(new.target.BYTES_PER_ELEMENT);
+    this.#offset = offset ?? 0;
+  }
 
-        if (a === undefined)
-            this.a_undefined = true;
-    }
+  get _arrayBuffer() {
+    return this.#arrayBuffer;
+  }
 
-    get r() { return this._view[0]; }
-    set r(value) { this._view[0] = value < 0 ? 0 : value; }
+  get _offset() {
+    return this.#offset;
+  }
 
-    get g() { return this._view[1]; }
-    set g(value) { this._view[1] = value < 0 ? 0 : value; }
+  static fromBufferOrEmpty(value, arrayBuffer, offset) {
+    return value
+      ? value.fromBuffer(arrayBuffer, offset)
+      : this.emptyFromBuffer(arrayBuffer, offset);
+  }
+}
 
-    get b() { return this._view[2]; }
-    set b(value) { this._view[2] = value < 0 ? 0 : value; }
+class WebGLColor extends BufferBackedType {
+  static BYTES_PER_ELEMENT = 4;
+  #view;
 
-    get a() { return this._view[3]; }
-    set a(value) { this._view[3] = value < 0 ? 0 : value; }
+  constructor(
+    r = 0,
+    g = 0,
+    b = 0,
+    a = undefined,
+    arrayBuffer,
+    offset
+  ) {
+    super(arrayBuffer, offset);
+    this.#view = new Uint8Array(this._arrayBuffer, this._offset, 4);
+    this.set(r, g, b, a);
+
+    if (a === undefined) this.a_undefined = true;
+  }
+
+  set(r = 0, g = 0, b = 0, a = undefined) {
+    this.#view[0] = r;
+    this.#view[1] = g;
+    this.#view[2] = b;
+    this.#view[3] = a == null ? BYTE : a;
+  }
+
+  get r() {
+    return this.#view[0];
+  }
+  set r(value) {
+    this.#view[0] = Math.max(value, 0);
+  }
+
+  get g() {
+    return this.#view[1];
+  }
+  set g(value) {
+    this.#view[1] = Math.max(value, 0);
+  }
+
+  get b() {
+    return this.#view[2];
+  }
+  set b(value) {
+    this.#view[2] = Math.max(value, 0);
+  }
+
+  get a() {
+    return this.#view[3];
+  }
+  set a(value) {
+    this.#view[3] = Math.max(value, 0);
+  }
+
+  clone() {
+    return new WebGLColor(this.r, this.g, this.b, this.a);
+  }
+
+  fromBuffer(arrayBuffer, offset) {
+    return new WebGLColor(this.r, this.g, this.b, this.a, arrayBuffer, offset);
+  }
+
+  static emptyFromBuffer(arrayBuffer, offset) {
+    return new WebGLColor(0, 0, 0, 0, arrayBuffer, offset);
+  }
 }
 
 /**
@@ -61,33 +127,49 @@ class WebGLColor {
  * @param {Array} arrayBuffer
  * @param {Number}offset
  */
-export class Vertex2F {
-    static BYTES_PER_ELEMENT = 8;
+export class Vertex2F extends BufferBackedType {
+  static BYTES_PER_ELEMENT = 8;
+  #view;
 
-    constructor(x, y, arrayBuffer, offset) {
-        this._arrayBuffer = arrayBuffer || new ArrayBuffer(Vertex2F.BYTES_PER_ELEMENT);
-        this._offset = offset || 0;
+  constructor(x = 0, y = 0, arrayBuffer, offset) {
+    super(arrayBuffer, offset);
 
-        this._view = new Float32Array(this._arrayBuffer, this._offset, 2);
-        this._view[0] = x || 0;
-        this._view[1] = y || 0;
-    }
+    this.#view = new Float32Array(this._arrayBuffer, this._offset, 2);
+    this.set(x, y);
+  }
 
-    get x() {
-        return this._view[0];
-    }
+  set(x = 0, y = 0) {
+    this.#view[0] = x;
+    this.#view[1] = y;
+  }
 
-    set x(xValue) {
-        this._view[0] = xValue;
-    }
+  get x() {
+    return this.#view[0];
+  }
 
-    get y() {
-        return this._view[1];
-    }
+  set x(xValue) {
+    this.#view[0] = xValue;
+  }
 
-    set y(yValue) {
-        this._view[1] = yValue;
-    }
+  get y() {
+    return this.#view[1];
+  }
+
+  set y(yValue) {
+    this.#view[1] = yValue;
+  }
+
+  clone() {
+    return new Vertex2F(this.x, this.y);
+  }
+
+  fromBuffer(arrayBuffer, offset) {
+    return new Vertex2F(this.x, this.y, arrayBuffer, offset);
+  }
+
+  static emptyFromBuffer(arrayBuffer, offset) {
+    return new Vertex2F(0, 0, arrayBuffer, offset);
+  }
 }
 
 /**
@@ -97,43 +179,60 @@ export class Vertex2F {
  * @param {Array} arrayBuffer
  * @param {Number} offset
  */
-export class Vertex3F {
-    static BYTES_PER_ELEMENT = 12;
+export class Vertex3F extends BufferBackedType {
+  static BYTES_PER_ELEMENT = 12;
+  #view;
 
-    constructor(x, y, z, arrayBuffer, offset) {
-        this._arrayBuffer = arrayBuffer || new ArrayBuffer(Vertex3F.BYTES_PER_ELEMENT);
-        this._offset = offset || 0;
+  constructor(x = 0, y = 0, z = 0, arrayBuffer, offset) {
+    super(arrayBuffer, offset);
 
-        var locArrayBuffer = this._arrayBuffer, locOffset = this._offset;
-        this._view = new Float32Array(locArrayBuffer, locOffset, 3);
-        this._view[0] = x || 0;
-        this._view[1] = y || 0;
-        this._view[2] = z || 0;
-    }
+    const locArrayBuffer = this._arrayBuffer;
+    const locOffset = this._offset;
+    this.#view = new Float32Array(locArrayBuffer, locOffset, 3);
+    this.set(x, y, z);
+  }
 
-    get x() {
-        return this._view[0];
-    }
+  set(x = 0, y = 0, z = 0) {
+    this.#view[0] = x;
+    this.#view[1] = y;
+    this.#view[2] = z;
+  }
 
-    set x(xValue) {
-        this._view[0] = xValue;
-    }
+  get x() {
+    return this.#view[0];
+  }
 
-    get y() {
-        return this._view[1];
-    }
+  set x(xValue) {
+    this.#view[0] = xValue;
+  }
 
-    set y(yValue) {
-        this._view[1] = yValue;
-    }
+  get y() {
+    return this.#view[1];
+  }
 
-    get z() {
-        return this._view[2];
-    }
+  set y(yValue) {
+    this.#view[1] = yValue;
+  }
 
-    set z(zValue) {
-        this._view[2] = zValue;
-    }
+  get z() {
+    return this.#view[2];
+  }
+
+  set z(zValue) {
+    this.#view[2] = zValue;
+  }
+
+  clone() {
+    return new Vertex3F(this.x, this.y, this.z);
+  }
+
+  fromBuffer(arrayBuffer, offset) {
+    return new Vertex3F(this.x, this.y, this.z, arrayBuffer, offset);
+  }
+
+  static emptyFromBuffer(arrayBuffer, offset) {
+    return new Vertex3F(0, 0, 0, arrayBuffer, offset);
+  }
 }
 
 /**
@@ -142,33 +241,49 @@ export class Vertex3F {
  * @param {Array} arrayBuffer
  * @param {Number} offset
  */
-export class Tex2F {
-    static BYTES_PER_ELEMENT = 8;
+export class Tex2F extends BufferBackedType {
+  static BYTES_PER_ELEMENT = 8;
+  #view;
 
-    constructor(u, v, arrayBuffer, offset) {
-        this._arrayBuffer = arrayBuffer || new ArrayBuffer(Tex2F.BYTES_PER_ELEMENT);
-        this._offset = offset || 0;
+  constructor(u = 0, v = 0, arrayBuffer, offset) {
+    super(arrayBuffer, offset);
 
-        this._view = new Float32Array(this._arrayBuffer, this._offset, 2);
-        this._view[0] = u || 0;
-        this._view[1] = v || 0;
-    }
+    this.#view = new Float32Array(this._arrayBuffer, this._offset, 2);
+    this.set(u, v);
+  }
 
-    get u() {
-        return this._view[0];
-    }
+  set(u = 0, v = 0) {
+    this.#view[0] = u;
+    this.#view[1] = v;
+  }
 
-    set u(uValue) {
-        this._view[0] = uValue;
-    }
+  get u() {
+    return this.#view[0];
+  }
 
-    get v() {
-        return this._view[1];
-    }
+  set u(uValue) {
+    this.#view[0] = uValue;
+  }
 
-    set v(vValue) {
-        this._view[1] = vValue;
-    }
+  get v() {
+    return this.#view[1];
+  }
+
+  set v(vValue) {
+    this.#view[1] = vValue;
+  }
+
+  clone() {
+    return new Tex2F(this.u, this.v);
+  }
+
+  fromBuffer(arrayBuffer, offset) {
+    return new Tex2F(this.u, this.v, arrayBuffer, offset);
+  }
+
+  static emptyFromBuffer(arrayBuffer, offset) {
+    return new Tex2F(0, 0, arrayBuffer, offset);
+  }
 }
 
 /**
@@ -179,57 +294,77 @@ export class Tex2F {
  * @param {Array} arrayBuffer
  * @param {Number} offset
  */
-export class Quad2 {
+export class Quad2 extends BufferBackedType {
     static BYTES_PER_ELEMENT = 32;
+    #tl;
+    #tr;
+    #bl;
+    #br;
 
-    constructor(tl, tr, bl, br, arrayBuffer, offset) {
-        this._arrayBuffer = arrayBuffer || new ArrayBuffer(Quad2.BYTES_PER_ELEMENT);
-        this._offset = offset || 0;
+    constructor(tl = null, tr = null, bl = null, br = null, arrayBuffer, offset) {
+        super(arrayBuffer, offset);
 
-        var locArrayBuffer = this._arrayBuffer, locOffset = this._offset, locElementLen = Vertex2F.BYTES_PER_ELEMENT;
-        this._tl = tl ? new Vertex2F(tl.x, tl.y, locArrayBuffer, locOffset) : new Vertex2F(0, 0, locArrayBuffer, locOffset);
+        const locArrayBuffer = this._arrayBuffer;
+        let locOffset = this._offset;
+        const locElementLen = Vertex2F.BYTES_PER_ELEMENT;
+        this.#tl = Vertex2F.fromBufferOrEmpty(tl, locArrayBuffer, locOffset);
         locOffset += locElementLen;
-        this._tr = tr ? new Vertex2F(tr.x, tr.y, locArrayBuffer, locOffset) : new Vertex2F(0, 0, locArrayBuffer, locOffset);
+        this.#tr = Vertex2F.fromBufferOrEmpty(tr, locArrayBuffer, locOffset);
         locOffset += locElementLen;
-        this._bl = bl ? new Vertex2F(bl.x, bl.y, locArrayBuffer, locOffset) : new Vertex2F(0, 0, locArrayBuffer, locOffset);
+        this.#bl = Vertex2F.fromBufferOrEmpty(bl, locArrayBuffer, locOffset);
         locOffset += locElementLen;
-        this._br = br ? new Vertex2F(br.x, br.y, locArrayBuffer, locOffset) : new Vertex2F(0, 0, locArrayBuffer, locOffset);
+        this.#br = Vertex2F.fromBufferOrEmpty(br, locArrayBuffer, locOffset);
     }
 
     get tl() {
-        return this._tl;
+        return this.#tl;
     }
 
     set tl(tlValue) {
-        this._tl._view[0] = tlValue.x;
-        this._tl._view[1] = tlValue.y;
+        this.#tl.set(tlValue.x, tlValue.y);
     }
 
     get tr() {
-        return this._tr;
+        return this.#tr;
     }
 
     set tr(trValue) {
-        this._tr._view[0] = trValue.x;
-        this._tr._view[1] = trValue.y;
+        this.#tr.set(trValue.x, trValue.y);
     }
 
     get bl() {
-        return this._bl;
+        return this.#bl;
     }
 
     set bl(blValue) {
-        this._bl._view[0] = blValue.x;
-        this._bl._view[1] = blValue.y;
+        this.#bl.set(blValue.x, blValue.y);
     }
 
     get br() {
-        return this._br;
+        return this.#br;
     }
 
     set br(brValue) {
-        this._br._view[0] = brValue.x;
-        this._br._view[1] = brValue.y;
+        this.#br.set(brValue.x, brValue.y);
+    }
+
+    set(tlValue, trValue, blValue, brValue) {
+        this.tl = tlValue;
+        this.tr = trValue;
+        this.bl = blValue;
+        this.br = brValue;
+    }
+
+    clone() {
+        return new Quad2(this.tl, this.tr, this.bl, this.br);
+    }
+
+    fromBuffer(arrayBuffer, offset) {
+        return new Quad2(this.tl, this.tr, this.bl, this.br, arrayBuffer, offset);
+    }
+
+    static emptyFromBuffer(arrayBuffer, offset) {
+        return new Quad2(null, null, null, null, arrayBuffer, offset);
     }
 }
 
@@ -241,22 +376,78 @@ export class Quad2 {
  * @param {Vertex3F} tl
  * @param {Vertex3F} tr
  */
-export class Quad3 {
-    static BYTES_PER_ELEMENT = 48;
+export class Quad3 extends BufferBackedType {
+  static BYTES_PER_ELEMENT = 48;
+  #bl;
+  #br;
+  #tl;
+  #tr;
 
-    constructor(bl, br, tl, tr, arrayBuffer, offset) {
-        this._arrayBuffer = arrayBuffer || new ArrayBuffer(Quad3.BYTES_PER_ELEMENT);
-        this._offset = offset || 0;
+  constructor(bl = null, br = null, tl = null, tr = null, arrayBuffer, offset) {
+    super(arrayBuffer, offset);
 
-        var locArrayBuffer = this._arrayBuffer, locOffset = this._offset, locElementLen = Vertex3F.BYTES_PER_ELEMENT;
-        this.bl = bl ? new Vertex3F(bl.x, bl.y, bl.z, locArrayBuffer, locOffset) : new Vertex3F(0, 0, 0, locArrayBuffer, locOffset);
-        locOffset += locElementLen;
-        this.br = br ? new Vertex3F(br.x, br.y, br.z, locArrayBuffer, locOffset) : new Vertex3F(0, 0, 0, locArrayBuffer, locOffset);
-        locOffset += locElementLen;
-        this.tl = tl ? new Vertex3F(tl.x, tl.y, tl.z, locArrayBuffer, locOffset) : new Vertex3F(0, 0, 0, locArrayBuffer, locOffset);
-        locOffset += locElementLen;
-        this.tr = tr ? new Vertex3F(tr.x, tr.y, tr.z, locArrayBuffer, locOffset) : new Vertex3F(0, 0, 0, locArrayBuffer, locOffset);
-    }
+    const locArrayBuffer = this._arrayBuffer;
+    let locOffset = this._offset;
+    const locElementLen = Vertex3F.BYTES_PER_ELEMENT;
+    this.#bl = Vertex3F.fromBufferOrEmpty(bl, locArrayBuffer, locOffset);
+    locOffset += locElementLen;
+    this.#br = Vertex3F.fromBufferOrEmpty(br, locArrayBuffer, locOffset);
+    locOffset += locElementLen;
+    this.#tl = Vertex3F.fromBufferOrEmpty(tl, locArrayBuffer, locOffset);
+    locOffset += locElementLen;
+    this.#tr = Vertex3F.fromBufferOrEmpty(tr, locArrayBuffer, locOffset);
+  }
+
+  get bl() {
+    return this.#bl;
+  }
+
+  set bl(blValue) {
+    this.#bl.set(blValue.x, blValue.y, blValue.z);
+  }
+
+  get br() {
+    return this.#br;
+  }
+
+  set br(brValue) {
+    this.#br.set(brValue.x, brValue.y, brValue.z);
+  }
+
+  get tl() {
+    return this.#tl;
+  }
+
+  set tl(tlValue) {
+    this.#tl.set(tlValue.x, tlValue.y, tlValue.z);
+  }
+
+  get tr() {
+    return this.#tr;
+  }
+
+  set tr(trValue) {
+    this.#tr.set(trValue.x, trValue.y, trValue.z);
+  }
+
+  set(blValue, brValue, tlValue, trValue) {
+    this.bl = blValue;
+    this.br = brValue;
+    this.tl = tlValue;
+    this.tr = trValue;
+  }
+
+  clone() {
+    return new Quad3(this.bl, this.br, this.tl, this.tr);
+  }
+
+  fromBuffer(arrayBuffer, offset) {
+    return new Quad3(this.bl, this.br, this.tl, this.tr, arrayBuffer, offset);
+  }
+
+  static emptyFromBuffer(arrayBuffer, offset) {
+    return new Quad3(null, null, null, null, arrayBuffer, offset);
+  }
 }
 
 /**
@@ -266,57 +457,91 @@ export class Quad3 {
  * @param {Array} arrayBuffer
  * @param {Number} offset
  */
-export class V3F_C4B_T2F {
-    static BYTES_PER_ELEMENT = 24;
+export class V3F_C4B_T2F extends BufferBackedType {
+  static BYTES_PER_ELEMENT = 24;
+  #vertices;
+  #colors;
+  #texCoords;
 
-    constructor(vertices, colors, texCoords, arrayBuffer, offset) {
-        this._arrayBuffer = arrayBuffer || new ArrayBuffer(V3F_C4B_T2F.BYTES_PER_ELEMENT);
-        this._offset = offset || 0;
+  constructor(
+    vertices = null,
+    colors = null,
+    texCoords = null,
+    arrayBuffer,
+    offset
+  ) {
+    super(arrayBuffer, offset);
 
-        var locArrayBuffer = this._arrayBuffer, locOffset = this._offset;
-        this._vertices = vertices ? new Vertex3F(vertices.x, vertices.y, vertices.z, locArrayBuffer, locOffset) :
-            new Vertex3F(0, 0, 0, locArrayBuffer, locOffset);
+    const locArrayBuffer = this._arrayBuffer;
+    let locOffset = this._offset;
+    this.#vertices = Vertex3F.fromBufferOrEmpty(
+      vertices,
+      locArrayBuffer,
+      locOffset
+    );
 
-        locOffset += Vertex3F.BYTES_PER_ELEMENT;
-        this._colors = colors ? new WebGLColor(colors.r, colors.g, colors.b, colors.a, locArrayBuffer, locOffset) :
-            new WebGLColor(0, 0, 0, 0, locArrayBuffer, locOffset);
+    locOffset += Vertex3F.BYTES_PER_ELEMENT;
+    this.#colors = WebGLColor.fromBufferOrEmpty(
+      colors,
+      locArrayBuffer,
+      locOffset
+    );
 
-        locOffset += WebGLColor.BYTES_PER_ELEMENT;
-        this._texCoords = texCoords ? new Tex2F(texCoords.u, texCoords.v, locArrayBuffer, locOffset) :
-            new Tex2F(0, 0, locArrayBuffer, locOffset);
-    }
+    locOffset += WebGLColor.BYTES_PER_ELEMENT;
+    this.#texCoords = Tex2F.fromBufferOrEmpty(
+      texCoords,
+      locArrayBuffer,
+      locOffset
+    );
+  }
 
-    get vertices() {
-        return this._vertices;
-    }
+  get vertices() {
+    return this.#vertices;
+  }
 
-    set vertices(verticesValue) {
-        var locVertices = this._vertices;
-        locVertices._view[0] = verticesValue.x;
-        locVertices._view[1] = verticesValue.y;
-        locVertices._view[2] = verticesValue.z;
-    }
+  set vertices(verticesValue) {
+    this.#vertices.set(verticesValue.x, verticesValue.y, verticesValue.z);
+  }
 
-    get colors() {
-        return this._colors;
-    }
+  get colors() {
+    return this.#colors;
+  }
 
-    set colors(colorValue) {
-        var locColors = this._colors;
-        locColors._view[0] = colorValue.r;
-        locColors._view[1] = colorValue.g;
-        locColors._view[2] = colorValue.b;
-        locColors._view[3] = colorValue.a;
-    }
+  set colors(colorValue) {
+    this.#colors.set(colorValue.r, colorValue.g, colorValue.b, colorValue.a);
+  }
 
-    get texCoords() {
-        return this._texCoords;
-    }
+  get texCoords() {
+    return this.#texCoords;
+  }
 
-    set texCoords(texValue) {
-        this._texCoords._view[0] = texValue.u;
-        this._texCoords._view[1] = texValue.v;
-    }
+  set texCoords(texValue) {
+    this.#texCoords.set(texValue.u, texValue.v);
+  }
+
+  set(verticesValue, colorValue, texValue) {
+    this.vertices = verticesValue;
+    this.colors = colorValue;
+    this.texCoords = texValue;
+  }
+
+  clone() {
+    return new V3F_C4B_T2F(this.vertices, this.colors, this.texCoords);
+  }
+
+  fromBuffer(arrayBuffer, offset) {
+    return new V3F_C4B_T2F(
+      this.vertices,
+      this.colors,
+      this.texCoords,
+      arrayBuffer,
+      offset
+    );
+  }
+
+  static emptyFromBuffer(arrayBuffer, offset) {
+    return new V3F_C4B_T2F(null, null, null, arrayBuffer, offset);
+  }
 }
 
 /**
@@ -327,132 +552,124 @@ export class V3F_C4B_T2F {
  * @param {Array} arrayBuffer
  * @param {Number} offset
  */
-export class V3F_C4B_T2F_Quad {
-    static BYTES_PER_ELEMENT = 96;
+export class V3F_C4B_T2F_Quad extends BufferBackedType {
+  static BYTES_PER_ELEMENT = 96;
+  #tl;
+  #bl;
+  #tr;
+  #br;
 
-    constructor(tl, bl, tr, br, arrayBuffer, offset) {
-        this._arrayBuffer = arrayBuffer || new ArrayBuffer(V3F_C4B_T2F_Quad.BYTES_PER_ELEMENT);
-        this._offset = offset || 0;
+  constructor(tl = null, bl = null, tr = null, br = null, arrayBuffer, offset) {
+    super(arrayBuffer, offset);
 
-        var locArrayBuffer = this._arrayBuffer, locOffset = this._offset, locElementLen = V3F_C4B_T2F.BYTES_PER_ELEMENT;
-        this._tl = tl ? new V3F_C4B_T2F(tl.vertices, tl.colors, tl.texCoords, locArrayBuffer, locOffset) :
-            new V3F_C4B_T2F(null, null, null, locArrayBuffer, locOffset);
-        locOffset += locElementLen;
-        this._bl = bl ? new V3F_C4B_T2F(bl.vertices, bl.colors, bl.texCoords, locArrayBuffer, locOffset) :
-            new V3F_C4B_T2F(null, null, null, locArrayBuffer, locOffset);
-        locOffset += locElementLen;
-        this._tr = tr ? new V3F_C4B_T2F(tr.vertices, tr.colors, tr.texCoords, locArrayBuffer, locOffset) :
-            new V3F_C4B_T2F(null, null, null, locArrayBuffer, locOffset);
-        locOffset += locElementLen;
-        this._br = br ? new V3F_C4B_T2F(br.vertices, br.colors, br.texCoords, locArrayBuffer, locOffset) :
-            new V3F_C4B_T2F(null, null, null, locArrayBuffer, locOffset);
-    }
+    const locArrayBuffer = this._arrayBuffer;
+    let locOffset = this._offset;
+    const locElementLen = V3F_C4B_T2F.BYTES_PER_ELEMENT;
+    this.#tl = V3F_C4B_T2F.fromBufferOrEmpty(
+      tl,
+      locArrayBuffer,
+      locOffset
+    );
+    locOffset += locElementLen;
+    this.#bl = V3F_C4B_T2F.fromBufferOrEmpty(
+      bl,
+      locArrayBuffer,
+      locOffset
+    );
+    locOffset += locElementLen;
+    this.#tr = V3F_C4B_T2F.fromBufferOrEmpty(
+      tr,
+      locArrayBuffer,
+      locOffset
+    );
+    locOffset += locElementLen;
+    this.#br = V3F_C4B_T2F.fromBufferOrEmpty(
+      br,
+      locArrayBuffer,
+      locOffset
+    );
+  }
 
-    get tl() {
-        return this._tl;
-    }
+  get tl() {
+    return this.#tl;
+  }
 
-    set tl(tlValue) {
-        var locTl = this._tl;
-        locTl.vertices = tlValue.vertices;
-        locTl.colors = tlValue.colors;
-        locTl.texCoords = tlValue.texCoords;
-    }
+  set tl(tlValue) {
+    this.#tl.set(tlValue.vertices, tlValue.colors, tlValue.texCoords);
+  }
 
-    get bl() {
-        return this._bl;
-    }
+  get bl() {
+    return this.#bl;
+  }
 
-    set bl(blValue) {
-        var locBl = this._bl;
-        locBl.vertices = blValue.vertices;
-        locBl.colors = blValue.colors;
-        locBl.texCoords = blValue.texCoords;
-    }
+  set bl(blValue) {
+    const locBl = this.#bl;
+    locBl.set(blValue.vertices, blValue.colors, blValue.texCoords);
+  }
 
-    get tr() {
-        return this._tr;
-    }
+  get tr() {
+    return this.#tr;
+  }
 
-    set tr(trValue) {
-        var locTr = this._tr;
-        locTr.vertices = trValue.vertices;
-        locTr.colors = trValue.colors;
-        locTr.texCoords = trValue.texCoords;
-    }
+  set tr(trValue) {
+    this.#tr.set(trValue.vertices, trValue.colors, trValue.texCoords);
+  }
 
-    get br() {
-        return this._br;
-    }
+  get br() {
+    return this.#br;
+  }
 
-    set br(brValue) {
-        var locBr = this._br;
-        locBr.vertices = brValue.vertices;
-        locBr.colors = brValue.colors;
-        locBr.texCoords = brValue.texCoords;
-    }
+  set br(brValue) {
+    this.#br.set(brValue.vertices, brValue.colors, brValue.texCoords);
+  }
 
-    get arrayBuffer() {
-        return this._arrayBuffer;
-    }
-}
+  set(tlValue, blValue, trValue, brValue) {
+    this.tl = tlValue;
+    this.bl = blValue;
+    this.tr = trValue;
+    this.br = brValue;
+  }
 
-/**
- * @function
- * @returns {V3F_C4B_T2F_Quad}
- */
-export function V3F_C4B_T2F_QuadZero() {
+  get arrayBuffer() {
+    return this._arrayBuffer;
+  }
+
+  static zero() {
     return new V3F_C4B_T2F_Quad();
-}
+  }
 
-/**
- * @function
- * @param {V3F_C4B_T2F_Quad} sourceQuad
- * @return {V3F_C4B_T2F_Quad}
- */
-export function V3F_C4B_T2F_QuadCopy(sourceQuad) {
-    if (!sourceQuad)
-        return V3F_C4B_T2F_QuadZero();
+  static copy(sourceQuad) {
+    return !sourceQuad ? V3F_C4B_T2F_Quad.zero() : sourceQuad.clone();
+  }
 
-    var srcTL = sourceQuad.tl, srcBL = sourceQuad.bl, srcTR = sourceQuad.tr, srcBR = sourceQuad.br;
-    return {
-        tl: {
-            vertices: {x: srcTL.vertices.x, y: srcTL.vertices.y, z: srcTL.vertices.z},
-            colors: {r: srcTL.colors.r, g: srcTL.colors.g, b: srcTL.colors.b, a: srcTL.colors.a},
-            texCoords: {u: srcTL.texCoords.u, v: srcTL.texCoords.v}
-        },
-        bl: {
-            vertices: {x: srcBL.vertices.x, y: srcBL.vertices.y, z: srcBL.vertices.z},
-            colors: {r: srcBL.colors.r, g: srcBL.colors.g, b: srcBL.colors.b, a: srcBL.colors.a},
-            texCoords: {u: srcBL.texCoords.u, v: srcBL.texCoords.v}
-        },
-        tr: {
-            vertices: {x: srcTR.vertices.x, y: srcTR.vertices.y, z: srcTR.vertices.z},
-            colors: {r: srcTR.colors.r, g: srcTR.colors.g, b: srcTR.colors.b, a: srcTR.colors.a},
-            texCoords: {u: srcTR.texCoords.u, v: srcTR.texCoords.v}
-        },
-        br: {
-            vertices: {x: srcBR.vertices.x, y: srcBR.vertices.y, z: srcBR.vertices.z},
-            colors: {r: srcBR.colors.r, g: srcBR.colors.g, b: srcBR.colors.b, a: srcBR.colors.a},
-            texCoords: {u: srcBR.texCoords.u, v: srcBR.texCoords.v}
-        }
-    };
-}
+  static copyArray(sourceQuads) {
+    if (!sourceQuads) return [];
 
-/**
- * @function
- * @param {Array} sourceQuads
- * @returns {Array}
- */
-export function V3F_C4B_T2F_QuadsCopy(sourceQuads) {
-    if (!sourceQuads)
-        return [];
-
-    var retArr = [];
-    for (var i = 0; i < sourceQuads.length; i++) {
-        retArr.push(V3F_C4B_T2F_QuadCopy(sourceQuads[i]));
+    const retArr = [];
+    for (let i = 0; i < sourceQuads.length; i++) {
+      retArr.push(V3F_C4B_T2F_Quad.copy(sourceQuads[i]));
     }
     return retArr;
+  }
+
+  clone() {
+    return new V3F_C4B_T2F_Quad(this.tl, this.bl, this.tr, this.br);
+  }
+
+  fromBuffer(arrayBuffer, offset) {
+    return new V3F_C4B_T2F_Quad(
+      this.tl,
+      this.bl,
+      this.tr,
+      this.br,
+      arrayBuffer,
+      offset
+    );
+  }
+
+  static emptyFromBuffer(arrayBuffer, offset) {
+    return new V3F_C4B_T2F_Quad(null, null, null, null, arrayBuffer, offset);
+  }
 }
 
 /**
@@ -462,52 +679,88 @@ export function V3F_C4B_T2F_QuadsCopy(sourceQuads) {
  * @param {Array} arrayBuffer
  * @param {Number} offset
  */
-export class V2F_C4B_T2F {
+export class V2F_C4B_T2F extends BufferBackedType {
     static BYTES_PER_ELEMENT = 20;
+    #vertices;
+    #colors;
+    #texCoords;
 
-    constructor(vertices, colors, texCoords, arrayBuffer, offset) {
-        this._arrayBuffer = arrayBuffer || new ArrayBuffer(V2F_C4B_T2F.BYTES_PER_ELEMENT);
-        this._offset = offset || 0;
+    constructor(
+        vertices = null,
+        colors = null,
+        texCoords = null,
+        arrayBuffer,
+        offset
+    ) {
+        super(arrayBuffer, offset);
 
-        var locArrayBuffer = this._arrayBuffer, locOffset = this._offset;
-        this._vertices = vertices ? new Vertex2F(vertices.x, vertices.y, locArrayBuffer, locOffset) :
-            new Vertex2F(0, 0, locArrayBuffer, locOffset);
+        const locArrayBuffer = this._arrayBuffer;
+        let locOffset = this._offset;
+        this.#vertices = Vertex2F.fromBufferOrEmpty(
+            vertices,
+            locArrayBuffer,
+            locOffset
+        );
         locOffset += Vertex2F.BYTES_PER_ELEMENT;
-        this._colors = colors ? new WebGLColor(colors.r, colors.g, colors.b, colors.a, locArrayBuffer, locOffset) :
-            new WebGLColor(0, 0, 0, 0, locArrayBuffer, locOffset);
+        this.#colors = WebGLColor.fromBufferOrEmpty(
+            colors,
+            locArrayBuffer,
+            locOffset
+        );
         locOffset += WebGLColor.BYTES_PER_ELEMENT;
-        this._texCoords = texCoords ? new Tex2F(texCoords.u, texCoords.v, locArrayBuffer, locOffset) :
-            new Tex2F(0, 0, locArrayBuffer, locOffset);
+        this.#texCoords = Tex2F.fromBufferOrEmpty(
+            texCoords,
+            locArrayBuffer,
+            locOffset
+        );
     }
 
     get vertices() {
-        return this._vertices;
+        return this.#vertices;
     }
 
     set vertices(verticesValue) {
-        this._vertices._view[0] = verticesValue.x;
-        this._vertices._view[1] = verticesValue.y;
+        this.#vertices.set(verticesValue.x, verticesValue.y);
     }
 
     get colors() {
-        return this._colors;
+        return this.#colors;
     }
 
     set colors(colorValue) {
-        var locColors = this._colors;
-        locColors._view[0] = colorValue.r;
-        locColors._view[1] = colorValue.g;
-        locColors._view[2] = colorValue.b;
-        locColors._view[3] = colorValue.a;
+        this.#colors.set(colorValue.r, colorValue.g, colorValue.b, colorValue.a);
     }
 
     get texCoords() {
-        return this._texCoords;
+        return this.#texCoords;
     }
 
     set texCoords(texValue) {
-        this._texCoords._view[0] = texValue.u;
-        this._texCoords._view[1] = texValue.v;
+        this.#texCoords.set(texValue.u, texValue.v);
+    }
+
+    set(verticesValue, colorValue, texValue) {
+        this.vertices = verticesValue;
+        this.colors = colorValue;
+        this.texCoords = texValue;
+    }
+
+    clone() {
+        return new V2F_C4B_T2F(this.vertices, this.colors, this.texCoords);
+    }
+
+    fromBuffer(arrayBuffer, offset) {
+        return new V2F_C4B_T2F(
+            this.vertices,
+            this.colors,
+            this.texCoords,
+            arrayBuffer,
+            offset
+        );
+    }
+
+    static emptyFromBuffer(arrayBuffer, offset) {
+        return new V2F_C4B_T2F(null, null, null, arrayBuffer, offset);
     }
 }
 
@@ -518,88 +771,70 @@ export class V2F_C4B_T2F {
  * @param {Array} arrayBuffer
  * @param {Number} offset
  */
-export class V2F_C4B_T2F_Triangle {
-    static BYTES_PER_ELEMENT = 60;
+export class V2F_C4B_T2F_Triangle extends BufferBackedType {
+  static BYTES_PER_ELEMENT = 60;
+  #a;
+  #b;
+  #c;
 
-    constructor(a, b, c, arrayBuffer, offset) {
-        this._arrayBuffer = arrayBuffer || new ArrayBuffer(V2F_C4B_T2F_Triangle.BYTES_PER_ELEMENT);
-        this._offset = offset || 0;
+  constructor(a = null, b = null, c = null, arrayBuffer, offset) {
+    super(arrayBuffer, offset);
 
-        var locArrayBuffer = this._arrayBuffer, locOffset = this._offset, locElementLen = V2F_C4B_T2F.BYTES_PER_ELEMENT;
-        this._a = a ? new V2F_C4B_T2F(a.vertices, a.colors, a.texCoords, locArrayBuffer, locOffset) :
-            new V2F_C4B_T2F(null, null, null, locArrayBuffer, locOffset);
-        locOffset += locElementLen;
-        this._b = b ? new V2F_C4B_T2F(b.vertices, b.colors, b.texCoords, locArrayBuffer, locOffset) :
-            new V2F_C4B_T2F(null, null, null, locArrayBuffer, locOffset);
-        locOffset += locElementLen;
-        this._c = c ? new V2F_C4B_T2F(c.vertices, c.colors, c.texCoords, locArrayBuffer, locOffset) :
-            new V2F_C4B_T2F(null, null, null, locArrayBuffer, locOffset);
-    }
+    const locArrayBuffer = this._arrayBuffer;
+    let locOffset = this._offset;
+    const locElementLen = V2F_C4B_T2F.BYTES_PER_ELEMENT;
+    this.#a = V2F_C4B_T2F.fromBufferOrEmpty(a, locArrayBuffer, locOffset);
+    locOffset += locElementLen;
+    this.#b = V2F_C4B_T2F.fromBufferOrEmpty(b, locArrayBuffer, locOffset);
+    locOffset += locElementLen;
+    this.#c = V2F_C4B_T2F.fromBufferOrEmpty(c, locArrayBuffer, locOffset);
+  }
 
-    get a() {
-        return this._a;
-    }
+  get a() {
+    return this.#a;
+  }
 
-    set a(aValue) {
-        var locA = this._a;
-        locA.vertices = aValue.vertices;
-        locA.colors = aValue.colors;
-        locA.texCoords = aValue.texCoords;
-    }
+  set a(aValue) {
+    this.#a.set(aValue.vertices, aValue.colors, aValue.texCoords);
+  }
 
-    get b() {
-        return this._b;
-    }
+  get b() {
+    return this.#b;
+  }
 
-    set b(bValue) {
-        var locB = this._b;
-        locB.vertices = bValue.vertices;
-        locB.colors = bValue.colors;
-        locB.texCoords = bValue.texCoords;
-    }
+  set b(bValue) {
+    this.#b.set(bValue.vertices, bValue.colors, bValue.texCoords);
+  }
 
-    get c() {
-        return this._c;
-    }
+  get c() {
+    return this.#c;
+  }
 
-    set c(cValue) {
-        var locC = this._c;
-        locC.vertices = cValue.vertices;
-        locC.colors = cValue.colors;
-        locC.texCoords = cValue.texCoords;
-    }
-}
+  set c(cValue) {
+    this.#c.set(cValue.vertices, cValue.colors, cValue.texCoords);
+  }
 
-/**
- * Helper macro that creates an Vertex2F type composed of 2 floats: x, y
- * @function
- * @param {Number} x
- * @param {Number} y
- * @return {Vertex2F}
- */
-export function vertex2(x, y) {
-    return new Vertex2F(x, y);
-}
+  set(aValue, bValue, cValue) {
+    this.a = aValue;
+    this.b = bValue;
+    this.c = cValue;
+  }
 
-/**
- * Helper macro that creates an Vertex3F type composed of 3 floats: x, y, z
- * @function
- * @param {Number} x
- * @param {Number} y
- * @param {Number} z
- * @return {Vertex3F}
- */
-export function vertex3(x, y, z) {
-    return new Vertex3F(x, y, z);
-}
+  clone() {
+    return new V2F_C4B_T2F_Triangle(this.a, this.b, this.c);
+  }
 
-/**
- * Helper macro that creates an Tex2F type: A texcoord composed of 2 floats: u, y
- * @function
- * @param {Number} u
- * @param {Number} v
- * @return {Tex2F}
- */
-export function tex2(u, v) {
-    return new Tex2F(u, v);
+  fromBuffer(arrayBuffer, offset) {
+    return new V2F_C4B_T2F_Triangle(
+      this.a,
+      this.b,
+      this.c,
+      arrayBuffer,
+      offset
+    );
+  }
+
+  static emptyFromBuffer(arrayBuffer, offset) {
+    return new V2F_C4B_T2F_Triangle(null, null, null, arrayBuffer, offset);
+  }
 }

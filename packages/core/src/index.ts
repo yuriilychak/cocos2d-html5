@@ -282,7 +282,7 @@ export { Path, Loader } from "./boot";
 export { EGLView } from "./platform/egl-view/egl-view";
 export { TextureAtlas } from "./textures/texture-atlas";
 export { isObject } from "./boot";
-export { V3F_C4B_T2F_Quad, V3F_C4B_T2F_QuadZero } from "./platform/types/vertex";
+export { V3F_C4B_T2F_Quad } from "./platform/types/vertex";
 export { glBlendFuncForParticle } from "./shaders/CCGLStateCache";
 export { randomMinus1To1 } from "./platform/macro/utils";
 export { getImageFormatByData } from "./platform/common";

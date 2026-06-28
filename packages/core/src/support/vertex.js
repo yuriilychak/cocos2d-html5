@@ -27,7 +27,7 @@
 
 import { Point } from "../geometry";
 import { degreesToRadians } from "../platform/macro/utils";
-import { vertex2 } from "../platform/types/vertex";
+import { Vertex2F } from "../platform/types/vertex";
 
 /**
  * converts a line to a polygon
@@ -97,10 +97,16 @@ export function vertexLineToPolygon(
     idx = i * 2;
     var idx1 = idx + 2;
 
-    var v1 = vertex2(vertices[idx * 2], vertices[idx * 2 + 1]);
-    var v2 = vertex2(vertices[(idx + 1) * 2], vertices[(idx + 1) * 2 + 1]);
-    var v3 = vertex2(vertices[idx1 * 2], vertices[idx1 * 2]);
-    var v4 = vertex2(vertices[(idx1 + 1) * 2], vertices[(idx1 + 1) * 2 + 1]);
+    var v1 = new Vertex2F(vertices[idx * 2], vertices[idx * 2 + 1]);
+    var v2 = new Vertex2F(
+      vertices[(idx + 1) * 2],
+      vertices[(idx + 1) * 2 + 1]
+    );
+    var v3 = new Vertex2F(vertices[idx1 * 2], vertices[idx1 * 2]);
+    var v4 = new Vertex2F(
+      vertices[(idx1 + 1) * 2],
+      vertices[(idx1 + 1) * 2 + 1]
+    );
 
     //BOOL fixVertex = !ccpLineIntersect(ccp(p1.x, p1.y), ccp(p4.x, p4.y), ccp(p2.x, p2.y), ccp(p3.x, p3.y), &s, &t);
     var fixVertexResult = !vertexLineIntersect(
