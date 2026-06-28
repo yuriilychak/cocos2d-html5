@@ -29,6 +29,7 @@ import { Node } from "./node";
 
 import { ServiceLocator } from "../service-locator";
 import { GLState } from "../enums";
+import { BYTE } from "../constants";
 
 //---------------------- Customer render cmd --------------------
 export class CustomRenderCmd {
@@ -73,7 +74,7 @@ export class RenderCmd {
   _needDraw = false;
   _dirtyFlag = 1;
   _curLevel = -1;
-  _displayedOpacity = 255;
+  _displayedOpacity = BYTE;
   _cascadeColorEnabledDirty = false;
   _cascadeOpacityEnabledDirty = false;
   _transform = null;
@@ -327,7 +328,7 @@ export class RenderCmd {
       locDispColor.r = locRealColor.r;
       locDispColor.g = locRealColor.g;
       locDispColor.b = locRealColor.b;
-      const whiteColor = new Color(255, 255, 255, 255);
+      const whiteColor = new Color(BYTE, BYTE, BYTE, BYTE);
       selChildren = node._children;
       for (i = 0, len = selChildren.length; i < len; i++) {
         item = selChildren[i];
@@ -342,9 +343,9 @@ export class RenderCmd {
           parentColor = locParent.getDisplayedColor();
         else parentColor = Color.WHITE;
       }
-      locDispColor.r = 0 | ((locRealColor.r * parentColor.r) / 255.0);
-      locDispColor.g = 0 | ((locRealColor.g * parentColor.g) / 255.0);
-      locDispColor.b = 0 | ((locRealColor.b * parentColor.b) / 255.0);
+      locDispColor.r = 0 | ((locRealColor.r * parentColor.r) / BYTE);
+      locDispColor.g = 0 | ((locRealColor.g * parentColor.g) / BYTE);
+      locDispColor.b = 0 | ((locRealColor.b * parentColor.b) / BYTE);
       if (node._cascadeColorEnabled) {
         selChildren = node._children;
         for (i = 0, len = selChildren.length; i < len; i++) {
@@ -369,17 +370,17 @@ export class RenderCmd {
       selChildren = node._children;
       for (i = 0, len = selChildren.length; i < len; i++) {
         item = selChildren[i];
-        if (item && item._renderCmd) item._renderCmd._updateDisplayOpacity(255);
+        if (item && item._renderCmd) item._renderCmd._updateDisplayOpacity(BYTE);
       }
       this._cascadeOpacityEnabledDirty = false;
     } else {
       if (parentOpacity === undefined) {
         const locParent = node._parent;
-        parentOpacity = 255;
+        parentOpacity = BYTE;
         if (locParent && locParent._cascadeOpacityEnabled)
           parentOpacity = locParent.getDisplayedOpacity();
       }
-      this._displayedOpacity = (node._realOpacity * parentOpacity) / 255.0;
+      this._displayedOpacity = (node._realOpacity * parentOpacity) / BYTE;
       if (node._cascadeOpacityEnabled) {
         selChildren = node._children;
         for (i = 0, len = selChildren.length; i < len; i++) {
@@ -404,20 +405,20 @@ export class RenderCmd {
         parentColor = locParent.getDisplayedColor();
       else parentColor = Color.WHITE;
     }
-    locDispColor.r = 0 | ((locRealColor.r * parentColor.r) / 255.0);
-    locDispColor.g = 0 | ((locRealColor.g * parentColor.g) / 255.0);
-    locDispColor.b = 0 | ((locRealColor.b * parentColor.b) / 255.0);
+    locDispColor.r = 0 | ((locRealColor.r * parentColor.r) / BYTE);
+    locDispColor.g = 0 | ((locRealColor.g * parentColor.g) / BYTE);
+    locDispColor.b = 0 | ((locRealColor.b * parentColor.b) / BYTE);
   }
 
   _syncDisplayOpacity(parentOpacity) {
     const node = this._node;
     if (parentOpacity === undefined) {
       const locParent = node._parent;
-      parentOpacity = 255;
+      parentOpacity = BYTE;
       if (locParent && locParent._cascadeOpacityEnabled)
         parentOpacity = locParent.getDisplayedOpacity();
     }
-    this._displayedOpacity = (node._realOpacity * parentOpacity) / 255.0;
+    this._displayedOpacity = (node._realOpacity * parentOpacity) / BYTE;
   }
 
   _updateColor() {}

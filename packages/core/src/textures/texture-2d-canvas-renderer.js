@@ -3,6 +3,7 @@ import { Texture2D } from "./texture-2d";
 
 import { ServiceLocator } from "../service-locator";
 import { GLState } from "../enums";
+import { BYTE } from "../constants";
 
 function renderToCache(image, cache) {
   var w = image.width;
@@ -138,15 +139,15 @@ function generateColorTextureFourChannel(texture, r, g, b, rect, canvas) {
   context.globalCompositeOperation = "lighter";
   context.drawImage(tintedImgCache[3], x, y, w, h, 0, 0, w, h);
   if (r > 0) {
-    context.globalAlpha = r / 255;
+    context.globalAlpha = r / BYTE;
     context.drawImage(tintedImgCache[0], x, y, w, h, 0, 0, w, h);
   }
   if (g > 0) {
-    context.globalAlpha = g / 255;
+    context.globalAlpha = g / BYTE;
     context.drawImage(tintedImgCache[1], x, y, w, h, 0, 0, w, h);
   }
   if (b > 0) {
-    context.globalAlpha = b / 255;
+    context.globalAlpha = b / BYTE;
     context.drawImage(tintedImgCache[2], x, y, w, h, 0, 0, w, h);
   }
   if (onlyCanvas) return canvas;

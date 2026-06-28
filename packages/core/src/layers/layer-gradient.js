@@ -33,6 +33,7 @@ import {
   LayerGradientWebGLRenderer
 } from "./renderer";
 import { ServiceLocator } from "../service-locator";
+import { BYTE } from "../constants";
 
 /**
  * LayerGradient is a subclass of LayerColor that draws gradients across the background.
@@ -41,17 +42,17 @@ export class LayerGradient extends LayerColor {
   constructor(start, end, v, stops) {
     super();
     this._endColor = null;
-    this._startOpacity = 255;
-    this._endOpacity = 255;
+    this._startOpacity = BYTE;
+    this._endOpacity = BYTE;
     this._alongVector = null;
     this._compressedInterpolation = false;
     this._className = "LayerGradient";
     this._colorStops = [];
 
-    this._endColor = new Color(0, 0, 0, 255);
+    this._endColor = new Color(0, 0, 0, BYTE);
     this._alongVector = new Point(0, -1);
-    this._startOpacity = 255;
-    this._endOpacity = 255;
+    this._startOpacity = BYTE;
+    this._endOpacity = BYTE;
 
     if (stops && stops instanceof Array) {
       this._colorStops = stops;
@@ -67,8 +68,8 @@ export class LayerGradient extends LayerColor {
   }
 
   init(start, end, v, stops) {
-    start = start || new Color(0, 0, 0, 255);
-    end = end || new Color(0, 0, 0, 255);
+    start = start || new Color(0, 0, 0, BYTE);
+    end = end || new Color(0, 0, 0, BYTE);
     v = v || new Point(0, -1);
     var _t = this;
 
@@ -83,7 +84,7 @@ export class LayerGradient extends LayerColor {
     _t._alongVector = v;
     _t._compressedInterpolation = true;
 
-    super.init(new Color(start.r, start.g, start.b, 255));
+    super.init(new Color(start.r, start.g, start.b, BYTE));
     this._renderCmd.setDirtyFlag(
       Node._dirtyFlags.colorDirty |
         Node._dirtyFlags.opacityDirty |

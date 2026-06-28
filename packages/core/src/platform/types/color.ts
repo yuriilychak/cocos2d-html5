@@ -24,70 +24,99 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { isNumber, isObject } from "../../boot/utils";
+import { BYTE, FULL_BYTE } from "../../constants";
+
+export type HSV = {
+  h: number;
+  s: number;
+  v: number;
+};
+
+export type ColorLike = {
+  r: number;
+  g: number;
+  b: number;
+  a: number;
+};
+
 /**
- * Color class, please use color() to construct a color
- * @param {Number} r
- * @param {Number} g
- * @param {Number} b
- * @param {Number} a
+ * Color class, please use color() to construct a color.
  */
 export class Color {
-  constructor(r, g, b, a) {
-    if (typeof r === "object") {
-      this._val =
-        (((r.r || 0) << 24) >>> 0) +
-        ((r.g || 0) << 16) +
-        ((r.b || 0) << 8) +
-        (r.a == null ? 255 : r.a);
+  #val = 0;
+
+  constructor();
+  constructor(color: ColorLike);
+  constructor(r: number, g?: number, b?: number, a?: number);
+  constructor(r: number | ColorLike = 0, g: number = 0, b: number = 0, a: number = BYTE) {
+    if (Color.isLike(r)) {
+      this.#initFromColor(r);
     } else {
-      r = r || 0;
-      g = g || 0;
-      b = b || 0;
-      a = typeof a === "number" ? a : 255;
-      this._val = ((r << 24) >>> 0) + (g << 16) + (b << 8) + a;
+      if (
+        !isNumber(r) ||
+        !isNumber(g) ||
+        !isNumber(b) ||
+        !isNumber(a)
+      ) {
+        throw new TypeError("Invalid Color constructor arguments");
+      }
+      this.#initFromNumber(r, g, b, a);
     }
   }
 
-  clone() {
+  #initFromNumber(r: number, g: number, b: number, a: number): void {
+    r = r || 0;
+    g = g || 0;
+    b = b || 0;
+    a = isNumber(a) ? a : BYTE;
+    this.#val = ((r << 24) >>> 0) + (g << 16) + (b << 8) + a;
+  }
+
+  #initFromColor(color: ColorLike): void {
+    this.#initFromNumber(color.r, color.g, color.b, color.a);
+  }
+
+  clone(): Color {
     return new Color(this.r, this.g, this.b, this.a);
   }
 
-  get r() {
-    return (this._val & 0xff000000) >>> 24;
+  get r(): number {
+    return (this.#val & 0xff000000) >>> 24;
   }
 
-  set r(value) {
-    this._val = (this._val & 0x00ffffff) | ((value << 24) >>> 0);
+  set r(value: number) {
+    this.#val = (this.#val & 0x00ffffff) | ((value << 24) >>> 0);
   }
 
-  get g() {
-    return (this._val & 0x00ff0000) >> 16;
+  get g(): number {
+    return (this.#val & 0x00ff0000) >> 16;
   }
 
-  set g(value) {
-    this._val = (this._val & 0xff00ffff) | (value << 16);
+  set g(value: number) {
+    this.#val = (this.#val & 0xff00ffff) | (value << 16);
   }
 
-  get b() {
-    return (this._val & 0x0000ff00) >> 8;
+  get b(): number {
+    return (this.#val & 0x0000ff00) >> 8;
   }
 
-  set b(value) {
-    this._val = (this._val & 0xffff00ff) | (value << 8);
+  set b(value: number) {
+    this.#val = (this.#val & 0xffff00ff) | (value << 8);
   }
 
-  get a() {
-    return this._val & 0x000000ff;
+  get a(): number {
+    return this.#val & 0x000000ff;
   }
 
-  set a(value) {
-    this._val = (this._val & 0xffffff00) | value;
+  set a(value: number) {
+    this.#val = (this.#val & 0xffffff00) | value;
   }
 
-  get hsv() {
-    const r = this.r / 255.0;
-    const g = this.g / 255.0;
-    const b = this.b / 255.0;
+  get hsv(): HSV {
+    const r = this.r / BYTE;
+    const g = this.g / BYTE;
+    const b = this.b / BYTE;
     const min = Math.min(r, g, b);
     const max = Math.max(r, g, b);
     const delta = max - min;
@@ -128,97 +157,97 @@ export class Color {
   }
 
   /**
-   * White color (255, 255, 255, 255)
+   * White color (BYTE, BYTE, BYTE, BYTE)
    * @returns {Color}
    */
-  static get WHITE() {
-    return new Color(255, 255, 255, 255);
+  static get WHITE(): Color {
+    return new Color(BYTE, BYTE, BYTE, BYTE);
   }
 
   /**
-   * Yellow color (255, 255, 0, 255)
+   * Yellow color (BYTE, BYTE, 0, BYTE)
    * @returns {Color}
    */
-  static get YELLOW() {
-    return new Color(255, 255, 0, 255);
+  static get YELLOW(): Color {
+    return new Color(BYTE, BYTE, 0, BYTE);
   }
 
   /**
-   * Blue color (0, 0, 255, 255)
+   * Blue color (0, 0, BYTE, BYTE)
    * @returns {Color}
    */
-  static get BLUE() {
-    return new Color(0, 0, 255, 255);
+  static get BLUE(): Color {
+    return new Color(0, 0, BYTE, BYTE);
   }
 
   /**
-   * Green Color (0, 255, 0, 255)
+   * Green Color (0, BYTE, 0, BYTE)
    * @returns {Color}
    */
-  static get GREEN() {
-    return new Color(0, 255, 0, 255);
+  static get GREEN(): Color {
+    return new Color(0, BYTE, 0, BYTE);
   }
 
   /**
-   * Red Color (255, 0, 0, 255)
+   * Red Color (BYTE, 0, 0, BYTE)
    * @returns {Color}
    */
-  static get RED() {
-    return new Color(255, 0, 0, 255);
+  static get RED(): Color {
+    return new Color(BYTE, 0, 0, BYTE);
   }
 
   /**
-   * Magenta Color (255, 0, 255, 255)
+   * Magenta Color (BYTE, 0, BYTE, BYTE)
    * @returns {Color}
    */
-  static get MAGENTA() {
-    return new Color(255, 0, 255, 255);
+  static get MAGENTA(): Color {
+    return new Color(BYTE, 0, BYTE, BYTE);
   }
 
   /**
-   * Black Color (0, 0, 0, 255)
+   * Black Color (0, 0, 0, BYTE)
    * @returns {Color}
    */
-  static get BLACK() {
-    return new Color(0, 0, 0, 255);
+  static get BLACK(): Color {
+    return new Color(0, 0, 0, BYTE);
   }
 
   /**
-   * Orange Color (255, 127, 0, 255)
+   * Orange Color (BYTE, 127, 0, BYTE)
    * @returns {Color}
    */
-  static get ORANGE() {
-    return new Color(255, 127, 0, 255);
+  static get ORANGE(): Color {
+    return new Color(BYTE, 127, 0, BYTE);
   }
 
   /**
-   * Gray Color (166, 166, 166, 255)
+   * Gray Color (166, 166, 166, BYTE)
    * @returns {Color}
    */
-  static get GRAY() {
-    return new Color(166, 166, 166, 255);
+  static get GRAY(): Color {
+    return new Color(166, 166, 166, BYTE);
   }
 
-  toArray() {
+  toArray(): number[] {
     return [this.r, this.g, this.b, this.a];
   }
 
-  static equal(color1, color2) {
+  static equal(color1: Color, color2: Color): boolean {
     return (
       color1.r === color2.r && color1.g === color2.g && color1.b === color2.b
     );
   }
 
-  static fromHex(hex) {
+  static fromHex(hex: string): Color {
     hex = hex.replace(/^#?/, "0x");
     var c = parseInt(hex);
     var r = c >> 16;
-    var g = (c >> 8) % 256;
-    var b = c % 256;
+    var g = (c >> 8) % FULL_BYTE;
+    var b = c % FULL_BYTE;
     return new Color(r, g, b);
   }
 
-  static toHex(color) {
+  static toHex(color: Color): string {
     var hR = color.r.toString(16),
       hG = color.g.toString(16),
       hB = color.b.toString(16);
@@ -230,16 +259,16 @@ export class Color {
     );
   }
 
-  static toRgba(r = 255, g = 255, b = 255, a = 255) {
+  static toRgba(r: Color | number = BYTE, g = BYTE, b = BYTE, a = BYTE): string {
     const c = r instanceof Color ? r.toArray() : [r, g, b, a];
-    c[3] = c[3] / 255;
+    c[3] = c[3] / BYTE;
 
     return `rgba(${c.join(",")})`;
   }
 
-  static fromHSV({ h, s, v }) {
-    var hh, p, q, t, ff;
-    let i;
+  static fromHSV({ h, s, v }: HSV): Color {
+    var hh: number, p: number, q: number, t: number, ff: number;
+    let i: number;
     let r = 0;
     let g = 0;
     let b = 0;
@@ -249,12 +278,12 @@ export class Color {
         r = v;
         g = v;
         b = v;
-        return new Color(0 | (r * 255), 0 | (g * 255), 0 | (b * 255));
+        return new Color(0 | (r * BYTE), 0 | (g * BYTE), 0 | (b * BYTE));
       }
       r = 0.0;
       g = 0.0;
       b = 0.0;
-      return new Color(0 | (r * 255), 0 | (g * 255), 0 | (b * 255));
+      return new Color(0 | (r * BYTE), 0 | (g * BYTE), 0 | (b * BYTE));
     }
     hh = h;
     if (hh >= 360.0) {
@@ -301,23 +330,21 @@ export class Color {
         break;
     }
 
-    return new Color(0 | (r * 255), 0 | (g * 255), 0 | (b * 255));
+    return new Color(0 | (r * BYTE), 0 | (g * BYTE), 0 | (b * BYTE));
   }
-}
 
-/**
- * the device accelerometer reports values for each axis in units of g-force
- * @constructor
- * @param {Number} x
- * @param {Number} y
- * @param {Number} z
- * @param {Number} timestamp
- */
-export class Acceleration{
-  constructor(x = 0, y = 0, z = 0, timestamp = 0) {
-    this.x = x;
-    this.y = y;
-    this.z = z;
-    this.timestamp = timestamp;
+  public static isLike(value: unknown): value is ColorLike {
+    if (!isObject(value)) {
+      return false;
+    }
+
+    const color = value as ColorLike;
+
+    return (
+      isNumber(color.r) &&
+      isNumber(color.g) &&
+      isNumber(color.b) &&
+      isNumber(color.a)
+    );
   }
 }

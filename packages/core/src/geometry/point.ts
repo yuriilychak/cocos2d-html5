@@ -24,6 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { isNumber, isObject } from "../boot/utils";
 import type { PointLike, SizeLike } from "./types";
 
 export default class Point implements PointLike {
@@ -85,7 +86,7 @@ export default class Point implements PointLike {
     point1: PointLike | null | undefined,
     point2: PointLike | null | undefined
   ): boolean {
-    return !!point1 && !!point2 && point1.x === point2.x && point1.y === point2.y;
+    return isObject(point1) && isObject(point2) && point1.x === point2.x && point1.y === point2.y;
   }
 
   public static neg(point: PointLike): Point {
@@ -276,7 +277,7 @@ export default class Point implements PointLike {
   }
 
   public static sameAs(A: PointLike | null | undefined, B: PointLike | null | undefined): boolean {
-    if (A != null && B != null) {
+    if (isObject(A) && isObject(B)) {
       return A.x === B.x && A.y === B.y;
     }
     return false;
@@ -313,10 +314,15 @@ export default class Point implements PointLike {
   }
 
   public static isLike(value: unknown): value is PointLike {
+    if (!isObject(value)) {
+      return false;
+    }
+
+    const point = value as unknown as PointLike;
+
     return (
-      value != null &&
-      typeof (value as PointLike).x === "number" &&
-      typeof (value as PointLike).y === "number"
+      isNumber(point.x) &&
+      isNumber(point.y)
     );
   }
 }

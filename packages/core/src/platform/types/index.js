@@ -1,4 +1,5 @@
-export { Color, Acceleration } from "./color";
+export { Color } from "./color";
+export { Acceleration } from "./acceleration";
 export {
   Vertex2F,
   Vertex3F,

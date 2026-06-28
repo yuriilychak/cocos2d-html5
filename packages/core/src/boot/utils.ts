@@ -38,7 +38,7 @@ export function isUndefined(obj: unknown): obj is undefined {
  * Check the obj whether is object or not
  */
 export function isObject(obj: unknown): obj is Record<string, unknown> {
-    return typeof obj === "object" && Object.prototype.toString.call(obj) === '[object Object]';
+    return !!obj && typeof obj === "object" && Object.prototype.toString.call(obj) === '[object Object]';
 }
 
 /**

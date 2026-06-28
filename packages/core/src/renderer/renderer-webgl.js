@@ -29,6 +29,7 @@ import { GLProgramState } from "../shaders/CCGLProgramState";
 import Matrix4 from "../kazmath/mat4";
 import { ServiceLocator } from "../service-locator";
 import { OperatingSystem, VertexAttribute, ShaderName } from "../enums";
+import { BYTE } from "../constants";
 
 // Internal variables
 // Batching general informations
@@ -141,7 +142,7 @@ var rendererWebGL = {
   _cacheToBufferCmds: {}, // an array saves the renderer commands need for cache to other canvas
   _cacheInstanceIds: [],
   _currentID: 0,
-  _clearColor: new Color(0, 0, 0, 255), //background color,default BLACK
+  _clearColor: new Color(0, 0, 0, BYTE), //background color,default BLACK
 
   init: function () {
     var gl = ServiceLocator.sys.rendererConfig.renderContext;
@@ -344,10 +345,10 @@ var rendererWebGL = {
   clear: function () {
     var gl = ServiceLocator.sys.rendererConfig.renderContext;
     gl.clearColor(
-      this._clearColor.r / 255,
-      this._clearColor.g / 255,
-      this._clearColor.b / 255,
-      this._clearColor.a / 255
+      this._clearColor.r / BYTE,
+      this._clearColor.g / BYTE,
+      this._clearColor.b / BYTE,
+      this._clearColor.a / BYTE
     );
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
   },

@@ -208,6 +208,7 @@ export {
   DRAWNODE_TOTAL_VERTICES
 } from "./platform/config";
 export { Color, Acceleration } from "./platform/types";
+export { BYTE, FULL_BYTE } from "./constants";
 export { BlendFunc } from "./platform/types/blend-func";
 export { GlobalVertexBuffer } from "./renderer/global-vertex-buffer";
 export { Animation } from "./sprites/animation/animation";

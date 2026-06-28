@@ -31,6 +31,7 @@ import { incrementGLDraws, contentScaleFactor } from "./platform/macro/utils";
 import { GLProgramState } from "./shaders/CCGLProgramState";
 import { ServiceLocator } from "./service-locator";
 import { ShaderName, VertexAttribute } from "./enums";
+import { BYTE } from "./constants";
 
 /**
  * Canvas of DrawingPrimitive implement version use for WebGlMode
@@ -519,10 +520,10 @@ export class DrawingPrimitiveWebGL extends BaseClass {
   }
 
   setDrawColor(r, g, b, a) {
-    this._colorArray[0] = r / 255.0;
-    this._colorArray[1] = g / 255.0;
-    this._colorArray[2] = b / 255.0;
-    this._colorArray[3] = a / 255.0;
+    this._colorArray[0] = r / BYTE;
+    this._colorArray[1] = g / BYTE;
+    this._colorArray[2] = b / BYTE;
+    this._colorArray[3] = a / BYTE;
   }
 
   setPointSize(pointSize) {

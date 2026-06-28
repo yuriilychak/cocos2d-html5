@@ -24,6 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { isNumber, isObject } from "../boot/utils";
 import type { PointLike, RectLike, SizeLike } from "./types";
 import Point from "./point";
 import Size from "./size";
@@ -47,7 +48,7 @@ export default class Rect implements RectLike {
     } else if (Point.isLike(xOrRectOrPos) && Size.isLike(yOrSize)) {
       this.#initFromPosAndSize(xOrRectOrPos, yOrSize);
     } else {
-      if (typeof xOrRectOrPos !== "number" || typeof yOrSize !== "number") {
+      if (!isNumber(xOrRectOrPos) || !isNumber(yOrSize)) {
         throw new TypeError("Invalid Rect constructor arguments");
       }
       this.#initFromNumber(xOrRectOrPos, yOrSize, width, height);
@@ -128,7 +129,7 @@ export default class Rect implements RectLike {
     } else if (Point.isLike(xOrRectOrPos) && Size.isLike(yOrSize)) {
       this.#initFromPosAndSize(xOrRectOrPos, yOrSize);
     } else {
-      if (typeof xOrRectOrPos !== "number" || typeof yOrSize !== "number") {
+      if (!isNumber(xOrRectOrPos) || !isNumber(yOrSize)) {
         throw new TypeError("Invalid Rect set arguments");
       }
       this.#initFromNumber(xOrRectOrPos, yOrSize, width, height);
@@ -155,8 +156,8 @@ export default class Rect implements RectLike {
     rect2: RectLike | null | undefined
   ): boolean {
     return (
-      rect1 != null &&
-      rect2 != null &&
+      isObject(rect1) &&
+      isObject(rect2) &&
       rect1.x === rect2.x &&
       rect1.y === rect2.y &&
       rect1.width === rect2.width &&
@@ -165,11 +166,11 @@ export default class Rect implements RectLike {
   }
 
   public static equalToZero(r: RectLike | null | undefined): boolean {
-    return r != null && r.x === 0 && r.y === 0 && r.width === 0 && r.height === 0;
+    return isObject(r) && r.x === 0 && r.y === 0 && r.width === 0 && r.height === 0;
   }
 
   public static contains(rect1: RectLike | null | undefined, rect2: RectLike | null | undefined): boolean {
-    if (!rect1 || !rect2) return false;
+    if (!isObject(rect1) || !isObject(rect2)) return false;
     return !(
       rect1.x >= rect2.x ||
       rect1.y >= rect2.y ||

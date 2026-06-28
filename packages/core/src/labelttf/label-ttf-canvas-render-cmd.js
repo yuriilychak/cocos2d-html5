@@ -27,6 +27,7 @@ import { Texture2D } from "../textures/texture-2d";
 import { Color } from "../platform/types/color";
 import { TextAlignment, VerticalTextAlignment } from "../enums";
 import { ServiceLocator } from "../service-locator";
+import { BYTE } from "../constants";
 
 export const _textAlign = ["left", "center", "right"];
 export const _textBaseline = ["top", "middle", "bottom"];
@@ -125,15 +126,15 @@ export const LabelRenderMixin = (Base) =>
         locShadowColor = node._shadowColor || this._displayedColor;
       const locStrokeColor = node._strokeColor,
         locFontFillColor = node._textFillColor;
-      const dr = locDisplayColor.r / 255,
-        dg = locDisplayColor.g / 255,
-        db = locDisplayColor.b / 255;
+      const dr = locDisplayColor.r / BYTE,
+        dg = locDisplayColor.g / BYTE,
+        db = locDisplayColor.b / BYTE;
 
       this._shadowColorStr = Color.toRgba(
         0 | (dr * locShadowColor.r),
         0 | (dg * locShadowColor.g),
         0 | (db * locShadowColor.b),
-        node._shadowOpacity * 255
+        node._shadowOpacity * BYTE
       );
       this._fillColorStr = Color.toRgba(
         0 | (dr * locFontFillColor.r),
@@ -614,7 +615,7 @@ export class CanvasRenderCmd extends LabelRenderMixin(SpriteCanvasRenderCmd) {
     let locX = node._offsetPosition.x;
     let locY = -node._offsetPosition.y - locHeight;
 
-    const alpha = this._displayedOpacity / 255;
+    const alpha = this._displayedOpacity / BYTE;
 
     wrapper.setTransform(this._worldTransform, scaleX, scaleY);
     wrapper.setCompositeOperation(this._blendFuncStr);

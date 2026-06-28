@@ -3,6 +3,7 @@ import {
   DIRECTOR_FPS_INTERVAL
 } from "../platform/config";
 import { DirectorEvent } from "../enums";
+import { BYTE } from "../constants";
 
 export class Profiler {
   static LEVEL_DET_FACTOR = 0.6;
@@ -47,7 +48,7 @@ export class Profiler {
     const labels = [this._drawsLabel, this._SPFLabel, this._FPSLabel];
     for (let i = 0; i < 3; ++i) {
       const style = labels[i].style;
-      style.color = "rgb(0, 255, 255)";
+      style.color = `rgb(0, ${BYTE}, ${BYTE})`;
       style.font = "bold 12px Helvetica, Arial";
       style.lineHeight = "20px";
       style.width = "100%";

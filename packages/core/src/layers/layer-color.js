@@ -30,6 +30,7 @@ import { Color } from "../platform/types/color";
 import { LayerColorCanvasRenderer, LayerColorWebGLRenderer } from "./renderer";
 import { BlendFunc } from "../platform/types/blend-func";
 import { ServiceLocator } from "../service-locator";
+import { BYTE } from "../constants";
 
 /**
  * LayerColor is a subclass of Layer that implements the RGBAProtocol protocol.
@@ -56,7 +57,7 @@ export class LayerColor extends Layer {
 
   init(color, width, height) {
     var winSize = ServiceLocator.director.getWinSize();
-    color = color || new Color(0, 0, 0, 255);
+    color = color || new Color(0, 0, 0, BYTE);
     width = width === undefined ? winSize.width : width;
     height = height === undefined ? winSize.height : height;
 

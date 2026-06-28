@@ -40,6 +40,7 @@ import Touch from "../event-manager/touch";
 import { CanvasRenderCmd as NodeCanvasRenderCmd } from "./node-canvas-render-cmd";
 import { WebGLRenderCmd as NodeWebGLRenderCmd } from "./node-webgl-render-cmd";
 import { ServiceLocator } from "../service-locator";
+import { BYTE } from "../constants";
 
 /**
  * Default Node tag
@@ -90,8 +91,8 @@ export function setGlobalOrderOfArrival(val) {
  * - scale: (x=1,y=1) <br/>
  * - contentSize: (x=0,y=0)<br/>
  * - anchorPoint: (x=0,y=0)<br/>
- * - color: (r=255,g=255,b=255)<br/>
- * - opacity: 255</p>
+ * - color: (r=BYTE,g=BYTE,b=BYTE)<br/>
+ * - opacity: BYTE</p>
  *
  * <p> Limitations:<br/>
  * - A Node is a "void" object. It doesn't have a texture <br/></P>
@@ -127,9 +128,9 @@ export function setGlobalOrderOfArrival(val) {
  * @property {Number}               scaleX              - Scale on x axis
  * @property {Number}               scaleY              - Scale on y axis
  * @property {Boolean}              visible             - Indicate whether node is visible or not
- * @property {Color}             color               - Color of node, default value is white: (255, 255, 255)
+ * @property {Color}             color               - Color of node, default value is white: (BYTE, BYTE, BYTE)
  * @property {Boolean}              cascadeColor        - Indicate whether node's color value affect its child nodes, default value is false
- * @property {Number}               opacity             - Opacity of node, default value is 255
+ * @property {Number}               opacity             - Opacity of node, default value is BYTE
  * @property {Boolean}              opacityModifyRGB    - Indicate whether opacity affect the color value, default value is false
  * @property {Boolean}              cascadeOpacity      - Indicate whether node's opacity value affect its child nodes, default value is false
  * @property {Array}                children            - <@readonly> All children nodes
@@ -189,7 +190,7 @@ export class Node extends BaseClass {
     this._className = "Node";
     this._showNode = false;
     this._name = "";
-    this._realOpacity = 255;
+    this._realOpacity = BYTE;
     this._realColor = null;
     this._cascadeColorEnabled = false;
     this._cascadeOpacityEnabled = false;
@@ -204,7 +205,7 @@ export class Node extends BaseClass {
     if (ComponentContainer) {
       this._componentContainer = new ComponentContainer(this);
     }
-    this._realColor = new Color(255, 255, 255, 255);
+    this._realColor = new Color(BYTE, BYTE, BYTE, BYTE);
 
     this._renderCmd = this._createRenderCmd();
   }

@@ -26,6 +26,7 @@
 
 import { TextAlignment, VerticalTextAlignment } from "../../enums";
 import { Color } from "./color";
+import { BYTE } from "../../constants";
 
 /**
  * Common usage:
@@ -53,12 +54,12 @@ export var FontDefinition = function (properties) {
     _t.fontSize = 12;
     _t.textAlign = TextAlignment.CENTER;
     _t.verticalAlign = VerticalTextAlignment.TOP;
-    _t.fillStyle = new Color(255, 255, 255, 255);
+    _t.fillStyle = new Color(BYTE, BYTE, BYTE, BYTE);
     _t.boundingWidth = 0;
     _t.boundingHeight = 0;
 
     _t.strokeEnabled = false;
-    _t.strokeStyle = new Color(255, 255, 255, 255);
+    _t.strokeStyle = new Color(BYTE, BYTE, BYTE, BYTE);
     _t.lineWidth = 1;
     _t.lineHeight = "normal";
     _t.fontStyle = "normal";

@@ -24,6 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { isNumber, isObject, isUndefined } from "../boot/utils";
 import Point from "./point";
 import Rect from "./rect";
 import Size from "./size";
@@ -164,7 +165,7 @@ export default class AffineTransform implements AffineTransformLike {
     let y: number;
     let transform: AffineTransformLike;
 
-    if (t === undefined) {
+    if (isUndefined(t)) {
       if (!Point.isLike(pointOrX) || !AffineTransform.isLike(transOrY)) {
         throw new TypeError("Invalid AffineTransform.applyToPoint arguments");
       }
@@ -172,7 +173,7 @@ export default class AffineTransform implements AffineTransformLike {
       x = pointOrX.x;
       y = pointOrX.y;
     } else {
-      if (typeof pointOrX !== "number" || typeof transOrY !== "number") {
+      if (!isNumber(pointOrX) || !isNumber(transOrY)) {
         throw new TypeError("Invalid AffineTransform.applyToPoint arguments");
       }
       transform = t;
@@ -339,14 +340,19 @@ export default class AffineTransform implements AffineTransformLike {
   }
 
   public static isLike(value: unknown): value is AffineTransformLike {
+    if (!isObject(value)) {
+      return false;
+    }
+
+    const transform = value as unknown as AffineTransformLike;
+
     return (
-      value != null &&
-      typeof (value as AffineTransformLike).a === "number" &&
-      typeof (value as AffineTransformLike).b === "number" &&
-      typeof (value as AffineTransformLike).c === "number" &&
-      typeof (value as AffineTransformLike).d === "number" &&
-      typeof (value as AffineTransformLike).tx === "number" &&
-      typeof (value as AffineTransformLike).ty === "number"
+      isNumber(transform.a) &&
+      isNumber(transform.b) &&
+      isNumber(transform.c) &&
+      isNumber(transform.d) &&
+      isNumber(transform.tx) &&
+      isNumber(transform.ty)
     );
   }
 }

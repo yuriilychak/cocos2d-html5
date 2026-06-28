@@ -36,6 +36,7 @@ import { LabelTTF } from "../labelttf/label-ttf";
 import { Texture2D } from "../textures/texture-2d";
 import { Sprite } from "../sprites/sprite";
 import { ServiceLocator } from "../service-locator";
+import { BYTE } from "../constants";
 
 /**
  * LoaderScene is a scene that you can load it when you loading files
@@ -75,7 +76,7 @@ export class LoaderScene extends Scene {
     var logoWidth = 160;
     var logoHeight = 200;
 
-    var bgLayer = (self._bgLayer = new LayerColor(new Color(32, 32, 32, 255)));
+    var bgLayer = (self._bgLayer = new LayerColor(new Color(32, 32, 32, BYTE)));
     self.addChild(bgLayer, 0);
 
     var fontSize = 24,

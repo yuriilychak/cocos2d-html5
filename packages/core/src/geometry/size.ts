@@ -24,6 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { isNumber, isObject } from "../boot/utils";
 import type { SizeLike } from "./types";
 
 export default class Size implements SizeLike {
@@ -85,18 +86,23 @@ export default class Size implements SizeLike {
     size2: SizeLike | null | undefined
   ): boolean {
     return (
-      size1 != null &&
-      size2 != null &&
+      isObject(size1) &&
+      isObject(size2) &&
       size1.width === size2.width &&
       size1.height === size2.height
     );
   }
 
   public static isLike(value: unknown): value is SizeLike {
+    if (!isObject(value)) {
+      return false;
+    }
+
+    const size = value as unknown as SizeLike;
+
     return (
-      value != null &&
-      typeof (value as SizeLike).width === "number" &&
-      typeof (value as SizeLike).height === "number"
+      isNumber(size.width) &&
+      isNumber(size.height)
     );
   }
 }

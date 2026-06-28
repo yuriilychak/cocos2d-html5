@@ -30,6 +30,7 @@ import Matrix4 from "../kazmath/mat4";
 import { radiansToDegrees } from "../platform/macro/utils";
 import { ServiceLocator } from "../service-locator";
 import { ShaderName, VertexAttribute } from "../enums";
+import { BYTE } from "../constants";
 
 /**
  * Layer's WebGL render command
@@ -279,7 +280,7 @@ export class LayerGradientWebGLRenderCmd extends LayerColorWebGLRenderCmd {
 
     const stopsLen = stops.length,
       colors = this._colorView,
-      opacityf = this._displayedOpacity / 255;
+      opacityf = this._displayedOpacity / BYTE;
     let stopColor, offset;
     for (let i = 0; i < stopsLen; i++) {
       stopColor = stops[i].color;

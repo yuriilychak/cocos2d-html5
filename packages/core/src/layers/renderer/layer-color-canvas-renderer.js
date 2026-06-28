@@ -30,6 +30,7 @@ import {
   CanvasRenderCmd as NodeCanvasRenderCmd
 } from "../../base-nodes/node-canvas-render-cmd";
 import { ServiceLocator } from "../../service-locator";
+import { BYTE } from "../../constants";
 
 /**
  * LayerColor's Canvas render command
@@ -52,7 +53,7 @@ export default class LayerColorCanvasRenderer extends LayerCanvasRenderer {
       context = wrapper.getContext(),
       node = this._node,
       curColor = this._displayedColor,
-      opacity = this._displayedOpacity / 255,
+      opacity = this._displayedOpacity / BYTE,
       locWidth = node._contentSize.width,
       locHeight = node._contentSize.height;
 

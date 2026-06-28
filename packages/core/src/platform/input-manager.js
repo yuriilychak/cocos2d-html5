@@ -29,7 +29,7 @@ import Touch from "../event-manager/touch";
 import { EventTouch, EventMouse } from "../event-manager/event/index";
 import { EventAcceleration } from "../event-manager/event-extension/index";
 import EventKeyboard from "../event-manager/event-extension/event-keyboard";
-import { Acceleration } from "../platform/types/color";
+import { Acceleration } from "../platform/types/acceleration";
 import { isFunction } from "../boot/utils";
 import { BrowserType, MouseEvent, TouchEvent } from "../enums";
 

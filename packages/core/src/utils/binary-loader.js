@@ -26,6 +26,7 @@
 
 import { log } from '../boot/debugger';
 import { ServiceLocator } from "../service-locator";
+import { FULL_BYTE } from "../constants";
 
 /**
  * Helper to convert from responseBody to a "responseText" like thing (IE compat).
@@ -35,9 +36,9 @@ import { ServiceLocator } from "../service-locator";
  */
 export function _convertResponseBodyToText(binary) {
     var byteMapping = {};
-    for (var i = 0; i < 256; i++) {
-        for (var j = 0; j < 256; j++) {
-            byteMapping[ String.fromCharCode(i + j * 256) ] =
+    for (var i = 0; i < FULL_BYTE; i++) {
+        for (var j = 0; j < FULL_BYTE; j++) {
+            byteMapping[ String.fromCharCode(i + j * FULL_BYTE) ] =
                 String.fromCharCode(i) + String.fromCharCode(j);
         }
     }

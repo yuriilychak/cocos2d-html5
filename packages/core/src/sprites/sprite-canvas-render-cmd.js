@@ -30,6 +30,7 @@ import { Texture2D } from "../textures/texture-2d";
 import { Color } from "../platform/types/color";
 import { contentScaleFactor } from "../platform/macro/utils";
 import { ServiceLocator } from "../service-locator";
+import { BYTE } from "../constants";
 
 export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
   constructor(renderable) {
@@ -148,7 +149,7 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
   rendering(ctx, scaleX, scaleY) {
     const node = this._node;
     const locTextureCoord = this._textureCoord,
-      alpha = this._displayedOpacity / 255;
+      alpha = this._displayedOpacity / BYTE;
     const texture = this._textureToRender || node._texture;
 
     if (
@@ -263,7 +264,7 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
     const dColor = this._displayedColor;
 
     if (texture) {
-      if (dColor.r !== 255 || dColor.g !== 255 || dColor.b !== 255) {
+      if (dColor.r !== BYTE || dColor.g !== BYTE || dColor.b !== BYTE) {
         this._textureToRender = texture._generateColorTexture(
           dColor.r,
           dColor.g,
@@ -297,7 +298,7 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
 
     //set the texture's color after the it loaded
     const locColor = locRenderCmd._displayedColor;
-    if (locColor.r !== 255 || locColor.g !== 255 || locColor.b !== 255)
+    if (locColor.r !== BYTE || locColor.g !== BYTE || locColor.b !== BYTE)
       locRenderCmd._updateColor();
 
     // by default use "Self Render".

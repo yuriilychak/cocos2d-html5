@@ -27,6 +27,7 @@ import { Node } from "../../base-nodes/node";
 import { Point } from "../../geometry";
 import { Color } from "../../platform/types/color";
 import { ServiceLocator } from "../../service-locator";
+import { BYTE } from "../../constants";
 
 /**
  * LayerGradient's Canvas render command
@@ -45,7 +46,7 @@ export default class LayerGradientCanvasRenderer extends LayerColorCanvasRendere
     const wrapper = ctx || ServiceLocator.sys.rendererConfig.renderContext,
       context = wrapper.getContext(),
       node = this._node,
-      opacity = this._displayedOpacity / 255;
+      opacity = this._displayedOpacity / BYTE;
 
     if (opacity === 0) return;
 
@@ -116,19 +117,19 @@ export default class LayerGradientCanvasRenderer extends LayerColorCanvasRendere
 
     const locStartColor = this._displayedColor,
       locEndColor = node._endColor;
-    const startOpacity = node._startOpacity / 255,
-      endOpacity = node._endOpacity / 255;
+    const startOpacity = node._startOpacity / BYTE,
+      endOpacity = node._endOpacity / BYTE;
     this._startStopStr = Color.toRgba(
       Math.round(locStartColor.r),
       Math.round(locStartColor.g),
       Math.round(locStartColor.b),
-      startOpacity.toFixed(4) * 255
+      startOpacity.toFixed(4) * BYTE
     );
     this._endStopStr = Color.toRgba(
       Math.round(locEndColor.r),
       Math.round(locEndColor.g),
       Math.round(locEndColor.b),
-      endOpacity.toFixed(4) * 255
+      endOpacity.toFixed(4) * BYTE
     );
 
     if (node._colorStops) {
@@ -138,7 +139,7 @@ export default class LayerGradientCanvasRenderer extends LayerColorCanvasRendere
       this._colorStopsStr = [];
       for (let i = 0; i < node._colorStops.length; i++) {
         const stopColor = node._colorStops[i].color;
-        const stopOpacity = stopColor.a == null ? 1 : stopColor.a / 255;
+        const stopOpacity = stopColor.a == null ? 1 : stopColor.a / BYTE;
         this._colorStopsStr.push(
           "rgba(" +
             Math.round(stopColor.r) +

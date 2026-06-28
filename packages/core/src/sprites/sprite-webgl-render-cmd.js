@@ -33,6 +33,7 @@ import {
 import { FIX_ARTIFACTS_BY_STRECHING_TEXEL } from "../platform/config";
 import { ServiceLocator } from "../service-locator";
 import { GLState, ShaderName } from "../enums";
+import { BYTE } from "../constants";
 
 //Sprite's WebGL render command
 export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
@@ -401,7 +402,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
       g = this._displayedColor.g,
       b = this._displayedColor.b;
     if (node.isOpacityModifyRGB) {
-      const a = opacity / 255;
+      const a = opacity / BYTE;
       r *= a;
       g *= a;
       b *= a;

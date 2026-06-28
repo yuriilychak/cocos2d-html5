@@ -24,6 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { BYTE } from "../../constants";
+
 class WebGLColor {
     static BYTES_PER_ELEMENT = 4;
 
@@ -34,7 +36,7 @@ class WebGLColor {
         this._view[0] = r || 0;
         this._view[1] = g || 0;
         this._view[2] = b || 0;
-        this._view[3] = (a == null) ? 255 : a;
+        this._view[3] = (a == null) ? BYTE : a;
 
         if (a === undefined)
             this.a_undefined = true;

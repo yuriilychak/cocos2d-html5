@@ -31,6 +31,7 @@ import { TextureAtlas } from "../textures/texture-atlas";
 
 import { ServiceLocator } from "../service-locator";
 import { ShaderName, GLState } from "../enums";
+import { BYTE } from "../constants";
 
 /**
  * AtlasNode's rendering objects of WebGL
@@ -107,10 +108,10 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
 
     const locRealColor = node._realColor;
     this._colorF32Array = new Float32Array([
-      locRealColor.r / 255.0,
-      locRealColor.g / 255.0,
-      locRealColor.b / 255.0,
-      node._realOpacity / 255.0
+      locRealColor.r / BYTE,
+      locRealColor.g / BYTE,
+      locRealColor.b / BYTE,
+      node._realOpacity / BYTE
     ]);
     this._textureAtlas = new TextureAtlas();
     this._textureAtlas.initWithTexture(texture, itemsToRender);
@@ -134,9 +135,9 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
     this._colorUnmodified = color3;
     const locDisplayedOpacity = this._displayedOpacity;
     if (node.isOpacityModifyRGB) {
-      temp.r = (temp.r * locDisplayedOpacity) / 255;
-      temp.g = (temp.g * locDisplayedOpacity) / 255;
-      temp.b = (temp.b * locDisplayedOpacity) / 255;
+      temp.r = (temp.r * locDisplayedOpacity) / BYTE;
+      temp.g = (temp.g * locDisplayedOpacity) / BYTE;
+      temp.b = (temp.b * locDisplayedOpacity) / BYTE;
     }
     node.color = temp;
   }
@@ -152,10 +153,10 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
   _updateColor() {
     if (this._colorF32Array) {
       const locDisplayedColor = this._displayedColor;
-      this._colorF32Array[0] = locDisplayedColor.r / 255.0;
-      this._colorF32Array[1] = locDisplayedColor.g / 255.0;
-      this._colorF32Array[2] = locDisplayedColor.b / 255.0;
-      this._colorF32Array[3] = this._displayedOpacity / 255.0;
+      this._colorF32Array[0] = locDisplayedColor.r / BYTE;
+      this._colorF32Array[1] = locDisplayedColor.g / BYTE;
+      this._colorF32Array[2] = locDisplayedColor.b / BYTE;
+      this._colorF32Array[3] = this._displayedOpacity / BYTE;
     }
   }
 

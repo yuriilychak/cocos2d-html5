@@ -29,6 +29,7 @@ import { arrayRemoveObject } from "../platform/macro/utils";
 import { isUndefined } from "../boot/utils";
 import { CanvasRenderCmd as NodeCanvasRenderCmd } from "../base-nodes/node-canvas-render-cmd";
 import { ServiceLocator } from "../service-locator";
+import { BYTE } from "../constants";
 
 var rendererCanvas = {
   childrenOrderDirty: true,
@@ -184,9 +185,9 @@ var rendererCanvas = {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, viewport.width, viewport.height);
     if (
-      this._clearColor.r !== 255 ||
-      this._clearColor.g !== 255 ||
-      this._clearColor.b !== 255
+      this._clearColor.r !== BYTE ||
+      this._clearColor.g !== BYTE ||
+      this._clearColor.b !== BYTE
     ) {
       wrapper.setFillStyle(this._clearFillStyle);
       wrapper.setGlobalAlpha(this._clearColor.a);

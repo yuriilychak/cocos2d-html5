@@ -33,6 +33,7 @@ import { log, _LogInfos } from "../boot/debugger";
 import { TextAlignment, VerticalTextAlignment } from "../enums";
 import { contentScaleFactor } from "../platform/macro/utils";
 import { ServiceLocator } from "../service-locator";
+import { BYTE } from "../constants";
 
 /**
  * <p>LabelTTF is a subclass of TextureNode that knows how to render text labels with system font or a ttf font file<br/>
@@ -114,10 +115,10 @@ export class LabelTTF extends Sprite {
     this._shadowBlur = 0;
 
     this._strokeEnabled = false;
-    this._strokeColor = new Color(255, 255, 255, 255);
+    this._strokeColor = new Color(BYTE, BYTE, BYTE, BYTE);
     this._strokeSize = 0;
 
-    this._textFillColor = new Color(255, 255, 255, 255);
+    this._textFillColor = new Color(BYTE, BYTE, BYTE, BYTE);
     this._strokeShadowOffsetX = 0;
     this._strokeShadowOffsetY = 0;
     this._needUpdateTexture = false;
@@ -335,7 +336,7 @@ export class LabelTTF extends Sprite {
   }
   _enableShadow(shadowColor, offset, blurRadius) {
     if (!this._shadowColor) {
-      this._shadowColor = new Color(255, 255, 255, 128);
+      this._shadowColor = new Color(BYTE, BYTE, BYTE, 128);
     }
     this._shadowColor.r = shadowColor.r;
     this._shadowColor.g = shadowColor.g;
@@ -344,7 +345,7 @@ export class LabelTTF extends Sprite {
     var x, y, a, b;
     x = offset.width || offset.x || 0;
     y = offset.height || offset.y || 0;
-    a = shadowColor.a != null ? shadowColor.a / 255 : 0.5;
+    a = shadowColor.a != null ? shadowColor.a / BYTE : 0.5;
     b = blurRadius;
 
     this._enableShadowNoneColor(x, y, a, b);
