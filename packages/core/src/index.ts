@@ -229,7 +229,7 @@ export { Configuration } from "./sys/configuration";
 export { glUseProgram } from "./shaders/CCGLStateCache";
 export { setProgramForNode } from "./shaders/utils";
 export { isUndefined } from "./boot";
-export { KEY } from "./platform/common";
+export { KEY } from "./enums";
 export {
   arrayRemoveObject,
   pointPixelsToPoints,
