@@ -90,7 +90,14 @@ LabelTTF.WebGLRenderCmd = LabelTTFWebGLRenderCmd;
 // ======================================================================
 // Named re-exports for direct imports from other packages
 // ======================================================================
-export { Point, Size, Rect, AffineTransform, cardinalSplineAt, getControlPointAt } from "./geometry";
+export {
+  Point,
+  Size,
+  Rect,
+  AffineTransform,
+  cardinalSplineAt,
+  getControlPointAt
+} from "./geometry";
 export {
   BrowserType,
   DebugMode,
@@ -126,7 +133,6 @@ export {
   UserRenderMode,
   UniformValueType
 } from "./enums";
-export { Vertex3F, Quad3, V3F_C4B_T2F } from "./platform/types/vertex";
 export {
   rand,
   NextPOT,
@@ -165,10 +171,7 @@ export {
   glBindTexture2D,
   setProjectionMatrixDirty
 } from "./shaders/CCGLStateCache";
-export {
-  Matrix4,
-  KMGLMatrix
-} from "./kazmath";
+export { Matrix4, KMGLMatrix } from "./kazmath";
 export const KM_GL_MODELVIEW = KMGLMatrix.KM_GL_MODELVIEW;
 export const KM_GL_PROJECTION = KMGLMatrix.KM_GL_PROJECTION;
 export const KM_GL_TEXTURE = KMGLMatrix.KM_GL_TEXTURE;
@@ -207,9 +210,7 @@ export {
   ENABLE_STACKABLE_ACTIONS,
   DRAWNODE_TOTAL_VERTICES
 } from "./platform/config";
-export { Color, Acceleration } from "./platform/types";
 export { BYTE, FULL_BYTE } from "./constants";
-export { BlendFunc } from "./platform/types/blend-func";
 export { GlobalVertexBuffer } from "./renderer/global-vertex-buffer";
 export { Animation } from "./sprites/animation/animation";
 export { AnimationFrame } from "./sprites/animation/animation-frame";
@@ -228,7 +229,6 @@ export { Sprite } from "./sprites/sprite";
 export { Configuration } from "./sys/configuration";
 export { glUseProgram } from "./shaders/CCGLStateCache";
 export { setProgramForNode } from "./shaders/utils";
-export { isUndefined } from "./boot";
 export { KEY } from "./enums";
 export {
   arrayRemoveObject,
@@ -259,18 +259,21 @@ export {
   DISABLE_TAG,
   UINT_MAX
 } from "./platform/macro/constants";
-export { visibleRect } from "./platform/visible-rect";
+export { VisibleRect } from "./platform/visible-rect";
 export { ResolutionPolicy } from "./platform/egl-view/resolution-policy";
 export { ContainerStrategy } from "./platform/egl-view/container-strategy";
 export { ContentStrategy } from "./platform/egl-view/content-strategy";
 export { SpriteFrame } from "./sprites/sprite-frame";
 export { PolygonInfo, Triangles } from "./sprites/polygon-info";
 export { Component, ComponentContainer } from "./components";
-export { assert, error } from "./boot";
-export { FontDefinition } from "./platform/types/font-definition";
+export { assert, error, Path, Loader, isObject, isUndefined } from "./boot";
 export { default as Touch } from "./event-manager/touch";
 export { default as EventFocus } from "./event-manager/event/event-focus";
-export { NODE_TAG_INVALID, s_globalOrderOfArrival, setGlobalOrderOfArrival } from "./base-nodes/node";
+export {
+  NODE_TAG_INVALID,
+  s_globalOrderOfArrival,
+  setGlobalOrderOfArrival
+} from "./base-nodes/node";
 export { Screen } from "./platform/screen";
 export { default as SpriteFrameCache } from "./sprites/sprite-frame-cache";
 export { LayerGradient } from "./layers/layer-gradient";
@@ -278,11 +281,19 @@ export { FLT_MIN, BATCH_VERTEX_COUNT } from "./platform/macro/constants";
 export { OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA } from "./platform/config";
 export { INVALID_INDEX, REPEAT_FOREVER } from "./platform/macro/constants";
 export { rectPointsToPixels } from "./platform/macro/utils";
-export { Path, Loader } from "./boot";
 export { EGLView } from "./platform/egl-view/egl-view";
 export { TextureAtlas } from "./textures/texture-atlas";
-export { isObject } from "./boot";
-export { V3F_C4B_T2F_Quad } from "./platform/types/vertex";
+export {
+  V3F_C4B_T2F_Quad,
+  vertexLineToPolygon,
+  FontDefinition,
+  Color,
+  Acceleration,
+  BlendFunc,
+  Vertex3F,
+  Quad3,
+  V3F_C4B_T2F
+} from "./platform/types";
 export { glBlendFuncForParticle } from "./shaders/CCGLStateCache";
 export { randomMinus1To1 } from "./platform/macro/utils";
 export { getImageFormatByData } from "./platform/common";
@@ -298,9 +309,7 @@ export { InputManager } from "./platform/input-manager";
 export { Scheduler } from "./scheduler";
 export { ActionManager } from "./action-manager";
 export { LayerMultiplex } from "./layers/layer-multiplex";
-export { Device } from "./platform/device";
 export { isArray, isNumber } from "./boot/utils";
-export { vertexLineToPolygon } from "./support/vertex";
 export { plistParser } from "./platform/sax-parser";
 export { DirtyRegion } from "./renderer/dirty-region";
 export { _convertResponseBodyToText } from "./utils/binary-loader";

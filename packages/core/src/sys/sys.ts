@@ -59,6 +59,10 @@ export default class Sys {
     this.#env.window.open(url);
   }
 
+  public vibrate(duration: number): void {
+    this.#env.navigator.vibrate?.(Math.round(duration * 1000));
+  }
+
   #detectWebGLSupport(): boolean {
     const win = this.#env.window;
     const doc = this.#env.document;

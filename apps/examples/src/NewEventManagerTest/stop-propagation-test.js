@@ -27,7 +27,7 @@
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { createColoredView } from "./touchable-sprite";
-import { Color, EventListener, EventListenerType, Rect, log, visibleRect, ServiceLocator } from "@aspect/core";
+import { Color, EventListener, EventListenerType, Rect, log, ServiceLocator } from "@aspect/core";
 
 export class StopPropagationTest extends EventDispatcherTestDemo {
   constructor() {
@@ -137,13 +137,13 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
 
       var visibleSize = ServiceLocator.director.getVisibleSize();
       sprite1.x =
-        visibleRect.left.x + (visibleSize.width / (SPRITE_COUNT - 1)) * i;
+        ServiceLocator.eglView.visibleRect.left.x + (visibleSize.width / (SPRITE_COUNT - 1)) * i;
       sprite1.y =
-        visibleRect.center.y + sprite2.getContentSize().height / 2 + 10;
+        ServiceLocator.eglView.visibleRect.center.y + sprite2.getContentSize().height / 2 + 10;
       sprite2.x =
-        visibleRect.left.x + (visibleSize.width / (SPRITE_COUNT - 1)) * i;
+        ServiceLocator.eglView.visibleRect.left.x + (visibleSize.width / (SPRITE_COUNT - 1)) * i;
       sprite2.y =
-        visibleRect.center.y - sprite2.getContentSize().height / 2 - 10;
+        ServiceLocator.eglView.visibleRect.center.y - sprite2.getContentSize().height / 2 - 10;
     }
     //----end9----
   }

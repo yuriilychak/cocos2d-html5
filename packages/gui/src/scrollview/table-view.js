@@ -289,7 +289,7 @@ export class TableView extends GScrollView {
   setVerticalFillOrder(fillOrder) {
     if (this._vOrdering !== fillOrder) {
       this._vOrdering = fillOrder;
-      if (this._cellsUsed.count() > 0) {
+      if (this._cellsUsed.size > 0) {
         this.reloadData();
       }
     }
@@ -340,7 +340,7 @@ export class TableView extends GScrollView {
     var cell = locCellsUsed.objectWithObjectID(idx);
     if (cell) {
       newIdx = locCellsUsed.indexOfSortedObject(cell);
-      for (var i = newIdx; i < locCellsUsed.count(); i++) {
+      for (var i = newIdx; i < locCellsUsed.size; i++) {
         cell = locCellsUsed.objectAtIndex(i);
         this._setIndexForCell(cell.getIdx() + 1, cell);
       }
@@ -371,7 +371,7 @@ export class TableView extends GScrollView {
     arrayRemoveObject(this._indices, idx);
     this._updateCellPositions();
 
-    for (var i = locCellsUsed.count() - 1; i > newIdx; i--) {
+    for (var i = locCellsUsed.size - 1; i > newIdx; i--) {
       cell = locCellsUsed.objectAtIndex(i);
       this._setIndexForCell(cell.getIdx() - 1, cell);
     }
@@ -382,7 +382,7 @@ export class TableView extends GScrollView {
     var locCellsUsed = this._cellsUsed,
       locCellsFreed = this._cellsFreed,
       locContainer = this.getContainer();
-    for (var i = 0, len = locCellsUsed.count(); i < len; i++) {
+    for (var i = 0, len = locCellsUsed.size; i < len; i++) {
       var cell = locCellsUsed.objectAtIndex(i);
 
       if (
@@ -408,7 +408,7 @@ export class TableView extends GScrollView {
   }
 
   dequeueCell() {
-    if (this._cellsFreed.count() === 0) {
+    if (this._cellsFreed.size === 0) {
       return null;
     } else {
       var cell = this._cellsFreed.objectAtIndex(0);
@@ -458,24 +458,24 @@ export class TableView extends GScrollView {
 
     var cell,
       locCellsUsed = this._cellsUsed;
-    if (locCellsUsed.count() > 0) {
+    if (locCellsUsed.size > 0) {
       cell = locCellsUsed.objectAtIndex(0);
       idx = cell.getIdx();
       while (idx < startIdx) {
         this._moveCellOutOfSight(cell);
-        if (locCellsUsed.count() > 0) {
+        if (locCellsUsed.size > 0) {
           cell = locCellsUsed.objectAtIndex(0);
           idx = cell.getIdx();
         } else break;
       }
     }
 
-    if (locCellsUsed.count() > 0) {
+    if (locCellsUsed.size > 0) {
       cell = locCellsUsed.lastObject();
       idx = cell.getIdx();
       while (idx <= maxIdx && idx > endIdx) {
         this._moveCellOutOfSight(cell);
-        if (locCellsUsed.count() > 0) {
+        if (locCellsUsed.size > 0) {
           cell = locCellsUsed.lastObject();
           idx = cell.getIdx();
         } else break;

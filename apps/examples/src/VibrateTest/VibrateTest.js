@@ -26,7 +26,7 @@
 
 import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
 import { TestScene } from "../test-scene";
-import { Color, Device, ServiceLocator } from "@aspect/core";
+import { Color, ServiceLocator } from "@aspect/core";
 import { Slider, TextBMFont } from "@aspect/ccui";
 import { ButtonLayout } from "../button-layout";
 import { s_simpleFont_fnt } from "../resources";
@@ -74,7 +74,7 @@ export class VibrateTest extends BaseTestLayer {
     this.addChild(durationSlider);
   }
   startVibrate(sender) {
-    Device.vibrate(this._duration);
+    ServiceLocator.sys.vibrate(this._duration);
   }
   durationSliderEvent(sender, type) {
     switch (type) {

@@ -37,9 +37,9 @@ export class ArrayForObjectSorting extends BaseClass {
     }
 
     removeSortedObject(delObject) {
-        if (this.count() === 0) return;
+        if (this.size === 0) return;
         var idx = this.indexOfSortedObject(delObject);
-        if (idx < this.count() && idx !== INVALID_INDEX) {
+        if (idx < this.size && idx !== INVALID_INDEX) {
             var foundObj = this.objectAtIndex(idx);
             if (foundObj.getObjectID() === delObject.getObjectID()) {
                 this.removeObjectAtIndex(idx);
@@ -49,7 +49,7 @@ export class ArrayForObjectSorting extends BaseClass {
 
     setObjectID_ofSortedObject(tag, setObject) {
         var idx = this.indexOfSortedObject(setObject);
-        if (idx < this.count() && idx !== INVALID_INDEX) {
+        if (idx < this.size && idx !== INVALID_INDEX) {
             var foundObj = this.objectAtIndex(idx);
             if (foundObj.getObjectID() === setObject.getObjectID()) {
                 this.removeObjectAtIndex(idx);
@@ -60,11 +60,11 @@ export class ArrayForObjectSorting extends BaseClass {
     }
 
     objectWithObjectID(tag) {
-        if (this.count() === 0) return null;
+        if (this.size === 0) return null;
         var foundObj = new SortedObject();
         foundObj.setObjectID(tag);
         var idx = this.indexOfSortedObject(foundObj);
-        if (idx < this.count() && idx !== INVALID_INDEX) {
+        if (idx < this.size && idx !== INVALID_INDEX) {
             foundObj = this.objectAtIndex(idx);
             if (foundObj.getObjectID() !== tag)
                 foundObj = null;
@@ -98,7 +98,7 @@ export class ArrayForObjectSorting extends BaseClass {
         return idx;
     }
 
-    count() { return this._saveObjectArr.length; }
+    get size() { return this._saveObjectArr.length; }
 
     lastObject() {
         var locObjectArr = this._saveObjectArr;

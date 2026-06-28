@@ -1,4 +1,4 @@
-import { BrowserType, OperatingSystem, visibleRect, Point, ServiceLocator } from "@aspect/core";
+import { BrowserType, OperatingSystem, Point, ServiceLocator } from "@aspect/core";
 import { EditBoxInputBase } from './edit-box-input-base';
 
 const SCROLLY = 40;
@@ -21,8 +21,8 @@ if (
 
 function adjustEditBoxPosition(editBox) {
     var worldPos = editBox.convertToWorldSpace(new Point(0, 0));
-    var windowHeight = visibleRect.height;
-    var windowWidth = visibleRect.width;
+    var windowHeight = ServiceLocator.eglView.visibleRect.height;
+    var windowWidth = ServiceLocator.eglView.visibleRect.width;
     var factor = windowWidth > windowHeight ? 0.7 : 0.5;
     setTimeout(function () {
         if (window.scrollY < SCROLLY && worldPos.y < windowHeight * factor) {

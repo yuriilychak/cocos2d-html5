@@ -9,7 +9,10 @@ export {
   V3F_C4B_T2F,
   V3F_C4B_T2F_Quad,
   V2F_C4B_T2F,
-  V2F_C4B_T2F_Triangle
+  V2F_C4B_T2F_Triangle,
+  vertexLineIntersect,
+  vertexLineToPolygon,
+  vertexListIsClockwise,
 } from "./vertex";
 export { BlendFunc } from "./blend-func";
 export { FontDefinition } from "./font-definition";

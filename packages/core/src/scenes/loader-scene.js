@@ -27,7 +27,6 @@ import { Scene } from "./scene";
 import { Node } from "../base-nodes/node";
 import { Point } from "../geometry";
 import { Color } from "../platform/types/color";
-import { visibleRect } from "../platform/visible-rect";
 import { contentScaleFactor } from "../platform/macro/utils";
 import { DirectorEvent } from "../enums";
 import { isString } from "../boot/utils";
@@ -88,7 +87,7 @@ export class LoaderScene extends Scene {
         function (err, img) {
           logoWidth = img.width;
           logoHeight = img.height;
-          self._initStage(img, visibleRect.center);
+          self._initStage(img, ServiceLocator.eglView.visibleRect.center);
         }
       );
       fontSize = 14;
@@ -99,7 +98,7 @@ export class LoaderScene extends Scene {
       "Arial",
       fontSize
     ));
-    label.setPosition(Point.add(visibleRect.center, new Point(0, lblHeight)));
+    label.setPosition(Point.add(ServiceLocator.eglView.visibleRect.center, new Point(0, lblHeight)));
     label.color = new Color(180, 180, 180);
     bgLayer.addChild(this._label, 10);
     return true;

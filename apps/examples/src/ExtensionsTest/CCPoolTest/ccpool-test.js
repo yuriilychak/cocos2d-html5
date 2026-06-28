@@ -28,7 +28,7 @@
  ****************************************************************************/
 
 import { MySprite } from "./my-sprite";
-import { Color, Point, visibleRect } from "@aspect/core";
+import { Color, Point, ServiceLocator } from "@aspect/core";
 import { ButtonLayout } from "../../button-layout";
 import { Pool } from "@aspect/ccpool";
 import { BaseTestLayer } from "../../BaseTestLayer/BaseTestLayer";
@@ -64,11 +64,11 @@ export class CCPoolTest extends BaseTestLayer {
     this.directLabel = new TextBMFont("create directly cost:", s_simpleFont_fnt);
     this.poolLabel = new TextBMFont("use pool cost:", s_simpleFont_fnt);
     this.directLabel.setPosition(
-      Point.add(visibleRect.center, new Point(-190, -65))
+      Point.add(ServiceLocator.eglView.visibleRect.center, new Point(-190, -65))
     );
     this.directLabel.anchorY = 0;
     this.poolLabel.setPosition(
-      Point.add(visibleRect.center, new Point(200, -65))
+      Point.add(ServiceLocator.eglView.visibleRect.center, new Point(200, -65))
     );
     this.poolLabel.anchorY = 0;
     this.addChild(this.directLabel);

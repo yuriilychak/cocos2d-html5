@@ -9,3 +9,8 @@ export { default as V3F_C4B_T2F } from "./v3-f-c4-b-t2-f";
 export { default as V3F_C4B_T2F_Quad } from "./v3-f-c4-b-t2-f-quad";
 export { default as V2F_C4B_T2F } from "./v2-f-c4-b-t2-f";
 export { default as V2F_C4B_T2F_Triangle } from "./v2-f-c4-b-t2-f-triangle";
+export {
+  vertexLineIntersect,
+  vertexLineToPolygon,
+  vertexListIsClockwise
+} from "./utils";

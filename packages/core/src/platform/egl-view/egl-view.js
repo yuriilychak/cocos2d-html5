@@ -27,7 +27,7 @@
 import { BaseClass } from "../class";
 import { Point, Rect, Size } from "../../geometry";
 import { contentScaleFactor } from "../macro/utils";
-import { visibleRect } from "../visible-rect";
+import { VisibleRect } from "../visible-rect";
 import { ContainerStrategy } from "./container-strategy";
 import { ContentStrategy } from "./content-strategy";
 import { ResolutionPolicy } from "./resolution-policy";
@@ -117,6 +117,8 @@ var _scissorRect = null;
  * @name EGLView
  */
 export class EGLView extends BaseClass {
+  #visibleRect;
+
   /**
    * Constructor of EGLView
    */
@@ -177,6 +179,7 @@ export class EGLView extends BaseClass {
     this._screen = null;
     this._sys = null;
     this._resizeEvent = this._resizeEvent.bind(this);
+    this.#visibleRect = new VisibleRect();
 
     var _t = this,
       _strategyer = ContainerStrategy,
@@ -494,7 +497,7 @@ export class EGLView extends BaseClass {
     this._contentTranslateLeftTop = { left: 0, top: 0 };
     this._viewName = "Cocos2dHTML5";
 
-    visibleRect && visibleRect.init(this._visibleRect);
+    this.#visibleRect.init(this._visibleRect);
 
     if (this._sys.specification.isMobile) {
       window.addEventListener(
@@ -819,7 +822,11 @@ export class EGLView extends BaseClass {
 
     this._originalScaleX = this._scaleX;
     this._originalScaleY = this._scaleY;
-    visibleRect && visibleRect.init(this._visibleRect);
+    this.#visibleRect.init(this._visibleRect);
+  }
+
+  get visibleRect() {
+    return this.#visibleRect;
   }
 
   /**

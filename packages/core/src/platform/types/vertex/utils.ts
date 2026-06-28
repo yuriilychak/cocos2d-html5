@@ -25,35 +25,37 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Point } from "../geometry";
-import { degreesToRadians } from "../platform/macro/utils";
-import { Vertex2F } from "../platform/types/vertex";
+import { Point } from "../../../geometry";
+import type { PointLike } from "../../../geometry";
+import { degreesToRadians } from "../../../platform/macro/utils";
+import Vertex2F from "./vertex2-f";
+
+type VertexLineIntersectResult = {
+  isSuccess: boolean;
+  value: number;
+};
 
 /**
  * converts a line to a polygon
- * @param {Float32Array} points
- * @param {Number} stroke
- * @param {Float32Array} vertices
- * @param {Number} offset
- * @param {Number} nuPoints
  */
 export function vertexLineToPolygon(
-  points,
-  stroke,
-  vertices,
-  offset,
-  nuPoints
-) {
+  points: Float32Array,
+  stroke: number,
+  vertices: Float32Array,
+  offset: number,
+  nuPoints: number
+): void {
   nuPoints += offset;
   if (nuPoints <= 1) return;
 
   stroke *= 0.5;
-  var idx;
-  var nuPointsMinus = nuPoints - 1;
-  for (var i = offset; i < nuPoints; i++) {
+  let idx: number;
+  const nuPointsMinus = nuPoints - 1;
+  let i;
+  for (i = offset; i < nuPoints; i++) {
     idx = i * 2;
-    var p1 = new Point(points[i * 2], points[i * 2 + 1]);
-    var perpVector;
+    const p1 = new Point(points[i * 2], points[i * 2 + 1]);
+    let perpVector: Point;
 
     if (i === 0)
       perpVector = Point.perp(
@@ -68,14 +70,14 @@ export function vertexLineToPolygon(
         )
       );
     else {
-      var p0 = new Point(points[(i - 1) * 2], points[(i - 1) * 2 + 1]);
-      var p2 = new Point(points[(i + 1) * 2], points[(i + 1) * 2 + 1]);
+      const p0 = new Point(points[(i - 1) * 2], points[(i - 1) * 2 + 1]);
+      const p2 = new Point(points[(i + 1) * 2], points[(i + 1) * 2 + 1]);
 
-      var p2p1 = Point.normalize(Point.sub(p2, p1));
-      var p0p1 = Point.normalize(Point.sub(p0, p1));
+      const p2p1 = Point.normalize(Point.sub(p2, p1));
+      const p0p1 = Point.normalize(Point.sub(p0, p1));
 
       // Calculate angle between vectors
-      var angle = Math.acos(Point.dot(p2p1, p0p1));
+      const angle = Math.acos(Point.dot(p2p1, p0p1));
 
       if (angle < degreesToRadians(70))
         perpVector = Point.perp(Point.normalize(Point.midpoint(p2p1, p0p1)));
@@ -95,21 +97,21 @@ export function vertexLineToPolygon(
   offset = offset === 0 ? 0 : offset - 1;
   for (i = offset; i < nuPointsMinus; i++) {
     idx = i * 2;
-    var idx1 = idx + 2;
+    const idx1 = idx + 2;
 
-    var v1 = new Vertex2F(vertices[idx * 2], vertices[idx * 2 + 1]);
-    var v2 = new Vertex2F(
+    const v1 = new Vertex2F(vertices[idx * 2], vertices[idx * 2 + 1]);
+    const v2 = new Vertex2F(
       vertices[(idx + 1) * 2],
       vertices[(idx + 1) * 2 + 1]
     );
-    var v3 = new Vertex2F(vertices[idx1 * 2], vertices[idx1 * 2]);
-    var v4 = new Vertex2F(
+    const v3 = new Vertex2F(vertices[idx1 * 2], vertices[idx1 * 2]);
+    const v4 = new Vertex2F(
       vertices[(idx1 + 1) * 2],
       vertices[(idx1 + 1) * 2 + 1]
     );
 
     //BOOL fixVertex = !ccpLineIntersect(ccp(p1.x, p1.y), ccp(p4.x, p4.y), ccp(p2.x, p2.y), ccp(p3.x, p3.y), &s, &t);
-    var fixVertexResult = !vertexLineIntersect(
+    const fixVertexResult = vertexLineIntersect(
       v1.x,
       v1.y,
       v4.x,
@@ -134,18 +136,21 @@ export function vertexLineToPolygon(
 
 /**
  * returns whether or not the line intersects
- * @param {Number} Ax
- * @param {Number} Ay
- * @param {Number} Bx
- * @param {Number} By
- * @param {Number} Cx
- * @param {Number} Cy
- * @param {Number} Dx
- * @param {Number} Dy
- * @return {Object}
  */
-export function vertexLineIntersect(Ax, Ay, Bx, By, Cx, Cy, Dx, Dy) {
-  var distAB, theCos, theSin, newX;
+export function vertexLineIntersect(
+  Ax: number,
+  Ay: number,
+  Bx: number,
+  By: number,
+  Cx: number,
+  Cy: number,
+  Dx: number,
+  Dy: number
+): VertexLineIntersectResult {
+  let distAB: number;
+  let theCos: number;
+  let theSin: number;
+  let newX: number;
 
   // FAIL: Line undefined
   if ((Ax === Bx && Ay === By) || (Cx === Dx && Cy === Dy))
@@ -176,7 +181,7 @@ export function vertexLineIntersect(Ax, Ay, Bx, By, Cx, Cy, Dx, Dy) {
   if (Cy === Dy) return { isSuccess: false, value: 0 };
 
   // Discover the relative position of the intersection in the line AB
-  var t = (Dx + ((Cx - Dx) * Dy) / (Dy - Cy)) / distAB;
+  const t = (Dx + ((Cx - Dx) * Dy) / (Dy - Cy)) / distAB;
 
   // Success.
   return { isSuccess: true, value: t };
@@ -184,14 +189,12 @@ export function vertexLineIntersect(Ax, Ay, Bx, By, Cx, Cy, Dx, Dy) {
 
 /**
  * returns wheter or not polygon defined by vertex list is clockwise
- * @param {Array} verts
- * @return {Boolean}
  */
-export function vertexListIsClockwise(verts) {
-  for (var i = 0, len = verts.length; i < len; i++) {
-    var a = verts[i];
-    var b = verts[(i + 1) % len];
-    var c = verts[(i + 2) % len];
+export function vertexListIsClockwise(verts: PointLike[]): boolean {
+  for (let i = 0, len = verts.length; i < len; i++) {
+    const a = verts[i];
+    const b = verts[(i + 1) % len];
+    const c = verts[(i + 2) % len];
 
     if (Point.cross(Point.sub(b, a), Point.sub(c, b)) > 0) return false;
   }

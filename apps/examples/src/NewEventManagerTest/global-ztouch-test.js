@@ -27,7 +27,7 @@
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { createColoredView } from "./touchable-sprite";
-import { Color, EventListener, EventListenerType, Rect, log, visibleRect, ServiceLocator } from "@aspect/core";
+import { Color, EventListener, EventListenerType, Rect, log, ServiceLocator } from "@aspect/core";
 
 export class GlobalZTouchTest extends EventDispatcherTestDemo {
   constructor() {
@@ -84,8 +84,8 @@ export class GlobalZTouchTest extends EventDispatcherTestDemo {
 
       var visibleSize = ServiceLocator.director.getVisibleSize();
       sprite.x =
-        visibleRect.left.x + (visibleSize.width / (SPRITE_COUNT - 1)) * i;
-      sprite.y = visibleRect.center.y;
+        ServiceLocator.eglView.visibleRect.left.x + (visibleSize.width / (SPRITE_COUNT - 1)) * i;
+      sprite.y = ServiceLocator.eglView.visibleRect.center.y;
     }
 
     this.scheduleUpdate();

@@ -9,6 +9,7 @@ export default class SysCapabilities {
     #mouse: boolean = false;
     #keyboard: boolean = false;
     #accelerometer: boolean = false;
+    #vibrate: boolean = false;
     #newBlendModes: boolean = false;
     #offscreenCanvas: boolean = false;
 
@@ -20,6 +21,7 @@ export default class SysCapabilities {
         this.#mouse = !isUndefined(docEle.onmouseup);
         this.#keyboard =!isUndefined(docEle.onkeyup),
         this.#accelerometer = !!win.DeviceMotionEvent || !!win.DeviceOrientationEvent;
+        this.#vibrate = typeof nav.vibrate === "function";
         this.#newBlendModes = SysCapabilities.#detectNewBlendModesSupport(doc);
         this.#offscreenCanvas = !isUndefined(win.OffscreenCanvas);
     }
@@ -48,6 +50,10 @@ export default class SysCapabilities {
         return this.#accelerometer;
     }
 
+    public get vibrate(): boolean {
+        return this.#vibrate;
+    }
+
     public get offscreenCanvas(): boolean {
         return this.#offscreenCanvas;
     }
@@ -64,6 +70,7 @@ export default class SysCapabilities {
             `support Mouse: ${this.#mouse}`,
             `support Keyboard: ${this.#keyboard}`,
             `support Accelerometer: ${this.#accelerometer}`,
+            `support Vibrate: ${this.#vibrate}`,
             `support New blenf modes: ${this.#newBlendModes}`,
             `support Offscreen canvas: ${this.#offscreenCanvas}`,
         ].join(', ')

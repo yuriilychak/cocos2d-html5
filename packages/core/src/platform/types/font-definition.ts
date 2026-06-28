@@ -27,6 +27,7 @@
 import { TextAlignment, VerticalTextAlignment } from "../../enums";
 import { Color } from "./color";
 import { BYTE } from "../../constants";
+import { isNumber, isObject } from "../../boot/utils";
 
 /**
  * Common usage:
@@ -46,42 +47,63 @@ import { BYTE } from "../../constants";
  *
  *
  * @param {Object} properties - (OPTIONAL) Allow inline FontDefinition
- * @constructor
  */
-export var FontDefinition = function (properties) {
-    var _t = this;
-    _t.fontName = "Arial";
-    _t.fontSize = 12;
-    _t.textAlign = TextAlignment.CENTER;
-    _t.verticalAlign = VerticalTextAlignment.TOP;
-    _t.fillStyle = new Color(BYTE, BYTE, BYTE, BYTE);
-    _t.boundingWidth = 0;
-    _t.boundingHeight = 0;
+export class FontDefinition {
+    [key: string]: unknown;
 
-    _t.strokeEnabled = false;
-    _t.strokeStyle = new Color(BYTE, BYTE, BYTE, BYTE);
-    _t.lineWidth = 1;
-    _t.lineHeight = "normal";
-    _t.fontStyle = "normal";
-    _t.fontWeight = "normal";
+    fontName: string;
+    fontSize: number;
+    textAlign: TextAlignment;
+    verticalAlign: VerticalTextAlignment;
+    fillStyle: Color;
+    boundingWidth: number;
+    boundingHeight: number;
 
-    _t.shadowEnabled = false;
-    _t.shadowOffsetX = 0;
-    _t.shadowOffsetY = 0;
-    _t.shadowBlur = 0;
-    _t.shadowOpacity = 1.0;
+    strokeEnabled: boolean;
+    strokeStyle: Color;
+    lineWidth: number;
+    lineHeight: string | number;
+    fontStyle: string;
+    fontWeight: string;
 
-    //properties mapping:
-    if (properties && properties instanceof Object) {
-        for (var key in properties) {
-            _t[key] = properties[key];
+    shadowEnabled: boolean;
+    shadowOffsetX: number;
+    shadowOffsetY: number;
+    shadowBlur: number;
+    shadowOpacity: number;
+
+    constructor(properties?: unknown) {
+        this.fontName = "Arial";
+        this.fontSize = 12;
+        this.textAlign = TextAlignment.CENTER;
+        this.verticalAlign = VerticalTextAlignment.TOP;
+        this.fillStyle = new Color(BYTE, BYTE, BYTE, BYTE);
+        this.boundingWidth = 0;
+        this.boundingHeight = 0;
+
+        this.strokeEnabled = false;
+        this.strokeStyle = new Color(BYTE, BYTE, BYTE, BYTE);
+        this.lineWidth = 1;
+        this.lineHeight = "normal";
+        this.fontStyle = "normal";
+        this.fontWeight = "normal";
+
+        this.shadowEnabled = false;
+        this.shadowOffsetX = 0;
+        this.shadowOffsetY = 0;
+        this.shadowBlur = 0;
+        this.shadowOpacity = 1.0;
+
+        //properties mapping:
+        if (isObject(properties)) {
+            for (const key in properties) {
+                this[key] = properties[key];
+            }
         }
     }
-};
-/**
- * Web ONLY
- * */
-FontDefinition.prototype._getCanvasFontStr = function () {
-    var lineHeight = !this.lineHeight.charAt ? this.lineHeight + "px" : this.lineHeight;
-    return this.fontStyle + " " + this.fontWeight + " " + this.fontSize + "px/" + lineHeight + " '" + this.fontName + "'";
-};
+
+    _getCanvasFontStr(): string {
+        const lineHeight = isNumber(this.lineHeight) ? this.lineHeight + "px" : this.lineHeight;
+        return this.fontStyle + " " + this.fontWeight + " " + this.fontSize + "px/" + lineHeight + " '" + this.fontName + "'";
+    }
+}

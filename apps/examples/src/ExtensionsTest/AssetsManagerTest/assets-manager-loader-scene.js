@@ -35,7 +35,7 @@ import { __failCount, _set__failCount } from "./assets-manager-test-helpers";
 import { AssetsManagerTestScene } from "./assets-manager-test-scene";
 import { TestScene } from "../../test-scene";
 import { s_image_icon } from "../../resources";
-import { Layer, Sprite, log, visibleRect, ServiceLocator } from "@aspect/core";
+import { Layer, Sprite, log, ServiceLocator } from "@aspect/core";
 import { winSize } from "../../constants";
 import { LoadingBar } from "@aspect/ccui";
 
@@ -144,15 +144,15 @@ export class AssetsManagerLoaderScene extends TestScene {
     this._loadingBar = new LoadingBar(
       "ccs-res/cocosui/sliderProgress.png"
     );
-    this._loadingBar.x = visibleRect.center.x;
-    this._loadingBar.y = visibleRect.top.y - 40;
+    this._loadingBar.x = ServiceLocator.eglView.visibleRect.center.x;
+    this._loadingBar.y = ServiceLocator.eglView.visibleRect.top.y - 40;
     layer.addChild(this._loadingBar);
 
     this._fileLoadingBar = new LoadingBar(
       "ccs-res/cocosui/sliderProgress.png"
     );
-    this._fileLoadingBar.x = visibleRect.center.x;
-    this._fileLoadingBar.y = visibleRect.top.y - 80;
+    this._fileLoadingBar.x = ServiceLocator.eglView.visibleRect.center.x;
+    this._fileLoadingBar.y = ServiceLocator.eglView.visibleRect.top.y - 80;
     layer.addChild(this._fileLoadingBar);
 
     this._am = new jsb.AssetsManager(manifestPath, storagePath);

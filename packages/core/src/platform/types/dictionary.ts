@@ -27,78 +27,49 @@
 import { BaseClass } from '../class';
 
 export class _Dictionary extends BaseClass {
+    #map: Map<unknown, unknown>;
+
     constructor() {
         super();
-        this._keyMapTb = {};
-        this._valueMapTb = {};
-        this.__currId = 2 << (0 | (Math.random() * 10));
+        this.#map = new Map();
     }
 
-    __getKey() {
-        this.__currId++;
-        return "key_" + this.__currId;
-    }
-
-    setObject(value, key) {
+    set(value: unknown, key: unknown): void {
         if (key == null)
             return;
 
-        var keyId = this.__getKey();
-        this._keyMapTb[keyId] = key;
-        this._valueMapTb[keyId] = value;
+        this.#map.set(key, value);
     }
 
-    objectForKey(key) {
+    get(key: unknown): unknown | null {
         if (key == null)
             return null;
 
-        var locKeyMapTb = this._keyMapTb;
-        for (var keyId in locKeyMapTb) {
-            if (locKeyMapTb[keyId] === key)
-                return this._valueMapTb[keyId];
-        }
-        return null;
+        return this.#map.has(key) ? this.#map.get(key) : null;
     }
 
-    valueForKey(key) {
-        return this.objectForKey(key);
-    }
-
-    removeObjectForKey(key) {
+    delete(key: unknown | unknown[]): void {
         if (key == null)
             return;
 
-        var locKeyMapTb = this._keyMapTb;
-        for (var keyId in locKeyMapTb) {
-            if (locKeyMapTb[keyId] === key) {
-                delete this._valueMapTb[keyId];
-                delete locKeyMapTb[keyId];
-                return;
-            }
-        }
-    }
-
-    removeObjectsForKeys(keys) {
-        if (keys == null)
+        if (!Array.isArray(key)) {
+            this.#map.delete(key);
             return;
+        }
 
-        for (var i = 0; i < keys.length; i++)
-            this.removeObjectForKey(keys[i]);
+        for (let i = 0; i < key.length; i++)
+            this.delete(key[i]);
     }
 
-    allKeys() {
-        var keyArr = [], locKeyMapTb = this._keyMapTb;
-        for (var key in locKeyMapTb)
-            keyArr.push(locKeyMapTb[key]);
-        return keyArr;
+    clean(): void {
+        this.#map.clear();
     }
 
-    removeAllObjects() {
-        this._keyMapTb = {};
-        this._valueMapTb = {};
+    get keys(): unknown[] {
+        return Array.from(this.#map.keys());
     }
 
-    count() {
-        return this.allKeys().length;
+    get size(): number {
+        return this.#map.size;
     }
 }

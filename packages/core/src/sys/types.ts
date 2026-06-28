@@ -2,6 +2,7 @@ export type WebGLContext = WebGLRenderingContext | WebGL2RenderingContext;
 export type BrowserNavigator = Navigator & {
   browserLanguage?: string;
   msPointerEnabled?: boolean;
+  vibrate?: (pattern: number | number[]) => boolean;
 };
 
 export type BrowserWindow = Window & {

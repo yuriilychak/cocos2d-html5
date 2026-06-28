@@ -27,7 +27,7 @@
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { director } from "../constants";
-import { EventListener, EventListenerType, Sprite, log, visibleRect, ServiceLocator } from "@aspect/core";
+import { EventListener, EventListenerType, Sprite, log, ServiceLocator } from "@aspect/core";
 export class SpriteAccelerationEventTest extends EventDispatcherTestDemo {
   onEnter() {
     //----start5----onEnter
@@ -52,13 +52,13 @@ export class SpriteAccelerationEventTest extends EventDispatcherTestDemo {
 
           target.x = SpriteAccelerationEventTest._fix_pos(
             ptNow.x + accumulator.x * 9.81,
-            visibleRect.left.x + ballSize.width / 2.0,
-            visibleRect.right.x - ballSize.width / 2.0
+            ServiceLocator.eglView.visibleRect.left.x + ballSize.width / 2.0,
+            ServiceLocator.eglView.visibleRect.right.x - ballSize.width / 2.0
           );
           target.y = SpriteAccelerationEventTest._fix_pos(
             ptNow.y + accumulator.y * 9.81,
-            visibleRect.bottom.y + ballSize.height / 2.0,
-            visibleRect.top.y - ballSize.height / 2.0
+            ServiceLocator.eglView.visibleRect.bottom.y + ballSize.height / 2.0,
+            ServiceLocator.eglView.visibleRect.top.y - ballSize.height / 2.0
           );
         }
       },

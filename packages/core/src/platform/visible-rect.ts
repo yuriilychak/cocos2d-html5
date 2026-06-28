@@ -25,10 +25,11 @@
  ****************************************************************************/
 
 import { Point } from "../geometry";
+import type { RectLike } from "../geometry/types";
 
 /**
- * visibleRect is a singleton object which defines the actual visible rect of the current view,
- * it should represent the same rect as view.getViewportRect()
+ * VisibleRect defines the actual visible rect of a view.
+ * It should represent the same rect as view.getViewportRect()
  *
  * @property {Point}     topLeft         - Top left coordinate of the screen related to the game scene
  * @property {Point}     topRight        - Top right coordinate of the screen related to the game scene
@@ -42,59 +43,56 @@ import { Point } from "../geometry";
  * @property {Number}       width           - Width of the screen
  * @property {Number}       height          - Height of the screen
  *
- * @name visibleRect
+ * @name VisibleRect
  */
-export const visibleRect = {
-  topLeft: new Point(0, 0),
-  topRight: new Point(0, 0),
-  top: new Point(0, 0),
-  bottomLeft: new Point(0, 0),
-  bottomRight: new Point(0, 0),
-  bottom: new Point(0, 0),
-  center: new Point(0, 0),
-  left: new Point(0, 0),
-  right: new Point(0, 0),
-  width: 0,
-  height: 0,
+export class VisibleRect {
+  topLeft: Point;
+  topRight: Point;
+  top: Point;
+  bottomLeft: Point;
+  bottomRight: Point;
+  bottom: Point;
+  center: Point;
+  left: Point;
+  right: Point;
+  width: number;
+  height: number;
+
+  constructor() {
+    this.topLeft = new Point();
+    this.topRight = new Point();
+    this.top = new Point();
+    this.bottomLeft = new Point();
+    this.bottomRight = new Point();
+    this.bottom = new Point();
+    this.center = new Point();
+    this.left = new Point();
+    this.right = new Point();
+    this.width = 0;
+    this.height = 0;
+  }
 
   /**
    * initialize
-   * @param {Rect} visibleRect
    */
-  init: function (visibleRect) {
-    var w = (this.width = visibleRect.width);
-    var h = (this.height = visibleRect.height);
-    var l = visibleRect.x,
+  init(visibleRect: RectLike): void {
+    const w = (this.width = visibleRect.width);
+    const h = (this.height = visibleRect.height);
+    const l = visibleRect.x,
       b = visibleRect.y,
       t = b + h,
       r = l + w;
 
-    //top
-    this.topLeft.x = l;
-    this.topLeft.y = t;
-    this.topRight.x = r;
-    this.topRight.y = t;
-    this.top.x = l + w / 2;
-    this.top.y = t;
+    this.topLeft.set(l, t);
+    this.topRight.set(r, t);
+    this.top.set(l + w / 2, t);
 
-    //bottom
-    this.bottomLeft.x = l;
-    this.bottomLeft.y = b;
-    this.bottomRight.x = r;
-    this.bottomRight.y = b;
-    this.bottom.x = l + w / 2;
-    this.bottom.y = b;
+    this.bottomLeft.set(l, b);
+    this.bottomRight.set(r, b);
+    this.bottom.set(l + w / 2, b);
 
-    //center
-    this.center.x = l + w / 2;
-    this.center.y = b + h / 2;
-
-    //left
-    this.left.x = l;
-    this.left.y = b + h / 2;
-
-    //right
-    this.right.x = r;
-    this.right.y = b + h / 2;
+    this.center.set(l + w / 2, b + h / 2);
+    this.left.set(l, b + h / 2);
+    this.right.set(r, b + h / 2);
   }
-};
+}
