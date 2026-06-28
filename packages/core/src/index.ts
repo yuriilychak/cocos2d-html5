@@ -134,17 +134,66 @@ export {
   UniformValueType
 } from "./enums";
 export {
-  rand,
+  ACTION_TAG_INVALID,
+  Acceleration,
+  BATCH_VERTEX_COUNT,
+  BaseClass,
+  BlendFunc,
+  Color,
+  ContainerStrategy,
+  ContentStrategy,
+  CURRENT_ITEM,
+  DISABLE_TAG,
+  DRAWNODE_TOTAL_VERTICES,
+  EGLView,
+  ENABLE_STACKABLE_ACTIONS,
+  FIX_ARTIFACTS_BY_STRECHING_TEXEL,
+  FLT_EPSILON,
+  FLT_MAX,
+  FLT_MIN,
+  FontDefinition,
+  INVALID_INDEX,
+  InputManager,
+  ITEM_SIZE,
+  LABELATLAS_DEBUG_DRAW,
   NextPOT,
-  incrementGLDraws,
+  NORMAL_TAG,
+  OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA,
+  Quad3,
+  randomMinus1To1,
+  rand,
+  REPEAT_FOREVER,
+  ResolutionPolicy,
+  SAXParser,
+  Screen,
+  SELECTED_TAG,
+  UINT_MAX,
+  V3F_C4B_T2F,
+  V3F_C4B_T2F_Quad,
+  Vertex3F,
+  VisibleRect,
+  ZOOM_ACTION_TAG,
+  _txtLoader,
+  arrayRemoveObject,
   arrayVerifyType,
-  contentScaleFactor
-} from "./platform/macro/utils";
+  classManager,
+  contentScaleFactor,
+  degreesToRadians,
+  getImageFormatByData,
+  incrementGLDraws,
+  lerp,
+  plistParser,
+  pointPixelsToPoints,
+  radiansToDegrees,
+  rectPixelsToPoints,
+  rectPointsToPixels,
+  sizePixelsToPoints,
+  vertexLineToPolygon
+} from "./platform";
 export { log, warn } from "./boot/debugger";
 export { RendererConfig } from "./sys/renderer-config";
 export { Director, DisplayLinkDirector } from "./director/director";
 export { Sys } from "./sys";
-export { BaseClass, classManager } from "./platform/class";
 export { Texture2D } from "./textures/texture-2d";
 export {
   PIXEL_FORMAT_RGBA8888,
@@ -201,15 +250,6 @@ export type {
   Vec3Like,
   Vec4Like
 } from "./kazmath";
-export {
-  ACTION_TAG_INVALID,
-  FLT_EPSILON,
-  FLT_MAX
-} from "./platform/macro/constants";
-export {
-  ENABLE_STACKABLE_ACTIONS,
-  DRAWNODE_TOTAL_VERTICES
-} from "./platform/config";
 export { BYTE, FULL_BYTE } from "./constants";
 export { GlobalVertexBuffer } from "./renderer/global-vertex-buffer";
 export { Animation } from "./sprites/animation/animation";
@@ -218,7 +258,7 @@ export { Node } from "./base-nodes/node";
 export { Scene } from "./scenes/scene";
 export { LoaderScene } from "./scenes/loader-scene";
 export { LayerColor } from "./layers/layer-color";
-export { default as EventManager } from "./event-manager/event-manager";
+export * from "./event-manager";
 export {
   CanvasRenderCmd as NodeCanvasRenderCmd,
   CustomRenderCmd
@@ -230,87 +270,30 @@ export { Configuration } from "./sys/configuration";
 export { glUseProgram } from "./shaders/CCGLStateCache";
 export { setProgramForNode } from "./shaders/utils";
 export { KEY } from "./enums";
-export {
-  arrayRemoveObject,
-  pointPixelsToPoints,
-  sizePixelsToPoints,
-  rectPixelsToPoints,
-  lerp,
-  radiansToDegrees,
-  degreesToRadians
-} from "./platform/macro/utils";
 export { LabelTTF } from "./labelttf/label-ttf";
 export { AtlasNode } from "./base-nodes/atlas-node";
 export { SpriteBatchNode } from "./sprites/sprite-batch-node";
-export { default as EventHelper } from "./event-manager/event-helper";
-export {
-  FIX_ARTIFACTS_BY_STRECHING_TEXEL,
-  LABELATLAS_DEBUG_DRAW
-} from "./platform/config";
 export { Layer } from "./layers/layer";
-export { default as EventListener } from "./event-manager/event-listener/event-listener";
 export { isFunction, isString } from "./boot/utils";
-export {
-  ITEM_SIZE,
-  CURRENT_ITEM,
-  ZOOM_ACTION_TAG,
-  NORMAL_TAG,
-  SELECTED_TAG,
-  DISABLE_TAG,
-  UINT_MAX
-} from "./platform/macro/constants";
-export { VisibleRect } from "./platform/visible-rect";
-export { ResolutionPolicy } from "./platform/egl-view/resolution-policy";
-export { ContainerStrategy } from "./platform/egl-view/container-strategy";
-export { ContentStrategy } from "./platform/egl-view/content-strategy";
 export { SpriteFrame } from "./sprites/sprite-frame";
 export { PolygonInfo, Triangles } from "./sprites/polygon-info";
 export { Component, ComponentContainer } from "./components";
 export { assert, error, Path, Loader, isObject, isUndefined } from "./boot";
-export { default as Touch } from "./event-manager/touch";
-export { default as EventFocus } from "./event-manager/event/event-focus";
 export {
   NODE_TAG_INVALID,
   s_globalOrderOfArrival,
   setGlobalOrderOfArrival
 } from "./base-nodes/node";
-export { Screen } from "./platform/screen";
 export { default as SpriteFrameCache } from "./sprites/sprite-frame-cache";
 export { LayerGradient } from "./layers/layer-gradient";
-export { FLT_MIN, BATCH_VERTEX_COUNT } from "./platform/macro/constants";
-export { OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA } from "./platform/config";
-export { INVALID_INDEX, REPEAT_FOREVER } from "./platform/macro/constants";
-export { rectPointsToPixels } from "./platform/macro/utils";
-export { EGLView } from "./platform/egl-view/egl-view";
 export { TextureAtlas } from "./textures/texture-atlas";
-export {
-  V3F_C4B_T2F_Quad,
-  vertexLineToPolygon,
-  FontDefinition,
-  Color,
-  Acceleration,
-  BlendFunc,
-  Vertex3F,
-  Quad3,
-  V3F_C4B_T2F
-} from "./platform/types";
 export { glBlendFuncForParticle } from "./shaders/CCGLStateCache";
-export { randomMinus1To1 } from "./platform/macro/utils";
-export { getImageFormatByData } from "./platform/common";
-export { SAXParser } from "./platform/sax-parser/sax-parser";
-export { _txtLoader } from "./platform/loaders";
-export { default as EventMouse } from "./event-manager/event/event-mouse";
-export { default as EventTouch } from "./event-manager/event/event-touch";
-export { default as EventCustom } from "./event-manager/event/event-custom";
-export { default as EventKeyboard } from "./event-manager/event-extension/event-keyboard";
 export { GLProgram } from "./shaders";
 export { default as AnimationCache } from "./sprites/animation-cache";
-export { InputManager } from "./platform/input-manager";
 export { Scheduler } from "./scheduler";
 export { ActionManager } from "./action-manager";
 export { LayerMultiplex } from "./layers/layer-multiplex";
 export { isArray, isNumber } from "./boot/utils";
-export { plistParser } from "./platform/sax-parser";
 export { DirtyRegion } from "./renderer/dirty-region";
 export { _convertResponseBodyToText } from "./utils/binary-loader";
 export { ServiceLocator } from "./service-locator";

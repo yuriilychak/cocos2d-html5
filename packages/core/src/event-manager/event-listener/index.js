@@ -29,8 +29,8 @@ import _EventListenerMouse from './event-listener-mouse';
 import _EventListenerTouchOneByOne from './event-listener-touch-one-by-one';
 import _EventListenerTouchAllAtOnce from './event-listener-touch-all-at-once';
 import _EventListenerFocus from './event-listener-focus';
-import _EventListenerKeyboard from '../event-extension/event-listener-keyboard';
-import _EventListenerAcceleration from '../event-extension/event-listener-acceleration';
+import _EventListenerKeyboard from './event-listener-keyboard';
+import _EventListenerAcceleration from './event-listener-acceleration';
 import { assert, _LogInfos } from '../../boot/debugger';
 import { EventListenerType } from '../../enums';
 
@@ -90,5 +90,7 @@ export {
     _EventListenerMouse,
     _EventListenerTouchOneByOne,
     _EventListenerTouchAllAtOnce,
-    _EventListenerFocus
+    _EventListenerFocus,
+    _EventListenerKeyboard,
+    _EventListenerAcceleration
 };

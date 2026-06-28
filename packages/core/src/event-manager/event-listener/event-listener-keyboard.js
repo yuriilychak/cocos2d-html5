@@ -23,19 +23,44 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import Event from '../event/event';
-import { EventType } from "../../enums";
+import EventListener from './event-listener';
+import { log, _LogInfos } from '../../boot/debugger';
+import { EventListenerType } from '../../enums';
 
-/**
- * The keyboard event
- */
-export default class EventKeyboard extends Event {
-    _keyCode = 0;
-    _isPressed = false;
+export default class _EventListenerKeyboard extends EventListener {
+    onKeyPressed = null;
+    onKeyReleased = null;
 
-    constructor(keyCode, isPressed) {
-        super(EventType.KEYBOARD);
-        this._keyCode = keyCode;
-        this._isPressed = isPressed;
+    constructor() {
+        var selfPointer;
+        var listener = (event) => {
+            if (event._isPressed) {
+                if (selfPointer.onKeyPressed)
+                    selfPointer.onKeyPressed(event._keyCode, event);
+            } else {
+                if (selfPointer.onKeyReleased)
+                    selfPointer.onKeyReleased(event._keyCode, event);
+            }
+        };
+        super(EventListenerType.KEYBOARD, _EventListenerKeyboard.LISTENER_ID, listener);
+
+        selfPointer = this;
     }
+
+    clone() {
+        var eventListener = new _EventListenerKeyboard();
+        eventListener.onKeyPressed = this.onKeyPressed;
+        eventListener.onKeyReleased = this.onKeyReleased;
+        return eventListener;
+    }
+
+    checkAvailable() {
+        if (this.onKeyPressed === null && this.onKeyReleased === null) {
+            log(_LogInfos._EventListenerKeyboard_checkAvailable);
+            return false;
+        }
+        return true;
+    }
+
+    static LISTENER_ID = "__cc_keyboard";
 }

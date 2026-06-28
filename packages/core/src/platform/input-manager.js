@@ -26,9 +26,7 @@
 import { Point, Rect } from "../geometry";
 import { log, _LogInfos } from "../boot/debugger";
 import Touch from "../event-manager/touch";
-import { EventTouch, EventMouse } from "../event-manager/event/index";
-import { EventAcceleration } from "../event-manager/event-extension/index";
-import EventKeyboard from "../event-manager/event-extension/event-keyboard";
+import { EventTouch, EventMouse, EventAcceleration, EventKeyboard } from "../event-manager/event/index";
 import { Acceleration } from "../platform/types/acceleration";
 import { isFunction } from "../boot/utils";
 import { BrowserType, MouseEvent, TouchEvent } from "../enums";

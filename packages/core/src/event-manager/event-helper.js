@@ -23,6 +23,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { isArray } from '../boot/utils';
+
 /**
  * EventHelper mixin — adds event listener methods to a class.
  * @param {Function} Base - The base class to extend
@@ -86,14 +88,12 @@ const EventHelper = (Base) => class extends Base {
         var listeners = this._listeners;
         var listenerArray = listeners[type];
 
-        if (listenerArray !== undefined) {
-            for (var i = 0; i < listenerArray.length;) {
-                var selListener = listenerArray[i];
-                if (selListener.eventTarget === target)
-                    listenerArray.splice(i, 1);
-                else
-                    i++;
-            }
+        if (isArray(listenerArray)) {
+          for (var i = 0; i < listenerArray.length; ) {
+            var selListener = listenerArray[i];
+            if (selListener.eventTarget === target) listenerArray.splice(i, 1);
+            else i++;
+          }
         }
     }
 
@@ -101,25 +101,21 @@ const EventHelper = (Base) => class extends Base {
         if (this._listeners === undefined)
             return;
 
-        if (clearAfterDispatch == null)
+        if (clearAfterDispatch == null) {
             clearAfterDispatch = true;
-        var listeners = this._listeners;
-        var listenerArray = listeners[event];
+        }
+        var listenerArray = this._listeners[event];
 
-        if (listenerArray !== undefined) {
-            var array = [];
-            var length = listenerArray.length;
+        if (isArray(listenerArray)) {
+            const array = listenerArray.slice();
 
-            for (var i = 0; i < length; i++) {
-                array[i] = listenerArray[i];
+            for (i = 0; i < array.length; ++i) {
+              array[i].callback.call(array[i].eventTarget, this);
             }
 
-            for (i = 0; i < length; i++) {
-                array[i].callback.call(array[i].eventTarget, this);
-            }
-
-            if (clearAfterDispatch)
+            if (clearAfterDispatch) {
                 listenerArray.length = 0;
+            }
         }
     }
 };

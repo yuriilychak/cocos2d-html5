@@ -35,12 +35,10 @@ import {
   _EventListenerMouse,
   _EventListenerTouchOneByOne,
   _EventListenerTouchAllAtOnce,
-  _EventListenerFocus
-} from "./event-listener";
-import {
+  _EventListenerFocus,
   _EventListenerAcceleration,
   _EventListenerKeyboard
-} from "./event-extension";
+} from "./event-listener";
 import { log, assert, _LogInfos } from "../boot/debugger";
 
 /**
@@ -94,19 +92,25 @@ export class _EventListenerVector extends BaseClass {
 }
 
 function __getListenerID(event) {
-  var getType = event.getType();
-  if (getType === EventType.ACCELERATION)
-    return _EventListenerAcceleration.LISTENER_ID;
-  if (getType === EventType.CUSTOM) return event.eventName;
-  if (getType === EventType.KEYBOARD) return _EventListenerKeyboard.LISTENER_ID;
-  if (getType === EventType.MOUSE) return _EventListenerMouse.LISTENER_ID;
-  if (getType === EventType.FOCUS) return _EventListenerFocus.LISTENER_ID;
-  if (getType === EventType.TOUCH) {
-    // Touch listener is very special, it contains two kinds of listeners, EventListenerTouchOneByOne and EventListenerTouchAllAtOnce.
-    // return UNKNOWN instead.
-    log(_LogInfos.__getListenerID);
+  switch (event.getType()) {
+    case EventType.ACCELERATION:
+      return _EventListenerAcceleration.LISTENER_ID;
+    case EventType.CUSTOM:
+      return event.eventName;
+    case EventType.KEYBOARD:
+      return _EventListenerKeyboard.LISTENER_ID;
+    case EventType.MOUSE:
+      return _EventListenerMouse.LISTENER_ID;
+    case EventType.FOCUS:
+      return _EventListenerFocus.LISTENER_ID;
+    case EventType.TOUCH:
+      // Touch listener is very special, it contains two kinds of listeners, EventListenerTouchOneByOne and EventListenerTouchAllAtOnce.
+      // return UNKNOWN instead.
+      log(_LogInfos.__getListenerID);
+      return "";
+    default:
+      return "";
   }
-  return "";
 }
 
 /**

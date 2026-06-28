@@ -23,43 +23,35 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import EventListener from '../event-listener/event-listener';
-import { log, _LogInfos } from '../../boot/debugger';
+import EventListener from './event-listener';
+import { assert, _LogInfos } from '../../boot/debugger';
 import { EventListenerType } from '../../enums';
 
-export default class _EventListenerKeyboard extends EventListener {
-    constructor() {
-        var selfPointer;
+export default class _EventListenerAcceleration extends EventListener {
+    _onAccelerationEvent = null;
+
+    constructor(callback) {
+        let self;
         var listener = (event) => {
-            if (event._isPressed) {
-                if (selfPointer.onKeyPressed)
-                    selfPointer.onKeyPressed(event._keyCode, event);
-            } else {
-                if (selfPointer.onKeyReleased)
-                    selfPointer.onKeyReleased(event._keyCode, event);
-            }
+            self._onAccelerationEvent(event._acc, event);
         };
-        super(EventListenerType.KEYBOARD, _EventListenerKeyboard.LISTENER_ID, listener);
-        this.onKeyPressed = null;
-        this.onKeyReleased = null;
+        super(EventListenerType.ACCELERATION, _EventListenerAcceleration.LISTENER_ID, listener);
 
-        selfPointer = this;
-    }
 
-    clone() {
-        var eventListener = new _EventListenerKeyboard();
-        eventListener.onKeyPressed = this.onKeyPressed;
-        eventListener.onKeyReleased = this.onKeyReleased;
-        return eventListener;
+        this._onAccelerationEvent = callback;
+        self = this;
     }
 
     checkAvailable() {
-        if (this.onKeyPressed === null && this.onKeyReleased === null) {
-            log(_LogInfos._EventListenerKeyboard_checkAvailable);
-            return false;
-        }
+
+        assert(this._onAccelerationEvent, _LogInfos._EventListenerAcceleration_checkAvailable);
+
         return true;
     }
 
-    static LISTENER_ID = "__cc_keyboard";
+    clone() {
+        return new _EventListenerAcceleration(this._onAccelerationEvent);
+    }
+
+    static LISTENER_ID = "__cc_acceleration";
 }

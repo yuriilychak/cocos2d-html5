@@ -23,35 +23,19 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import EventListener from '../event-listener/event-listener';
-import { assert, _LogInfos } from '../../boot/debugger';
-import { EventListenerType } from '../../enums';
+import Event from './event';
+import { EventType } from "../../enums";
 
-export default class _EventListenerAcceleration extends EventListener {
-    _onAccelerationEvent = null;
+/**
+ * The keyboard event
+ */
+export default class EventKeyboard extends Event {
+    _keyCode: number = 0;
+    _isPressed: boolean = false;
 
-    constructor(callback) {
-        let self;
-        var listener = (event) => {
-            self._onAccelerationEvent(event._acc, event);
-        };
-        super(EventListenerType.ACCELERATION, _EventListenerAcceleration.LISTENER_ID, listener);
-
-
-        this._onAccelerationEvent = callback;
-        self = this;
+    constructor(keyCode: number, isPressed: boolean) {
+        super(EventType.KEYBOARD);
+        this._keyCode = keyCode;
+        this._isPressed = isPressed;
     }
-
-    checkAvailable() {
-
-        assert(this._onAccelerationEvent, _LogInfos._EventListenerAcceleration_checkAvailable);
-
-        return true;
-    }
-
-    clone() {
-        return new _EventListenerAcceleration(this._onAccelerationEvent);
-    }
-
-    static LISTENER_ID = "__cc_acceleration";
 }

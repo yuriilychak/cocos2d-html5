@@ -42,6 +42,7 @@ export default class EventListener extends BaseClass {
   _node = null;
   _paused = true;
   _isEnabled = true;
+  #availbale = false;
 
   /**
    * Initializes event with type and callback function
@@ -49,11 +50,17 @@ export default class EventListener extends BaseClass {
    * @param {string} listenerID
    * @param {function} callback
    */
-  constructor(type = '', listenerID = '', callback = null) {
+  constructor(type = "", listenerID = "", callback = null) {
     super();
     this._onEvent = callback;
     this._type = type;
     this._listenerID = listenerID;
+  }
+
+  dispatch(event) {
+    if (this._onEvent) {
+      this._onEvent(event);
+    }
   }
 
   /**

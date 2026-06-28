@@ -23,16 +23,17 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import Event from '../event/event';
+import Event from './event';
 import { EventType } from "../../enums";
+import type { Acceleration } from "../../platform/types/acceleration";
 
 /**
  * The acceleration event
  */
 export default class EventAcceleration extends Event {
-    _acc = null;
+    _acc: Acceleration;
 
-    constructor(acc) {
+    constructor(acc: Acceleration) {
         super(EventType.ACCELERATION);
         this._acc = acc;
     }
