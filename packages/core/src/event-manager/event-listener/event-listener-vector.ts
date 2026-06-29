@@ -24,6 +24,7 @@
  ****************************************************************************/
 
 import { BaseClass } from "../../platform/class";
+import { arrayRemoveObject } from "../../platform/macro/utils";
 import EventListener from "./event-listener";
 
 /**
@@ -50,7 +51,9 @@ export default class _EventListenerVector extends BaseClass {
     if (this.#fixedListeners.length === 0) return;
 
     // After sort: priority < 0, > 0
-    this.#fixedListeners.sort(_EventListenerVector.#sortListenersOfFixedPriorityAsc);
+    this.#fixedListeners.sort(
+      _EventListenerVector.#sortListenersOfFixedPriorityAsc
+    );
 
     // FIXME: Should use binary search
     let index = 0;
@@ -59,6 +62,111 @@ export default class _EventListenerVector extends BaseClass {
       ++index;
     }
     this.#firstNaturalFixedPriorityIndex = index;
+  }
+
+  public updateListeners(toRemovedListeners: EventListener[]): void {
+    this.#removeUnregisteredListeners(
+      this.#sceneGraphListeners,
+      toRemovedListeners
+    );
+    this.#removeUnregisteredListeners(this.#fixedListeners, toRemovedListeners);
+
+    if (this.#sceneGraphListeners.length === 0) {
+      this.clearSceneGraphListeners();
+    }
+
+    if (this.#fixedListeners.length === 0) {
+      this.clearFixedListeners();
+    }
+  }
+
+  public removeListener(listener: EventListener): void {
+    arrayRemoveObject(this.#sceneGraphListeners, listener);
+    arrayRemoveObject(this.#fixedListeners, listener);
+  }
+
+  public dispatchEvent(
+    onEvent: (listener: EventListener, eventOrArgs: unknown) => boolean,
+    eventOrArgs: unknown
+  ): void {
+    let shouldStopPropagation = false;
+    let i = 0;
+
+    if (this.#fixedListeners.length !== 0) {
+      // priority < 0
+      for (; i < this.#firstNaturalFixedPriorityIndex; ++i) {
+        if (
+          this.#dispatchEventToListener(
+            this.#fixedListeners[i],
+            onEvent,
+            eventOrArgs
+          )
+        ) {
+          shouldStopPropagation = true;
+          break;
+        }
+      }
+    }
+
+    if (this.#sceneGraphListeners.length !== 0 && !shouldStopPropagation) {
+      // priority == 0, scene graph priority
+      for (let j = 0; j < this.#sceneGraphListeners.length; j++) {
+        if (
+          this.#dispatchEventToListener(
+            this.#sceneGraphListeners[j],
+            onEvent,
+            eventOrArgs
+          )
+        ) {
+          shouldStopPropagation = true;
+          break;
+        }
+      }
+    }
+
+    if (this.#fixedListeners.length !== 0 && !shouldStopPropagation) {
+      // priority > 0
+      for (; i < this.#fixedListeners.length; ++i) {
+        if (
+          this.#dispatchEventToListener(
+            this.#fixedListeners[i],
+            onEvent,
+            eventOrArgs
+          )
+        ) {
+          break;
+        }
+      }
+    }
+  }
+
+  #dispatchEventToListener(
+    listener: EventListener,
+    onEvent: (listener: EventListener, eventOrArgs: unknown) => boolean,
+    eventOrArgs: unknown
+  ): boolean {
+    return (
+      listener.enabled &&
+      !listener.paused &&
+      listener.registered &&
+      onEvent(listener, eventOrArgs)
+    );
+  }
+
+  #removeUnregisteredListeners(
+    listeners: EventListener[],
+    toRemovedListeners: EventListener[]
+  ): void {
+    for (let i = 0; i < listeners.length; ) {
+      const listener = listeners[i];
+      if (!listener.registered) {
+        arrayRemoveObject(listeners, listener);
+        const idx = toRemovedListeners.indexOf(listener);
+        if (idx !== -1) toRemovedListeners.splice(idx, 1);
+      } else {
+        ++i;
+      }
+    }
   }
 
   clearSceneGraphListeners(): void {
