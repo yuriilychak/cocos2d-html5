@@ -100,7 +100,7 @@ export class TouchAllAtOnce extends EventTest {
   }
 
   onTouchesBegan(touches, event) {
-    var target = event.getCurrentTarget();
+    var target = event.currentTarget;
     for (var i = 0; i < touches.length; i++) {
       var touch = touches[i];
       var id = touch.id;
@@ -118,7 +118,7 @@ export class TouchAllAtOnce extends EventTest {
     }
   }
   onTouchesMoved(touches, event) {
-    var target = event.getCurrentTarget();
+    var target = event.currentTarget;
     for (var i = 0; i < touches.length; i++) {
       var touch = touches[i];
       var id = touch.id;
@@ -146,7 +146,7 @@ export class TouchAllAtOnce extends EventTest {
     }
   }
   onTouchesEnded(touches, event) {
-    var target = event.getCurrentTarget();
+    var target = event.currentTarget;
     for (var i = 0; i < touches.length; i++) {
       var touch = touches[i];
       var id = touch.id;
@@ -164,7 +164,7 @@ export class TouchAllAtOnce extends EventTest {
     }
   }
   onTouchesCancelled(touches, event) {
-    var target = event.getCurrentTarget();
+    var target = event.currentTarget;
     for (var i = 0; i < touches.length; i++) {
       var touch = touches[i];
       var id = touch.id;

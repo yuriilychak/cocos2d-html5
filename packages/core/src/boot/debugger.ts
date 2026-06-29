@@ -65,10 +65,10 @@ export const _LogInfos = {
     AtlasNode_initWithTileFile: "",
     AtlasNode__initWithTexture: "cocos2d: Could not initialize AtlasNode. Invalid Texture.",
 
-    _EventListenerKeyboard_checkAvailable: "_EventListenerKeyboard.checkAvailable(): Invalid EventListenerKeyboard!",
-    _EventListenerTouchOneByOne_checkAvailable: "_EventListenerTouchOneByOne.checkAvailable(): Invalid EventListenerTouchOneByOne!",
-    _EventListenerTouchAllAtOnce_checkAvailable: "_EventListenerTouchAllAtOnce.checkAvailable(): Invalid EventListenerTouchAllAtOnce!",
-    _EventListenerAcceleration_checkAvailable: "_EventListenerAcceleration.checkAvailable(): _onAccelerationEvent must be non-nil",
+    _EventListenerKeyboard_available: "_EventListenerKeyboard.available: Invalid EventListenerKeyboard!",
+    _EventListenerTouchOneByOne_available: "_EventListenerTouchOneByOne.available: Invalid EventListenerTouchOneByOne!",
+    _EventListenerTouchAllAtOnce_available: "_EventListenerTouchAllAtOnce.available: Invalid EventListenerTouchAllAtOnce!",
+    _EventListenerAcceleration_available: "_EventListenerAcceleration.available: #onAccelerationEvent must be non-nil",
 
     EventListener_create: "Invalid parameter.",
 

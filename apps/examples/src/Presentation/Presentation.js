@@ -347,13 +347,13 @@ export class ParticlesPage extends PresentationBaseLayer {
         {
           event: EventListenerType.TOUCH_ALL_AT_ONCE,
           onTouchesMoved: function (touches, event) {
-            var particle = event.getCurrentTarget().particle;
+            var particle = event.currentTarget.particle;
             var pos = touches[0];
             particle.x = pos.x;
             particle.y = pos.y;
           },
           onTouchesEnded: function (touches, event) {
-            var particle = event.getCurrentTarget().particle;
+            var particle = event.currentTarget.particle;
             var pos = touches[0];
             particle.x = pos.x;
             particle.y = pos.y;
@@ -366,12 +366,12 @@ export class ParticlesPage extends PresentationBaseLayer {
         {
           event: EventListenerType.MOUSE,
           onMouseMove: function (event) {
-            var particle = event.getCurrentTarget().particle;
+            var particle = event.currentTarget.particle;
             particle.x = event.getLocationX();
             particle.y = event.getLocationY();
           },
           onMouseUp: function (event) {
-            var particle = event.getCurrentTarget().particle;
+            var particle = event.currentTarget.particle;
             particle.x = event.getLocationX();
             particle.y = event.getLocationY();
           }

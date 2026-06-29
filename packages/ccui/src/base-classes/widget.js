@@ -210,6 +210,16 @@ export class Widget extends ProtectedNode {
     this.setTouchEnabled(v);
   }
 
+  get swallowTouches() {
+    if (this._touchListener) {
+      return this._touchListener.swallowTouches;
+    }
+    return false;
+  }
+  set swallowTouches(v) {
+    if (this._touchListener) this._touchListener.swallowTouches = v;
+  }
+
   get updateEnabled() {
     return this.isUpdateEnabled();
   }
@@ -246,7 +256,7 @@ export class Widget extends ProtectedNode {
 
   onEnter() {
     var locListener = this._touchListener;
-    if (locListener && !locListener._isRegistered() && this._touchEnabled)
+    if (locListener && !locListener.registered && this._touchEnabled)
       ServiceLocator.eventManager.addListener(locListener, this);
     if (!this._usingLayoutComponent) this.updateSizeAndPosition();
     if (this._sizeDirty) this._onSizeChanged();
@@ -295,14 +305,11 @@ export class Widget extends ProtectedNode {
   }
 
   setSwallowTouches(swallow) {
-    if (this._touchListener) this._touchListener.setSwallowTouches(swallow);
+    this.swallowTouches = swallow;
   }
 
   isSwallowTouches() {
-    if (this._touchListener) {
-      return this._touchListener.isSwallowTouches();
-    }
-    return false;
+    return this.swallowTouches;
   }
   _getAncensterWidget(node) {
     if (null == node) return null;

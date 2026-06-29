@@ -28,7 +28,15 @@
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { createColoredView } from "./touchable-sprite";
 import { director } from "../constants";
-import { Color, EventListener, EventListenerType, Node, Rect, log, ServiceLocator } from "@aspect/core";
+import {
+  Color,
+  EventListener,
+  EventListenerType,
+  Node,
+  Rect,
+  log,
+  ServiceLocator
+} from "@aspect/core";
 import { ButtonLayout } from "../button-layout";
 
 export class TouchableSpriteTest extends EventDispatcherTestDemo {
@@ -61,7 +69,7 @@ export class TouchableSpriteTest extends EventDispatcherTestDemo {
       event: EventListenerType.TOUCH_ONE_BY_ONE,
       swallowTouches: true,
       onTouchBegan: function (touch, event) {
-        var target = event.getCurrentTarget();
+        var target = event.currentTarget;
 
         var locationInNode = target.convertToNodeSpace(touch);
         var s = target.getContentSize();
@@ -80,13 +88,13 @@ export class TouchableSpriteTest extends EventDispatcherTestDemo {
         return false;
       },
       onTouchMoved: function (touch, event) {
-        var target = event.getCurrentTarget();
-        var delta = touch.getDelta();
+        var target = event.currentTarget;
+        var delta = touch.delta;
         target.x += delta.x;
         target.y += delta.y;
       },
       onTouchEnded: function (touch, event) {
-        var target = event.getCurrentTarget();
+        var target = event.currentTarget;
         log("sprite onTouchesEnded.. ");
         target.opacity = 255;
         if (target == sprite2) {
@@ -103,8 +111,16 @@ export class TouchableSpriteTest extends EventDispatcherTestDemo {
 
     const layout = new ButtonLayout(
       [
-        { label: "Remove All Touch Listeners", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
-        { label: "Next", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) }
+        {
+          label: "Remove All Touch Listeners",
+          tintDefault: new Color(0x44, 0x55, 0x77),
+          tintPressed: new Color(0x22, 0x33, 0x55)
+        },
+        {
+          label: "Next",
+          tintDefault: new Color(0x44, 0x55, 0x77),
+          tintPressed: new Color(0x22, 0x33, 0x55)
+        }
       ],
       196,
       "Actions",
@@ -112,7 +128,9 @@ export class TouchableSpriteTest extends EventDispatcherTestDemo {
         switch (i) {
           case 0:
             layout.setLabelText(0, "Only Next item could be clicked");
-            ServiceLocator.eventManager.removeListeners(EventListenerType.TOUCH_ONE_BY_ONE);
+            ServiceLocator.eventManager.removeListeners(
+              EventListenerType.TOUCH_ONE_BY_ONE
+            );
             layout.showButton(1);
             break;
           case 1:

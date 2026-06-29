@@ -72,7 +72,7 @@ export class Paddle extends Sprite {
     }
 
     onTouchBegan(touch, event) {
-        var target = event.getCurrentTarget();
+        var target = event.currentTarget;
         if (target._state != PADDLE_STATE_UNGRABBED) return false;
         if (!target.containsTouchLocation(touch)) return false;
 
@@ -80,7 +80,7 @@ export class Paddle extends Sprite {
         return true;
     }
     onTouchMoved(touch, event) {
-        var target = event.getCurrentTarget();
+        var target = event.currentTarget;
         // If it weren't for the TouchDispatcher, you would need to keep a reference
         // to the touch from touchBegan and check that the current touch is the same
         // as that one.
@@ -94,7 +94,7 @@ export class Paddle extends Sprite {
         target.x = touch.x;
     }
     onTouchEnded(touch, event) {
-        var target = event.getCurrentTarget();
+        var target = event.currentTarget;
         assert(target._state == PADDLE_STATE_GRABBED, "Paddle - Unexpected state!");
         target._state = PADDLE_STATE_UNGRABBED;
     }

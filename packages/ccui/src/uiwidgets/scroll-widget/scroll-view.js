@@ -1414,7 +1414,7 @@ export class ScrollView extends Layout {
       case Widget.TOUCH_ENDED:
         this._touchEndPosition.set(touch);
         this._handleReleaseLogic(touch);
-        if (sender.isSwallowTouches()) this._isInterceptTouch = false;
+        if (sender.swallowTouches) this._isInterceptTouch = false;
         break;
     }
   }

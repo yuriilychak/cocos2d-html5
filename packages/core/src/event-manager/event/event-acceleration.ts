@@ -25,16 +25,20 @@
 
 import Event from './event';
 import { EventType } from "../../enums";
-import type { Acceleration } from "../../platform/types/acceleration";
+import type { Acceleration } from "../../platform";
 
 /**
  * The acceleration event
  */
 export default class EventAcceleration extends Event {
-    _acc: Acceleration;
+    #value: Acceleration;
 
     constructor(acc: Acceleration) {
         super(EventType.ACCELERATION);
-        this._acc = acc;
+        this.#value = acc;
+    }
+
+    get value(): Acceleration {
+        return this.#value;
     }
 }

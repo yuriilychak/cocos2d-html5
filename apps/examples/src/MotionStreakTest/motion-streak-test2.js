@@ -48,7 +48,7 @@ export class MotionStreakTest2 extends MotionStreakTest {
           if (touches.length == 0) return;
 
           var touch = touches[0];
-          var streak = event.getCurrentTarget()._streak;
+          var streak = event.currentTarget._streak;
           streak.x = touch.x;
           streak.y = touch.y;
         }

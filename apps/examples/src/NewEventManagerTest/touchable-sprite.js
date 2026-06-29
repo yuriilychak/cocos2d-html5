@@ -25,7 +25,13 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Color, EventListener, EventListenerType, Rect, ServiceLocator } from "@aspect/core";
+import {
+  Color,
+  EventListener,
+  EventListenerType,
+  Rect,
+  ServiceLocator
+} from "@aspect/core";
 import { ImageView, Widget } from "@aspect/ccui";
 
 const SQUARE_SIZE = 80;
@@ -33,86 +39,84 @@ const SQUARE_TEXTURE = "default_theme/rounded_shadow_2.png";
 const SQUARE_CAP = new Rect(12, 12, 12, 12);
 
 export function createColoredView(color, size) {
-    size = size || SQUARE_SIZE;
-    const iv = new ImageView();
-    iv.setScale9Enabled(true);
-    iv.ignoreContentAdaptWithSize(false);
-    iv.loadTexture(SQUARE_TEXTURE, Widget.PLIST_TEXTURE);
-    iv.setCapInsets(SQUARE_CAP);
-    iv.setContentSize(size, size);
-    iv.color = color;
-    return iv;
+  size = size || SQUARE_SIZE;
+  const iv = new ImageView();
+  iv.setScale9Enabled(true);
+  iv.ignoreContentAdaptWithSize(false);
+  iv.loadTexture(SQUARE_TEXTURE, Widget.PLIST_TEXTURE);
+  iv.setCapInsets(SQUARE_CAP);
+  iv.setContentSize(size, size);
+  iv.color = color;
+  return iv;
 }
 
 export class TouchableSprite extends ImageView {
+  constructor(priority) {
+    super();
 
-    constructor(priority){
-        super();
+    this._listener = null;
+    this._fixedPriority = 0;
+    this._removeListenerOnTouchEnded = false;
+    this._fixedPriority = priority || 0;
 
-        this._listener = null;
-        this._fixedPriority = 0;
-        this._removeListenerOnTouchEnded = false;
-        this._fixedPriority = priority || 0;
+    this.setScale9Enabled(true);
+    this.ignoreContentAdaptWithSize(false);
+    this.loadTexture(SQUARE_TEXTURE, Widget.PLIST_TEXTURE);
+    this.setCapInsets(SQUARE_CAP);
+    this.setContentSize(SQUARE_SIZE, SQUARE_SIZE);
+  }
 
-        this.setScale9Enabled(true);
-        this.ignoreContentAdaptWithSize(false);
-        this.loadTexture(SQUARE_TEXTURE, Widget.PLIST_TEXTURE);
-        this.setCapInsets(SQUARE_CAP);
-        this.setContentSize(SQUARE_SIZE, SQUARE_SIZE);
-    }
+  setPriority(fixedPriority) {
+    this._fixedPriority = fixedPriority;
+  }
 
-    setPriority(fixedPriority){
-        this._fixedPriority = fixedPriority;
-    }
+  onEnter() {
+    super.onEnter();
 
-    onEnter(){
-        super.onEnter();
+    var selfPointer = this;
+    var listener = EventListener.create({
+      event: EventListenerType.TOUCH_ONE_BY_ONE,
+      swallowTouches: true,
+      onTouchBegan: function (touch, event) {
+        var locationInNode = selfPointer.convertToNodeSpace(touch);
+        var s = selfPointer.getContentSize();
+        var rect = new Rect(0, 0, s.width, s.height);
 
-        var selfPointer = this;
-        var listener = EventListener.create({
-            event: EventListenerType.TOUCH_ONE_BY_ONE,
-            swallowTouches: true,
-            onTouchBegan: function (touch, event) {
-                var locationInNode = selfPointer.convertToNodeSpace(touch);
-                var s = selfPointer.getContentSize();
-                var rect = new Rect(0, 0, s.width, s.height);
+        if (Rect.containsPoint(rect, locationInNode)) {
+          selfPointer.opacity = 128;
+          return true;
+        }
+        return false;
+      },
+      onTouchMoved: function (touch, event) {
+        //this.setPosition(this.getPosition() + touch.delta);
+      },
+      onTouchEnded: function (touch, event) {
+        selfPointer.opacity = 255;
+        if (selfPointer._removeListenerOnTouchEnded) {
+          ServiceLocator.eventManager.removeListener(selfPointer._listener);
+          selfPointer._listener = null;
+        }
+      }
+    });
 
-                if (Rect.containsPoint(rect, locationInNode)) {
-                    selfPointer.opacity = 128;
-                    return true;
-                }
-                return false;
-            },
-            onTouchMoved: function (touch, event) {
-                //this.setPosition(this.getPosition() + touch.getDelta());
-            },
-            onTouchEnded: function (touch, event) {
-                selfPointer.opacity = 255;
-                if(selfPointer._removeListenerOnTouchEnded) {
-                    ServiceLocator.eventManager.removeListener(selfPointer._listener);
-                    selfPointer._listener = null;
-                }
-            }
-        });
+    if (this._fixedPriority != 0)
+      ServiceLocator.eventManager.addListener(listener, this._fixedPriority);
+    else ServiceLocator.eventManager.addListener(listener, this);
+    this._listener = listener;
+  }
 
-        if(this._fixedPriority != 0)
-            ServiceLocator.eventManager.addListener(listener, this._fixedPriority);
-        else
-            ServiceLocator.eventManager.addListener(listener, this);
-        this._listener = listener;
-    }
+  onExit() {
+    this._listener &&
+      ServiceLocator.eventManager.removeListener(this._listener);
+    super.onExit();
+  }
 
-    onExit(){
-        this._listener && ServiceLocator.eventManager.removeListener(this._listener);
-        super.onExit();
-    }
+  removeListenerOnTouchEnded(toRemove) {
+    this._removeListenerOnTouchEnded = toRemove;
+  }
 
-    removeListenerOnTouchEnded(toRemove){
-        this._removeListenerOnTouchEnded = toRemove;
-    }
-
-    getListener() {
-        return this._listener;
-    }
-
+  getListener() {
+    return this._listener;
+  }
 }

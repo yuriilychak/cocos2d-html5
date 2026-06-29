@@ -28,7 +28,14 @@
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { createColoredView } from "./touchable-sprite";
 import { director } from "../constants";
-import { Color, EventListener, EventListenerType, Rect, log, ServiceLocator } from "@aspect/core";
+import {
+  Color,
+  EventListener,
+  EventListenerType,
+  Rect,
+  log,
+  ServiceLocator
+} from "@aspect/core";
 import { CallFunc, DelayTime, Sequence } from "@aspect/actions";
 
 export class RemoveAndRetainNodeTest extends EventDispatcherTestDemo {
@@ -57,7 +64,7 @@ export class RemoveAndRetainNodeTest extends EventDispatcherTestDemo {
       event: EventListenerType.TOUCH_ONE_BY_ONE,
       swallowTouches: true,
       onTouchBegan: function (touch, event) {
-        var target = event.getCurrentTarget();
+        var target = event.currentTarget;
 
         var locationInNode = target.convertToNodeSpace(touch);
         var s = target.getContentSize();
@@ -76,13 +83,13 @@ export class RemoveAndRetainNodeTest extends EventDispatcherTestDemo {
         return false;
       },
       onTouchMoved: function (touch, event) {
-        var target = event.getCurrentTarget();
-        var delta = touch.getDelta();
+        var target = event.currentTarget;
+        var delta = touch.delta;
         target.x += delta.x;
         target.y += delta.y;
       },
       onTouchEnded: function (touch, event) {
-        var target = event.getCurrentTarget();
+        var target = event.currentTarget;
         log("sprite onTouchesEnded.. ");
         target.opacity = 255;
       }

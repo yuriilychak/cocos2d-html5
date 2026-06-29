@@ -89,7 +89,7 @@ export class ScrollViewDemo extends BaseClippingNodeTest {
         event: EventListenerType.TOUCH_ALL_AT_ONCE,
         onTouchesBegan: function (touches, event) {
           if (!touches || touches.length == 0) return;
-          var target = event.getCurrentTarget();
+          var target = event.currentTarget;
 
           var touch = touches[0];
           var clipper = target.getChildByTag(TAG_CLIPPERNODE);
@@ -100,7 +100,7 @@ export class ScrollViewDemo extends BaseClippingNodeTest {
         },
 
         onTouchesMoved: function (touches, event) {
-          var target = event.getCurrentTarget();
+          var target = event.currentTarget;
           if (!target._scrolling) return;
 
           if (!touches || touches.length == 0) return;
@@ -114,7 +114,7 @@ export class ScrollViewDemo extends BaseClippingNodeTest {
         },
 
         onTouchesEnded: function (touches, event) {
-          var target = event.getCurrentTarget();
+          var target = event.currentTarget;
           if (!target._scrolling) return;
           target._scrolling = false;
         }

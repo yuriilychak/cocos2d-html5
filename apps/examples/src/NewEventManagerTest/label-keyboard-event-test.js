@@ -50,7 +50,7 @@ export class LabelKeyboardEventTest extends EventDispatcherTestDemo {
       {
         event: EventListenerType.KEYBOARD,
         onKeyPressed: function (keyCode, event) {
-          var label = event.getCurrentTarget();
+          var label = event.currentTarget;
           label.string = "Key " +
               (ServiceLocator.sys.isNative
                 ? that.getNativeKeyName(keyCode)
@@ -60,7 +60,7 @@ export class LabelKeyboardEventTest extends EventDispatcherTestDemo {
               ") was pressed!";
         },
         onKeyReleased: function (keyCode, event) {
-          var label = event.getCurrentTarget();
+          var label = event.currentTarget;
           label.string = "Key " +
               (ServiceLocator.sys.isNative
                 ? that.getNativeKeyName(keyCode)

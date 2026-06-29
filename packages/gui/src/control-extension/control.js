@@ -60,7 +60,7 @@ export class Control extends Layer {
 
   onEnter() {
     var locListener = this._touchListener;
-    if (!locListener._isRegistered())
+    if (!locListener.registered)
       ServiceLocator.eventManager.addListener(locListener, this);
     Node.prototype.onEnter.call(this);
   }

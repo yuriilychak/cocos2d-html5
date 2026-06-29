@@ -66,10 +66,10 @@ export class ParticleDemo extends BaseTestLayer {
         {
           event: EventListenerType.TOUCH_ALL_AT_ONCE,
           onTouchesBegan: function (touches, event) {
-            event.getCurrentTarget()._moveToTouchPoint(touches[0]);
+            event.currentTarget._moveToTouchPoint(touches[0]);
           },
           onTouchesMoved: function (touches, event) {
-            event.getCurrentTarget()._moveToTouchPoint(touches[0]);
+            event.currentTarget._moveToTouchPoint(touches[0]);
           }
         },
         this
@@ -79,11 +79,11 @@ export class ParticleDemo extends BaseTestLayer {
         {
           event: EventListenerType.MOUSE,
           onMouseDown: function (event) {
-            event.getCurrentTarget()._moveToTouchPoint(event);
+            event.currentTarget._moveToTouchPoint(event);
           },
           onMouseMove: function (event) {
             if (event.button == MouseButton.LEFT)
-              event.getCurrentTarget()._moveToTouchPoint(event);
+              event.currentTarget._moveToTouchPoint(event);
           }
         },
         this

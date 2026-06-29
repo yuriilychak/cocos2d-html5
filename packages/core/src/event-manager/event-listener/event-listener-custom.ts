@@ -26,27 +26,38 @@
 import EventListener from './event-listener';
 import { EventListenerType } from '../../enums';
 
-export default class _EventListenerCustom extends EventListener {
-    constructor(listenerId, callback, target) {
-        super(EventListenerType.CUSTOM, listenerId, null);
-        this._onCustomEvent = null;
-        this._target = undefined;
+import type { EventCustom } from '../event';
+import type { CustomEventCallback } from './types';
 
-        this._onCustomEvent = callback;
-        this._target = target;
-        this._onEvent = this._callback;
-    }
+export default class _EventListenerCustom<T = unknown> extends EventListener<EventCustom<T>> {
+  #onCustomEvent: CustomEventCallback<T> | null;
+  #target: unknown;
 
-    _callback(event) {
-        if (this._onCustomEvent !== null)
-            this._onCustomEvent.call(this._target, event);
-    }
+  constructor(id: string, callback: CustomEventCallback<T> | null, target?: unknown) {
+    super(EventListenerType.CUSTOM, id);
+    this.#onCustomEvent = callback;
+    this.#target = target;
+    this.setEvent(this.#handleEvent.bind(this));
+  }
 
-    checkAvailable() {
-        return (super.checkAvailable() && this._onCustomEvent !== null);
-    }
+  clone(): _EventListenerCustom<T> {
+    return new _EventListenerCustom<T>(this.id, this.#onCustomEvent, this.#target);
+  }
 
-    clone() {
-        return new _EventListenerCustom(this._listenerID, this._onCustomEvent);
-    }
+  #handleEvent(event: EventCustom<T>): void {
+    if (this.#onCustomEvent !== null)
+      this.#onCustomEvent.call(this.#target, event);
+  }
+
+  get onCustomEvent(): CustomEventCallback<T> | null {
+    return this.#onCustomEvent;
+  }
+
+  get target(): unknown {
+    return this.#target;
+  }
+
+  get available(): boolean {
+    return super.available && this.#onCustomEvent !== null;
+  }
 }

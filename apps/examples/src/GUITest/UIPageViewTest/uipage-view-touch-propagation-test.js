@@ -173,11 +173,11 @@ export class UIPageViewTouchPropagationTest extends UIMainLayer {
       }
 
       if (ck2.isSelected()) {
-        btn.setSwallowTouches(true);
-        pageView.setSwallowTouches(true);
+        btn.swallowTouches = true;
+        pageView.swallowTouches = true;
       } else {
-        btn.setSwallowTouches(false);
-        pageView.setSwallowTouches(false);
+        btn.swallowTouches = false;
+        pageView.swallowTouches = false;
       }
     }
     if (type == Widget.TOUCH_ENDED) log("button clicked");

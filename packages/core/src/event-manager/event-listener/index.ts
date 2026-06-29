@@ -31,8 +31,18 @@ import _EventListenerTouchAllAtOnce from './event-listener-touch-all-at-once';
 import _EventListenerFocus from './event-listener-focus';
 import _EventListenerKeyboard from './event-listener-keyboard';
 import _EventListenerAcceleration from './event-listener-acceleration';
+import _EventListenerVector from './event-listener-vector';
 import { assert, _LogInfos } from '../../boot/debugger';
 import { EventListenerType } from '../../enums';
+import type {
+    AccelerationEventCallback,
+    CustomEventCallback,
+    ListenerCreateOptions
+} from './types';
+
+type DeprecatedEventListenerFactory = typeof EventListener & {
+    create: (argObj: ListenerCreateOptions) => EventListener | null;
+};
 
 /**
  * Create a EventListener object by json object
@@ -51,14 +61,14 @@ import { EventListenerType } from '../../enums';
  *       }
  *    });
  */
-EventListener.create = function(argObj){
+(EventListener as DeprecatedEventListenerFactory).create = function(argObj: ListenerCreateOptions): EventListener | null {
 
     assert(argObj&&argObj.event, _LogInfos.EventListener_create);
 
     var listenerType = argObj.event;
     delete argObj.event;
 
-    var listener = null;
+    var listener: object | null = null;
     if(listenerType === EventListenerType.TOUCH_ONE_BY_ONE)
         listener = new _EventListenerTouchOneByOne();
     else if(listenerType === EventListenerType.TOUCH_ALL_AT_ONCE)
@@ -66,22 +76,25 @@ EventListener.create = function(argObj){
     else if(listenerType === EventListenerType.MOUSE)
         listener = new _EventListenerMouse();
     else if(listenerType === EventListenerType.CUSTOM){
-        listener = new _EventListenerCustom(argObj.eventName, argObj.callback);
+        listener = new _EventListenerCustom(
+            argObj.eventName ?? "",
+            (argObj.callback as CustomEventCallback | undefined) ?? null
+        );
         delete argObj.eventName;
         delete argObj.callback;
     } else if(listenerType === EventListenerType.KEYBOARD)
         listener = new _EventListenerKeyboard();
     else if(listenerType === EventListenerType.ACCELERATION){
-        listener = new _EventListenerAcceleration(argObj.callback);
+        listener = new _EventListenerAcceleration(argObj.callback as AccelerationEventCallback);
         delete argObj.callback;
     } else if(listenerType === EventListenerType.FOCUS)
         listener = new _EventListenerFocus();
 
     for(var key in argObj) {
-        listener[key] = argObj[key];
+        if (listener !== null) (listener as Record<string, unknown>)[key] = argObj[key];
     }
 
-    return listener;
+    return listener as EventListener | null;
 };
 
 export {
@@ -92,5 +105,8 @@ export {
     _EventListenerTouchAllAtOnce,
     _EventListenerFocus,
     _EventListenerKeyboard,
-    _EventListenerAcceleration
+    _EventListenerAcceleration,
+    _EventListenerVector
 };
+
+export type * from './types';

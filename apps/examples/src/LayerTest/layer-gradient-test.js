@@ -61,10 +61,10 @@ export class LayerGradientTest extends LayerTest {
         {
           event: EventListenerType.TOUCH_ALL_AT_ONCE,
           onTouchesBegan: function (touches, event) {
-            event.getCurrentTarget().updateGradient(touches[0]);
+            event.currentTarget.updateGradient(touches[0]);
           },
           onTouchesMoved: function (touches, event) {
-            event.getCurrentTarget().updateGradient(touches[0]);
+            event.currentTarget.updateGradient(touches[0]);
           }
         },
         this
@@ -74,11 +74,11 @@ export class LayerGradientTest extends LayerTest {
         {
           event: EventListenerType.MOUSE,
           onMouseDown: function (event) {
-            event.getCurrentTarget().updateGradient(event);
+            event.currentTarget.updateGradient(event);
           },
           onMouseMove: function (event) {
             if (event.button == MouseButton.LEFT)
-              event.getCurrentTarget().updateGradient(event);
+              event.currentTarget.updateGradient(event);
           }
         },
         this

@@ -61,7 +61,7 @@ export class RenderTextureSave extends RenderTextureBaseLayer {
         {
           event: EventListenerType.TOUCH_ALL_AT_ONCE,
           onTouchesMoved: function (touches, event) {
-            event.getCurrentTarget().drawInLocation(touches[0]);
+            event.currentTarget.drawInLocation(touches[0]);
           }
         },
         this
@@ -71,11 +71,11 @@ export class RenderTextureSave extends RenderTextureBaseLayer {
         {
           event: EventListenerType.MOUSE,
           onMouseDown: function (event) {
-            event.getCurrentTarget()._lastLocation = new Point(event);
+            event.currentTarget._lastLocation = new Point(event);
           },
           onMouseMove: function (event) {
             if (event.button == MouseButton.LEFT)
-              event.getCurrentTarget().drawInLocation(event);
+              event.currentTarget.drawInLocation(event);
           }
         },
         this

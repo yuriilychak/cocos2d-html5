@@ -57,9 +57,9 @@ export class TileDemo extends BaseTestLayer {
           event: EventListenerType.TOUCH_ALL_AT_ONCE,
           onTouchesMoved: function (touches, event) {
             var touch = touches[0];
-            var delta = touch.getDelta();
+            var delta = touch.delta;
 
-            var node = event.getCurrentTarget().getChildByTag(TAG_TILE_MAP);
+            var node = event.currentTarget.getChildByTag(TAG_TILE_MAP);
             node.x += delta.x;
             node.y += delta.y;
           }
@@ -72,7 +72,7 @@ export class TileDemo extends BaseTestLayer {
           event: EventListenerType.MOUSE,
           onMouseMove: function (event) {
             if (event.button == MouseButton.LEFT) {
-              var node = event.getCurrentTarget().getChildByTag(TAG_TILE_MAP);
+              var node = event.currentTarget.getChildByTag(TAG_TILE_MAP);
               node.x += event.getDeltaX();
               node.y += event.getDeltaY();
             }

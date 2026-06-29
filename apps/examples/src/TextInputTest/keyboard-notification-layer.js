@@ -114,7 +114,7 @@ export class KeyboardNotificationLayer extends TextInputTest {
   }
 
   onTouchesEnded(touches, event) {
-    var target = event.getCurrentTarget();
+    var target = event.currentTarget;
     if (!target._trackNode) return;
 
     // grab first touch
@@ -143,7 +143,7 @@ export class KeyboardNotificationLayer extends TextInputTest {
   }
 
   onMouseUp(event) {
-    var target = event.getCurrentTarget();
+    var target = event.currentTarget;
     if (!target._trackNode) return;
 
     // decide the trackNode is clicked.

@@ -26,18 +26,21 @@
 import EventListener from './event-listener';
 import { EventListenerType, MouseEvent } from '../../enums';
 
-export default class _EventListenerMouse extends EventListener {
-    constructor() {
-        super(EventListenerType.MOUSE, _EventListenerMouse.LISTENER_ID, null);
-        this.onMouseDown = null;
-        this.onMouseUp = null;
-        this.onMouseMove = null;
-        this.onMouseScroll = null;
+import type { EventMouse } from '../event';
+import type { MouseEventCallback } from './types';
 
-        this._onEvent = this._callback;
+export default class _EventListenerMouse extends EventListener<EventMouse> {
+    onMouseDown: MouseEventCallback | null = null;
+    onMouseUp: MouseEventCallback | null = null;
+    onMouseMove: MouseEventCallback | null = null;
+    onMouseScroll: MouseEventCallback | null = null;
+
+    constructor() {
+        super(EventListenerType.MOUSE);
+        this.setEvent(this.#handleEvent.bind(this));
     }
 
-    _callback(event) {
+    #handleEvent(event: EventMouse): void {
         switch (event.eventType) {
             case MouseEvent.DOWN:
                 if (this.onMouseDown)
@@ -60,7 +63,7 @@ export default class _EventListenerMouse extends EventListener {
         }
     }
 
-    clone() {
+    clone(): _EventListenerMouse {
         var eventListener = new _EventListenerMouse();
         eventListener.onMouseDown = this.onMouseDown;
         eventListener.onMouseUp = this.onMouseUp;
@@ -69,11 +72,9 @@ export default class _EventListenerMouse extends EventListener {
         return eventListener;
     }
 
-    checkAvailable() {
+    get available(): boolean {
         return true;
     }
 
     static LISTENER_ID = "__cc_mouse";
 }
-
-

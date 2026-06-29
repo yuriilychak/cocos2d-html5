@@ -56,9 +56,9 @@ export class Parallax2 extends ParallaxDemo {
           event: EventListenerType.TOUCH_ALL_AT_ONCE,
           onTouchesMoved: function (touches, event) {
             var touch = touches[0];
-            var node = event.getCurrentTarget().getChildByTag(TAG_NODE);
-            node.x += touch.getDelta().x;
-            node.y += touch.getDelta().y;
+            var node = event.currentTarget.getChildByTag(TAG_NODE);
+            node.x += touch.delta.x;
+            node.y += touch.delta.y;
           }
         },
         this
@@ -69,7 +69,7 @@ export class Parallax2 extends ParallaxDemo {
           event: EventListenerType.MOUSE,
           onMouseMove: function (event) {
             if (event.button == MouseButton.LEFT) {
-              var node = event.getCurrentTarget().getChildByTag(TAG_NODE);
+              var node = event.currentTarget.getChildByTag(TAG_NODE);
               node.x += event.getDeltaX();
               node.y += event.getDeltaY();
             }

@@ -24,6 +24,11 @@
  ****************************************************************************/
 
 import { BaseClass } from "../../platform/class";
+import { EventListenerType } from "../../enums";
+
+import type { EventCallback } from "./types";
+import type { Event } from "../event";
+export type { EventCallback } from "./types";
 
 /**
  * <p>
@@ -33,35 +38,42 @@ import { BaseClass } from "../../platform/class";
  *      EventListenerTouchOneByOne, EventListenerCustom.
  * </p>
  */
-export default class EventListener extends BaseClass {
-  _onEvent = null;
-  _type = 0;
-  _listenerID = null;
-  _registered = false;
-  _fixedPriority = 0;
-  _node = null;
-  _paused = true;
-  _isEnabled = true;
-  #availbale = false;
+export default abstract class EventListener<TEvent extends Event = Event> extends BaseClass {
+  #onEvent: EventCallback<TEvent> | null;
+  #type: EventListenerType;
+  #id: string;
+  #fixedPriority: number = 0;
+  #node: unknown = null;
+  #paused: boolean = true;
+  #registered: boolean = false;
+  #enabled: boolean = true;
 
   /**
    * Initializes event with type and callback function
-   * @param {number} type
-   * @param {string} listenerID
-   * @param {function} callback
    */
-  constructor(type = "", listenerID = "", callback = null) {
+  constructor(
+    type: EventListenerType = EventListenerType.UNKNOWN,
+    id?: string,
+    callback: EventCallback<TEvent> | null = null
+  ) {
     super();
-    this._onEvent = callback;
-    this._type = type;
-    this._listenerID = listenerID;
+    this.#onEvent = callback;
+    this.#type = type;
+    this.#id = id ?? (this.constructor as typeof EventListener).LISTENER_ID;
   }
 
-  dispatch(event) {
-    if (this._onEvent) {
-      this._onEvent(event);
-    }
+  setEvent(value: EventCallback<TEvent> | null): void {
+    this.#onEvent = value;
   }
+
+  get onEvent(): EventCallback<TEvent> | null {
+    return this.#onEvent;
+  }
+
+  /**
+   * Clones the listener, its subclasses have to override this method.
+   */
+  abstract clone(): EventListener<TEvent>;
 
   /**
    * <p>
@@ -73,77 +85,62 @@ export default class EventListener extends BaseClass {
    *              call `enabled = false` instead.
    *            2) In `Node`'s onEnter and onExit, the `paused state` of the listeners which associated with that node will be automatically updated.
    * </p>
-   * @param {boolean} paused
-   * @private
    */
-  _setPaused(paused) {
-    this._paused = paused;
+  set paused(paused: boolean) {
+    this.#paused = paused;
   }
 
   /**
    * Checks whether the listener is paused
-   * @returns {boolean}
-   * @private
    */
-  _isPaused() {
-    return this._paused;
+  get paused(): boolean {
+    return this.#paused;
   }
 
   /**
    * Marks the listener was registered by EventDispatcher
-   * @param {boolean} registered
-   * @private
    */
-  _setRegistered(registered) {
-    this._registered = registered;
+  set registered(registered: boolean) {
+    this.#registered = registered;
   }
 
   /**
    * Checks whether the listener was registered by EventDispatcher
-   * @returns {boolean}
-   * @private
    */
-  _isRegistered() {
-    return this._registered;
+  get registered(): boolean {
+    return this.#registered;
   }
 
   /**
    * Gets the type of this listener
    * @note It's different from `EventType`, e.g. TouchEvent has two kinds of event listeners - EventListenerOneByOne, EventListenerAllAtOnce
-   * @returns {number}
-   * @private
    */
-  _getType() {
-    return this._type;
+  get type(): EventListenerType {
+    return this.#type;
   }
 
   /**
    *  Gets the listener ID of this listener
    *  When event is being dispatched, listener ID is used as key for searching listeners according to event type.
-   * @returns {string}
-   * @private
    */
-  _getListenerID() {
-    return this._listenerID;
+  get id(): string {
+    return this.#id;
   }
 
   /**
    * Sets the fixed priority for this listener
    *  @note This method is only used for `fixed priority listeners`, it needs to access a non-zero value. 0 is reserved for scene graph priority listeners
-   * @param {number} fixedPriority
-   * @private
    */
-  _setFixedPriority(fixedPriority) {
-    this._fixedPriority = fixedPriority;
+  set fixedPriority(fixedPriority: number) {
+    this.#fixedPriority = fixedPriority;
   }
 
   /**
    * Gets the fixed priority of this listener
-   * @returns {number} 0 if it's a scene graph priority listener, non-zero for fixed priority listener
-   * @private
+   * @returns 0 if it's a scene graph priority listener, non-zero for fixed priority listener
    */
-  _getFixedPriority() {
-    return this._fixedPriority;
+  get fixedPriority(): number {
+    return this.#fixedPriority;
   }
 
   /**
@@ -151,8 +148,8 @@ export default class EventListener extends BaseClass {
    * @param {Node} node
    * @private
    */
-  _setSceneGraphPriority(node) {
-    this._node = node;
+  set sceneGraphPriority(node: unknown) {
+    this.#node = node;
   }
 
   /**
@@ -160,24 +157,15 @@ export default class EventListener extends BaseClass {
    * @returns {Node} if it's a fixed priority listener, non-null for scene graph priority listener
    * @private
    */
-  _getSceneGraphPriority() {
-    return this._node;
+  get sceneGraphPriority(): unknown {
+    return this.#node;
   }
 
   /**
    * Checks whether the listener is available.
-   * @returns {boolean}
    */
-  checkAvailable() {
-    return this._onEvent !== null;
-  }
-
-  /**
-   * Clones the listener, its subclasses have to override this method.
-   * @returns {EventListener}
-   */
-  clone() {
-    return null;
+  get available(): boolean {
+    return this.#onEvent !== null;
   }
 
   /**
@@ -186,17 +174,17 @@ export default class EventListener extends BaseClass {
    *          When an listener was initialized, it's enabled by default.
    *          An event listener can receive events when it is enabled and is not paused.
    *          paused state is always false when it is a fixed priority listener.
-   * @param {boolean} enabled
    */
-  set enabled(enabled) {
-    this._isEnabled = enabled;
+  set enabled(enabled: boolean) {
+    this.#enabled = enabled;
   }
 
   /**
    * Checks whether the listener is enabled
-   * @returns {boolean}
    */
-  get enabled() {
-    return this._isEnabled;
+  get enabled(): boolean {
+    return this.#enabled;
   }
+
+  static LISTENER_ID: string = "";
 }

@@ -25,21 +25,24 @@
 
 import EventListener from './event-listener';
 import { log, _LogInfos } from '../../boot/debugger';
-import { EventListenerType } from '../../enums';
+import { EventListenerType, TouchEvent } from '../../enums';
+
+import type Touch from '../touch';
+import type { EventTouch } from '../event';
+import type { TouchesCallback } from './types';
 
 export default class _EventListenerTouchAllAtOnce extends EventListener {
-    onTouchesBegan = null;
-    onTouchesMoved = null;
-    onTouchesEnded = null;
-    onTouchesCancelled = null;
+    onTouchesBegan: TouchesCallback | null = null;
+    onTouchesMoved: TouchesCallback | null = null;
+    onTouchesEnded: TouchesCallback | null = null;
+    onTouchesCancelled: TouchesCallback | null = null;
 
     constructor() {
-        super(EventListenerType.TOUCH_ALL_AT_ONCE, _EventListenerTouchAllAtOnce.LISTENER_ID, null);
-        
+        super(EventListenerType.TOUCH_ALL_AT_ONCE);
     }
 
-    clone() {
-        var eventListener = new _EventListenerTouchAllAtOnce();
+    clone(): _EventListenerTouchAllAtOnce {
+        const eventListener = new _EventListenerTouchAllAtOnce();
         eventListener.onTouchesBegan = this.onTouchesBegan;
         eventListener.onTouchesMoved = this.onTouchesMoved;
         eventListener.onTouchesEnded = this.onTouchesEnded;
@@ -47,10 +50,39 @@ export default class _EventListenerTouchAllAtOnce extends EventListener {
         return eventListener;
     }
 
-    checkAvailable() {
+    public handleTouchEvent(touches: Touch[], event: EventTouch): void {
+        event.currentTarget = this.sceneGraphPriority;
+
+        switch (event.eventCode) {
+            case TouchEvent.BEGAN:
+                this.#handleTouches(this.onTouchesBegan, touches, event);
+                break;
+            case TouchEvent.MOVED:
+                this.#handleTouches(this.onTouchesMoved, touches, event);
+                break;
+            case TouchEvent.ENDED:
+                this.#handleTouches(this.onTouchesEnded, touches, event);
+                break;
+            case TouchEvent.CANCELLED:
+                this.#handleTouches(this.onTouchesCancelled, touches, event);
+                break;
+        }
+    }
+
+    #handleTouches(
+        callback: TouchesCallback | null,
+        touches: Touch[],
+        event: EventTouch
+    ): void {
+        if (callback) {
+            callback.call(this, touches, event);
+        }
+    }
+
+    get available(): boolean {
         if (this.onTouchesBegan === null && this.onTouchesMoved === null
             && this.onTouchesEnded === null && this.onTouchesCancelled === null) {
-            log(_LogInfos._EventListenerTouchAllAtOnce_checkAvailable);
+            log(_LogInfos._EventListenerTouchAllAtOnce_available);
             return false;
         }
         return true;
@@ -58,4 +90,3 @@ export default class _EventListenerTouchAllAtOnce extends EventListener {
 
     static LISTENER_ID = "__cc_touch_all_at_once";
 }
-

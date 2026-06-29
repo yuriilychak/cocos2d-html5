@@ -24,36 +24,36 @@
  ****************************************************************************/
 
 import EventListener from './event-listener';
-import { log } from '../../boot/debugger';
+import { assert, _LogInfos } from '../../boot/debugger';
 import { EventListenerType } from '../../enums';
+import type { EventAcceleration } from '../event';
+import type { AccelerationEventCallback } from './types';
 
-export default class _EventListenerFocus extends EventListener {
-    constructor() {
-        super(EventListenerType.FOCUS, _EventListenerFocus.LISTENER_ID, null);
-        this.onFocusChanged = null;
+export default class _EventListenerAcceleration extends EventListener<EventAcceleration> {
+  #onAccelerationEvent: AccelerationEventCallback;
 
-        this._onEvent = this._callback;
-    }
+  constructor(callback: AccelerationEventCallback) {
+    super(EventListenerType.ACCELERATION);
+    this.setEvent(this.#handleEvent.bind(this));
+    this.#onAccelerationEvent = callback;
+  }
 
-    clone() {
-        var listener = new _EventListenerFocus();
-        listener.onFocusChanged = this.onFocusChanged;
-        return listener;
-    }
+  clone(): _EventListenerAcceleration {
+    return new _EventListenerAcceleration(this.#onAccelerationEvent);
+  }
 
-    checkAvailable() {
-        if(!this.onFocusChanged){
-            log("Invalid EventListenerFocus!");
-            return false;
-        }
-        return true;
-    }
+  #handleEvent(event: EventAcceleration): void {
+    this.#onAccelerationEvent(event.value, event);
+  }
 
-    _callback(event) {
-        if (this.onFocusChanged) {
-            this.onFocusChanged(event._widgetLoseFocus, event._widgetGetFocus);
-        }
-    }
+  get available(): boolean {
+    assert(
+      this.#onAccelerationEvent,
+      _LogInfos._EventListenerAcceleration_available
+    );
 
-    static LISTENER_ID = "__cc_focus_event";
+    return true;
+  }
+
+  static LISTENER_ID = "__cc_acceleration";
 }

@@ -103,7 +103,7 @@ export class TouchOneByOneTest extends EventTest {
     var id = touch.id;
     log("onTouchBegan at: " + touch.x + " " + touch.y + " Id:" + id);
     if (touch.x < winSize.width / 2) {
-      event.getCurrentTarget().new_id(id, touch);
+      event.currentTarget.new_id(id, touch);
       return true;
     }
     return false;
@@ -111,16 +111,16 @@ export class TouchOneByOneTest extends EventTest {
   onTouchMoved(touch, event) {
     var id = touch.id;
     log("onTouchMoved at: " + touch.x + " " + touch.y + " Id:" + id);
-    event.getCurrentTarget().update_id(id, touch);
+    event.currentTarget.update_id(id, touch);
   }
   onTouchEnded(touch, event) {
     var id = touch.id;
     log("onTouchEnded at: " + ptouchos.x + " " + touch.y + " Id:" + id);
-    event.getCurrentTarget().release_id(id, touch);
+    event.currentTarget.release_id(id, touch);
   }
   onTouchCancelled(touch, event) {
     var id = touch.id;
     log("onTouchCancelled at: " + touch.x + " " + touch.y + " Id:" + id);
-    event.getCurrentTarget().update_id(id, touch);
+    event.currentTarget.update_id(id, touch);
   }
 }

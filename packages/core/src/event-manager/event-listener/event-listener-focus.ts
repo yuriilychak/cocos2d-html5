@@ -24,47 +24,39 @@
  ****************************************************************************/
 
 import EventListener from './event-listener';
-import { log, _LogInfos } from '../../boot/debugger';
+import { log } from '../../boot/debugger';
 import { EventListenerType } from '../../enums';
 
-export default class _EventListenerTouchOneByOne extends EventListener {
-    _claimedTouches = [];
-    swallowTouches = false;
-    onTouchBegan = null;
-    onTouchMoved = null;
-    onTouchEnded = null;
-    onTouchCancelled = null;
+import type { EventFocus } from '../event';
+import type { FocusChangedCallback } from './types';
+
+export default class _EventListenerFocus extends EventListener<EventFocus> {
+    onFocusChanged: FocusChangedCallback | null = null;
 
     constructor() {
-        super(EventListenerType.TOUCH_ONE_BY_ONE, _EventListenerTouchOneByOne.LISTENER_ID, null); 
+        super(EventListenerType.FOCUS);
+        this.setEvent(this.#handleEvent.bind(this));
     }
 
-    setSwallowTouches(needSwallow) {
-        this.swallowTouches = needSwallow;
+    clone(): _EventListenerFocus {
+        var listener = new _EventListenerFocus();
+        listener.onFocusChanged = this.onFocusChanged;
+        return listener;
     }
 
-    isSwallowTouches() {
-        return this.swallowTouches;
+    #handleEvent(event: EventFocus): void {
+        if (this.onFocusChanged) {
+            this.onFocusChanged(event._widgetLoseFocus, event._widgetGetFocus);
+        }
     }
 
-    clone() {
-        var eventListener = new _EventListenerTouchOneByOne();
-        eventListener.onTouchBegan = this.onTouchBegan;
-        eventListener.onTouchMoved = this.onTouchMoved;
-        eventListener.onTouchEnded = this.onTouchEnded;
-        eventListener.onTouchCancelled = this.onTouchCancelled;
-        eventListener.swallowTouches = this.swallowTouches;
-        return eventListener;
-    }
-
-    checkAvailable() {
-        if(!this.onTouchBegan){
-            log(_LogInfos._EventListenerTouchOneByOne_checkAvailable);
+    get available(): boolean {
+        if(!this.onFocusChanged){
+            log("Invalid EventListenerFocus!");
             return false;
         }
         return true;
     }
 
-    static LISTENER_ID = "__cc_touch_one_by_one";
+    static LISTENER_ID = "__cc_focus_event";
 }
-

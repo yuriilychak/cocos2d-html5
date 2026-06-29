@@ -46,7 +46,7 @@ export class SpriteAccelerationEventTest extends EventDispatcherTestDemo {
       {
         event: EventListenerType.ACCELERATION,
         callback: function (accumulator, event) {
-          var target = event.getCurrentTarget();
+          var target = event.currentTarget;
           var ballSize = target.getContentSize();
           var ptNow = target.getPosition();
 

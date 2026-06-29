@@ -39,15 +39,11 @@ export default class Event extends BaseClass {
     this.#type = type;
   }
 
-  _setCurrentTarget(target: unknown) {
-    this.#currentTarget = target;
-  }
-
   /**
    * Gets the event type
    */
 
-  getType(): EventType {
+  get type(): EventType {
     return this.#type;
   }
 
@@ -61,7 +57,7 @@ export default class Event extends BaseClass {
   /**
    * Checks whether the event has been stopped
    */
-  isStopped(): boolean {
+  get stopped(): boolean {
     return this.#isStopped;
   }
 
@@ -73,7 +69,11 @@ export default class Event extends BaseClass {
    * </p>
    * @returns {Node}  The target with which the event associates.
    */
-  getCurrentTarget(): unknown {
+  get currentTarget(): unknown {
     return this.#currentTarget;
+  }
+
+  set currentTarget(target: unknown) {
+    this.#currentTarget = target;
   }
 }

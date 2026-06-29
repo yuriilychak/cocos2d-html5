@@ -30,12 +30,20 @@ import { EventType } from "../../enums";
  * The keyboard event
  */
 export default class EventKeyboard extends Event {
-    _keyCode: number = 0;
-    _isPressed: boolean = false;
+    #keyCode: number = 0;
+    #pressed: boolean = false;
 
-    constructor(keyCode: number, isPressed: boolean) {
+    constructor(keyCode: number, pressed: boolean) {
         super(EventType.KEYBOARD);
-        this._keyCode = keyCode;
-        this._isPressed = isPressed;
+        this.#keyCode = keyCode;
+        this.#pressed = pressed;
+    }
+
+    get keyCode(): number {
+        return this.#keyCode;
+    }
+
+    get pressed(): boolean {
+        return this.#pressed;
     }
 }

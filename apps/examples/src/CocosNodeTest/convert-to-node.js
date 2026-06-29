@@ -60,7 +60,7 @@ export class ConvertToNode extends TestNodeDemo {
         EventListener.create({
           event: EventListenerType.TOUCH_ALL_AT_ONCE,
           onTouchesEnded: function (touches, event) {
-            var target = event.getCurrentTarget();
+            var target = event.currentTarget;
             for (var it = 0; it < touches.length; it++) {
               target.processEvent(touches[it]);
             }
@@ -73,7 +73,7 @@ export class ConvertToNode extends TestNodeDemo {
         {
           event: EventListenerType.MOUSE,
           onMouseUp: function (event) {
-            event.getCurrentTarget().processEvent(event);
+            event.currentTarget.processEvent(event);
           }
         },
         this

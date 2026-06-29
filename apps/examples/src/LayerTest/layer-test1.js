@@ -57,7 +57,7 @@ export class LayerTest1 extends LayerTest {
         {
           event: EventListenerType.TOUCH_ALL_AT_ONCE,
           onTouchesMoved: function (touches, event) {
-            event.getCurrentTarget().updateSize(touches[0]);
+            event.currentTarget.updateSize(touches[0]);
           }
         },
         this
@@ -68,7 +68,7 @@ export class LayerTest1 extends LayerTest {
           event: EventListenerType.MOUSE,
           onMouseMove: function (event) {
             if (event.button == MouseButton.LEFT)
-              event.getCurrentTarget().updateSize(event);
+              event.currentTarget.updateSize(event);
           }
         },
         this

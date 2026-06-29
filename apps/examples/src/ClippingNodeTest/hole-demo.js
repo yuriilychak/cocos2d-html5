@@ -101,7 +101,7 @@ export class HoleDemo extends BaseClippingNodeTest {
       EventListener.create({
         event: EventListenerType.TOUCH_ALL_AT_ONCE,
         onTouchesBegan: function (touches, event) {
-          var target = event.getCurrentTarget();
+          var target = event.currentTarget;
           var touch = touches[0];
           var point = target._outerClipper.convertToNodeSpace(touch);
           var rect = new Rect(

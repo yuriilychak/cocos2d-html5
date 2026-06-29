@@ -60,7 +60,7 @@ export class MouseTest extends EventTest {
         {
           event: EventListenerType.MOUSE,
           onMouseDown: function (event) {
-            var target = event.getCurrentTarget();
+            var target = event.currentTarget;
             if (event.button === MouseButton.RIGHT)
               log("onRightMouseDown at: " + event.x + " " + event.y);
             else if (event.button === BUTTON_LEFT.LEFT)
@@ -69,13 +69,13 @@ export class MouseTest extends EventTest {
             target.sprite.y = event.y;
           },
           onMouseMove: function (event) {
-            var target = event.getCurrentTarget();
+            var target = event.currentTarget;
             log("onMouseMove at: " + event.x + " " + event.y);
             target.sprite.x = event.x;
             target.sprite.y = event.y;
           },
           onMouseUp: function (event) {
-            var target = event.getCurrentTarget();
+            var target = event.currentTarget;
             target.sprite.x = event.x;
             target.sprite.y = event.y;
             log("onMouseUp at: " + event.x + " " + event.y);

@@ -56,7 +56,7 @@ export class AccelerometerTest extends EventTest {
         {
           event: EventListenerType.ACCELERATION,
           callback: function (accelEvent, event) {
-            var target = event.getCurrentTarget();
+            var target = event.currentTarget;
             self._logIndex++;
             if (self._logIndex > 20) {
               log(

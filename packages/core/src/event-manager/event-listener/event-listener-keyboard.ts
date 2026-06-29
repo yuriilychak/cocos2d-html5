@@ -27,36 +27,38 @@ import EventListener from './event-listener';
 import { log, _LogInfos } from '../../boot/debugger';
 import { EventListenerType } from '../../enums';
 
-export default class _EventListenerKeyboard extends EventListener {
-    onKeyPressed = null;
-    onKeyReleased = null;
+import type { EventKeyboard } from '../event';
+import type { KeyboardEventCallback } from './types';
+
+export default class _EventListenerKeyboard extends EventListener<EventKeyboard> {
+    onKeyPressed: KeyboardEventCallback | null = null;
+    onKeyReleased: KeyboardEventCallback | null = null;
 
     constructor() {
-        var selfPointer;
-        var listener = (event) => {
-            if (event._isPressed) {
-                if (selfPointer.onKeyPressed)
-                    selfPointer.onKeyPressed(event._keyCode, event);
-            } else {
-                if (selfPointer.onKeyReleased)
-                    selfPointer.onKeyReleased(event._keyCode, event);
-            }
-        };
-        super(EventListenerType.KEYBOARD, _EventListenerKeyboard.LISTENER_ID, listener);
-
-        selfPointer = this;
+        super(EventListenerType.KEYBOARD);
+        this.setEvent(this.#handleEvent.bind(this));
     }
 
-    clone() {
+    #handleEvent(event: EventKeyboard): void {
+        if (event.pressed) {
+            if (this.onKeyPressed)
+                this.onKeyPressed(event.keyCode, event);
+        } else {
+            if (this.onKeyReleased)
+                this.onKeyReleased(event.keyCode, event);
+        }
+    }
+
+    clone(): _EventListenerKeyboard {
         var eventListener = new _EventListenerKeyboard();
         eventListener.onKeyPressed = this.onKeyPressed;
         eventListener.onKeyReleased = this.onKeyReleased;
         return eventListener;
     }
 
-    checkAvailable() {
+    get available(): boolean {
         if (this.onKeyPressed === null && this.onKeyReleased === null) {
-            log(_LogInfos._EventListenerKeyboard_checkAvailable);
+            log(_LogInfos._EventListenerKeyboard_available);
             return false;
         }
         return true;

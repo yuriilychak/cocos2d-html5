@@ -27,7 +27,14 @@
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { createColoredView } from "./touchable-sprite";
-import { Color, EventListener, EventListenerType, Rect, log, ServiceLocator } from "@aspect/core";
+import {
+  Color,
+  EventListener,
+  EventListenerType,
+  Rect,
+  log,
+  ServiceLocator
+} from "@aspect/core";
 
 export class GlobalZTouchTest extends EventDispatcherTestDemo {
   constructor() {
@@ -41,7 +48,7 @@ export class GlobalZTouchTest extends EventDispatcherTestDemo {
       event: EventListenerType.TOUCH_ONE_BY_ONE,
       swallowTouches: true,
       onTouchBegan: function (touch, event) {
-        var target = event.getCurrentTarget();
+        var target = event.currentTarget;
 
         var locationInNode = target.convertToNodeSpace(touch);
         var s = target.getContentSize();
@@ -59,14 +66,14 @@ export class GlobalZTouchTest extends EventDispatcherTestDemo {
         return false;
       },
       onTouchMoved: function (touch, event) {
-        var target = event.getCurrentTarget(),
-          delta = touch.getDelta();
+        var target = event.currentTarget,
+          delta = touch.delta;
         target.x += delta.x;
         target.y += delta.y;
       },
       onTouchEnded: function (touch, event) {
         log("sprite onTouchesEnded.. ");
-        event.getCurrentTarget().opacity = 255;
+        event.currentTarget.opacity = 255;
       }
     });
 
@@ -84,7 +91,8 @@ export class GlobalZTouchTest extends EventDispatcherTestDemo {
 
       var visibleSize = ServiceLocator.director.getVisibleSize();
       sprite.x =
-        ServiceLocator.eglView.visibleRect.left.x + (visibleSize.width / (SPRITE_COUNT - 1)) * i;
+        ServiceLocator.eglView.visibleRect.left.x +
+        (visibleSize.width / (SPRITE_COUNT - 1)) * i;
       sprite.y = ServiceLocator.eglView.visibleRect.center.y;
     }
 

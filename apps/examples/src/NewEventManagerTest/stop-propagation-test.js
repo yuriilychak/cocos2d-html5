@@ -42,7 +42,7 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
         if (!this._isPointInTopHalfAreaOfScreen(touch))
           return false;
 
-        var target = event.getCurrentTarget();
+        var target = event.currentTarget;
         if (target.tag != StopPropagationTest._TAG_BLUE_SPRITE)
           log("Yellow blocks shouldn't response event.");
 
@@ -56,7 +56,7 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
         return false;
       }.bind(this),
       onTouchEnded: function (touch, event) {
-        event.getCurrentTarget().opacity = 255;
+        event.currentTarget.opacity = 255;
       }
     });
 
@@ -67,7 +67,7 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
         if (this._isPointInTopHalfAreaOfScreen(touches[0]))
           return;
 
-        var target = event.getCurrentTarget();
+        var target = event.currentTarget;
         if (target.tag != StopPropagationTest._TAG_BLUE_SPRITE2)
           log("Yellow blocks shouldn't response event.");
 
@@ -81,7 +81,7 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
         if (this._isPointInTopHalfAreaOfScreen(touches[0]))
           return;
 
-        var target = event.getCurrentTarget();
+        var target = event.currentTarget;
         if (target.tag != StopPropagationTest._TAG_BLUE_SPRITE2)
           log("Yellow blocks shouldn't response event.");
 
@@ -95,7 +95,7 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
     var keyboardEventListener = EventListener.create({
       event: EventListenerType.KEYBOARD,
       onKeyPressed: function (key, event) {
-        var target = event.getCurrentTarget();
+        var target = event.currentTarget;
         if (
           !(
             target.tag == StopPropagationTest._TAG_BLUE_SPRITE ||

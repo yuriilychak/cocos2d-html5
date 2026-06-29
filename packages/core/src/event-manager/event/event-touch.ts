@@ -44,22 +44,22 @@ export default class EventTouch extends Event {
   /**
    * Returns event code
    */
-  getEventCode(): TouchEvent {
+  get eventCode(): TouchEvent {
     return this.#eventCode;
+  }
+
+  set eventCode(eventCode: TouchEvent) {
+    this.#eventCode = eventCode;
   }
 
   /**
    * Returns touches of event
    */
-  getTouches(): Touch[] {
+  get touches(): Touch[] {
     return this.#touches;
   }
 
-  _setEventCode(eventCode: TouchEvent) {
-    this.#eventCode = eventCode;
-  }
-
-  _setTouches(touches: Touch[]) {
+  set touches(touches: Touch[]) {
     this.#touches = touches;
   }
 
@@ -70,4 +70,3 @@ export default class EventTouch extends Event {
 
   static MAX_TOUCHES: number = 5;
 }
-

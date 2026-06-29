@@ -166,7 +166,7 @@ export class InputManager {
     if (handleTouches.length > 0) {
       this._glView._convertTouchesWithScale(handleTouches);
       var touchEvent = new EventTouch(handleTouches);
-      touchEvent._setEventCode(TouchEvent.BEGAN);
+      touchEvent.eventCode = TouchEvent.BEGAN;
       this._eventManager.dispatchEvent(touchEvent);
     }
   }
@@ -201,7 +201,7 @@ export class InputManager {
     if (handleTouches.length > 0) {
       this._glView._convertTouchesWithScale(handleTouches);
       var touchEvent = new EventTouch(handleTouches);
-      touchEvent._setEventCode(TouchEvent.MOVED);
+      touchEvent.eventCode = TouchEvent.MOVED;
       this._eventManager.dispatchEvent(touchEvent);
     }
   }
@@ -215,7 +215,7 @@ export class InputManager {
     if (handleTouches.length > 0) {
       this._glView._convertTouchesWithScale(handleTouches);
       var touchEvent = new EventTouch(handleTouches);
-      touchEvent._setEventCode(TouchEvent.ENDED);
+      touchEvent.eventCode = TouchEvent.ENDED;
       this._eventManager.dispatchEvent(touchEvent);
     }
   }
@@ -229,7 +229,7 @@ export class InputManager {
     if (handleTouches.length > 0) {
       this._glView._convertTouchesWithScale(handleTouches);
       var touchEvent = new EventTouch(handleTouches);
-      touchEvent._setEventCode(TouchEvent.CANCELLED);
+      touchEvent.eventCode = TouchEvent.CANCELLED;
       this._eventManager.dispatchEvent(touchEvent);
     }
   }

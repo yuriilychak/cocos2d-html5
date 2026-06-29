@@ -74,7 +74,7 @@ export class SpriteBatchNodeNewTexture extends SpriteTestDemo {
         {
           event: EventListenerType.TOUCH_ALL_AT_ONCE,
           onTouchesEnded: function (touches, event) {
-            event.getCurrentTarget().onChangeTexture();
+            event.currentTarget.onChangeTexture();
           }
         },
         this
@@ -84,7 +84,7 @@ export class SpriteBatchNodeNewTexture extends SpriteTestDemo {
         {
           event: EventListenerType.MOUSE,
           onMouseUp: function (event) {
-            event.getCurrentTarget().onChangeTexture();
+            event.currentTarget.onChangeTexture();
           }
         },
         this

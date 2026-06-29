@@ -102,6 +102,13 @@ export enum GameEvent {
   RENDERER_INITED = "renderer_inited"
 }
 
+export enum EventManagerDirtyFlag {
+  NONE = 0,
+  FIXED_PRIORITY = 1 << 0,
+  SCENE_GRAPH_PRIORITY = 1 << 1,
+  ALL = 3
+}
+
 /**
  * Key map for keyboard event.
  */
