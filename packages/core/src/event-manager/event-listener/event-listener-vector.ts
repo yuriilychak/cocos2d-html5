@@ -42,13 +42,29 @@ export default class _EventListenerVector extends BaseClass {
     return l1.fixedPriority - l2.fixedPriority;
   }
 
+  static #sortEventListenersOfSceneGraphPriorityDes(
+    l1: EventListener | null | undefined,
+    l2: EventListener | null | undefined,
+    nodePriorities: Map<number, number>
+  ): number {
+    const node1 = l1?.sceneGraphPriority as { __instanceId: number } | null,
+      node2 = l2?.sceneGraphPriority as { __instanceId: number } | null;
+    if (!l2 || !node2 || !nodePriorities.has(node2.__instanceId)) return -1;
+    else if (!l1 || !node1 || !nodePriorities.has(node1.__instanceId))
+      return 1;
+    return (
+      nodePriorities.get(node2.__instanceId)! -
+      nodePriorities.get(node1.__instanceId)!
+    );
+  }
+
   push(listener: EventListener): void {
     if (listener.fixedPriority === 0) this.#sceneGraphListeners.push(listener);
     else this.#fixedListeners.push(listener);
   }
 
   public sortFixedPriorityListeners(): void {
-    if (this.#fixedListeners.length === 0) return;
+    if (this.fixedPriorityListenersEmpty) return;
 
     // After sort: priority < 0, > 0
     this.#fixedListeners.sort(
@@ -64,20 +80,27 @@ export default class _EventListenerVector extends BaseClass {
     this.#firstNaturalFixedPriorityIndex = index;
   }
 
+  public sortSceneGraphPriorityListeners(
+    nodePriorities: Map<number, number>
+  ): void {
+    if (this.sceneGraphPriorityListenersEmpty) return;
+
+    // After sort: priority < 0, > 0
+    this.#sceneGraphListeners.sort((l1, l2) =>
+      _EventListenerVector.#sortEventListenersOfSceneGraphPriorityDes(
+        l1,
+        l2,
+        nodePriorities
+      )
+    );
+  }
+
   public updateListeners(toRemovedListeners: EventListener[]): void {
     this.#removeUnregisteredListeners(
       this.#sceneGraphListeners,
       toRemovedListeners
     );
     this.#removeUnregisteredListeners(this.#fixedListeners, toRemovedListeners);
-
-    if (this.#sceneGraphListeners.length === 0) {
-      this.clearSceneGraphListeners();
-    }
-
-    if (this.#fixedListeners.length === 0) {
-      this.clearFixedListeners();
-    }
   }
 
   public removeListener(listener: EventListener): void {
@@ -89,7 +112,6 @@ export default class _EventListenerVector extends BaseClass {
     onEvent: (listener: EventListener, eventOrArgs: unknown) => boolean,
     eventOrArgs: unknown
   ): void {
-    let shouldStopPropagation = false;
     let i = 0;
 
     if (this.#fixedListeners.length !== 0) {
@@ -102,13 +124,12 @@ export default class _EventListenerVector extends BaseClass {
             eventOrArgs
           )
         ) {
-          shouldStopPropagation = true;
-          break;
+          return;
         }
       }
     }
 
-    if (this.#sceneGraphListeners.length !== 0 && !shouldStopPropagation) {
+    if (this.#sceneGraphListeners.length !== 0) {
       // priority == 0, scene graph priority
       for (let j = 0; j < this.#sceneGraphListeners.length; j++) {
         if (
@@ -118,13 +139,12 @@ export default class _EventListenerVector extends BaseClass {
             eventOrArgs
           )
         ) {
-          shouldStopPropagation = true;
-          break;
+          return;
         }
       }
     }
 
-    if (this.#fixedListeners.length !== 0 && !shouldStopPropagation) {
+    if (this.#fixedListeners.length !== 0) {
       // priority > 0
       for (; i < this.#fixedListeners.length; ++i) {
         if (
@@ -134,7 +154,7 @@ export default class _EventListenerVector extends BaseClass {
             eventOrArgs
           )
         ) {
-          break;
+          return;
         }
       }
     }
@@ -188,9 +208,17 @@ export default class _EventListenerVector extends BaseClass {
 
   get empty(): boolean {
     return (
-      this.#fixedListeners.length === 0 &&
-      this.#sceneGraphListeners.length === 0
+      this.fixedPriorityListenersEmpty &&
+      this.sceneGraphPriorityListenersEmpty
     );
+  }
+
+  get fixedPriorityListenersEmpty(): boolean {
+    return this.#fixedListeners.length === 0;
+  }
+
+  get sceneGraphPriorityListenersEmpty(): boolean {
+    return this.#sceneGraphListeners.length === 0;
   }
 
   get fixedPriorityListeners(): EventListener[] {

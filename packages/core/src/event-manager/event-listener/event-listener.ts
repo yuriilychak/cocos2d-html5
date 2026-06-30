@@ -25,6 +25,7 @@
 
 import { BaseClass } from "../../platform/class";
 import { EventListenerType } from "../../enums";
+import { log, _LogInfos } from "../../boot/debugger";
 
 import type { EventCallback } from "./types";
 import type { Event } from "../event";
@@ -68,6 +69,16 @@ export default abstract class EventListener<TEvent extends Event = Event> extend
 
   get onEvent(): EventCallback<TEvent> | null {
     return this.#onEvent;
+  }
+
+  static handleEventCallback(listener: EventListener, event: Event): boolean {
+    return listener.handleEvent(event);
+  }
+
+  public handleEvent(event: TEvent): boolean {
+    event.currentTarget = this.sceneGraphPriority;
+    this.#onEvent!(event);
+    return event.stopped;
   }
 
   /**
@@ -141,6 +152,19 @@ export default abstract class EventListener<TEvent extends Event = Event> extend
    */
   get fixedPriority(): number {
     return this.#fixedPriority;
+  }
+
+  public updateFixedPriority(fixedPriority: number): boolean {
+    if (this.sceneGraphPriority !== null) {
+      log(_LogInfos.eventManager_setPriority);
+    }
+
+    if (this.#fixedPriority === fixedPriority) {
+      return false;
+    }
+
+    this.#fixedPriority = fixedPriority;
+    return true;
   }
 
   /**
