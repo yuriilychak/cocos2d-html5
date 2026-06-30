@@ -180,7 +180,7 @@ export default class _EventListenerVector extends BaseClass {
     for (let i = 0; i < listeners.length; ) {
       const listener = listeners[i];
       if (!listener.registered) {
-        arrayRemoveObject(listeners, listener);
+        listeners.splice(i, 1);
         const idx = toRemovedListeners.indexOf(listener);
         if (idx !== -1) toRemovedListeners.splice(idx, 1);
       } else {

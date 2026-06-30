@@ -321,11 +321,9 @@ export function arrayVerifyType(arr, type) {
  * @param {*} delObj  remove object
  */
 export function arrayRemoveObject(arr, delObj) {
-  for (var i = 0, l = arr.length; i < l; i++) {
-    if (arr[i] === delObj) {
-      arr.splice(i, 1);
-      break;
-    }
+  const index = arr.indexOf(delObj);
+  if (index !== -1) {
+    arr.splice(index, 1);
   }
 }
 

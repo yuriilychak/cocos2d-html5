@@ -55,6 +55,27 @@ import { log, assert, _LogInfos } from "../boot/debugger";
  * </p>
  */
 export default class EventManager {
+  static #eventListenerIDByType = new Map([
+    [EventType.ACCELERATION, _EventListenerAcceleration.LISTENER_ID],
+    [EventType.KEYBOARD, _EventListenerKeyboard.LISTENER_ID],
+    [EventType.MOUSE, _EventListenerMouse.LISTENER_ID],
+    [EventType.FOCUS, _EventListenerFocus.LISTENER_ID]
+  ]);
+
+  static #listenerIDByType = new Map([
+    [
+      EventListenerType.TOUCH_ONE_BY_ONE,
+      _EventListenerTouchOneByOne.LISTENER_ID
+    ],
+    [
+      EventListenerType.TOUCH_ALL_AT_ONCE,
+      _EventListenerTouchAllAtOnce.LISTENER_ID
+    ],
+    [EventListenerType.MOUSE, _EventListenerMouse.LISTENER_ID],
+    [EventListenerType.ACCELERATION, _EventListenerAcceleration.LISTENER_ID],
+    [EventListenerType.KEYBOARD, _EventListenerKeyboard.LISTENER_ID]
+  ]);
+
   #listeners = new Map();
   #priorityDirtyFlags = new Map();
   #nodeListeners = new Map();
@@ -70,17 +91,13 @@ export default class EventManager {
   #director = null;
 
   static __getListenerID(event) {
+    if (EventManager.#eventListenerIDByType.has(event.type)) {
+      return EventManager.#eventListenerIDByType.get(event.type);
+    }
+
     switch (event.type) {
-      case EventType.ACCELERATION:
-        return _EventListenerAcceleration.LISTENER_ID;
       case EventType.CUSTOM:
         return event.eventName;
-      case EventType.KEYBOARD:
-        return _EventListenerKeyboard.LISTENER_ID;
-      case EventType.MOUSE:
-        return _EventListenerMouse.LISTENER_ID;
-      case EventType.FOCUS:
-        return _EventListenerFocus.LISTENER_ID;
       case EventType.TOUCH:
         // Touch listener is very special, it contains two kinds of listeners, EventListenerTouchOneByOne and EventListenerTouchAllAtOnce.
         // return UNKNOWN instead.
@@ -141,11 +158,6 @@ export default class EventManager {
     }
   }
 
-  _addListener(listener) {
-    if (this.#inDispatch === 0) this._forceAddEventListener(listener);
-    else this.#toAddedListeners.push(listener);
-  }
-
   _forceAddEventListener(listener) {
     const listenerID = listener.id;
     let listeners = this.#listeners.get(listenerID);
@@ -164,10 +176,6 @@ export default class EventManager {
       this._associateNodeAndEventListener(node, listener);
       if (node.isRunning()) this.resumeTarget(node);
     } else this._setDirty(listenerID, EventManagerDirtyFlag.FIXED_PRIORITY);
-  }
-
-  _getListeners(listenerID) {
-    return this.#listeners.get(listenerID);
   }
 
   _updateDirtyFlagForSceneGraph() {
@@ -266,8 +274,10 @@ export default class EventManager {
   }
 
   _sortListenersOfSceneGraphPriority(listenerID, rootNode) {
-    const listeners = this._getListeners(listenerID);
-    if (!listeners || listeners.sceneGraphPriorityListenersEmpty) return;
+    const listeners = this.#listeners.get(listenerID);
+    if (!listeners || listeners.sceneGraphPriorityListenersEmpty) {
+      return;
+    }
 
     // Reset priority index
     this.#nodePriorityIndex = 0;
@@ -304,14 +314,8 @@ export default class EventManager {
       }
     }
 
-    if (this.#toAddedListeners.length !== 0) {
-      for (let i = 0, len = this.#toAddedListeners.length; i < len; i++)
-        this._forceAddEventListener(this.#toAddedListeners[i]);
-      this.#toAddedListeners.length = 0;
-    }
-    if (this.#toRemovedListeners.length !== 0) {
-      this._cleanToRemovedListeners();
-    }
+    this._flushToAddedListeners();
+    this._cleanToRemovedListeners();
   }
 
   _updateTouchListeners(event) {
@@ -325,18 +329,27 @@ export default class EventManager {
 
     assert(locInDispatch === 1, _LogInfos.EventManager__updateListeners_2);
 
-    if (this.#toAddedListeners.length !== 0) {
-      for (let i = 0, len = this.#toAddedListeners.length; i < len; i++)
-        this._forceAddEventListener(this.#toAddedListeners[i]);
-      this.#toAddedListeners.length = 0;
+    this._flushToAddedListeners();
+    this._cleanToRemovedListeners();
+  }
+
+  _flushToAddedListeners() {
+    if (this.#toAddedListeners.length === 0) {
+      return;
     }
-    if (this.#toRemovedListeners.length !== 0) {
-      this._cleanToRemovedListeners();
+
+    for (let i = 0, len = this.#toAddedListeners.length; i < len; i++) {
+      this._forceAddEventListener(this.#toAddedListeners[i]);
     }
+    this.#toAddedListeners.length = 0;
   }
 
   //Remove all listeners in _toRemoveListeners list and cleanup
   _cleanToRemovedListeners() {
+    if (this.#toRemovedListeners.length === 0) {
+      return;
+    }
+
     for (let i = 0; i < this.#toRemovedListeners.length; i++) {
       const selListener = this.#toRemovedListeners[i];
       if (!this.#listeners.has(selListener.id)) continue;
@@ -374,10 +387,10 @@ export default class EventManager {
     this._sortEventListeners(_EventListenerTouchOneByOne.LISTENER_ID);
     this._sortEventListeners(_EventListenerTouchAllAtOnce.LISTENER_ID);
 
-    const oneByOneListeners = this._getListeners(
+    const oneByOneListeners = this.#listeners.get(
       _EventListenerTouchOneByOne.LISTENER_ID
     );
-    const allAtOnceListeners = this._getListeners(
+    const allAtOnceListeners = this.#listeners.get(
       _EventListenerTouchAllAtOnce.LISTENER_ID
     );
 
@@ -563,32 +576,31 @@ export default class EventManager {
     if (!(listener instanceof EventListener)) {
       assert(!isNumber(nodeOrPriority), _LogInfos.eventManager_addListener_3);
       listener = EventListener.create(listener);
-    } else {
-      if (listener.registered) {
-        log(_LogInfos.eventManager_addListener_4);
-        return;
-      }
+    } else if (listener.registered) {
+      log(_LogInfos.eventManager_addListener_4);
+      return;
     }
 
     if (!listener.available) return;
 
-    if (isNumber(nodeOrPriority)) {
-      if (nodeOrPriority === 0) {
-        log(_LogInfos.eventManager_addListener);
-        return;
-      }
 
-      listener.sceneGraphPriority = null;
-      listener.fixedPriority = nodeOrPriority;
-      listener.registered = true;
-      listener.paused = false;
-    } else {
-      listener.sceneGraphPriority = nodeOrPriority;
-      listener.fixedPriority = 0;
-      listener.registered = true;
+    const isFixedPriority = isNumber(nodeOrPriority);
+    if (isFixedPriority && nodeOrPriority === 0) {
+      log(_LogInfos.eventManager_addListener);
+      return;
     }
 
-    this._addListener(listener);
+    listener.setRegisteredPriority(nodeOrPriority);
+
+    if (isFixedPriority) {
+      listener.paused = false;
+    }
+
+    if (this.#inDispatch === 0) {
+      this._forceAddEventListener(listener);
+    } else {
+      this.#toAddedListeners.push(listener);
+    }
 
     return listener;
   }
@@ -648,7 +660,7 @@ export default class EventManager {
       for (let i = 0, len = locToAddedListeners.length; i < len; i++) {
         const selListener = locToAddedListeners[i];
         if (selListener === listener) {
-          arrayRemoveObject(locToAddedListeners, selListener);
+          locToAddedListeners.splice(i, 1);
           selListener.registered = false;
           break;
         }
@@ -720,35 +732,12 @@ export default class EventManager {
         for (i = 0, len = locChildren.length; i < len; i++)
           this.removeListeners(locChildren[i], true);
       }
+    } else if (EventManager.#listenerIDByType.has(listenerType)) {
+      this._removeListenersForListenerID(
+        EventManager.#listenerIDByType.get(listenerType)
+      );
     } else {
-      switch (listenerType) {
-        case EventListenerType.TOUCH_ONE_BY_ONE:
-          this._removeListenersForListenerID(
-            _EventListenerTouchOneByOne.LISTENER_ID
-          );
-          break;
-        case EventListenerType.TOUCH_ALL_AT_ONCE:
-          this._removeListenersForListenerID(
-            _EventListenerTouchAllAtOnce.LISTENER_ID
-          );
-          break;
-        case EventListenerType.MOUSE:
-          this._removeListenersForListenerID(_EventListenerMouse.LISTENER_ID);
-          break;
-        case EventListenerType.ACCELERATION:
-          this._removeListenersForListenerID(
-            _EventListenerAcceleration.LISTENER_ID
-          );
-          break;
-        case EventListenerType.KEYBOARD:
-          this._removeListenersForListenerID(
-            _EventListenerKeyboard.LISTENER_ID
-          );
-          break;
-        default:
-          log(_LogInfos.eventManager_removeListeners);
-          break;
-      }
+      log(_LogInfos.eventManager_removeListeners);
     }
   }
 

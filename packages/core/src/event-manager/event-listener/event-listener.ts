@@ -26,10 +26,13 @@
 import { BaseClass } from "../../platform/class";
 import { EventListenerType } from "../../enums";
 import { log, _LogInfos } from "../../boot/debugger";
+import { isNumber } from "../../boot/utils";
 
 import type { EventCallback } from "./types";
 import type { Event } from "../event";
 export type { EventCallback } from "./types";
+
+type NodeLike = object;
 
 /**
  * <p>
@@ -165,6 +168,19 @@ export default abstract class EventListener<TEvent extends Event = Event> extend
 
     this.#fixedPriority = fixedPriority;
     return true;
+  }
+
+  public setRegisteredPriority(fixedPriority: number): void;
+  public setRegisteredPriority(node: NodeLike): void;
+  public setRegisteredPriority(nodeOrPriority: number | NodeLike): void {
+    if (isNumber(nodeOrPriority)) {
+      this.sceneGraphPriority = null;
+      this.fixedPriority = nodeOrPriority;
+    } else {
+      this.sceneGraphPriority = nodeOrPriority;
+      this.fixedPriority = 0;
+    }
+    this.registered = true;
   }
 
   /**

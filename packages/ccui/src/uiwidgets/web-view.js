@@ -69,11 +69,8 @@ export class WebView extends Widget {
         hasChild = container.compareDocumentPosition(div) % 16;
       }
       if (hasChild) container.removeChild(div);
-      var list = eventManager._getListeners(
-        GameEvent.RESIZE
-      ).fixedPriorityListeners;
-      eventManager._removeListenerInVector(list, cmd._listener);
-      cmd._listener = null;
+      eventManager.removeListener(this._listener);
+      this._listener = null;
     }
     cmd.updateStatus();
     cmd.resize(ServiceLocator.eglView);
@@ -352,11 +349,8 @@ if (webViewSys.specification.isMobile) {
       if (node._parent && node._visible)
         this.updateMatrix(this._worldTransform, view._scaleX, view._scaleY);
       else {
-        var list = eventManager._getListeners(
-          GameEvent.RESIZE
-        ).fixedPriorityListeners;
-        eventManager._removeListenerInVector(list, this._listener);
-        this._listener = null;
+        eventManager.removeListener(node._listener);
+        node._listener = null;
       }
     }
 
