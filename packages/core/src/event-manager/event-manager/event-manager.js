@@ -23,16 +23,16 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Node } from "../base-nodes/node";
-import { EventCustom } from "./event";
+import { Node } from "../../base-nodes/node";
+import { EventCustom } from "../event";
 import {
   EventListenerType,
   EventManagerDirtyFlag,
   EventType,
   GameEvent
-} from "../enums";
-import { arrayRemoveObject, copyArray } from "../platform/macro/utils";
-import { isNumber } from "../boot/utils";
+} from "../../enums";
+import { arrayRemoveObject, copyArray } from "../../platform/macro/utils";
+import { isNumber } from "../../boot/utils";
 import {
   EventListener,
   _EventListenerCustom,
@@ -43,8 +43,9 @@ import {
   _EventListenerAcceleration,
   _EventListenerKeyboard,
   _EventListenerVector
-} from "./event-listener";
-import { log, assert, _LogInfos } from "../boot/debugger";
+} from "../event-listener";
+import { log, assert, _LogInfos } from "../../boot/debugger";
+import { ToAddedListeners } from "./to-added-listeners";
 
 /**
  * <p>
@@ -81,7 +82,7 @@ export default class EventManager {
   #nodeListeners = new Map();
   #nodePriorities = new Map();
   #globalZOrderNodes = new Map();
-  #toAddedListeners = [];
+  #toAddedListeners;
   #toRemovedListeners = [];
   #dirtyNodes = [];
   #inDispatch = 0;
@@ -89,6 +90,10 @@ export default class EventManager {
   #nodePriorityIndex = 0;
   #internalCustomListenerIDs = [GameEvent.HIDE, GameEvent.SHOW];
   #director = null;
+
+  constructor() {
+    this.#toAddedListeners = new ToAddedListeners();
+  }
 
   static __getListenerID(event) {
     if (EventManager.#eventListenerIDByType.has(event.type)) {
@@ -114,8 +119,7 @@ export default class EventManager {
 
   _setDirtyForNode(node) {
     // Mark the node dirty only when there is an event listener associated with it.
-    if (this.#nodeListeners.has(node.__instanceId))
-      this.#dirtyNodes.push(node);
+    if (this.#nodeListeners.has(node.__instanceId)) this.#dirtyNodes.push(node);
     const _children = node.children;
     for (let i = 0, len = _children.length; i < len; i++)
       this._setDirtyForNode(_children[i]);
@@ -183,8 +187,7 @@ export default class EventManager {
 
     const locDirtyNodes = this.#dirtyNodes,
       locNodeListeners = this.#nodeListeners;
-    let selListeners,
-      selListener;
+    let selListeners, selListener;
     for (let i = 0, len = locDirtyNodes.length; i < len; i++) {
       selListeners = locNodeListeners.get(locDirtyNodes[i].__instanceId);
       if (selListeners) {
@@ -234,16 +237,7 @@ export default class EventManager {
       this.#listeners.delete(listenerID);
     }
 
-    let listener;
-
-    for (let i = 0; i < this.#toAddedListeners.length; ) {
-      listener = this.#toAddedListeners[i];
-      if (listener && listener.id === listenerID) {
-        this.#toAddedListeners.splice(i, 1);
-      } else {
-        ++i;
-      }
-    }
+    this.#toAddedListeners.removeForListenerID(listenerID);
   }
 
   _sortEventListeners(listenerID) {
@@ -334,14 +328,14 @@ export default class EventManager {
   }
 
   _flushToAddedListeners() {
-    if (this.#toAddedListeners.length === 0) {
+    const listeners = this.#toAddedListeners.apply();
+    if (listeners.length === 0) {
       return;
     }
 
-    for (let i = 0, len = this.#toAddedListeners.length; i < len; i++) {
-      this._forceAddEventListener(this.#toAddedListeners[i]);
+    for (let i = 0, len = listeners.length; i < len; i++) {
+      this._forceAddEventListener(listeners[i]);
     }
-    this.#toAddedListeners.length = 0;
   }
 
   //Remove all listeners in _toRemoveListeners list and cleanup
@@ -458,7 +452,11 @@ export default class EventManager {
     listeners.push(listener);
   }
 
-  _dissociateNodeAndEventListener(listeners, index, shouldTrackRemoved = false) {
+  _dissociateNodeAndEventListener(
+    listeners,
+    index,
+    shouldTrackRemoved = false
+  ) {
     if (listeners === null || index === -1) {
       return false;
     }
@@ -542,8 +540,7 @@ export default class EventManager {
 
       const zOrdersLen = globalZOrders.length,
         locNodePriorities = this.#nodePriorities;
-      let selZOrders,
-        j;
+      let selZOrders, j;
       for (i = 0; i < zOrdersLen; i++) {
         selZOrders = locGlobalZOrderNodes.get(globalZOrders[i]);
         for (j = 0; j < selZOrders.length; j++)
@@ -583,7 +580,6 @@ export default class EventManager {
 
     if (!listener.available) return;
 
-
     const isFixedPriority = isNumber(nodeOrPriority);
     if (isFixedPriority && nodeOrPriority === 0) {
       log(_LogInfos.eventManager_addListener);
@@ -599,7 +595,7 @@ export default class EventManager {
     if (this.#inDispatch === 0) {
       this._forceAddEventListener(listener);
     } else {
-      this.#toAddedListeners.push(listener);
+      this.#toAddedListeners.add(listener);
     }
 
     return listener;
@@ -628,8 +624,7 @@ export default class EventManager {
     const locListeners = this.#listeners;
     for (const [listenerID, listeners] of locListeners) {
       const fixedPriorityListeners = listeners.fixedPriorityListeners,
-        sceneGraphPriorityListeners =
-          listeners.sceneGraphPriorityListeners;
+        sceneGraphPriorityListeners = listeners.sceneGraphPriorityListeners;
 
       isFound = this._removeListenerInVector(
         sceneGraphPriorityListeners,
@@ -656,15 +651,7 @@ export default class EventManager {
     }
 
     if (!isFound) {
-      const locToAddedListeners = this.#toAddedListeners;
-      for (let i = 0, len = locToAddedListeners.length; i < len; i++) {
-        const selListener = locToAddedListeners[i];
-        if (selListener === listener) {
-          locToAddedListeners.splice(i, 1);
-          selListener.registered = false;
-          break;
-        }
-      }
+      this.#toAddedListeners.remove(listener);
     }
   }
 
@@ -672,7 +659,7 @@ export default class EventManager {
     const index =
       listeners !== null
         ? listeners.findIndex(
-            listener =>
+            (listener) =>
               listener.onCustomEvent === callback ||
               listener.onEvent === callback
           )
@@ -716,15 +703,7 @@ export default class EventManager {
       // This is to catch the scenario where the node gets destroyed before it's listener
       // is added into the event dispatcher fully. This could happen if a node registers a listener
       // and gets destroyed while we are dispatching an event (touch etc.)
-      const locToAddedListeners = this.#toAddedListeners;
-      for (i = 0; i < locToAddedListeners.length; ) {
-        const listener = locToAddedListeners[i];
-        if (listener.sceneGraphPriority === listenerType) {
-          listener.sceneGraphPriority = null; // Ensure no dangling ptr to the target node.
-          listener.registered = false;
-          locToAddedListeners.splice(i, 1);
-        } else ++i;
-      }
+      this.#toAddedListeners.removeForNode(listenerType);
 
       if (recursive === true) {
         const locChildren = listenerType.children;
@@ -837,4 +816,5 @@ export default class EventManager {
   dispatchCustomEvent(eventName, optionalUserData) {
     this.dispatchEvent(new EventCustom(eventName, optionalUserData));
   }
+
 }
