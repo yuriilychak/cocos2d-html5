@@ -41,11 +41,11 @@ import {
   _EventListenerTouchAllAtOnce,
   _EventListenerFocus,
   _EventListenerAcceleration,
-  _EventListenerKeyboard,
-  _EventListenerVector
+  _EventListenerKeyboard
 } from "../event-listener";
 import { log, assert, _LogInfos } from "../../boot/debugger";
 import { ToAddedListeners } from "./to-added-listeners";
+import EventManagerListeners from "./event-manager-listeners";
 
 /**
  * <p>
@@ -77,23 +77,18 @@ export default class EventManager {
     [EventListenerType.KEYBOARD, _EventListenerKeyboard.LISTENER_ID]
   ]);
 
-  #listeners = new Map();
+  #listeners = new EventManagerListeners();
   #priorityDirtyFlags = new Map();
   #nodeListeners = new Map();
   #nodePriorities = new Map();
   #globalZOrderNodes = new Map();
-  #toAddedListeners;
-  #toRemovedListeners = [];
+  #toAddedListeners = new ToAddedListeners();
   #dirtyNodes = [];
   #inDispatch = 0;
   #isEnabled = false;
   #nodePriorityIndex = 0;
   #internalCustomListenerIDs = [GameEvent.HIDE, GameEvent.SHOW];
   #director = null;
-
-  constructor() {
-    this.#toAddedListeners = new ToAddedListeners();
-  }
 
   static __getListenerID(event) {
     if (EventManager.#eventListenerIDByType.has(event.type)) {
@@ -148,7 +143,7 @@ export default class EventManager {
    * @param {Node} node
    * @param {Boolean} [recursive=false]
    */
-  resumeTarget(node, recursive) {
+  resumeTarget(node, recursive = false) {
     const listeners = this.#nodeListeners.get(node.__instanceId);
     if (listeners) {
       for (let i = 0, len = listeners.length; i < len; i++)
@@ -164,22 +159,22 @@ export default class EventManager {
 
   _forceAddEventListener(listener) {
     const listenerID = listener.id;
-    let listeners = this.#listeners.get(listenerID);
-    if (!listeners) {
-      listeners = new _EventListenerVector();
-      this.#listeners.set(listenerID, listeners);
-    }
-    listeners.push(listener);
+    this.#listeners.addToVector(listener);
+
+    this._setDirty(
+      listenerID,
+      listener.fixedPriority === 0
+        ? EventManagerDirtyFlag.SCENE_GRAPH_PRIORITY
+        : EventManagerDirtyFlag.FIXED_PRIORITY
+    );
 
     if (listener.fixedPriority === 0) {
-      this._setDirty(listenerID, EventManagerDirtyFlag.SCENE_GRAPH_PRIORITY);
-
       const node = listener.sceneGraphPriority;
       if (node === null) log(_LogInfos.eventManager__forceAddEventListener);
 
       this._associateNodeAndEventListener(node, listener);
       if (node.isRunning()) this.resumeTarget(node);
-    } else this._setDirty(listenerID, EventManagerDirtyFlag.FIXED_PRIORITY);
+    }
   }
 
   _updateDirtyFlagForSceneGraph() {
@@ -253,7 +248,7 @@ export default class EventManager {
     this.#priorityDirtyFlags.set(listenerID, EventManagerDirtyFlag.NONE);
 
     if (dirtyFlag & EventManagerDirtyFlag.FIXED_PRIORITY)
-      this._sortListenersOfFixedPriority(listenerID);
+      this.#listeners.sortFixedPriority(listenerID);
 
     if (dirtyFlag & EventManagerDirtyFlag.SCENE_GRAPH_PRIORITY) {
       const rootNode = this.#director.getRunningScene();
@@ -282,34 +277,15 @@ export default class EventManager {
     listeners.sortSceneGraphPriorityListeners(this.#nodePriorities);
   }
 
-  _sortListenersOfFixedPriority(listenerID) {
-    if (!this.#listeners.has(listenerID)) {
-      return;
-    }
-
-    const listeners = this.#listeners.get(listenerID);
-    listeners.sortFixedPriorityListeners();
-  }
-
-  _onUpdateListeners(listenerID) {
-    if (!this.#listeners.has(listenerID)) {
-      return;
-    }
-
-    const listeners = this.#listeners.get(listenerID);
-    listeners.updateListeners(this.#toRemovedListeners);
-  }
-
   frameUpdateListeners() {
-    for (const [id, listeners] of this.#listeners) {
-      if (listeners.empty) {
-        this.#priorityDirtyFlags.delete(id);
-        this.#listeners.delete(id);
-      }
+    const listenerIDsToDelete = this.#listeners.emptyIDs;
+    for (const id of listenerIDsToDelete) {
+      this.#priorityDirtyFlags.delete(id);
+      this.#listeners.delete(id);
     }
 
     this._flushToAddedListeners();
-    this._cleanToRemovedListeners();
+    this.#listeners.cleanRemoved();
   }
 
   _updateTouchListeners(event) {
@@ -318,13 +294,13 @@ export default class EventManager {
 
     if (locInDispatch > 1) return;
 
-    this._onUpdateListeners(_EventListenerTouchOneByOne.LISTENER_ID);
-    this._onUpdateListeners(_EventListenerTouchAllAtOnce.LISTENER_ID);
+    this.#listeners.update(_EventListenerTouchOneByOne.LISTENER_ID);
+    this.#listeners.update(_EventListenerTouchAllAtOnce.LISTENER_ID);
 
     assert(locInDispatch === 1, _LogInfos.EventManager__updateListeners_2);
 
     this._flushToAddedListeners();
-    this._cleanToRemovedListeners();
+    this.#listeners.cleanRemoved();
   }
 
   _flushToAddedListeners() {
@@ -336,22 +312,6 @@ export default class EventManager {
     for (let i = 0, len = listeners.length; i < len; i++) {
       this._forceAddEventListener(listeners[i]);
     }
-  }
-
-  //Remove all listeners in _toRemoveListeners list and cleanup
-  _cleanToRemovedListeners() {
-    if (this.#toRemovedListeners.length === 0) {
-      return;
-    }
-
-    for (let i = 0; i < this.#toRemovedListeners.length; i++) {
-      const selListener = this.#toRemovedListeners[i];
-      if (!this.#listeners.has(selListener.id)) continue;
-
-      const listeners = this.#listeners.get(selListener.id);
-      listeners.removeListener(selListener);
-    }
-    this.#toRemovedListeners.length = 0;
   }
 
   _onTouchEventCallback(listener, argsObj) {
@@ -485,16 +445,17 @@ export default class EventManager {
     }
 
     if (shouldTrackRemoved) {
-      this.#toRemovedListeners.push(listener);
+      this.#listeners.addToRemove(listener);
     }
 
     return false;
   }
 
   _setDirty(listenerID, flag) {
-    const locDirtyFlags = this.#priorityDirtyFlags;
-    if (!locDirtyFlags.has(listenerID)) locDirtyFlags.set(listenerID, flag);
-    else locDirtyFlags.set(listenerID, flag | locDirtyFlags.get(listenerID));
+    const dirtyFlag = this.#priorityDirtyFlags.has(listenerID)
+      ? flag | this.#priorityDirtyFlags.get(listenerID)
+      : flag;
+    this.#priorityDirtyFlags.set(listenerID, dirtyFlag);
   }
 
   _visitTarget(node, isRootNode) {
@@ -613,6 +574,36 @@ export default class EventManager {
     return listener;
   }
 
+  _removeListenerTemp(listener, listeners, isSceneGraph) {
+    const listenersToCheck = isSceneGraph
+      ? listeners.sceneGraphPriorityListeners
+      : listeners.fixedPriorityListeners;
+
+    if (!this._removeListenerInVector(listenersToCheck, listener)) {
+      return false;
+    }
+
+    const flag = isSceneGraph
+      ? EventManagerDirtyFlag.SCENE_GRAPH_PRIORITY
+      : EventManagerDirtyFlag.FIXED_PRIORITY;
+    this._setDirty(listener.id, flag);
+
+    return true;
+  }
+
+  _removeListenerInner(listener, listeners, listenerID) {
+    const isFound =
+      this._removeListenerTemp(listener, listeners, true) ||
+      this._removeListenerTemp(listener, listeners, false);
+
+    if (listeners.empty) {
+      this.#priorityDirtyFlags.delete(listenerID);
+      this.#listeners.delete(listenerID);
+    }
+
+    return isFound;
+  }
+
   /**
    * Remove a listener
    * @param {EventListener} listener an event listener or a registered node target
@@ -620,35 +611,9 @@ export default class EventManager {
   removeListener(listener) {
     if (listener == null) return;
 
-    let isFound;
-    const locListeners = this.#listeners;
-    for (const [listenerID, listeners] of locListeners) {
-      const fixedPriorityListeners = listeners.fixedPriorityListeners,
-        sceneGraphPriorityListeners = listeners.sceneGraphPriorityListeners;
-
-      isFound = this._removeListenerInVector(
-        sceneGraphPriorityListeners,
-        listener
-      );
-      if (isFound) {
-        // fixed #4160: Dirty flag need to be updated after listeners were removed.
-        this._setDirty(listener.id, EventManagerDirtyFlag.SCENE_GRAPH_PRIORITY);
-      } else {
-        isFound = this._removeListenerInVector(
-          fixedPriorityListeners,
-          listener
-        );
-        if (isFound)
-          this._setDirty(listener.id, EventManagerDirtyFlag.FIXED_PRIORITY);
-      }
-
-      if (listeners.empty) {
-        this.#priorityDirtyFlags.delete(listenerID);
-        locListeners.delete(listenerID);
-      }
-
-      if (isFound) break;
-    }
+    const isFound = this.#listeners.removeFromListeners(
+      listener,
+      this._removeListenerInner.bind(this));
 
     if (!isFound) {
       this.#toAddedListeners.remove(listener);
@@ -732,7 +697,7 @@ export default class EventManager {
    * Removes all listeners
    */
   removeAllListeners() {
-    const ids = this.#listeners.keys();
+    const ids = this.#listeners.keys;
     for (const id of ids) {
       if (!this.#internalCustomListenerIDs.includes(id)) {
         this._removeListenersForListenerID(id);
@@ -750,17 +715,9 @@ export default class EventManager {
       return;
     }
 
-    const listeners = this.#listeners.values();
-
-    for (const selListeners of listeners) {
-      if (!selListeners.fixedPriorityListeners.includes(listener)) {
-        continue;
-      }
-
-      if (listener.updateFixedPriority(fixedPriority)) {
-        this._setDirty(listener.id, EventManagerDirtyFlag.FIXED_PRIORITY);
-      }
-      return;
+    const listenerID = this.#listeners.getFixedPriorityListenerID(listener);
+    if (listenerID !== null && listener.updateFixedPriority(fixedPriority)) {
+      this._setDirty(listenerID, EventManagerDirtyFlag.FIXED_PRIORITY);
     }
   }
 
@@ -799,11 +756,7 @@ export default class EventManager {
 
     const listenerID = EventManager.__getListenerID(event);
     this._sortEventListeners(listenerID);
-    if (this.#listeners.has(listenerID)) {
-      const selListeners = this.#listeners.get(listenerID);
-      selListeners.dispatchEvent(EventListener.handleEventCallback, event);
-      this._onUpdateListeners(listenerID);
-    }
+    this.#listeners.dispatchEvent(listenerID, event);
 
     this.#inDispatch--;
   }

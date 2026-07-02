@@ -1,32 +1,21 @@
 import RemoveForListenerIDStrategy from "./remove-for-listener-id-strategy";
 import RemoveForNodeStrategy from "./remove-for-node-strategy";
 import RemoveListenerStrategy from "./remove-listener-strategy";
+import ListenersQueue from "../listeners-queue";
 
 import type { EventListener } from "../../event-listener";
 import type { ToAddedListenersRemoveStrategy } from "./types";
 
-export default class ToAddedListeners {
-  #listeners: EventListener[];
+export default class ToAddedListeners extends ListenersQueue {
   #removeForListenerIDStrategy: RemoveForListenerIDStrategy;
   #removeForNodeStrategy: RemoveForNodeStrategy;
   #removeListenerStrategy: RemoveListenerStrategy;
 
   constructor() {
-    this.#listeners = [];
+    super();
     this.#removeForListenerIDStrategy = new RemoveForListenerIDStrategy();
     this.#removeForNodeStrategy = new RemoveForNodeStrategy();
     this.#removeListenerStrategy = new RemoveListenerStrategy();
-  }
-
-  add(listener: EventListener): void {
-    this.#listeners.push(listener);
-  }
-
-  apply(): EventListener[] {
-    const result = this.#listeners.slice();
-    this.#listeners.length = 0;
-
-    return result;
   }
 
   removeForListenerID(listenerID: string): void {
@@ -45,9 +34,9 @@ export default class ToAddedListeners {
   }
 
   #remove(strategy: ToAddedListenersRemoveStrategy): void {
-    for (let i = 0; i < this.#listeners.length; ) {
-      if (strategy.shouldRemove(this.#listeners[i])) {
-        this.#listeners.splice(i, 1);
+    for (let i = 0; i < this.listeners.length; ) {
+      if (strategy.shouldRemove(this.listeners[i])) {
+        this.listeners.splice(i, 1);
         if (strategy.stopAfterRemove) {
           break;
         }
