@@ -30,9 +30,8 @@ import { isNumber } from "../../boot/utils";
 
 import type { EventCallback } from "./types";
 import type { Event } from "../event";
+import type { Node } from "../../base-nodes/node";
 export type { EventCallback } from "./types";
-
-type NodeLike = object;
 
 /**
  * <p>
@@ -47,7 +46,7 @@ export default abstract class EventListener<TEvent extends Event = Event> extend
   #type: EventListenerType;
   #id: string;
   #fixedPriority: number = 0;
-  #node: unknown = null;
+  #node: Node | null = null;
   #paused: boolean = true;
   #registered: boolean = false;
   #enabled: boolean = true;
@@ -171,8 +170,8 @@ export default abstract class EventListener<TEvent extends Event = Event> extend
   }
 
   public setRegisteredPriority(fixedPriority: number): void;
-  public setRegisteredPriority(node: NodeLike): void;
-  public setRegisteredPriority(nodeOrPriority: number | NodeLike): void {
+  public setRegisteredPriority(node: Node): void;
+  public setRegisteredPriority(nodeOrPriority: number | Node): void {
     if (isNumber(nodeOrPriority)) {
       this.sceneGraphPriority = null;
       this.fixedPriority = nodeOrPriority;
@@ -188,7 +187,7 @@ export default abstract class EventListener<TEvent extends Event = Event> extend
    * @param {Node} node
    * @private
    */
-  set sceneGraphPriority(node: unknown) {
+  set sceneGraphPriority(node: Node | null) {
     this.#node = node;
   }
 
@@ -197,7 +196,7 @@ export default abstract class EventListener<TEvent extends Event = Event> extend
    * @returns {Node} if it's a fixed priority listener, non-null for scene graph priority listener
    * @private
    */
-  get sceneGraphPriority(): unknown {
+  get sceneGraphPriority(): Node | null {
     return this.#node;
   }
 

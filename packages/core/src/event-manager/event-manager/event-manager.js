@@ -31,7 +31,7 @@ import {
   EventType,
   GameEvent
 } from "../../enums";
-import { arrayRemoveObject, copyArray } from "../../platform/macro/utils";
+import { copyArray } from "../../platform/macro/utils";
 import { isNumber } from "../../boot/utils";
 import {
   EventListener,
@@ -46,6 +46,8 @@ import {
 import { log, assert, _LogInfos } from "../../boot/debugger";
 import { ToAddedListeners } from "./to-added-listeners";
 import EventManagerListeners from "./event-manager-listeners";
+import NodeListeners from "./node-listeners";
+import NodePriorities from "./node-priorities";
 
 /**
  * <p>
@@ -78,15 +80,11 @@ export default class EventManager {
   ]);
 
   #listeners = new EventManagerListeners();
-  #priorityDirtyFlags = new Map();
-  #nodeListeners = new Map();
-  #nodePriorities = new Map();
-  #globalZOrderNodes = new Map();
+  #nodeListeners = new NodeListeners();
+  #nodePriorities = new NodePriorities();
   #toAddedListeners = new ToAddedListeners();
-  #dirtyNodes = [];
   #inDispatch = 0;
   #isEnabled = false;
-  #nodePriorityIndex = 0;
   #internalCustomListenerIDs = [GameEvent.HIDE, GameEvent.SHOW];
   #director = null;
 
@@ -113,98 +111,19 @@ export default class EventManager {
   }
 
   _setDirtyForNode(node) {
-    // Mark the node dirty only when there is an event listener associated with it.
-    if (this.#nodeListeners.has(node.__instanceId)) this.#dirtyNodes.push(node);
-    const _children = node.children;
-    for (let i = 0, len = _children.length; i < len; i++)
-      this._setDirtyForNode(_children[i]);
-  }
-
-  /**
-   * Pauses all listeners which are associated the specified target.
-   * @param {Node} node
-   * @param {Boolean} [recursive=false]
-   */
-  pauseTarget(node, recursive = false) {
-    const listeners = this.#nodeListeners.get(node.__instanceId);
-    if (listeners) {
-      for (let i = 0, len = listeners.length; i < len; i++)
-        listeners[i].paused = true;
-    }
-    if (recursive === true) {
-      const locChildren = node.children;
-      for (let i = 0, len = locChildren.length; i < len; i++)
-        this.pauseTarget(locChildren[i], true);
-    }
-  }
-
-  /**
-   * Resumes all listeners which are associated the specified target.
-   * @param {Node} node
-   * @param {Boolean} [recursive=false]
-   */
-  resumeTarget(node, recursive = false) {
-    const listeners = this.#nodeListeners.get(node.__instanceId);
-    if (listeners) {
-      for (let i = 0, len = listeners.length; i < len; i++)
-        listeners[i].paused = false;
-    }
-    this._setDirtyForNode(node);
-    if (recursive === true) {
-      const locChildren = node.children;
-      for (let i = 0, len = locChildren.length; i < len; i++)
-        this.resumeTarget(locChildren[i], true);
-    }
+    this.#nodeListeners.setDirtyForNode(node);
   }
 
   _forceAddEventListener(listener) {
-    const listenerID = listener.id;
     this.#listeners.addToVector(listener);
 
-    this._setDirty(
-      listenerID,
-      listener.fixedPriority === 0
-        ? EventManagerDirtyFlag.SCENE_GRAPH_PRIORITY
-        : EventManagerDirtyFlag.FIXED_PRIORITY
-    );
-
     if (listener.fixedPriority === 0) {
-      const node = listener.sceneGraphPriority;
-      if (node === null) log(_LogInfos.eventManager__forceAddEventListener);
-
-      this._associateNodeAndEventListener(node, listener);
-      if (node.isRunning()) this.resumeTarget(node);
+      this.#nodeListeners.associateNodeAndEventListener(listener);
     }
-  }
-
-  _updateDirtyFlagForSceneGraph() {
-    if (this.#dirtyNodes.length === 0) return;
-
-    const locDirtyNodes = this.#dirtyNodes,
-      locNodeListeners = this.#nodeListeners;
-    let selListeners, selListener;
-    for (let i = 0, len = locDirtyNodes.length; i < len; i++) {
-      selListeners = locNodeListeners.get(locDirtyNodes[i].__instanceId);
-      if (selListeners) {
-        for (
-          let j = 0, listenersLen = selListeners.length;
-          j < listenersLen;
-          j++
-        ) {
-          selListener = selListeners[j];
-          if (selListener)
-            this._setDirty(
-              selListener.id,
-              EventManagerDirtyFlag.SCENE_GRAPH_PRIORITY
-            );
-        }
-      }
-    }
-    this.#dirtyNodes.length = 0;
   }
 
   _removeAllListenersInVector(listenerVector) {
-    if (!listenerVector) {
+    if (!listenerVector || !listenerVector.length) {
       return;
     }
 
@@ -224,8 +143,6 @@ export default class EventManager {
 
       // Remove the dirty flag according the 'listenerID'.
       // No need to check whether the dispatcher is dispatching event.
-      this.#priorityDirtyFlags.delete(listenerID);
-
       if (!this.#inDispatch) {
         listeners.clear();
       }
@@ -236,29 +153,10 @@ export default class EventManager {
   }
 
   _sortEventListeners(listenerID) {
-    const dirtyFlag = this.#priorityDirtyFlags.has(listenerID)
-      ? this.#priorityDirtyFlags.get(listenerID)
-      : EventManagerDirtyFlag.NONE;
+    const rootNode = this.#director.getRunningScene();
 
-    if (dirtyFlag === EventManagerDirtyFlag.NONE) {
-      return;
-    }
-
-    // Clear the dirty flag first, if `rootNode` is null, then set its dirty flag of scene graph priority
-    this.#priorityDirtyFlags.set(listenerID, EventManagerDirtyFlag.NONE);
-
-    if (dirtyFlag & EventManagerDirtyFlag.FIXED_PRIORITY)
-      this.#listeners.sortFixedPriority(listenerID);
-
-    if (dirtyFlag & EventManagerDirtyFlag.SCENE_GRAPH_PRIORITY) {
-      const rootNode = this.#director.getRunningScene();
-      if (rootNode)
-        this._sortListenersOfSceneGraphPriority(listenerID, rootNode);
-      else
-        this.#priorityDirtyFlags.set(
-          listenerID,
-          EventManagerDirtyFlag.SCENE_GRAPH_PRIORITY
-        );
+    if (this.#listeners.sortEventListeners(listenerID, Boolean(rootNode))) {
+      this._sortListenersOfSceneGraphPriority(listenerID, rootNode);
     }
   }
 
@@ -268,24 +166,13 @@ export default class EventManager {
       return;
     }
 
-    // Reset priority index
-    this.#nodePriorityIndex = 0;
-    this.#nodePriorities.clear();
-
-    this._visitTarget(rootNode, true);
-
-    listeners.sortSceneGraphPriorityListeners(this.#nodePriorities);
+    this.#nodePriorities.sortSceneGraphListeners(listeners, rootNode, this.#nodeListeners);
   }
 
   frameUpdateListeners() {
-    const listenerIDsToDelete = this.#listeners.emptyIDs;
-    for (const id of listenerIDsToDelete) {
-      this.#priorityDirtyFlags.delete(id);
-      this.#listeners.delete(id);
-    }
+    this.#listeners.deleteEmpty();
 
     this._flushToAddedListeners();
-    this.#listeners.cleanRemoved();
   }
 
   _updateTouchListeners(event) {
@@ -300,7 +187,6 @@ export default class EventManager {
     assert(locInDispatch === 1, _LogInfos.EventManager__updateListeners_2);
 
     this._flushToAddedListeners();
-    this.#listeners.cleanRemoved();
   }
 
   _flushToAddedListeners() {
@@ -312,6 +198,7 @@ export default class EventManager {
     for (let i = 0, len = listeners.length; i < len; i++) {
       this._forceAddEventListener(listeners[i]);
     }
+    this.#listeners.cleanRemoved();
   }
 
   _onTouchEventCallback(listener, argsObj) {
@@ -403,15 +290,6 @@ export default class EventManager {
     return stopped;
   }
 
-  _associateNodeAndEventListener(node, listener) {
-    let listeners = this.#nodeListeners.get(node.__instanceId);
-    if (!listeners) {
-      listeners = [];
-      this.#nodeListeners.set(node.__instanceId, listeners);
-    }
-    listeners.push(listener);
-  }
-
   _dissociateNodeAndEventListener(
     listeners,
     index,
@@ -425,18 +303,7 @@ export default class EventManager {
     listener.registered = false;
 
     if (listener.sceneGraphPriority !== null) {
-      const node = listener.sceneGraphPriority;
-      const listeners = this.#nodeListeners.get(node.__instanceId);
-
-      if (listeners) {
-        arrayRemoveObject(listeners, listener);
-
-        if (listeners.length === 0) {
-          this.#nodeListeners.delete(node.__instanceId);
-        }
-      }
-
-      listener.sceneGraphPriority = null; // NULL out the node pointer so we don't have any dangling pointers to destroyed nodes.
+      this.#nodeListeners.dissociateListenerFromNode(listener);
     }
 
     if (this.#inDispatch === 0) {
@@ -449,70 +316,6 @@ export default class EventManager {
     }
 
     return false;
-  }
-
-  _setDirty(listenerID, flag) {
-    const dirtyFlag = this.#priorityDirtyFlags.has(listenerID)
-      ? flag | this.#priorityDirtyFlags.get(listenerID)
-      : flag;
-    this.#priorityDirtyFlags.set(listenerID, dirtyFlag);
-  }
-
-  _visitTarget(node, isRootNode) {
-    const children = node.children;
-    let i = 0,
-      globalZOrder;
-    const childrenCount = children.length,
-      locGlobalZOrderNodes = this.#globalZOrderNodes,
-      locNodeListeners = this.#nodeListeners;
-
-    if (childrenCount > 0) {
-      let child;
-      // visit children zOrder < 0
-      for (; i < childrenCount; i++) {
-        child = children[i];
-        if (child && child.zIndex < 0) this._visitTarget(child, false);
-        else break;
-      }
-
-      if (locNodeListeners.has(node.__instanceId)) {
-        globalZOrder = node.getGlobalZOrder();
-        if (!locGlobalZOrderNodes.has(globalZOrder))
-          locGlobalZOrderNodes.set(globalZOrder, []);
-        locGlobalZOrderNodes.get(globalZOrder).push(node.__instanceId);
-      }
-
-      for (; i < childrenCount; i++) {
-        child = children[i];
-        if (child) this._visitTarget(child, false);
-      }
-    } else {
-      if (locNodeListeners.has(node.__instanceId)) {
-        globalZOrder = node.getGlobalZOrder();
-        if (!locGlobalZOrderNodes.has(globalZOrder))
-          locGlobalZOrderNodes.set(globalZOrder, []);
-        locGlobalZOrderNodes.get(globalZOrder).push(node.__instanceId);
-      }
-    }
-
-    if (isRootNode) {
-      const globalZOrders = Array.from(locGlobalZOrderNodes.keys());
-      globalZOrders.sort(this._sortNumberAsc);
-
-      const zOrdersLen = globalZOrders.length,
-        locNodePriorities = this.#nodePriorities;
-      let selZOrders, j;
-      for (i = 0; i < zOrdersLen; i++) {
-        selZOrders = locGlobalZOrderNodes.get(globalZOrders[i]);
-        for (j = 0; j < selZOrders.length; j++)
-          locNodePriorities.set(selZOrders[j], ++this.#nodePriorityIndex);
-      }
-      this.#globalZOrderNodes.clear();
-    }
-  }
-
-  _sortNumberAsc(a, b) {
-    return a - b;
   }
 
   /**
@@ -586,7 +389,7 @@ export default class EventManager {
     const flag = isSceneGraph
       ? EventManagerDirtyFlag.SCENE_GRAPH_PRIORITY
       : EventManagerDirtyFlag.FIXED_PRIORITY;
-    this._setDirty(listener.id, flag);
+    this.#listeners.priorityDirtyFlags.setDirty(listener.id, flag);
 
     return true;
   }
@@ -597,7 +400,6 @@ export default class EventManager {
       this._removeListenerTemp(listener, listeners, false);
 
     if (listeners.empty) {
-      this.#priorityDirtyFlags.delete(listenerID);
       this.#listeners.delete(listenerID);
     }
 
@@ -613,7 +415,8 @@ export default class EventManager {
 
     const isFound = this.#listeners.removeFromListeners(
       listener,
-      this._removeListenerInner.bind(this));
+      this._removeListenerInner.bind(this)
+    );
 
     if (!isFound) {
       this.#toAddedListeners.remove(listener);
@@ -652,15 +455,13 @@ export default class EventManager {
     if (listenerType instanceof Node) {
       // Ensure the node is removed from these immediately also.
       // Don't want any dangling pointers or the possibility of dealing with deleted objects..
-      this.#nodePriorities.delete(listenerType.__instanceId);
-      arrayRemoveObject(this.#dirtyNodes, listenerType);
-      const listeners = this.#nodeListeners.get(listenerType.__instanceId);
+      this.#nodePriorities.deletePriority(listenerType);
+      const listeners = this.#nodeListeners.getNodeListenersCopy(listenerType);
+
       let i;
-      if (listeners) {
-        const listenersCopy = copyArray(listeners);
-        for (i = 0; i < listenersCopy.length; i++)
-          this.removeListener(listenersCopy[i]);
-        listenersCopy.length = 0;
+      if (listeners.length) {
+        for (i = 0; i < listeners.length; i++)
+          this.removeListener(listeners[i]);
       }
 
       // Bug fix: ensure there are no references to the node in the list of listeners to be added.
@@ -711,14 +512,7 @@ export default class EventManager {
    * @param {Number} fixedPriority
    */
   setPriority(listener, fixedPriority) {
-    if (listener == null) {
-      return;
-    }
-
-    const listenerID = this.#listeners.getFixedPriorityListenerID(listener);
-    if (listenerID !== null && listener.updateFixedPriority(fixedPriority)) {
-      this._setDirty(listenerID, EventManagerDirtyFlag.FIXED_PRIORITY);
-    }
+    this.#listeners.setPriority(listener, fixedPriority);
   }
 
   /**
@@ -744,7 +538,9 @@ export default class EventManager {
   dispatchEvent(event) {
     if (!this.#isEnabled) return;
 
-    this._updateDirtyFlagForSceneGraph();
+    this.#nodeListeners.updateDirtyFlagForSceneGraph(
+      this.#listeners.priorityDirtyFlags
+    );
     this.#inDispatch++;
     if (!event || event.type === EventType.NONE)
       throw new Error("event is undefined");
@@ -759,6 +555,24 @@ export default class EventManager {
     this.#listeners.dispatchEvent(listenerID, event);
 
     this.#inDispatch--;
+  }
+
+  /**
+   * Pauses all listeners which are associated the specified target.
+   * @param {Node} node
+   * @param {Boolean} [recursive=false]
+   */
+  pauseTarget(node, recursive = false) {
+    this.#nodeListeners.setTargetPaused(node, recursive, true);
+  }
+
+  /**
+   * Resumes all listeners which are associated the specified target.
+   * @param {Node} node
+   * @param {Boolean} [recursive=false]
+   */
+  resumeTarget(node, recursive = false) {
+    this.#nodeListeners.setTargetPaused(node, recursive, false);
   }
 
   /**

@@ -2,7 +2,9 @@ import {
   EventListener,
   _EventListenerVector
 } from "../event-listener";
+import { EventManagerDirtyFlag } from "../../enums";
 import ToRemovedListeners from "./to-removed-listeners";
+import PriorityDirtyFlags from "./priority-dirty-flags";
 import type { Event } from "../event";
 
 type RemoveCheck = (
@@ -14,6 +16,11 @@ type RemoveCheck = (
 export default class EventManagerListeners {
   #listeners = new Map<string, _EventListenerVector>();
   #toRemovedListeners = new ToRemovedListeners();
+  #priorityDirtyFlags = new PriorityDirtyFlags();
+
+  get priorityDirtyFlags(): PriorityDirtyFlags {
+    return this.#priorityDirtyFlags;
+  }
 
   removeFromListeners(listener: EventListener, removeCheck: RemoveCheck): boolean {
     for (const [listenerID, listeners] of this.#listeners) {
@@ -26,6 +33,7 @@ export default class EventManagerListeners {
   }
 
   delete(id: string): void {
+    this.#priorityDirtyFlags.delete(id);
     this.#listeners.delete(id);
   }
 
@@ -49,6 +57,13 @@ export default class EventManagerListeners {
       this.#listeners.set(listenerID, listeners);
     }
     listeners.push(listener);
+
+    this.#priorityDirtyFlags.setDirty(
+      listenerID,
+      listener.fixedPriority === 0
+        ? EventManagerDirtyFlag.SCENE_GRAPH_PRIORITY
+        : EventManagerDirtyFlag.FIXED_PRIORITY
+    );
   }
 
   sortFixedPriority(listenerID: string): void {
@@ -58,6 +73,29 @@ export default class EventManagerListeners {
     }
 
     listeners.sortFixedPriorityListeners();
+  }
+
+  sortEventListeners(listenerID: string, hasRootNode: boolean): boolean {
+    const dirtyFlag = this.#priorityDirtyFlags.getAndClear(listenerID);
+
+    if (dirtyFlag === EventManagerDirtyFlag.NONE) {
+      return false;
+    }
+
+    if (dirtyFlag & EventManagerDirtyFlag.FIXED_PRIORITY) {
+      this.sortFixedPriority(listenerID);
+    }
+
+    if (!(dirtyFlag & EventManagerDirtyFlag.SCENE_GRAPH_PRIORITY)) {
+      return false;
+    }
+
+    if (!hasRootNode) {
+      this.#priorityDirtyFlags.setSceneGraphPriority(listenerID);
+      return false;
+    }
+
+    return true;
   }
 
   update(listenerID: string): void {
@@ -101,6 +139,20 @@ export default class EventManagerListeners {
     this.update(listenerID);
   }
 
+  setPriority(listener: EventListener | null, fixedPriority: number): void {
+    if (listener == null) {
+      return;
+    }
+
+    const listenerID = this.getFixedPriorityListenerID(listener);
+    if (listenerID !== null && listener.updateFixedPriority(fixedPriority)) {
+      this.#priorityDirtyFlags.setDirty(
+        listenerID,
+        EventManagerDirtyFlag.FIXED_PRIORITY
+      );
+    }
+  }
+
   getFixedPriorityListenerID(listener: EventListener): string | null {
     const listeners = this.#listeners.values();
 
@@ -113,15 +165,11 @@ export default class EventManagerListeners {
     return null;
   }
 
-  get emptyIDs(): string[] {
-    const listenerIDs = [];
-
+  deleteEmpty(): void {
     for (const [id, listeners] of this.#listeners) {
       if (listeners.empty) {
-        listenerIDs.push(id);
+        this.delete(id);
       }
     }
-
-    return listenerIDs;
   }
 }
