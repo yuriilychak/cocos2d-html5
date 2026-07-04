@@ -100,7 +100,7 @@ export class ServiceLocator {
     ServiceLocator.#sys = new Sys();
     ServiceLocator.#loader = new Loader();
     ServiceLocator.#game = new Game();
-    ServiceLocator.#eventManager = new EventManager();
+    ServiceLocator.#eventManager = new EventManager(ServiceLocator.#director);
     ServiceLocator.#eglView = new EGLView();
     ServiceLocator.#textureCache = new TextureCache();
     ServiceLocator.#spriteFrameCache = new SpriteFrameCache();
@@ -141,10 +141,6 @@ export class ServiceLocator {
       loader: ServiceLocator.#loader,
       rendererConfig: renderingConfig,
       textureCache: ServiceLocator.#textureCache
-    });
-
-    ServiceLocator.#eventManager.injectServices({
-      director: ServiceLocator.#director
     });
 
     // eglView.initialize() needs game.container and is invoked later from

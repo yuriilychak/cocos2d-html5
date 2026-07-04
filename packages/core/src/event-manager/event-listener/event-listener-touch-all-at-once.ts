@@ -50,7 +50,11 @@ export default class _EventListenerTouchAllAtOnce extends EventListener {
         return eventListener;
     }
 
-    public handleTouchEvent(touches: Touch[], event: EventTouch): void {
+    public handleTouchEvent(touches: Touch[], event: EventTouch): boolean {
+        if (!this.registered) {
+            return false;
+        }
+
         event.currentTarget = this.sceneGraphPriority;
 
         switch (event.eventCode) {
@@ -67,6 +71,8 @@ export default class _EventListenerTouchAllAtOnce extends EventListener {
                 this.#handleTouches(this.onTouchesCancelled, touches, event);
                 break;
         }
+
+        return event.stopped;
     }
 
     #handleTouches(
