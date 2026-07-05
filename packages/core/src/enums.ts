@@ -286,6 +286,22 @@ export enum DensityDPI {
   LOW = "low-dpi"
 }
 
+export enum ContainerStrategyKey {
+  EQUAL_TO_FRAME = "EQUAL_TO_FRAME",
+  PROPORTION_TO_FRAME = "PROPORTION_TO_FRAME",
+  EQUAL_TO_WINDOW = "EQUAL_TO_WINDOW",
+  PROPORTION_TO_WINDOW = "PROPORTION_TO_WINDOW",
+  ORIGINAL_CONTAINER = "ORIGINAL_CONTAINER"
+}
+
+export enum ContentStrategyKey {
+  EXACT_FIT = "EXACT_FIT",
+  NO_BORDER = "NO_BORDER",
+  SHOW_ALL = "SHOW_ALL",
+  FIXED_HEIGHT = "FIXED_HEIGHT",
+  FIXED_WIDTH = "FIXED_WIDTH"
+}
+
 export enum ResolutionPolicyType {
   EXACT_FIT = 0,
   NO_BORDER = 1,

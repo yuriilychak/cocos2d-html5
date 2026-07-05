@@ -29,7 +29,7 @@ import { TestController } from "./test-controller";
 import { TestScene } from "./test-scene";
 import { _initGlobals } from "./constants";
 import { g_resources, s_simpleTheme_plist } from "./resources";
-import { ContentStrategy, LoaderScene, ServiceLocator, DeviceOrientation } from "@aspect/core";
+import { ContentStrategyType, LoaderScene, ServiceLocator, DeviceOrientation } from "@aspect/core";
 const projectConfig = {
   debugMode: 1,
   noCache: false,
@@ -45,7 +45,7 @@ ServiceLocator.game.onStart = function () {
   ServiceLocator.eglView.setDesignResolutionSize(
     1280,
     720,
-    ContentStrategy.FIXED_HEIGHT
+    ContentStrategyType.FIXED_HEIGHT
   );
   ServiceLocator.eglView.resizeWithBrowserSize(true);
 

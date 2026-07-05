@@ -28,74 +28,75 @@ import { BaseClass } from "../class";
 import { ContainerStrategy } from "./container-strategy";
 import { ContentStrategy } from "./content-strategy";
 
+import type { SizeLike } from "../../geometry/types";
+import type { ContentStrategyResult } from "./content-strategy/types";
+import type { EGLViewLike } from "./types";
+
 /**
  * <p>ResolutionPolicy class is the root strategy class of scale strategy,
  * its main task is to maintain the compatibility with Cocos2d-x</p>
- *
- * @param {ContainerStrategy} containerStg The container strategy
- * @param {ContentStrategy} contentStg The content strategy
  */
 export class ResolutionPolicy extends BaseClass {
+  #containerStrategy!: ContainerStrategy;
+  #contentStrategy!: ContentStrategy;
+
   /**
    * Constructor of ResolutionPolicy
-   * @param {ContainerStrategy} containerStg
-   * @param {ContentStrategy} contentStg
    */
-  constructor(containerStg, contentStg) {
+  constructor(containerStg: ContainerStrategy, contentStg: ContentStrategy) {
     super();
-    this._containerStrategy = null;
-    this._contentStrategy = null;
 
-    this.setContainerStrategy(containerStg);
-    this.setContentStrategy(contentStg);
+    this.containerStrategy = containerStg;
+    this.contentStrategy = contentStg;
   }
 
   /**
    * Manipulation before applying the resolution policy
-   * @param {view} view The target view
    */
-  preApply(view) {
-    this._containerStrategy.preApply(view);
-    this._contentStrategy.preApply(view);
+  preApply(view: EGLViewLike): void {
+    this.containerStrategy.preApply(view);
+    this.contentStrategy.preApply(view);
   }
 
   /**
-   * Function to apply this resolution policy
-   * The return value is {scale: [scaleX, scaleY], viewport: {Rect}},
-   * The target view can then apply these value to itself, it's preferred not to modify directly its private variables
-   * @param {view} view The target view
-   * @param {Size} designedResolution The user defined design resolution
-   * @return {object} An object contains the scale X/Y values and the viewport rect
+   * Function to apply this resolution policy.
+   * The target view can then apply these values without directly mutating its private variables.
    */
-  apply(view, designedResolution) {
-    this._containerStrategy.apply(view, designedResolution);
-    return this._contentStrategy.apply(view, designedResolution);
+  apply(
+    view: EGLViewLike,
+    designedResolution: SizeLike
+  ): ContentStrategyResult {
+    this.containerStrategy.apply(view, designedResolution);
+    return this.contentStrategy.apply(view, designedResolution);
   }
 
   /**
-   * Manipulation after appyling the strategy
-   * @param {view} view The target view
+   * Manipulation after applying the strategy
    */
-  postApply(view) {
-    this._containerStrategy.postApply(view);
-    this._contentStrategy.postApply(view);
+  postApply(view: EGLViewLike): void {
+    this.containerStrategy.postApply(view);
+    this.contentStrategy.postApply(view);
   }
 
   /**
-   * Setup the container's scale strategy
-   * @param {ContainerStrategy} containerStg
+   * Container scale strategy.
    */
-  setContainerStrategy(containerStg) {
-    if (containerStg instanceof ContainerStrategy)
-      this._containerStrategy = containerStg;
+  get containerStrategy(): ContainerStrategy {
+    return this.#containerStrategy;
+  }
+
+  set containerStrategy(strategy: ContainerStrategy) {
+    this.#containerStrategy = strategy;
   }
 
   /**
-   * Setup the content's scale strategy
-   * @param {ContentStrategy} contentStg
+   * Content scale strategy.
    */
-  setContentStrategy(contentStg) {
-    if (contentStg instanceof ContentStrategy)
-      this._contentStrategy = contentStg;
+  get contentStrategy(): ContentStrategy {
+    return this.#contentStrategy;
+  }
+
+  set contentStrategy(strategy: ContentStrategy) {
+    this.#contentStrategy = strategy;
   }
 }

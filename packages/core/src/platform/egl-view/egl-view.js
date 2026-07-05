@@ -28,8 +28,7 @@ import { BaseClass } from "../class";
 import { Point, Rect, Size } from "../../geometry";
 import { contentScaleFactor } from "../macro/utils";
 import { VisibleRect } from "../visible-rect";
-import { ContainerStrategy } from "./container-strategy";
-import { ContentStrategy } from "./content-strategy";
+import { ContainerStrategyType, ContentStrategyType } from "./enums";
 import { ResolutionPolicy } from "./resolution-policy";
 import { log, _LogInfos } from "../../boot/debugger";
 import {
@@ -182,8 +181,8 @@ export class EGLView extends BaseClass {
     this.#visibleRect = new VisibleRect();
 
     var _t = this,
-      _strategyer = ContainerStrategy,
-      _strategy = ContentStrategy;
+      _strategyer = ContainerStrategyType,
+      _strategy = ContentStrategyType;
 
     // Setup system default resolution policies
     _t._rpExactFit = new ResolutionPolicy(
@@ -210,7 +209,38 @@ export class EGLView extends BaseClass {
     _t._targetDensityDPI = DensityDPI.HIGH;
   }
 
-  injectServices({ director, eventManager, game, rendererConfig, screen, sys }) {
+  get rotated() {
+    return this._isRotated;
+  }
+
+  get frameSize() {
+    return this._frameSize;
+  }
+
+  get devicePixelRatio() {
+    return this._devicePixelRatio;
+  }
+
+  set devicePixelRatio(value) {
+    this._devicePixelRatio = value;
+  }
+
+  get frame() {
+    return this._frame;
+  }
+
+  set frame(value) {
+    this._frame = value;
+  }
+
+  injectServices({
+    director,
+    eventManager,
+    game,
+    rendererConfig,
+    screen,
+    sys
+  }) {
     this._director = director;
     this._eventManager = eventManager;
     this._game = game;

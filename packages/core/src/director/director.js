@@ -60,7 +60,7 @@ export class Director extends BaseClass {
     this._projection = 0;
     this._contentScaleFactor = 1.0;
     this._deltaTime = 0.0;
-    this._winSizeInPoints = null;
+    this._winSizeInPoints = new Size();
     this._lastUpdate = null;
     this._nextScene = null;
     this._notificationNode = null;
@@ -88,6 +88,14 @@ export class Director extends BaseClass {
     this._spriteFrameCache = null;
     this._textureCache = null;
     this._showEventListenerRegistered = false;
+  }
+
+  get winSizeInPoints() {
+    return this._winSizeInPoints;
+  }
+
+  set winSizeInPoints(value) {
+    this._winSizeInPoints.set(value);
   }
 
   injectServices({
@@ -121,8 +129,6 @@ export class Director extends BaseClass {
 
     this._paused = false;
     this._purgeDirectorInNextLoop = false;
-
-    this._winSizeInPoints = new Size();
 
     this._openGLView = null;
     this._contentScaleFactor = 1.0;
@@ -270,7 +276,7 @@ export class Director extends BaseClass {
   }
 
   getWinSize() {
-    return new Size(this._winSizeInPoints);
+    return this._winSizeInPoints.clone();
   }
 
   getWinSizeInPixels() {
