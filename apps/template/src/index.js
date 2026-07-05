@@ -25,7 +25,7 @@ game.onStart = function () {
     document.body.removeChild(document.getElementById("cocosLoading"));
 
   let designSize = new Size(1280, 720);
-  const screenSize = ServiceLocator.eglView.getFrameSize();
+  const screenSize = ServiceLocator.eglView.frameSize;
 
   if (!ServiceLocator.sys.isNative && screenSize.height < 800) {
     designSize = new Size(960, 540);
@@ -34,8 +34,7 @@ game.onStart = function () {
     ServiceLocator.loader.resPath = "res/HD";
   }
   ServiceLocator.eglView.setDesignResolutionSize(
-    designSize.width,
-    designSize.height,
+    designSize,
     new ResolutionPolicy(
       ContainerStrategyType.EQUAL_TO_FRAME,
       ContentStrategyType.NO_BORDER

@@ -288,24 +288,53 @@ export default class Point implements PointLike {
     v.y = 0;
   }
 
-  public static copyIn(v1: PointLike, v2: PointLike): void {
+  public static copyIn(v1: PointLike, v2: PointLike): PointLike {
     v1.x = v2.x;
     v1.y = v2.y;
+
+    return v1;
   }
 
-  public static multIn(point: PointLike, floatVar: number): void {
+  public static negIn(v1: PointLike, v2: PointLike): PointLike {
+    v1.x = -v2.x;
+    v1.y = -v2.y;
+
+    return v1;
+  }
+
+  public static multIn(point: PointLike, floatVar: number): PointLike {
     point.x *= floatVar;
     point.y *= floatVar;
+
+    return point;
   }
 
-  public static subIn(v1: PointLike, v2: PointLike): void {
+  public static subIn(v1: PointLike, v2: PointLike): PointLike {
     v1.x -= v2.x;
     v1.y -= v2.y;
+
+    return v1;
   }
 
-  public static addIn(v1: PointLike, v2: PointLike): void {
+  public static addIn(v1: PointLike, v2: PointLike): PointLike {
     v1.x += v2.x;
     v1.y += v2.y;
+
+    return v1;
+  }
+
+  public static compMultIn(v1: PointLike, v2: PointLike): PointLike {
+    v1.x *= v2.x;
+    v1.y *= v2.y;
+
+    return v1;
+  }
+
+  public static compDivIn(v1: PointLike, v2: PointLike): PointLike {
+    v1.x /= v2.x;
+    v1.y /= v2.y;
+
+    return v1;
   }
 
   public static normalizeIn(v: PointLike): void {

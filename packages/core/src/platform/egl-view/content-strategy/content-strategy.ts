@@ -25,7 +25,7 @@
  ****************************************************************************/
 
 import { BaseClass } from "../../class";
-import { Rect } from "../../../geometry";
+import { Rect, Point } from "../../../geometry";
 import { ServiceLocator } from "../../../service-locator";
 
 import type { SizeLike } from "../../../geometry/types";
@@ -67,7 +67,7 @@ export default abstract class ContentStrategy extends BaseClass {
     }
 
     return {
-      scale: [scaleX, scaleY],
+      scale: new Point(scaleX, scaleY),
       viewport
     };
   }

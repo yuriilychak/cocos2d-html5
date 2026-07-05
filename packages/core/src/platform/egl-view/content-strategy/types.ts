@@ -1,6 +1,6 @@
-import type { RectLike } from "../../../geometry/types";
+import type { RectLike, PointLike } from "../../../geometry/types";
 
 export interface ContentStrategyResult {
-  scale: [number, number];
+  scale: PointLike;
   viewport: RectLike;
 }

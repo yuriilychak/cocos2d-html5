@@ -40,40 +40,33 @@ export interface EGLViewLike {
   autoFullScreenEnabled: boolean;
   devicePixelRatio: number;
   frame: HTMLElement;
-  readonly frameSize: SizeLike;
+  frameSize: SizeLike;
   targetDensityDPI: DensityDPIValue;
   orientation: DeviceOrientation;
   resolutionPolicy: ResolutionPolicyValue | null;
+  contentTranslateLeftTop: PointLike;
   viewName: string;
   injectServices(services: EGLViewServices): void;
   resizeWithBrowserSize: boolean;
-  setResizeCallback(callback: (() => void) | null): void;
+  resizeCallback: (() => void) | null;
   setDocumentPixelWidth(width: number): void;
   initialize(): void;
-  adjustViewPort(enabled: boolean): void;
+  adjustViewPort: boolean;
   readonly openGLReady: boolean;
   frameZoomFactor: number;
-  swapBuffers(): void;
-  setIMEKeyboardState(isOpen: boolean): void;
-  setContentTranslateLeftTop(offsetLeft: number, offsetTop: number): void;
-  getContentTranslateLeftTop(): EGLViewContentTranslate;
   readonly canvasSize: SizeLike;
-  getFrameSize(): SizeLike;
-  setFrameSize(width: number, height: number): void;
   readonly visibleSize: SizeLike;
   readonly visibleSizeInPixel: SizeLike;
   readonly visibleOrigin: PointLike;
   readonly visibleOriginInPixel: PointLike;
   readonly canSetContentScaleFactor: boolean;
   setDesignResolutionSize(
-    width: number,
-    height: number,
+    size: SizeLike,
     resolutionPolicy: ResolutionPolicyValue
   ): void;
   readonly designResolutionSize: SizeLike;
   setRealPixelResolution(
-    width: number,
-    height: number,
+    size: SizeLike,
     resolutionPolicy: ResolutionPolicyValue
   ): void;
   setViewPortInPoints(x: number, y: number, w: number, h: number): void;

@@ -84,10 +84,11 @@ export class MobileEditBoxInput extends EditBoxInputBase {
 
         var view = ServiceLocator.eglView;
         var designResolutionSize = view.designResolutionSize;
-        var width = designResolutionSize.width;
-        var height = designResolutionSize.height;
-        if (width > 0) {
-          view.setDesignResolutionSize(width, height, view.resolutionPolicy);
+        if (designResolutionSize.width > 0) {
+          view.setDesignResolutionSize(
+            designResolutionSize,
+            view.resolutionPolicy
+          );
         }
         self.__rotateScreen = false;
       }
