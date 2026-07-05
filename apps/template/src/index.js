@@ -41,7 +41,7 @@ game.onStart = function () {
       ContentStrategyType.NO_BORDER
     )
   );
-  ServiceLocator.eglView.resizeWithBrowserSize(true);
+  ServiceLocator.eglView.resizeWithBrowserSize = true;
 
   LoaderScene.getInstance().preload(
     g_resources,

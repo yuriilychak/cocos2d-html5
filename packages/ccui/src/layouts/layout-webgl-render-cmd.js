@@ -91,7 +91,7 @@ export class LayoutWebGLRenderCmd extends ProtectedNodeWebGLRenderCmd {
         clippingRect.height
       );
     } else {
-      this._clippingOldRect = ServiceLocator.eglView.getScissorRect();
+      this._clippingOldRect = ServiceLocator.eglView.scissorRect;
       if (!Rect.equalTo(this._clippingOldRect, clippingRect))
         ServiceLocator.eglView.setScissorInPoints(
           clippingRect.x,

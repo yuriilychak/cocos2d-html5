@@ -316,21 +316,21 @@ if (webViewSys.specification.isMobile) {
       this.originTransform(parentCmd, recursive);
       this.updateMatrix(
         this._worldTransform,
-        ServiceLocator.eglView._scaleX,
-        ServiceLocator.eglView._scaleY
+        ServiceLocator.eglView.scaleX,
+        ServiceLocator.eglView.scaleY
       );
     }
 
     updateStatus() {
-      polyfill.devicePixelRatio = ServiceLocator.eglView.isRetinaEnabled();
+      polyfill.devicePixelRatio = ServiceLocator.eglView.retinaEnabled;
       var flags = Node._dirtyFlags,
         locFlag = this._dirtyFlag;
       if (locFlag & flags.transformDirty) {
         this.transform(this.getParentRenderCmd(), true);
         this.updateMatrix(
           this._worldTransform,
-          ServiceLocator.eglView._scaleX,
-          ServiceLocator.eglView._scaleY
+          ServiceLocator.eglView.scaleX,
+          ServiceLocator.eglView.scaleY
         );
         this._dirtyFlag =
           (this._dirtyFlag & Node._dirtyFlags.transformDirty) ^ this._dirtyFlag;
@@ -347,7 +347,7 @@ if (webViewSys.specification.isMobile) {
       var node = this._node,
         eventManager = ServiceLocator.eventManager;
       if (node._parent && node._visible)
-        this.updateMatrix(this._worldTransform, view._scaleX, view._scaleY);
+        this.updateMatrix(this._worldTransform, view.scaleX, view.scaleY);
       else {
         eventManager.removeListener(node._listener);
         node._listener = null;
@@ -357,7 +357,7 @@ if (webViewSys.specification.isMobile) {
     updateMatrix(t, scaleX, scaleY) {
       var node = this._node;
       if (polyfill.devicePixelRatio) {
-        var dpr = ServiceLocator.eglView.getDevicePixelRatio();
+        var dpr = ServiceLocator.eglView.devicePixelRatio;
         scaleX = scaleX / dpr;
         scaleY = scaleY / dpr;
       }

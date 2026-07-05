@@ -1,5 +1,10 @@
-import { BrowserType, OperatingSystem, Point, ServiceLocator } from "@aspect/core";
-import { EditBoxInputBase } from './edit-box-input-base';
+import {
+  BrowserType,
+  OperatingSystem,
+  Point,
+  ServiceLocator
+} from "@aspect/core";
+import { EditBoxInputBase } from "./edit-box-input-base";
 
 const SCROLLY = 40;
 const TIMER_NAME = 400;
@@ -12,26 +17,26 @@ const TIMER_NAME = 400;
  */
 export const editBoxPolyfill = { zoomInvalid: false };
 if (
-    OperatingSystem.ANDROID === ServiceLocator.sys.specification.os &&
-    (ServiceLocator.sys.specification.browserType === BrowserType.SOUGOU ||
-        ServiceLocator.sys.specification.browserType === BrowserType.BROWSER_360)
+  OperatingSystem.ANDROID === ServiceLocator.sys.specification.os &&
+  (ServiceLocator.sys.specification.browserType === BrowserType.SOUGOU ||
+    ServiceLocator.sys.specification.browserType === BrowserType.BROWSER_360)
 ) {
-    editBoxPolyfill.zoomInvalid = true;
+  editBoxPolyfill.zoomInvalid = true;
 }
 
 function adjustEditBoxPosition(editBox) {
-    var worldPos = editBox.convertToWorldSpace(new Point(0, 0));
-    var windowHeight = ServiceLocator.eglView.visibleRect.height;
-    var windowWidth = ServiceLocator.eglView.visibleRect.width;
-    var factor = windowWidth > windowHeight ? 0.7 : 0.5;
-    setTimeout(function () {
-        if (window.scrollY < SCROLLY && worldPos.y < windowHeight * factor) {
-            var scrollOffset = windowHeight * factor - worldPos.y - window.scrollY;
-            if (scrollOffset < 35) scrollOffset = 35;
-            if (scrollOffset > 320) scrollOffset = 320;
-            window.scrollTo(scrollOffset, scrollOffset);
-        }
-    }, TIMER_NAME);
+  var worldPos = editBox.convertToWorldSpace(new Point(0, 0));
+  var windowHeight = ServiceLocator.eglView.visibleRect.height;
+  var windowWidth = ServiceLocator.eglView.visibleRect.width;
+  var factor = windowWidth > windowHeight ? 0.7 : 0.5;
+  setTimeout(function () {
+    if (window.scrollY < SCROLLY && worldPos.y < windowHeight * factor) {
+      var scrollOffset = windowHeight * factor - worldPos.y - window.scrollY;
+      if (scrollOffset < 35) scrollOffset = 35;
+      if (scrollOffset > 320) scrollOffset = 320;
+      window.scrollTo(scrollOffset, scrollOffset);
+    }
+  }, TIMER_NAME);
 }
 
 /**
@@ -39,75 +44,79 @@ function adjustEditBoxPosition(editBox) {
  * auto-resize and rotated views around the editing lifecycle.
  */
 export class MobileEditBoxInput extends EditBoxInputBase {
-    constructor(editBox) {
-        super(editBox);
-        this.__fullscreen = false;
-        this.__autoResize = false;
-        this.__rotateScreen = false;
-        this.__orientationChanged = null;
+  constructor(editBox) {
+    super(editBox);
+    this.__fullscreen = false;
+    this.__autoResize = false;
+    this.__rotateScreen = false;
+    this.__orientationChanged = null;
+  }
+
+  _adjustZoom(a, d) {
+    return { a, d };
+  }
+
+  _onBeginEditing() {
+    var editBox = this._editBox;
+    this.__orientationChanged = function () {
+      adjustEditBoxPosition(editBox);
+    };
+    window.addEventListener("orientationchange", this.__orientationChanged);
+
+    if (ServiceLocator.eglView.autoFullScreenEnabled) {
+      this.__fullscreen = true;
+      ServiceLocator.eglView.autoFullScreenEnabled = false;
+      ServiceLocator.screen.exitFullScreen();
+    } else {
+      this.__fullscreen = false;
     }
+    this.__autoResize = ServiceLocator.eglView.resizeWithBrowserSize;
+    ServiceLocator.eglView.resizeWithBrowserSize = false;
+  }
 
-    _adjustZoom(a, d) {
-        return { a, d };
-    }
+  _onEndEditing() {
+    var self = this;
+    setTimeout(function () {
+      if (self.__rotateScreen) {
+        var containerStyle = ServiceLocator.game.container.style;
+        containerStyle["-webkit-transform"] = "rotate(90deg)";
+        containerStyle.transform = "rotate(90deg)";
 
-    _onBeginEditing() {
-        var editBox = this._editBox;
-        this.__orientationChanged = function () {
-            adjustEditBoxPosition(editBox);
-        };
-        window.addEventListener('orientationchange', this.__orientationChanged);
-
-        if (ServiceLocator.eglView.isAutoFullScreenEnabled()) {
-            this.__fullscreen = true;
-            ServiceLocator.eglView.enableAutoFullScreen(false);
-            ServiceLocator.screen.exitFullScreen();
-        } else {
-            this.__fullscreen = false;
+        var view = ServiceLocator.eglView;
+        var designResolutionSize = view.designResolutionSize;
+        var width = designResolutionSize.width;
+        var height = designResolutionSize.height;
+        if (width > 0) {
+          view.setDesignResolutionSize(width, height, view.resolutionPolicy);
         }
-        this.__autoResize = ServiceLocator.eglView.__resizeWithBrowserSize;
-        ServiceLocator.eglView.resizeWithBrowserSize(false);
-    }
+        self.__rotateScreen = false;
+      }
+      window.removeEventListener(
+        "orientationchange",
+        self.__orientationChanged
+      );
+      window.scrollTo(0, 0);
+      if (self.__fullscreen) {
+        ServiceLocator.eglView.autoFullScreenEnabled = true;
+      }
+      if (self.__autoResize) {
+        ServiceLocator.eglView.resizeWithBrowserSize = true;
+      }
+    }, TIMER_NAME);
+  }
 
-    _onEndEditing() {
-        var self = this;
-        setTimeout(function () {
-            if (self.__rotateScreen) {
-                var containerStyle = ServiceLocator.game.container.style;
-                containerStyle['-webkit-transform'] = 'rotate(90deg)';
-                containerStyle.transform = 'rotate(90deg)';
-
-                var view = ServiceLocator.eglView;
-                var width = view._originalDesignResolutionSize.width;
-                var height = view._originalDesignResolutionSize.height;
-                if (width > 0) {
-                    view.setDesignResolutionSize(width, height, view._resolutionPolicy);
-                }
-                self.__rotateScreen = false;
-            }
-            window.removeEventListener('orientationchange', self.__orientationChanged);
-            window.scrollTo(0, 0);
-            if (self.__fullscreen) {
-                ServiceLocator.eglView.enableAutoFullScreen(true);
-            }
-            if (self.__autoResize) {
-                ServiceLocator.eglView.resizeWithBrowserSize(true);
-            }
-        }, TIMER_NAME);
+  _onFocus() {
+    var editBox = this._editBox;
+    if (ServiceLocator.eglView.rotated) {
+      var containerStyle = ServiceLocator.game.container.style;
+      containerStyle["-webkit-transform"] = "rotate(0deg)";
+      containerStyle.transform = "rotate(0deg)";
+      containerStyle.margin = "0px";
+      window.scrollTo(35, 35);
+      this.__rotateScreen = true;
+    } else {
+      this.__rotateScreen = false;
     }
-
-    _onFocus() {
-        var editBox = this._editBox;
-        if (ServiceLocator.eglView._isRotated) {
-            var containerStyle = ServiceLocator.game.container.style;
-            containerStyle['-webkit-transform'] = 'rotate(0deg)';
-            containerStyle.transform = 'rotate(0deg)';
-            containerStyle.margin = '0px';
-            window.scrollTo(35, 35);
-            this.__rotateScreen = true;
-        } else {
-            this.__rotateScreen = false;
-        }
-        adjustEditBoxPosition(editBox);
-    }
+    adjustEditBoxPosition(editBox);
+  }
 }

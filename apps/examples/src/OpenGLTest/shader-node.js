@@ -63,8 +63,8 @@ export class ShaderNode extends GLNode {
     // Uniforms
     //
     var frameSize = ServiceLocator.eglView.getFrameSize();
-    var visibleSize = ServiceLocator.eglView.getVisibleSize();
-    var retinaFactor = ServiceLocator.eglView.getDevicePixelRatio();
+    var visibleSize = ServiceLocator.eglView.visibleSize;
+    var retinaFactor = ServiceLocator.eglView.devicePixelRatio;
     var position = this.getPosition();
 
     var centerx =

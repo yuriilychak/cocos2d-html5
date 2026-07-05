@@ -35,6 +35,6 @@ export default class FixedWidth extends ContentStrategy {
   }
 
   postApply(view: EGLViewLike): void {
-    ServiceLocator.director.winSizeInPoints = view.getVisibleSize();
+    ServiceLocator.director.winSizeInPoints = view.visibleSize;
   }
 }

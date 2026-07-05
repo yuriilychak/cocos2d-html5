@@ -54,8 +54,9 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
     this.setViewport();
 
     var view = director._openGLView,
-      ox = view._viewPortRect.x / view._scaleX,
-      oy = view._viewPortRect.y / view._scaleY;
+      viewPortRect = view.viewPortRect,
+      ox = viewPortRect.x / view.scaleX,
+      oy = viewPortRect.y / view.scaleY;
 
     switch (projection) {
       case DirectorProjection.TWO_D:
@@ -136,11 +137,11 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
   }
 
   getVisibleSize() {
-    return this._director._openGLView.getVisibleSize();
+    return this._director._openGLView.visibleSize;
   }
 
   getVisibleOrigin() {
-    return this._director._openGLView.getVisibleOrigin();
+    return this._director._openGLView.visibleOrigin;
   }
 
   getZEye() {
@@ -151,9 +152,10 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
     var view = this._director._openGLView;
     if (view) {
       var locWinSizeInPoints = this._director._winSizeInPoints;
+      var viewPortRect = view.viewPortRect;
       view.setViewPortInPoints(
-        -view._viewPortRect.x / view._scaleX,
-        -view._viewPortRect.y / view._scaleY,
+        -viewPortRect.x / view.scaleX,
+        -viewPortRect.y / view.scaleY,
         locWinSizeInPoints.width,
         locWinSizeInPoints.height
       );

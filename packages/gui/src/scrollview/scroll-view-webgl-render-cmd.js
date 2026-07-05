@@ -13,9 +13,9 @@ export class GuiScrollViewWebGLRenderCmd extends Layer.WebGLRenderCmd {
     var node = this._node;
     var eglView = ServiceLocator.eglView;
     var frame = node._getViewRect();
-    if (eglView.isScissorEnabled()) {
+    if (eglView.scissorEnabled) {
       node._scissorRestored = true;
-      node._parentScissorRect = eglView.getScissorRect();
+      node._parentScissorRect = eglView.scissorRect;
       if (Rect.intersection(frame, node._parentScissorRect)) {
         var locPSRect = node._parentScissorRect;
         var x = Math.max(frame.x, locPSRect.x);

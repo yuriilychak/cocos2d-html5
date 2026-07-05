@@ -49,8 +49,8 @@ export class TMXLayerWebGLRenderCmd extends Node.WebGLRenderCmd {
     const stride = rendererConfig.renderer.getSizePerVertex();
     const ti = texIndex || 0;
 
-    const scalex = view._scaleX,
-      scaley = view._scaleY,
+    const scalex = view.scaleX,
+      scaley = view.scaleY,
       maptw = node._mapTileSize.width,
       mapth = node._mapTileSize.height,
       tilew = node.tileset._tileSize.width / director._contentScaleFactor,

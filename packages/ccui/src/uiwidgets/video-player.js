@@ -387,21 +387,21 @@ document.head.appendChild(style);
       this.originTransform(parentCmd, recursive);
       this.updateMatrix(
         this._worldTransform,
-        ServiceLocator.eglView._scaleX,
-        ServiceLocator.eglView._scaleY
+        ServiceLocator.eglView.scaleX,
+        ServiceLocator.eglView.scaleY
       );
     }
 
     updateStatus() {
-      polyfill.devicePixelRatio = ServiceLocator.eglView.isRetinaEnabled();
+      polyfill.devicePixelRatio = ServiceLocator.eglView.retinaEnabled;
       var flags = Node._dirtyFlags,
         locFlag = this._dirtyFlag;
       if (locFlag & flags.transformDirty) {
         this.transform(this.getParentRenderCmd(), true);
         this.updateMatrix(
           this._worldTransform,
-          ServiceLocator.eglView._scaleX,
-          ServiceLocator.eglView._scaleY
+          ServiceLocator.eglView.scaleX,
+          ServiceLocator.eglView.scaleY
         );
         this._dirtyFlag =
           (this._dirtyFlag & Node._dirtyFlags.transformDirty) ^ this._dirtyFlag;
@@ -418,7 +418,7 @@ document.head.appendChild(style);
       var node = this._node,
         eventManager = ServiceLocator.eventManager;
       if (node._parent && node._visible)
-        this.updateMatrix(this._worldTransform, view._scaleX, view._scaleY);
+        this.updateMatrix(this._worldTransform, view.scaleX, view.scaleY);
       else {
         eventManager.removeListener(this._listener);
         this._listener = null;
@@ -428,7 +428,7 @@ document.head.appendChild(style);
     updateMatrix(t, scaleX, scaleY) {
       var node = this._node;
       if (polyfill.devicePixelRatio) {
-        var dpr = ServiceLocator.eglView.getDevicePixelRatio();
+        var dpr = ServiceLocator.eglView.devicePixelRatio;
         scaleX = scaleX / dpr;
         scaleY = scaleY / dpr;
       }
@@ -533,8 +533,8 @@ document.head.appendChild(style);
       video.addEventListener("ended", () => {
         node._renderCmd.updateMatrix(
           this._worldTransform,
-          ServiceLocator.eglView._scaleX,
-          ServiceLocator.eglView._scaleY
+          ServiceLocator.eglView.scaleX,
+          ServiceLocator.eglView.scaleY
         );
         node._playing = false;
         node._dispatchEvent(VideoPlayer.EventType.COMPLETED);

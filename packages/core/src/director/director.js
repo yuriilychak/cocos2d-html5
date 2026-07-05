@@ -194,10 +194,11 @@ export class Director extends BaseClass {
     var box = docElem.getBoundingClientRect();
     box.left += window.pageXOffset - docElem.clientLeft;
     box.top += window.pageYOffset - docElem.clientTop;
-    var x = view._devicePixelRatio * (uiPoint.x - box.left);
-    var y = view._devicePixelRatio * (box.top + box.height - uiPoint.y);
-    return view._isRotated
-      ? { x: view._viewPortRect.width - y, y: x }
+    var devicePixelRatio = view.devicePixelRatio;
+    var x = devicePixelRatio * (uiPoint.x - box.left);
+    var y = devicePixelRatio * (box.top + box.height - uiPoint.y);
+    return view.rotated
+      ? { x: view.viewPortRect.width - y, y: x }
       : { x: x, y: y };
   }
 
@@ -208,15 +209,16 @@ export class Director extends BaseClass {
     box.left += window.pageXOffset - docElem.clientLeft;
     box.top += window.pageYOffset - docElem.clientTop;
     var uiPoint = { x: 0, y: 0 };
-    if (view._isRotated) {
-      uiPoint.x = box.left + glPoint.y / view._devicePixelRatio;
+    var devicePixelRatio = view.devicePixelRatio;
+    if (view.rotated) {
+      uiPoint.x = box.left + glPoint.y / devicePixelRatio;
       uiPoint.y =
         box.top +
         box.height -
-        (view._viewPortRect.width - glPoint.x) / view._devicePixelRatio;
+        (view.viewPortRect.width - glPoint.x) / devicePixelRatio;
     } else {
-      uiPoint.x = box.left + glPoint.x / view._devicePixelRatio;
-      uiPoint.y = box.top + box.height - glPoint.y / view._devicePixelRatio;
+      uiPoint.x = box.left + glPoint.x / devicePixelRatio;
+      uiPoint.y = box.top + box.height - glPoint.y / devicePixelRatio;
     }
     return uiPoint;
   }

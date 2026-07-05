@@ -36,44 +36,41 @@ export interface EGLViewServices {
 
 export interface EGLViewLike {
   readonly rotated: boolean;
+  retinaEnabled: boolean;
+  autoFullScreenEnabled: boolean;
   devicePixelRatio: number;
   frame: HTMLElement;
   readonly frameSize: SizeLike;
+  targetDensityDPI: DensityDPIValue;
+  orientation: DeviceOrientation;
+  resolutionPolicy: ResolutionPolicyValue | null;
+  viewName: string;
   injectServices(services: EGLViewServices): void;
-  setTargetDensityDPI(densityDPI: DensityDPIValue): void;
-  getTargetDensityDPI(): DensityDPIValue | null;
-  resizeWithBrowserSize(enabled: boolean): void;
+  resizeWithBrowserSize: boolean;
   setResizeCallback(callback: (() => void) | null): void;
-  setOrientation(orientation: DeviceOrientation): void;
   setDocumentPixelWidth(width: number): void;
   initialize(): void;
   adjustViewPort(enabled: boolean): void;
-  enableRetina(enabled: boolean): void;
-  isRetinaEnabled(): boolean;
-  enableAutoFullScreen(enabled: boolean): void;
-  isAutoFullScreenEnabled(): boolean;
-  isOpenGLReady(): unknown;
-  setFrameZoomFactor(zoomFactor: number): void;
+  readonly openGLReady: boolean;
+  frameZoomFactor: number;
   swapBuffers(): void;
   setIMEKeyboardState(isOpen: boolean): void;
   setContentTranslateLeftTop(offsetLeft: number, offsetTop: number): void;
   getContentTranslateLeftTop(): EGLViewContentTranslate;
-  getCanvasSize(): SizeLike;
+  readonly canvasSize: SizeLike;
   getFrameSize(): SizeLike;
   setFrameSize(width: number, height: number): void;
-  getVisibleSize(): SizeLike;
-  getVisibleSizeInPixel(): SizeLike;
-  getVisibleOrigin(): PointLike;
-  getVisibleOriginInPixel(): PointLike;
-  canSetContentScaleFactor(): boolean;
-  getResolutionPolicy(): ResolutionPolicy | null;
-  setResolutionPolicy(resolutionPolicy: ResolutionPolicyValue): void;
+  readonly visibleSize: SizeLike;
+  readonly visibleSizeInPixel: SizeLike;
+  readonly visibleOrigin: PointLike;
+  readonly visibleOriginInPixel: PointLike;
+  readonly canSetContentScaleFactor: boolean;
   setDesignResolutionSize(
     width: number,
     height: number,
     resolutionPolicy: ResolutionPolicyValue
   ): void;
-  getDesignResolutionSize(): SizeLike;
+  readonly designResolutionSize: SizeLike;
   setRealPixelResolution(
     width: number,
     height: number,
@@ -81,12 +78,9 @@ export interface EGLViewLike {
   ): void;
   setViewPortInPoints(x: number, y: number, w: number, h: number): void;
   setScissorInPoints(x: number, y: number, w: number, h: number): void;
-  isScissorEnabled(): boolean;
-  getScissorRect(): RectLike;
-  setViewName(viewName: string): void;
-  getViewName(): string;
-  getViewPortRect(): RectLike;
-  getDevicePixelRatio(): number;
+  readonly scissorEnabled: boolean;
+  readonly scissorRect: RectLike;
+  readonly viewPortRect: RectLike;
   convertToLocationInView(
     tx: number,
     ty: number,

@@ -90,7 +90,7 @@ export const LabelRenderMixin = (Base) =>
           LabelTTF.__getFontHeightByDiv(fontNameOrFontDef);
       } else {
         const deviceFontSize =
-          fontSize * ServiceLocator.eglView.getDevicePixelRatio();
+          fontSize * ServiceLocator.eglView.devicePixelRatio;
         this._fontStyleStr =
           fontStyle +
           " " +
@@ -151,7 +151,7 @@ export const LabelRenderMixin = (Base) =>
     getLocalBB() {
       const node = this._node;
       localBB.x = localBB.y = 0;
-      const pixelRatio = ServiceLocator.eglView.getDevicePixelRatio();
+      const pixelRatio = ServiceLocator.eglView.devicePixelRatio;
       localBB.width = node._getWidth() * pixelRatio;
       localBB.height = node._getHeight() * pixelRatio;
       return localBB;
@@ -159,7 +159,7 @@ export const LabelRenderMixin = (Base) =>
 
     _updateTTF() {
       const node = this._node;
-      const pixelRatio = ServiceLocator.eglView.getDevicePixelRatio();
+      const pixelRatio = ServiceLocator.eglView.devicePixelRatio;
       const locDimensionsWidth = node._dimensions.width * pixelRatio;
       let i, strLength;
       const locLineWidth = this._lineWidths;
@@ -274,7 +274,7 @@ export const LabelRenderMixin = (Base) =>
 
     _saveStatus() {
       const node = this._node;
-      const scale = ServiceLocator.eglView.getDevicePixelRatio();
+      const scale = ServiceLocator.eglView.devicePixelRatio;
       const locStrokeShadowOffsetX = node._strokeShadowOffsetX,
         locStrokeShadowOffsetY = node._strokeShadowOffsetY;
       const locContentSizeHeight =

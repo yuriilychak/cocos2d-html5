@@ -65,7 +65,7 @@ export default abstract class ContainerStrategy extends BaseClass {
 
     // Setup pixel ratio for retina display
     let devicePixelRatio = (view.devicePixelRatio = 1);
-    if (view.isRetinaEnabled()) {
+    if (view.retinaEnabled) {
       devicePixelRatio = view.devicePixelRatio = Math.min(
         2,
         window.devicePixelRatio || 1

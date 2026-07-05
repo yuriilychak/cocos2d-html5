@@ -92,7 +92,10 @@ export default class EventMouse extends Event implements PointLike {
    * Returns the current cursor location in screen coordinates
    */
   get locationInView(): Point {
-    return new Point(this.#curr.x, ServiceLocator.eglView._designResolutionSize.height - this.#curr.y);
+    return new Point(
+      this.#curr.x,
+      ServiceLocator.eglView.designResolutionSize.height - this.#curr.y
+    );
   }
 
   _setPrevCursor(x: number, y: number): void {

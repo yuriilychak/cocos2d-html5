@@ -40,14 +40,14 @@ const projectConfig = {
 };
 
 ServiceLocator.game.onStart = function () {
-  ServiceLocator.eglView.enableRetina(true);
-  ServiceLocator.eglView.setOrientation(DeviceOrientation.LANDSCAPE);
+  ServiceLocator.eglView.retinaEnabled = true;
+  ServiceLocator.eglView.orientation = DeviceOrientation.LANDSCAPE;
   ServiceLocator.eglView.setDesignResolutionSize(
     1280,
     720,
     ContentStrategyType.FIXED_HEIGHT
   );
-  ServiceLocator.eglView.resizeWithBrowserSize(true);
+  ServiceLocator.eglView.resizeWithBrowserSize = true;
 
   ServiceLocator.loader.resPath = "res";
 
