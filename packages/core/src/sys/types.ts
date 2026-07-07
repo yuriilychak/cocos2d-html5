@@ -24,10 +24,15 @@ export type StorageLike = {
   clear(...args: any[]): any;
 };
 
+type CanvasRenderContext = {
+  getParameter(parameter: number): number | null;
+  MAX_TEXTURE_IMAGE_UNITS: number;
+};
+
+type RenderContextExtensions = {
+  resetCache?: () => void;
+};
+
 export type RenderContext =
-  WebGLContext
-  | {
-      getParameter(parameter: number): number | null;
-      MAX_TEXTURE_IMAGE_UNITS: number;
-    }
+  | ((WebGLContext | CanvasRenderContext) & RenderContextExtensions)
   | null;

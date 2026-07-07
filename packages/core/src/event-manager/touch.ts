@@ -115,7 +115,7 @@ export default class Touch extends BaseClass implements PointLike {
 
     if (!this.#startPointCaptured) {
       this.#start.set(this.#curr);
-      ServiceLocator.eglView._convertPointWithScale(this.#start);
+      ServiceLocator.eglView.convertPointWithScale(this.#start);
       this.#startPointCaptured = true;
     }
   }

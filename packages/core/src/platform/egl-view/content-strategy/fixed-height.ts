@@ -15,10 +15,9 @@ export default class FixedHeight extends ContentStrategy {
     designedResolution: SizeLike
   ): ContentStrategyResult {
     void view;
-
-    const canvas = ServiceLocator.game.canvas as HTMLCanvasElement;
-    const containerW = canvas.width;
-    const containerH = canvas.height;
+    
+    const containerW = view.canvas.width;
+    const containerH = view.canvas.height;
     const designH = designedResolution.height;
     const scale = containerH / designH;
     const contentW = containerW;

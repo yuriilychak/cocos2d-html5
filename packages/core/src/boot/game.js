@@ -214,7 +214,7 @@ export default class Game extends EventHelper(BaseClass) {
 
       // eglView is wired lazily; initialize it now that the renderer (and thus
       // game.container/canvas) is ready.
-      this._eglView.initialize();
+      this._eglView.initialize(this.canvas, this.container);
       // Director is created lazily; this is its first access, so initialize it here.
       const director = this._director;
       director.init();

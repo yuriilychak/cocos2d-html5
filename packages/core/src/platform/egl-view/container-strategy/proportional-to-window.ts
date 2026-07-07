@@ -10,6 +10,6 @@ export default class ProportionalToWindow extends ProportionalToFrame {
 
   apply(view: EGLViewLike, designedResolution?: SizeLike): void {
     super.apply(view, designedResolution);
-    this.fixContainer();
+    this.fixContainer(view);
   }
 }

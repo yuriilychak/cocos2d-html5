@@ -25,8 +25,7 @@
  ****************************************************************************/
 
 import { BaseClass } from "../../class";
-import { OperatingSystem } from "../../../enums";
-import { ServiceLocator } from "../../../service-locator";
+
 import type { SizeLike } from "../../../geometry/types";
 import type { EGLViewLike } from "../types";
 
@@ -50,37 +49,9 @@ export default abstract class ContainerStrategy extends BaseClass {
    */
   abstract postApply(view: EGLViewLike): void;
 
-  protected setupContainer(view: EGLViewLike, w: number, h: number): void {
-    const locCanvas = ServiceLocator.game.canvas as HTMLCanvasElement;
-    const locContainer = ServiceLocator.game.container as HTMLElement;
-
-    if (ServiceLocator.sys.specification.os === OperatingSystem.ANDROID) {
-      document.body.style.width = `${view.rotated ? h : w}px`;
-      document.body.style.height = `${view.rotated ? w : h}px`;
-    }
-
-    // Setup style
-    locContainer.style.width = locCanvas.style.width = `${w}px`;
-    locContainer.style.height = locCanvas.style.height = `${h}px`;
-
-    // Setup pixel ratio for retina display
-    let devicePixelRatio = (view.devicePixelRatio = 1);
-    if (view.retinaEnabled) {
-      devicePixelRatio = view.devicePixelRatio = Math.min(
-        2,
-        window.devicePixelRatio || 1
-      );
-    }
-
-    // Setup canvas
-    locCanvas.width = w * devicePixelRatio;
-    locCanvas.height = h * devicePixelRatio;
-    ServiceLocator.sys.rendererConfig.renderContext?.resetCache?.();
-  }
-
-  protected fixContainer(): void {
+  protected fixContainer(view: EGLViewLike): void {
     // Add container to document body
-    document.body.insertBefore(ServiceLocator.game.container, document.body.firstChild);
+    document.body.insertBefore(view.container, document.body.firstChild);
 
     // Set body's width height to window's size, and forbid overflow, so that game will be centered
     const bs = document.body.style;
@@ -89,7 +60,7 @@ export default abstract class ContainerStrategy extends BaseClass {
     bs.overflow = "hidden";
 
     // Body size solution doesn't work on all mobile browser so this is the aleternative: fixed container
-    const contStyle = ServiceLocator.game.container.style;
+    const contStyle = view.container.style;
     contStyle.position = "fixed";
     contStyle.left = contStyle.top = "0px";
 

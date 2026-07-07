@@ -1,8 +1,8 @@
 import {
   Size,
   ResolutionPolicy,
-  ContainerStrategyType,
-  ContentStrategyType,
+  ContainerStrategyKey,
+  ContentStrategyKey,
   LoaderScene,
   ServiceLocator
 } from "@aspect/core";
@@ -36,8 +36,8 @@ game.onStart = function () {
   ServiceLocator.eglView.setDesignResolutionSize(
     designSize,
     new ResolutionPolicy(
-      ContainerStrategyType.EQUAL_TO_FRAME,
-      ContentStrategyType.NO_BORDER
+      ContainerStrategyKey.EQUAL_TO_FRAME,
+      ContentStrategyKey.NO_BORDER
     )
   );
   ServiceLocator.eglView.resizeWithBrowserSize = true;

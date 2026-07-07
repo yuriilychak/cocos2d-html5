@@ -164,7 +164,7 @@ export class InputManager {
       }
     }
     if (handleTouches.length > 0) {
-      this._glView._convertTouchesWithScale(handleTouches);
+      this._glView.convertTouchesWithScale(handleTouches);
       var touchEvent = new EventTouch(handleTouches);
       touchEvent.eventCode = TouchEvent.BEGAN;
       this._eventManager.dispatchEvent(touchEvent);
@@ -199,7 +199,7 @@ export class InputManager {
       }
     }
     if (handleTouches.length > 0) {
-      this._glView._convertTouchesWithScale(handleTouches);
+      this._glView.convertTouchesWithScale(handleTouches);
       var touchEvent = new EventTouch(handleTouches);
       touchEvent.eventCode = TouchEvent.MOVED;
       this._eventManager.dispatchEvent(touchEvent);
@@ -213,7 +213,7 @@ export class InputManager {
   handleTouchesEnd(touches) {
     var handleTouches = this.getSetOfTouchesEndOrCancel(touches);
     if (handleTouches.length > 0) {
-      this._glView._convertTouchesWithScale(handleTouches);
+      this._glView.convertTouchesWithScale(handleTouches);
       var touchEvent = new EventTouch(handleTouches);
       touchEvent.eventCode = TouchEvent.ENDED;
       this._eventManager.dispatchEvent(touchEvent);
@@ -227,7 +227,7 @@ export class InputManager {
   handleTouchesCancel(touches) {
     var handleTouches = this.getSetOfTouchesEndOrCancel(touches);
     if (handleTouches.length > 0) {
-      this._glView._convertTouchesWithScale(handleTouches);
+      this._glView.convertTouchesWithScale(handleTouches);
       var touchEvent = new EventTouch(handleTouches);
       touchEvent.eventCode = TouchEvent.CANCELLED;
       this._eventManager.dispatchEvent(touchEvent);
@@ -362,7 +362,7 @@ export class InputManager {
    */
   getMouseEvent(location, pos, eventType) {
     var locPreMouse = this._prevMousePoint;
-    this._glView._convertMouseToLocationInView(location, pos);
+    this._glView.convertMouseToLocationInView(location, pos);
     var mouseEvent = new EventMouse(eventType);
     mouseEvent.setLocation(location.x, location.y);
     mouseEvent._setPrevCursor(locPreMouse.x, locPreMouse.y);

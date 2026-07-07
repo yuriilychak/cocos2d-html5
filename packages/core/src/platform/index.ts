@@ -3,9 +3,7 @@ export * from "./common";
 export * from "./config";
 export {
   ContainerStrategy,
-  ContainerStrategyType,
   ContentStrategy,
-  ContentStrategyType,
   EGLView,
   ResolutionPolicy
 } from "./egl-view";

@@ -101,7 +101,11 @@ export class ServiceLocator {
     ServiceLocator.#loader = new Loader();
     ServiceLocator.#game = new Game();
     ServiceLocator.#eventManager = new EventManager(ServiceLocator.#director);
-    ServiceLocator.#eglView = new EGLView();
+    ServiceLocator.#screen = new Screen();
+    ServiceLocator.#eglView = new EGLView(
+      ServiceLocator.#sys,
+      ServiceLocator.#screen
+    );
     ServiceLocator.#textureCache = new TextureCache();
     ServiceLocator.#spriteFrameCache = new SpriteFrameCache();
     ServiceLocator.#animationCache = new AnimationCache();
@@ -110,7 +114,6 @@ export class ServiceLocator {
     ServiceLocator.#kmglMatrix = new KMGLMatrix();
     ServiceLocator.#profiler = new Profiler();
     ServiceLocator.#inputManager = new InputManager();
-    ServiceLocator.#screen = new Screen(ServiceLocator.#game);
 
     const renderingConfig = ServiceLocator.#sys.rendererConfig;
 
@@ -147,11 +150,7 @@ export class ServiceLocator {
     // Game.prepare() once the renderer is set up — only deps are wired here.
     ServiceLocator.#eglView.injectServices({
       director: ServiceLocator.#director,
-      eventManager: ServiceLocator.#eventManager,
-      game: ServiceLocator.#game,
-      rendererConfig: renderingConfig,
-      screen: ServiceLocator.#screen,
-      sys: ServiceLocator.#sys
+      eventManager: ServiceLocator.#eventManager
     });
 
     ServiceLocator.#textureCache.injectServices({

@@ -30,8 +30,10 @@ import { TestScene } from "./test-scene";
 import { _initGlobals } from "./constants";
 import { g_resources, s_simpleTheme_plist } from "./resources";
 import {
-  ContentStrategyType,
+  ContainerStrategyKey,
+  ContentStrategyKey,
   LoaderScene,
+  ResolutionPolicy,
   ServiceLocator,
   DeviceOrientation,
   Size
@@ -42,7 +44,9 @@ const projectConfig = {
   showFPS: true,
   frameRate: 60,
   id: "gameCanvas",
-  renderMode: 0
+  renderMode: 0,
+  width: 1280,
+  height: 720
 };
 
 ServiceLocator.game.onStart = function () {
@@ -50,7 +54,10 @@ ServiceLocator.game.onStart = function () {
   ServiceLocator.eglView.orientation = DeviceOrientation.LANDSCAPE;
   ServiceLocator.eglView.setDesignResolutionSize(
     new Size(1280, 720),
-    ContentStrategyType.FIXED_HEIGHT
+    new ResolutionPolicy(
+      ContainerStrategyKey.ORIGINAL_CONTAINER,
+      ContentStrategyKey.FIXED_HEIGHT
+    )
   );
   ServiceLocator.eglView.resizeWithBrowserSize = true;
 
@@ -63,7 +70,6 @@ ServiceLocator.game.onStart = function () {
       if (window.sideIndexBar && typeof sideIndexBar.start === "function") {
         sideIndexBar.start();
       } else {
-
         ServiceLocator.spriteFrameCache.addSpriteFrames(s_simpleTheme_plist);
         const scene = new TestScene("Examples", "Close");
         scene.onMainMenuCallback = () => {

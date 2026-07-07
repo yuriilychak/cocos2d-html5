@@ -1,4 +1,3 @@
-import { ServiceLocator } from "../../../service-locator";
 import ContentStrategy from "./content-strategy";
 
 import type { SizeLike } from "../../../geometry/types";
@@ -14,11 +13,8 @@ export default class ExactFit extends ContentStrategy {
     view: EGLViewLike,
     designedResolution: SizeLike
   ): ContentStrategyResult {
-    void view;
-
-    const canvas = ServiceLocator.game.canvas as HTMLCanvasElement;
-    const containerW = canvas.width;
-    const containerH = canvas.height;
+    const containerW = view.canvas.width;
+    const containerH = view.canvas.height;
     const scaleX = containerW / designedResolution.width;
     const scaleY = containerH / designedResolution.height;
 

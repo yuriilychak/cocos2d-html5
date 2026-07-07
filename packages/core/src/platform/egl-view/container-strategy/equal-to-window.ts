@@ -9,6 +9,6 @@ export default class EqualToWindow extends EqualToFrame {
 
   apply(view: EGLViewLike): void {
     super.apply(view);
-    this.fixContainer();
+    this.fixContainer(view);
   }
 }

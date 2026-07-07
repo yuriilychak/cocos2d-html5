@@ -25,8 +25,23 @@
  ****************************************************************************/
 
 import { BaseClass } from "../class";
-import { ContainerStrategy } from "./container-strategy";
-import { ContentStrategy } from "./content-strategy";
+import {
+  ContainerStrategy,
+  EqualToFrame,
+  EqualToWindow,
+  OriginalContainer,
+  ProportionalToFrame,
+  ProportionalToWindow
+} from "./container-strategy";
+import {
+  ContentStrategy,
+  ExactFit,
+  FixedHeight,
+  FixedWidth,
+  NoBorder,
+  ShowAll
+} from "./content-strategy";
+import { ContainerStrategyKey, ContentStrategyKey } from "../../enums";
 
 import type { SizeLike } from "../../geometry/types";
 import type { ContentStrategyResult } from "./content-strategy/types";
@@ -43,11 +58,55 @@ export class ResolutionPolicy extends BaseClass {
   /**
    * Constructor of ResolutionPolicy
    */
-  constructor(containerStg: ContainerStrategy, contentStg: ContentStrategy) {
+  constructor(
+    containerStrategy: ContainerStrategyKey,
+    contentStrategy: ContentStrategyKey
+  ) {
     super();
 
-    this.containerStrategy = containerStg;
-    this.contentStrategy = contentStg;
+    this.#containerStrategy = ResolutionPolicy.createContainerStrategy(
+      containerStrategy
+    );
+    this.#contentStrategy =
+      ResolutionPolicy.createContentStrategy(contentStrategy);
+  }
+
+  private static createContainerStrategy(
+    strategy: ContainerStrategyKey
+  ): ContainerStrategy {
+    switch (strategy) {
+      case ContainerStrategyKey.EQUAL_TO_FRAME:
+        return new EqualToFrame();
+      case ContainerStrategyKey.PROPORTION_TO_FRAME:
+        return new ProportionalToFrame();
+      case ContainerStrategyKey.EQUAL_TO_WINDOW:
+        return new EqualToWindow();
+      case ContainerStrategyKey.PROPORTION_TO_WINDOW:
+        return new ProportionalToWindow();
+      case ContainerStrategyKey.ORIGINAL_CONTAINER:
+        return new OriginalContainer();
+      default:
+        throw new Error(`Unknown container strategy: ${strategy}`);
+    }
+  }
+
+  private static createContentStrategy(
+    strategy: ContentStrategyKey
+  ): ContentStrategy {
+    switch (strategy) {
+      case ContentStrategyKey.EXACT_FIT:
+        return new ExactFit();
+      case ContentStrategyKey.SHOW_ALL:
+        return new ShowAll();
+      case ContentStrategyKey.NO_BORDER:
+        return new NoBorder();
+      case ContentStrategyKey.FIXED_HEIGHT:
+        return new FixedHeight();
+      case ContentStrategyKey.FIXED_WIDTH:
+        return new FixedWidth();
+      default:
+        throw new Error(`Unknown content strategy: ${strategy}`);
+    }
   }
 
   /**
@@ -85,18 +144,10 @@ export class ResolutionPolicy extends BaseClass {
     return this.#containerStrategy;
   }
 
-  set containerStrategy(strategy: ContainerStrategy) {
-    this.#containerStrategy = strategy;
-  }
-
   /**
    * Content scale strategy.
    */
   get contentStrategy(): ContentStrategy {
     return this.#contentStrategy;
-  }
-
-  set contentStrategy(strategy: ContentStrategy) {
-    this.#contentStrategy = strategy;
   }
 }

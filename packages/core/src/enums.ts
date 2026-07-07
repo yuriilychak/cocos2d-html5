@@ -302,15 +302,6 @@ export enum ContentStrategyKey {
   FIXED_WIDTH = "FIXED_WIDTH"
 }
 
-export enum ResolutionPolicyType {
-  EXACT_FIT = 0,
-  NO_BORDER = 1,
-  SHOW_ALL = 2,
-  FIXED_HEIGHT = 3,
-  FIXED_WIDTH = 4,
-  UNKNOWN = 5
-}
-
 export enum GLState {
   ONE = 1,
   ZERO = 0,

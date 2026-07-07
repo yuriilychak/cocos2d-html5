@@ -43,7 +43,6 @@ type GameLike = {
  * It's invalid on safari, QQbrowser and android browser
  */
 export class Screen {
-    #game: GameLike;
     #supportsFullScreen: boolean;
     // the pre fullscreenchange function
     #preOnFullScreenChange: EventListener | null = null;
@@ -88,9 +87,7 @@ export class Screen {
         ]
     ];
 
-    constructor(game: GameLike) {
-        this.#game = game;
-
+    constructor() {
         const fn: Partial<FullscreenApiMap> = {};
         const map = Screen.#fnMap;
         for (let i = 0, l = map.length; i < l; i++) {
@@ -155,9 +152,9 @@ export class Screen {
     /**
      * Automatically request full screen with a touch/click event
      */
-    public autoFullScreen(element?: Element, onFullScreenChange?: EventListener): void {
+    public autoFullScreen(canvas: HTMLCanvasElement, element?: Element, onFullScreenChange?: EventListener): void {
         const fullScreenElement = element || document.body;
-        const touchTarget: EventTarget = this.#game.canvas || fullScreenElement;
+        const touchTarget: EventTarget = canvas || fullScreenElement;
         // Function bind will be too complicated here because we need the callback function's reference to remove the listener
         const callback = () => {
             touchTarget.removeEventListener(this.#touchEvent, callback);

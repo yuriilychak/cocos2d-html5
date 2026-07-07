@@ -25,7 +25,7 @@
  ****************************************************************************/
 
 import { isNumber, isObject } from "../boot/utils";
-import type { SizeLike } from "./types";
+import type { PointLike, SizeLike } from "./types";
 
 export default class Size implements SizeLike {
   #data: number[];
@@ -81,16 +81,40 @@ export default class Size implements SizeLike {
     this.#initFromNumber(size.width, size.height);
   }
 
-  public static equalTo(
-    size1: SizeLike | null | undefined,
-    size2: SizeLike | null | undefined
-  ): boolean {
+  public static copy(size1: SizeLike, size2: SizeLike): void {
+    size1.width = size2.width;
+    size1.height = size2.height;
+  }
+
+  public static equalTo(size1: SizeLike, size2: SizeLike): boolean {
     return (
-      isObject(size1) &&
-      isObject(size2) &&
+      Size.isLike(size1) &&
+       Size.isLike(size2) &&
       size1.width === size2.width &&
       size1.height === size2.height
     );
+  }
+
+  public static compMult(size: SizeLike, point: PointLike): Size {
+    return new Size(size.width * point.x, size.height * point.y);
+  }
+
+  public static compDiv(size: SizeLike, point: PointLike): Size {
+    return new Size(size.width / point.x, size.height / point.y);
+  }
+
+  public static compMultIn(size: SizeLike, point: PointLike): SizeLike {
+    size.width *= point.x;
+    size.height *= point.y;
+
+    return size;
+  }
+
+  public static compDivIn(size: SizeLike, point: PointLike): SizeLike {
+    size.width /= point.x;
+    size.height /= point.y;
+
+    return size;
   }
 
   public static isLike(value: unknown): value is SizeLike {

@@ -8,6 +8,15 @@ import {
 import type SysCapabilities from "./sys-capabilities";
 import type { RenderContext } from './types';
 
+export type RendererConfigRenderContext = NonNullable<RenderContext> &
+  WebGLRenderingContext & {
+    setOffset?: (x: number, y: number) => void;
+  };
+
+export type RendererConfigRenderer = {
+  _allNeedDraw: boolean;
+};
+
 export class RendererConfig {
   #renderType: RenderType = RenderType.CANVAS;
   #supportRender: boolean = false;

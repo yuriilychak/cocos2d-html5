@@ -1,17 +1,9 @@
 import type { PointLike, RectLike, SizeLike } from "../../geometry/types";
-import type {
-  DensityDPI,
-  DeviceOrientation,
-  ResolutionPolicyType
-} from "../../enums";
+import type { DensityDPI, DeviceOrientation } from "../../enums";
+import type EventManager from "../../event-manager/event-manager/event-manager";
 import type { ResolutionPolicy } from "./resolution-policy";
 
 export type DensityDPIValue = DensityDPI | string;
-
-export type ResolutionPolicyValue =
-  | ResolutionPolicy
-  | ResolutionPolicyType
-  | number;
 
 export interface EGLViewRelatedPosition {
   left: number;
@@ -27,11 +19,7 @@ export interface EGLViewContentTranslate {
 
 export interface EGLViewServices {
   director: unknown;
-  eventManager: unknown;
-  game: unknown;
-  rendererConfig: unknown;
-  screen: unknown;
-  sys: unknown;
+  eventManager: EventManager;
 }
 
 export interface EGLViewLike {
@@ -39,18 +27,19 @@ export interface EGLViewLike {
   retinaEnabled: boolean;
   autoFullScreenEnabled: boolean;
   devicePixelRatio: number;
-  frame: HTMLElement;
+  frame: HTMLElement | null;
   frameSize: SizeLike;
   targetDensityDPI: DensityDPIValue;
   orientation: DeviceOrientation;
-  resolutionPolicy: ResolutionPolicyValue | null;
+  resolutionPolicy: ResolutionPolicy | null;
   contentTranslateLeftTop: PointLike;
   viewName: string;
   injectServices(services: EGLViewServices): void;
   resizeWithBrowserSize: boolean;
   resizeCallback: (() => void) | null;
   setDocumentPixelWidth(width: number): void;
-  initialize(): void;
+  initialize(canvas: HTMLCanvasElement, container: HTMLElement): void;
+  setupContainer(size: SizeLike): void;
   adjustViewPort: boolean;
   readonly openGLReady: boolean;
   frameZoomFactor: number;
@@ -60,14 +49,16 @@ export interface EGLViewLike {
   readonly visibleOrigin: PointLike;
   readonly visibleOriginInPixel: PointLike;
   readonly canSetContentScaleFactor: boolean;
+  readonly canvas: HTMLCanvasElement;
+  readonly container: HTMLElement;
   setDesignResolutionSize(
     size: SizeLike,
-    resolutionPolicy: ResolutionPolicyValue
+    resolutionPolicy: ResolutionPolicy
   ): void;
   readonly designResolutionSize: SizeLike;
   setRealPixelResolution(
     size: SizeLike,
-    resolutionPolicy: ResolutionPolicyValue
+    resolutionPolicy: ResolutionPolicy
   ): void;
   setViewPortInPoints(x: number, y: number, w: number, h: number): void;
   setScissorInPoints(x: number, y: number, w: number, h: number): void;
@@ -79,4 +70,12 @@ export interface EGLViewLike {
     ty: number,
     relatedPos: EGLViewRelatedPosition
   ): PointLike;
+  convertMouseToLocationInView(
+    point: PointLike,
+    relatedPos: EGLViewRelatedPosition
+  ): void;
+  convertPointWithScale(point: PointLike): void;
+  convertTouchesWithScale(
+    touches: Array<PointLike & { previousLocation: PointLike }>
+  ): void;
 }

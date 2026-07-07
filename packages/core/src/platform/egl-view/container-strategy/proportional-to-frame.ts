@@ -1,17 +1,19 @@
-import { ServiceLocator } from "../../../service-locator";
 import ContainerStrategy from "./container-strategy";
+import { Size } from "../../../geometry";
 
-import type { SizeLike } from "../../../geometry/types";
+import type { SizeLike } from "../../../geometry";
 import type { EGLViewLike } from "../types";
 
 
 export default class ProportionalToFrame extends ContainerStrategy {
+  #size: Size = new Size();
+
   preApply(view: EGLViewLike): void {}
 
   apply(view: EGLViewLike, designedResolution?: SizeLike): void {
     const frameW = view.frameSize.width;
     const frameH = view.frameSize.height;
-    const containerStyle = (ServiceLocator.game.container as HTMLElement).style;
+    const containerStyle = view.container.style;
     const designW = designedResolution!.width;
     const designH = designedResolution!.height;
     const scaleX = frameW / designW;
@@ -30,10 +32,9 @@ export default class ProportionalToFrame extends ContainerStrategy {
     // Adjust container size with integer value
     const offx = Math.round((frameW - containerW) / 2);
     const offy = Math.round((frameH - containerH) / 2);
-    containerW = frameW - 2 * offx;
-    containerH = frameH - 2 * offy;
+    this.#size.set(frameW - 2 * offx, frameH - 2 * offy);
 
-    this.setupContainer(view, containerW, containerH);
+    view.setupContainer(this.#size);
 
     // Setup container's margin and padding
     if (view.rotated) {

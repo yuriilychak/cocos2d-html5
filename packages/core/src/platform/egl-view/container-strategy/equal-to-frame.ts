@@ -1,4 +1,3 @@
-import { ServiceLocator } from "../../../service-locator";
 import ContainerStrategy from "./container-strategy";
 
 import type { EGLViewLike } from "../types";
@@ -8,9 +7,9 @@ export default class EqualToFrame extends ContainerStrategy {
 
   apply(view: EGLViewLike): void {
     const frameH = view.frameSize.height;
-    const containerStyle = (ServiceLocator.game.container as HTMLElement).style;
+    const containerStyle = view.container.style;
 
-    this.setupContainer(view, view.frameSize.width, view.frameSize.height);
+    view.setupContainer(view.frameSize);
 
     // Setup container's margin and padding
     if (view.rotated) {
