@@ -1,20 +1,9 @@
 import { BaseClass } from "../platform/class";
 import { Node } from "../base-nodes/node";
-import Matrix4 from "../kazmath/mat4";
-import Vec3 from "../kazmath/vec3";
-import { KMGLMatrix } from "../kazmath/km-gl-matrix";
 import { DirectorRenderer } from "./director-renderer";
-import { log, _LogInfos } from "../boot/debugger";
 import { ServiceLocator } from "../service-locator";
-import { DirectorEvent, DirectorProjection, GLState } from "../enums";
+import { DirectorEvent, GLState } from "../enums";
 import { EventCustom } from '../event-manager';
-
-/**
- * OpenGL projection protocol
- */
-export class DirectorDelegate extends BaseClass {
-  updateProjection() {}
-}
 
 function recursiveChild(node) {
   if (node && node._renderCmd) {
@@ -48,65 +37,11 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
   }
 
   setProjection(projection) {
-    var director = this._director;
-    var size = ServiceLocator.eglView.winSizeInPoints;
-
     ServiceLocator.eglView.setViewport();
-
-    var view = ServiceLocator.eglView,
-      viewPortRect = view.viewPortRect,
-      ox = viewPortRect.x / view.scaleX,
-      oy = viewPortRect.y / view.scaleY;
-
-    switch (projection) {
-      case DirectorProjection.TWO_D:
-        ServiceLocator.kmglMatrix.matrixMode(KMGLMatrix.KM_GL_PROJECTION);
-        ServiceLocator.kmglMatrix.loadIdentity();
-        var orthoMatrix = Matrix4.createOrthographicProjection(
-          0,
-          size.width,
-          0,
-          size.height,
-          -1024,
-          1024
-        );
-        ServiceLocator.kmglMatrix.multMatrix(orthoMatrix);
-        ServiceLocator.kmglMatrix.matrixMode(KMGLMatrix.KM_GL_MODELVIEW);
-        ServiceLocator.kmglMatrix.loadIdentity();
-        break;
-      case DirectorProjection.THREE_D:
-        var zeye = this.getZEye();
-        var matrixPerspective = new Matrix4(),
-          matrixLookup = new Matrix4();
-        ServiceLocator.kmglMatrix.matrixMode(KMGLMatrix.KM_GL_PROJECTION);
-        ServiceLocator.kmglMatrix.loadIdentity();
-
-        matrixPerspective = Matrix4.createPerspectiveProjection(
-          60,
-          size.width / size.height,
-          0.1,
-          zeye * 2
-        );
-
-        ServiceLocator.kmglMatrix.multMatrix(matrixPerspective);
-
-        var eye = new Vec3(-ox + size.width / 2, -oy + size.height / 2, zeye);
-        var center = new Vec3(-ox + size.width / 2, -oy + size.height / 2, 0.0);
-        var up = new Vec3(0.0, 1.0, 0.0);
-        matrixLookup.lookAt(eye, center, up);
-        ServiceLocator.kmglMatrix.multMatrix(matrixLookup);
-
-        ServiceLocator.kmglMatrix.matrixMode(KMGLMatrix.KM_GL_MODELVIEW);
-        ServiceLocator.kmglMatrix.loadIdentity();
-        break;
-      case DirectorProjection.CUSTOM:
-        if (director._projectionDelegate)
-          director._projectionDelegate.updateProjection();
-        break;
-      default:
-        log(_LogInfos.Director_setProjection);
-        break;
-    }
+    ServiceLocator.kmglMatrix.setDirectorProjection(
+      projection,
+      ServiceLocator.eglView
+    );
     ServiceLocator.eglView.projection = projection;
     ServiceLocator.glStateCache.setProjectionMatrixDirty();
     ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty = true;
@@ -122,14 +57,14 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
 
   setOpenGLView(openGLView) {
     ServiceLocator.eglView.winSizeInPoints = ServiceLocator.eglView.canvas;
-
-    var conf = ServiceLocator.sys.configuration;
-    conf.gatherGPUInfo();
-    conf.dumpInfo();
+    ServiceLocator.sys.configuration.gatherGPUInfo();
+    ServiceLocator.sys.configuration.dumpInfo();
 
     this.setGLDefaultValues();
 
-    if (ServiceLocator.eventManager) ServiceLocator.eventManager.enabled = true;
+    if (ServiceLocator.eventManager) {
+      ServiceLocator.eventManager.enabled = true;
+    }
   }
 
   getVisibleSize() {
@@ -138,10 +73,6 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
 
   getVisibleOrigin() {
     return ServiceLocator.eglView.visibleOrigin;
-  }
-
-  getZEye() {
-    return ServiceLocator.eglView.zEye;
   }
 
   setAlphaBlending(on) {

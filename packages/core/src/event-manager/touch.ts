@@ -52,7 +52,7 @@ export default class Touch extends BaseClass implements PointLike {
    */
   get previousLocation(): Point {
     //TODO
-    //return director.convertToGL(this._prevPoint);
+    //return ServiceLocator.eglView.convertToGL(this.#prev);
     return this.#prev.clone();
   }
 
@@ -62,7 +62,7 @@ export default class Touch extends BaseClass implements PointLike {
    */
   get startLocation() {
     //TODO
-    //return director.convertToGL(this._startPoint);
+    //return ServiceLocator.eglView.convertToGL(this.#start);
     return this.#start.clone();
   }
 

@@ -2006,7 +2006,7 @@ export class Node extends BaseClass {
 
   _convertToWindowSpace(nodePoint) {
     var worldPoint = this.convertToWorldSpace(nodePoint);
-    return ServiceLocator.director.convertToUI(worldPoint);
+    return ServiceLocator.eglView.convertToUI(worldPoint);
   }
 
   /** convenience methods which take a Touch instead of Point
@@ -2025,7 +2025,7 @@ export class Node extends BaseClass {
    * @return {Point}
    */
   convertTouchToNodeSpaceAR(touch) {
-    var point = ServiceLocator.director.convertToGL(touch);
+    var point = ServiceLocator.eglView.convertToGL(touch);
     return this.convertToNodeSpaceAR(point);
   }
 

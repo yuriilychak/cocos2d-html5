@@ -89,8 +89,6 @@ export class Paddle extends Sprite {
         // in each touchXXX method.
         assert(target._state == PADDLE_STATE_GRABBED, "Paddle - Unexpected state!");
 
-        //touchPoint = director.convertToGL( touchPoint );
-
         target.x = touch.x;
     }
     onTouchEnded(touch, event) {

@@ -60,7 +60,6 @@ export class Director extends BaseClass {
     this._nextScene = null;
     this._notificationNode = null;
     this._scenesStack = null;
-    this._projectionDelegate = null;
     this._runningScene = null;
     this._totalFrames = 0;
     this._secondsPerFrame = 0;
@@ -73,7 +72,6 @@ export class Director extends BaseClass {
     this._rendererDelegate = null;
     this._lastUpdate = Date.now();
     this._animationCache = null;
-    this._eglView = null;
     this._eventManager = null;
     this._game = null;
     this._profiler = null;
@@ -85,7 +83,6 @@ export class Director extends BaseClass {
 
   injectServices({
     animationCache,
-    eglView,
     eventManager,
     game,
     profiler,
@@ -94,7 +91,6 @@ export class Director extends BaseClass {
     textureCache
   }) {
     this._animationCache = animationCache;
-    this._eglView = eglView;
     this._eventManager = eventManager;
     this._game = game;
     this._profiler = profiler;
@@ -106,7 +102,6 @@ export class Director extends BaseClass {
   init() {
     this._oldAnimationInterval = this._animationInterval = 1.0 / defaultFPS;
     this._scenesStack = [];
-    this._projectionDelegate = null;
 
     this._totalFrames = 0;
     this._lastUpdate = Date.now();
@@ -163,41 +158,6 @@ export class Director extends BaseClass {
       this._deltaTime = 1 / 60.0;
 
     this._lastUpdate = now;
-  }
-
-  convertToGL(uiPoint) {
-    var docElem = document.documentElement;
-    var view = this._eglView;
-    var box = docElem.getBoundingClientRect();
-    box.left += window.pageXOffset - docElem.clientLeft;
-    box.top += window.pageYOffset - docElem.clientTop;
-    var devicePixelRatio = view.devicePixelRatio;
-    var x = devicePixelRatio * (uiPoint.x - box.left);
-    var y = devicePixelRatio * (box.top + box.height - uiPoint.y);
-    return view.rotated
-      ? { x: view.viewPortRect.width - y, y: x }
-      : { x: x, y: y };
-  }
-
-  convertToUI(glPoint) {
-    var docElem = document.documentElement;
-    var view = this._eglView;
-    var box = docElem.getBoundingClientRect();
-    box.left += window.pageXOffset - docElem.clientLeft;
-    box.top += window.pageYOffset - docElem.clientTop;
-    var uiPoint = { x: 0, y: 0 };
-    var devicePixelRatio = view.devicePixelRatio;
-    if (view.rotated) {
-      uiPoint.x = box.left + glPoint.y / devicePixelRatio;
-      uiPoint.y =
-        box.top +
-        box.height -
-        (view.viewPortRect.width - glPoint.x) / devicePixelRatio;
-    } else {
-      uiPoint.x = box.left + glPoint.x / devicePixelRatio;
-      uiPoint.y = box.top + box.height - glPoint.y / devicePixelRatio;
-    }
-    return uiPoint;
   }
 
   drawScene() {
@@ -381,10 +341,6 @@ export class Director extends BaseClass {
     return this._rendererDelegate.getOpenGLView();
   }
 
-  getZEye() {
-    return this._rendererDelegate.getZEye();
-  }
-
   setViewport() {
     this._rendererDelegate.setViewport();
   }
@@ -453,14 +409,6 @@ export class Director extends BaseClass {
     this._notificationNode._performRecursive(
       Node._stateCallbackType.onEnterTransitionDidFinish
     );
-  }
-
-  getDelegate() {
-    return this._projectionDelegate;
-  }
-
-  setDelegate(delegate) {
-    this._projectionDelegate = delegate;
   }
 
   isSendCleanupToScene() {

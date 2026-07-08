@@ -2,6 +2,9 @@ import Matrix4 from "./mat4";
 import Vec3 from "./vec3";
 import Matrix4Stack from "./mat4-stack";
 import { degreesToRadians } from "../platform/macro/utils";
+import { DirectorProjection } from "../enums";
+import { log, _LogInfos } from "../boot/debugger";
+import type { EGLViewLike } from "../platform/egl-view/types";
 import type { Mat4Like } from "./types";
 
 interface DirectorLike {
@@ -97,6 +100,68 @@ export class KMGLMatrix {
 
   public multMatrix(pIn: Mat4Like): void {
     this.currentStack!.top!.multiply(pIn);
+  }
+
+  public setDirectorProjection(
+    projection: DirectorProjection,
+    eglView: EGLViewLike
+  ): void {
+    const size = eglView.winSizeInPoints;
+
+    switch (projection) {
+      case DirectorProjection.TWO_D:
+        this.matrixMode(KMGLMatrix.KM_GL_PROJECTION);
+        this.loadIdentity();
+        this.multMatrix(
+          Matrix4.createOrthographicProjection(
+            0,
+            size.width,
+            0,
+            size.height,
+            -1024,
+            1024
+          )
+        );
+        this.matrixMode(KMGLMatrix.KM_GL_MODELVIEW);
+        this.loadIdentity();
+        break;
+      case DirectorProjection.THREE_D: {
+        this.matrixMode(KMGLMatrix.KM_GL_PROJECTION);
+        this.loadIdentity();
+
+        const zEye = eglView.zEye;
+        const viewPortOrigin = eglView.viewPortOriginInPoints;
+
+        this.multMatrix(
+          Matrix4.createPerspectiveProjection(
+            60,
+            size.width / size.height,
+            0.1,
+            zEye * 2
+          )!
+        );
+
+        const eye = new Vec3(
+          -viewPortOrigin.x + size.width / 2,
+          -viewPortOrigin.y + size.height / 2,
+          zEye
+        );
+        const center = new Vec3(
+          -viewPortOrigin.x + size.width / 2,
+          -viewPortOrigin.y + size.height / 2,
+          0.0
+        );
+        const up = new Vec3(0.0, 1.0, 0.0);
+        this.multMatrix(new Matrix4().lookAt(eye, center, up));
+
+        this.matrixMode(KMGLMatrix.KM_GL_MODELVIEW);
+        this.loadIdentity();
+        break;
+      }
+      default:
+        log(_LogInfos.Director_setProjection);
+        break;
+    }
   }
 
   public translatef(x: number, y: number, z: number): void {

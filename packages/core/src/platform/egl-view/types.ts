@@ -70,6 +70,7 @@ export interface EGLViewLike {
   readonly scissorEnabled: boolean;
   readonly scissorRect: RectLike;
   readonly viewPortRect: RectLike;
+  readonly viewPortOriginInPoints: PointLike;
   convertToLocationInView(
     tx: number,
     ty: number,

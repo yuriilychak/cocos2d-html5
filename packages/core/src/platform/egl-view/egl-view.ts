@@ -407,6 +407,40 @@ export class EGLView extends BaseClass {
       : new Point(x, y);
   }
 
+  convertToGL(uiPoint: PointLike): Point {
+    const docElem = document.documentElement;
+    const box = docElem.getBoundingClientRect();
+    const left = box.left + window.pageXOffset - docElem.clientLeft;
+    const top = box.top + window.pageYOffset - docElem.clientTop;
+    const x = this.#devicePixelRatio * (uiPoint.x - left);
+    const y = this.#devicePixelRatio * (top + box.height - uiPoint.y);
+
+    return this.#rotated
+      ? new Point(this.#viewPortRect.width - y, x)
+      : new Point(x, y);
+  }
+
+  convertToUI(glPoint: PointLike): Point {
+    const docElem = document.documentElement;
+    const box = docElem.getBoundingClientRect();
+    const left = box.left + window.pageXOffset - docElem.clientLeft;
+    const top = box.top + window.pageYOffset - docElem.clientTop;
+
+    if (this.#rotated) {
+      return new Point(
+        left + glPoint.y / this.#devicePixelRatio,
+        top +
+          box.height -
+          (this.#viewPortRect.width - glPoint.x) / this.#devicePixelRatio
+      );
+    }
+
+    return new Point(
+      left + glPoint.x / this.#devicePixelRatio,
+      top + box.height - glPoint.y / this.#devicePixelRatio
+    );
+  }
+
   convertMouseToLocationInView(
     point: PointLike,
     relatedPos: EGLViewRelatedPosition
@@ -941,6 +975,10 @@ export class EGLView extends BaseClass {
    */
   get viewPortRect(): Rect {
     return this.#viewPortRect.clone();
+  }
+
+  get viewPortOriginInPoints(): Point {
+    return Point.compDiv(this.#viewPortRect, this.#scale);
   }
 
   /**

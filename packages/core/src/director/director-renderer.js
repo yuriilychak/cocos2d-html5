@@ -25,10 +25,6 @@ export class DirectorRenderer {
     return ServiceLocator.eglView;
   }
 
-  getZEye() {
-    return 0;
-  }
-
   setAlphaBlending(on) {}
 
   setGLDefaultValues() {}

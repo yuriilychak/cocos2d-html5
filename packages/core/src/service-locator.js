@@ -121,7 +121,6 @@ export class ServiceLocator {
     // so the cyclic service graph resolves to the constructed singletons.
     ServiceLocator.#director.injectServices({
       animationCache: ServiceLocator.#animationCache,
-      eglView: ServiceLocator.#eglView,
       eventManager: ServiceLocator.#eventManager,
       game: ServiceLocator.#game,
       profiler: ServiceLocator.#profiler,

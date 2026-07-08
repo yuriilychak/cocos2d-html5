@@ -205,6 +205,10 @@ export default class Point implements PointLike {
     return new Point(a.x * b.x, a.y * b.y);
   }
 
+  public static compDiv(a: PointLike, b: PointLike): Point {
+    return new Point(a.x / b.x, a.y / b.y);
+  }
+
   public static angleSigned(a: PointLike, b: PointLike): number {
     const a2 = Point.normalize(a);
     const b2 = Point.normalize(b);
