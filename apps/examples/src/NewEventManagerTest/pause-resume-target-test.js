@@ -37,8 +37,8 @@ export class PauseResumeTargetTest extends EventDispatcherTestDemo {
     //----start11----ctor
     super();
 
-    var origin = ServiceLocator.director.getVisibleOrigin();
-    var size = ServiceLocator.director.getVisibleSize();
+    var origin = ServiceLocator.eglView.rendererDelegate.getVisibleOrigin();
+    var size = ServiceLocator.eglView.rendererDelegate.getVisibleSize();
 
     var sprite1 = TouchableSprite.create();
     sprite1.color = new Color(0, 255, 255);

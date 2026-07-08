@@ -129,7 +129,7 @@ load.preload = true;
  */
 export function loadWithVisibleSize (file, path) {
     var object = load(file, path);
-    var size = ServiceLocator.director.getVisibleSize();
+    var size = ServiceLocator.eglView.rendererDelegate.getVisibleSize();
     if (object.node && size) {
         object.node.setContentSize(size.width, size.height);
         helper.doLayout(object.node);

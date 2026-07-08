@@ -26,7 +26,7 @@
  ****************************************************************************/
 
 import { director } from "../constants";
-import { Color } from "@aspect/core";
+import { Color, ServiceLocator } from "@aspect/core";
 import { TRANSITION_ORIENTATION_DOWN_OVER, TRANSITION_ORIENTATION_LEFT_OVER, TRANSITION_ORIENTATION_RIGHT_OVER, TRANSITION_ORIENTATION_UP_OVER, TransitionCrossFade, TransitionFade, TransitionFadeBL, TransitionFadeDown, TransitionFadeTR, TransitionFadeUp, TransitionJumpZoom, TransitionMoveInB, TransitionMoveInL, TransitionMoveInR, TransitionMoveInT, TransitionPageTurn, TransitionProgressRadialCCW, TransitionProgressRadialCW, TransitionRotoZoom, TransitionShrinkGrow, TransitionSlideInB, TransitionSlideInL, TransitionSlideInR, TransitionSlideInT, TransitionSplitCols, TransitionSplitRows, TransitionTurnOffTiles } from "@aspect/transitions";
 
 export function JumpZoomTransition(t, s) {
@@ -94,12 +94,12 @@ export function CCTransitionRadialCW(t, s) {
 }
 
 export function PageTransitionForward(t, s) {
-  director.setDepthTest(true);
+  ServiceLocator.eglView.rendererDelegate.setDepthTest(true);
   return new TransitionPageTurn(t, s, false);
 }
 
 export function PageTransitionBackward(t, s) {
-  director.setDepthTest(true);
+  ServiceLocator.eglView.rendererDelegate.setDepthTest(true);
   return new TransitionPageTurn(t, s, true);
 }
 

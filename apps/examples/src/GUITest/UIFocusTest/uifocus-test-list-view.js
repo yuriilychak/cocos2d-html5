@@ -36,7 +36,7 @@ export class UIFocusTestListView extends UIFocusTestBase {
 
   init() {
     if (super.init()) {
-      var winSize = ServiceLocator.director.getVisibleSize();
+      var winSize = ServiceLocator.eglView.rendererDelegate.getVisibleSize();
 
       this._listView = new ListView();
       this._listView.setDirection(ScrollView.DIR_VERTICAL);

@@ -287,8 +287,7 @@ export class RenderTextureWebGLRenderCmd extends NodeWebGLRenderCmd {
 
     const gl = ServiceLocator.sys.rendererConfig.renderContext;
 
-    const director = ServiceLocator.director;
-    director.setProjection(director.getProjection());
+    ServiceLocator.eglView.rendererDelegate.projection = ServiceLocator.eglView.rendererDelegate.projection;
 
     const texSize = node._texture.getContentSizeInPixels();
 
@@ -394,11 +393,10 @@ export class RenderTextureWebGLRenderCmd extends NodeWebGLRenderCmd {
     );
 
     const gl = ServiceLocator.sys.rendererConfig.renderContext;
-    const director = ServiceLocator.director;
     gl.bindFramebuffer(gl.FRAMEBUFFER, this._oldFBO);
 
     //restore viewport
-    director.setViewport();
+    ServiceLocator.eglView.setViewport();
     ServiceLocator.kmglMatrix.matrixMode(KMGLMatrix.KM_GL_PROJECTION);
     ServiceLocator.kmglMatrix.popMatrix();
     ServiceLocator.kmglMatrix.matrixMode(KMGLMatrix.KM_GL_MODELVIEW);

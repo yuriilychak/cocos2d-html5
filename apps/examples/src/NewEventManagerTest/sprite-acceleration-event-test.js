@@ -33,8 +33,8 @@ export class SpriteAccelerationEventTest extends EventDispatcherTestDemo {
     //----start5----onEnter
     super.onEnter();
 
-    var origin = director.getVisibleOrigin();
-    var size = director.getVisibleSize();
+    var origin = ServiceLocator.eglView.rendererDelegate.getVisibleOrigin();
+    var size = ServiceLocator.eglView.rendererDelegate.getVisibleSize();
 
     ServiceLocator.inputManager.setAccelerometerEnabled(true);
 

@@ -38,8 +38,8 @@ export class RemoveListenerWhenDispatching extends EventDispatcherTestDemo {
     //----start2----onEnter
     super.onEnter();
 
-    var origin = director.getVisibleOrigin();
-    var size = director.getVisibleSize();
+    var origin = ServiceLocator.eglView.rendererDelegate.getVisibleOrigin();
+    var size = ServiceLocator.eglView.rendererDelegate.getVisibleSize();
 
     var sprite1 = createColoredView(new Color(0, 255, 255));
     sprite1.setPosition(origin.x + size.width / 2, origin.y + size.height / 2);

@@ -49,8 +49,8 @@ export class RemoveAndRetainNodeTest extends EventDispatcherTestDemo {
     //----start6----onEnter
     super.onEnter();
 
-    var origin = director.getVisibleOrigin();
-    var size = director.getVisibleSize();
+    var origin = ServiceLocator.eglView.rendererDelegate.getVisibleOrigin();
+    var size = ServiceLocator.eglView.rendererDelegate.getVisibleSize();
 
     this._sprite = createColoredView(new Color(0, 255, 255));
     this._sprite.setPosition(

@@ -28,15 +28,15 @@
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { TouchableSprite } from "./touchable-sprite";
 import { director } from "../constants";
-import { Color } from "@aspect/core";
+import { Color, ServiceLocator } from "@aspect/core";
 
 export class FixedPriorityTest extends EventDispatcherTestDemo {
   onEnter() {
     //----start1----onEnter
     super.onEnter();
 
-    var origin = director.getVisibleOrigin();
-    var size = director.getVisibleSize();
+    var origin = ServiceLocator.eglView.rendererDelegate.getVisibleOrigin();
+    var size = ServiceLocator.eglView.rendererDelegate.getVisibleSize();
 
     var sprite1 = TouchableSprite.create(30);
     sprite1.color = new Color(0, 255, 255);

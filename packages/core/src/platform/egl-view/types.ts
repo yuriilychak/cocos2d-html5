@@ -1,7 +1,7 @@
 import type { PointLike, RectLike, SizeLike } from "../../geometry/types";
 import type { DensityDPI, DeviceOrientation, DirectorProjection } from "../../enums";
-import type EventManager from "../../event-manager/event-manager/event-manager";
 import type { ResolutionPolicy } from "./resolution-policy";
+import type { DirectorRenderer } from "../../director/director-renderer";
 
 export type DensityDPIValue = DensityDPI | string;
 
@@ -17,10 +17,6 @@ export interface EGLViewContentTranslate {
   top: number;
 }
 
-export interface EGLViewServices {
-  director: unknown;
-  eventManager: EventManager;
-}
 
 export interface EGLViewLike {
   readonly rotated: boolean;
@@ -34,7 +30,6 @@ export interface EGLViewLike {
   resolutionPolicy: ResolutionPolicy | null;
   contentTranslateLeftTop: PointLike;
   viewName: string;
-  injectServices(services: EGLViewServices): void;
   resizeWithBrowserSize: boolean;
   resizeCallback: (() => void) | null;
   setDocumentPixelWidth(width: number): void;
@@ -43,6 +38,7 @@ export interface EGLViewLike {
   setViewport(): void;
   adjustViewPort: boolean;
   readonly openGLReady: boolean;
+  readonly rendererDelegate: DirectorRenderer;
   frameZoomFactor: number;
   contentScaleFactor: number;
   winSizeInPoints: SizeLike;
@@ -65,7 +61,6 @@ export interface EGLViewLike {
     size: SizeLike,
     resolutionPolicy: ResolutionPolicy
   ): void;
-  setViewPortInPoints(x: number, y: number, w: number, h: number): void;
   setScissorInPoints(x: number, y: number, w: number, h: number): void;
   readonly scissorEnabled: boolean;
   readonly scissorRect: RectLike;

@@ -90,9 +90,8 @@ export class GridBase extends BaseClass {
   setActive(active) {
     this._active = active;
     if (!active) {
-      const director = ServiceLocator.director;
-      const proj = director.getProjection();
-      director.setProjection(proj);
+      const proj = ServiceLocator.eglView.rendererDelegate.projection;
+      ServiceLocator.eglView.rendererDelegate.projection = proj;
     }
   }
 
@@ -247,7 +246,7 @@ export class GridBase extends BaseClass {
 
   beforeDraw() {
     // save projection
-    this._directorProjection = ServiceLocator.director.getProjection();
+    this._directorProjection = ServiceLocator.eglView.rendererDelegate.projection;
 
     //this.set2DProjection();    //TODO why?
     const size = ServiceLocator.eglView.winSizeInPixels;
@@ -259,8 +258,8 @@ export class GridBase extends BaseClass {
     this._grabber.afterRender(this._texture);
 
     // restore projection
-    //ServiceLocator.director.setProjection(this._directorProjection);
-    ServiceLocator.director.setViewport();
+    //ServiceLocator.eglView.rendererDelegate.projection = this._directorProjection;
+    ServiceLocator.eglView.setViewport();
 
     glBindTexture2D(this._texture);
     this.beforeBlit();

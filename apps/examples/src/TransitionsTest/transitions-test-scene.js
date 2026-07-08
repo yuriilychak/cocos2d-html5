@@ -31,6 +31,7 @@
 import { TestScene } from "../test-scene";
 import { director } from "../constants";
 import { TestLayer1 } from "./test-layer1";
+import { ServiceLocator } from "@aspect/core";
 
 export class TransitionsTestScene extends TestScene {
   constructor() {
@@ -39,7 +40,7 @@ export class TransitionsTestScene extends TestScene {
 
   onEnter() {
     super.onEnter();
-    director.setDepthTest(false);
+    ServiceLocator.eglView.rendererDelegate.setDepthTest(false);
   }
   runThisTest() {
     var layer = new TestLayer1();

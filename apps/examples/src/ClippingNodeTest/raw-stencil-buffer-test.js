@@ -74,7 +74,7 @@ export class RawStencilBufferTest extends BaseClippingNodeTest {
     this._sprite.anchorX = 0.5;
     this._sprite.anchorY = 0;
     this._sprite.scale = 2.5;
-    ServiceLocator.director.setAlphaBlending(true);
+    ServiceLocator.eglView.rendererDelegate.setAlphaBlending(true);
   }
 
   draw(ctx) {

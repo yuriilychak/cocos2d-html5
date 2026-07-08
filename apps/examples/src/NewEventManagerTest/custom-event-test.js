@@ -45,8 +45,8 @@ export class CustomEventTest extends EventDispatcherTestDemo {
     //----start3----onEnter
     super.onEnter();
 
-    var origin = director.getVisibleOrigin(),
-      size = director.getVisibleSize();
+    var origin = ServiceLocator.eglView.rendererDelegate.getVisibleOrigin(),
+      size = ServiceLocator.eglView.rendererDelegate.getVisibleSize();
 
     var statusLabel = new TextBMFont("No custom event 1 received!", s_simpleFont_fnt);
     statusLabel.setPosition(

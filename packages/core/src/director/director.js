@@ -25,8 +25,6 @@
  ****************************************************************************/
 
 import { BaseClass } from "../platform/class";
-import { DirectorCanvasRenderer } from "./director-canvas";
-import { DirectorWebGLRenderer } from "./director-webgl";
 import Scheduler from "../scheduler/scheduler";
 import { ActionManager } from "../action-manager";
 import EventCustom from "../event-manager/event/event-custom";
@@ -69,7 +67,6 @@ export class Director extends BaseClass {
     this._eventAfterUpdate = null;
     this._eventAfterVisit = null;
     this._eventAfterDraw = null;
-    this._rendererDelegate = null;
     this._lastUpdate = Date.now();
     this._animationCache = null;
     this._eventManager = null;
@@ -78,6 +75,7 @@ export class Director extends BaseClass {
     this._rendererConfig = null;
     this._spriteFrameCache = null;
     this._textureCache = null;
+    this._loader = null;
     this._showEventListenerRegistered = false;
   }
 
@@ -88,7 +86,8 @@ export class Director extends BaseClass {
     profiler,
     rendererConfig,
     spriteFrameCache,
-    textureCache
+    textureCache,
+    loader
   }) {
     this._animationCache = animationCache;
     this._eventManager = eventManager;
@@ -97,6 +96,7 @@ export class Director extends BaseClass {
     this._rendererConfig = rendererConfig;
     this._spriteFrameCache = spriteFrameCache;
     this._textureCache = textureCache;
+    this._loader = loader;
   }
 
   init() {
@@ -125,10 +125,20 @@ export class Director extends BaseClass {
     this._eventAfterVisit = new EventCustom(DirectorEvent.AFTER_VISIT, this);
     this._eventAfterDraw = new EventCustom(DirectorEvent.AFTER_DRAW, this);
 
-    if (this._rendererConfig.isCanvas) {
-      this._rendererDelegate = new DirectorCanvasRenderer(this);
-    } else {
-      this._rendererDelegate = new DirectorWebGLRenderer(this);
+    if (!this._rendererConfig.isCanvas) {
+      this._fpsImage = new Image();
+      this._fpsImage.addEventListener("load", () => {
+        this._fpsImageLoaded = true;
+      });
+
+      if (this._loader._fpsImage) {
+        this._fpsImage.src = this._loader._fpsImage;
+      }
+
+      this._eventManager.addCustomListener(
+        DirectorEvent.PROJECTION_CHANGED,
+        this.#onProjectionChange.bind(this)
+      );
     }
 
     if (!this._showEventListenerRegistered) {
@@ -151,10 +161,7 @@ export class Director extends BaseClass {
       this._deltaTime = (now - this._lastUpdate) / 1000;
     }
 
-    if (
-      this._game.config[CONFIG_KEY.debugMode] > 0 &&
-      this._deltaTime > 0.2
-    )
+    if (this._game.config[CONFIG_KEY.debugMode] > 0 && this._deltaTime > 0.2)
       this._deltaTime = 1 / 60.0;
 
     this._lastUpdate = now;
@@ -308,51 +315,6 @@ export class Director extends BaseClass {
 
   setDefaultValues() {}
 
-  // Renderer-delegated methods
-  getProjection() {
-    return this._rendererDelegate.getProjection();
-  }
-
-  setProjection(projection) {
-    this._rendererDelegate.setProjection(projection);
-  }
-
-  setDepthTest(on) {
-    this._rendererDelegate.setDepthTest(on);
-  }
-
-  setClearColor(clearColor) {
-    this._rendererDelegate.setClearColor(clearColor);
-  }
-
-  setOpenGLView(openGLView) {
-    this._rendererDelegate.setOpenGLView(openGLView);
-  }
-
-  getVisibleSize() {
-    return this._rendererDelegate.getVisibleSize();
-  }
-
-  getVisibleOrigin() {
-    return this._rendererDelegate.getVisibleOrigin();
-  }
-
-  getOpenGLView() {
-    return this._rendererDelegate.getOpenGLView();
-  }
-
-  setViewport() {
-    this._rendererDelegate.setViewport();
-  }
-
-  setAlphaBlending(on) {
-    this._rendererDelegate.setAlphaBlending(on);
-  }
-
-  setGLDefaultValues() {
-    this._rendererDelegate.setGLDefaultValues();
-  }
-
   setNextDeltaTimeZero(nextDeltaTimeZero) {
     this._nextDeltaTimeZero = nextDeltaTimeZero;
   }
@@ -505,6 +467,21 @@ export class Director extends BaseClass {
   _calculateMPF() {
     var now = Date.now();
     this._secondsPerFrame = (now - this._lastUpdate) / 1000;
+  }
+
+  #onProjectionChange() {
+    var stack = this._scenesStack;
+    for (var i = 0; i < stack.length; i++) Director.recursiveChild(stack[i]);
+  }
+
+  static recursiveChild(node) {
+    if (node && node._renderCmd) {
+      node._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
+      var children = node._children;
+      for (var i = 0; i < children.length; i++) {
+        recursiveChild(children[i]);
+      }
+    }
   }
 }
 

@@ -32,7 +32,7 @@ import {
 import { EffectsTestScene } from "./effects-test-scene";
 import { s_back3, s_pathSister1, s_pathSister2 } from "../resources";
 import { director, winSize } from "../constants";
-import { Color, LayerGradient, Node, Rect, Size, Sprite } from "@aspect/core";
+import { Color, LayerGradient, Node, Rect, ServiceLocator, Size, Sprite } from "@aspect/core";
 import { ScaleBy, Sequence } from "@aspect/actions";
 import { PageTurn3D } from "@aspect/actions3d";
 
@@ -64,7 +64,7 @@ export class PageTurn3DInRectTest extends BaseTestLayer {
     super.onEnter();
 
     //var node = new Node();
-    var visiableSize = director.getVisibleSize();
+    var visiableSize = ServiceLocator.eglView.rendererDelegate.getVisibleSize();
     var gridRect = new Rect(
       visiableSize.width * 0.1,
       visiableSize.height * 0.1,

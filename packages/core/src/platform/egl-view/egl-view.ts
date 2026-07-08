@@ -43,10 +43,12 @@ import type {
 import type {
   DensityDPIValue,
   EGLViewRelatedPosition,
-  EGLViewServices
 } from "./types";
 import { ResolutionPolicy } from "./resolution-policy";
 import { EventCustom } from "../../event-manager";
+import { DirectorRenderer } from "../../director/director-renderer";
+import { DirectorCanvasRenderer } from "../../director/director-canvas";
+import { DirectorWebGLRenderer } from "../../director/director-webgl";
 
 declare const gl: WebGLRenderingContext;
 
@@ -124,25 +126,21 @@ export class EGLView extends BaseClass {
 
   #projection = DirectorProjection.DEFAULT;
 
-  #director: any = null;
-  #eventManager: EventManager | null = null;
+  #rendererDelegate: DirectorRenderer | null = null;
+
+  #eventManager: EventManager;
+
   #screen: Screen;
+
   #sys: Sys;
 
-  constructor(sys: Sys, screen: Screen) {
+  constructor(sys: Sys, screen: Screen, eventManager: EventManager) {
     super();
 
     this.#sys = sys;
     this.#screen = screen;
-    this.#browserGetter = new BrowserGetter(this);
-  }
-
-  injectServices({
-    director,
-    eventManager
-  }: EGLViewServices): void {
-    this.#director = director;
     this.#eventManager = eventManager;
+    this.#browserGetter = new BrowserGetter(this);
   }
 
   initContainers(canvas: HTMLCanvasElement, container: HTMLElement): void {
@@ -205,6 +203,10 @@ export class EGLView extends BaseClass {
 
     this.#canvas = canvas;
     this.#container = container;
+
+    this.#rendererDelegate = this.#sys.rendererConfig.isCanvas
+      ? new DirectorCanvasRenderer(this, this.#sys, this.#eventManager!)
+      : new DirectorWebGLRenderer(this, this.#sys, this.#eventManager!);
 
     this.#browserGetter.init(this.#sys);
 
@@ -295,7 +297,7 @@ export class EGLView extends BaseClass {
 
     if (this.#sys.rendererConfig.isWebGL) {
       // reset director's member variables to fit visible rect
-      this.#director.setGLDefaultValues();
+      this.rendererDelegate.setGLDefaultValues();
     } else if (this.#sys.rendererConfig.isCanvas) {
       (this.#sys.rendererConfig.renderer as RendererConfigRenderer)._allNeedDraw =
         true;
@@ -334,20 +336,6 @@ export class EGLView extends BaseClass {
   }
 
   /**
-   * Sets view port rectangle with points.
-   */
-  setViewPortInPoints(x: number, y: number, w: number, h: number): void {
-    const scale = Point.mult(this.#scale, this.#frameZoomFactor);
-    const viewPort = Point.mult(this.#viewPortRect, this.#frameZoomFactor);
-    (this.#sys.rendererConfig.renderContext as RendererConfigRenderContext).viewport(
-      x * scale.x + viewPort.x,
-      y * scale.y + viewPort.y,
-      w * scale.x,
-      h * scale.y
-    );
-  }
-
-  /**
    * Sets Scissor rectangle with points.
    * @param {Number} x
    * @param {Number} y
@@ -377,22 +365,21 @@ export class EGLView extends BaseClass {
     }
   }
 
-  setViewport() {
+  setViewport(): void {
     const pos = Point.compDivIn(Point.neg(this.#viewPortRect), this.#scale);
-    this.setViewPortInPoints(
-      pos.x,
-      pos.y,
-      this.#winSizeInPoints.width,
-      this.#winSizeInPoints.height
+    const scale = Point.mult(this.#scale, this.#frameZoomFactor);
+    const viewPort = Point.mult(this.#viewPortRect, this.#frameZoomFactor);
+
+    (this.#sys.rendererConfig.renderContext as RendererConfigRenderContext).viewport(
+      pos.x * scale.x + viewPort.x,
+      pos.y * scale.y + viewPort.y,
+      this.#winSizeInPoints.width * scale.x,
+      this.#winSizeInPoints.height * scale.y
     );
   }
 
   /**
    * Returns the real location in view for a translation based on a related position
-   * @param {Number} tx The X axis translation
-   * @param {Number} ty The Y axis translation
-   * @param {Object} relatedPos The related position object including "left", "top", "width", "height" informations
-   * @return {Point}
    */
   convertToLocationInView(
     tx: number,
@@ -657,7 +644,7 @@ export class EGLView extends BaseClass {
     this.#frame!.style.width = size.width + "px";
     this.#frame!.style.height = size.height + "px";
     this.#resizeEvent();
-    this.#director.setProjection(this.#director.getProjection());
+    this.rendererDelegate.projection = this.rendererDelegate.projection;
   }
 
   get devicePixelRatio(): number {
@@ -834,7 +821,7 @@ export class EGLView extends BaseClass {
    */
   set frameZoomFactor(zoomFactor: number) {
     this.#frameZoomFactor = zoomFactor;
-    this.#director.setProjection(this.#director.getProjection());
+    this.rendererDelegate.projection = this.rendererDelegate.projection;
   }
 
   /**
@@ -1014,5 +1001,9 @@ export class EGLView extends BaseClass {
   set projection(value: DirectorProjection) {
     this.#projection = value;
     this.#eventManager!.dispatchEvent(new EventCustom(DirectorEvent.PROJECTION_CHANGED));
+  }
+
+  get rendererDelegate(): DirectorRenderer {
+    return this.#rendererDelegate!;
   }
 }

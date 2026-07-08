@@ -32,7 +32,7 @@
 import { SysTestBase } from "./sys-test-base";
 import { s_back } from "../resources";
 import { director, winSize } from "../constants";
-import { Color, Rect, Sprite } from "@aspect/core";
+import { Color, Rect, ServiceLocator, Sprite } from "@aspect/core";
 
 export class setClearColorTest extends SysTestBase {
     constructor()
@@ -49,11 +49,11 @@ export class setClearColorTest extends SysTestBase {
     {
         super.onEnter();
         var clearColor = new Color(255, 0, 0, 0);
-        director.setClearColor(clearColor);
+        ServiceLocator.eglView.rendererDelegate.setClearColor(clearColor);
     }
     onExit()
     {
-        director.setClearColor(new Color(0, 0, 0, 255));
+        ServiceLocator.eglView.rendererDelegate.setClearColor(new Color(0, 0, 0, 255));
         super.onExit();
     }
 

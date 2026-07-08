@@ -36,7 +36,7 @@ export class UIFocusTestNestedLayout2 extends UIFocusTestBase {
 
   init() {
     if (super.init()) {
-      var winSize = ServiceLocator.director.getVisibleSize();
+      var winSize = ServiceLocator.eglView.rendererDelegate.getVisibleSize();
 
       this._horizontalLayout = new HBox();
       this._horizontalLayout.setPosition(

@@ -113,7 +113,7 @@ export class DirectorEventTest extends EventDispatcherTestDemo {
     //----start8----update
     this._time += dt;
     if (this._time > 0.5) {
-      ServiceLocator.director.setProjection(DirectorProjection.TWO_D);
+      ServiceLocator.eglView.rendererDelegate.projection = DirectorProjection.TWO_D;
       this._time = 0;
     }
     //----end8----
