@@ -30,7 +30,7 @@
 //
 import { EaseSpriteDemo } from "./ease-sprite-demo";
 import { director } from "../constants";
-import { Point } from "@aspect/core";
+import { Point, ServiceLocator } from "@aspect/core";
 import { BezierBy, BezierTo, easeBezierAction, Sequence } from "@aspect/actions";
 
 export class SpriteEaseBezierTest extends EaseSpriteDemo {
@@ -38,7 +38,7 @@ export class SpriteEaseBezierTest extends EaseSpriteDemo {
     super.onEnter();
     //----start14----onEnter
 
-    var size = director.getWinSize();
+    var size = ServiceLocator.eglView.winSizeInPoints;
 
     //
     // startPosition can be any coordinate, but since the movement

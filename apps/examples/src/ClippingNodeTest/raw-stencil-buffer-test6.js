@@ -53,7 +53,7 @@ export class RawStencilBufferTest6 extends RawStencilBufferTest {
     gl.stencilOp(gl.REPLACE, gl.KEEP, gl.KEEP);
     ServiceLocator.game.drawingUtils.drawSolidRect(
       new Point(0, 0),
-      Point.fromSize(ServiceLocator.director.getWinSize()),
+      Point.fromSize(ServiceLocator.eglView.winSizeInPoints),
       new Color(255, 255, 255, 255)
     );
     gl.stencilFunc(gl.NEVER, planeMask, planeMask);

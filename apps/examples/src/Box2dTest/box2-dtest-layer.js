@@ -61,7 +61,7 @@ export class Box2DTestLayer extends LayerColor {
       this
     );
 
-    var winSize = ServiceLocator.director.getWinSize();
+    var winSize = ServiceLocator.eglView.winSizeInPoints;
     var label = new TextBMFont("Tap screen", s_simpleFont_fnt);
     label.color = new Color(0, 0, 255);
     label.x = winSize.width / 2;
@@ -88,7 +88,7 @@ export class Box2DTestLayer extends LayerColor {
     var b2PolygonShape = box2D.b2PolygonShape;
     this._box2D = box2D;
 
-    var screenSize = ServiceLocator.director.getWinSize();
+    var screenSize = ServiceLocator.eglView.winSizeInPoints;
 
     // Construct a world object
     var gravity = new b2Vec2(0, -10);

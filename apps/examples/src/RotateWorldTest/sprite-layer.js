@@ -27,7 +27,7 @@
 
 import { s_pathGrossini, s_pathSister1, s_pathSister2 } from "../resources";
 import { director } from "../constants";
-import { Layer, Point, Sprite } from "@aspect/core";
+import { Layer, Point, Sprite, ServiceLocator } from "@aspect/core";
 import { JumpBy, RotateBy, Sequence } from "@aspect/actions";
 
 export class SpriteLayer extends Layer {
@@ -41,7 +41,7 @@ export class SpriteLayer extends Layer {
 
     var x, y;
 
-    var size = director.getWinSize();
+    var size = ServiceLocator.eglView.winSizeInPoints;
     x = size.width;
     y = size.height;
 

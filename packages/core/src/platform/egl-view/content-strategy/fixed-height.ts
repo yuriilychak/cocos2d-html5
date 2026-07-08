@@ -1,4 +1,3 @@
-import { ServiceLocator } from "../../../service-locator";
 import ContentStrategy from "./content-strategy";
 
 import type { SizeLike } from "../../../geometry/types";
@@ -15,7 +14,7 @@ export default class FixedHeight extends ContentStrategy {
     designedResolution: SizeLike
   ): ContentStrategyResult {
     void view;
-    
+
     const containerW = view.canvas.width;
     const containerH = view.canvas.height;
     const designH = designedResolution.height;
@@ -34,6 +33,6 @@ export default class FixedHeight extends ContentStrategy {
   }
 
   postApply(view: EGLViewLike): void {
-    ServiceLocator.director.winSizeInPoints = view.visibleSize;
+    view.winSizeInPoints = view.visibleSize;
   }
 }

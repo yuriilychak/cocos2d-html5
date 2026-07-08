@@ -43,7 +43,7 @@ export class KeyboardTest extends EventTest {
     super.init();
     var self = this;
     var label = new TextBMFont("show key Code", s_simpleFont_fnt);
-    var size = ServiceLocator.director.getWinSize();
+    var size = ServiceLocator.eglView.winSizeInPoints;
     label.setPosition(size.width / 2, size.height / 2);
     this.addChild(label);
     if (ServiceLocator.sys.capabilities.keyboard) {

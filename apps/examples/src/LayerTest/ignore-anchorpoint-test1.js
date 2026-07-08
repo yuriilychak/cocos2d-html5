@@ -27,7 +27,7 @@
 
 import { LayerTest } from "./layer-test";
 import { director } from "../constants";
-import { Color, LayerColor } from "@aspect/core";
+import { Color, LayerColor, ServiceLocator } from "@aspect/core";
 
 export class IgnoreAnchorpointTest1 extends LayerTest {
   constructor() {
@@ -40,7 +40,7 @@ export class IgnoreAnchorpointTest1 extends LayerTest {
     //----start3----onEnter
     super.onEnter();
     //create layer
-    var ws = director.getWinSize();
+    var ws = ServiceLocator.eglView.winSizeInPoints;
     var layer1 = new LayerColor(
       new Color(255, 100, 100, 128),
       ws.width / 2,
@@ -71,13 +71,13 @@ export class IgnoreAnchorpointTest1 extends LayerTest {
   //
 
   getExpectedResult() {
-    var s = director.getWinSize();
+    var s = ServiceLocator.eglView.winSizeInPoints;
     var ret = { big: "yes", small: "yes" };
     return JSON.stringify(ret);
   }
 
   getCurrentResult() {
-    var s = director.getWinSize();
+    var s = ServiceLocator.eglView.winSizeInPoints;
     var ret2 = this.readPixels(
       s.width / 2 + s.width / 5,
       s.height / 2 + s.height / 5,

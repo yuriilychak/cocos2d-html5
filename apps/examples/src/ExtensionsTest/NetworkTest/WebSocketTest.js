@@ -53,7 +53,7 @@ export class WebSocketTestLayer extends BaseTestLayer {
   }
 
   init() {
-    var winSize = ServiceLocator.director.getWinSize();
+    var winSize = ServiceLocator.eglView.winSizeInPoints;
 
     this.addChild(new ButtonLayout(
       [

@@ -192,7 +192,7 @@ export class GridBase extends BaseClass {
   initWithSize(gridSize, texture, flipped, rect) {
     if (!texture) {
       const director = ServiceLocator.director;
-      const winSize = director.getWinSizeInPixels();
+      const winSize = ServiceLocator.eglView.winSizeInPixels;
 
       const POTWide = NextPOT(winSize.width);
       const POTHigh = NextPOT(winSize.height);
@@ -250,7 +250,7 @@ export class GridBase extends BaseClass {
     this._directorProjection = ServiceLocator.director.getProjection();
 
     //this.set2DProjection();    //TODO why?
-    const size = ServiceLocator.director.getWinSizeInPixels();
+    const size = ServiceLocator.eglView.winSizeInPixels;
     gl.viewport(0, 0, size.width, size.height);
     this._grabber.beforeRender(this._texture);
   }
@@ -285,7 +285,7 @@ export class GridBase extends BaseClass {
   }
 
   set2DProjection() {
-    const winSize = ServiceLocator.director.getWinSizeInPixels();
+    const winSize = ServiceLocator.eglView.winSizeInPixels;
 
     const gl = ServiceLocator.sys.rendererConfig.renderContext;
     gl.viewport(0, 0, winSize.width, winSize.height);

@@ -38,7 +38,7 @@ export class VibrateTest extends BaseTestLayer {
     this._duration = 0.1;
 
     this._durationLabel = null;
-    var s = ServiceLocator.director.getWinSize();
+    var s = ServiceLocator.eglView.winSizeInPoints;
     var label = new TextBMFont("vibrate control test", s_simpleFont_fnt);
     this.addChild(label, 0);
     label.x = s.width / 2;

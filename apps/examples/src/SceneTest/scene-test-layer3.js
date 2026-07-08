@@ -46,7 +46,7 @@ export class SceneTestLayer3 extends LayerColor {
 
     var label = new TextBMFont("Touch to popScene", s_simpleFont_fnt);
     this.addChild(label);
-    var s = director.getWinSize();
+    var s = ServiceLocator.eglView.winSizeInPoints;
     label.x = s.width / 2;
     label.y = s.height / 2;
 

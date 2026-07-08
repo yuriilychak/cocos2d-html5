@@ -34,7 +34,7 @@ export class CurrentLanguageTest extends BaseTestLayer {
         super();
         this._showNavButtons = false;
 
-        var s = ServiceLocator.director.getWinSize();
+        var s = ServiceLocator.eglView.winSizeInPoints;
 
         var labelLanguage = new TextBMFont("", s_simpleFont_fnt);
         labelLanguage.fontSize = 20;

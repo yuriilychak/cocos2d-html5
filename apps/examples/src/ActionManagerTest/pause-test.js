@@ -34,7 +34,7 @@ import { TAG_GROSSINI } from "./constants";
 import { ActionManagerTest } from "./action-manager-test";
 import { s_pathGrossini, s_simpleFont_fnt } from "../resources";
 import { autoTestEnabled, director } from "../constants";
-import { Point, Sprite } from "@aspect/core";
+import { Point, Sprite, ServiceLocator } from "@aspect/core";
 import { TextBMFont } from "@aspect/ccui";
 import { MoveBy } from "@aspect/actions";
 
@@ -55,7 +55,7 @@ export class PauseTest extends ActionManagerTest {
     //
     super.onEnter();
 
-    var s = director.getWinSize();
+    var s = ServiceLocator.eglView.winSizeInPoints;
     var l = new TextBMFont(
       "After 3 seconds grossini should move",
       s_simpleFont_fnt

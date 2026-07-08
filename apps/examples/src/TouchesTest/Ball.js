@@ -42,7 +42,7 @@ export class Ball extends Sprite {
     move(delta) {
 	    this.x += this._velocity.x * delta;
 	    this.y += this._velocity.y * delta;
-        var winSize = ServiceLocator.director.getWinSize();
+        var winSize = ServiceLocator.eglView.winSizeInPoints;
         if (this.x > winSize.width - this.radius()) {
             this.x = winSize.width - this.radius();
             this._velocity.x *= -1;

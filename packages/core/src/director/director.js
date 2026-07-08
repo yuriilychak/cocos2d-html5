@@ -37,7 +37,6 @@ import {
   DirectorProjection,
   GameEvent
 } from "../enums";
-import { Size } from "../geometry";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import { checkGLErrorDebug } from "../platform/macro/utils";
 
@@ -58,13 +57,10 @@ export class Director extends BaseClass {
     this._animationInterval = 0.0;
     this._oldAnimationInterval = 0.0;
     this._projection = 0;
-    this._contentScaleFactor = 1.0;
     this._deltaTime = 0.0;
-    this._winSizeInPoints = new Size();
     this._lastUpdate = null;
     this._nextScene = null;
     this._notificationNode = null;
-    this._openGLView = null;
     this._scenesStack = null;
     this._projectionDelegate = null;
     this._runningScene = null;
@@ -88,14 +84,6 @@ export class Director extends BaseClass {
     this._spriteFrameCache = null;
     this._textureCache = null;
     this._showEventListenerRegistered = false;
-  }
-
-  get winSizeInPoints() {
-    return this._winSizeInPoints;
-  }
-
-  set winSizeInPoints(value) {
-    this._winSizeInPoints.set(value);
   }
 
   injectServices({
@@ -129,9 +117,6 @@ export class Director extends BaseClass {
 
     this._paused = false;
     this._purgeDirectorInNextLoop = false;
-
-    this._openGLView = null;
-    this._contentScaleFactor = 1.0;
 
     this._scheduler = new Scheduler();
     if (ActionManager) {
@@ -269,23 +254,8 @@ export class Director extends BaseClass {
     this._purgeDirectorInNextLoop = true;
   }
 
-  getContentScaleFactor() {
-    return this._contentScaleFactor;
-  }
-
   getNotificationNode() {
     return this._notificationNode;
-  }
-
-  getWinSize() {
-    return this._winSizeInPoints.clone();
-  }
-
-  getWinSizeInPixels() {
-    return new Size(
-      this._winSizeInPoints.width * this._contentScaleFactor,
-      this._winSizeInPoints.height * this._contentScaleFactor
-    );
   }
 
   pause() {
@@ -382,12 +352,6 @@ export class Director extends BaseClass {
 
     this._paused = false;
     this._deltaTime = 0;
-  }
-
-  setContentScaleFactor(scaleFactor) {
-    if (scaleFactor !== this._contentScaleFactor) {
-      this._contentScaleFactor = scaleFactor;
-    }
   }
 
   setDefaultValues() {}

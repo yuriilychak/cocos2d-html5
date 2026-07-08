@@ -32,7 +32,7 @@
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
 import { director, winSize } from "../constants";
-import { Point } from "@aspect/core";
+import { Point, ServiceLocator } from "@aspect/core";
 import { BezierBy, BezierTo, DelayTime, Sequence } from "@aspect/actions";
 
 export class ActionBezier extends ActionsDemo {
@@ -45,7 +45,7 @@ export class ActionBezier extends ActionsDemo {
     //----start8----onEnter
 
     super.onEnter();
-    var s = director.getWinSize();
+    var s = ServiceLocator.eglView.winSizeInPoints;
 
     //
     // startPosition can be any coordinate, but since the movement

@@ -17,7 +17,7 @@ export class MyLayer extends Layer {
     // 2. add a menu item with "X" image, which is clicked to quit the program
     //    you may modify it.
     // ask director the window size
-    const size = ServiceLocator.director.getWinSize();
+    const size = ServiceLocator.eglView.winSizeInPoints;
 
     /////////////////////////////
     // 3. add your codes below...

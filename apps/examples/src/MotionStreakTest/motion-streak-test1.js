@@ -42,7 +42,7 @@ export class MotionStreakTest1 extends MotionStreakTest {
   onEnter() {
     super.onEnter();
 
-    var winSize = ServiceLocator.director.getWinSize();
+    var winSize = ServiceLocator.eglView.winSizeInPoints;
     // the root object just rotates around
     this._root = new Sprite(s_pathR1);
     this.addChild(this._root, 1);

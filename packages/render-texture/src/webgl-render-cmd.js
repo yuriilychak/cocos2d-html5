@@ -293,7 +293,7 @@ export class RenderTextureWebGLRenderCmd extends NodeWebGLRenderCmd {
     const texSize = node._texture.getContentSizeInPixels();
 
     // Calculate the adjustment ratios based on the old and new projections
-    const size = ServiceLocator.director.getWinSizeInPixels();
+    const size = ServiceLocator.eglView.winSizeInPixels;
     const widthRatio = size.width / texSize.width;
     const heightRatio = size.height / texSize.height;
 

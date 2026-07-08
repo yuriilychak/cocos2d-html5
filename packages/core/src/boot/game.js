@@ -218,7 +218,7 @@ export default class Game extends EventHelper(BaseClass) {
       // Director is created lazily; this is its first access, so initialize it here.
       const director = this._director;
       director.init();
-      if (director.setOpenGLView) director.setOpenGLView(this._eglView);
+      director.setOpenGLView(this._eglView);
 
       this._initEvents();
 

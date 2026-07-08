@@ -56,7 +56,7 @@ export class LayerColor extends Layer {
   }
 
   init(color, width, height) {
-    var winSize = ServiceLocator.director.getWinSize();
+    var winSize = ServiceLocator.eglView.winSizeInPoints;
     color = color || new Color(0, 0, 0, BYTE);
     width = width === undefined ? winSize.width : width;
     height = height === undefined ? winSize.height : height;

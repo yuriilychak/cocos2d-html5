@@ -54,7 +54,7 @@ export class MenuTestLayer extends Layer {
     this._resizeListener = null;
     this._bgLayout = null;
 
-    const winSizeLocal = ServiceLocator.director.getWinSize();
+    const winSizeLocal = ServiceLocator.eglView.winSizeInPoints;
     const PADDING = 12;
     const ITEM_HEIGHT = 44;
     const ITEM_MARGIN = 6;
@@ -154,7 +154,7 @@ export class MenuTestLayer extends Layer {
     this._resizeListener = ServiceLocator.eventManager.addCustomListener(
       "canvas-resize",
       () => {
-        this.setContentSize(ServiceLocator.director.getWinSize());
+        this.setContentSize(ServiceLocator.eglView.winSizeInPoints);
         helper.doLayout(this);
       },
       this

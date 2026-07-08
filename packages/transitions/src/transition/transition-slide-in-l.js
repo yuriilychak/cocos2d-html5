@@ -31,7 +31,7 @@ export class TransitionSlideInL extends TransitionScene {
 
   initScenes() {
     this._inScene.setPosition(
-      -ServiceLocator.director.getWinSize().width + ADJUST_FACTOR,
+      -ServiceLocator.eglView.winSizeInPoints.width + ADJUST_FACTOR,
       0
     );
   }
@@ -39,7 +39,7 @@ export class TransitionSlideInL extends TransitionScene {
   action() {
     return new MoveBy(
       this._duration,
-      new Point(ServiceLocator.director.getWinSize().width - ADJUST_FACTOR, 0)
+      new Point(ServiceLocator.eglView.winSizeInPoints.width - ADJUST_FACTOR, 0)
     );
   }
 

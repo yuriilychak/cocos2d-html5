@@ -34,7 +34,7 @@ import { TAG_GROSSINI } from "./constants";
 import { ActionManagerTest } from "./action-manager-test";
 import { s_pathGrossini, s_simpleFont_fnt } from "../resources";
 import { director } from "../constants";
-import { Sprite } from "@aspect/core";
+import { Sprite, ServiceLocator } from "@aspect/core";
 import { TextBMFont } from "@aspect/ccui";
 import { RotateBy, ScaleBy } from "@aspect/actions";
 
@@ -51,7 +51,7 @@ export class ResumeTest extends ActionManagerTest {
     //----start4----onEnter
     super.onEnter();
 
-    var s = director.getWinSize();
+    var s = ServiceLocator.eglView.winSizeInPoints;
     var l = new TextBMFont(
       "Grossini only rotate/scale in 3 seconds",
       s_simpleFont_fnt

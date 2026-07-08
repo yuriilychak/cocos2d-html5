@@ -44,7 +44,7 @@ export class TextureCacheTest extends TextureCacheTestBase {
 
     this._numberOfLoadedSprites = 0;
 
-    var size = ServiceLocator.director.getWinSize();
+    var size = ServiceLocator.eglView.winSizeInPoints;
 
     this._labelLoading = new TextBMFont("loading...", s_simpleFont_fnt);
     this._labelPercent = new TextBMFont("%0", s_simpleFont_fnt);
@@ -150,7 +150,7 @@ export class TextureCacheTest extends TextureCacheTestBase {
     texCache.addImageAsync("Images/blocks.png", this.loadingCallBack, this);
   }
   addSprite() {
-    var size = ServiceLocator.director.getWinSize();
+    var size = ServiceLocator.eglView.winSizeInPoints;
 
     // create sprites
     var bg = new Sprite("Images/HelloWorld.png");

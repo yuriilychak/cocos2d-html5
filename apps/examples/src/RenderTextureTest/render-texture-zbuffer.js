@@ -64,7 +64,7 @@ export class RenderTextureZbuffer extends RenderTextureBaseLayer {
       this
     );
 
-    var size = ServiceLocator.director.getWinSize();
+    var size = ServiceLocator.eglView.winSizeInPoints;
     var label = new TextBMFont("vertexZ = 50", s_simpleFont_fnt);
     label.x = size.width / 2;
     label.y = size.height * 0.25;
@@ -188,7 +188,7 @@ export class RenderTextureZbuffer extends RenderTextureBaseLayer {
   }
 
   renderScreenShot() {
-    var winSize = ServiceLocator.director.getWinSize();
+    var winSize = ServiceLocator.eglView.winSizeInPoints;
     var texture = new RenderTexture(winSize.width, winSize.width);
     if (!texture) return;
 

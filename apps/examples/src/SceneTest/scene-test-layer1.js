@@ -46,7 +46,7 @@ export class SceneTestLayer1 extends MenuTestLayer {
   constructor() {
     super(MENU_ITEMS);
 
-    const s = director.getWinSize();
+    const s = ServiceLocator.eglView.winSizeInPoints;
     const sprite = new Sprite(s_pathGrossini);
     this.addChild(sprite);
     sprite.x = s.width - 40;

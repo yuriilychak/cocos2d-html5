@@ -32,7 +32,7 @@
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
 import { director } from "../constants";
-import { Point, Rect } from "@aspect/core";
+import { Point, Rect, ServiceLocator } from "@aspect/core";
 import { Follow, MoveBy, Sequence } from "@aspect/actions";
 
 export class ActionFollow extends ActionsDemo {
@@ -40,7 +40,7 @@ export class ActionFollow extends ActionsDemo {
     //----start30----onEnter
     super.onEnter();
     this.centerSprites(1);
-    var s = director.getWinSize();
+    var s = ServiceLocator.eglView.winSizeInPoints;
 
     this._grossini.x = -(s.width / 2);
     this._grossini.y = s.height / 2;

@@ -160,7 +160,7 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
 
   _isPointInTopHalfAreaOfScreen(pt) {
     //----start9----_isPointInTopHalfAreaOfScreen
-    var winSize = ServiceLocator.director.getWinSize();
+    var winSize = ServiceLocator.eglView.winSizeInPoints;
     return pt.y >= winSize.height / 2;
     //----end9----
   }

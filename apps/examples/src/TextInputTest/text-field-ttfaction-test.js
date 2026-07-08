@@ -83,7 +83,7 @@ export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
     this._action = false;
 
     // add CCTextFieldTTF
-    var winSize = ServiceLocator.director.getWinSize();
+    var winSize = ServiceLocator.eglView.winSizeInPoints;
 
     this._textField = new TextFieldTTF(
       "<click here for input>",
@@ -140,7 +140,7 @@ export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
 
     var duration = 0.5;
     label.x = endX;
-    label.y = ServiceLocator.director.getWinSize().height - label.height * 2;
+    label.y = ServiceLocator.eglView.winSizeInPoints.height - label.height * 2;
     label.scale = 8;
 
     var seq = new Sequence(
@@ -165,7 +165,7 @@ export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
       beginY = sender.y;
     beginX += (sender.width - label.width) / 2.0;
 
-    var winSize = ServiceLocator.director.getWinSize();
+    var winSize = ServiceLocator.eglView.winSizeInPoints;
     var endPos = new Point(
       -winSize.width / 4.0,
       winSize.height * (0.5 + Math.random() / 2.0)

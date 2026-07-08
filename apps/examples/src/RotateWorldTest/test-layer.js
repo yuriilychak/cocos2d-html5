@@ -26,7 +26,7 @@
  ****************************************************************************/
 
 import { director } from "../constants";
-import { Layer } from "@aspect/core";
+import { Layer, ServiceLocator } from "@aspect/core";
 import { TextBMFont } from "@aspect/ccui";
 import { s_simpleFont_fnt } from "../resources";
 
@@ -41,7 +41,7 @@ export class TestLayer extends Layer {
 
     var x, y;
 
-    var size = director.getWinSize();
+    var size = ServiceLocator.eglView.winSizeInPoints;
     x = size.width;
     y = size.height;
 

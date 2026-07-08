@@ -22,7 +22,7 @@ export class TransitionTurnOffTiles extends TransitionScene {
     this._gridProxy.setTarget(this._outScene);
     this._gridProxy._performRecursive(Node._stateCallbackType.onEnter);
 
-    var winSize = ServiceLocator.director.getWinSize();
+    var winSize = ServiceLocator.eglView.winSizeInPoints;
     var aspect = winSize.width / winSize.height;
     var x = 0 | (12 * aspect);
     var y = 12;

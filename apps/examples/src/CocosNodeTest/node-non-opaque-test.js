@@ -32,7 +32,7 @@ export class NodeNonOpaqueTest extends TestNodeDemo {
   constructor() {
     //----start14----ctor
     super();
-    var winSize = ServiceLocator.director.getWinSize();
+    var winSize = ServiceLocator.eglView.winSizeInPoints;
     var background;
     for (var i = 0; i < 50; i++) {
       background = new Sprite(s_back1);

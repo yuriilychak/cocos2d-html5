@@ -74,7 +74,7 @@ export class LayerTest1 extends LayerTest {
         this
       );
 
-    var s = director.getWinSize();
+    var s = ServiceLocator.eglView.winSizeInPoints;
     var layer = new LayerColor(new Color(255, 0, 0, 128));
 
     layer.ignoreAnchor = false;
@@ -104,13 +104,13 @@ export class LayerTest1 extends LayerTest {
   //
 
   getExpectedResult() {
-    var s = director.getWinSize();
+    var s = ServiceLocator.eglView.winSizeInPoints;
     var ret = { center: "yes" };
     return JSON.stringify(ret);
   }
 
   getCurrentResult() {
-    var s = director.getWinSize();
+    var s = ServiceLocator.eglView.winSizeInPoints;
     var ret2 = this.readPixels(s.width / 2, s.height / 2, 5, 5);
     var ret = {
       center: this.containsPixel(ret2, this.pixel, true, 100) ? "yes" : "no"

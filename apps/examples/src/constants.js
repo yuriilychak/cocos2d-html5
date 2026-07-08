@@ -35,7 +35,7 @@ export let winSize = null;
 
 export function _initGlobals() {
     director = ServiceLocator.director;
-    winSize = ServiceLocator.director.getWinSize();
+    winSize = ServiceLocator.eglView.winSizeInPoints;
 }
 
 export var PLATFORM_JSB = 1 << 0;

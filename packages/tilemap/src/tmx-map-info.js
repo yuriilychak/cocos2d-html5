@@ -434,8 +434,7 @@ export class TMXMapInfo extends SAXParser {
         }
 
         var objects = selGroup.querySelectorAll("object");
-        var getContentScaleFactor =
-          ServiceLocator.director.getContentScaleFactor();
+        var contentScaleFactor = ServiceLocator.eglView.contentScaleFactor;
         if (objects) {
           for (j = 0; j < objects.length; j++) {
             var selObj = objects[j];
@@ -450,16 +449,16 @@ export class TMXMapInfo extends SAXParser {
             objectProp["x"] =
               (((selObj.getAttribute("x") || 0) | 0) +
                 objectGroup.getPositionOffset().x) /
-              getContentScaleFactor;
+              contentScaleFactor;
             var y =
               ((selObj.getAttribute("y") || 0) | 0) +
-              objectGroup.getPositionOffset().y / getContentScaleFactor;
+              objectGroup.getPositionOffset().y / contentScaleFactor;
             // Correct y position. (Tiled uses Flipped, cocos2d uses Standard)
             objectProp["y"] =
               (parseInt(this.getMapSize().height * this.getTileSize().height) -
                 y -
                 objectProp["height"]) /
-              ServiceLocator.director.getContentScaleFactor();
+              ServiceLocator.eglView.contentScaleFactor;
 
             objectProp["rotation"] =
               parseInt(selObj.getAttribute("rotation")) || 0;

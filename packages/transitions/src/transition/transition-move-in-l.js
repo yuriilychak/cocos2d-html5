@@ -22,7 +22,7 @@ export class TransitionMoveInL extends TransitionScene {
   }
 
   initScenes() {
-    this._inScene.setPosition(-ServiceLocator.director.getWinSize().width, 0);
+    this._inScene.setPosition(-ServiceLocator.eglView.winSizeInPoints.width, 0);
   }
 
   action() {

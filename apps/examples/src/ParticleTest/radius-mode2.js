@@ -64,7 +64,7 @@ export class RadiusMode2 extends ParticleDemo {
         this._emitter.angleVar = 0;
 
         // emitter position
-        var size = director.getWinSize();
+        var size = ServiceLocator.eglView.winSizeInPoints;
         this._emitter.x = size.width / 2;
         this._emitter.y = size.height / 2;
         this._emitter.posVar = new Point(0, 0);

@@ -59,7 +59,7 @@ export class IntervalLayer extends LayerGradient {
 
     this.time0 = this.time1 = this.time2 = this.time3 = this.time4 = 0.0;
 
-    var s = director.getWinSize();
+    var s = ServiceLocator.eglView.winSizeInPoints;
     // sun
     var sun = new ParticleSun();
     sun.texture = ServiceLocator.textureCache.addImage(s_fire);

@@ -30,7 +30,7 @@ import { RenderTexture } from "@aspect/render-texture";
 export class RenderTextureIssue937 extends RenderTextureBaseLayer {
   constructor() {
     super();
-    var winSize = ServiceLocator.director.getWinSize();
+    var winSize = ServiceLocator.eglView.winSizeInPoints;
     /*
      *     1    2
      * A: A1   A2

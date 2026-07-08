@@ -132,13 +132,13 @@ export class LayerGradientTest extends LayerTest {
   //
 
   getExpectedResult() {
-    var s = director.getWinSize();
+    var s = ServiceLocator.eglView.winSizeInPoints;
     var ret = { bottomleft: "yes", topright: "yes" };
     return JSON.stringify(ret);
   }
 
   getCurrentResult() {
-    var s = director.getWinSize();
+    var s = ServiceLocator.eglView.winSizeInPoints;
     var ret2 = this.readPixels(50, 50, 50, 50);
     var ret3 = this.readPixels(s.width - 50, s.height - 50, 50, 50);
     var ret = {

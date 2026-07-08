@@ -43,8 +43,7 @@ export class TMXLayerWebGLRenderCmd extends Node.WebGLRenderCmd {
     }
 
     const view = ServiceLocator.eglView;
-    const director = ServiceLocator.director;
-    const winSize = director.getWinSize();
+    const winSize = ServiceLocator.eglView.winSizeInPoints;
     const rendererConfig = ServiceLocator.sys.rendererConfig;
     const stride = rendererConfig.renderer.getSizePerVertex();
     const ti = texIndex || 0;
@@ -53,8 +52,10 @@ export class TMXLayerWebGLRenderCmd extends Node.WebGLRenderCmd {
       scaley = view.scaleY,
       maptw = node._mapTileSize.width,
       mapth = node._mapTileSize.height,
-      tilew = node.tileset._tileSize.width / director._contentScaleFactor,
-      tileh = node.tileset._tileSize.height / director._contentScaleFactor,
+      tilew =
+        node.tileset._tileSize.width / ServiceLocator.eglView.contentScaleFactor,
+      tileh =
+        node.tileset._tileSize.height / ServiceLocator.eglView.contentScaleFactor,
       extw = tilew - maptw,
       exth = tileh - mapth,
       winw = winSize.width,

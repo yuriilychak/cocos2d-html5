@@ -174,7 +174,7 @@ export function incrementGLDraws(addNumber) {
  * @function
  */
 export function contentScaleFactor() {
-  return ServiceLocator.director._contentScaleFactor;
+  return ServiceLocator.eglView.contentScaleFactor;
 }
 
 /**

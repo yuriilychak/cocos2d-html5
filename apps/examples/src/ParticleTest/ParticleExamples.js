@@ -72,7 +72,7 @@ export class ParticleFire extends ParticleSystem {
       this.setAngleVar(10);
 
       // emitter position
-      var winSize = ServiceLocator.director.getWinSize();
+      var winSize = ServiceLocator.eglView.winSizeInPoints;
       this.setPosition(winSize.width / 2, 60);
       this.setPosVar(new Point(40, 20));
 
@@ -143,7 +143,7 @@ export class ParticleFireworks extends ParticleSystem {
       this.setSpeedVar(50);
 
       // emitter position
-      var winSize = ServiceLocator.director.getWinSize();
+      var winSize = ServiceLocator.eglView.winSizeInPoints;
       this.setPosition(winSize.width / 2, winSize.height / 2);
 
       // angle
@@ -224,7 +224,7 @@ export class ParticleSun extends ParticleSystem {
       this.setAngleVar(360);
 
       // emitter position
-      var winSize = ServiceLocator.director.getWinSize();
+      var winSize = ServiceLocator.eglView.winSizeInPoints;
       this.setPosition(winSize.width / 2, winSize.height / 2);
       this.setPosVar(new Point(0, 0));
 
@@ -302,7 +302,7 @@ export class ParticleGalaxy extends ParticleSystem {
       this.setAngleVar(360);
 
       // emitter position
-      var winSize = ServiceLocator.director.getWinSize();
+      var winSize = ServiceLocator.eglView.winSizeInPoints;
       this.setPosition(winSize.width / 2, winSize.height / 2);
       this.setPosVar(new Point(0, 0));
 
@@ -381,7 +381,7 @@ export class ParticleFlower extends ParticleSystem {
       this.setAngleVar(360);
 
       // emitter position
-      var winSize = ServiceLocator.director.getWinSize();
+      var winSize = ServiceLocator.eglView.winSizeInPoints;
       this.setPosition(winSize.width / 2, winSize.height / 2);
       this.setPosVar(new Point(0, 0));
 
@@ -461,7 +461,7 @@ export class ParticleMeteor extends ParticleSystem {
       this.setAngleVar(360);
 
       // emitter position
-      var winSize = ServiceLocator.director.getWinSize();
+      var winSize = ServiceLocator.eglView.winSizeInPoints;
       this.setPosition(winSize.width / 2, winSize.height / 2);
       this.setPosVar(new Point(0, 0));
 
@@ -540,7 +540,7 @@ export class ParticleSpiral extends ParticleSystem {
       this.setAngleVar(0);
 
       // emitter position
-      var winSize = ServiceLocator.director.getWinSize();
+      var winSize = ServiceLocator.eglView.winSizeInPoints;
       this.setPosition(winSize.width / 2, winSize.height / 2);
       this.setPosVar(new Point(0, 0));
 
@@ -618,7 +618,7 @@ export class ParticleExplosion extends ParticleSystem {
       this.setAngleVar(360);
 
       // emitter position
-      var winSize = ServiceLocator.director.getWinSize();
+      var winSize = ServiceLocator.eglView.winSizeInPoints;
       this.setPosition(winSize.width / 2, winSize.height / 2);
       this.setPosVar(new Point(0, 0));
 
@@ -693,7 +693,7 @@ export class ParticleSmoke extends ParticleSystem {
       this.setAngleVar(5);
 
       // emitter position
-      var winSize = ServiceLocator.director.getWinSize();
+      var winSize = ServiceLocator.eglView.winSizeInPoints;
       this.setPosition(winSize.width / 2, 0);
       this.setPosVar(new Point(20, 0));
 
@@ -768,7 +768,7 @@ export class ParticleSnow extends ParticleSystem {
       this.setTangentialAccelVar(1);
 
       // emitter position
-      var winSize = ServiceLocator.director.getWinSize();
+      var winSize = ServiceLocator.eglView.winSizeInPoints;
       this.setPosition(winSize.width / 2, winSize.height + 10);
       this.setPosVar(new Point(winSize.width / 2, 0));
 
@@ -851,7 +851,7 @@ export class ParticleRain extends ParticleSystem {
       this.setAngleVar(5);
 
       // emitter position
-      var winSize = ServiceLocator.director.getWinSize();
+      var winSize = ServiceLocator.eglView.winSizeInPoints;
       this.setPosition(winSize.width / 2, winSize.height);
       this.setPosVar(new Point(winSize.width / 2, 0));
 

@@ -10,7 +10,7 @@ export class TransitionJumpZoom extends TransitionScene {
 
   onEnter() {
     super.onEnter();
-    var winSize = ServiceLocator.director.getWinSize();
+    var winSize = ServiceLocator.eglView.winSizeInPoints;
 
     this._inScene.attr({
       scale: 0.5,

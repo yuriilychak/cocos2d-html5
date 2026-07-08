@@ -55,7 +55,7 @@ export class MotionStreakTest2 extends MotionStreakTest {
       },
       this
     );
-    var winSize = ServiceLocator.director.getWinSize();
+    var winSize = ServiceLocator.eglView.winSizeInPoints;
     // create the streak object and add it to the scene
     this._streak = new MotionStreak(3, 3, 64, Color.WHITE, s_streak);
     this.addChild(this._streak);

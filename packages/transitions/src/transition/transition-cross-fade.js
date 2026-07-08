@@ -14,7 +14,7 @@ export class TransitionCrossFade extends TransitionScene {
     super.onEnter();
 
     var color = new Color(0, 0, 0, 0);
-    var winSize = ServiceLocator.director.getWinSize();
+    var winSize = ServiceLocator.eglView.winSizeInPoints;
     var layer = new LayerColor(color);
 
     var inTexture = new RenderTexture(winSize.width, winSize.height);

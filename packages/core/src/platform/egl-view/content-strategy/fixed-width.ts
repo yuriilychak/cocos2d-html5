@@ -1,4 +1,3 @@
-import { ServiceLocator } from "../../../service-locator";
 import ContentStrategy from "./content-strategy";
 
 import type { SizeLike } from "../../../geometry/types";
@@ -16,7 +15,7 @@ export default class FixedWidth extends ContentStrategy {
   ): ContentStrategyResult {
     void view;
 
-    const canvas = ServiceLocator.game.canvas as HTMLCanvasElement;
+    const canvas = view.canvas;
     const containerW = canvas.width;
     const containerH = canvas.height;
     const designW = designedResolution.width;
@@ -35,6 +34,6 @@ export default class FixedWidth extends ContentStrategy {
   }
 
   postApply(view: EGLViewLike): void {
-    ServiceLocator.director.winSizeInPoints = view.visibleSize;
+    view.winSizeInPoints = view.visibleSize;
   }
 }

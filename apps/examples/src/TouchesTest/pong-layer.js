@@ -47,7 +47,7 @@ export class PongLayer extends Layer {
 
     this._winSize = null;
     this._ballStartingVelocity = new Point(20.0, -100.0);
-    this._winSize = ServiceLocator.director.getWinSize();
+    this._winSize = ServiceLocator.eglView.winSizeInPoints;
 
     this._ball = Ball.ballWithTexture(ServiceLocator.textureCache.addImage(s_ball));
     this._ball.x = this._winSize.width / 2;

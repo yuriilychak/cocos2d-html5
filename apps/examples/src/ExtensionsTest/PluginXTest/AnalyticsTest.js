@@ -139,7 +139,7 @@ export class AnalyticsTestLayer extends PluginXTest {
 
   onEnter() {
     super.onEnter();
-    var size = ServiceLocator.director.getWinSize();
+    var size = ServiceLocator.eglView.winSizeInPoints;
 
     loadAnalyticsPlugin();
 

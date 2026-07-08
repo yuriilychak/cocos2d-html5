@@ -32,7 +32,7 @@
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
 import { director } from "../constants";
-import { Point } from "@aspect/core";
+import { Point, ServiceLocator } from "@aspect/core";
 import { CallFunc, FadeOut, MoveBy, RotateBy, ScaleBy, Sequence } from "@aspect/actions";
 import { TextBMFont } from "@aspect/ccui";
 import { s_simpleFont_fnt } from "../resources";
@@ -79,7 +79,7 @@ export class ActionCallFunc1 extends ActionsDemo {
     //----end25----
   }
   onCallback1(nodeExecutingAction, value) {
-    var s = director.getWinSize();
+    var s = ServiceLocator.eglView.winSizeInPoints;
     var label = new TextBMFont("callback 1 called", s_simpleFont_fnt);
     label.x = (s.width / 4) * 1;
     label.y = s.height / 2;
@@ -87,7 +87,7 @@ export class ActionCallFunc1 extends ActionsDemo {
     this.control1 = true;
   }
   onCallback2(nodeExecutingAction, value) {
-    var s = director.getWinSize();
+    var s = ServiceLocator.eglView.winSizeInPoints;
     var label = new TextBMFont("callback 2 called", s_simpleFont_fnt);
     label.x = (s.width / 4) * 2;
     label.y = s.height / 2;
@@ -96,7 +96,7 @@ export class ActionCallFunc1 extends ActionsDemo {
     this.control2 = true;
   }
   onCallback3(nodeExecutingAction, value) {
-    var s = director.getWinSize();
+    var s = ServiceLocator.eglView.winSizeInPoints;
     var label = new TextBMFont("callback 3 called:" + value, s_simpleFont_fnt);
     label.x = (s.width / 4) * 3;
     label.y = s.height / 2;

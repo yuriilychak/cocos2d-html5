@@ -32,7 +32,7 @@
 //------------------------------------------------------------------
 import { ActionsDemo } from "./actions-demo";
 import { director, winSize } from "../constants";
-import { Point } from "@aspect/core";
+import { Point, ServiceLocator } from "@aspect/core";
 import { MoveBy, MoveTo, Sequence } from "@aspect/actions";
 
 export class ActionMove extends ActionsDemo {
@@ -53,7 +53,7 @@ export class ActionMove extends ActionsDemo {
     super.onEnter();
 
     this.centerSprites(3);
-    var s = director.getWinSize();
+    var s = ServiceLocator.eglView.winSizeInPoints;
 
     var actionTo = new MoveTo(2, new Point(s.width - 40, s.height - 40));
 

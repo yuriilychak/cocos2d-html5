@@ -18,15 +18,15 @@ export class DirectorCanvasRenderer extends DirectorRenderer {
   }
 
   setOpenGLView(openGLView) {
-    var director = this._director;
-    director._winSizeInPoints.width = ServiceLocator.game.canvas.width;
-    director._winSizeInPoints.height = ServiceLocator.game.canvas.height;
-    director._openGLView = openGLView || ServiceLocator.eglView;
-    if (ServiceLocator.eventManager) ServiceLocator.eventManager.enabled = true;
+    ServiceLocator.eglView.winSizeInPoints = ServiceLocator.eglView.canvas;
+
+    if (ServiceLocator.eventManager) {
+      ServiceLocator.eventManager.enabled = true;
+    }
   }
 
   getVisibleSize() {
-    return this._director.getWinSize();
+    return ServiceLocator.eglView.winSizeInPoints;
   }
 
   getVisibleOrigin() {

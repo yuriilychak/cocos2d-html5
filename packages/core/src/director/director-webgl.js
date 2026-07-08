@@ -5,7 +5,6 @@ import Vec3 from "../kazmath/vec3";
 import { KMGLMatrix } from "../kazmath/km-gl-matrix";
 import { DirectorRenderer } from "./director-renderer";
 import { log, _LogInfos } from "../boot/debugger";
-
 import { ServiceLocator } from "../service-locator";
 import { DirectorEvent, DirectorProjection, GLState } from "../enums";
 
@@ -49,11 +48,11 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
 
   setProjection(projection) {
     var director = this._director;
-    var size = director._winSizeInPoints;
+    var size = ServiceLocator.eglView.winSizeInPoints;
 
     this.setViewport();
 
-    var view = director._openGLView,
+    var view = ServiceLocator.eglView,
       viewPortRect = view.viewPortRect,
       ox = viewPortRect.x / view.scaleX,
       oy = viewPortRect.y / view.scaleY;
@@ -122,10 +121,7 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
   }
 
   setOpenGLView(openGLView) {
-    var director = this._director;
-    director._winSizeInPoints.width = ServiceLocator.game.canvas.width;
-    director._winSizeInPoints.height = ServiceLocator.game.canvas.height;
-    director._openGLView = openGLView || ServiceLocator.eglView;
+    ServiceLocator.eglView.winSizeInPoints = ServiceLocator.eglView.canvas;
 
     var conf = ServiceLocator.sys.configuration;
     conf.gatherGPUInfo();
@@ -137,29 +133,26 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
   }
 
   getVisibleSize() {
-    return this._director._openGLView.visibleSize;
+    return ServiceLocator.eglView.visibleSize;
   }
 
   getVisibleOrigin() {
-    return this._director._openGLView.visibleOrigin;
+    return ServiceLocator.eglView.visibleOrigin;
   }
 
   getZEye() {
-    return this._director._winSizeInPoints.height / 1.1546999375;
+    return ServiceLocator.eglView.zEye;
   }
 
   setViewport() {
-    var view = this._director._openGLView;
-    if (view) {
-      var locWinSizeInPoints = this._director._winSizeInPoints;
-      var viewPortRect = view.viewPortRect;
-      view.setViewPortInPoints(
-        -viewPortRect.x / view.scaleX,
-        -viewPortRect.y / view.scaleY,
-        locWinSizeInPoints.width,
-        locWinSizeInPoints.height
-      );
-    }
+    var locWinSizeInPoints = ServiceLocator.eglView.winSizeInPoints;
+    var viewPortRect = ServiceLocator.eglView.viewPortRect;
+    ServiceLocator.eglView.setViewPortInPoints(
+      -viewPortRect.x / ServiceLocator.eglView.scaleX,
+      -viewPortRect.y / ServiceLocator.eglView.scaleY,
+      locWinSizeInPoints.width,
+      locWinSizeInPoints.height
+    );
   }
 
   setAlphaBlending(on) {

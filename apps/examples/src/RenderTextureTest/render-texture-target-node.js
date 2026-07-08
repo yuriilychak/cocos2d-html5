@@ -57,7 +57,7 @@ export class RenderTextureTargetNode extends RenderTextureBaseLayer {
     var background = new LayerColor(new Color(40, 40, 40, 255));
     this.addChild(background);
 
-    var winSize = ServiceLocator.director.getWinSize();
+    var winSize = ServiceLocator.eglView.winSizeInPoints;
     this._winSize = winSize;
 
     // sprite 1

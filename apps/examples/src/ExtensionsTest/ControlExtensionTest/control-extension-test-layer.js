@@ -21,7 +21,7 @@ export default class ControlExtensionTestLayer extends BaseTestLayer {
     super(new Color(53, 57, 65, 255), new Color(53, 57, 65, 255));
     this._title = "Control Extension Tests";
 
-    const screenSize = ServiceLocator.director.getWinSize();
+    const screenSize = ServiceLocator.eglView.winSizeInPoints;
 
     this.addExample(ControlSliderTest, 96, screenSize.height - 150);
     this.addExample(ControlColourPickerTest, 560, screenSize.height - 180);

@@ -39,7 +39,7 @@ export class Layer extends Node {
 
     this._ignoreAnchorPointForPosition = true;
     this.setAnchorPoint(0.5, 0.5);
-    this.setContentSize(ServiceLocator.director.getWinSize());
+    this.setContentSize(ServiceLocator.eglView.winSizeInPoints);
     this._cascadeColorEnabled = false;
     this._cascadeOpacityEnabled = false;
   }

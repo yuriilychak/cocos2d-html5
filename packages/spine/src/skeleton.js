@@ -105,7 +105,7 @@ export class Skeleton extends Node {
       } else {
         atlas = atlasFile;
       }
-      scale = scale || 1 / ServiceLocator.director.getContentScaleFactor();
+      scale = scale || 1 / ServiceLocator.eglView.contentScaleFactor;
 
       const attachmentLoader = new AtlasAttachmentLoader(atlas);
       const skeletonJsonReader = new SkeletonJson(attachmentLoader);
@@ -219,8 +219,8 @@ export class Skeleton extends Node {
   setSkeletonData(skeletonData, ownsSkeletonData) {
     if (skeletonData.width != null && skeletonData.height != null)
       this.setContentSize(
-        skeletonData.width / ServiceLocator.director.getContentScaleFactor(),
-        skeletonData.height / ServiceLocator.director.getContentScaleFactor()
+        skeletonData.width / ServiceLocator.eglView.contentScaleFactor,
+        skeletonData.height / ServiceLocator.eglView.contentScaleFactor
       );
 
     this._skeleton = new SpineSkeleton(skeletonData);

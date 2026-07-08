@@ -9,7 +9,7 @@ export class TransitionProgressRadialCW extends TransitionProgress {
   }
 
   _progressTimerNodeWithRenderTexture(texture) {
-    var size = ServiceLocator.director.getWinSize();
+    var size = ServiceLocator.eglView.winSizeInPoints;
 
     var pNode = new ProgressTimer(texture.sprite);
     if (ServiceLocator.sys.rendererConfig.isWebGL) pNode.sprite.flippedY = true;

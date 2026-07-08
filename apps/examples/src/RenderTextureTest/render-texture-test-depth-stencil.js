@@ -44,7 +44,7 @@ export class RenderTextureTestDepthStencil extends RenderTextureBaseLayer {
     this._spriteDraw = null;
 
     this._rend = null;
-    var winSize = ServiceLocator.director.getWinSize();
+    var winSize = ServiceLocator.eglView.winSizeInPoints;
 
     this._spriteDraw = new Sprite(s_fire);
     this._spriteDraw.x = winSize.width * 0.25;

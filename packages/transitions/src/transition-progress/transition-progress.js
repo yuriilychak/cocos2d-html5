@@ -29,7 +29,7 @@ export class TransitionProgress extends TransitionScene {
     super.onEnter();
     this._setupTransition();
 
-    var winSize = ServiceLocator.director.getWinSize();
+    var winSize = ServiceLocator.eglView.winSizeInPoints;
 
     var texture = new RenderTexture(winSize.width, winSize.height);
     texture.sprite.anchorX = 0.5;

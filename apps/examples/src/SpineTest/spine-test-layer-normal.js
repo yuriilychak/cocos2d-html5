@@ -47,7 +47,7 @@ export class SpineTestLayerNormal extends SpineTestLayer {
     this._debugBonesOn = false;
     this._debugSlotsOn = false;
 
-    var size = director.getWinSize();
+    var size = ServiceLocator.eglView.winSizeInPoints;
 
     /////////////////////////////
     // Make Spine's Animated skeleton Node

@@ -124,7 +124,7 @@ export default class Follow extends Action {
 
     this._boundaryFullyCovered = false;
 
-    const winSize = ServiceLocator.director.getWinSize();
+    const winSize = ServiceLocator.eglView.winSizeInPoints;
     this._fullScreenSize = new Point(winSize.width, winSize.height);
     this._halfScreenSize = Point.mult(this._fullScreenSize, 0.5);
 

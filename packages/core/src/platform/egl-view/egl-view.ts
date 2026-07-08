@@ -26,7 +26,6 @@
 
 import { BaseClass } from "../class";
 import { Point, Rect, Size } from "../../geometry";
-import { contentScaleFactor } from "../macro/utils";
 import { VisibleRect } from "../visible-rect";
 import { BrowserGetter } from "./browser-getter";
 import { log, _LogInfos } from "../../boot/debugger";
@@ -113,6 +112,10 @@ export class EGLView extends BaseClass {
   #resizeCallback: (() => void) | null = null;
 
   #initialized: boolean = false;
+
+  #winSizeInPoints = new Size();
+
+  #contentScaleFactor: number = 1;
 
   #canvas: HTMLCanvasElement | null = null;
 
@@ -284,7 +287,7 @@ export class EGLView extends BaseClass {
       renderContext.setOffset(this.#viewPortRect.x, -this.#viewPortRect.y);
 
     // reset director's member variables to fit visible rect
-    this.#director._winSizeInPoints.set(this.#designResolution);
+    this.#winSizeInPoints.set(this.#designResolution);
     this.#resolutionPolicy.postApply(this);
 
     if (this.#sys.rendererConfig.isWebGL) {
@@ -309,8 +312,6 @@ export class EGLView extends BaseClass {
    *     1. Set viewport's width to the desired width in pixel
    *     2. Set body width to the exact pixel resolution
    *     3. The resolution policy will be reset with designed view size in points.
-   * @param {SizeLike} size Design resolution size.
-   * @param {ResolutionPolicy|Number} resolutionPolicy The resolution policy desired
    */
   setRealPixelResolution(
     size: SizeLike,
@@ -331,10 +332,6 @@ export class EGLView extends BaseClass {
 
   /**
    * Sets view port rectangle with points.
-   * @param {Number} x
-   * @param {Number} y
-   * @param {Number} w width
-   * @param {Number} h height
    */
   setViewPortInPoints(x: number, y: number, w: number, h: number): void {
     const scale = Point.mult(this.#scale, this.#frameZoomFactor);
@@ -561,7 +558,7 @@ export class EGLView extends BaseClass {
   // RenderTexture hacker
   #setScaleXYForRenderTexture(): void {
     //hack for RenderTexture on canvas mode when adapting multiple resolution resources
-    const scaleFactor = contentScaleFactor();
+    const scaleFactor = this.#contentScaleFactor;
     this.#scale.set(scaleFactor, scaleFactor);
   }
 
@@ -630,6 +627,26 @@ export class EGLView extends BaseClass {
 
   set frame(value: HTMLElement | null) {
     this.#frame = value;
+  }
+
+  get contentScaleFactor(): number {
+    return this.#contentScaleFactor;
+  }
+
+  set contentScaleFactor(value: number) {
+    this.#contentScaleFactor = value;
+  }
+
+  get winSizeInPoints(): Size {
+    return this.#winSizeInPoints.clone();
+  }
+
+  set winSizeInPoints(value: SizeLike) {
+    this.#winSizeInPoints.set(value);
+  }
+
+  get winSizeInPixels() {
+    return Size.mult(this.#winSizeInPoints, this.#contentScaleFactor);
   }
 
   get resizeWithBrowserSize(): boolean {
@@ -910,7 +927,7 @@ export class EGLView extends BaseClass {
    * Returns the view port rectangle.
    */
   get viewPortRect(): Rect {
-    return this.#viewPortRect;
+    return this.#viewPortRect.clone();
   }
 
   /**
@@ -933,5 +950,9 @@ export class EGLView extends BaseClass {
 
   get container(): HTMLElement {
     return this.#container!;
+  }
+
+  get zEye(): number {
+    return this.#winSizeInPoints.height / 1.1546999375;
   }
 }

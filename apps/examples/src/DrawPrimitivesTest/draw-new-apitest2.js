@@ -46,7 +46,7 @@ export class DrawNewAPITest2 extends DrawTestDemo {
     super.onEnter();
     var draw = new DrawNode();
     this.addChild(draw, 10);
-    var winSize = ServiceLocator.director.getWinSize();
+    var winSize = ServiceLocator.eglView.winSizeInPoints;
     var centerPos = new Point(winSize.width / 2, winSize.height / 2);
     //drawSegment
     draw.drawSegment(

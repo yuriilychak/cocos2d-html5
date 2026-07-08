@@ -51,7 +51,7 @@ export class Issue1358 extends MotionStreakTest {
     super.onEnter();
 
     // ask director the the window size
-    var size = ServiceLocator.director.getWinSize();
+    var size = ServiceLocator.eglView.winSizeInPoints;
     this._streak = new MotionStreak(
       2.0,
       1.0,

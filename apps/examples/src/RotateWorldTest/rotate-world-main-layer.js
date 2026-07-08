@@ -28,7 +28,7 @@
 import { SpriteLayer } from "./sprite-layer";
 import { TestLayer } from "./test-layer";
 import { director } from "../constants";
-import { Color, Layer, LayerColor } from "@aspect/core";
+import { Color, Layer, LayerColor, ServiceLocator } from "@aspect/core";
 import { RotateBy } from "@aspect/actions";
 
 export class RotateWorldMainLayer extends Layer {
@@ -41,7 +41,7 @@ export class RotateWorldMainLayer extends Layer {
     super.onEnter();
     var x, y;
 
-    var size = director.getWinSize();
+    var size = ServiceLocator.eglView.winSizeInPoints;
     x = size.width;
     y = size.height;
 

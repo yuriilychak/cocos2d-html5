@@ -40,7 +40,7 @@ export class UIS9NinePatchTest extends UIMainLayer {
         "ccs-res/cocosui/android9patch.plist"
       );
 
-      var winSize = director.getWinSize();
+      var winSize = ServiceLocator.eglView.winSizeInPoints;
       var x = winSize.width / 2;
       var y = 0 + (winSize.height / 2 + 50);
 

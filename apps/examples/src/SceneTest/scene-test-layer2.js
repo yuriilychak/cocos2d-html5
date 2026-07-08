@@ -29,7 +29,7 @@ import { SceneTestLayer3 } from "./scene-test-layer3";
 import { TestScene } from "../test-scene";
 import { s_pathGrossini } from "../resources";
 import { director } from "../constants";
-import { Sprite } from "@aspect/core";
+import { Sprite, ServiceLocator } from "@aspect/core";
 import { RotateBy } from "@aspect/actions";
 import { TransitionSlideInT } from "@aspect/transitions";
 import { MenuTestLayer } from "../menu-test-layer";
@@ -44,7 +44,7 @@ export class SceneTestLayer2 extends MenuTestLayer {
   constructor() {
     super(MENU_ITEMS);
 
-    const s = director.getWinSize();
+    const s = ServiceLocator.eglView.winSizeInPoints;
     const sprite = new Sprite(s_pathGrossini);
     this.addChild(sprite);
     sprite.x = s.width - 40;

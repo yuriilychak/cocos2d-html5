@@ -36,7 +36,7 @@ import {
 } from "./layer-test-constants";
 import { LayerTest } from "./layer-test";
 import { autoTestEnabled, director } from "../constants";
-import { Color, LayerColor } from "@aspect/core";
+import { Color, LayerColor, ServiceLocator } from "@aspect/core";
 import { DelayTime, FadeOut, TintBy, Sequence } from "@aspect/actions";
 
 export class LayerTest2 extends LayerTest {
@@ -50,7 +50,7 @@ export class LayerTest2 extends LayerTest {
     //----start1----onEnter
     super.onEnter();
 
-    var s = director.getWinSize();
+    var s = ServiceLocator.eglView.winSizeInPoints;
     var layer1 = new LayerColor(new Color(255, 255, 0, 80), 100, 300);
     layer1.x = s.width / 3;
     layer1.y = s.height / 2;
@@ -110,7 +110,7 @@ export class LayerTest2 extends LayerTest {
       }
       return false;
     };
-    var s = director.getWinSize();
+    var s = ServiceLocator.eglView.winSizeInPoints;
     var tint = this.getChildByTag(LAYERTEST2_LAYER1_TAG).color;
     var op = this.getChildByTag(LAYERTEST2_LAYER2_TAG).opacity;
     var ret = {

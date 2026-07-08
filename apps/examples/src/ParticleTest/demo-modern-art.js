@@ -41,7 +41,7 @@ export class DemoModernArt extends ParticleDemo {
 
     this._background.addChild(this._emitter, 10);
 
-    var winSize = director.getWinSize();
+    var winSize = ServiceLocator.eglView.winSizeInPoints;
 
     // duration
     this._emitter.duration = -1;

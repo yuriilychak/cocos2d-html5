@@ -95,6 +95,10 @@ export default class Size implements SizeLike {
     );
   }
 
+  public static mult(size: SizeLike, scale: number): Size {
+    return new Size(size.width * scale, size.height * scale);
+  }
+
   public static compMult(size: SizeLike, point: PointLike): Size {
     return new Size(size.width * point.x, size.height * point.y);
   }

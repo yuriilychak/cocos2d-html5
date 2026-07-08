@@ -31,7 +31,7 @@ export class TransitionPageTurn extends TransitionScene {
 
   onEnter() {
     super.onEnter();
-    var winSize = ServiceLocator.director.getWinSize();
+    var winSize = ServiceLocator.eglView.winSizeInPoints;
     var x, y;
     if (winSize.width > winSize.height) {
       x = 16;

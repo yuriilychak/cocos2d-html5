@@ -50,7 +50,7 @@ export class TestScene extends Scene {
     this._testInfoLabel = null;
     this.init();
 
-    const winSizeLocal = ServiceLocator.director.getWinSize();
+    const winSizeLocal = ServiceLocator.eglView.winSizeInPoints;
     const winH = winSizeLocal.height;
     const winW = winSizeLocal.width;
     const centerY = winH - HEADER_HEIGHT / 2;

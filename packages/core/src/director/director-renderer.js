@@ -1,35 +1,37 @@
+import { ServiceLocator } from "../service-locator";
+
 export class DirectorRenderer {
-    constructor(director) {
-        this._director = director;
-    }
+  constructor(director) {
+    this._director = director;
+  }
 
-    getProjection() {
-        return this._director._projection;
-    }
+  getProjection() {
+    return this._director._projection;
+  }
 
-    setProjection(projection) {}
+  setProjection(projection) {}
 
-    setDepthTest(on) {}
+  setDepthTest(on) {}
 
-    setClearColor(clearColor) {}
+  setClearColor(clearColor) {}
 
-    setOpenGLView(openGLView) {}
+  setOpenGLView(openGLView) {}
 
-    getVisibleSize() {}
+  getVisibleSize() {}
 
-    getVisibleOrigin() {}
+  getVisibleOrigin() {}
 
-    getOpenGLView() {
-        return this._director._openGLView;
-    }
+  getOpenGLView() {
+    return ServiceLocator.eglView;
+  }
 
-    getZEye() {
-        return 0;
-    }
+  getZEye() {
+    return 0;
+  }
 
-    setViewport() {}
+  setViewport() {}
 
-    setAlphaBlending(on) {}
+  setAlphaBlending(on) {}
 
-    setGLDefaultValues() {}
+  setGLDefaultValues() {}
 }

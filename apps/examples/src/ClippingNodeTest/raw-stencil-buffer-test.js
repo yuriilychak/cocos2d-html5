@@ -79,7 +79,7 @@ export class RawStencilBufferTest extends BaseClippingNodeTest {
 
   draw(ctx) {
     var gl = ctx || ServiceLocator.sys.rendererConfig.renderContext;
-    var winPoint = Point.fromSize(ServiceLocator.director.getWinSize());
+    var winPoint = Point.fromSize(ServiceLocator.eglView.winSizeInPoints);
     var planeSize = Point.mult(winPoint, 1.0 / _PLANE_COUNT);
 
     gl.enable(gl.STENCIL_TEST);

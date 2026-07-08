@@ -50,6 +50,6 @@ export default class SplitCols extends TiledGrid3DAction {
 
   startWithTarget(target) {
     super.startWithTarget(target);
-    this._winSize = ServiceLocator.director.getWinSizeInPixels();
+    this._winSize = ServiceLocator.eglView.winSizeInPixels;
   }
 }

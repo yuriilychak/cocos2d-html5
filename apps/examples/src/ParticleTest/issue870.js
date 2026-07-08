@@ -49,8 +49,8 @@ export class Issue870 extends ParticleDemo {
         this.addChild(system, 10);
         this._emitter = system;
         this._emitter.drawMode = ParticleSystem.TEXTURE_MODE;
-        this._emitter.x = director.getWinSize().width / 2;
-        this._emitter.y = director.getWinSize().height / 2 - 50;
+        this._emitter.x = ServiceLocator.eglView.winSizeInPoints.width / 2;
+        this._emitter.y = ServiceLocator.eglView.winSizeInPoints.height / 2 - 50;
         this._index = 0;
         this.schedule(this.updateQuads, 2.0);
     }

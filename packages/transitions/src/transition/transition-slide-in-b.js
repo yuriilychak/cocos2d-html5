@@ -16,7 +16,7 @@ export class TransitionSlideInB extends TransitionSlideInL {
   initScenes() {
     this._inScene.setPosition(
       0,
-      -(ServiceLocator.director.getWinSize().height - ADJUST_FACTOR)
+      -(ServiceLocator.eglView.winSizeInPoints.height - ADJUST_FACTOR)
     );
   }
 
@@ -25,7 +25,7 @@ export class TransitionSlideInB extends TransitionSlideInL {
       this._duration,
       new Point(
         0,
-        ServiceLocator.director.getWinSize().height - ADJUST_FACTOR
+        ServiceLocator.eglView.winSizeInPoints.height - ADJUST_FACTOR
       )
     );
   }

@@ -41,7 +41,7 @@ import { ActionsTestScene } from "./actions-test-scene";
 import { BaseTestLayer } from "../BaseTestLayer/BaseTestLayer";
 import { s_pathGrossini, s_pathSister1, s_pathSister2 } from "../resources";
 import { director } from "../constants";
-import { Color, Sprite } from "@aspect/core";
+import { Color, Sprite, ServiceLocator } from "@aspect/core";
 
 export class ActionsDemo extends BaseTestLayer {
   constructor() {
@@ -59,7 +59,7 @@ export class ActionsDemo extends BaseTestLayer {
     this.addChild(this._grossini, SPRITE_GROSSINI_TAG);
     this.addChild(this._tamara, SPRITE_TAMARA_TAG);
     this.addChild(this._kathia, SPRITE_KATHIA_TAG);
-    var s = director.getWinSize();
+    var s = ServiceLocator.eglView.winSizeInPoints;
     this._grossini.x = s.width / 2;
     this._grossini.y = s.height / 3;
     this._tamara.x = s.width / 2;
@@ -69,7 +69,7 @@ export class ActionsDemo extends BaseTestLayer {
   }
 
   centerSprites(numberOfSprites) {
-    var winSize = director.getWinSize();
+    var winSize = ServiceLocator.eglView.winSizeInPoints;
 
     if (numberOfSprites === 0) {
       this._tamara.visible = false;
@@ -97,7 +97,7 @@ export class ActionsDemo extends BaseTestLayer {
   }
   alignSpritesLeft(numberOfSprites) {
     //----start47----onEnter
-    var s = director.getWinSize();
+    var s = ServiceLocator.eglView.winSizeInPoints;
 
     if (numberOfSprites == 1) {
       this._tamara.visible = false;

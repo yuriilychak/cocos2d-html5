@@ -28,7 +28,7 @@
 import { ParticleDemo } from "./particle-demo";
 import { s_resprefix } from "../resources";
 import { director } from "../constants";
-import { Color } from "@aspect/core";
+import { Color, ServiceLocator } from "@aspect/core";
 import { ParticleSystem } from "@aspect/particle";
 
 export class DemoParticleFromFile extends ParticleDemo {
@@ -63,8 +63,8 @@ export class DemoParticleFromFile extends ParticleDemo {
     setEmitterPosition() {
         var sourcePos = this._emitter.getSourcePosition();
         if (sourcePos.x === 0 && sourcePos.y === 0)
-            this._emitter.x = director.getWinSize().width / 2;
-            this._emitter.y = director.getWinSize().height / 2 - 50;
+            this._emitter.x = ServiceLocator.eglView.winSizeInPoints.width / 2;
+            this._emitter.y = ServiceLocator.eglView.winSizeInPoints.height / 2 - 50;
     }
 
     title() {

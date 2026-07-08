@@ -36,7 +36,7 @@ export class LoaderCycleLayer extends BaseTestLayer {
 
     this._subtitle = "";
 
-    var winSize = ServiceLocator.director.getWinSize();
+    var winSize = ServiceLocator.eglView.winSizeInPoints;
 
     var resultTTF = new TextBMFont("result: unknown", s_simpleFont_fnt);
     resultTTF.x = winSize.width / 2;
@@ -80,7 +80,7 @@ export class LoaderCycleLayer extends BaseTestLayer {
   }
 
   createInfo() {
-    var winSize = ServiceLocator.director.getWinSize();
+    var winSize = ServiceLocator.eglView.winSizeInPoints;
     var info1 = new TextBMFont("Load 5 files", s_simpleFont_fnt);
     info1.x = winSize.width / 2;
     info1.y = winSize.height / 2 + 80;

@@ -46,7 +46,7 @@ export class BasicTest extends BaseClippingNodeTest {
   }
 
   setup() {
-    var winSize = ServiceLocator.director.getWinSize();
+    var winSize = ServiceLocator.eglView.winSizeInPoints;
 
     var stencil = this.stencil();
     stencil.tag = TAG_STENCILNODE;

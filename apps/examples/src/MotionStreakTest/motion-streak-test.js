@@ -51,7 +51,7 @@ export class MotionStreakTest extends Layer {
 
   onEnter() {
     super.onEnter();
-    var winSize = ServiceLocator.director.getWinSize();
+    var winSize = ServiceLocator.eglView.winSizeInPoints;
 
     let scene = this.parent;
     while (scene && !scene.setTestInfo) {

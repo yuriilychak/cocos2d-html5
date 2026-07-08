@@ -45,7 +45,7 @@ export class Effect1 extends EffectAdvanceTextLayer {
     // in this case:
     //     Lens3D is Grid3D and it's size is (15,10)
     //     Waves3D is Grid3D and it's size is (15,10)
-    var size = ServiceLocator.director.getWinSize();
+    var size = ServiceLocator.eglView.winSizeInPoints;
     var lens = new Lens3D(
       0.0,
       new Size(15, 10),

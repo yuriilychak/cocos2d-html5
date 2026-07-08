@@ -57,7 +57,7 @@ export class ActionCardinalSpline extends ActionsDemo {
     this._array = [];
 
     //add draw node
-    var winSize = ServiceLocator.director.getWinSize();
+    var winSize = ServiceLocator.eglView.winSizeInPoints;
     this._drawNode1 = new DrawNode();
     this.addChild(this._drawNode1);
     this._drawNode1.x = 50;
@@ -74,7 +74,7 @@ export class ActionCardinalSpline extends ActionsDemo {
   onEnter() {
     //----start11----onEnter
     super.onEnter();
-    var winSize = ServiceLocator.director.getWinSize();
+    var winSize = ServiceLocator.eglView.winSizeInPoints;
     this.centerSprites(2);
 
     var delay = new DelayTime(0.25);

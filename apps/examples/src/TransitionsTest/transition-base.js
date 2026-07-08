@@ -34,7 +34,7 @@ import {
   TRANSITION_DURATION
 } from "./transitions-test-constants";
 import { TransitionsTestScene } from "./transitions-test-scene";
-import { Color, Sprite } from "@aspect/core";
+import { Color, Sprite, ServiceLocator } from "@aspect/core";
 import { TextBMFont } from "@aspect/ccui";
 import { s_simpleFont_fnt } from "../resources";
 
@@ -50,7 +50,7 @@ export class TransitionBase extends BaseTestLayer {
     this.testDuration = TRANSITION_DURATION + 0.1;
 
     var x, y;
-    var size = director.getWinSize();
+    var size = ServiceLocator.eglView.winSizeInPoints;
     x = size.width;
     y = size.height;
 

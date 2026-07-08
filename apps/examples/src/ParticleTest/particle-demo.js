@@ -89,7 +89,7 @@ export class ParticleDemo extends BaseTestLayer {
         this
       );
 
-    var s = director.getWinSize();
+    var s = ServiceLocator.eglView.winSizeInPoints;
 
     const movementColor = new Color(0xff, 0x88, 0x00);
     const modeColor = new Color(0x00, 0xaa, 0x00);

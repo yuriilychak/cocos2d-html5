@@ -43,6 +43,9 @@ export interface EGLViewLike {
   adjustViewPort: boolean;
   readonly openGLReady: boolean;
   frameZoomFactor: number;
+  contentScaleFactor: number;
+  winSizeInPoints: SizeLike;
+  readonly zEye: number;
   readonly canvasSize: SizeLike;
   readonly visibleSize: SizeLike;
   readonly visibleSizeInPixel: SizeLike;

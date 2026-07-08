@@ -27,14 +27,14 @@
 
 import { LayerTest } from "./layer-test";
 import { director } from "../constants";
-import { Color, LayerColor } from "@aspect/core";
+import { Color, LayerColor, ServiceLocator } from "@aspect/core";
 
 export class IgnoreAnchorpointTest4 extends LayerTest {
   onEnter() {
     //----start6----onEnter
     super.onEnter();
     //create layer
-    var ws = director.getWinSize();
+    var ws = ServiceLocator.eglView.winSizeInPoints;
     var layer1 = new LayerColor(
       new Color(255, 100, 100, 128),
       ws.width / 2,

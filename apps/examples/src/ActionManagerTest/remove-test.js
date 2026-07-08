@@ -34,7 +34,7 @@ import { NOT_CRASHED_CONST, TAG_GROSSINI, TAG_SEQUENCE } from "./constants";
 import { ActionManagerTest } from "./action-manager-test";
 import { s_pathGrossini, s_simpleFont_fnt } from "../resources";
 import { director } from "../constants";
-import { Point, Sprite } from "@aspect/core";
+import { Point, Sprite, ServiceLocator } from "@aspect/core";
 import { TextBMFont } from "@aspect/ccui";
 import { CallFunc, MoveBy, Sequence } from "@aspect/actions";
 
@@ -51,7 +51,7 @@ export class RemoveTest extends ActionManagerTest {
     //----start3----onEnter
     super.onEnter();
 
-    var s = director.getWinSize();
+    var s = ServiceLocator.eglView.winSizeInPoints;
     var l = new TextBMFont("Should not crash", s_simpleFont_fnt);
     l.fontSize = 16;
     this.addChild(l);

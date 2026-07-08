@@ -45,7 +45,6 @@ export class TMXLayer extends SpriteBatchNode {
     this._useAutomaticVertexZ = null;
     this._reusedTile = null;
     this._atlasIndexArray = null;
-    this._contentScaleFactor = null;
 
     this._className = "TMXLayer";
 

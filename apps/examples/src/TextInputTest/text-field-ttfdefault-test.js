@@ -57,7 +57,7 @@ export class TextFieldTTFDefaultTest extends KeyboardNotificationLayer {
     super.onEnter();
 
     // add CCTextFieldTTF
-    var winSize = ServiceLocator.director.getWinSize();
+    var winSize = ServiceLocator.eglView.winSizeInPoints;
 
     var textField = new TextFieldTTF(
       "<click here for input>",

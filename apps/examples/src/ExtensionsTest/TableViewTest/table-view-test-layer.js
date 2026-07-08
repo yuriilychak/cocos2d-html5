@@ -41,7 +41,7 @@ export class TableViewTestLayer extends BaseTestLayer {
   }
 
   init() {
-    var winSize = ServiceLocator.director.getWinSize();
+    var winSize = ServiceLocator.eglView.winSizeInPoints;
 
     var tableView = new TableView(this, new Size(600, 60));
     tableView.setDirection(SCROLLVIEW_DIRECTION_HORIZONTAL);

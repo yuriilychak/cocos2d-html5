@@ -52,7 +52,7 @@ export class DirectorEventTest extends EventDispatcherTestDemo {
   onEnter() {
     //----start8----onEnter
     super.onEnter();
-    var s = director.getWinSize(),
+    var s = ServiceLocator.eglView.winSizeInPoints,
       selfPointer = this;
 
     this._label1 = new TextBMFont("Update: 0", s_simpleFont_fnt);
