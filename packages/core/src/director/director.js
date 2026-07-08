@@ -49,14 +49,12 @@ export class Director extends BaseClass {
   constructor() {
     super();
     this.TransitionSceneClass = null;
-    this._landscape = false;
     this._nextDeltaTimeZero = false;
     this._paused = false;
     this._purgeDirectorInNextLoop = false;
     this._sendCleanupToScene = false;
     this._animationInterval = 0.0;
     this._oldAnimationInterval = 0.0;
-    this._projection = 0;
     this._deltaTime = 0.0;
     this._lastUpdate = null;
     this._nextScene = null;
@@ -69,7 +67,6 @@ export class Director extends BaseClass {
     this._dirtyRegion = null;
     this._scheduler = null;
     this._actionManager = null;
-    this._eventProjectionChanged = null;
     this._eventAfterUpdate = null;
     this._eventAfterVisit = null;
     this._eventAfterDraw = null;
@@ -109,7 +106,6 @@ export class Director extends BaseClass {
   init() {
     this._oldAnimationInterval = this._animationInterval = 1.0 / defaultFPS;
     this._scenesStack = [];
-    this._projection = DirectorProjection.DEFAULT;
     this._projectionDelegate = null;
 
     this._totalFrames = 0;
@@ -133,10 +129,6 @@ export class Director extends BaseClass {
     this._eventAfterUpdate = new EventCustom(DirectorEvent.AFTER_UPDATE, this);
     this._eventAfterVisit = new EventCustom(DirectorEvent.AFTER_VISIT, this);
     this._eventAfterDraw = new EventCustom(DirectorEvent.AFTER_DRAW, this);
-    this._eventProjectionChanged = new EventCustom(
-      DirectorEvent.PROJECTION_CHANGED,
-      this
-    );
 
     if (this._rendererConfig.isCanvas) {
       this._rendererDelegate = new DirectorCanvasRenderer(this);

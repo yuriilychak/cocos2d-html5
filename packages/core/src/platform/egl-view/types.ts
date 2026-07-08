@@ -1,5 +1,5 @@
 import type { PointLike, RectLike, SizeLike } from "../../geometry/types";
-import type { DensityDPI, DeviceOrientation } from "../../enums";
+import type { DensityDPI, DeviceOrientation, DirectorProjection } from "../../enums";
 import type EventManager from "../../event-manager/event-manager/event-manager";
 import type { ResolutionPolicy } from "./resolution-policy";
 
@@ -40,11 +40,13 @@ export interface EGLViewLike {
   setDocumentPixelWidth(width: number): void;
   initialize(canvas: HTMLCanvasElement, container: HTMLElement): void;
   setupContainer(size: SizeLike): void;
+  setViewport(): void;
   adjustViewPort: boolean;
   readonly openGLReady: boolean;
   frameZoomFactor: number;
   contentScaleFactor: number;
   winSizeInPoints: SizeLike;
+  projection: DirectorProjection;
   readonly zEye: number;
   readonly canvasSize: SizeLike;
   readonly visibleSize: SizeLike;

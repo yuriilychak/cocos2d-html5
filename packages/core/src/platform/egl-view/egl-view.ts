@@ -29,7 +29,7 @@ import { Point, Rect, Size } from "../../geometry";
 import { VisibleRect } from "../visible-rect";
 import { BrowserGetter } from "./browser-getter";
 import { log, _LogInfos } from "../../boot/debugger";
-import { DensityDPI, DeviceOrientation, OperatingSystem } from "../../enums";
+import { DensityDPI, DeviceOrientation, DirectorEvent, DirectorProjection, OperatingSystem } from "../../enums";
 
 import type { PointLike, SizeLike } from "../../geometry/types";
 import type EventManager from "../../event-manager/event-manager/event-manager";
@@ -46,6 +46,7 @@ import type {
   EGLViewServices
 } from "./types";
 import { ResolutionPolicy } from "./resolution-policy";
+import { EventCustom } from "../../event-manager";
 
 declare const gl: WebGLRenderingContext;
 
@@ -120,6 +121,8 @@ export class EGLView extends BaseClass {
   #canvas: HTMLCanvasElement | null = null;
 
   #container: HTMLElement | null = null;
+
+  #projection = DirectorProjection.DEFAULT;
 
   #director: any = null;
   #eventManager: EventManager | null = null;
@@ -372,6 +375,16 @@ export class EGLView extends BaseClass {
         this.#sys.rendererConfig.renderContext as RendererConfigRenderContext
       ).scissor(sx, sy, sw, sh);
     }
+  }
+
+  setViewport() {
+    const pos = Point.compDivIn(Point.neg(this.#viewPortRect), this.#scale);
+    this.setViewPortInPoints(
+      pos.x,
+      pos.y,
+      this.#winSizeInPoints.width,
+      this.#winSizeInPoints.height
+    );
   }
 
   /**
@@ -855,8 +868,8 @@ export class EGLView extends BaseClass {
   /**
    * Returns the visible area size of the view port.
    */
-  get visibleSize(): Rect {
-    return this.#innerVisibleRect.clone();
+  get visibleSize(): Size {
+    return new Size(this.#innerVisibleRect);
   }
 
   /**
@@ -954,5 +967,14 @@ export class EGLView extends BaseClass {
 
   get zEye(): number {
     return this.#winSizeInPoints.height / 1.1546999375;
+  }
+
+  get projection(): DirectorProjection {
+    return this.#projection;
+  }
+
+  set projection(value: DirectorProjection) {
+    this.#projection = value;
+    this.#eventManager!.dispatchEvent(new EventCustom(DirectorEvent.PROJECTION_CHANGED));
   }
 }

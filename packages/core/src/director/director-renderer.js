@@ -6,7 +6,7 @@ export class DirectorRenderer {
   }
 
   getProjection() {
-    return this._director._projection;
+    return ServiceLocator.eglView.projection;
   }
 
   setProjection(projection) {}
@@ -28,8 +28,6 @@ export class DirectorRenderer {
   getZEye() {
     return 0;
   }
-
-  setViewport() {}
 
   setAlphaBlending(on) {}
 

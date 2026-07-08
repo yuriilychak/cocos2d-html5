@@ -1,13 +1,11 @@
 import { DirectorRenderer } from "./director-renderer";
 import { Point } from "../geometry";
 import { ServiceLocator } from "../service-locator";
+import { EventCustom } from '../event-manager';
 
 export class DirectorCanvasRenderer extends DirectorRenderer {
   setProjection(projection) {
-    this._director._projection = projection;
-    ServiceLocator.eventManager.dispatchEvent(
-      this._director._eventProjectionChanged
-    );
+    ServiceLocator.eglView.projection = projection;
   }
 
   setClearColor(clearColor) {

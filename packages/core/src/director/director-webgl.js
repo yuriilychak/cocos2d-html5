@@ -7,6 +7,7 @@ import { DirectorRenderer } from "./director-renderer";
 import { log, _LogInfos } from "../boot/debugger";
 import { ServiceLocator } from "../service-locator";
 import { DirectorEvent, DirectorProjection, GLState } from "../enums";
+import { EventCustom } from '../event-manager';
 
 /**
  * OpenGL projection protocol
@@ -50,7 +51,7 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
     var director = this._director;
     var size = ServiceLocator.eglView.winSizeInPoints;
 
-    this.setViewport();
+    ServiceLocator.eglView.setViewport();
 
     var view = ServiceLocator.eglView,
       viewPortRect = view.viewPortRect,
@@ -106,8 +107,7 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
         log(_LogInfos.Director_setProjection);
         break;
     }
-    director._projection = projection;
-    ServiceLocator.eventManager.dispatchEvent(director._eventProjectionChanged);
+    ServiceLocator.eglView.projection = projection;
     ServiceLocator.glStateCache.setProjectionMatrixDirty();
     ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty = true;
   }
@@ -144,17 +144,6 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
     return ServiceLocator.eglView.zEye;
   }
 
-  setViewport() {
-    var locWinSizeInPoints = ServiceLocator.eglView.winSizeInPoints;
-    var viewPortRect = ServiceLocator.eglView.viewPortRect;
-    ServiceLocator.eglView.setViewPortInPoints(
-      -viewPortRect.x / ServiceLocator.eglView.scaleX,
-      -viewPortRect.y / ServiceLocator.eglView.scaleY,
-      locWinSizeInPoints.width,
-      locWinSizeInPoints.height
-    );
-  }
-
   setAlphaBlending(on) {
     if (on)
       ServiceLocator.glStateCache.blendFunc(
@@ -170,7 +159,7 @@ export class DirectorWebGLRenderer extends DirectorRenderer {
 
   setGLDefaultValues() {
     this.setAlphaBlending(true);
-    this.setProjection(this._director._projection);
+    this.setProjection(ServiceLocator.eglView.projection);
     ServiceLocator.sys.rendererConfig.renderContext.clearColor(
       0.0,
       0.0,
