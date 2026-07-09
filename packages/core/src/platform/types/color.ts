@@ -266,6 +266,14 @@ export class Color {
     return `rgba(${c.join(",")})`;
   }
 
+  static toRgb(r: Color | number = BYTE, g = BYTE, b = BYTE, a = BYTE): string {
+    const c = r instanceof Color ? r.toArray() : [r, g, b, a];
+    
+    c.pop();
+
+    return `rgb(${c.join(",")})`;
+  }
+
   static fromHSV({ h, s, v }: HSV): Color {
     var hh: number, p: number, q: number, t: number, ff: number;
     let i: number;

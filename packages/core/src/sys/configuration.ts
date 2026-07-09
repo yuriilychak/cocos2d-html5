@@ -27,7 +27,6 @@
 import { ENGINE_VERSION } from "../platform/config";
 import { checkGLErrorDebug } from "../platform/macro/utils";
 import type RendererConfig from "./renderer-config";
-import type { WebGLContext } from "./types";
 
 /**
  * Class that contains some openGL variables
@@ -122,7 +121,7 @@ export class Configuration {
       return;
     }
 
-    const gl = this.#rendererConfig.renderContext as WebGLContext | null;
+    const gl = this.#rendererConfig.renderContext;
 
     if (gl === null) {
       return;

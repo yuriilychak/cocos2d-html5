@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { isNumber, isObject } from "../boot/utils";
+import { isNumber } from "../boot/utils";
 import type { PointLike, SizeLike } from "./types";
 
 export default class Size implements SizeLike {
@@ -131,7 +131,10 @@ export default class Size implements SizeLike {
   }
 
   public static isLike(value: unknown): value is SizeLike {
-    if (!isObject(value)) {
+    if (
+      value === null ||
+      (typeof value !== "object" && typeof value !== "function")
+    ) {
       return false;
     }
 

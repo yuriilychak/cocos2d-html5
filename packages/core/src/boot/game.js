@@ -216,9 +216,8 @@ export default class Game extends EventHelper(BaseClass) {
       // game.container/canvas) is ready.
       this._eglView.initialize(this.canvas, this.container);
       // Director is created lazily; this is its first access, so initialize it here.
-      const director = this._director;
-      director.init();
-      this._eglView.rendererDelegate.setOpenGLView(this._eglView);
+      this._director.init();
+      this._eglView.postInit();
 
       this._initEvents();
 

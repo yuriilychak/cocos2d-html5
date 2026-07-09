@@ -1,7 +1,7 @@
 import type { PointLike, RectLike, SizeLike } from "../../geometry/types";
 import type { DensityDPI, DeviceOrientation, DirectorProjection } from "../../enums";
 import type { ResolutionPolicy } from "./resolution-policy";
-import type { DirectorRenderer } from "./director-renderer";
+import type { DirectorRenderer } from "./renderer";
 
 export type DensityDPIValue = DensityDPI | string;
 
@@ -36,6 +36,7 @@ export interface EGLViewLike {
   initialize(canvas: HTMLCanvasElement, container: HTMLElement): void;
   setupContainer(size: SizeLike): void;
   setViewport(): void;
+  postInit(): void;
   adjustViewPort: boolean;
   readonly openGLReady: boolean;
   readonly rendererDelegate: DirectorRenderer;

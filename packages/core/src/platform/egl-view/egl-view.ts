@@ -37,18 +37,16 @@ import type Touch from "../../event-manager/touch";
 import type { Screen } from "../screen";
 import type Sys from "../../sys/sys";
 import type {
-  RendererConfigRenderContext,
-  RendererConfigRenderer
-} from "../../sys/renderer-config";
-import type {
   DensityDPIValue,
   EGLViewRelatedPosition,
 } from "./types";
 import { ResolutionPolicy } from "./resolution-policy";
 import { EventCustom } from "../../event-manager";
-import { DirectorRenderer } from "./director-renderer";
-import { DirectorCanvasRenderer } from "./director-canvas";
-import { DirectorWebGLRenderer } from "./director-webgl";
+import {
+  DirectorRenderer,
+  DirectorCanvasRenderer,
+  DirectorWebGLRenderer
+} from "./renderer";
 import DOMAdapter from "./dom-adapter";
 
 declare const gl: WebGLRenderingContext;
@@ -153,8 +151,7 @@ export class EGLView extends BaseClass {
     this.#setViewportMeta({ width }, true);
 
     // Set body width to the exact pixel resolution
-    document.documentElement.style.width = width + "px";
-    document.body.style.width = "100%";
+    this.#domAdapter.setFullPixelWidth(width);
 
     // Reset the resolution size and policy
     this.#resetDesignResolution(false);
@@ -180,8 +177,8 @@ export class EGLView extends BaseClass {
     this.#domAdapter.initialize(canvas, container, this.#sys.specification.isMobile);
 
     this.#rendererDelegate = this.#sys.rendererConfig.isCanvas
-      ? new DirectorCanvasRenderer(this, this.#sys, this.#eventManager)
-      : new DirectorWebGLRenderer(this, this.#sys, this.#eventManager);
+      ? new DirectorCanvasRenderer(this, this.#sys)
+      : new DirectorWebGLRenderer(this, this.#sys);
 
     this.#browserGetter.init(this.#sys);
     this.#domAdapter.initFrameSize();
@@ -208,6 +205,18 @@ export class EGLView extends BaseClass {
     }
 
     this.#initialized = true;
+  }
+
+  postInit(): void {
+    this.#winSizeInPoints.set(this.#domAdapter.canvas);
+
+    if(!this.#sys.rendererConfig.isCanvas) {
+        this.#sys.configuration.gatherGPUInfo();
+        this.#sys.configuration.dumpInfo();
+        this.#rendererDelegate!.setGLDefaultValues();
+    }
+
+    this.#eventManager.enabled = true;
   }
 
   /**
@@ -256,8 +265,7 @@ export class EGLView extends BaseClass {
     Point.compMultIn(Point.negIn(this.#innerVisibleRect, this.#viewPortRect), this.#scale);
     Size.copy(this.#innerVisibleRect, this.#domAdapter.canvas);
     Size.compDivIn(this.#innerVisibleRect, this.#scale);
-    const renderContext = this.#sys.rendererConfig
-      .renderContext as RendererConfigRenderContext;
+    const renderContext = this.#sys.rendererConfig.renderContext;
     renderContext.setOffset &&
       renderContext.setOffset(this.#viewPortRect.x, -this.#viewPortRect.y);
 
@@ -269,8 +277,7 @@ export class EGLView extends BaseClass {
       // reset director's member variables to fit visible rect
       this.rendererDelegate.setGLDefaultValues();
     } else if (this.#sys.rendererConfig.isCanvas) {
-      (this.#sys.rendererConfig.renderer as RendererConfigRenderer)._allNeedDraw =
-        true;
+      this.#sys.rendererConfig.renderer._allNeedDraw = true;
     }
 
     this.#originalScale.set(this.#scale);
@@ -294,23 +301,14 @@ export class EGLView extends BaseClass {
   ): void {
     // Set viewport's width
     this.#setViewportMeta({ width: size.width }, true);
-
     // Set body width to the exact pixel resolution
-    document.documentElement.style.width = size.width + "px";
-    document.body.style.width = size.width + "px";
-    document.body.style.left = "0px";
-    document.body.style.top = "0px";
-
+    this.#domAdapter.setBodyPixelWidth(size.width);
     // Reset the resolution size and policy
     this.setDesignResolutionSize(size, resolutionPolicy);
   }
 
   /**
    * Sets Scissor rectangle with points.
-   * @param {Number} x
-   * @param {Number} y
-   * @param {Number} w
-   * @param {Number} h
    */
   setScissorInPoints(x: number, y: number, w: number, h: number): void {
     const scale = Point.mult(this.#scale, this.#frameZoomFactor);
@@ -329,9 +327,7 @@ export class EGLView extends BaseClass {
       this.#scissorRect.height !== sh
     ) {
       this.#scissorRect.set(sx, sy, sw, sh);
-      (
-        this.#sys.rendererConfig.renderContext as RendererConfigRenderContext
-      ).scissor(sx, sy, sw, sh);
+      this.#sys.rendererConfig.renderContext.scissor(sx, sy, sw, sh);
     }
   }
 
@@ -340,7 +336,7 @@ export class EGLView extends BaseClass {
     const scale = Point.mult(this.#scale, this.#frameZoomFactor);
     const viewPort = Point.mult(this.#viewPortRect, this.#frameZoomFactor);
 
-    (this.#sys.rendererConfig.renderContext as RendererConfigRenderContext).viewport(
+    this.#sys.rendererConfig.renderContext.viewport(
       pos.x * scale.x + viewPort.x,
       pos.y * scale.y + viewPort.y,
       this.#winSizeInPoints.width * scale.x,
@@ -852,9 +848,7 @@ export class EGLView extends BaseClass {
    * Returns whether GL_SCISSOR_TEST is enable
    */
   get scissorEnabled(): boolean {
-    return (
-      this.#sys.rendererConfig.renderContext as RendererConfigRenderContext
-    ).isEnabled(gl.SCISSOR_TEST);
+    return this.#sys.rendererConfig.renderContext.isEnabled(gl.SCISSOR_TEST);
   }
 
   /**

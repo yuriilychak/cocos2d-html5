@@ -7,6 +7,7 @@ import {
 
 import type SysCapabilities from "./sys-capabilities";
 import type { RenderContext } from './types';
+import type { Color } from "../platform/types";
 
 export type RendererConfigRenderContext = NonNullable<RenderContext> &
   WebGLRenderingContext & {
@@ -15,13 +16,17 @@ export type RendererConfigRenderContext = NonNullable<RenderContext> &
 
 export type RendererConfigRenderer = {
   _allNeedDraw: boolean;
+  childrenOrderDirty: boolean;
+  setDepthTest(on: boolean): void;
+  _clearColor: Color;
+  _clearFillStyle: string;
 };
 
 export class RendererConfig {
   #renderType: RenderType = RenderType.CANVAS;
   #supportRender: boolean = false;
   #renderContext: RenderContext = null;
-  #renderer: unknown = null;
+  #renderer: RendererConfigRenderer | null = null;
   #numberOfDraws: number = 0;
   #glVersion: GLVersion = GLVersion.CANVAS;
   #maxBatchTextures: number = 0;
@@ -80,8 +85,8 @@ export class RendererConfig {
     }
   }
 
-  public get renderContext(): RenderContext {
-    return this.#renderContext;
+  public get renderContext(): RendererConfigRenderContext {
+    return this.#renderContext as RendererConfigRenderContext;
   }
 
   public set renderContext(context: RenderContext) {
@@ -119,11 +124,11 @@ export class RendererConfig {
     return this.#maxBatchTextures;
   }
 
-  public get renderer(): unknown {
-    return this.#renderer;
+  public get renderer(): RendererConfigRenderer {
+    return this.#renderer as RendererConfigRenderer;
   }
 
-  public set renderer(value: unknown) {
+  public set renderer(value: RendererConfigRenderer) {
     this.#renderer = value;
   }
 

@@ -43,8 +43,6 @@ type BrowserGetterMeta = {
 
 export class BrowserGetter {
   #view: BrowserGetterView;
-  #html: HTMLElement | null = null;
-  #initialized = false;
   #meta: BrowserGetterMeta = { width: "device-width" };
   #adaptationType = BrowserType.UNKNOWN;
 
@@ -53,50 +51,33 @@ export class BrowserGetter {
   }
 
   init(sys: Sys): void {
-    if (!this.#initialized) {
-      this.#initialized = true;
-      this.#adaptationType = sys.specification.browserType;
+    this.#adaptationType = sys.specification.browserType;
 
-      if (window.navigator.userAgent.indexOf("OS 8_1_") > -1) {
-        this.#adaptationType = BrowserType.MIUI;
-      }
+    if (window.navigator.userAgent.indexOf("OS 8_1_") > -1) {
+      this.#adaptationType = BrowserType.MIUI;
+    }
 
-      if (sys.specification.os === OperatingSystem.IOS) {
-        this.#adaptationType = BrowserType.SAFARI;
-      }
+    if (sys.specification.os === OperatingSystem.IOS) {
+      this.#adaptationType = BrowserType.SAFARI;
+    }
 
-      switch (this.#adaptationType) {
-        case BrowserType.SAFARI:
-          this.#meta["minimal-ui"] = "true";
-          break;
-        case BrowserType.CHROME:
-          Object.defineProperty(this.meta, "target-densitydpi", {
-            get: () => this.#view.targetDensityDPI,
-            enumerable: true,
-            configurable: true
-          });
-          break;
-      }
+    switch (this.#adaptationType) {
+      case BrowserType.SAFARI:
+        this.#meta["minimal-ui"] = "true";
+        break;
+      case BrowserType.CHROME:
+        Object.defineProperty(this.meta, "target-densitydpi", {
+          get: () => this.#view.targetDensityDPI,
+          enumerable: true,
+          configurable: true
+        });
+        break;
     }
 
     if (this.#adaptationType === BrowserType.MIUI) {
       this.#view.initResizeHandler();
       return;
     }
-
-    this.#html = document.documentElement;
-  }
-
-  get width(): number {
-    return !this.#view.frame || this.#view.frame === this.#html
-      ? window.innerWidth
-      : this.#view.frame.clientWidth;
-  }
-
-  get height(): number {
-    return !this.#view.frame || this.#view.frame === this.#html
-      ? window.innerHeight
-      : this.#view.frame.clientHeight;
   }
 
   get meta(): BrowserGetterMeta {

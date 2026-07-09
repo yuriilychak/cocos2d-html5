@@ -117,6 +117,21 @@ export default class DOMAdapter {
     }
   }
 
+  setFullPixelWidth(width: number): void {
+    document.documentElement.style.width = width + "px";
+    document.body.style.width = "100%";
+  }
+  
+
+  setBodyPixelWidth(width: number): void {
+        // Set body width to the exact pixel resolution
+    document.documentElement.style.width = width + "px";
+    document.body.style.width = width + "px";
+    document.body.style.left = "0px";
+    document.body.style.top = "0px";
+
+  }
+
   #updateCurrentSize(): void {
     if (this.#frame === null || this.isFrameDocument) {
       this.#currentSize.set(window.innerWidth, window.innerHeight);
