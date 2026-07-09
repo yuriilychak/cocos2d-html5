@@ -81,9 +81,11 @@ export default class Size implements SizeLike {
     this.#initFromNumber(size.width, size.height);
   }
 
-  public static copy(size1: SizeLike, size2: SizeLike): void {
+  public static copy(size1: SizeLike, size2: SizeLike): SizeLike {
     size1.width = size2.width;
     size1.height = size2.height;
+
+    return size1;
   }
 
   public static equalTo(size1: SizeLike, size2: SizeLike): boolean {
@@ -119,6 +121,13 @@ export default class Size implements SizeLike {
     size.height /= point.y;
 
     return size;
+  }
+
+  public static multIn(size: SizeLike, scale: number): SizeLike {
+    size.width *= scale;
+    size.height *= scale;
+
+    return size
   }
 
   public static isLike(value: unknown): value is SizeLike {

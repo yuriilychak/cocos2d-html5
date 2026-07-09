@@ -46,9 +46,10 @@ import type {
 } from "./types";
 import { ResolutionPolicy } from "./resolution-policy";
 import { EventCustom } from "../../event-manager";
-import { DirectorRenderer } from "../../director/director-renderer";
-import { DirectorCanvasRenderer } from "../../director/director-canvas";
-import { DirectorWebGLRenderer } from "../../director/director-webgl";
+import { DirectorRenderer } from "./director-renderer";
+import { DirectorCanvasRenderer } from "./director-canvas";
+import { DirectorWebGLRenderer } from "./director-webgl";
+import DOMAdapter from "./dom-adapter";
 
 declare const gl: WebGLRenderingContext;
 
@@ -73,9 +74,6 @@ export class EGLView extends BaseClass {
   #originalScale: Point = new Point(1, 1);
   #retinaEnabled: boolean = false;
   #autoFullScreen: boolean = false;
-  #rotated = false;
-  // Size of parent node that contains container and _canvas
-  #frameSize: Size = new Size();
   // resolution size, it is the size appropriate for the app resources.
   #designResolution: Size = new Size();
   #originalDesignResolution: Size = new Size();
@@ -91,16 +89,11 @@ export class EGLView extends BaseClass {
 
   #targetDensityDPI: DensityDPIValue = DensityDPI.HIGH;
 
-  #orientation: DeviceOrientation = DeviceOrientation.AUTO;
-
   #frameZoomFactor: number = 1;
 
   #orientationChanging: boolean = true;
 
   #resizing: boolean = false;
-
-  // Parent node that contains container and _canvas
-  #frame: HTMLElement | null = null;
 
   #resizeWithBrowserSize: boolean = false;
 
@@ -120,9 +113,7 @@ export class EGLView extends BaseClass {
 
   #contentScaleFactor: number = 1;
 
-  #canvas: HTMLCanvasElement | null = null;
-
-  #container: HTMLElement | null = null;
+  #domAdapter: DOMAdapter;
 
   #projection = DirectorProjection.DEFAULT;
 
@@ -141,11 +132,7 @@ export class EGLView extends BaseClass {
     this.#screen = screen;
     this.#eventManager = eventManager;
     this.#browserGetter = new BrowserGetter(this);
-  }
-
-  initContainers(canvas: HTMLCanvasElement, container: HTMLElement): void {
-    this.#canvas = canvas;
-    this.#container = container;
+    this.#domAdapter = new DOMAdapter();
   }
 
   initResizeHandler(): void {
@@ -174,25 +161,14 @@ export class EGLView extends BaseClass {
   }
 
   setupContainer(size: SizeLike): void {
-    if (this.#sys.specification.os === OperatingSystem.ANDROID) {
-      document.body.style.width = `${this.#rotated ? size.height : size.width}px`;
-      document.body.style.height = `${this.#rotated ? size.width : size.height}px`;
-    }
-
-    // Setup style
-    this.container.style.width = this.canvas.style.width = `${size.width}px`;
-    this.container.style.height = this.canvas.style.height = `${size.height}px`;
-
     // Setup pixel ratio for retina display
     const devicePixelRatio = this.#retinaEnabled ? Math.min(
         2,
         window.devicePixelRatio || 1
       ) : 1;
-    this.#devicePixelRatio = devicePixelRatio;
 
-    // Setup canvas
-    this.canvas.width = size.width * devicePixelRatio;
-    this.canvas.height = size.height * devicePixelRatio;
+    this.#devicePixelRatio = devicePixelRatio;
+    this.#domAdapter.setupContainer(size, devicePixelRatio, this.#sys.specification.os === OperatingSystem.ANDROID);
     this.#sys.rendererConfig.renderContext?.resetCache?.();
   }
 
@@ -201,31 +177,23 @@ export class EGLView extends BaseClass {
       return;
     }
 
-    this.#canvas = canvas;
-    this.#container = container;
+    this.#domAdapter.initialize(canvas, container, this.#sys.specification.isMobile);
 
     this.#rendererDelegate = this.#sys.rendererConfig.isCanvas
-      ? new DirectorCanvasRenderer(this, this.#sys, this.#eventManager!)
-      : new DirectorWebGLRenderer(this, this.#sys, this.#eventManager!);
+      ? new DirectorCanvasRenderer(this, this.#sys, this.#eventManager)
+      : new DirectorWebGLRenderer(this, this.#sys, this.#eventManager);
 
     this.#browserGetter.init(this.#sys);
+    this.#domAdapter.initFrameSize();
 
-    const d = document;
+    const zeroPoint = new Point();
+    const canvasSize = this.#domAdapter.canvasSize;
 
-    this.#frame =
-      this.#container.parentNode === d.body
-        ? d.documentElement
-        : this.#container.parentNode as HTMLElement;
-
-    this.#initFrameSize();
-
-    const w = this.canvas.width,
-      h = this.canvas.height;
-    this.#designResolution.set(this.canvas);
-    this.#originalDesignResolution.set(this.canvas);
-    this.#viewPortRect.set(0, 0, w, h);
-    this.#innerVisibleRect.set(0, 0, w, h);
-    this.#contentTranslateLeftTop.set(0, 0);
+    this.#designResolution.set(canvasSize);
+    this.#originalDesignResolution.set(canvasSize);
+    this.#viewPortRect.set(zeroPoint, canvasSize);
+    this.#innerVisibleRect.set(zeroPoint, canvasSize);
+    this.#contentTranslateLeftTop.set(zeroPoint);
     this.#viewName = "Cocos2dHTML5";
 
     this.#visibleRect.init(this.#innerVisibleRect);
@@ -270,7 +238,9 @@ export class EGLView extends BaseClass {
     if (this.#sys.specification.isMobile) this.#adjustViewportMeta();
 
     // If resizing, then frame size is already initialized, this logic should be improved
-    if (!this.#resizing) this.#initFrameSize();
+    if (!this.#resizing) {
+      this.#domAdapter.initFrameSize();
+    }
 
     this.#designResolution.set(size);
     this.#originalDesignResolution.set(size);
@@ -284,7 +254,7 @@ export class EGLView extends BaseClass {
     this.#viewPortRect.set(viewport);
 
     Point.compMultIn(Point.negIn(this.#innerVisibleRect, this.#viewPortRect), this.#scale);
-    Size.copy(this.#innerVisibleRect, this.canvas);
+    Size.copy(this.#innerVisibleRect, this.#domAdapter.canvas);
     Size.compDivIn(this.#innerVisibleRect, this.#scale);
     const renderContext = this.#sys.rendererConfig
       .renderContext as RendererConfigRenderContext;
@@ -389,22 +359,13 @@ export class EGLView extends BaseClass {
     const x = this.#devicePixelRatio * (tx - relatedPos.left);
     const y =
       this.#devicePixelRatio * (relatedPos.top + relatedPos.height - ty);
-    return this.#rotated
+    return this.#domAdapter.rotated
       ? new Point(this.#viewPortRect.width - y, x)
       : new Point(x, y);
   }
 
   convertToGL(uiPoint: PointLike): Point {
-    const docElem = document.documentElement;
-    const box = docElem.getBoundingClientRect();
-    const left = box.left + window.pageXOffset - docElem.clientLeft;
-    const top = box.top + window.pageYOffset - docElem.clientTop;
-    const x = this.#devicePixelRatio * (uiPoint.x - left);
-    const y = this.#devicePixelRatio * (top + box.height - uiPoint.y);
-
-    return this.#rotated
-      ? new Point(this.#viewPortRect.width - y, x)
-      : new Point(x, y);
+    return this.#domAdapter.convertToGL(uiPoint, this.#devicePixelRatio, this.#viewPortRect.width);
   }
 
   convertToUI(glPoint: PointLike): Point {
@@ -413,16 +374,12 @@ export class EGLView extends BaseClass {
     const left = box.left + window.pageXOffset - docElem.clientLeft;
     const top = box.top + window.pageYOffset - docElem.clientTop;
 
-    if (this.#rotated) {
-      return new Point(
+    return this.#domAdapter.rotated ? new Point(
         left + glPoint.y / this.#devicePixelRatio,
         top +
           box.height -
           (this.#viewPortRect.width - glPoint.x) / this.#devicePixelRatio
-      );
-    }
-
-    return new Point(
+      ) :  new Point(
       left + glPoint.x / this.#devicePixelRatio,
       top + box.height - glPoint.y / this.#devicePixelRatio
     );
@@ -464,24 +421,8 @@ export class EGLView extends BaseClass {
     }
 
     // Check frame size changed or not
-    const prevFrameW = this.#frameSize.width,
-      prevFrameH = this.#frameSize.height,
-      prevRotated = this.#rotated;
-    if (this.#sys.specification.isMobile) {
-      const containerStyle = this.container.style,
-        margin = containerStyle.margin;
-      containerStyle.margin = "0";
-      containerStyle.display = "none";
-      this.#initFrameSize();
-      containerStyle.margin = margin;
-      containerStyle.display = "block";
-    } else {
-      this.#initFrameSize();
-    }
     if (
-      this.#rotated === prevRotated &&
-      this.#frameSize.width === prevFrameW &&
-      this.#frameSize.height === prevFrameH
+      !this.#domAdapter.getChanged()
     )
       return;
 
@@ -503,9 +444,8 @@ export class EGLView extends BaseClass {
 
   #orientationChange(): void {
     this.#orientationChanging = true;
-    if (this.#sys.specification.isMobile) {
-      this.container.style.display = "none";
-    }
+    this.#domAdapter.orientationChange(this.#sys.specification.isMobile);
+
     setTimeout(() => {
       this.#orientationChanging = false;
       this.#resizeEvent();
@@ -518,29 +458,6 @@ export class EGLView extends BaseClass {
       : this.#designResolution;
 
     this.setDesignResolutionSize(size, this.#resolutionPolicy!);
-  }
-
-  #initFrameSize(): void {
-    const w = this.#browserGetter.width;
-    const h = this.#browserGetter.height;
-    const isLandscape = w >= h;
-    const nextRotated =
-      this.#sys.specification.isMobile &&
-      ((isLandscape && !(this.#orientation & DeviceOrientation.LANDSCAPE)) ||
-        (!isLandscape && !(this.#orientation & DeviceOrientation.PORTRAIT)));
-
-    if (nextRotated) {
-      this.#frameSize.set(h, w);
-      this.container.style.setProperty("-webkit-transform", "rotate(90deg)");
-      this.container.style.transform = "rotate(90deg)";
-      this.container.style.setProperty("-webkit-transform-origin", "0px 0px 0px");
-      this.container.style.transformOrigin = "0px 0px 0px";
-    } else {
-      this.#frameSize.set(w, h);
-      this.container.style.setProperty("-webkit-transform", "rotate(0deg)");
-      this.container.style.transform = "rotate(0deg)";
-    }
-    this.#rotated = nextRotated;
   }
 
   // hack
@@ -628,11 +545,11 @@ export class EGLView extends BaseClass {
   }
 
   get rotated(): boolean {
-    return this.#rotated;
+    return this.#domAdapter.rotated;
   }
 
   get frameSize(): Size {
-    return this.#frameSize.clone();
+    return this.#domAdapter.frameSize;
   }
 
   /**
@@ -640,9 +557,7 @@ export class EGLView extends BaseClass {
    * On web, it sets the size of the canvas's outer DOM element.
    */
   set frameSize(size: SizeLike) {
-    this.#frameSize.set(size);
-    this.#frame!.style.width = size.width + "px";
-    this.#frame!.style.height = size.height + "px";
+    this.#domAdapter.frameSize = size;
     this.#resizeEvent();
     this.rendererDelegate.projection = this.rendererDelegate.projection;
   }
@@ -655,12 +570,12 @@ export class EGLView extends BaseClass {
     this.#devicePixelRatio = value;
   }
 
-  get frame(): HTMLElement | null {
-    return this.#frame;
+  get frame(): HTMLElement {
+    return this.#domAdapter.frame;
   }
 
-  set frame(value: HTMLElement | null) {
-    this.#frame = value;
+  set frame(value: HTMLElement) {
+    this.#domAdapter.frame = value;
   }
 
   get contentScaleFactor(): number {
@@ -748,8 +663,8 @@ export class EGLView extends BaseClass {
    */
   set orientation(orientation: DeviceOrientation) {
     orientation = orientation & DeviceOrientation.AUTO;
-    if (orientation && this.#orientation !== orientation) {
-      this.#orientation = orientation;
+    if (orientation && this.#domAdapter.orientation !== orientation) {
+      this.#domAdapter.orientation = orientation;
       if (this.#resolutionPolicy) {
         this.#resetDesignResolution(true);
       }
@@ -760,7 +675,7 @@ export class EGLView extends BaseClass {
    * Returns the current orientation.
    */
   get orientation(): DeviceOrientation {
-    return this.#orientation;
+    return this.#domAdapter.orientation;
   }
 
   /**
@@ -851,11 +766,11 @@ export class EGLView extends BaseClass {
       enabled &&
       enabled !== this.#autoFullScreen &&
       this.#sys.specification.isMobile &&
-      this.#frame === document.documentElement
+      this.#domAdapter.isFrameDocument
     ) {
       // Automatically full screen when user touches on mobile version
       this.#autoFullScreen = true;
-      this.#screen.autoFullScreen(this.canvas, this.#frame);
+      this.#screen.autoFullScreen(this.#domAdapter.canvas, this.#domAdapter.frame);
     } else {
       this.#autoFullScreen = false;
     }
@@ -874,7 +789,7 @@ export class EGLView extends BaseClass {
    * this name is for the compatibility with cocos2d-x, subclass must implement this method.
    */
   get openGLReady(): boolean {
-    return this.#canvas !== null && !!this.#sys.rendererConfig.renderContext;
+    return this.#domAdapter.canvasReady && !!this.#sys.rendererConfig.renderContext;
   }
 
   /**
@@ -883,7 +798,7 @@ export class EGLView extends BaseClass {
    * On web, it returns the size of the canvas element.
    */
   get canvasSize(): Size {
-    return new Size(this.canvas);
+    return this.#domAdapter.canvasSize;
   }
 
   /**
@@ -983,11 +898,11 @@ export class EGLView extends BaseClass {
   }
 
   get canvas(): HTMLCanvasElement {
-    return this.#canvas!;
+    return this.#domAdapter.canvas;
   }
 
   get container(): HTMLElement {
-    return this.#container!;
+    return this.#domAdapter.container;
   }
 
   get zEye(): number {

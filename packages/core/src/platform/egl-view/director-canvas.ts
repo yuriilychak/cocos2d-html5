@@ -1,10 +1,10 @@
 import { DirectorRenderer } from "./director-renderer";
-import { Point } from "../geometry";
+import { Point } from "../../geometry";
 
-import type { PointLike, SizeLike } from "../geometry/types";
-import type { EGLViewLike } from "../platform/egl-view/types";
-import type { Sys } from "../sys";
-import type { EventManager } from "../event-manager";
+import type { PointLike, SizeLike } from "../../geometry/types";
+import type { EGLViewLike } from "./types";
+import type { Sys } from "../../sys";
+import type { EventManager } from "../../event-manager";
 
 type CanvasClearColor = {
   r: number;

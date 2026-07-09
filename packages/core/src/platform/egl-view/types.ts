@@ -1,7 +1,7 @@
 import type { PointLike, RectLike, SizeLike } from "../../geometry/types";
 import type { DensityDPI, DeviceOrientation, DirectorProjection } from "../../enums";
 import type { ResolutionPolicy } from "./resolution-policy";
-import type { DirectorRenderer } from "../../director/director-renderer";
+import type { DirectorRenderer } from "./director-renderer";
 
 export type DensityDPIValue = DensityDPI | string;
 

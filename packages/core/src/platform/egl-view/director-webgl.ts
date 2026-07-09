@@ -1,12 +1,12 @@
 import { DirectorRenderer } from "./director-renderer";
-import { ServiceLocator } from "../service-locator";
-import { GLState } from "../enums";
+import { ServiceLocator } from "../../service-locator";
+import { GLState } from "../../enums";
 
-import type { DirectorProjection } from "../enums";
-import type { PointLike, SizeLike } from "../geometry/types";
-import type { EGLViewLike } from "../platform/egl-view/types";
-import type { Sys } from "../sys";
-import type { EventManager } from "../event-manager";
+import type { DirectorProjection } from "../../enums";
+import type { PointLike, SizeLike } from "../../geometry/types";
+import type { EGLViewLike } from "./types";
+import type { Sys } from "../../sys";
+import type { EventManager } from "../../event-manager";
 
 type WebGLDirectorRenderer = {
   childrenOrderDirty: boolean;
