@@ -48,7 +48,7 @@ export default class WebGLTextureRenderer {
     var t = this._texture;
     premultiplied =
       premultiplied !== undefined ? premultiplied : this._hasPremultipliedAlpha;
-    if (!ServiceLocator.game._rendererInitialized) return;
+    if (!ServiceLocator.game.rendererInitialized) return;
     if (!t._htmlElementObj) return;
     if (!t._htmlElementObj.width || !t._htmlElementObj.height) return;
 

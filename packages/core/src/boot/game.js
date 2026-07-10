@@ -25,57 +25,34 @@ import {
  * An object to boot the game.
  */
 export default class Game extends EventHelper(BaseClass) {
-  static _isContextMenuEnable = false;
+  static #isContextMenuEnable = false;
 
-  _eventHide = null;
-  _eventShow = null;
+  #eventHide = null;
+  #eventShow = null;
 
-  _director = null;
-  _eglView = null;
-  _eventManager = null;
-  _inputManager = null;
-  _loader = null;
-  _rendererConfig = null;
-  _textureCache = null;
-
-  injectServices({
-    director,
-    eglView,
-    eventManager,
-    inputManager,
-    loader,
-    rendererConfig,
-    textureCache
-  }) {
-    this._director = director;
-    this._eglView = eglView;
-    this._eventManager = eventManager;
-    this._inputManager = inputManager;
-    this._loader = loader;
-    this._rendererConfig = rendererConfig;
-    this._textureCache = textureCache;
-  }
-
-  constructor() {
-    super();
-    this.CONFIG_KEY = CONFIG_KEY;
-  }
+  #director = null;
+  #eglView = null;
+  #eventManager = null;
+  #inputManager = null;
+  #loader = null;
+  #rendererConfig = null;
+  #textureCache = null;
 
   // states
-  _paused = true;
-  _configLoaded = false;
-  _engineLoaded = false;
-  _prepareCalled = false;
-  _prepared = false;
-  _rendererInitialized = false;
+  #paused = true;
+  #configLoaded = false;
+  #engineLoaded = false;
+  #prepareCalled = false;
+  #prepared = false;
+  rendererInitialized = false;
 
-  _renderContext = null;
+  #renderContext = null;
 
-  _intervalId = null;
+  #intervalId = null;
 
-  _lastTime = null;
-  _frameTime = null;
-  _gameDiv = null;
+  #lastTime = null;
+  #frameTime = null;
+  #gameDiv = null;
 
   /**
    * The outer frame of the game canvas, parent of container
@@ -117,6 +94,29 @@ export default class Game extends EventHelper(BaseClass) {
 
   glExt = null;
 
+  injectServices({
+    director,
+    eglView,
+    eventManager,
+    inputManager,
+    loader,
+    rendererConfig,
+    textureCache
+  }) {
+    this.#director = director;
+    this.#eglView = eglView;
+    this.#eventManager = eventManager;
+    this.#inputManager = inputManager;
+    this.#loader = loader;
+    this.#rendererConfig = rendererConfig;
+    this.#textureCache = textureCache;
+  }
+
+  constructor() {
+    super();
+    this.CONFIG_KEY = CONFIG_KEY;
+  }
+
   /**
    * Set frameRate of game.
    * @param frameRate
@@ -124,57 +124,57 @@ export default class Game extends EventHelper(BaseClass) {
   setFrameRate(frameRate) {
     var config = this.config;
     config[CONFIG_KEY.frameRate] = frameRate;
-    if (this._intervalId) window.cancelAnimationFrame(this._intervalId);
-    this._intervalId = 0;
-    this._paused = true;
-    this._setAnimFrame();
-    this._runMainLoop();
+    if (this.#intervalId) window.cancelAnimationFrame(this.#intervalId);
+    this.#intervalId = 0;
+    this.#paused = true;
+    this.#setAnimFrame();
+    this.#runMainLoop();
   }
 
   /**
    * Run the game frame by frame.
    */
   step() {
-    this._director.mainLoop();
+    this.#director.mainLoop();
   }
 
   /**
    * Pause the game.
    */
   pause() {
-    if (this._paused) return;
-    this._paused = true;
+    if (this.#paused) return;
+    this.#paused = true;
     if (this.audioEngine) {
       this.audioEngine._pausePlaying();
     }
-    if (this._intervalId) window.cancelAnimationFrame(this._intervalId);
-    this._intervalId = 0;
+    if (this.#intervalId) window.cancelAnimationFrame(this.#intervalId);
+    this.#intervalId = 0;
   }
 
   /**
    * Resume the game from pause.
    */
   resume() {
-    if (!this._paused) return;
-    this._paused = false;
+    if (!this.#paused) return;
+    this.#paused = false;
     if (this.audioEngine) {
       this.audioEngine._resumePlaying();
     }
-    this._runMainLoop();
+    this.#runMainLoop();
   }
 
   /**
    * Check whether the game is paused.
    */
   isPaused() {
-    return this._paused;
+    return this.#paused;
   }
 
   /**
    * Restart game.
    */
   restart() {
-    this._director.popToSceneStackLevel(0);
+    this.#director.popToSceneStackLevel(0);
     this.audioEngine && this.audioEngine.end();
     this.onStart();
   }
@@ -193,42 +193,42 @@ export default class Game extends EventHelper(BaseClass) {
   prepare(cb) {
     var config = this.config;
 
-    if (!this._configLoaded) {
-      this._loadConfig(() => {
+    if (!this.#configLoaded) {
+      this.#loadConfig(() => {
         this.prepare(cb);
       });
       return;
     }
 
-    if (this._prepared) {
+    if (this.#prepared) {
       if (cb) cb();
       return;
     }
-    if (this._prepareCalled) {
+    if (this.#prepareCalled) {
       return;
     }
-    if (this._engineLoaded) {
-      this._prepareCalled = true;
+    if (this.#engineLoaded) {
+      this.#prepareCalled = true;
 
-      this._initRenderer(config[CONFIG_KEY.width], config[CONFIG_KEY.height]);
+      this.#initRenderer(config[CONFIG_KEY.width], config[CONFIG_KEY.height]);
 
       // eglView is wired lazily; initialize it now that the renderer (and thus
       // game.container/canvas) is ready.
-      this._eglView.initialize(this.canvas, this.container);
+      this.#eglView.initialize(this.canvas, this.container);
       // Director is created lazily; this is its first access, so initialize it here.
-      this._director.init();
-      this._eglView.postInit();
+      this.#director.init();
+      this.#eglView.postInit();
 
-      this._initEvents();
+      this.#initEvents();
 
-      this._setAnimFrame();
-      this._runMainLoop();
+      this.#setAnimFrame();
+      this.#runMainLoop();
 
       var jsList = config[CONFIG_KEY.jsList];
       if (jsList) {
-        this._loader.loadJsWithImg(jsList, (err) => {
+        this.#loader.loadJsWithImg(jsList, (err) => {
           if (err) throw new Error(err);
-          this._prepared = true;
+          this.#prepared = true;
           if (cb) cb();
         });
       } else {
@@ -238,7 +238,7 @@ export default class Game extends EventHelper(BaseClass) {
       return;
     }
 
-    this._initEngine();
+    this.#initEngine();
     this.prepare(cb);
   }
 
@@ -253,7 +253,7 @@ export default class Game extends EventHelper(BaseClass) {
     } else {
       if (config) {
         if (typeof config === "string") {
-          if (!this.config) this._loadConfig();
+          if (!this.config) this.#loadConfig();
           this.config[CONFIG_KEY.id] = config;
         } else {
           this.config = config;
@@ -267,20 +267,20 @@ export default class Game extends EventHelper(BaseClass) {
     this.prepare(this.onStart && this.onStart.bind(this));
   }
 
-  _initEngine() {
-    this._rendererConfig.determineRenderType(this.config);
+  #initEngine() {
+    this.#rendererConfig.determineRenderType(this.config);
     initDebugSetting(this.config[CONFIG_KEY.debugMode]);
-    this._engineLoaded = true;
+    this.#engineLoaded = true;
     console.log(ENGINE_VERSION);
   }
 
-  _setAnimFrame() {
-    this._lastTime = new Date();
+  #setAnimFrame() {
+    this.#lastTime = new Date();
     var frameRate = this.config[CONFIG_KEY.frameRate];
-    this._frameTime = 1000 / frameRate;
+    this.#frameTime = 1000 / frameRate;
     if (frameRate !== 60 && frameRate !== 30) {
-      window.requestAnimFrame = this._stTime;
-      window.cancelAnimationFrame = this._ctTime;
+      window.requestAnimFrame = this.#stTime;
+      window.cancelAnimationFrame = this.#ctTime;
     } else {
       window.requestAnimFrame =
         window.requestAnimationFrame ||
@@ -288,7 +288,7 @@ export default class Game extends EventHelper(BaseClass) {
         window.mozRequestAnimationFrame ||
         window.oRequestAnimationFrame ||
         window.msRequestAnimationFrame ||
-        this._stTime;
+        this.#stTime;
       window.cancelAnimationFrame =
         window.cancelAnimationFrame ||
         window.cancelRequestAnimationFrame ||
@@ -300,54 +300,52 @@ export default class Game extends EventHelper(BaseClass) {
         window.mozCancelAnimationFrame ||
         window.webkitCancelAnimationFrame ||
         window.oCancelAnimationFrame ||
-        this._ctTime;
+        this.#ctTime;
     }
   }
 
-  _stTime = (callback) => {
+  #stTime = (callback) => {
     var currTime = new Date().getTime();
-    var timeToCall = Math.max(0, this._frameTime - (currTime - this._lastTime));
+    var timeToCall = Math.max(0, this.#frameTime - (currTime - this.#lastTime));
     var id = window.setTimeout(() => {
       callback();
     }, timeToCall);
-    this._lastTime = currTime + timeToCall;
+    this.#lastTime = currTime + timeToCall;
     return id;
   };
 
-  _ctTime = (id) => {
+  #ctTime = (id) => {
     window.clearTimeout(id);
   };
 
-  _runMainLoop() {
-    var config = this.config,
-      director = this._director,
-      skip = true,
-      frameRate = config[CONFIG_KEY.frameRate];
+  #runMainLoop() {
+    var skip = true,
+      frameRate = this.config[CONFIG_KEY.frameRate];
 
-    director.setDisplayStats(config[CONFIG_KEY.showFPS]);
+    this.#director.setDisplayStats(this.config[CONFIG_KEY.showFPS]);
 
     var callback = () => {
-      if (!this._paused) {
+      if (!this.#paused) {
         if (frameRate === 30) {
           if ((skip = !skip)) {
-            this._intervalId = window.requestAnimFrame(callback);
+            this.#intervalId = window.requestAnimFrame(callback);
             return;
           }
         }
 
-        director.mainLoop();
-        this._intervalId = window.requestAnimFrame(callback);
+        this.#director.mainLoop();
+        this.#intervalId = window.requestAnimFrame(callback);
       }
     };
 
-    this._intervalId = window.requestAnimFrame(callback);
-    this._paused = false;
+    this.#intervalId = window.requestAnimFrame(callback);
+    this.#paused = false;
   }
 
-  _loadConfig(cb) {
+  #loadConfig(cb) {
     var config = this.config || document["ccConfig"];
     if (config) {
-      this._initConfig(config);
+      this.#initConfig(config);
       cb && cb();
     } else {
       var cocos_script = document.getElementsByTagName("script");
@@ -359,7 +357,7 @@ export default class Game extends EventHelper(BaseClass) {
       }
       var loaded = (err, txt) => {
         var data = JSON.parse(txt);
-        this._initConfig(data);
+        this.#initConfig(data);
         cb && cb();
       };
       var _src, txt, _resPath;
@@ -367,18 +365,28 @@ export default class Game extends EventHelper(BaseClass) {
         _src = cocos_script[i].src;
         if (_src) {
           _resPath = /(.*)\//.exec(_src)[0];
-          this._loader.resPath = _resPath;
+          this.#loader.resPath = _resPath;
           _src = Path.join(_resPath, "project.json");
         }
-        this._loader.loadTxt(_src, loaded);
+        this.#loader.loadTxt(_src, loaded);
       }
       if (!txt) {
-        this._loader.loadTxt("project.json", loaded);
+        this.#loader.loadTxt("project.json", loaded);
       }
     }
   }
 
-  _initConfig(config) {
+  onHidden() {
+    if (this.#eventManager && this.#eventHide)
+      this.#eventManager.dispatchEvent(this.#eventHide);
+  }
+
+  onShow() {
+    if (this.#eventManager && this.#eventShow)
+      this.#eventManager.dispatchEvent(this.#eventShow);
+  }
+
+  #initConfig(config) {
     var modules = config[CONFIG_KEY.modules];
 
     config[CONFIG_KEY.showFPS] =
@@ -398,13 +406,13 @@ export default class Game extends EventHelper(BaseClass) {
     if (modules && modules.indexOf("core") < 0) modules.splice(0, 0, "core");
     modules && (config[CONFIG_KEY.modules] = modules);
     this.config = config;
-    this._configLoaded = true;
+    this.#configLoaded = true;
   }
 
-  _initRenderer(width, height) {
-    if (this._rendererInitialized) return;
+  #initRenderer(width, height) {
+    if (this.rendererInitialized) return;
 
-    if (!this._rendererConfig.supportRenderer) {
+    if (!this.#rendererConfig.supportRenderer) {
       throw new Error(
         "The renderer doesn't support the renderMode " +
           this.config[CONFIG_KEY.renderMode]
@@ -423,9 +431,7 @@ export default class Game extends EventHelper(BaseClass) {
       height = height || element.height;
 
       this.canvas = localCanvas = element;
-      this.container =
-        localContainer =
-          document.createElement("DIV");
+      this.container = localContainer = document.createElement("DIV");
       if (localCanvas.parentNode)
         localCanvas.parentNode.insertBefore(localContainer, localCanvas);
     } else {
@@ -435,9 +441,7 @@ export default class Game extends EventHelper(BaseClass) {
       width = width || element.clientWidth;
       height = height || element.clientHeight;
       this.canvas = localCanvas = document.createElement("CANVAS");
-      this.container =
-        localContainer =
-          document.createElement("DIV");
+      this.container = localContainer = document.createElement("DIV");
       element.appendChild(localContainer);
     }
     localContainer.setAttribute("id", "Cocos2dGameContainer");
@@ -452,25 +456,25 @@ export default class Game extends EventHelper(BaseClass) {
     localCanvas.setAttribute("height", height || 320);
     localCanvas.setAttribute("tabindex", 99);
 
-    if (this._rendererConfig.isWebGL) {
-      this._renderContext = Sys.create3DContext(localCanvas, {
+    if (this.#rendererConfig.isWebGL) {
+      this.#renderContext = Sys.create3DContext(localCanvas, {
         stencil: true,
         alpha: false
       });
-      this._rendererConfig.renderContext = this._renderContext;
+      this.#rendererConfig.renderContext = this.#renderContext;
     }
-    if (this._renderContext) {
-      win.gl = this._renderContext;
-      const gl = this._renderContext;
+    if (this.#renderContext) {
+      win.gl = this.#renderContext;
+      const gl = this.#renderContext;
       const isWebGL2 =
         typeof WebGL2RenderingContext !== "undefined" &&
         gl instanceof WebGL2RenderingContext;
-      this._rendererConfig.glVersion = isWebGL2
+      this.#rendererConfig.glVersion = isWebGL2
         ? GLVersion.WEBGL2
         : GLVersion.WEBGL;
-      this._rendererConfig.renderer = rendererWebGL;
-      this._rendererConfig.renderer.init();
-      this.drawingUtil = new DrawingPrimitiveWebGL(this._renderContext);
+      this.#rendererConfig.renderer = rendererWebGL;
+      this.#rendererConfig.renderer.init();
+      this.drawingUtil = new DrawingPrimitiveWebGL(this.#renderContext);
       this.glExt = isWebGL2
         ? {
             instanced_arrays: {
@@ -492,42 +496,41 @@ export default class Game extends EventHelper(BaseClass) {
             element_uint: gl.getExtension("OES_element_index_uint")
           };
     } else {
-      this._rendererConfig.renderType = RenderType.CANVAS;
-      this._rendererConfig.glVersion = GLVersion.CANVAS;
-      this._rendererConfig.renderer = rendererCanvas;
-      this._renderContext = new CanvasContextWrapper(
+      this.#rendererConfig.renderType = RenderType.CANVAS;
+      this.#rendererConfig.glVersion = GLVersion.CANVAS;
+      this.#rendererConfig.renderer = rendererCanvas;
+      this.#renderContext = new CanvasContextWrapper(
         localCanvas.getContext("2d")
       );
-      this._rendererConfig.renderContext = this._renderContext;
+      this.#rendererConfig.renderContext = this.#renderContext;
       this.drawingUtil = DrawingPrimitiveCanvas
-        ? new DrawingPrimitiveCanvas(this._renderContext)
+        ? new DrawingPrimitiveCanvas(this.#renderContext)
         : null;
     }
 
-    this._gameDiv = localContainer;
+    this.#gameDiv = localContainer;
     this.canvas.oncontextmenu = function () {
-      if (!Game._isContextMenuEnable) return false;
+      if (!Game.#isContextMenuEnable) return false;
     };
 
     this.dispatchEvent(GameEvent.RENDERER_INITED, true);
 
-    this._rendererInitialized = true;
+    this.rendererInitialized = true;
 
     // Initialize TextureCache renderer after renderer type is determined
-    this._textureCache.initRenderer();
+    this.#textureCache.initRenderer();
   }
 
-  _initEvents() {
-    var win = window,
-      hidden;
+  #initEvents() {
+    let hidden = "";
 
-    this._eventHide = this._eventHide || new EventCustom(GameEvent.HIDE);
-    this._eventHide.userData = this;
-    this._eventShow = this._eventShow || new EventCustom(GameEvent.SHOW);
-    this._eventShow.userData = this;
+    this.#eventHide = this.#eventHide || new EventCustom(GameEvent.HIDE);
+    this.#eventHide.userData = this;
+    this.#eventShow = this.#eventShow || new EventCustom(GameEvent.SHOW);
+    this.#eventShow.userData = this;
 
     if (this.config[CONFIG_KEY.registerSystemEvent])
-      this._inputManager.registerSystemEvent(this.canvas);
+      this.#inputManager.registerSystemEvent(this.canvas);
 
     if (!isUndefined(document.hidden)) {
       hidden = "hidden";
@@ -546,14 +549,6 @@ export default class Game extends EventHelper(BaseClass) {
       "webkitvisibilitychange",
       "qbrowserVisibilityChange"
     ];
-    var onHidden = () => {
-      if (this._eventManager && this._eventHide)
-        this._eventManager.dispatchEvent(this._eventHide);
-    };
-    var onShow = () => {
-      if (this._eventManager && this._eventShow)
-        this._eventManager.dispatchEvent(this._eventShow);
-    };
 
     if (hidden) {
       for (var i = 0; i < changeList.length; i++) {
@@ -562,33 +557,30 @@ export default class Game extends EventHelper(BaseClass) {
           (event) => {
             var visible = document[hidden];
             visible = visible || event["hidden"];
-            if (visible) onHidden();
-            else onShow();
+            if (visible) this.onHidden();
+            else this.onShow();
           },
           false
         );
       }
     } else {
-      win.addEventListener("blur", onHidden, false);
-      win.addEventListener("focus", onShow, false);
+      window.addEventListener("blur", this.onHidden.bind(this), false);
+      window.addEventListener("focus", this.onShow.bind(this), false);
     }
 
     if (navigator.userAgent.indexOf("MicroMessenger") > -1) {
-      win.onfocus = () => {
-        onShow();
-      };
+      window.onfocus = this.onShow.bind(this);
     }
 
     if ("onpageshow" in window && "onpagehide" in window) {
-      win.addEventListener("pagehide", onHidden, false);
-      win.addEventListener("pageshow", onShow, false);
+      window.addEventListener("pagehide", this.onHidden.bind(this), false);
+      window.addEventListener("pageshow", this.onShow.bind(this), false);
     }
 
-    this._eventManager.addCustomListener(GameEvent.HIDE, () => {
-      this.pause();
-    });
-    this._eventManager.addCustomListener(GameEvent.SHOW, () => {
-      this.resume();
-    });
+    this.#eventManager.addCustomListener(GameEvent.HIDE, this.pause.bind(this));
+    this.#eventManager.addCustomListener(
+      GameEvent.SHOW,
+      this.resume.bind(this)
+    );
   }
 }

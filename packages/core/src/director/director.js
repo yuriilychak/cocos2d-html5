@@ -38,46 +38,43 @@ import {
 import { log, assert, _LogInfos } from "../boot/debugger";
 import { checkGLErrorDebug } from "../platform/macro/utils";
 
-export const defaultFPS = 60;
-
 /**
  * Director is a singleton object which manage your game's logic flow.
  */
 export class Director extends BaseClass {
-  constructor() {
-    super();
-    this.TransitionSceneClass = null;
-    this._nextDeltaTimeZero = false;
-    this._paused = false;
-    this._purgeDirectorInNextLoop = false;
-    this._sendCleanupToScene = false;
-    this._animationInterval = 0.0;
-    this._oldAnimationInterval = 0.0;
-    this._deltaTime = 0.0;
-    this._lastUpdate = null;
-    this._nextScene = null;
-    this._notificationNode = null;
-    this._scenesStack = null;
-    this._runningScene = null;
-    this._totalFrames = 0;
-    this._secondsPerFrame = 0;
-    this._dirtyRegion = null;
-    this._scheduler = null;
-    this._actionManager = null;
-    this._eventAfterUpdate = null;
-    this._eventAfterVisit = null;
-    this._eventAfterDraw = null;
-    this._lastUpdate = Date.now();
-    this._animationCache = null;
-    this._eventManager = null;
-    this._game = null;
-    this._profiler = null;
-    this._rendererConfig = null;
-    this._spriteFrameCache = null;
-    this._textureCache = null;
-    this._loader = null;
-    this._showEventListenerRegistered = false;
-  }
+  static defaultFPS = 60;
+
+  TransitionSceneClass = null;
+  _nextDeltaTimeZero = false;
+  _paused = false;
+  _purgeDirectorInNextLoop = false;
+  _sendCleanupToScene = false;
+  _animationInterval = 0.0;
+  _oldAnimationInterval = 0.0;
+  _deltaTime = 0.0;
+  _lastUpdate = null;
+  _nextScene = null;
+  _notificationNode = null;
+  _scenesStack = null;
+  _runningScene = null;
+  _totalFrames = 0;
+  _secondsPerFrame = 0;
+  _dirtyRegion = null;
+  _scheduler = null;
+  _actionManager = null;
+  _eventAfterUpdate = null;
+  _eventAfterVisit = null;
+  _eventAfterDraw = null;
+  _lastUpdate = Date.now();
+  _animationCache = null;
+  _eventManager = null;
+  _game = null;
+  _profiler = null;
+  _rendererConfig = null;
+  _spriteFrameCache = null;
+  _textureCache = null;
+  _loader = null;
+  _showEventListenerRegistered = false;
 
   injectServices({
     animationCache,
@@ -100,7 +97,8 @@ export class Director extends BaseClass {
   }
 
   init() {
-    this._oldAnimationInterval = this._animationInterval = 1.0 / defaultFPS;
+    this._oldAnimationInterval = this._animationInterval =
+      1.0 / Director.defaultFPS;
     this._scenesStack = [];
 
     this._totalFrames = 0;
@@ -110,16 +108,13 @@ export class Director extends BaseClass {
     this._purgeDirectorInNextLoop = false;
 
     this._scheduler = new Scheduler();
-    if (ActionManager) {
-      this._actionManager = new ActionManager();
-      this._scheduler.scheduleUpdate(
-        this._actionManager,
-        Scheduler.PRIORITY_SYSTEM,
-        false
-      );
-    } else {
-      this._actionManager = null;
-    }
+
+    this._actionManager = new ActionManager();
+    this._scheduler.scheduleUpdate(
+      this._actionManager,
+      Scheduler.PRIORITY_SYSTEM,
+      false
+    );
 
     this._eventAfterUpdate = new EventCustom(DirectorEvent.AFTER_UPDATE, this);
     this._eventAfterVisit = new EventCustom(DirectorEvent.AFTER_VISIT, this);

@@ -1,1 +1,1 @@
-export { Director, DisplayLinkDirector, defaultFPS } from './director';
+export { Director, DisplayLinkDirector } from './director';

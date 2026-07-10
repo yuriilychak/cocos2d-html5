@@ -14,7 +14,7 @@ export default class TextureCacheWebGLRenderer {
       tex,
       ext;
     //remove judge(webgl)
-    if (!ServiceLocator.game._rendererInitialized) {
+    if (!ServiceLocator.game.rendererInitialized) {
       locTexs = textureCache._loadedTexturesBefore;
     }
     tex = locTexs[url];
@@ -52,7 +52,7 @@ export default class TextureCacheWebGLRenderer {
 
     var locTexs = textureCache._textures;
     //remove judge(webgl)
-    if (!ServiceLocator.game._rendererInitialized) {
+    if (!ServiceLocator.game.rendererInitialized) {
       locTexs = textureCache._loadedTexturesBefore;
     }
     var tex = locTexs[url] || locTexs[ServiceLocator.loader._getAliase(url)];
