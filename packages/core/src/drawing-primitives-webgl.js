@@ -62,7 +62,7 @@ export class DrawingPrimitiveWebGL extends BaseClass {
   lazy_init() {
     var _t = this;
     if (!_t._initialized) {
-      _t._shader = ServiceLocator.shaderCache.programForKey(
+      _t._shader = ServiceLocator.shaderCache.getProgram(
         ShaderName.POSITION_UCOLOR
       );
       _t._shader._addUniformLocation(this._colorLocation);

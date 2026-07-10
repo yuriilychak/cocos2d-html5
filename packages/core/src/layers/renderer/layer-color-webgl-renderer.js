@@ -44,7 +44,7 @@ export default class LayerColorWebGLRenderer extends LayerWebGLRenderer {
     this._color = new Uint32Array(1);
     this._vertexBuffer = null;
 
-    this._shaderProgram = ServiceLocator.shaderCache.programForKey(
+    this._shaderProgram = ServiceLocator.shaderCache.getProgram(
       ShaderName.POSITION_COLOR
     );
   }

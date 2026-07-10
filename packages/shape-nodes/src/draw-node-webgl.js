@@ -71,7 +71,7 @@ export class DrawNodeWebGL {
       );
     }
 
-    this._renderCmd._shaderProgram = ServiceLocator.shaderCache.programForKey(
+    this._renderCmd._shaderProgram = ServiceLocator.shaderCache.getProgram(
       ShaderName.POSITION_LENGTHTEXTURECOLOR
     );
     this._blendFunc = new BlendFunc(

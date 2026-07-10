@@ -268,7 +268,7 @@ export class ProgressTimerWebGLRenderCmd extends Node.WebGLRenderCmd {
       this._vertexDataCount = 0;
       this._vertexDataDirty = true;
 
-      this._shaderProgram = ServiceLocator.shaderCache.programForKey(
+      this._shaderProgram = ServiceLocator.shaderCache.getProgram(
         ShaderName.SPRITE_POSITION_TEXTURECOLOR
       );
     }

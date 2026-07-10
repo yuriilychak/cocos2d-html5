@@ -29,7 +29,7 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
     this.vertexType =
       ServiceLocator.sys.rendererConfig.renderer.VertexType.CUSTOM;
     this.setShaderProgram(
-      ServiceLocator.shaderCache.programForKey(
+      ServiceLocator.shaderCache.getProgram(
         ShaderName.SPRITE_POSITION_TEXTURECOLOR
       )
     );

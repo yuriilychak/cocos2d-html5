@@ -28,7 +28,7 @@ import { EGLView } from "./platform/egl-view/egl-view";
 import TextureCache from "./textures/texture-cache";
 import SpriteFrameCache from "./sprites/sprite-frame-cache";
 import AnimationCache from "./sprites/animation-cache";
-import ShaderCache from "./shaders/CCShaderCache";
+import ShaderCache from "./shaders/shader-cache";
 import { GLStateCache } from "./shaders/CCGLStateCache";
 import { KMGLMatrix } from "./kazmath/km-gl-matrix";
 import { Profiler } from "./utils/profiler";
@@ -110,7 +110,7 @@ export class ServiceLocator {
     ServiceLocator.#textureCache = new TextureCache();
     ServiceLocator.#spriteFrameCache = new SpriteFrameCache();
     ServiceLocator.#animationCache = new AnimationCache();
-    ServiceLocator.#shaderCache = new ShaderCache();
+    ServiceLocator.#shaderCache = new ShaderCache(ServiceLocator.#sys);
     ServiceLocator.#glStateCache = new GLStateCache();
     ServiceLocator.#kmglMatrix = new KMGLMatrix();
     ServiceLocator.#profiler = new Profiler();
@@ -161,10 +161,6 @@ export class ServiceLocator {
     ServiceLocator.#animationCache.injectServices({
       loader: ServiceLocator.#loader,
       spriteFrameCache: ServiceLocator.#spriteFrameCache
-    });
-
-    ServiceLocator.#shaderCache.injectServices({
-      rendererConfig: renderingConfig
     });
 
     ServiceLocator.#glStateCache.injectServices({

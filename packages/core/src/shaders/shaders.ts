@@ -29,7 +29,7 @@
  * @constant
  * @type {String}
  */
-export const SHADER_POSITION_UCOLOR_FRAG =
+const SHADER_POSITION_UCOLOR_FRAG =
         "precision lowp float;\n"
         + "varying vec4 v_fragmentColor;\n"
         + "void main()                              \n"
@@ -40,7 +40,7 @@ export const SHADER_POSITION_UCOLOR_FRAG =
  * @constant
  * @type {String}
  */
-export const SHADER_POSITION_UCOLOR_VERT =
+const SHADER_POSITION_UCOLOR_VERT =
         "attribute vec4 a_position;\n"
         + "uniform    vec4 u_color;\n"
         + "uniform float u_pointSize;\n"
@@ -58,7 +58,7 @@ export const SHADER_POSITION_UCOLOR_VERT =
  * @constant
  * @type {String}
  */
-export const SHADER_POSITION_COLOR_FRAG =
+const SHADER_POSITION_COLOR_FRAG =
         "precision lowp float; \n"
         + "varying vec4 v_fragmentColor; \n"
         + "void main() \n"
@@ -70,7 +70,7 @@ export const SHADER_POSITION_COLOR_FRAG =
  * @constant
  * @type {String}
  */
-export const SHADER_POSITION_COLOR_VERT =
+const SHADER_POSITION_COLOR_VERT =
         "attribute vec4 a_position;\n"
         + "attribute vec4 a_color;\n"
         + "varying lowp vec4 v_fragmentColor;\n"
@@ -80,7 +80,7 @@ export const SHADER_POSITION_COLOR_VERT =
         + "    v_fragmentColor = a_color;             \n"
         + "}";
 
-export const SHADER_SPRITE_POSITION_COLOR_VERT =
+const SHADER_SPRITE_POSITION_COLOR_VERT =
         "attribute vec4 a_position;\n"
         + "attribute vec4 a_color;\n"
         + "varying lowp vec4 v_fragmentColor;\n"
@@ -95,7 +95,7 @@ export const SHADER_SPRITE_POSITION_COLOR_VERT =
  * @constant
  * @type {String}
  */
-export const SHADER_POSITION_COLOR_LENGTH_TEXTURE_FRAG =
+const SHADER_POSITION_COLOR_LENGTH_TEXTURE_FRAG =
         "// #extension GL_OES_standard_derivatives : enable\n"
         + "varying mediump vec4 v_color;\n"
         + "varying mediump vec2 v_texcoord;\n"
@@ -112,7 +112,7 @@ export const SHADER_POSITION_COLOR_LENGTH_TEXTURE_FRAG =
  * @constant
  * @type {String}
  */
-export const SHADER_POSITION_COLOR_LENGTH_TEXTURE_VERT =
+const SHADER_POSITION_COLOR_LENGTH_TEXTURE_VERT =
         "attribute mediump vec4 a_position; \n"
         + "attribute mediump vec2 a_texcoord; \n"
         + "attribute mediump vec4 a_color;	\n"
@@ -131,7 +131,7 @@ export const SHADER_POSITION_COLOR_LENGTH_TEXTURE_VERT =
  * @constant
  * @type {String}
  */
-export const SHADER_POSITION_TEXTURE_FRAG =
+const SHADER_POSITION_TEXTURE_FRAG =
         "precision lowp float;   \n"
         + "varying vec2 v_texCoord;  \n"
         + "void main() \n"
@@ -143,7 +143,7 @@ export const SHADER_POSITION_TEXTURE_FRAG =
  * @constant
  * @type {String}
  */
-export const SHADER_POSITION_TEXTURE_VERT =
+const SHADER_POSITION_TEXTURE_VERT =
         "attribute vec4 a_position; \n"
         + "attribute vec2 a_texCoord; \n"
         + "varying mediump vec2 v_texCoord; \n"
@@ -159,7 +159,7 @@ export const SHADER_POSITION_TEXTURE_VERT =
  * @constant
  * @type {String}
  */
-export const SHADER_POSITION_TEXTURE_UCOLOR_FRAG =
+const SHADER_POSITION_TEXTURE_UCOLOR_FRAG =
         "precision lowp float;  \n"
         + "uniform vec4 u_color; \n"
         + "varying vec2 v_texCoord; \n"
@@ -172,7 +172,7 @@ export const SHADER_POSITION_TEXTURE_UCOLOR_FRAG =
  * @constant
  * @type {String}
  */
-export const SHADER_POSITION_TEXTURE_UCOLOR_VERT =
+const SHADER_POSITION_TEXTURE_UCOLOR_VERT =
         "attribute vec4 a_position;\n"
         + "attribute vec2 a_texCoord; \n"
         + "varying mediump vec2 v_texCoord; \n"
@@ -188,7 +188,7 @@ export const SHADER_POSITION_TEXTURE_UCOLOR_VERT =
  * @constant
  * @type {String}
  */
-export const SHADER_POSITION_TEXTURE_A8COLOR_FRAG =
+const SHADER_POSITION_TEXTURE_A8COLOR_FRAG =
         "precision lowp float;  \n"
         + "varying vec4 v_fragmentColor; \n"
         + "varying vec2 v_texCoord; \n"
@@ -203,7 +203,7 @@ export const SHADER_POSITION_TEXTURE_A8COLOR_FRAG =
  * @constant
  * @type {String}
  */
-export const SHADER_POSITION_TEXTURE_A8COLOR_VERT =
+const SHADER_POSITION_TEXTURE_A8COLOR_VERT =
         "attribute vec4 a_position; \n"
         + "attribute vec2 a_texCoord; \n"
         + "attribute vec4 a_color;  \n"
@@ -221,7 +221,7 @@ export const SHADER_POSITION_TEXTURE_A8COLOR_VERT =
  * @constant
  * @type {String}
  */
-export const SHADER_POSITION_TEXTURE_COLOR_FRAG =
+const SHADER_POSITION_TEXTURE_COLOR_FRAG =
         "precision lowp float;\n"
         + "varying vec4 v_fragmentColor; \n"
         + "varying vec2 v_texCoord; \n"
@@ -234,7 +234,7 @@ export const SHADER_POSITION_TEXTURE_COLOR_FRAG =
  * @constant
  * @type {String}
  */
-export const SHADER_POSITION_TEXTURE_COLOR_VERT =
+const SHADER_POSITION_TEXTURE_COLOR_VERT =
         "attribute vec4 a_position; \n"
         + "attribute vec2 a_texCoord; \n"
         + "attribute vec4 a_color;  \n"
@@ -251,7 +251,7 @@ export const SHADER_POSITION_TEXTURE_COLOR_VERT =
  * @constant
  * @type {String}
  */
-export const SHADER_SPRITE_POSITION_TEXTURE_COLOR_VERT =
+const SHADER_SPRITE_POSITION_TEXTURE_COLOR_VERT =
         "attribute vec4 a_position; \n"
         + "attribute vec2 a_texCoord; \n"
         + "attribute vec4 a_color;  \n"
@@ -264,7 +264,7 @@ export const SHADER_SPRITE_POSITION_TEXTURE_COLOR_VERT =
         + "    v_texCoord = a_texCoord; \n"
     + "}";
 
-export const SHADER_SPRITE_POSITION_TEXTURE_COLOR_GRAY_FRAG =
+const SHADER_SPRITE_POSITION_TEXTURE_COLOR_GRAY_FRAG =
         "precision lowp float;\n"
         + "varying vec4 v_fragmentColor; \n"
         + "varying vec2 v_texCoord; \n"
@@ -279,7 +279,7 @@ export const SHADER_SPRITE_POSITION_TEXTURE_COLOR_GRAY_FRAG =
  * @constant
  * @type {String}
  */
-export const SHADER_POSITION_TEXTURE_COLOR_ALPHATEST_FRAG =
+const SHADER_POSITION_TEXTURE_COLOR_ALPHATEST_FRAG =
         "precision lowp float;   \n"
         + "varying vec4 v_fragmentColor; \n"
         + "varying vec2 v_texCoord;   \n"
@@ -299,7 +299,7 @@ export const SHADER_POSITION_TEXTURE_COLOR_ALPHATEST_FRAG =
  * @constant
  * @type {String}
  */
-export const SHADEREX_SWITCHMASK_FRAG =
+const SHADEREX_SWITCHMASK_FRAG =
         "precision lowp float; \n"
         + "varying vec4 v_fragmentColor; \n"
         + "varying vec2 v_texCoord; \n"
@@ -313,6 +313,32 @@ export const SHADEREX_SWITCHMASK_FRAG =
         + "    gl_FragColor    = v_fragmentColor * finalColor; \n"
         + "}";
 
+export const SHADER_POSITION: Record<string, string> = {
+    UCOLOR_FRAG: SHADER_POSITION_UCOLOR_FRAG,
+    UCOLOR_VERT: SHADER_POSITION_UCOLOR_VERT,
+    COLOR_FRAG: SHADER_POSITION_COLOR_FRAG,
+    COLOR_VERT: SHADER_POSITION_COLOR_VERT,
+    COLOR_LENGTH_TEXTURE_FRAG: SHADER_POSITION_COLOR_LENGTH_TEXTURE_FRAG,
+    COLOR_LENGTH_TEXTURE_VERT: SHADER_POSITION_COLOR_LENGTH_TEXTURE_VERT,
+    TEXTURE_FRAG: SHADER_POSITION_TEXTURE_FRAG,
+    TEXTURE_VERT: SHADER_POSITION_TEXTURE_VERT,
+    TEXTURE_UCOLOR_FRAG: SHADER_POSITION_TEXTURE_UCOLOR_FRAG,
+    TEXTURE_UCOLOR_VERT: SHADER_POSITION_TEXTURE_UCOLOR_VERT,
+    TEXTURE_A8COLOR_FRAG: SHADER_POSITION_TEXTURE_A8COLOR_FRAG,
+    TEXTURE_A8COLOR_VERT: SHADER_POSITION_TEXTURE_A8COLOR_VERT,
+    TEXTURE_COLOR_FRAG: SHADER_POSITION_TEXTURE_COLOR_FRAG,
+    TEXTURE_COLOR_VERT: SHADER_POSITION_TEXTURE_COLOR_VERT,
+    TEXTURE_COLOR_ALPHATEST_FRAG: SHADER_POSITION_TEXTURE_COLOR_ALPHATEST_FRAG
+};
+
+export const SHADER_SPRITE: Record<string, string> = {
+    POSITION_COLOR_VERT: SHADER_SPRITE_POSITION_COLOR_VERT,
+    POSITION_TEXTURE_COLOR_VERT: SHADER_SPRITE_POSITION_TEXTURE_COLOR_VERT,
+    POSITION_TEXTURE_COLOR_GRAY_FRAG:
+        SHADER_SPRITE_POSITION_TEXTURE_COLOR_GRAY_FRAG,
+    SWITCHMASK_FRAG: SHADEREX_SWITCHMASK_FRAG
+};
+
 // -------------------- Multi-texture sprite shader (WebGL2 / GLSL ES 3.00) --------------------
 // Used by the multi-texture batcher: a single draw call can reference up to
 // `maxTextures` distinct textures, selected per-vertex via `a_texIndex`.
@@ -321,7 +347,7 @@ export const SHADEREX_SWITCHMASK_FRAG =
  * Build the GLSL ES 3.00 vertex shader for the multi-texture sprite program.
  * @returns {String}
  */
-export function buildSpriteMultiTextureVert() {
+export function buildSpriteMultiTextureVert(): string {
     return "#version 300 es\n"
         + "in vec4 a_position;\n"
         + "in vec4 a_color;\n"
@@ -346,7 +372,7 @@ export function buildSpriteMultiTextureVert() {
  * @param {Number} maxTextures Number of sampler-array slots (>= 1).
  * @returns {String}
  */
-export function buildSpriteMultiTextureFrag(maxTextures) {
+export function buildSpriteMultiTextureFrag(maxTextures: number): string {
     let src =
         "#version 300 es\n"
         + "precision highp int;\n"

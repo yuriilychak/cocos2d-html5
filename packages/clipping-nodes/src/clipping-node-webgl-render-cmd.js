@@ -140,7 +140,7 @@ export class ClippingNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
     gl.clear(gl.STENCIL_BUFFER_BIT);
 
     if (node.alphaThreshold < 1) {
-      const program = ServiceLocator.shaderCache.programForKey(
+      const program = ServiceLocator.shaderCache.getProgram(
         ShaderName.POSITION_TEXTURECOLORALPHATEST
       );
       glUseProgram(program.getProgram());

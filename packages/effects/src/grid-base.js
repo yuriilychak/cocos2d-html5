@@ -238,7 +238,7 @@ export class GridBase extends BaseClass {
     if (!this._grabber) return false;
     this._grabber.grab(this._texture);
     this._glProgramState = GLProgramState.getOrCreateWithGLProgram(
-      ServiceLocator.shaderCache.programForKey(ShaderName.POSITION_TEXTURE)
+      ServiceLocator.shaderCache.getProgram(ShaderName.POSITION_TEXTURE)
     );
     this.calculateVertexPoints();
     return true;

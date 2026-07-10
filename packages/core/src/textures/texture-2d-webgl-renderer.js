@@ -73,7 +73,7 @@ export default class WebGLTextureRenderer {
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 
-    this._shaderProgram = ServiceLocator.shaderCache.programForKey(
+    this._shaderProgram = ServiceLocator.shaderCache.getProgram(
       ShaderName.POSITION_TEXTURE
     );
     ServiceLocator.glStateCache.bindTexture2D(null);
@@ -240,7 +240,7 @@ export default class WebGLTextureRenderer {
 
     this._hasPremultipliedAlpha = false;
     this._hasMipmaps = false;
-    this._shaderProgram = ServiceLocator.shaderCache.programForKey(
+    this._shaderProgram = ServiceLocator.shaderCache.getProgram(
       ShaderName.POSITION_TEXTURE
     );
 

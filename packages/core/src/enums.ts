@@ -362,6 +362,21 @@ export enum Uniform {
   MAX = 8
 }
 
+export enum ShaderType {
+  POSITION_TEXTURECOLOR = 0,
+  POSITION_TEXTURECOLOR_ALPHATEST = 1,
+  POSITION_COLOR = 2,
+  POSITION_TEXTURE = 3,
+  POSITION_TEXTURE_UCOLOR = 4,
+  POSITION_TEXTURE_A8COLOR = 5,
+  POSITION_UCOLOR = 6,
+  POSITION_TEXTURECOLOR_UCOLOR = 7,
+  SPRITE_POSITION_TEXTURECOLOR = 8,
+  SPRITE_POSITION_TEXTURECOLOR_ALPHATEST = 9,
+  SPRITE_POSITION_COLOR = 10,
+  SPRITE_POSITION_TEXTURECOLOR_GRAY = 11
+}
+
 export enum ShaderName {
   POSITION_TEXTURECOLOR = "ShaderPositionTextureColor",
   SPRITE_POSITION_TEXTURECOLOR = "ShaderSpritePositionTextureColor",
@@ -393,6 +408,7 @@ export enum UniformName {
 export enum AttributeName {
   COLOR = "a_color",
   POSITION = "a_position",
+  VERTEX = "aVertex",
   TEX_COORD = "a_texCoord",
   TEX_INDEX = "a_texIndex",
   MVMAT = "a_mvMatrix"

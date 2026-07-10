@@ -1283,12 +1283,12 @@ export class Widget extends ProtectedNode {
     arrayRemoveObject(this._nodes, node);
   }
   _getNormalGLProgram() {
-    return ServiceLocator.shaderCache.programForKey(
+    return ServiceLocator.shaderCache.getProgram(
       ShaderName.SPRITE_POSITION_TEXTURECOLOR
     );
   }
   _getGrayGLProgram() {
-    return ServiceLocator.shaderCache.programForKey(
+    return ServiceLocator.shaderCache.getProgram(
       ShaderName.SPRITE_POSITION_TEXTURECOLOR_GRAY
     );
   }

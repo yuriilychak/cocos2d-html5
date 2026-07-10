@@ -183,7 +183,7 @@ var rendererWebGL = {
       return null;
     }
     if (!_multiProgramState) {
-      var program = ServiceLocator.shaderCache.programForKey(
+      var program = ServiceLocator.shaderCache.getProgram(
         ShaderName.SPRITE_POSITION_TEXTURECOLOR_MULTI
       );
       _multiProgramState = GLProgramState.getOrCreateWithGLProgram(program);

@@ -121,6 +121,7 @@ export {
   GLVersion,
   RenderType,
   ShaderName,
+  ShaderType,
   TextAlignment,
   Uniform,
   UniformName,

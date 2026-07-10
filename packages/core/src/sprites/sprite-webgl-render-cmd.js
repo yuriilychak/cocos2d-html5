@@ -57,7 +57,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
     this._indices = null;
     this._polyUVDirty = true;
 
-    this._shaderProgram = ServiceLocator.shaderCache.programForKey(
+    this._shaderProgram = ServiceLocator.shaderCache.getProgram(
       ServiceLocator.sys.rendererConfig.isWebGL2
         ? ShaderName.SPRITE_POSITION_TEXTURECOLOR_MULTI
         : ShaderName.SPRITE_POSITION_TEXTURECOLOR

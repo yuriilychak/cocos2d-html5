@@ -583,7 +583,7 @@ export class TMXLayer extends SpriteBatchNode {
         if (alphaFuncVal) alphaFuncValue = parseFloat(alphaFuncVal);
 
         if (ServiceLocator.sys.rendererConfig.isWebGL) {
-          this.shaderProgram = ServiceLocator.shaderCache.programForKey(
+          this.shaderProgram = ServiceLocator.shaderCache.getProgram(
             ShaderName.SPRITE_POSITION_TEXTURECOLORALPHATEST
           );
           this.shaderProgram.use();
