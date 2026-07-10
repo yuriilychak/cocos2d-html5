@@ -26,8 +26,6 @@ import {
   Node,
   Rect,
   Matrix4,
-  glBindTexture2D,
-  glBlendFuncForParticle,
   V3F_C4B_T2F_Quad,
   contentScaleFactor,
   degreesToRadians,
@@ -212,8 +210,11 @@ export class ParticleSystemWebGLRenderCmd extends Node.WebGLRenderCmd {
 
     this._glProgramState.apply(this._matrix);
 
-    glBindTexture2D(node._texture);
-    glBlendFuncForParticle(node._blendFunc.src, node._blendFunc.dst);
+    ServiceLocator.glStateCache.bindTexture2D(node._texture);
+    ServiceLocator.glStateCache.blendFuncForParticle(
+      node._blendFunc.src,
+      node._blendFunc.dst
+    );
 
     gl.enableVertexAttribArray(VertexAttribute.POSITION);
     gl.enableVertexAttribArray(VertexAttribute.COLOR);

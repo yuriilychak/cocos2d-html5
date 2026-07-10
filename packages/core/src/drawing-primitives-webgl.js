@@ -28,7 +28,7 @@ import { BaseClass } from "./platform/class";
 import { Point, cardinalSplineAt, getControlPointAt } from "./geometry";
 
 import { incrementGLDraws, contentScaleFactor } from "./platform/macro/utils";
-import { GLProgramState } from "./shaders/CCGLProgramState";
+import { GLProgramState } from "./shaders/program-state";
 import { ServiceLocator } from "./service-locator";
 import { ShaderName, VertexAttribute } from "./enums";
 import { BYTE } from "./constants";
@@ -65,8 +65,8 @@ export class DrawingPrimitiveWebGL extends BaseClass {
       _t._shader = ServiceLocator.shaderCache.get(
         ShaderName.POSITION_UCOLOR
       );
-      _t._shader._addUniformLocation(this._colorLocation);
-      _t._shader._addUniformLocation(this._pointSizeLocation);
+      _t._shader.addUniformLocation(this._colorLocation);
+      _t._shader.addUniformLocation(this._pointSizeLocation);
       _t._glProgramState = GLProgramState.getOrCreateWithGLProgram(_t._shader);
 
       _t._initialized = true;

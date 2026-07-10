@@ -1,5 +1,5 @@
 import { Texture } from "@esotericsoftware/spine-core";
-import { glBindTexture2D, ServiceLocator } from "@aspect/core";
+import { ServiceLocator } from "@aspect/core";
 
 export class SkeletonTexture extends Texture {
   name = "SkeletonTexture";
@@ -39,7 +39,7 @@ export class SkeletonTexture extends Texture {
 
   bind() {
     if (ServiceLocator.sys.rendererConfig.isWebGL) {
-      glBindTexture2D(this._texture);
+      ServiceLocator.glStateCache.bindTexture2D(this._texture);
     }
   }
 }

@@ -34,8 +34,6 @@ import {
   log,
   Texture2D,
   GLProgramState,
-  glBindTexture2D,
-  setProjectionMatrixDirty,
   Matrix4,
   KMGLMatrix,
   PIXEL_FORMAT_RGBA8888,
@@ -261,7 +259,7 @@ export class GridBase extends BaseClass {
     //ServiceLocator.eglView.rendererDelegate.projection = this._directorProjection;
     ServiceLocator.eglView.setViewport();
 
-    glBindTexture2D(this._texture);
+    ServiceLocator.glStateCache.bindTexture2D(this._texture);
     this.beforeBlit();
     this.blit(target);
     this.afterBlit();
@@ -303,6 +301,6 @@ export class GridBase extends BaseClass {
 
     ServiceLocator.kmglMatrix.matrixMode(KMGLMatrix.KM_GL_MODELVIEW);
     ServiceLocator.kmglMatrix.loadIdentity();
-    setProjectionMatrixDirty();
+    ServiceLocator.glStateCache.setProjectionMatrixDirty();
   }
 }

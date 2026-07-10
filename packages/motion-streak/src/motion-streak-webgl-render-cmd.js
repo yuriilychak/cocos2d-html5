@@ -1,7 +1,5 @@
 import {
   Node,
-  glBlendFunc,
-  glBindTexture2D,
   Matrix4,
   ServiceLocator,
   ShaderName,
@@ -35,8 +33,11 @@ export class MotionStreakWebGLRenderCmd extends Node.WebGLRenderCmd {
       this._matrix.mat[13] = wt.ty;
 
       this._glProgramState.apply(this._matrix);
-      glBlendFunc(node._blendFunc.src, node._blendFunc.dst);
-      glBindTexture2D(node.texture);
+      ServiceLocator.glStateCache.blendFunc(
+        node._blendFunc.src,
+        node._blendFunc.dst
+      );
+      ServiceLocator.glStateCache.bindTexture2D(node.texture);
 
       ctx.enableVertexAttribArray(VertexAttribute.POSITION);
       ctx.enableVertexAttribArray(VertexAttribute.COLOR);

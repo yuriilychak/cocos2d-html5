@@ -1,7 +1,5 @@
 import {
   Node,
-  glBlendFunc,
-  glBindTexture2D,
   incrementGLDraws,
   V3F_C4B_T2F,
   FLT_MAX,
@@ -61,11 +59,11 @@ export class ProgressTimerWebGLRenderCmd extends Node.WebGLRenderCmd {
     if (this._vertexDataCount === 0 || !node._sprite) return;
 
     this._glProgramState.apply();
-    this._shaderProgram._updateProjectionUniform();
+    this._shaderProgram.updateProjectionUniform();
 
     const blendFunc = node._sprite._blendFunc;
-    glBlendFunc(blendFunc.src, blendFunc.dst);
-    glBindTexture2D(node._sprite.texture);
+    ServiceLocator.glStateCache.blendFunc(blendFunc.src, blendFunc.dst);
+    ServiceLocator.glStateCache.bindTexture2D(node._sprite.texture);
     context.bindBuffer(context.ARRAY_BUFFER, this._vertexWebGLBuffer);
 
     context.enableVertexAttribArray(VertexAttribute.POSITION);

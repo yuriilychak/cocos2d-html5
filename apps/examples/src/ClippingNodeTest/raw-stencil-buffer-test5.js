@@ -48,10 +48,10 @@ export class RawStencilBufferTest5 extends RawStencilBufferTest {
       ShaderName.POSITION_TEXTURECOLORALPHATEST
     );
     var alphaValueLocation = gl.getUniformLocation(
-      program.getProgram(),
+      program.program,
       UniformName.ALPHA_TEST_VALUE
     );
-    glUseProgram(program.getProgram());
+    glUseProgram(program.program);
     program.setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
     this._sprite.shaderProgram = program;
   }

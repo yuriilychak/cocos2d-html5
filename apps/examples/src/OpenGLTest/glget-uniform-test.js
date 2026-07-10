@@ -53,7 +53,7 @@ export class GLGetUniformTest extends OpenGLTestLayer {
     var shader = ServiceLocator.shaderCache.get(
       "ShaderPositionTextureColor"
     );
-    var program = shader.getProgram();
+    var program = shader.program;
     shader.use();
 
     var loc = ServiceLocator.sys.isNative

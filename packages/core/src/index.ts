@@ -216,12 +216,7 @@ export {
 // Export TextureCache class
 export { default as TextureCache } from "./textures/texture-cache";
 export { GLProgramState, ShaderCache } from "./shaders";
-export { GLStateCache } from "./shaders/CCGLStateCache";
-export {
-  glBlendFunc,
-  glBindTexture2D,
-  setProjectionMatrixDirty
-} from "./shaders/CCGLStateCache";
+export { GLStateCache } from "./shaders/gl-state-cache";
 export { Matrix4, KMGLMatrix } from "./kazmath";
 export const KM_GL_MODELVIEW = KMGLMatrix.KM_GL_MODELVIEW;
 export const KM_GL_PROJECTION = KMGLMatrix.KM_GL_PROJECTION;
@@ -269,7 +264,6 @@ export { WebGLRenderCmd as NodeWebGLRenderCmd } from "./base-nodes/node-webgl-re
 export { CanvasContextWrapper } from "./renderer/renderer-canvas";
 export { Sprite } from "./sprites/sprite";
 export { Configuration } from "./sys/configuration";
-export { glUseProgram } from "./shaders/CCGLStateCache";
 export { setProgramForNode } from "./shaders/utils";
 export { KEY } from "./enums";
 export { LabelTTF } from "./labelttf/label-ttf";
@@ -289,7 +283,6 @@ export {
 export { default as SpriteFrameCache } from "./sprites/sprite-frame-cache";
 export { LayerGradient } from "./layers/layer-gradient";
 export { TextureAtlas } from "./textures/texture-atlas";
-export { glBlendFuncForParticle } from "./shaders/CCGLStateCache";
 export { GLProgram } from "./shaders";
 export { default as AnimationCache } from "./sprites/animation-cache";
 export { Scheduler } from "./scheduler";

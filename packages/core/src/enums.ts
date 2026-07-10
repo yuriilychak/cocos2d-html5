@@ -532,6 +532,7 @@ export enum TouchEvent {
 }
 
 export enum UniformValueType {
+  NONE = -1,
   GL_FLOAT = 0,
   GL_INT = 1,
   GL_FLOAT_VEC2 = 2,

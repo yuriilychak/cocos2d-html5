@@ -1,7 +1,6 @@
 import {
   Node,
   CustomRenderCmd,
-  glUseProgram,
   setProgramForNode,
   log,
   ServiceLocator,
@@ -143,7 +142,7 @@ export class ClippingNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
       const program = ServiceLocator.shaderCache.get(
         ShaderName.POSITION_TEXTURECOLORALPHATEST
       );
-      glUseProgram(program.getProgram());
+      ServiceLocator.glStateCache.useProgram(program.program);
       program.setUniformLocationWith1f(
         UniformName.ALPHA_TEST_VALUE,
         node.alphaThreshold

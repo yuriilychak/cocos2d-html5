@@ -29,7 +29,7 @@ import TextureCache from "./textures/texture-cache";
 import SpriteFrameCache from "./sprites/sprite-frame-cache";
 import AnimationCache from "./sprites/animation-cache";
 import ShaderCache from "./shaders/shader-cache";
-import { GLStateCache } from "./shaders/CCGLStateCache";
+import { GLStateCache } from "./shaders/gl-state-cache";
 import { KMGLMatrix } from "./kazmath/km-gl-matrix";
 import { Profiler } from "./utils/profiler";
 import { InputManager } from "./platform/input-manager";
@@ -111,8 +111,8 @@ export class ServiceLocator {
     ServiceLocator.#spriteFrameCache = new SpriteFrameCache();
     ServiceLocator.#animationCache = new AnimationCache();
     ServiceLocator.#shaderCache = new ShaderCache(ServiceLocator.#sys);
-    ServiceLocator.#glStateCache = new GLStateCache();
     ServiceLocator.#kmglMatrix = new KMGLMatrix();
+    ServiceLocator.#glStateCache = new GLStateCache(ServiceLocator.#sys, ServiceLocator.#kmglMatrix);
     ServiceLocator.#profiler = new Profiler();
     ServiceLocator.#inputManager = new InputManager();
 
@@ -161,11 +161,6 @@ export class ServiceLocator {
     ServiceLocator.#animationCache.injectServices({
       loader: ServiceLocator.#loader,
       spriteFrameCache: ServiceLocator.#spriteFrameCache
-    });
-
-    ServiceLocator.#glStateCache.injectServices({
-      kmglMatrix: ServiceLocator.#kmglMatrix,
-      rendererConfig: renderingConfig
     });
 
     ServiceLocator.#kmglMatrix.injectServices({

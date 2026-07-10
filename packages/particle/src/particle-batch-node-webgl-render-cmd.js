@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Node, Matrix4, glBlendFuncForParticle, ServiceLocator, ShaderName } from "@aspect/core";
+import { Node, Matrix4, ServiceLocator, ShaderName } from "@aspect/core";
 
 export class ParticleBatchNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
   constructor(renderable) {
@@ -45,7 +45,10 @@ export class ParticleBatchNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
     this._matrix.mat[13] = wt.ty;
 
     this._glProgramState.apply(this._matrix);
-    glBlendFuncForParticle(_t._blendFunc.src, _t._blendFunc.dst);
+    ServiceLocator.glStateCache.blendFuncForParticle(
+      _t._blendFunc.src,
+      _t._blendFunc.dst
+    );
     _t.textureAtlas.drawQuads();
   }
 

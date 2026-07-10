@@ -46,7 +46,7 @@ export class ShaderNode extends GLNode {
       this.shader.link();
       this.shader.updateUniforms();
 
-      var program = this.shader.getProgram();
+      var program = this.shader.program;
       this.uniformCenter = gl.getUniformLocation(program, "center");
       this.uniformResolution = gl.getUniformLocation(program, "resolution");
       this.initBuffers();

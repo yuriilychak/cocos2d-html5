@@ -73,7 +73,7 @@ export class GLGetActiveTest extends OpenGLTestLayer {
 
   getCurrentResult() {
     var ret = [];
-    var p = this.sprite.shaderProgram.getProgram();
+    var p = this.sprite.shaderProgram.program;
     ret.push(gl.getActiveAttrib(p, 0));
     ret.push(gl.getActiveUniform(p, 0));
     return JSON.stringify(ret);

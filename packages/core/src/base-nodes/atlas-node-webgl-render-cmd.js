@@ -54,7 +54,7 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
     );
     this._uniformColor =
       ServiceLocator.sys.rendererConfig.renderContext.getUniformLocation(
-        this._shaderProgram.getProgram(),
+        this._shaderProgram.program,
         "u_color"
       );
   }

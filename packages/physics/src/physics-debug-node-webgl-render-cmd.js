@@ -1,4 +1,4 @@
-import { Node, Matrix4, glBlendFunc } from "@aspect/core";
+import { Node, Matrix4, ServiceLocator } from "@aspect/core";
 import { drawShape, drawConstraint } from "./physics-debug-node";
 
 export class PhysicsDebugNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
@@ -25,7 +25,10 @@ export class PhysicsDebugNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
     this._matrix.mat[5] = wt.d;
     this._matrix.mat[13] = wt.ty;
 
-    glBlendFunc(node._blendFunc.src, node._blendFunc.dst);
+    ServiceLocator.glStateCache.blendFunc(
+      node._blendFunc.src,
+      node._blendFunc.dst
+    );
     this._glProgramState.apply(this._matrix);
     node._render();
 

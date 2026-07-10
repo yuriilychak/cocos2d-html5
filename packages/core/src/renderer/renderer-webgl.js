@@ -25,7 +25,7 @@
 import { Color } from "../platform/types/color";
 import { arrayRemoveObject } from "../platform/macro/utils";
 import { BATCH_VERTEX_COUNT } from "../platform/macro/constants";
-import { GLProgramState } from "../shaders/CCGLProgramState";
+import { GLProgramState } from "../shaders/program-state";
 import Matrix4 from "../kazmath/mat4";
 import { ServiceLocator } from "../service-locator";
 import { OperatingSystem, VertexAttribute, ShaderName } from "../enums";
@@ -543,7 +543,7 @@ var rendererWebGL = {
 
     if (glProgramState) {
       glProgramState.apply();
-      glProgramState.getGLProgram()._updateProjectionUniform();
+      glProgramState.program.updateProjectionUniform();
     }
 
     ServiceLocator.glStateCache.blendFunc(
@@ -563,7 +563,7 @@ var rendererWebGL = {
         ServiceLocator.glStateCache.bindTexture2DN(u, _batchTextures[0]);
       }
       if (glProgramState) {
-        glProgramState.getGLProgram().setTextureUnits(_textureUnits);
+        glProgramState.program.setTextureUnits(_textureUnits);
       }
     } else {
       ServiceLocator.glStateCache.bindTexture2DN(0, _batchTextures[0]);

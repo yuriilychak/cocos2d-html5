@@ -1,19 +1,19 @@
 import type { AttributeName, VertexAttribute } from "../enums";
 import { checkGLErrorDebug } from "../platform/macro/utils";
-import GLProgram from "./CCGLProgram";
+import GLProgram from "./gl-program";
 
 export type AttributeBinding = readonly [AttributeName, VertexAttribute];
-export type ShaderProgram = InstanceType<typeof GLProgram>;
+export type ShaderProgram = GLProgram;
 
 export default class ShaderDefinition {
     readonly #vertexShader: string;
-    #fragmentShader: string;
-    readonly #attributes: readonly AttributeBinding[];
+    readonly #fragmentShader: string;
+    readonly #attributes: AttributeBinding[];
 
     constructor(
         vertexShader: string,
         fragmentShader: string,
-        attributes: readonly AttributeBinding[]
+        attributes: AttributeBinding[]
     ) {
         this.#vertexShader = vertexShader;
         this.#fragmentShader = fragmentShader;
@@ -21,7 +21,7 @@ export default class ShaderDefinition {
     }
 
     createProgram(): ShaderProgram {
-        const program = new (GLProgram as unknown as { new (): ShaderProgram })();
+        const program = new GLProgram();
         program.initWithVertexShaderByteArray(
             this.#vertexShader,
             this.#fragmentShader
