@@ -143,7 +143,7 @@ export class ArmatureWebGLRenderCmd extends Node.WebGLRenderCmd {
   }
 
   initShaderCache() {
-    this._shaderProgram = ServiceLocator.shaderCache.getProgram(
+    this._shaderProgram = ServiceLocator.shaderCache.get(
       ShaderName.SPRITE_POSITION_TEXTURECOLOR
     );
   }

@@ -14,7 +14,7 @@ export class MotionStreakWebGLRenderCmd extends Node.WebGLRenderCmd {
     this._needDraw = true;
     this._matrix = new Matrix4();
     this._matrix.identity();
-    this._shaderProgram = ServiceLocator.shaderCache.getProgram(
+    this._shaderProgram = ServiceLocator.shaderCache.get(
       ShaderName.POSITION_TEXTURECOLOR
     );
   }

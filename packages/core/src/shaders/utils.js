@@ -9,7 +9,7 @@
  * @param {Node} node
  * @param {GLProgram} program The shader program which fetches from ShaderCache.
  * @example
- * setGLProgram(node, shaderCache.getProgram(SHADER_POSITION_TEXTURECOLOR));
+ * setGLProgram(node, shaderCache.get(SHADER_POSITION_TEXTURECOLOR));
  */
 export function setProgramForNode(node, program) {
   node.shaderProgram = program;

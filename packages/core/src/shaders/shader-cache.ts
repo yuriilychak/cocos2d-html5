@@ -26,11 +26,12 @@
 
 import { buildSpriteMultiTextureFrag } from './shaders';
 import { ShaderName } from "../enums";
-import type { Sys } from "../sys";
 import {
     defaultShaderLoadList,
     createDefaultShaderDefinitions
 } from "./constants";
+
+import type { Sys } from "../sys";
 import { type ShaderProgram } from "./shader-definition";
 import type ShaderDefinition from "./shader-definition";
 
@@ -45,7 +46,7 @@ export default class ShaderCache {
 
     #programs = new Map<string, ShaderProgram>();
 
-    #shaderDefinitions: Map<ShaderName, ShaderDefinition> = new Map();
+    #definitions: Map<ShaderName, ShaderDefinition> = new Map();
 
     #sys: Sys;
 
@@ -54,16 +55,16 @@ export default class ShaderCache {
     }
 
     #ensureShaderDefinitions(): void {
-        if (this.#shaderDefinitions.size > 0) {
+        if (this.#definitions.size > 0) {
             return;
         }
 
-        this.#shaderDefinitions = createDefaultShaderDefinitions(
+        this.#definitions = createDefaultShaderDefinitions(
             buildSpriteMultiTextureFrag(this.#sys.rendererConfig.maxBatchTextures)
         );
     }
 
-    loadDefaultShaders(): boolean {
+    refresh(): boolean {
         if (this.#programs.size > 0) {
             this.#programs.clear();
         }
@@ -74,7 +75,7 @@ export default class ShaderCache {
             if (defaultShader.isWebGL2Only && !this.#sys.rendererConfig.isWebGL2) {
                 continue;
             }
-            this.getProgram(defaultShader.shaderName);
+            this.get(defaultShader.shaderName);
         }
         return true;
     }
@@ -82,26 +83,26 @@ export default class ShaderCache {
     /**
      * returns a GL program for a given key
      */
-    getProgram(key: string): ShaderProgram {
+    get(key: string): ShaderProgram {
         this.#ensureShaderDefinitions();
 
         if (this.#programs.has(key)) {
             return this.#programs.get(key)!;
         }
 
-        if (!this.#shaderDefinitions.has(key as ShaderName)) {
+        if (!this.#definitions.has(key as ShaderName)) {
             throw new Error("cocos2d: shaderCache._loadDefaultShader, error shader type");
         }
-        const shaderDefinition = this.#shaderDefinitions.get(key as ShaderName)!;
-        const program = shaderDefinition.createProgram();
+        const definition = this.#definitions.get(key as ShaderName)!;
+        const program = definition.createProgram();
         this.#programs.set(key, program);
         return program;
     }
 
     /**
-     * adds a GLProgram to the cache for a given name
+     * sets a GLProgram in the cache for a given key
      */
-    addProgram(program: ShaderProgram, key: string): void {
+    set(key: string, program: ShaderProgram): void {
         this.#programs.set(key, program);
     }
 }

@@ -50,7 +50,7 @@ export class ParticleBatchNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
   }
 
   _initWithTexture() {
-    this._shaderProgram = ServiceLocator.shaderCache.getProgram(
+    this._shaderProgram = ServiceLocator.shaderCache.get(
       ShaderName.POSITION_TEXTURECOLOR
     );
   }

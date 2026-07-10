@@ -18,7 +18,7 @@ export class Scale9SpriteWebGLRenderCmd extends Node.WebGLRenderCmd {
     this._needDraw = true;
     this._color = new Uint32Array(1);
     this._dirty = false;
-    this._shaderProgram = ServiceLocator.shaderCache.getProgram(
+    this._shaderProgram = ServiceLocator.shaderCache.get(
       normalSpriteProgramKey()
     );
   }
@@ -154,11 +154,11 @@ export class Scale9SpriteWebGLRenderCmd extends Node.WebGLRenderCmd {
 
   setState(state) {
     if (state === Scale9Sprite.state.NORMAL) {
-      this._shaderProgram = ServiceLocator.shaderCache.getProgram(
+      this._shaderProgram = ServiceLocator.shaderCache.get(
         normalSpriteProgramKey()
       );
     } else if (state === Scale9Sprite.state.GRAY) {
-      this._shaderProgram = ServiceLocator.shaderCache.getProgram(
+      this._shaderProgram = ServiceLocator.shaderCache.get(
         ShaderName.SPRITE_POSITION_TEXTURECOLOR_GRAY
       );
     }

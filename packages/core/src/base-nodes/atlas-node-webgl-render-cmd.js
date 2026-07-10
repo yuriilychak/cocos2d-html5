@@ -49,7 +49,7 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
     this._matrix.identity();
 
     //shader stuff
-    this._shaderProgram = ServiceLocator.shaderCache.getProgram(
+    this._shaderProgram = ServiceLocator.shaderCache.get(
       ShaderName.POSITION_TEXTURE_UCOLOR
     );
     this._uniformColor =

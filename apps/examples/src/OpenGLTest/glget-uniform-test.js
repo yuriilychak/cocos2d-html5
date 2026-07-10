@@ -50,7 +50,7 @@ export class GLGetUniformTest extends OpenGLTestLayer {
     return "tests texParameter()\n See the Console";
   }
   runTest() {
-    var shader = ServiceLocator.shaderCache.getProgram(
+    var shader = ServiceLocator.shaderCache.get(
       "ShaderPositionTextureColor"
     );
     var program = shader.getProgram();

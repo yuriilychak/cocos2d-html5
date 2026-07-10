@@ -20,7 +20,7 @@ export class TMXLayerWebGLRenderCmd extends Node.WebGLRenderCmd {
       { x: 0, y: 0 }
     ];
     this._color = new Uint32Array(1);
-    this._shaderProgram = ServiceLocator.shaderCache.getProgram(
+    this._shaderProgram = ServiceLocator.shaderCache.get(
       ShaderName.SPRITE_POSITION_TEXTURECOLORALPHATEST
     );
 

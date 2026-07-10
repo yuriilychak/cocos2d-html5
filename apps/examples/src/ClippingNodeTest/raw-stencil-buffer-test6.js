@@ -61,7 +61,7 @@ export class RawStencilBufferTest6 extends RawStencilBufferTest {
     gl.disable(gl.DEPTH_TEST);
     gl.depthMask(false);
 
-    var program = ServiceLocator.shaderCache.getProgram(
+    var program = ServiceLocator.shaderCache.get(
       ShaderName.POSITION_TEXTURECOLORALPHATEST
     );
     var alphaValueLocation = gl.getUniformLocation(

@@ -421,7 +421,7 @@ export class ParticleSystemWebGLRenderCmd extends Node.WebGLRenderCmd {
     this.initIndices(totalParticles);
     this._setupVBO();
 
-    this._shaderProgram = ServiceLocator.shaderCache.getProgram(
+    this._shaderProgram = ServiceLocator.shaderCache.get(
       ShaderName.POSITION_TEXTURECOLOR
     );
   }

@@ -2198,7 +2198,7 @@ export class Node extends BaseClass {
    * @function
    * @param {GLProgram} newShaderProgram The shader program which fetches from ShaderCache.
    * @example
-   * node.setGLProgram(shaderCache.getProgram(SHADER_POSITION_TEXTURECOLOR));
+   * node.setGLProgram(shaderCache.get(SHADER_POSITION_TEXTURECOLOR));
    */
   setShaderProgram(newShaderProgram) {
     this._renderCmd.setShaderProgram(newShaderProgram);

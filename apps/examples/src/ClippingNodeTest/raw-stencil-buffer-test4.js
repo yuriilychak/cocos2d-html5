@@ -43,7 +43,7 @@ export class RawStencilBufferTest4 extends RawStencilBufferTest {
     super.setupStencilForClippingOnPlane(plane);
     gl.depthMask(false);
 
-    var program = ServiceLocator.shaderCache.getProgram(
+    var program = ServiceLocator.shaderCache.get(
       ShaderName.POSITION_TEXTURECOLORALPHATEST
     );
     var alphaValueLocation = gl.getUniformLocation(

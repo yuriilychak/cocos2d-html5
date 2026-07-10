@@ -47,7 +47,7 @@ export class TexImage2DTest extends OpenGLTestLayer {
       glnode.anchorX = 0.5;
       glnode.anchorY = 0.5;
 
-      this.shader = ServiceLocator.shaderCache.getProgram(
+      this.shader = ServiceLocator.shaderCache.get(
         "ShaderPositionTexture"
       );
       this.initGL();

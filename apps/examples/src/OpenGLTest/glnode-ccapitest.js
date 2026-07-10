@@ -41,7 +41,7 @@ export class GLNodeCCAPITest extends OpenGLTestLayer {
       this.addChild(glnode, 10);
       this.glnode = glnode;
 
-      this.shader = ServiceLocator.shaderCache.getProgram(
+      this.shader = ServiceLocator.shaderCache.get(
         "ShaderPositionColor"
       );
       this.initBuffers();
