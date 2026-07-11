@@ -63,6 +63,10 @@ export default class Point implements PointLike {
     return new Point(this);
   }
 
+  toString(): string {
+    return `x = ${this.#data[0]} y = ${this.#data[1]}`;
+  }
+
   set(point: PointLike): void;
   set(x: number, y: number): void;
   set(xOrPoint: number | PointLike, y = 0): void {

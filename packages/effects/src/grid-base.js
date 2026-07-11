@@ -35,8 +35,8 @@ import {
   Texture2D,
   GLProgramState,
   Matrix4,
-  KMGLMatrix,
-  PIXEL_FORMAT_RGBA8888,
+  KMGLMatrixMode,
+  PIXEL_FORMAT,
   ServiceLocator,
   ShaderName
 } from "@aspect/core";
@@ -55,7 +55,9 @@ export class GridBase extends BaseClass {
    * @param {Rect} rect
    */
   constructor(gridSize, texture, flipped, rect) {
-    ServiceLocator.sys._checkWebGLRenderMode();
+    if (!ServiceLocator.sys.rendererConfig.isWebGL) {
+      throw new Error("GridBase requires WebGL render mode.");
+    }
     super();
     this._active = false;
     this._reuseGrid = 0;
@@ -204,7 +206,7 @@ export class GridBase extends BaseClass {
       // we only use rgba8888
       texture.initWithData(
         data,
-        PIXEL_FORMAT_RGBA8888,
+        PIXEL_FORMAT.RGBA8888,
         POTWide,
         POTHigh,
         winSize
@@ -223,8 +225,7 @@ export class GridBase extends BaseClass {
     this._texture = texture;
     this._isTextureFlipped = flipped;
     if (rect === undefined || Rect.equalToZero(rect)) {
-      const size = this._texture.getContentSize();
-      rect = new Rect(0, 0, size.width, size.height);
+      rect = this._texture.rect;
     }
 
     this._gridRect = rect;
@@ -286,7 +287,7 @@ export class GridBase extends BaseClass {
 
     const gl = ServiceLocator.sys.rendererConfig.renderContext;
     gl.viewport(0, 0, winSize.width, winSize.height);
-    ServiceLocator.kmglMatrix.matrixMode(KMGLMatrix.KM_GL_PROJECTION);
+    ServiceLocator.kmglMatrix.matrixMode(KMGLMatrixMode.PROJECTION);
     ServiceLocator.kmglMatrix.loadIdentity();
 
     const orthoMatrix = Matrix4.createOrthographicProjection(
@@ -299,7 +300,7 @@ export class GridBase extends BaseClass {
     );
     ServiceLocator.kmglMatrix.multMatrix(orthoMatrix);
 
-    ServiceLocator.kmglMatrix.matrixMode(KMGLMatrix.KM_GL_MODELVIEW);
+    ServiceLocator.kmglMatrix.matrixMode(KMGLMatrixMode.MODELVIEW);
     ServiceLocator.kmglMatrix.loadIdentity();
     ServiceLocator.glStateCache.setProjectionMatrixDirty();
   }

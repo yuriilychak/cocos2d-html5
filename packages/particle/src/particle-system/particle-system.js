@@ -1279,11 +1279,8 @@ export class ParticleSystem extends Node {
   setTexture(texture) {
     if (!texture) return;
 
-    if (texture.isLoaded()) {
-      this.setTextureWithRect(
-        texture,
-        new Rect(0, 0, texture.width, texture.height)
-      );
+    if (texture.loaded) {
+      this.setTextureWithRect(texture, texture.rect);
     } else {
       this._textureLoaded = false;
       texture.addEventListener(
@@ -2201,7 +2198,7 @@ export class ParticleSystem extends Node {
         locBlendFunc.src === GLState.BLEND_SRC &&
         locBlendFunc.dst === GLState.BLEND_DST
       ) {
-        if (locTexture.hasPremultipliedAlpha()) {
+        if (locTexture.renderer.hasPremultipliedAlpha) {
           this.#opacityModifyRGB = true;
         } else {
           locBlendFunc.src = GLState.SRC_ALPHA;
@@ -2304,11 +2301,7 @@ export class ParticleSystem extends Node {
         // texture
         var texture = this.texture;
         if (texture) {
-          var size = texture.getContentSize();
-          retParticle.setTextureWithRect(
-            texture,
-            new Rect(0, 0, size.width, size.height)
-          );
+          retParticle.setTextureWithRect(texture, texture.rect);
         }
       }
     }

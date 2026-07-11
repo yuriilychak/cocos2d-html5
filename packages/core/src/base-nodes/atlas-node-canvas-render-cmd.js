@@ -74,22 +74,22 @@ export class AtlasNodeCanvasRenderCmd extends NodeCanvasRenderCmd {
     const node = this._node;
     const texture = node._texture,
       color = this._colorUnmodified,
-      element = texture.getHtmlElementObj();
+      element = texture.htmlElement;
     const textureRect = new Rect(0, 0, element.width, element.height);
     if (texture === this._textureToRender)
-      this._textureToRender = texture._generateColorTexture(
+      this._textureToRender = texture.renderer.generateColorTexture(
         color.r,
         color.g,
         color.b,
         textureRect
       );
     else
-      texture._generateColorTexture(
+      texture.renderer.generateColorTexture(
         color.r,
         color.g,
         color.b,
         textureRect,
-        this._textureToRender.getHtmlElementObj()
+        this._textureToRender.htmlElement
       );
   }
 
@@ -99,10 +99,9 @@ export class AtlasNodeCanvasRenderCmd extends NodeCanvasRenderCmd {
 
   _calculateMaxItems() {
     const node = this._node;
-    const selTexture = node._texture;
-    const size = selTexture.getContentSize();
+    const texture = node._texture;
 
-    node._itemsPerColumn = 0 | (size.height / node._itemHeight);
-    node._itemsPerRow = 0 | (size.width / node._itemWidth);
+    node._itemsPerColumn = 0 | (texture.height / node._itemHeight);
+    node._itemsPerRow = 0 | (texture.width / node._itemWidth);
   }
 }

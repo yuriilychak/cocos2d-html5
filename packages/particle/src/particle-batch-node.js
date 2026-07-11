@@ -416,7 +416,7 @@ export class ParticleBatchNode extends Node {
     var locBlendFunc = this._blendFunc;
     if (
       texture &&
-      !texture.hasPremultipliedAlpha() &&
+      !texture.renderer.hasPremultipliedAlpha &&
       locBlendFunc.src === GLState.BLEND_SRC &&
       locBlendFunc.dst === GLState.BLEND_DST
     ) {
@@ -560,7 +560,7 @@ export class ParticleBatchNode extends Node {
   }
 
   _updateBlendFunc() {
-    if (!this.textureAtlas.texture.hasPremultipliedAlpha()) {
+    if (!this.textureAtlas.texture.renderer.hasPremultipliedAlpha) {
       this._blendFunc.src = GLState.SRC_ALPHA;
       this._blendFunc.dst = GLState.ONE_MINUS_SRC_ALPHA;
     }

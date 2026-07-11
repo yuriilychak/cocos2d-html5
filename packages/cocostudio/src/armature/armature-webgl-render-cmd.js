@@ -101,7 +101,7 @@ export class ArmatureWebGLRenderCmd extends Node.WebGLRenderCmd {
                   node._blendFunc.src === alphaPremultiplied.src &&
                   node._blendFunc.dst === alphaPremultiplied.dst &&
                   tex &&
-                  !tex.hasPremultipliedAlpha()
+                  !tex.renderer.hasPremultipliedAlpha
                 ) {
                   selNode.setBlendFunc(alphaNonPremultipled);
                 } else {

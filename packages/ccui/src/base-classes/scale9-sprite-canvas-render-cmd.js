@@ -48,11 +48,11 @@ export class Scale9SpriteCanvasRenderCmd extends Node.CanvasRenderCmd {
     ) {
       this._textureToRender = this._originalTexture = locTexture;
       if (Scale9Sprite.state.GRAY === this._state) {
-        this._textureToRender = this._textureToRender._generateGrayTexture();
+        this._textureToRender = this._textureToRender.renderer.generateGrayTexture();
       }
       var color = node.getDisplayedColor();
       if (locTexture && (color.r !== 255 || color.g !== 255 || color.b !== 255))
-        this._textureToRender = this._textureToRender._generateColorTexture(
+        this._textureToRender = this._textureToRender.renderer.generateColorTexture(
           color.r,
           color.g,
           color.b
@@ -73,9 +73,9 @@ export class Scale9SpriteCanvasRenderCmd extends Node.CanvasRenderCmd {
       }
       var sx, sy, sw, sh;
       var x, y, w, h;
-      var textureWidth = this._textureToRender._pixelsWide;
-      var textureHeight = this._textureToRender._pixelsHigh;
-      var image = this._textureToRender._htmlElementObj;
+      var textureWidth = this._textureToRender.pixelsWidth;
+      var textureHeight = this._textureToRender.pixelsHeight;
+      var image = this._textureToRender.htmlElement;
       var vertices = node._vertices;
       var uvs = node._uvs;
       var i = 0,
@@ -116,9 +116,9 @@ export class Scale9SpriteCanvasRenderCmd extends Node.CanvasRenderCmd {
           sw = (uvs[off + 6] - uvs[off]) * textureWidth;
           sh = (uvs[off + 1] - uvs[off + 7]) * textureHeight;
 
-          if (this._textureToRender._pattern !== "") {
+          if (this._textureToRender.pattern !== "") {
             wrapper.setFillStyle(
-              context.createPattern(image, this._textureToRender._pattern)
+              context.createPattern(image, this._textureToRender.pattern)
             );
             context.fillRect(x, y, w, h);
           } else {

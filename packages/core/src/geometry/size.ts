@@ -62,6 +62,10 @@ export default class Size implements SizeLike {
     return new Size(this);
   }
 
+  toString(): string {
+    return `width = ${this.#data[0]} height = ${this.#data[1]}`;
+  }
+
   set(size: SizeLike): void;
   set(width: number, height: number): void;
   set(widthOrSize: number | SizeLike, height = 0): void {

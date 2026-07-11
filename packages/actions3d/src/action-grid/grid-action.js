@@ -16,7 +16,9 @@ export default class GridAction extends ActionInterval {
    * @param {Size} gridSize
    */
   constructor(duration, gridSize) {
-    ServiceLocator.sys._checkWebGLRenderMode();
+    if (!ServiceLocator.sys.rendererConfig.isWebGL) {
+      throw new Error("GridAction requires WebGL render mode.");
+    }
     super();
     this._gridSize = new Size();
 

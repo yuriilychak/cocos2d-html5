@@ -116,8 +116,8 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
         return false;
       }
       if (
-        child.texture._webTextureObj !==
-        node.textureAtlas.texture._webTextureObj
+        child.texture.renderer.webTexture !==
+        node.textureAtlas.texture.renderer.webTexture
       )
         log(_LogInfos.Sprite_addChild_2);
 
@@ -136,7 +136,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
     const node = this._node;
     return (
       Rect.equalTo(frame.getRect(), node._rect) &&
-      frame.getTexture().name === node._texture.name &&
+      frame.getTexture().renderer.webTexture === node._texture.renderer.webTexture &&
       Point.equalTo(frame.getOffset(), node._unflippedOffsetPositionFromCenter)
     );
   }
@@ -259,7 +259,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
     // it's possible to have an untextured sprite
     const node = this._node,
       blendFunc = node._blendFunc;
-    if (!node._texture || !node._texture.hasPremultipliedAlpha()) {
+    if (!node._texture || !node._texture.renderer.hasPremultipliedAlpha) {
       if (
         blendFunc.src === GLState.ONE &&
         blendFunc.dst === GLState.BLEND_DST
@@ -281,7 +281,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
   _setTexture(texture) {
     const node = this._node;
     if (node._texture !== texture) {
-      node._textureLoaded = texture ? texture._textureLoaded : false;
+      node._textureLoaded = texture ? texture.loaded : false;
       node._texture = texture;
       this._updateBlendFunc();
 
@@ -293,11 +293,9 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
 
   _checkTextureBoundary(texture, rect, rotated) {
     if (texture && texture.url) {
-      var texW = texture.getPixelsWide(),
-        texH = texture.getPixelsHigh();
-      var htmlElement = texture.getHtmlElementObj
-        ? texture.getHtmlElementObj()
-        : null;
+      var texW = texture.pixelsWidth,
+        texH = texture.pixelsHeight;
+      var htmlElement = texture.htmlElement;
       if (htmlElement) {
         texW = Math.max(
           texW,
@@ -388,7 +386,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
     if (
       !(
         locTexture &&
-        locTexture._textureLoaded &&
+        locTexture.loaded &&
         node._rect.width &&
         node._rect.height
       ) ||
@@ -469,8 +467,8 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
     // Convert UVs from pixel-space into normalized texture coords (once
     // per UV change). The polygon's local x/y are kept in sprite-space
     // pixels, and transformed by the world matrix at upload time.
-    const atlasW = tex.pixelsWidth || tex.getPixelsWide();
-    const atlasH = tex.pixelsHeight || tex.getPixelsHigh();
+    const atlasW = tex.pixelsWidth;
+    const atlasH = tex.pixelsHeight;
 
     const wt = this._worldTransform,
       wa = wt.a,

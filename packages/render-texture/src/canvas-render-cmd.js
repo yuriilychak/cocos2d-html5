@@ -67,8 +67,8 @@ export class RenderTextureCanvasRenderCmd extends Node.CanvasRenderCmd {
     locCacheCanvas.height = 0 | (height * locScaleFactor);
 
     const texture = new Texture2D();
-    texture.initWithElement(locCacheCanvas);
-    texture.handleLoadedTexture();
+    texture.htmlElement = locCacheCanvas;
+    texture.renderer.handleLoadedTexture();
 
     const locSprite = (node.sprite = new Sprite(texture));
     locSprite.setBlendFunc(GLState.ONE, GLState.ONE_MINUS_SRC_ALPHA);

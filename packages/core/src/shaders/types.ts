@@ -44,7 +44,9 @@ export type UniformSetter =
   | "setCallback";
 
 export type TextureLike = {
-  _webTextureObj: WebGLTexture;
+  renderer: {
+    webTexture: WebGLTexture | null;
+  };
 };
 export type CachedTexture = TextureLike | null | -1;
 

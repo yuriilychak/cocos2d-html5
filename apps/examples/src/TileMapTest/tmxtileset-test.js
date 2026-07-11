@@ -53,13 +53,13 @@ export class TMXTilesetTest extends TileDemo {
     if (ServiceLocator.sys.capabilities.opengl) {
       var layer;
       layer = map.getLayer("Layer 0");
-      layer.texture.setAntiAliasTexParameters();
+      layer.texture.renderer.setAntiAliasTexParameters();
 
       layer = map.getLayer("Layer 1");
-      layer.texture.setAntiAliasTexParameters();
+      layer.texture.renderer.setAntiAliasTexParameters();
 
       layer = map.getLayer("Layer 2");
-      layer.texture.setAntiAliasTexParameters();
+      layer.texture.renderer.setAntiAliasTexParameters();
     }
   }
   title() {

@@ -181,7 +181,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
       } else {
         texture = ServiceLocator.textureCache.addImage(newConf.atlasName);
       }
-      var locIsLoaded = texture.isLoaded();
+      var locIsLoaded = texture.loaded;
       this._textureLoaded = locIsLoaded;
       if (!locIsLoaded) {
         texture.addEventListener(
@@ -199,7 +199,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
     } else {
       texture = new Texture2D();
       var image = new Image();
-      texture.initWithElement(image);
+      texture.htmlElement = image;
       this._textureLoaded = false;
     }
 
@@ -716,7 +716,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
       self._config = newConf;
 
       var texture = ServiceLocator.textureCache.addImage(newConf.atlasName);
-      var locIsLoaded = texture.isLoaded();
+      var locIsLoaded = texture.loaded;
       self._textureLoaded = locIsLoaded;
       if (!locIsLoaded) {
         texture.addEventListener(

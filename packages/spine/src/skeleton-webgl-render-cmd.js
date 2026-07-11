@@ -2,7 +2,7 @@ import {
   Node,
   Point,
   Matrix4,
-  KMGLMatrix,
+  KMGLMatrixMode,
   BATCH_VERTEX_COUNT,
   ServiceLocator,
   GLState,
@@ -193,7 +193,7 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
       mat[1] = wt.b;
       mat[5] = wt.d;
       mat[13] = wt.ty;
-      ServiceLocator.kmglMatrix.matrixMode(KMGLMatrix.KM_GL_MODELVIEW);
+      ServiceLocator.kmglMatrix.matrixMode(KMGLMatrixMode.MODELVIEW);
       const currentStack = ServiceLocator.kmglMatrix.currentStack;
       currentStack.push(this._matrix);
       const drawingUtil = ServiceLocator.game.drawingUtil;

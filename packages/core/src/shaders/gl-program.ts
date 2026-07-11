@@ -30,10 +30,9 @@ import { BaseClass } from "../platform/class";
 import { log } from "../boot/debugger";
 
 import Matrix4 from "../kazmath/mat4";
-import { KMGLMatrix } from "../kazmath/km-gl-matrix";
 import { checkGLErrorDebug } from "../platform/macro/utils";
 import { ServiceLocator } from "../service-locator";
-import { CONFIG_KEY, UniformName } from "../enums";
+import { CONFIG_KEY, KMGLMatrixMode, UniformName } from "../enums";
 import { WebGLContext } from "../sys/types";
 import type {
   ResolvedUniformLocation,
@@ -508,8 +507,8 @@ export default class GLProgram extends BaseClass {
     const matrixMV = new Matrix4();
     const matrixMVP = new Matrix4();
 
-    ServiceLocator.kmglMatrix.getMatrix(KMGLMatrix.KM_GL_PROJECTION, matrixP);
-    ServiceLocator.kmglMatrix.getMatrix(KMGLMatrix.KM_GL_MODELVIEW, matrixMV);
+    ServiceLocator.kmglMatrix.getMatrix(KMGLMatrixMode.PROJECTION, matrixP);
+    ServiceLocator.kmglMatrix.getMatrix(KMGLMatrixMode.MODELVIEW, matrixMV);
 
     Matrix4.multiply(matrixMVP, matrixP, matrixMV);
 
@@ -664,8 +663,8 @@ export default class GLProgram extends BaseClass {
     const matrixP = new Matrix4();
     const matrixMVP = new Matrix4();
 
-    ServiceLocator.kmglMatrix.getMatrix(KMGLMatrix.KM_GL_PROJECTION, matrixP);
-    //ServiceLocator.kmglMatrix.getMatrix(KMGLMatrix.KM_GL_MODELVIEW, node._stackMatrix);
+    ServiceLocator.kmglMatrix.getMatrix(KMGLMatrixMode.PROJECTION, matrixP);
+    //ServiceLocator.kmglMatrix.getMatrix(KMGLMatrixMode.MODELVIEW, node._stackMatrix);
 
     Matrix4.multiply(matrixMVP, matrixP, node._renderCmd._stackMatrix);
 

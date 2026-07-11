@@ -29,9 +29,9 @@ import {
   Color,
   EventListener,
   EventListenerType,
+  PIXEL_FORMAT,
   Rect,
   Sprite,
-  Texture2D,
   ServiceLocator
 } from "@aspect/core";
 import { BMButton, Widget } from "@aspect/ccui";
@@ -61,7 +61,7 @@ export class RenderTextureTestDepthStencil extends RenderTextureBaseLayer {
     this._rend = new RenderTexture(
       winSize.width,
       winSize.height,
-      Texture2D.PIXEL_FORMAT_RGBA4444,
+      PIXEL_FORMAT.RGBA4444,
       gl.DEPTH24_STENCIL8_OES
     );
     this._rend.x = winSize.width * 0.5;

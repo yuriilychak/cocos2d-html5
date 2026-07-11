@@ -531,8 +531,8 @@ export class Sprite extends EventHelper(Node) {
       ) {
         // Init with a canvas or image element
         var texture2d = new Texture2D();
-        texture2d.initWithElement(fileName);
-        texture2d.handleLoadedTexture();
+        texture2d.htmlElement = fileName;
+        texture2d.renderer.handleLoadedTexture();
         this.initWithTexture(texture2d);
       }
     }
@@ -620,7 +620,7 @@ export class Sprite extends EventHelper(Node) {
       tex = ServiceLocator.textureCache.addImage(filename);
     }
 
-    if (!tex.isLoaded()) {
+    if (!tex.loaded) {
       this._loader.clear();
       this._loader.once(
         tex,
@@ -634,8 +634,7 @@ export class Sprite extends EventHelper(Node) {
     }
 
     if (!rect) {
-      var size = tex.getContentSize();
-      rect = new Rect(0, 0, size.width, size.height);
+      rect = tex.rect;
     }
     return this.initWithTexture(tex, rect);
   }
@@ -655,7 +654,7 @@ export class Sprite extends EventHelper(Node) {
     assert(arguments.length !== 0, _LogInfos.CCSpriteBatchNode_initWithTexture);
     this._loader.clear();
 
-    this._textureLoaded = texture.isLoaded();
+    this._textureLoaded = texture.loaded;
     if (!this._textureLoaded) {
       this._loader.once(
         texture,
@@ -701,7 +700,7 @@ export class Sprite extends EventHelper(Node) {
       this._rect.height = rect.height;
     }
 
-    if (!rect) rect = new Rect(0, 0, texture.width, texture.height);
+    if (!rect) rect = texture.rect;
 
     this._renderCmd._checkTextureBoundary(texture, rect, rotated);
 
@@ -871,7 +870,7 @@ export class Sprite extends EventHelper(Node) {
     if (isFileName) texture = ServiceLocator.textureCache.addImage(texture);
 
     this._loader.clear();
-    if (!texture._textureLoaded) {
+    if (!texture.loaded) {
       // wait for the load to be set again
       this._loader.once(
         texture,
@@ -891,7 +890,7 @@ export class Sprite extends EventHelper(Node) {
   }
 
   _changeRectWithTexture(texture) {
-    var contentSize = texture._contentSize;
+    var contentSize = texture.contentSize;
     var rect = new Rect(0, 0, contentSize.width, contentSize.height);
     this.setTextureRect(rect);
   }

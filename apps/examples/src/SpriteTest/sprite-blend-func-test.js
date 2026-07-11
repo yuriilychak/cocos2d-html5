@@ -75,7 +75,7 @@ export class SpriteBlendFuncTest extends SpriteTestDemo {
     var sourceImg = "Images/dot.png",
       destImg = "Images/wood.jpg";
     var sourceTexture = ServiceLocator.textureCache.addImage(sourceImg);
-    sourceTexture.handleLoadedTexture(true);
+    sourceTexture.renderer.handleLoadedTexture(true);
     var sourceSprite = new Sprite(sourceImg);
     var destSprite = new Sprite(destImg);
     sourceSprite.scale = 0.8;

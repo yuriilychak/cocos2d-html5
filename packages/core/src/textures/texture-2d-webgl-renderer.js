@@ -1,60 +1,90 @@
-import { RendererConfig } from "../sys/renderer-config";
-import { Size } from "../geometry";
+import { RendererConfig } from "../sys";
+import { Point, Size } from "../geometry";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import { NextPOT } from "../platform/macro/utils";
-
-import {
-  PIXEL_FORMAT_RGBA8888,
-  PIXEL_FORMAT_RGB888,
-  PIXEL_FORMAT_RGB565,
-  PIXEL_FORMAT_A8,
-  PIXEL_FORMAT_I8,
-  PIXEL_FORMAT_AI88,
-  PIXEL_FORMAT_RGBA4444,
-  PIXEL_FORMAT_RGB5A1,
-  PIXEL_FORMAT_DEFAULT,
-  PIXEL_FORMAT_NAMES,
-  PIXEL_FORMAT_BITS
-} from "./constants";
 import { ServiceLocator } from "../service-locator";
-import { ShaderName, VertexAttribute } from "../enums";
+import { PIXEL_FORMAT, ShaderName, VertexAttribute } from "../enums";
+import { PIXEL_FORMAT_BITS, PIXEL_FORMAT_NAMES } from "./constants";
+import Texture2DRenderer from "./texture-2d-renderer";
+import { isObject } from "../boot";
 
-export default class WebGLTextureRenderer {
+export default class WebGLTextureRenderer extends Texture2DRenderer {
+  #name = "";
+  #webTexture = null;
+  #pixelFormat = PIXEL_FORMAT.NONE;
+  #max = new Point();
+  #hasMipmaps = false;
+  #hasPremultipliedAlpha = false;
+
   constructor(texture) {
-    this._texture = texture;
-    this._pixelFormat = null;
-    this._name = "";
-    this._maxS = 0;
-    this._maxT = 0;
-    this._hasPremultipliedAlpha = false;
-    this._hasMipmaps = false;
-    this._shaderProgram = null;
-    this._webTextureObj = null;
+    super(texture);
   }
 
-  initWithElement(element) {
-    if (!element) return;
-    var t = this._texture;
-    this._webTextureObj =
+  get maxS() {
+    return this.#max.x;
+  }
+
+  set maxS(maxS) {
+    this.#max.x = maxS;
+  }
+
+  get maxT() {
+    return this.#max.y;
+  }
+
+  set maxT(maxT) {
+    this.#max.y = maxT;
+  }
+
+  get pixelFormat() {
+    return this.#pixelFormat;
+  }
+
+  get hasMipmaps() {
+    return this.#hasMipmaps;
+  }
+
+  get hasPremultipliedAlpha() {
+    return this.#hasPremultipliedAlpha;
+  }
+
+  get webTexture() {
+    return this.#webTexture;
+  }
+
+  set webTexture(value) {
+    this.#webTexture = value;
+  }
+
+  initWithElement() {
+    if (!ServiceLocator.game.rendererInitialized) {
+      this.#hasPremultipliedAlpha = true;
+      return;
+    }
+
+    this.#webTexture =
       ServiceLocator.sys.rendererConfig.renderContext.createTexture();
-    t._htmlElementObj = element;
-    t._pixelsWide = t._contentSize.width = element.width;
-    t._pixelsHigh = t._contentSize.height = element.height;
-    t._textureLoaded = true;
-    this._hasPremultipliedAlpha = true;
+    this.#hasPremultipliedAlpha = true;
   }
 
-  handleLoadedTexture(premultiplied) {
-    var t = this._texture;
-    premultiplied =
-      premultiplied !== undefined ? premultiplied : this._hasPremultipliedAlpha;
-    if (!ServiceLocator.game.rendererInitialized) return;
-    if (!t._htmlElementObj) return;
-    if (!t._htmlElementObj.width || !t._htmlElementObj.height) return;
+  handleLoadedTexture(premultiplied = this.#hasPremultipliedAlpha) {
+    const element = this.texture.htmlElement;
+
+    if (
+      !ServiceLocator.game.rendererInitialized ||
+      !Size.isLike(element) ||
+      !element.width ||
+      !element.height
+    )
+      return;
 
     var gl = ServiceLocator.sys.rendererConfig.renderContext;
 
-    ServiceLocator.glStateCache.bindTexture2D(t);
+    if (!this.#webTexture) {
+      this.#webTexture = gl.createTexture();
+    }
+
+    ServiceLocator.glStateCache.bindTexture2D(this.texture);
 
     gl.pixelStorei(gl.UNPACK_ALIGNMENT, 4);
     if (premultiplied) gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, 1);
@@ -65,7 +95,7 @@ export default class WebGLTextureRenderer {
       gl.RGBA,
       gl.RGBA,
       gl.UNSIGNED_BYTE,
-      t._htmlElementObj
+      element
     );
 
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
@@ -73,98 +103,37 @@ export default class WebGLTextureRenderer {
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 
-    this._shaderProgram = ServiceLocator.shaderCache.get(
+    this.shaderProgram = ServiceLocator.shaderCache.get(
       ShaderName.POSITION_TEXTURE
     );
     ServiceLocator.glStateCache.bindTexture2D(null);
     if (premultiplied) gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, 0);
 
-    var pixelsWide = t._htmlElementObj.width;
-    var pixelsHigh = t._htmlElementObj.height;
+    this.#pixelFormat = PIXEL_FORMAT.RGBA8888;
+    this.#max.set(1, 1);
 
-    t._pixelsWide = t._contentSize.width = pixelsWide;
-    t._pixelsHigh = t._contentSize.height = pixelsHigh;
-    this._pixelFormat = PIXEL_FORMAT_RGBA8888;
-    this._maxS = 1;
-    this._maxT = 1;
-
-    this._hasPremultipliedAlpha = premultiplied;
-    this._hasMipmaps = false;
-    if (RendererConfig.ENABLE_IMAGE_POOL) {
-      t._htmlElementObj = null;
-    }
-
-    t.dispatchEvent("load");
+    this.#hasPremultipliedAlpha = premultiplied;
+    this.#hasMipmaps = false;
+    this.texture.resetSize(RendererConfig.ENABLE_IMAGE_POOL);
   }
 
   releaseTexture() {
-    var t = this._texture;
-    if (this._webTextureObj)
+    if (this.#webTexture) {
       ServiceLocator.sys.rendererConfig.renderContext.deleteTexture(
-        this._webTextureObj
+        this.#webTexture
       );
-    t._htmlElementObj = null;
+    }
+    this.texture.releaseElement();
   }
 
-  getPixelFormat() {
-    return this._pixelFormat;
-  }
-
-  get name() {
-    return this._webTextureObj;
-  }
-
-  getMaxS() {
-    return this._maxS;
-  }
-
-  setMaxS(maxS) {
-    this._maxS = maxS;
-  }
-
-  getMaxT() {
-    return this._maxT;
-  }
-
-  setMaxT(maxT) {
-    this._maxT = maxT;
-  }
-
-  getShaderProgram() {
-    return this._shaderProgram;
-  }
-
-  setShaderProgram(shaderProgram) {
-    this._shaderProgram = shaderProgram;
-  }
-
-  hasPremultipliedAlpha() {
-    return this._hasPremultipliedAlpha;
-  }
-
-  hasMipmaps() {
-    return this._hasMipmaps;
-  }
-
-  description() {
-    var t = this._texture;
+  get description() {
+    var t = this.texture;
     return (
-      "<Texture2D | Name = " +
-      this._name +
-      " | Dimensions = " +
-      t._pixelsWide +
-      " x " +
-      t._pixelsHigh +
-      " | Coordinates = (" +
-      this._maxS +
-      ", " +
-      this._maxT +
-      ")>"
+      `<Texture2D | Name = ${this.#name} | Dimensions = ${this.texture.pixelSize.toString()} | Coordinates = ${this.#max.toString()}>`
     );
   }
 
   initWithData(data, pixelFormat, pixelsWide, pixelsHigh, contentSize) {
-    var t = this._texture;
     var gl = ServiceLocator.sys.rendererConfig.renderContext;
     var format = gl.RGBA,
       type = gl.UNSIGNED_BYTE;
@@ -182,8 +151,8 @@ export default class WebGLTextureRenderer {
       gl.pixelStorei(gl.UNPACK_ALIGNMENT, 1);
     }
 
-    this._webTextureObj = gl.createTexture();
-    ServiceLocator.glStateCache.bindTexture2D(t);
+    this.#webTexture = gl.createTexture();
+    ServiceLocator.glStateCache.bindTexture2D(this.texture);
 
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
@@ -191,28 +160,28 @@ export default class WebGLTextureRenderer {
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 
     switch (pixelFormat) {
-      case PIXEL_FORMAT_RGBA8888:
+      case PIXEL_FORMAT.RGBA8888:
         format = gl.RGBA;
         break;
-      case PIXEL_FORMAT_RGB888:
+      case PIXEL_FORMAT.RGB888:
         format = gl.RGB;
         break;
-      case PIXEL_FORMAT_RGBA4444:
+      case PIXEL_FORMAT.RGBA4444:
         type = gl.UNSIGNED_SHORT_4_4_4_4;
         break;
-      case PIXEL_FORMAT_RGB5A1:
+      case PIXEL_FORMAT.RGB5A1:
         type = gl.UNSIGNED_SHORT_5_5_5_1;
         break;
-      case PIXEL_FORMAT_RGB565:
+      case PIXEL_FORMAT.RGB565:
         type = gl.UNSIGNED_SHORT_5_6_5;
         break;
-      case PIXEL_FORMAT_AI88:
+      case PIXEL_FORMAT.AI88:
         format = gl.LUMINANCE_ALPHA;
         break;
-      case PIXEL_FORMAT_A8:
+      case PIXEL_FORMAT.A8:
         format = gl.ALPHA;
         break;
-      case PIXEL_FORMAT_I8:
+      case PIXEL_FORMAT.I8:
         format = gl.LUMINANCE;
         break;
       default:
@@ -230,61 +199,58 @@ export default class WebGLTextureRenderer {
       data
     );
 
-    t._contentSize.width = contentSize.width;
-    t._contentSize.height = contentSize.height;
-    t._pixelsWide = pixelsWide;
-    t._pixelsHigh = pixelsHigh;
-    this._pixelFormat = pixelFormat;
-    this._maxS = contentSize.width / pixelsWide;
-    this._maxT = contentSize.height / pixelsHigh;
-
-    this._hasPremultipliedAlpha = false;
-    this._hasMipmaps = false;
-    this._shaderProgram = ServiceLocator.shaderCache.get(
-      ShaderName.POSITION_TEXTURE
+    const pixelSize = new Size(pixelsWide, pixelsHigh);
+    this.texture.contentSize = contentSize;
+    this.texture.pixelSize = pixelSize;
+    this.#pixelFormat = pixelFormat;
+    this.#max.set(
+      contentSize.width / pixelSize.width,
+      contentSize.height / pixelSize.height
     );
 
-    t._textureLoaded = true;
+    this.#hasPremultipliedAlpha = false;
+    this.#hasMipmaps = false;
+    this.shaderProgram = ServiceLocator.shaderCache.get(
+      ShaderName.POSITION_TEXTURE
+    );
 
     return true;
   }
 
   drawAtPoint(point) {
-    var t = this._texture;
     var coordinates = [
         0.0,
-        this._maxT,
-        this._maxS,
-        this._maxT,
+        this.#max.y,
+        this.#max.x,
+        this.#max.y,
         0.0,
         0.0,
-        this._maxS,
+        this.#max.x,
         0.0
       ],
       gl = ServiceLocator.sys.rendererConfig.renderContext;
 
-    var width = t._pixelsWide * this._maxS,
-      height = t._pixelsHigh * this._maxT;
+    const size = Size.compMultIn(this.texture.pixelSize, this.#max);
 
     var vertices = [
       point.x,
       point.y,
-      0.0,
-      width + point.x,
+      0,
+      size.width + point.x,
       point.y,
-      0.0,
+      0,
       point.x,
-      height + point.y,
-      0.0,
-      width + point.x,
-      height + point.y,
-      0.0
+      size.height + point.y,
+      0,
+      size.width + point.x,
+      size.height + point.y,
+      0
     ];
 
-    t._glProgramState.apply();
-    t._glProgramState._glprogram.setUniformsForBuiltins();
+    this.shaderProgram.use();
+    this.shaderProgram.setUniformsForBuiltins();
 
-    ServiceLocator.glStateCache.bindTexture2D(t);
+    ServiceLocator.glStateCache.bindTexture2D(this.texture);
 
     gl.enableVertexAttribArray(VertexAttribute.POSITION);
     gl.enableVertexAttribArray(VertexAttribute.TEX_COORDS);
@@ -309,15 +275,15 @@ export default class WebGLTextureRenderer {
   }
 
   drawInRect(rect) {
-    var t = this._texture;
+    var t = this.texture;
     var coordinates = [
       0.0,
-      this._maxT,
-      this._maxS,
-      this._maxT,
+      this.#max.y,
+      this.#max.x,
+      this.#max.y,
       0.0,
       0.0,
-      this._maxS,
+      this.#max.x,
       0.0
     ];
 
@@ -332,8 +298,8 @@ export default class WebGLTextureRenderer {
       rect.y + rect.height
     ];
 
-    t._glProgramState.apply();
-    t._glProgramState._glprogram.setUniformsForBuiltins();
+    this.shaderProgram.use();
+    this.shaderProgram.setUniformsForBuiltins();
 
     ServiceLocator.glStateCache.bindTexture2D(t);
 
@@ -380,8 +346,6 @@ export default class WebGLTextureRenderer {
       );
       return false;
     }
-    this._texture._textureLoaded = true;
-
     return this._initPremultipliedATextureWithImage(
       uiImage,
       imageWidth,
@@ -389,26 +353,17 @@ export default class WebGLTextureRenderer {
     );
   }
 
-  initWithString(text, fontName, fontSize, dimensions, hAlignment, vAlignment) {
-    log(_LogInfos.Texture2D_initWithString);
-    return null;
-  }
-
-  setTexParameters(texParams, magFilter, wrapS, wrapT) {
-    var t = this._texture;
+  setTexParameters(texParamsOrMagFilter, magFilter, wrapS, wrapT) {
+    var t = this.texture;
     var gl = ServiceLocator.sys.rendererConfig.renderContext;
 
-    if (magFilter !== undefined)
-      texParams = {
-        minFilter: texParams,
-        magFilter: magFilter,
-        wrapS: wrapS,
-        wrapT: wrapT
-      };
+    const texParams = isObject(texParamsOrMagFilter) 
+    ? texParamsOrMagFilter 
+    : { minFilter: texParamsOrMagFilter, magFilter, wrapS, wrapT };
 
     assert(
-      (t._pixelsWide === NextPOT(t._pixelsWide) &&
-        t._pixelsHigh === NextPOT(t._pixelsHigh)) ||
+      (t.pixelSize.width === NextPOT(t.pixelSize.width) &&
+        t.pixelSize.height === NextPOT(t.pixelSize.height)) ||
         (texParams.wrapS === gl.CLAMP_TO_EDGE &&
           texParams.wrapT === gl.CLAMP_TO_EDGE),
       "WebGLRenderingContext.CLAMP_TO_EDGE should be used in NPOT textures"
@@ -423,10 +378,10 @@ export default class WebGLTextureRenderer {
 
   setAntiAliasTexParameters() {
     var gl = ServiceLocator.sys.rendererConfig.renderContext;
-    var t = this._texture;
+    var t = this.texture;
 
     ServiceLocator.glStateCache.bindTexture2D(t);
-    if (!this._hasMipmaps)
+    if (!this.#hasMipmaps)
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
     else
       gl.texParameteri(
@@ -439,10 +394,10 @@ export default class WebGLTextureRenderer {
 
   setAliasTexParameters() {
     var gl = ServiceLocator.sys.rendererConfig.renderContext;
-    var t = this._texture;
+    var t = this.texture;
 
     ServiceLocator.glStateCache.bindTexture2D(t);
-    if (!this._hasMipmaps)
+    if (!this.#hasMipmaps)
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
     else
       gl.texParameteri(
@@ -454,10 +409,10 @@ export default class WebGLTextureRenderer {
   }
 
   generateMipmap() {
-    var t = this._texture;
+    var t = this.texture;
     assert(
-      t._pixelsWide === NextPOT(t._pixelsWide) &&
-        t._pixelsHigh === NextPOT(t._pixelsHigh),
+      t.pixelSize.width === NextPOT(t.pixelSize.width) &&
+        t.pixelSize.height === NextPOT(t.pixelSize.height),
       "Mimpap texture only works in POT textures"
     );
 
@@ -465,15 +420,15 @@ export default class WebGLTextureRenderer {
     ServiceLocator.sys.rendererConfig.renderContext.generateMipmap(
       ServiceLocator.sys.rendererConfig.renderContext.TEXTURE_2D
     );
-    this._hasMipmaps = true;
+    this.#hasMipmaps = true;
   }
 
-  stringForFormat() {
-    return PIXEL_FORMAT_NAMES[this._pixelFormat];
+  get stringForFormat() {
+    return PIXEL_FORMAT_NAMES[this.pixelFormat];
   }
 
   bitsPerPixelForFormat(format) {
-    format = format || this._pixelFormat;
+    format = format || this.pixelFormat;
     var value = PIXEL_FORMAT_BITS[format];
     if (value != null) return value;
     log(_LogInfos.Texture2D_bitsPerPixelForFormat, format);
@@ -481,29 +436,29 @@ export default class WebGLTextureRenderer {
   }
 
   _initPremultipliedATextureWithImage(uiImage, width, height) {
-    var t = this._texture;
+    var t = this.texture;
     var tempData = uiImage.getData();
     var inPixel32 = null;
     var inPixel8 = null;
     var outPixel16 = null;
     var hasAlpha = uiImage.hasAlpha();
     var imageSize = new Size(uiImage.getWidth(), uiImage.getHeight());
-    var pixelFormat = PIXEL_FORMAT_DEFAULT;
+    var pixelFormat = PIXEL_FORMAT.DEFAULT;
     var bpp = uiImage.getBitsPerComponent();
 
     if (!hasAlpha) {
       if (bpp >= 8) {
-        pixelFormat = PIXEL_FORMAT_RGB888;
+        pixelFormat = PIXEL_FORMAT.RGB888;
       } else {
         log(_LogInfos.Texture2D__initPremultipliedATextureWithImage);
-        pixelFormat = PIXEL_FORMAT_RGB565;
+        pixelFormat = PIXEL_FORMAT.RGB565;
       }
     }
 
     var i,
       length = width * height;
 
-    if (pixelFormat === PIXEL_FORMAT_RGB565) {
+    if (pixelFormat === PIXEL_FORMAT.RGB565) {
       if (hasAlpha) {
         tempData = new Uint16Array(width * height);
         inPixel32 = uiImage.getData();
@@ -525,7 +480,7 @@ export default class WebGLTextureRenderer {
             (((inPixel8[i] & 0xff) >> 3) << 0);
         }
       }
-    } else if (pixelFormat === PIXEL_FORMAT_RGBA4444) {
+    } else if (pixelFormat === PIXEL_FORMAT.RGBA4444) {
       tempData = new Uint16Array(width * height);
       inPixel32 = uiImage.getData();
 
@@ -536,7 +491,7 @@ export default class WebGLTextureRenderer {
           ((((inPixel32[i] >> 16) & 0xff) >> 4) << 4) |
           ((((inPixel32[i] >> 24) & 0xff) >> 4) << 0);
       }
-    } else if (pixelFormat === PIXEL_FORMAT_RGB5A1) {
+    } else if (pixelFormat === PIXEL_FORMAT.RGB5A1) {
       tempData = new Uint16Array(width * height);
       inPixel32 = uiImage.getData();
 
@@ -547,7 +502,7 @@ export default class WebGLTextureRenderer {
           ((((inPixel32[i] >> 16) & 0xff) >> 3) << 1) |
           ((((inPixel32[i] >> 24) & 0xff) >> 7) << 0);
       }
-    } else if (pixelFormat === PIXEL_FORMAT_A8) {
+    } else if (pixelFormat === PIXEL_FORMAT.A8) {
       tempData = new Uint8Array(width * height);
       inPixel32 = uiImage.getData();
 
@@ -556,7 +511,7 @@ export default class WebGLTextureRenderer {
       }
     }
 
-    if (hasAlpha && pixelFormat === PIXEL_FORMAT_RGB888) {
+    if (hasAlpha && pixelFormat === PIXEL_FORMAT.RGB888) {
       inPixel32 = uiImage.getData();
       tempData = new Uint8Array(width * height * 3);
 
@@ -571,17 +526,25 @@ export default class WebGLTextureRenderer {
 
     if (tempData != uiImage.getData()) tempData = null;
 
-    this._hasPremultipliedAlpha = uiImage.isPremultipliedAlpha();
+    this.#hasPremultipliedAlpha = uiImage.isPremultipliedAlpha();
     return true;
   }
 
   // Canvas-only methods — no-ops for WebGL
-  _generateColorTexture() {}
-  _generateTextureCacheForColor() {
+  generateColorTexture() {
     return null;
   }
-  _switchToGray(toGray) {}
-  _generateGrayTexture() {
+  generateTextureCacheForColor() {
+    return null;
+  }
+
+  get grayscaled() {
+    return false;
+  }
+
+  set grayscaled(grayscaled) {}
+
+  generateGrayTexture() {
     return null;
   }
 }

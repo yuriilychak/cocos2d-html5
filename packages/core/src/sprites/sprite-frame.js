@@ -237,7 +237,7 @@ export class SpriteFrame extends EventHelper(BaseClass) {
       var locTexture = ServiceLocator.textureCache.addImage(
         this._textureFilename
       );
-      if (locTexture) this._textureLoaded = locTexture.isLoaded();
+      if (locTexture) this._textureLoaded = locTexture.loaded;
       return locTexture;
     }
     return null;
@@ -249,7 +249,7 @@ export class SpriteFrame extends EventHelper(BaseClass) {
    */
   setTexture(texture) {
     if (this._texture !== texture) {
-      var locLoaded = texture.isLoaded();
+      var locLoaded = texture.loaded;
       this._textureLoaded = locLoaded;
       this._texture = texture;
       if (!locLoaded) {
@@ -258,14 +258,14 @@ export class SpriteFrame extends EventHelper(BaseClass) {
           function (sender) {
             this._textureLoaded = true;
             if (this._rotated && ServiceLocator.sys.rendererConfig.isCanvas) {
-              var tempElement = sender.getHtmlElementObj();
+              var tempElement = sender.htmlElement;
               tempElement = SpriteCanvasRenderCmd._cutRotateImageToCanvas(
                 tempElement,
                 this.getRect()
               );
               var tempTexture = new Texture2D();
-              tempTexture.initWithElement(tempElement);
-              tempTexture.handleLoadedTexture();
+              tempTexture.htmlElement = tempElement;
+              tempTexture.renderer.handleLoadedTexture();
               this.setTexture(tempTexture);
 
               var rect = this.getRect();
@@ -411,7 +411,7 @@ export class SpriteFrame extends EventHelper(BaseClass) {
     this._rectInPixels = rect;
     this._rect = rectPixelsToPoints(rect);
 
-    if (texture && texture.url && texture.isLoaded()) {
+    if (texture && texture.url && texture.loaded) {
       var _x, _y;
       if (rotated) {
         _x = rect.x + rect.height;
@@ -420,10 +420,10 @@ export class SpriteFrame extends EventHelper(BaseClass) {
         _x = rect.x + rect.width;
         _y = rect.y + rect.height;
       }
-      if (_x > texture.getPixelsWide()) {
+      if (_x > texture.pixelsWidth) {
         error(_LogInfos.RectWidth, texture.url);
       }
-      if (_y > texture.getPixelsHigh()) {
+      if (_y > texture.pixelsHeight) {
         error(_LogInfos.RectHeight, texture.url);
       }
     }

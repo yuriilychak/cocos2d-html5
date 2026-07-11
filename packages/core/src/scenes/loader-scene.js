@@ -107,8 +107,8 @@ export class LoaderScene extends Scene {
   _initStage(img, centerPos) {
     var self = this;
     var texture2d = (self._texture2d = new Texture2D());
-    texture2d.initWithElement(img);
-    texture2d.handleLoadedTexture();
+    texture2d.htmlElement = img;
+    texture2d.renderer.handleLoadedTexture();
     var logo = (self._logo = new Sprite(texture2d));
     logo.scale = contentScaleFactor();
     logo.x = centerPos.x;

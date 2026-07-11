@@ -32,7 +32,7 @@ import { isArray } from '../boot/utils';
  */
 const EventHelper = (Base) => class extends Base {
     addEventListener(type, listener, target) {
-        if (type === "load" && this._textureLoaded) {
+        if (type === "load" && (this._textureLoaded || this.loaded === true)) {
             setTimeout(() => listener.call(target), 0);
             return;
         }
@@ -109,7 +109,7 @@ const EventHelper = (Base) => class extends Base {
         if (isArray(listenerArray)) {
             const array = listenerArray.slice();
 
-            for (i = 0; i < array.length; ++i) {
+            for (let i = 0; i < array.length; ++i) {
               array[i].callback.call(array[i].eventTarget, this);
             }
 

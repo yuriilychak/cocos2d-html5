@@ -439,12 +439,8 @@ export default class Loader {
         delete this._queue[url];
       }
 
-      if (
-        RendererConfig.ENABLE_IMAGE_POOL &&
-        this._rendererConfig.isWebGL
-      ) {
-        imagePool.put(img);
-      }
+      // WebGL uploads can be consumed after texImage2D returns on some
+      // browsers. Do not recycle and mutate the source image immediately.
     };
 
     var errorCallback = () => {

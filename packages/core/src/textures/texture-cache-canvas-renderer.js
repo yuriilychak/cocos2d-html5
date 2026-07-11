@@ -17,8 +17,8 @@ export default class TextureCacheCanvasRenderer {
       tex = locTexs[url] = new Texture2D();
       tex.url = url;
     }
-    tex.initWithElement(img);
-    tex.handleLoadedTexture();
+    tex.htmlElement = img;
+    tex.renderer.handleLoadedTexture();
     return tex;
   }
 
@@ -43,7 +43,7 @@ export default class TextureCacheCanvasRenderer {
     //remove judge
     var tex = locTexs[url] || locTexs[ServiceLocator.loader._getAliase(url)];
     if (tex) {
-      if (tex.isLoaded()) {
+      if (tex.loaded) {
         cb && cb.call(target, tex);
         return tex;
       } else {

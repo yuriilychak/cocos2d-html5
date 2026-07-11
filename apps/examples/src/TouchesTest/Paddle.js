@@ -56,7 +56,7 @@ export class Paddle extends Sprite {
             this._state = PADDLE_STATE_UNGRABBED;
         }
         if (aTexture instanceof Texture2D) {
-            this._rect = new Rect(0, 0, aTexture.width, aTexture.height);
+            this._rect = aTexture.rect;
         } else if ((aTexture instanceof HTMLImageElement) || (aTexture instanceof HTMLCanvasElement)) {
             this._rect = new Rect(0, 0, aTexture.width, aTexture.height);
         }

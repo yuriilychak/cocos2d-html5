@@ -59,7 +59,7 @@ export class TMXOrthoFromXMLTest extends TileDemo {
       var mapChildren = map.children;
       for (var i = 0; i < mapChildren.length; i++) {
         var child = mapChildren[i];
-        if (child) child.texture.setAntiAliasTexParameters();
+        if (child) child.texture.renderer.setAntiAliasTexParameters();
       }
     }
 

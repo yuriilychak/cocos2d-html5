@@ -143,7 +143,7 @@ export class SkeletonCanvasRenderCmd extends Node.CanvasRenderCmd {
       );
     };
 
-    if (texture.isLoaded()) {
+    if (texture.loaded) {
       initSprite();
     } else {
       texture.addEventListener("load", initSprite, this);

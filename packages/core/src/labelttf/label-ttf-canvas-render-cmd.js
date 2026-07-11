@@ -514,7 +514,7 @@ export const CacheLabelRenderMixin = (Base) =>
 
       if (!node._texture) {
         const labelTexture = new Texture2D();
-        labelTexture.initWithElement(this._labelCanvas);
+        labelTexture.htmlElement = this._labelCanvas;
         node.setTexture(labelTexture);
       }
 
@@ -522,8 +522,8 @@ export const CacheLabelRenderMixin = (Base) =>
         locLabelCanvas.width = 1;
         locLabelCanvas.height = locContentSize.height || 1;
         if (node._texture) {
-          node._texture._htmlElementObj = this._labelCanvas;
-          node._texture.handleLoadedTexture();
+          node._texture.htmlElement = this._labelCanvas;
+          node._texture.renderer.handleLoadedTexture();
         }
         node.setTextureRect(new Rect(0, 0, 1, locContentSize.height));
         return true;
@@ -540,8 +540,8 @@ export const CacheLabelRenderMixin = (Base) =>
       this._saveStatus();
       this._drawTTFInCanvas(locContext);
       if (node._texture) {
-        node._texture._htmlElementObj = this._labelCanvas;
-        node._texture.handleLoadedTexture();
+        node._texture.htmlElement = this._labelCanvas;
+        node._texture.renderer.handleLoadedTexture();
       }
       node.setTextureRect(new Rect(0, 0, width, height));
       return true;

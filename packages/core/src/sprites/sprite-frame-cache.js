@@ -308,15 +308,15 @@ export default class SpriteFrameCache {
         if (this._rendererConfig.isCanvas && spriteFrame.isRotated()) {
           //clip to canvas
           var locTexture = spriteFrame.getTexture();
-          if (locTexture.isLoaded()) {
-            var tempElement = spriteFrame.getTexture().getHtmlElementObj();
+          if (locTexture.loaded) {
+            var tempElement = spriteFrame.getTexture().htmlElement;
             tempElement = Sprite.CanvasRenderCmd._cutRotateImageToCanvas(
               tempElement,
               spriteFrame.getRectInPixels()
             );
             var tempTexture = new Texture2D();
-            tempTexture.initWithElement(tempElement);
-            tempTexture.handleLoadedTexture();
+            tempTexture.htmlElement = tempElement;
+            tempTexture.renderer.handleLoadedTexture();
             spriteFrame.setTexture(tempTexture);
             spriteFrame.setRotated(false);
 

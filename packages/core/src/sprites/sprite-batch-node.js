@@ -206,7 +206,7 @@ export class SpriteBatchNode extends Node {
   setTexture(texture) {
     this._texture = texture;
 
-    if (texture._textureLoaded) {
+    if (texture.loaded) {
       var i,
         children = this._children,
         len = children.length;

@@ -21,7 +21,7 @@ export class MotionStreakWebGLRenderCmd extends Node.WebGLRenderCmd {
     const node = this._node;
     if (node._nuPoints <= 1) return;
 
-    if (node.texture && node.texture.isLoaded()) {
+    if (node.texture && node.texture.loaded) {
       ctx = ctx || ServiceLocator.sys.rendererConfig.renderContext;
 
       const wt = this._worldTransform;

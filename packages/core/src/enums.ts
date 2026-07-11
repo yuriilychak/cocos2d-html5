@@ -102,6 +102,39 @@ export enum GameEvent {
   RENDERER_INITED = "renderer_inited"
 }
 
+export enum KMGLMatrixMode {
+  MODELVIEW = 0x1700,
+  PROJECTION = 0x1701,
+  TEXTURE = 0x1702
+}
+
+export enum ALIGN {
+  CENTER = 0x33,
+  TOP = 0x13,
+  TOP_RIGHT = 0x12,
+  RIGHT = 0x32,
+  BOTTOM_RIGHT = 0x22,
+  BOTTOM = 0x23,
+  BOTTOM_LEFT = 0x21,
+  LEFT = 0x31,
+  TOP_LEFT = 0x11
+}
+
+export enum PIXEL_FORMAT {
+  NONE = 0,
+  RGBA8888 = 2,
+  RGB888 = 3,
+  RGB565 = 4,
+  A8 = 5,
+  I8 = 6,
+  AI88 = 7,
+  RGBA4444 = 8,
+  RGB5A1 = 7,
+  PVRTC4 = 9,
+  PVRTC2 = 10,
+  DEFAULT = RGBA8888
+}
+
 export enum EventManagerDirtyFlag {
   NONE = 0,
   FIXED_PRIORITY = 1 << 0,

@@ -124,8 +124,8 @@ var simpleQuadGenerator = {
 
   _calculateUVs: function (sprite, spriteFrame) {
     var uvs = sprite._uvs;
-    var atlasWidth = spriteFrame._texture._pixelsWide;
-    var atlasHeight = spriteFrame._texture._pixelsHigh;
+    var atlasWidth = spriteFrame._texture.pixelsWidth;
+    var atlasHeight = spriteFrame._texture.pixelsHeight;
     var textureRect = spriteFrame._rect;
     textureRect = rectPointsToPixels(textureRect);
 
@@ -266,8 +266,8 @@ var scale9QuadGenerator = {
   ) {
     var uvs = sprite._uvs;
     var rect = spriteFrame._rect;
-    var atlasWidth = spriteFrame._texture._pixelsWide;
-    var atlasHeight = spriteFrame._texture._pixelsHigh;
+    var atlasWidth = spriteFrame._texture.pixelsWidth;
+    var atlasHeight = spriteFrame._texture.pixelsHeight;
 
     var leftWidth, centerWidth, rightWidth;
     var topHeight, centerHeight, bottomHeight;
@@ -506,7 +506,7 @@ export class Scale9Sprite extends EventHelper(Node) {
       texture = ServiceLocator.textureCache.addImage(file);
     }
 
-    var locLoaded = texture.isLoaded();
+    var locLoaded = texture.loaded;
     this._textureLoaded = locLoaded;
     this._loader.clear();
     if (!locLoaded) {
@@ -522,8 +522,7 @@ export class Scale9Sprite extends EventHelper(Node) {
     }
 
     if (Rect.equalToZero(rect)) {
-      var textureSize = texture.getContentSize();
-      rect = new Rect(0, 0, textureSize.width, textureSize.height);
+      rect = texture.rect;
     }
     this.setTexture(texture, rect);
     this._updateCapInsets(rect, capInsets);
@@ -538,7 +537,7 @@ export class Scale9Sprite extends EventHelper(Node) {
 
     var texture = batchNode.getTexture();
     this._loader.clear();
-    if (!texture.isLoaded()) {
+    if (!texture.loaded) {
       this._loader.once(
         texture,
         function () {
@@ -550,7 +549,15 @@ export class Scale9Sprite extends EventHelper(Node) {
       return false;
     }
 
-    this.setTexture(texture, originalRect);
+    this.setSpriteFrame(
+      new SpriteFrame(
+        texture,
+        originalRect,
+        rotated || false,
+        new Point(),
+        new Size(originalRect.width, originalRect.height)
+      )
+    );
     this._updateCapInsets(originalRect, capInsets);
 
     return true;
@@ -602,7 +609,7 @@ export class Scale9Sprite extends EventHelper(Node) {
     var blendFunc = this._blendFunc;
     if (
       !this._spriteFrame ||
-      !this._spriteFrame._texture.hasPremultipliedAlpha()
+      !this._spriteFrame._texture.renderer.hasPremultipliedAlpha
     ) {
       if (
         blendFunc.src === GLState.ONE &&

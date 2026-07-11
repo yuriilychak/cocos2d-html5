@@ -9,7 +9,7 @@ import "./boot";
 // Renderer & Utils
 // ======================================================================
 import { ServiceLocator } from "./service-locator";
-import { KMGLMatrix } from "./kazmath";
+import { KMGLMatrixMode } from "./enums";
 import type { Mat4Like } from "./kazmath";
 
 // ======================================================================
@@ -101,6 +101,7 @@ export {
 export {
   BrowserType,
   DebugMode,
+  ALIGN,
   DensityDPI,
   DeviceOrientation,
   DirectorEvent,
@@ -113,10 +114,12 @@ export {
   ConfigurationValueType,
   GameEvent,
   ImageFormat,
+  KMGLMatrixMode,
   GLServerState,
   GLState,
   Language,
   OperatingSystem,
+  PIXEL_FORMAT,
   Platform,
   GLVersion,
   RenderType,
@@ -197,30 +200,15 @@ export { RendererConfig } from "./sys/renderer-config";
 export { Director, DisplayLinkDirector } from "./director/director";
 export { Sys } from "./sys";
 export { Texture2D } from "./textures/texture-2d";
-export {
-  PIXEL_FORMAT_RGBA8888,
-  PIXEL_FORMAT_RGB888,
-  PIXEL_FORMAT_RGB565,
-  PIXEL_FORMAT_A8,
-  PIXEL_FORMAT_I8,
-  PIXEL_FORMAT_AI88,
-  PIXEL_FORMAT_RGBA4444,
-  PIXEL_FORMAT_RGB5A1,
-  PIXEL_FORMAT_PVRTC4,
-  PIXEL_FORMAT_PVRTC2,
-  PIXEL_FORMAT_DEFAULT,
-  defaultPixelFormat,
-  PIXEL_FORMAT_NAMES,
-  PIXEL_FORMAT_BITS
-} from "./textures/constants";
+export { defaultPixelFormat, PIXEL_FORMAT_NAMES, PIXEL_FORMAT_BITS } from "./textures/constants";
 // Export TextureCache class
 export { default as TextureCache } from "./textures/texture-cache";
 export { GLProgramState, ShaderCache } from "./shaders";
 export { GLStateCache } from "./shaders/gl-state-cache";
 export { Matrix4, KMGLMatrix } from "./kazmath";
-export const KM_GL_MODELVIEW = KMGLMatrix.KM_GL_MODELVIEW;
-export const KM_GL_PROJECTION = KMGLMatrix.KM_GL_PROJECTION;
-export const KM_GL_TEXTURE = KMGLMatrix.KM_GL_TEXTURE;
+export const KM_GL_MODELVIEW = KMGLMatrixMode.MODELVIEW;
+export const KM_GL_PROJECTION = KMGLMatrixMode.PROJECTION;
+export const KM_GL_TEXTURE = KMGLMatrixMode.TEXTURE;
 export function kmGLMatrixMode(mode: number): void {
   ServiceLocator.kmglMatrix.matrixMode(mode);
 }

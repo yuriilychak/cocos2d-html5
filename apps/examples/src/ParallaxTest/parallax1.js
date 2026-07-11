@@ -65,7 +65,7 @@ export class Parallax1 extends ParallaxDemo {
     this._tilemap.anchorY = 0;
 
     // Anti Aliased images
-    //tilemap.texture.setAntiAliasTexParameters();
+    //tilemap.texture.renderer.setAntiAliasTexParameters();
 
     // background layer: another image
     this._background = new Sprite(s_back);

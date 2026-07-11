@@ -223,7 +223,7 @@ export class TiledGrid3D extends GridBase {
   calculateVertexPoints() {
     const width = this._texture.pixelsWidth;
     const height = this._texture.pixelsHeight;
-    const imageH = this._texture.getContentSizeInPixels().height;
+    const imageH = this._texture.contentSize.height;
     const locGridSize = this._gridSize;
 
     const numQuads = locGridSize.width * locGridSize.height;

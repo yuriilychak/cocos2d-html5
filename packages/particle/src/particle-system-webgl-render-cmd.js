@@ -340,9 +340,7 @@ export class ParticleSystemWebGLRenderCmd extends Node.WebGLRenderCmd {
       this._setupVBO();
 
       if (node._texture) {
-        this.initTexCoordsWithRect(
-          new Rect(0, 0, node._texture.width, node._texture.height)
-        );
+        this.initTexCoordsWithRect(node._texture.rect);
       }
     } else node._totalParticles = tp;
     node.resetSystem();
@@ -407,7 +405,7 @@ export class ParticleSystemWebGLRenderCmd extends Node.WebGLRenderCmd {
 
   _setBlendAdditive() {
     const locBlendFunc = this._node._blendFunc;
-    if (this._texture && !this._texture.hasPremultipliedAlpha()) {
+    if (this._texture && !this._texture.renderer.hasPremultipliedAlpha) {
       locBlendFunc.src = GLState.SRC_ALPHA;
       locBlendFunc.dst = GLState.ONE_MINUS_SRC_ALPHA;
     } else {

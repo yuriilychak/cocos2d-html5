@@ -97,11 +97,11 @@ export class ParticleSystemCanvasRenderCmd extends Node.CanvasRenderCmd {
       particles = this._node._particles;
     if (node.drawMode !== SHAPE_MODE && node._texture) {
       // Delay drawing until the texture is fully loaded by the browser
-      if (!node._texture._textureLoaded) {
+      if (!node._texture.loaded) {
         wrapper.restore();
         return;
       }
-      const element = node._texture.getHtmlElementObj();
+      const element = node._texture.htmlElement;
       if (!element.width || !element.height) {
         wrapper.restore();
         return;
@@ -168,10 +168,9 @@ export class ParticleSystemCanvasRenderCmd extends Node.CanvasRenderCmd {
       this._tintCache = document.createElement("canvas");
     }
     const tintCache = this._tintCache;
-    const textureContentSize = texture.getContentSize();
-    tintCache.width = textureContentSize.width;
-    tintCache.height = textureContentSize.height;
-    return texture._generateColorTexture(
+    tintCache.width = texture.width;
+    tintCache.height = texture.height;
+    return texture.renderer.generateColorTexture(
       color.r,
       color.g,
       color.b,

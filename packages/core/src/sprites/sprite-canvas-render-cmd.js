@@ -58,7 +58,7 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
   _setTexture(texture) {
     const node = this._node;
     if (node._texture !== texture) {
-      node._textureLoaded = texture ? texture._textureLoaded : false;
+      node._textureLoaded = texture ? texture.loaded : false;
       node._texture = texture;
       this._updateColor();
     }
@@ -86,16 +86,16 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
   }
 
   _handleTextureForRotatedTexture(texture, rect, rotated, counterclockwise) {
-    if (rotated && texture.isLoaded()) {
-      let tempElement = texture.getHtmlElementObj();
+    if (rotated && texture.loaded) {
+      let tempElement = texture.htmlElement;
       tempElement = SpriteCanvasRenderCmd._cutRotateImageToCanvas(
         tempElement,
         rect,
         counterclockwise
       );
       const tempTexture = new Texture2D();
-      tempTexture.initWithElement(tempElement);
-      tempTexture.handleLoadedTexture();
+      tempTexture.htmlElement = tempElement;
+      tempTexture.renderer.handleLoadedTexture();
       texture = tempTexture;
       rect.x = rect.y = 0;
       this._node._rect = new Rect(0, 0, rect.width, rect.height);
@@ -105,11 +105,9 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
 
   _checkTextureBoundary(texture, rect, rotated) {
     if (texture && texture.url) {
-      var texW = texture.getPixelsWide(),
-        texH = texture.getPixelsHigh();
-      var htmlElement = texture.getHtmlElementObj
-        ? texture.getHtmlElementObj()
-        : null;
+      var texW = texture.pixelsWidth,
+        texH = texture.pixelsHeight;
+      var htmlElement = texture.htmlElement;
       if (htmlElement) {
         texW = Math.max(
           texW,
@@ -156,7 +154,7 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
       (texture &&
         (locTextureCoord.width === 0 ||
           locTextureCoord.height === 0 ||
-          !texture._textureLoaded)) ||
+          !texture.loaded)) ||
       alpha === 0
     )
       return;
@@ -199,10 +197,10 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
     w = locWidth;
     h = locHeight;
 
-    if (texture && texture._htmlElementObj) {
-      image = texture._htmlElementObj;
-      if (texture._pattern !== "") {
-        wrapper.setFillStyle(context.createPattern(image, texture._pattern));
+    if (texture && texture.htmlElement) {
+      image = texture.htmlElement;
+      if (texture.pattern !== "") {
+        wrapper.setFillStyle(context.createPattern(image, texture.pattern));
         context.fillRect(x, y, w, h);
       } else {
         // Polygonal sprite: clip drawImage to the polygon's outline so
@@ -265,7 +263,7 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
 
     if (texture) {
       if (dColor.r !== BYTE || dColor.g !== BYTE || dColor.b !== BYTE) {
-        this._textureToRender = texture._generateColorTexture(
+        this._textureToRender = texture.renderer.generateColorTexture(
           dColor.r,
           dColor.g,
           dColor.b,

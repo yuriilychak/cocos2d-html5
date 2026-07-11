@@ -30,7 +30,7 @@ import {
   Texture2D,
   Color,
   log,
-  PIXEL_FORMAT_RGBA8888,
+  PIXEL_FORMAT,
   ServiceLocator
 } from "@aspect/core";
 
@@ -87,11 +87,11 @@ export class RenderTexture extends Node {
     super();
     this._cascadeColorEnabled = true;
     this._cascadeOpacityEnabled = true;
-    this._pixelFormat = PIXEL_FORMAT_RGBA8888;
+    this._pixelFormat = PIXEL_FORMAT.RGBA8888;
     this._clearColor = new Color(0, 0, 0, 255);
 
     if (width !== undefined && height !== undefined) {
-      format = format || PIXEL_FORMAT_RGBA8888;
+      format = format || PIXEL_FORMAT.RGBA8888;
       depthStencilFormat = depthStencilFormat || 0;
       this.initWithWidthAndHeight(width, height, format, depthStencilFormat);
     }

@@ -195,7 +195,7 @@ export class Grid3D extends GridBase {
 
     const width = this._texture.pixelsWidth;
     const height = this._texture.pixelsHeight;
-    const imageH = this._texture.getContentSizeInPixels().height;
+    const imageH = this._texture.contentSize.height;
     const locGridSize = this._gridSize;
 
     const numOfPoints = (locGridSize.width + 1) * (locGridSize.height + 1);

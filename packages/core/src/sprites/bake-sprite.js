@@ -44,8 +44,8 @@ export class BakeSprite extends Sprite {
     );
 
     var texture = new Texture2D();
-    texture.initWithElement(canvasElement);
-    texture.handleLoadedTexture();
+    texture.htmlElement = canvasElement;
+    texture.renderer.handleLoadedTexture();
     this.setTexture(texture);
   }
 
@@ -77,7 +77,7 @@ export class BakeSprite extends Sprite {
       locContext._context.strokeStyle = strokeStyle;
     if (fillStyle !== locContext._context.fillStyle)
       locContext._context.fillStyle = fillStyle;
-    this.getTexture().handleLoadedTexture();
+    this.getTexture().renderer.handleLoadedTexture();
     this.setTextureRect(
       new Rect(0, 0, sizeOrWidth, height),
       false,

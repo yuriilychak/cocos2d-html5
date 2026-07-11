@@ -254,13 +254,11 @@ export class Button extends Widget {
     if (!texture) {
       texture = ServiceLocator.textureCache.addImage(file);
     }
-    if (!texture._textureLoaded) {
+    if (!texture.loaded) {
       return texture;
     }
 
-    var textureSize = texture.getContentSize();
-    var rect = new Rect(0, 0, textureSize.width, textureSize.height);
-    return new SpriteFrame(texture, rect);
+    return new SpriteFrame(texture, texture.rect);
   }
 
   _createSpriteFrameWithName(name) {

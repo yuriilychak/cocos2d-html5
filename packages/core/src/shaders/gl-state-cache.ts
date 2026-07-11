@@ -127,7 +127,7 @@ export class GLStateCache {
 
     const ctx = this.#sys.rendererConfig.renderContext;
     ctx.activeTexture(ctx.TEXTURE0 + textureUnit);
-    if (textureId) ctx.bindTexture(ctx.TEXTURE_2D, textureId._webTextureObj);
+    if (textureId) ctx.bindTexture(ctx.TEXTURE_2D, textureId.renderer.webTexture);
     else ctx.bindTexture(ctx.TEXTURE_2D, null);
   }
 
@@ -139,7 +139,7 @@ export class GLStateCache {
     if (textureId === this.#currentBoundTexture[textureUnit])
       this.#currentBoundTexture[textureUnit] = -1;
     this.#sys.rendererConfig.renderContext.deleteTexture(
-      textureId._webTextureObj
+      textureId.renderer.webTexture
     );
   }
 

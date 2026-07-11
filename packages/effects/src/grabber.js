@@ -34,7 +34,9 @@ export class Grabber extends BaseClass {
    * constructor of Grabber
    */
   constructor() {
-    ServiceLocator.sys._checkWebGLRenderMode();
+    if (!ServiceLocator.sys.rendererConfig.isWebGL) {
+      throw new Error("Grabber requires WebGL render mode.");
+    }
     super();
     this._gl = ServiceLocator.sys.rendererConfig.renderContext;
     this._oldClearColor = [0, 0, 0, 0];
@@ -57,7 +59,7 @@ export class Grabber extends BaseClass {
       locGL.FRAMEBUFFER,
       locGL.COLOR_ATTACHMENT0,
       locGL.TEXTURE_2D,
-      texture._webTextureObj,
+      texture.renderer.webTexture,
       0
     );
 

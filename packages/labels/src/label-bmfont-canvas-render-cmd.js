@@ -42,18 +42,20 @@ export class LabelBMFontCanvasRenderCmd extends Node.CanvasRenderCmd {
 
     _changeTextureColor() {
         const node = this._node;
-        const texture = node._texture,
-            contentSize = texture.getContentSize();
-
+        const texture = node._texture;
         const oTexture = node._texture,
-            oElement = oTexture.getHtmlElementObj();
+            oElement = oTexture.htmlElement;
         const disColor = this._displayedColor;
         const textureRect = new Rect(0, 0, oElement.width, oElement.height);
-        if (texture && contentSize.width > 0) {
-            if (!oElement)
-                return;
-            const textureToRender = oTexture._generateColorTexture(disColor.r, disColor.g, disColor.b, textureRect);
-            node.setTexture(textureToRender);
+        if (texture && texture.width > 0) {
+          if (!oElement) return;
+          const textureToRender = oTexture.renderer.generateColorTexture(
+            disColor.r,
+            disColor.g,
+            disColor.b,
+            textureRect
+          );
+          node.setTexture(textureToRender);
         }
     }
 

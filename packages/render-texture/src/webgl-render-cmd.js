@@ -32,8 +32,8 @@ import {
   NextPOT,
   contentScaleFactor,
   Matrix4,
-  KMGLMatrix,
-  PIXEL_FORMAT_A8,
+  KMGLMatrixMode,
+  PIXEL_FORMAT,
   ServiceLocator
 } from "@aspect/core";
 
@@ -155,7 +155,7 @@ export class RenderTextureWebGLRenderCmd extends NodeWebGLRenderCmd {
 
   initWithWidthAndHeight(width, height, format, depthStencilFormat) {
     const node = this._node;
-    if (format === PIXEL_FORMAT_A8)
+    if (format === PIXEL_FORMAT.A8)
       log(
         "RenderTexture._initWithWidthAndHeightForWebGL() : only RGB and RGBA formats are valid for a render texture;"
       );
@@ -221,7 +221,7 @@ export class RenderTextureWebGLRenderCmd extends NodeWebGLRenderCmd {
       gl.FRAMEBUFFER,
       gl.COLOR_ATTACHMENT0,
       gl.TEXTURE_2D,
-      locTexture._webTextureObj,
+      locTexture.renderer.webTexture,
       0
     );
 
@@ -260,7 +260,7 @@ export class RenderTextureWebGLRenderCmd extends NodeWebGLRenderCmd {
     if (gl.checkFramebufferStatus(gl.FRAMEBUFFER) !== gl.FRAMEBUFFER_COMPLETE)
       log("Could not attach texture to the framebuffer");
 
-    locTexture.setAliasTexParameters();
+    locTexture.renderer.setAliasTexParameters();
 
     const locSprite = (node.sprite = new Sprite(locTexture));
     locSprite.scaleY = -1;
@@ -280,16 +280,16 @@ export class RenderTextureWebGLRenderCmd extends NodeWebGLRenderCmd {
   begin() {
     const node = this._node;
     // Save the current matrix
-    ServiceLocator.kmglMatrix.matrixMode(KMGLMatrix.KM_GL_PROJECTION);
+    ServiceLocator.kmglMatrix.matrixMode(KMGLMatrixMode.PROJECTION);
     ServiceLocator.kmglMatrix.pushMatrix();
-    ServiceLocator.kmglMatrix.matrixMode(KMGLMatrix.KM_GL_MODELVIEW);
+    ServiceLocator.kmglMatrix.matrixMode(KMGLMatrixMode.MODELVIEW);
     ServiceLocator.kmglMatrix.pushMatrix();
 
     const gl = ServiceLocator.sys.rendererConfig.renderContext;
 
     ServiceLocator.eglView.rendererDelegate.projection = ServiceLocator.eglView.rendererDelegate.projection;
 
-    const texSize = node._texture.getContentSizeInPixels();
+    const texSize = node._texture.contentSize;
 
     // Calculate the adjustment ratios based on the old and new projections
     const size = ServiceLocator.eglView.winSizeInPixels;
@@ -332,7 +332,7 @@ export class RenderTextureWebGLRenderCmd extends NodeWebGLRenderCmd {
         gl.FRAMEBUFFER,
         gl.COLOR_ATTACHMENT0,
         gl.TEXTURE_2D,
-        this._textureCopy._webTextureObj,
+        this._textureCopy.renderer.webTexture,
         0
       );
       //checkGLErrorDebug();
@@ -341,7 +341,7 @@ export class RenderTextureWebGLRenderCmd extends NodeWebGLRenderCmd {
         gl.FRAMEBUFFER,
         gl.COLOR_ATTACHMENT0,
         gl.TEXTURE_2D,
-        node._texture._webTextureObj,
+        node._texture.renderer.webTexture,
         0
       );
     }
@@ -397,9 +397,9 @@ export class RenderTextureWebGLRenderCmd extends NodeWebGLRenderCmd {
 
     //restore viewport
     ServiceLocator.eglView.setViewport();
-    ServiceLocator.kmglMatrix.matrixMode(KMGLMatrix.KM_GL_PROJECTION);
+    ServiceLocator.kmglMatrix.matrixMode(KMGLMatrixMode.PROJECTION);
     ServiceLocator.kmglMatrix.popMatrix();
-    ServiceLocator.kmglMatrix.matrixMode(KMGLMatrix.KM_GL_MODELVIEW);
+    ServiceLocator.kmglMatrix.matrixMode(KMGLMatrixMode.MODELVIEW);
     ServiceLocator.kmglMatrix.popMatrix();
   }
 

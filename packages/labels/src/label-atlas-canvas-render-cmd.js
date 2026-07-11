@@ -27,7 +27,7 @@ export class LabelAtlasCanvasRenderCmd extends AtlasNode.CanvasRenderCmd {
             if(row < 0 || col < 0)
                 continue;
             const rect = new Rect(row * locItemWidth, col * locItemHeight, locItemWidth, locItemHeight);
-            const textureContent = texture._contentSize;
+            const textureContent = texture.contentSize;
             if(rect.x < 0 || rect.y < 0 || rect.x + rect.width > textureContent.width || rect.y + rect.height > textureContent.height)
                 continue;
 

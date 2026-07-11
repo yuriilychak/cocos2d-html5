@@ -2,7 +2,7 @@ import Matrix4 from "./mat4";
 import Vec3 from "./vec3";
 import Matrix4Stack from "./mat4-stack";
 import { degreesToRadians } from "../platform/macro/utils";
-import { DirectorProjection } from "../enums";
+import { DirectorProjection, KMGLMatrixMode } from "../enums";
 import { log, _LogInfos } from "../boot/debugger";
 import type { EGLViewLike } from "../platform/egl-view/types";
 import type { Mat4Like } from "./types";
@@ -12,11 +12,6 @@ interface DirectorLike {
 }
 
 export class KMGLMatrix {
-  public static KM_GL_MODELVIEW = 0x1700;
-  public static KM_GL_PROJECTION = 0x1701;
-  public static KM_GL_TEXTURE = 0x1702;
-
-
   public modelViewStack: Matrix4Stack | null = new Matrix4Stack();
   public projectionStack: Matrix4Stack | null = new Matrix4Stack();
   public textureStack: Matrix4Stack | null = new Matrix4Stack();
@@ -75,13 +70,13 @@ export class KMGLMatrix {
 
   public matrixMode(mode: number): void {
     switch (mode) {
-      case KMGLMatrix.KM_GL_MODELVIEW:
+      case KMGLMatrixMode.MODELVIEW:
         this.currentStack = this.modelViewStack!;
         break;
-      case KMGLMatrix.KM_GL_PROJECTION:
+      case KMGLMatrixMode.PROJECTION:
         this.currentStack = this.projectionStack!;
         break;
-      case KMGLMatrix.KM_GL_TEXTURE:
+      case KMGLMatrixMode.TEXTURE:
         this.currentStack = this.textureStack!;
         break;
       default:
@@ -110,7 +105,7 @@ export class KMGLMatrix {
 
     switch (projection) {
       case DirectorProjection.TWO_D:
-        this.matrixMode(KMGLMatrix.KM_GL_PROJECTION);
+        this.matrixMode(KMGLMatrixMode.PROJECTION);
         this.loadIdentity();
         this.multMatrix(
           Matrix4.createOrthographicProjection(
@@ -122,11 +117,11 @@ export class KMGLMatrix {
             1024
           )
         );
-        this.matrixMode(KMGLMatrix.KM_GL_MODELVIEW);
+        this.matrixMode(KMGLMatrixMode.MODELVIEW);
         this.loadIdentity();
         break;
       case DirectorProjection.THREE_D: {
-        this.matrixMode(KMGLMatrix.KM_GL_PROJECTION);
+        this.matrixMode(KMGLMatrixMode.PROJECTION);
         this.loadIdentity();
 
         const zEye = eglView.zEye;
@@ -154,7 +149,7 @@ export class KMGLMatrix {
         const up = new Vec3(0.0, 1.0, 0.0);
         this.multMatrix(new Matrix4().lookAt(eye, center, up));
 
-        this.matrixMode(KMGLMatrix.KM_GL_MODELVIEW);
+        this.matrixMode(KMGLMatrixMode.MODELVIEW);
         this.loadIdentity();
         break;
       }
@@ -186,13 +181,13 @@ export class KMGLMatrix {
 
   public getMatrix(mode: number, pOut: Matrix4): void {
     switch (mode) {
-      case KMGLMatrix.KM_GL_MODELVIEW:
+      case KMGLMatrixMode.MODELVIEW:
         pOut.assignFrom(this.modelViewStack!.top!);
         break;
-      case KMGLMatrix.KM_GL_PROJECTION:
+      case KMGLMatrixMode.PROJECTION:
         pOut.assignFrom(this.projectionStack!.top!);
         break;
-      case KMGLMatrix.KM_GL_TEXTURE:
+      case KMGLMatrixMode.TEXTURE:
         pOut.assignFrom(this.textureStack!.top!);
         break;
       default:

@@ -288,8 +288,8 @@ export const _atlasLoader = {
       const texturePath = Path.join(Path.dirname(atlasFilePath), page.name);
       const texture = ServiceLocator.textureCache.addImage(texturePath);
       const tex = new SkeletonTexture({
-        width: texture.getPixelsWide(),
-        height: texture.getPixelsHigh()
+        width: texture.pixelsWidth,
+        height: texture.pixelsHeight
       });
       tex.setRealTexture(texture);
       page.setTexture(tex);

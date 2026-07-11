@@ -91,7 +91,7 @@ export class TMXLayer extends SpriteBatchNode {
 
   _fillTextureGrids(tileset, texId) {
     var tex = this._textures[texId];
-    if (!tex.isLoaded()) {
+    if (!tex.loaded) {
       tex.addEventListener(
         "load",
         function () {
@@ -105,10 +105,11 @@ export class TMXLayer extends SpriteBatchNode {
       tileset.imageSize.width = tex.width;
       tileset.imageSize.height = tex.height;
     }
+    const textureContentSize = tex.contentSize;
     var tw = tileset._tileSize.width,
       th = tileset._tileSize.height,
-      imageW = tex._contentSize.width,
-      imageH = tex._contentSize.height,
+      imageW = textureContentSize.width,
+      imageH = textureContentSize.height,
       spacing = tileset.spacing,
       margin = tileset.margin,
       cols = Math.floor((imageW - margin * 2 + spacing) / (tw + spacing)),

@@ -90,7 +90,7 @@ export class ProgressTimerCanvasRenderCmd extends Node.CanvasRenderCmd {
 
     //draw sprite
     const texture = locSprite._renderCmd._textureToRender || locSprite._texture;
-    const image = texture.getHtmlElementObj();
+    const image = texture.htmlElement;
     if (locSprite._renderCmd._colorized) {
       context.drawImage(
         image,

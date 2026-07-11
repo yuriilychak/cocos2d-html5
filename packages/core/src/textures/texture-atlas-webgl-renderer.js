@@ -49,7 +49,7 @@ export default class TextureAtlasWebGLRenderer {
   drawNumberOfQuads(n, start) {
     var textureAtlas = this._textureAtlas;
     start = start || 0;
-    if (0 === n || !textureAtlas.texture || !textureAtlas.texture.isLoaded())
+    if (0 === n || !textureAtlas.texture || !textureAtlas.texture.loaded)
       return;
 
     var gl = ServiceLocator.sys.rendererConfig.renderContext;

@@ -61,7 +61,7 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
 
   _updateBlendFunc() {
     const node = this._node;
-    if (!this._textureAtlas.texture.hasPremultipliedAlpha()) {
+    if (!this._textureAtlas.texture.renderer.hasPremultipliedAlpha) {
       node._blendFunc.src = GLState.SRC_ALPHA;
       node._blendFunc.dst = GLState.ONE_MINUS_SRC_ALPHA;
     }
@@ -69,7 +69,7 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
 
   #updateOpacityModifyRGB() {
     this._node.isOpacityModifyRGB =
-      this._textureAtlas.texture.hasPremultipliedAlpha();
+      this._textureAtlas.texture.renderer.hasPremultipliedAlpha;
   }
 
   rendering(ctx) {
@@ -173,11 +173,14 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
   _calculateMaxItems() {
     const node = this._node;
     const selTexture = this._textureAtlas.texture;
-    let size = selTexture.getContentSize();
-    if (node._ignoreContentScaleFactor)
-      size = selTexture.getContentSizeInPixels();
+    const width = node._ignoreContentScaleFactor
+      ? selTexture.contentSize.width
+      : selTexture.width;
+    const height = node._ignoreContentScaleFactor
+      ? selTexture.contentSize.height
+      : selTexture.height;
 
-    node._itemsPerColumn = 0 | (size.height / node._itemHeight);
-    node._itemsPerRow = 0 | (size.width / node._itemWidth);
+    node._itemsPerColumn = 0 | (height / node._itemHeight);
+    node._itemsPerRow = 0 | (width / node._itemWidth);
   }
 }

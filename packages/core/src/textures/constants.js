@@ -24,104 +24,32 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-/**
- * Horizontal center and vertical center.
- * @constant
- * @type Number
- */
-export const ALIGN_CENTER = 0x33;
+import { PIXEL_FORMAT } from "../enums";
 
-/**
- * Horizontal center and vertical top.
- * @constant
- * @type Number
- */
-export const ALIGN_TOP = 0x13;
-
-/**
- * Horizontal right and vertical top.
- * @constant
- * @type Number
- */
-export const ALIGN_TOP_RIGHT = 0x12;
-
-/**
- * Horizontal right and vertical center.
- * @constant
- * @type Number
- */
-export const ALIGN_RIGHT = 0x32;
-
-/**
- * Horizontal right and vertical bottom.
- * @constant
- * @type Number
- */
-export const ALIGN_BOTTOM_RIGHT = 0x22;
-
-/**
- * Horizontal center and vertical bottom.
- * @constant
- * @type Number
- */
-export const ALIGN_BOTTOM = 0x23;
-
-/**
- * Horizontal left and vertical bottom.
- * @constant
- * @type Number
- */
-export const ALIGN_BOTTOM_LEFT = 0x21;
-
-/**
- * Horizontal left and vertical center.
- * @constant
- * @type Number
- */
-export const ALIGN_LEFT = 0x31;
-
-/**
- * Horizontal left and vertical top.
- * @constant
- * @type Number
- */
-export const ALIGN_TOP_LEFT = 0x11;
-
-export const PIXEL_FORMAT_RGBA8888 = 2;
-export const PIXEL_FORMAT_RGB888 = 3;
-export const PIXEL_FORMAT_RGB565 = 4;
-export const PIXEL_FORMAT_A8 = 5;
-export const PIXEL_FORMAT_I8 = 6;
-export const PIXEL_FORMAT_AI88 = 7;
-export const PIXEL_FORMAT_RGBA4444 = 8;
-export const PIXEL_FORMAT_RGB5A1 = 7;
-export const PIXEL_FORMAT_PVRTC4 = 9;
-export const PIXEL_FORMAT_PVRTC2 = 10;
-export const PIXEL_FORMAT_DEFAULT = PIXEL_FORMAT_RGBA8888;
-export const defaultPixelFormat = PIXEL_FORMAT_DEFAULT;
+export const defaultPixelFormat = PIXEL_FORMAT.DEFAULT;
 
 export const PIXEL_FORMAT_NAMES = {
-  [PIXEL_FORMAT_RGBA8888]: "RGBA8888",
-  [PIXEL_FORMAT_RGB888]: "RGB888",
-  [PIXEL_FORMAT_RGB565]: "RGB565",
-  [PIXEL_FORMAT_A8]: "A8",
-  [PIXEL_FORMAT_I8]: "I8",
-  [PIXEL_FORMAT_AI88]: "AI88",
-  [PIXEL_FORMAT_RGBA4444]: "RGBA4444",
-  [PIXEL_FORMAT_RGB5A1]: "RGB5A1",
-  [PIXEL_FORMAT_PVRTC4]: "PVRTC4",
-  [PIXEL_FORMAT_PVRTC2]: "PVRTC2"
+  [PIXEL_FORMAT.RGBA8888]: "RGBA8888",
+  [PIXEL_FORMAT.RGB888]: "RGB888",
+  [PIXEL_FORMAT.RGB565]: "RGB565",
+  [PIXEL_FORMAT.A8]: "A8",
+  [PIXEL_FORMAT.I8]: "I8",
+  [PIXEL_FORMAT.AI88]: "AI88",
+  [PIXEL_FORMAT.RGBA4444]: "RGBA4444",
+  [PIXEL_FORMAT.RGB5A1]: "RGB5A1",
+  [PIXEL_FORMAT.PVRTC4]: "PVRTC4",
+  [PIXEL_FORMAT.PVRTC2]: "PVRTC2"
 };
 
 export const PIXEL_FORMAT_BITS = {
-  [PIXEL_FORMAT_RGBA8888]: 32,
-  [PIXEL_FORMAT_RGB888]: 24,
-  [PIXEL_FORMAT_RGB565]: 16,
-  [PIXEL_FORMAT_A8]: 8,
-  [PIXEL_FORMAT_I8]: 8,
-  [PIXEL_FORMAT_AI88]: 16,
-  [PIXEL_FORMAT_RGBA4444]: 16,
-  [PIXEL_FORMAT_RGB5A1]: 16,
-  [PIXEL_FORMAT_PVRTC4]: 4,
-  [PIXEL_FORMAT_PVRTC2]: 3
+  [PIXEL_FORMAT.RGBA8888]: 32,
+  [PIXEL_FORMAT.RGB888]: 24,
+  [PIXEL_FORMAT.RGB565]: 16,
+  [PIXEL_FORMAT.A8]: 8,
+  [PIXEL_FORMAT.I8]: 8,
+  [PIXEL_FORMAT.AI88]: 16,
+  [PIXEL_FORMAT.RGBA4444]: 16,
+  [PIXEL_FORMAT.RGB5A1]: 16,
+  [PIXEL_FORMAT.PVRTC4]: 4,
+  [PIXEL_FORMAT.PVRTC2]: 3
 };

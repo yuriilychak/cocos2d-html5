@@ -25,7 +25,7 @@
 
 import { RenderTextureBaseLayer } from "./render-texture-base-layer";
 import { s_fire } from "../resources";
-import { Color, LayerColor, Sprite, Texture2D, ServiceLocator } from "@aspect/core";
+import { Color, LayerColor, PIXEL_FORMAT, Sprite, ServiceLocator } from "@aspect/core";
 import { RenderTexture } from "@aspect/render-texture";
 export class RenderTextureIssue937 extends RenderTextureBaseLayer {
   constructor() {
@@ -55,7 +55,7 @@ export class RenderTextureIssue937 extends RenderTextureBaseLayer {
     spr_nonpremulti.y = 16;
 
     /* A2 & B2 setup */
-    var rend = new RenderTexture(32, 64, Texture2D.PIXEL_FORMAT_RGBA8888);
+    var rend = new RenderTexture(32, 64, PIXEL_FORMAT.RGBA8888);
     if (!rend) return;
     // It's possible to modify the RenderTexture blending function by
     //        [[rend sprite] setBlendFunc:(ccBlendFunc) {GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];

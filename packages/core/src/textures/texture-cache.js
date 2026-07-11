@@ -73,7 +73,7 @@ export default class TextureCache {
       locTextures = this._textures;
     for (selPath in locLoadedTexturesBefore) {
       var tex2d = locLoadedTexturesBefore[selPath];
-      tex2d.handleLoadedTexture();
+      tex2d.renderer.handleLoadedTexture(Path.extname(selPath) === ".png");
       locTextures[selPath] = tex2d;
     }
     this._loadedTexturesBefore = {};
@@ -160,7 +160,7 @@ export default class TextureCache {
    * var cacheTextureForColor = textureCache.getTextureColors(texture);
    */
   getTextureColors(texture) {
-    var image = texture._htmlElementObj;
+    var image = texture.htmlElement;
     var key = this.getKeyByTexture(image);
     if (!key) {
       if (image instanceof HTMLImageElement) key = image.src;
@@ -168,7 +168,7 @@ export default class TextureCache {
     }
 
     if (!this._textureColorsCache[key])
-      this._textureColorsCache[key] = texture._generateTextureCacheForColor();
+      this._textureColorsCache[key] = texture.renderer.generateTextureCacheForColor();
     return this._textureColorsCache[key];
   }
 
@@ -249,8 +249,8 @@ export default class TextureCache {
       return;
     }
     var texture2d = new Texture2D();
-    texture2d.initWithElement(texture);
-    texture2d.handleLoadedTexture();
+    texture2d.htmlElement = texture;
+    texture2d.renderer.handleLoadedTexture();
     this._textures[path] = texture2d;
   }
 
@@ -291,23 +291,23 @@ export default class TextureCache {
     for (var key in locTextures) {
       var selTexture = locTextures[key];
       count++;
-      if (selTexture.getHtmlElementObj() instanceof HTMLImageElement)
+      if (selTexture.htmlElement instanceof HTMLImageElement)
         log(
           _LogInfos.textureCache_dumpCachedTextureInfo,
           key,
-          selTexture.getHtmlElementObj().src,
-          selTexture.getPixelsWide(),
-          selTexture.getPixelsHigh()
+          selTexture.htmlElement.src,
+          selTexture.pixelsWidth,
+          selTexture.pixelsHeight
         );
       else {
         log(
           _LogInfos.textureCache_dumpCachedTextureInfo_2,
           key,
-          selTexture.getPixelsWide(),
-          selTexture.getPixelsHigh()
+          selTexture.pixelsWidth,
+          selTexture.pixelsHeight
         );
       }
-      totalBytes += selTexture.getPixelsWide() * selTexture.getPixelsHigh() * 4;
+      totalBytes += selTexture.pixelsWidth * selTexture.pixelsHeight * 4;
     }
 
     var locTextureColorsCache = this._textureColorsCache;
@@ -349,10 +349,7 @@ export default class TextureCache {
         tex.url = url;
       }
       // Set basic dimensions before renderer is ready
-      tex._htmlElementObj = img;
-      tex._pixelsWide = tex._contentSize.width = img.width;
-      tex._pixelsHigh = tex._contentSize.height = img.height;
-      tex._textureLoaded = true;
+      tex.htmlElement = img;
       return tex;
     }
     return this._renderer.handleLoadedTexture(url, img);
@@ -365,7 +362,7 @@ export default class TextureCache {
         this._loadedTexturesBefore[url] ||
         this._loadedTexturesBefore[this._loader._getAliase(url)];
       if (tex) {
-        if (tex.isLoaded()) {
+        if (tex.loaded) {
           cb && cb.call(target, tex);
           return tex;
         } else {

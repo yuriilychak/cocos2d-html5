@@ -181,7 +181,7 @@ export class TMXLayerCanvasRenderCmd extends Node.CanvasRenderCmd {
           continue;
         }
         tex = node._textures[grid.texId];
-        if (!tex || !tex._htmlElementObj) {
+        if (!tex || !tex.htmlElement) {
           continue;
         }
 
@@ -236,7 +236,7 @@ export class TMXLayerCanvasRenderCmd extends Node.CanvasRenderCmd {
         }
 
         context.drawImage(
-          tex._htmlElementObj,
+          tex.htmlElement,
           grid.x,
           grid.y,
           grid.width,
