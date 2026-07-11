@@ -32,8 +32,8 @@ import {
 } from "./constants";
 
 import type { Sys } from "../sys";
-import { type ShaderProgram } from "./shader-definition";
 import type ShaderDefinition from "./shader-definition";
+import type { ShaderProgram } from "./types";
 
 /**
  * ShaderCache is a singleton object that stores manages GL shaders

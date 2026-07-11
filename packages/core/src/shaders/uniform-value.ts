@@ -27,14 +27,12 @@
 import { UniformValueType } from "../enums";
 import { ServiceLocator } from "../service-locator";
 import GLProgram from "./gl-program";
-
-type UniformLocationInput = WebGLUniformLocation | string | null;
-type UniformValueArray = Float32Array | number[];
-type UniformInfo = WebGLActiveInfo & {
-  _location: UniformLocationInput;
-};
-type UniformCallback = (program: GLProgram, uniform: UniformInfo) => void;
-type UniformStoredValue = number | UniformValueArray | UniformCallback | null;
+import type {
+  UniformCallback,
+  UniformInfo,
+  UniformStoredValue,
+  UniformValueArray
+} from "./types";
 
 export default class UniformValue {
   #uniform: UniformInfo;

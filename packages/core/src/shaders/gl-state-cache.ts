@@ -27,12 +27,7 @@
 import { TEXTURE_ATLAS_USE_VAO } from "../platform/config";
 import { KMGLMatrix } from "../kazmath/km-gl-matrix";
 import { Sys } from "../sys";
-
-type TextureLike = {
-  _webTextureObj: WebGLTexture;
-};
-
-type CachedTexture = TextureLike | null | -1;
+import type { CachedTexture, TextureLike } from "./types";
 
 export class GLStateCache {
   static MAX_ACTIVE_TEXTURE: number = 16;

@@ -35,11 +35,11 @@ import { checkGLErrorDebug } from "../platform/macro/utils";
 import { ServiceLocator } from "../service-locator";
 import { CONFIG_KEY, UniformName } from "../enums";
 import { WebGLContext } from "../sys/types";
-
-type NamedUniformLocation = WebGLUniformLocation & { _name?: string };
-type UniformLocationInput = NamedUniformLocation | string | null;
-type ResolvedUniformLocation = WebGLUniformLocation | null | "";
-type UniformMethodArg = number | boolean | Int32Array | Float32Array | number[];
+import type {
+  ResolvedUniformLocation,
+  UniformLocationInput,
+  UniformMethodArg
+} from "./types";
 
 /**
  * Class that implements a WebGL program

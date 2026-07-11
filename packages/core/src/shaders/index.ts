@@ -5,3 +5,4 @@ export { default as GLProgram } from './gl-program';
 export * from './program-state';
 export * from './gl-state-cache';
 export * from './utils';
+export type * from './types';

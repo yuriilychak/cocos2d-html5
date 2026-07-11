@@ -28,24 +28,9 @@ import { log } from "../boot/debugger";
 import Matrix4 from "../kazmath/mat4";
 import GLProgram from "./gl-program";
 import UniformValue from "./uniform-value";
+import type { ProgramUniform, UniformSetter } from "./types";
 
 export { default as UniformValue } from "./uniform-value";
-
-type UniformLocation = WebGLUniformLocation & { _name?: string };
-type ProgramUniform = WebGLActiveInfo & {
-  _location: UniformLocation | null;
-};
-type UniformSetter =
-  | "setInt"
-  | "setFloat"
-  | "setVec2"
-  | "setVec2v"
-  | "setVec3"
-  | "setVec3v"
-  | "setVec4"
-  | "setVec4v"
-  | "setMat4"
-  | "setCallback";
 
 export class GLProgramState {
   static #cache: Map<number, GLProgramState> = new Map();

@@ -1,9 +1,8 @@
-import type { AttributeName, VertexAttribute } from "../enums";
 import { checkGLErrorDebug } from "../platform/macro/utils";
 import GLProgram from "./gl-program";
+import type { AttributeBinding, ShaderProgram } from "./types";
 
-export type AttributeBinding = readonly [AttributeName, VertexAttribute];
-export type ShaderProgram = GLProgram;
+export type { AttributeBinding, ShaderProgram } from "./types";
 
 export default class ShaderDefinition {
     readonly #vertexShader: string;

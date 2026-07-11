@@ -5,6 +5,7 @@ import {
     buildSpriteMultiTextureVert
 } from "./shaders";
 import ShaderDefinition from "./shader-definition";
+import type { DefaultShaderLoadEntry } from "./types";
 
 export function createDefaultShaderDefinitions(
     multiTextureFragmentShader: string
@@ -162,10 +163,7 @@ export function createDefaultShaderDefinitions(
     ]);
 }
 
-export const defaultShaderLoadList: readonly {
-    shaderName: ShaderName;
-    isWebGL2Only?: boolean;
-}[] = [
+export const defaultShaderLoadList: readonly DefaultShaderLoadEntry[] = [
     { shaderName: ShaderName.POSITION_TEXTURECOLOR },
     { shaderName: ShaderName.POSITION_TEXTURECOLORALPHATEST },
     { shaderName: ShaderName.POSITION_COLOR },
