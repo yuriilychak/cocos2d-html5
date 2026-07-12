@@ -1,4 +1,5 @@
 import type { AttributeName, ShaderName, VertexAttribute } from "../enums";
+import type { Texture2DInterface } from "../textures/texture-2d";
 import type GLProgram from "./gl-program";
 
 export type AttributeBinding = readonly [AttributeName, VertexAttribute];
@@ -43,12 +44,7 @@ export type UniformSetter =
   | "setMat4"
   | "setCallback";
 
-export type TextureLike = {
-  renderer: {
-    webTexture: WebGLTexture | null;
-  };
-};
-export type CachedTexture = TextureLike | null | -1;
+export type CachedTexture = Texture2DInterface | null | -1;
 
 export type DefaultShaderLoadEntry = {
   shaderName: ShaderName;

@@ -24,20 +24,20 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BaseClass } from "../platform/class";
-import EventHelper from "../event-manager/event-helper";
-import { Rect, Size } from "../geometry";
-import type { SizeLike } from "../geometry";
+import { BaseClass } from "../../platform/class";
+import EventHelper from "../../event-manager/event-helper";
+import { ServiceLocator } from "../../service-locator";
+import { Rect, Size } from "../../geometry";
 import CanvasTextureRenderer from "./texture-2d-canvas-renderer";
 import WebGLTextureRenderer from "./texture-2d-webgl-renderer";
-import { contentScaleFactor } from "../platform/macro/utils";
-import { PIXEL_FORMAT } from "../enums";
+import { contentScaleFactor } from "../../platform/macro/utils";
+import { PIXEL_FORMAT } from "../../enums";
+
 import type Texture2DRenderer from "./texture-2d-renderer";
 import type { Texture2DInterface, TextureElement } from "./types";
+import type { SizeLike } from "../../geometry";
 
-export { defaultPixelFormat, PIXEL_FORMAT_NAMES, PIXEL_FORMAT_BITS } from "./constants";
 
-import { ServiceLocator } from "../service-locator";
 
 const Texture2DEventBase = EventHelper(BaseClass) as typeof BaseClass;
 

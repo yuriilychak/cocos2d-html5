@@ -100,7 +100,7 @@ export class SpriteAliased extends SpriteTestDemo {
       label.y = winSize.height / 2;
     } else {
       var sprite = this.getChildByTag(TAG_SPRITE1);
-      sprite.texture.renderer.setAliasTexParameters();
+      sprite.texture.renderer.aliasing = true;
     }
 
     //----end24----
@@ -113,7 +113,7 @@ export class SpriteAliased extends SpriteTestDemo {
         ServiceLocator.sys.rendererConfig.isWebGL)
     ) {
       var sprite = this.getChildByTag(TAG_SPRITE1);
-      sprite.texture.renderer.setAntiAliasTexParameters();
+      sprite.texture.renderer.aliasing = false;
     }
     super.onExit();
     //----end24----

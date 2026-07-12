@@ -199,8 +199,7 @@ export { log, warn } from "./boot/debugger";
 export { RendererConfig } from "./sys/renderer-config";
 export { Director, DisplayLinkDirector } from "./director/director";
 export { Sys } from "./sys";
-export { Texture2D } from "./textures/texture-2d";
-export { defaultPixelFormat, PIXEL_FORMAT_NAMES, PIXEL_FORMAT_BITS } from "./textures/constants";
+export { Texture2D, defaultPixelFormat, PIXEL_FORMAT_NAMES, PIXEL_FORMAT_BITS } from "./textures";
 // Export TextureCache class
 export { default as TextureCache } from "./textures/texture-cache";
 export { GLProgramState, ShaderCache } from "./shaders";

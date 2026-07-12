@@ -1,6 +1,6 @@
-import type { PointLike, RectLike, SizeLike } from "../geometry";
-import type { GLState, PIXEL_FORMAT } from "../enums";
-import type { ShaderProgram } from "../shaders";
+import type { PointLike, RectLike, SizeLike } from "../../geometry";
+import type { GLState, PIXEL_FORMAT } from "../../enums";
+import type { ShaderProgram } from "../../shaders";
 
 export type TextureElement = (HTMLImageElement | HTMLCanvasElement) & SizeLike;
 
@@ -10,6 +10,64 @@ export type Texture2DParameters = {
   wrapS: GLState;
   wrapT: GLState;
 }
+
+export type NumericPixelData = ArrayBufferView & {
+  readonly length: number;
+  [index: number]: number;
+};
+
+export type TextureImage = {
+  getWidth(): number;
+  getHeight(): number;
+  getData(): NumericPixelData;
+  hasAlpha(): boolean;
+  getBitsPerComponent(): number;
+  isPremultipliedAlpha(): boolean;
+};
+
+export type PixelDataFactory = (
+  uiImage: TextureImage,
+  width: number,
+  height: number,
+  hasAlpha: boolean
+) => NumericPixelData;
+
+export type TextureParameterKey =
+  | "TEXTURE_MIN_FILTER"
+  | "TEXTURE_MAG_FILTER"
+  | "TEXTURE_WRAP_S"
+  | "TEXTURE_WRAP_T";
+
+export type TextureParameterValueKey = "LINEAR" | "CLAMP_TO_EDGE";
+
+export type WebGLPixelFormatKey =
+  | "RGBA"
+  | "RGB"
+  | "LUMINANCE_ALPHA"
+  | "ALPHA"
+  | "LUMINANCE";
+
+export type WebGLPixelTypeKey =
+  | "UNSIGNED_BYTE"
+  | "UNSIGNED_SHORT_4_4_4_4"
+  | "UNSIGNED_SHORT_5_5_5_1"
+  | "UNSIGNED_SHORT_5_6_5";
+
+export type WebGLTextureFilterKey =
+  | "LINEAR"
+  | "LINEAR_MIPMAP_NEAREST"
+  | "NEAREST"
+  | "NEAREST_MIPMAP_NEAREST";
+
+export type WebGLPixelFormatMapping = {
+  format: WebGLPixelFormatKey;
+  type: WebGLPixelTypeKey;
+};
+
+export type WebGLTextureFilterMapping = {
+  filter: WebGLTextureFilterKey;
+  mipmapMinFilter: WebGLTextureFilterKey;
+};
 
 export interface Texture2DRendererInterface {
   initWithElement(): void;
@@ -28,9 +86,6 @@ export interface Texture2DRendererInterface {
   initWithImage(uiImage: unknown): boolean;
   drawAtPoint(point: PointLike): void;
   drawInRect(rect: RectLike): void;
-  setAntiAliasTexParameters(): void;
-  setAliasTexParameters(): void;
-  generateMipmap(): void;
   generateColorTexture(
     r?: number,
     g?: number,
@@ -42,14 +97,15 @@ export interface Texture2DRendererInterface {
   generateGrayTexture(): Texture2DInterface | null;
 
   grayscaled: boolean;
-  readonly description: string;
+  toString(): string;
   readonly stringForFormat: string;
   webTexture: WebGLTexture | null;
   maxS: number;
   maxT: number;
   readonly pixelFormat: PIXEL_FORMAT;
   readonly hasPremultipliedAlpha: boolean;
-  readonly hasMipmaps: boolean;
+  hasMipmaps: boolean;
+  aliasing: boolean | null;
   shaderProgram: ShaderProgram | null;
 }
 

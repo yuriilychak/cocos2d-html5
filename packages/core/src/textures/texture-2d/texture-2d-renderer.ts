@@ -1,6 +1,6 @@
-import { GLState, PIXEL_FORMAT } from "../enums";
-import { PointLike, RectLike, SizeLike } from "../geometry";
-import type { ShaderProgram } from "../shaders/types";
+import { GLState, PIXEL_FORMAT } from "../../enums";
+import { PointLike, RectLike, SizeLike } from "../../geometry";
+import type { ShaderProgram } from "../../shaders/types";
 import { Texture2D } from "./texture-2d";
 import type {
   Texture2DParameters,
@@ -47,12 +47,6 @@ export default abstract class Texture2DRenderer
 
   drawInRect(rect: RectLike): void {}
 
-  setAntiAliasTexParameters(): void {}
-
-  setAliasTexParameters(): void {}
-
-  generateMipmap(): void {}
-
   generateColorTexture(
     r?: number,
     g?: number,
@@ -72,10 +66,9 @@ export default abstract class Texture2DRenderer
   }
 
   abstract get grayscaled(): boolean;
-
   abstract set grayscaled(value: boolean);
 
-  abstract get description(): string;
+  abstract toString(): string;
 
   abstract get stringForFormat(): string;
 
@@ -93,6 +86,10 @@ export default abstract class Texture2DRenderer
   abstract get hasPremultipliedAlpha(): boolean;
 
   abstract get hasMipmaps(): boolean;
+  abstract set hasMipmaps(value: boolean);
+
+  abstract get aliasing(): boolean | null;
+  abstract set aliasing(value: boolean | null);
 
   get shaderProgram(): ShaderProgram | null {
     return this.#shaderProgram;

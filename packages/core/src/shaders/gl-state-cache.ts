@@ -27,7 +27,8 @@
 import { TEXTURE_ATLAS_USE_VAO } from "../platform/config";
 import { KMGLMatrix } from "../kazmath/km-gl-matrix";
 import { Sys } from "../sys";
-import type { CachedTexture, TextureLike } from "./types";
+import type { CachedTexture } from "./types";
+import { Texture2DInterface } from "../textures/texture-2d";
 
 export class GLStateCache {
   static MAX_ACTIVE_TEXTURE: number = 16;
@@ -117,11 +118,11 @@ export class GLStateCache {
     this.#currentProjectionMatrix = -1;
   }
 
-  bindTexture2D(textureId: TextureLike | null): void {
+  bindTexture2D(textureId: Texture2DInterface | null): void {
     this.bindTexture2DN(0, textureId);
   }
 
-  bindTexture2DN(textureUnit: number, textureId: TextureLike | null): void {
+  bindTexture2DN(textureUnit: number, textureId: Texture2DInterface | null): void {
     if (this.#currentBoundTexture[textureUnit] === textureId) return;
     this.#currentBoundTexture[textureUnit] = textureId;
 
@@ -131,11 +132,11 @@ export class GLStateCache {
     else ctx.bindTexture(ctx.TEXTURE_2D, null);
   }
 
-  deleteTexture(textureId: TextureLike): void {
+  deleteTexture(textureId: Texture2DInterface): void {
     this.deleteTextureN(0, textureId);
   }
 
-  deleteTextureN(textureUnit: number, textureId: TextureLike): void {
+  deleteTextureN(textureUnit: number, textureId: Texture2DInterface): void {
     if (textureId === this.#currentBoundTexture[textureUnit])
       this.#currentBoundTexture[textureUnit] = -1;
     this.#sys.rendererConfig.renderContext.deleteTexture(

@@ -260,7 +260,7 @@ export class RenderTextureWebGLRenderCmd extends NodeWebGLRenderCmd {
     if (gl.checkFramebufferStatus(gl.FRAMEBUFFER) !== gl.FRAMEBUFFER_COMPLETE)
       log("Could not attach texture to the framebuffer");
 
-    locTexture.renderer.setAliasTexParameters();
+    locTexture.renderer.aliasing = true;
 
     const locSprite = (node.sprite = new Sprite(locTexture));
     locSprite.scaleY = -1;

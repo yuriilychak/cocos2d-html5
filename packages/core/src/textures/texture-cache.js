@@ -108,10 +108,10 @@ export default class TextureCache {
   }
 
   /**
-   * Description
+   * String representation.
    * @return {String}
    */
-  description() {
+  toString() {
     return (
       "<TextureCache | Number of textures = " + this._textures.length + ">"
     );

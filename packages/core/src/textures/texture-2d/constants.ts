@@ -24,11 +24,79 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { PIXEL_FORMAT } from "../enums";
+import { PIXEL_FORMAT } from "../../enums";
+import type {
+  TextureParameterKey,
+  TextureParameterValueKey,
+  WebGLPixelFormatMapping,
+  WebGLTextureFilterMapping
+} from "./types";
 
-export const defaultPixelFormat = PIXEL_FORMAT.DEFAULT;
+export const defaultPixelFormat: PIXEL_FORMAT = PIXEL_FORMAT.DEFAULT;
 
-export const PIXEL_FORMAT_NAMES = {
+export const WEBGL_DEFAULT_TEXTURE_PARAMETERS: [
+  TextureParameterKey,
+  TextureParameterValueKey
+][] = [
+  ["TEXTURE_MIN_FILTER", "LINEAR"],
+  ["TEXTURE_MAG_FILTER", "LINEAR"],
+  ["TEXTURE_WRAP_S", "CLAMP_TO_EDGE"],
+  ["TEXTURE_WRAP_T", "CLAMP_TO_EDGE"]
+];
+
+export const WEBGL_ANTI_ALIAS_TEXTURE_FILTERS: WebGLTextureFilterMapping = {
+  filter: "LINEAR",
+  mipmapMinFilter: "LINEAR_MIPMAP_NEAREST"
+};
+
+export const WEBGL_ALIAS_TEXTURE_FILTERS: WebGLTextureFilterMapping = {
+  filter: "NEAREST",
+  mipmapMinFilter: "NEAREST_MIPMAP_NEAREST"
+};
+
+export const WEBGL_PIXEL_FORMATS: Partial<
+  Record<PIXEL_FORMAT, WebGLPixelFormatMapping>
+> = {
+  [PIXEL_FORMAT.NONE]: {
+    format: "RGBA",
+    type: "UNSIGNED_BYTE"
+  },
+  [PIXEL_FORMAT.RGBA8888]: {
+    format: "RGBA",
+    type: "UNSIGNED_BYTE"
+  },
+  [PIXEL_FORMAT.RGB888]: {
+    format: "RGB",
+    type: "UNSIGNED_BYTE"
+  },
+  [PIXEL_FORMAT.RGBA4444]: {
+    format: "RGBA",
+    type: "UNSIGNED_SHORT_4_4_4_4"
+  },
+  [PIXEL_FORMAT.RGB5A1]: {
+    format: "RGBA",
+    type: "UNSIGNED_SHORT_5_5_5_1"
+  },
+  [PIXEL_FORMAT.RGB565]: {
+    format: "RGBA",
+    type: "UNSIGNED_SHORT_5_6_5"
+  },
+  [PIXEL_FORMAT.AI88]: {
+    format: "LUMINANCE_ALPHA",
+    type: "UNSIGNED_BYTE"
+  },
+  [PIXEL_FORMAT.A8]: {
+    format: "ALPHA",
+    type: "UNSIGNED_BYTE"
+  },
+  [PIXEL_FORMAT.I8]: {
+    format: "LUMINANCE",
+    type: "UNSIGNED_BYTE"
+  }
+};
+
+export const PIXEL_FORMAT_NAMES: Record<PIXEL_FORMAT, string> = {
+  [PIXEL_FORMAT.NONE]: "",
   [PIXEL_FORMAT.RGBA8888]: "RGBA8888",
   [PIXEL_FORMAT.RGB888]: "RGB888",
   [PIXEL_FORMAT.RGB565]: "RGB565",
@@ -41,7 +109,8 @@ export const PIXEL_FORMAT_NAMES = {
   [PIXEL_FORMAT.PVRTC2]: "PVRTC2"
 };
 
-export const PIXEL_FORMAT_BITS = {
+export const PIXEL_FORMAT_BITS: Record<PIXEL_FORMAT, number> = {
+  [PIXEL_FORMAT.NONE]: 0,
   [PIXEL_FORMAT.RGBA8888]: 32,
   [PIXEL_FORMAT.RGB888]: 24,
   [PIXEL_FORMAT.RGB565]: 16,

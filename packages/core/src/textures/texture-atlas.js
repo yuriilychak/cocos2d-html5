@@ -183,10 +183,10 @@ export class TextureAtlas extends BaseClass {
   }
 
   /**
-   * Description
+   * String representation.
    * @return {String}
    */
-  description() {
+  toString() {
     return "<TextureAtlas | totalQuads =" + this._totalQuads + ">";
   }
 

@@ -58,7 +58,7 @@ export class TMXBug987 extends TileDemo {
       node = childs[i];
       if (!node) break;
       if (ServiceLocator.sys.capabilities.opengl)
-        node.texture.renderer.setAliasTexParameters();
+        node.texture.renderer.aliasing = true;
     }
 
     map.anchorX = 0;

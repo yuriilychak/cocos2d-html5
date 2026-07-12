@@ -62,7 +62,7 @@ export class SpriteBatchNodeChildrenChildren extends SpriteTestDemo {
       ServiceLocator.sys.capabilities.opengl &&
       ServiceLocator.sys.rendererConfig.isWebGL
     )
-      aParent.texture.renderer.generateMipmap();
+      aParent.texture.renderer.hasMipmaps = true;
     this.addChild(aParent);
 
     // parent

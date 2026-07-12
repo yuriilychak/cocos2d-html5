@@ -1,80 +1,103 @@
-import { Rect, Size } from "../geometry";
+import { Rect, Size } from "../../geometry";
 import { Texture2D } from "./texture-2d";
 
-import { ServiceLocator } from "../service-locator";
-import { GLState, PIXEL_FORMAT } from "../enums";
-import { BYTE } from "../constants";
+import { ServiceLocator } from "../../service-locator";
+import { GLState, PIXEL_FORMAT } from "../../enums";
+import { BYTE } from "../../constants";
 import Texture2DRenderer from "./texture-2d-renderer";
+import type { RectLike } from "../../geometry";
+import type {
+  Texture2DInterface,
+  Texture2DParameters,
+  TextureElement
+} from "./types";
 
 export default class CanvasTextureRenderer extends Texture2DRenderer {
-  #grayElement = null;
-  #backupElement = null;
-  #grayscaled = false;
+  #grayElement: HTMLCanvasElement | null = null;
+  #backupElement: TextureElement | null = null;
+  #grayscaled: boolean = false;
 
-  constructor(texture) {
+  constructor(texture: Texture2DInterface) {
     super(texture);
   }
 
-  initWithElement() {}
+  initWithElement(): void {}
 
-  handleLoadedTexture() {
+  handleLoadedTexture(): void {
     this.texture.resetSize(false);
   }
 
-  releaseTexture() {
+  releaseTexture(): void {
     this.texture.releaseElement();
   }
 
-  bitsPerPixelForFormat(format = PIXEL_FORMAT.NONE) {
+  bitsPerPixelForFormat(format = PIXEL_FORMAT.NONE): number {
     return -1;
   }
 
-  get webTexture() {
+  get webTexture(): WebGLTexture | null {
     return null;
   }
 
-  set webTexture(value) { }
+  set webTexture(value: WebGLTexture | null) { }
 
-  get maxS() {
+  get maxS(): number {
     return 1;
   }
 
-  set maxS(maxS) { }
+  set maxS(maxS: number) { }
 
-  get maxT() {
+  get maxT(): number {
     return 1;
   }
 
-  set maxT(maxT) { }
+  set maxT(maxT: number) { }
 
-  get pixelFormat() {
+  get pixelFormat(): PIXEL_FORMAT {
     return PIXEL_FORMAT.NONE;
   }
 
-  get hasPremultipliedAlpha() {
+  get hasPremultipliedAlpha(): boolean {
     return false;
   }
 
-  get hasMipmaps() {
+  get hasMipmaps(): boolean {
     return false;
   }
 
-  get stringForFormat() {
+  set hasMipmaps(value: boolean) {}
+
+  get aliasing(): boolean | null {
+    return null;
+  }
+
+  set aliasing(value: boolean | null) {}
+
+  get stringForFormat(): string {
     return "";
   }
 
-  get description() {
+  toString(): string {
     return `<Texture2D | ${this.texture.contentSize.toString()}>`;
   }
 
-  setTexParameters(texParams, magFilter, wrapS, wrapT) {
-    if (magFilter !== undefined)
-      texParams = {
-        minFilter: texParams,
-        magFilter: magFilter,
-        wrapS: wrapS,
-        wrapT: wrapT
-      };
+  setTexParameters(texParams: Texture2DParameters): void;
+  setTexParameters(minFilter: number, magFilter: number, wrapS: GLState, wrapT: GLState): void;
+  setTexParameters(
+    texParamsOrMinFilter: Texture2DParameters | number,
+    magFilter?: number,
+    wrapS?: GLState,
+    wrapT?: GLState
+  ): void {
+    const texParams: Texture2DParameters =
+      typeof texParamsOrMinFilter === "number"
+        ? {
+          minFilter: texParamsOrMinFilter,
+          magFilter: magFilter as number,
+          wrapS: wrapS as GLState,
+          wrapT: wrapT as GLState
+        }
+        : texParamsOrMinFilter;
 
     if (
       texParams.wrapS === GLState.REPEAT &&
@@ -97,9 +120,22 @@ export default class CanvasTextureRenderer extends Texture2DRenderer {
     this.texture.pattern = "";
   }
 
-  generateColorTexture(r, g, b, rect, canvas) {
+  generateColorTexture(
+    r = 0,
+    g = 0,
+    b = 0,
+    rect?: RectLike,
+    canvas?: HTMLCanvasElement
+  ): Texture2D | HTMLCanvasElement | null {
     return ServiceLocator.sys.capabilities.newBlendModes
-      ? CanvasTextureRenderer.generateColorTextureMultiply(this.texture, r, g, b, rect, canvas)
+      ? CanvasTextureRenderer.generateColorTextureMultiply(
+        this.texture,
+        r,
+        g,
+        b,
+        rect,
+        canvas
+      )
       : CanvasTextureRenderer.generateColorTextureFourChannel(
         this.texture,
         r,
@@ -110,7 +146,7 @@ export default class CanvasTextureRenderer extends Texture2DRenderer {
       );
   }
 
-  generateTextureCacheForColor() {
+  generateTextureCacheForColor(): HTMLCanvasElement[] | null {
     const element = this.texture.htmlElement;
     if (!element) {
       return null;
@@ -123,11 +159,11 @@ export default class CanvasTextureRenderer extends Texture2DRenderer {
        : textureCache;
   }
 
-  get grayscaled() {
+  get grayscaled(): boolean {
     return this.#grayscaled;
   }
 
-  set grayscaled(grayscaled) {
+  set grayscaled(grayscaled: boolean) {
     if (!this.texture.loaded || this.#grayscaled === grayscaled) {
       return;
     }
@@ -147,13 +183,17 @@ export default class CanvasTextureRenderer extends Texture2DRenderer {
     }
   }
 
-  generateGrayTexture() {
+  generateGrayTexture(): Texture2D | null {
     if (!this.texture.loaded) {
       return null;
     }
-    var grayElement = CanvasTextureRenderer.generateGrayTexture(
+    const grayElement = CanvasTextureRenderer.generateGrayTexture(
       this.texture.htmlElement
     );
+    if (!grayElement) {
+      return null;
+    }
+
     const newTexture = new Texture2D();
     newTexture.htmlElement = grayElement;
     newTexture.renderer.handleLoadedTexture();
@@ -161,14 +201,22 @@ export default class CanvasTextureRenderer extends Texture2DRenderer {
     return newTexture;
   }
 
-  static generateGrayTexture(texture, rect, renderCanvas) {
+  static generateGrayTexture(
+    texture: TextureElement | null,
+    rect?: RectLike,
+    renderCanvas?: HTMLCanvasElement
+  ): HTMLCanvasElement | null {
     if (texture === null) return null;
     renderCanvas = renderCanvas || document.createElement("canvas");
     rect = rect || new Rect(0, 0, texture.width, texture.height);
     renderCanvas.width = rect.width;
     renderCanvas.height = rect.height;
 
-    var context = renderCanvas.getContext("2d");
+    const context = renderCanvas.getContext("2d");
+    if (!context) {
+      return null;
+    }
+
     context.drawImage(
       texture,
       rect.x,
@@ -180,9 +228,9 @@ export default class CanvasTextureRenderer extends Texture2DRenderer {
       rect.width,
       rect.height
     );
-    var imgData = context.getImageData(0, 0, rect.width, rect.height);
-    var data = imgData.data;
-    for (var i = 0, len = data.length; i < len; i += 4) {
+    const imgData = context.getImageData(0, 0, rect.width, rect.height);
+    const data = imgData.data;
+    for (let i = 0, len = data.length; i < len; i += 4) {
       data[i] =
         data[i + 1] =
         data[i + 2] =
@@ -192,9 +240,12 @@ export default class CanvasTextureRenderer extends Texture2DRenderer {
     return renderCanvas;
   }
 
-  static renderToCache(image, cache) {
-    var w = image.width;
-    var h = image.height;
+  static renderToCache(
+    image: TextureElement,
+    cache: HTMLCanvasElement[]
+  ): HTMLCanvasElement[] | null {
+    const w = image.width;
+    const h = image.height;
 
     cache[0].width = w;
     cache[0].height = h;
@@ -205,17 +256,23 @@ export default class CanvasTextureRenderer extends Texture2DRenderer {
     cache[3].width = w;
     cache[3].height = h;
 
-    var cacheCtx = cache[3].getContext("2d");
+    const cacheCtx = cache[3].getContext("2d");
+    if (!cacheCtx) {
+      return null;
+    }
+
     cacheCtx.drawImage(image, 0, 0);
-    var pixels = cacheCtx.getImageData(0, 0, w, h).data;
+    const pixels = cacheCtx.getImageData(0, 0, w, h).data;
 
-    var ctx;
-    for (var rgbI = 0; rgbI < 4; rgbI++) {
-      ctx = cache[rgbI].getContext("2d");
+    for (let rgbI = 0; rgbI < 4; rgbI++) {
+      const ctx = cache[rgbI].getContext("2d");
+      if (!ctx) {
+        return null;
+      }
 
-      var to = ctx.getImageData(0, 0, w, h);
-      var data = to.data;
-      for (var i = 0; i < pixels.length; i += 4) {
+      const to = ctx.getImageData(0, 0, w, h);
+      const data = to.data;
+      for (let i = 0; i < pixels.length; i += 4) {
         data[i] = rgbI === 0 ? pixels[i] : 0;
         data[i + 1] = rgbI === 1 ? pixels[i + 1] : 0;
         data[i + 2] = rgbI === 2 ? pixels[i + 2] : 0;
@@ -228,17 +285,32 @@ export default class CanvasTextureRenderer extends Texture2DRenderer {
     return cache;
   }
 
-  static generateColorTextureMultiply(texture, r, g, b, rect, canvas) {
-    var onlyCanvas = false;
+  static generateColorTextureMultiply(
+    texture: Texture2DInterface,
+    r: number,
+    g: number,
+    b: number,
+    rect?: RectLike,
+    canvas?: HTMLCanvasElement
+  ): Texture2D | HTMLCanvasElement | null {
+    let onlyCanvas = false;
     if (canvas) onlyCanvas = true;
     else canvas = document.createElement("canvas");
-    var textureImage = texture.htmlElement;
+    const textureImage = texture.htmlElement;
+    if (!textureImage) {
+      return null;
+    }
+
     if (!rect) rect = new Rect(0, 0, textureImage.width, textureImage.height);
 
     canvas.width = rect.width;
     canvas.height = rect.height;
 
-    var context = canvas.getContext("2d");
+    const context = canvas.getContext("2d");
+    if (!context) {
+      return null;
+    }
+
     context.globalCompositeOperation = "source-over";
     context.fillStyle = "rgb(" + (r | 0) + "," + (g | 0) + "," + (b | 0) + ")";
     context.fillRect(0, 0, rect.width, rect.height);
@@ -271,31 +343,48 @@ export default class CanvasTextureRenderer extends Texture2DRenderer {
       return canvas;
     }
 
-    var newTexture = new Texture2D();
+    const newTexture = new Texture2D();
     newTexture.htmlElement = canvas;
     newTexture.renderer.handleLoadedTexture();
     return newTexture;
   }
 
-  static generateColorTextureFourChannel(texture, r, g, b, rect, canvas) {
-    var onlyCanvas = false;
+  static generateColorTextureFourChannel(
+    texture: Texture2DInterface,
+    r: number,
+    g: number,
+    b: number,
+    rect?: RectLike,
+    canvas?: HTMLCanvasElement
+  ): Texture2D | HTMLCanvasElement | null {
+    let onlyCanvas = false;
     if (canvas) onlyCanvas = true;
     else canvas = document.createElement("canvas");
 
-    var textureImage = texture.htmlElement;
+    const textureImage = texture.htmlElement;
+    if (!textureImage) {
+      return null;
+    }
+
     if (!rect) rect = new Rect(0, 0, textureImage.width, textureImage.height);
-    var x, y, w, h;
-    x = rect.x;
-    y = rect.y;
-    w = rect.width;
-    h = rect.height;
+    const x = rect.x;
+    const y = rect.y;
+    const w = rect.width;
+    const h = rect.height;
     if (!w || !h) return null;
 
-    canvas.width = w;
-    canvas.height = h;
+    Size.copy(canvas, rect);
 
-    var context = canvas.getContext("2d");
-    var tintedImgCache = ServiceLocator.textureCache.getTextureColors(texture);
+    const context = canvas.getContext("2d");
+    if (!context) {
+      return null;
+    }
+
+    const tintedImgCache = ServiceLocator.textureCache.getTextureColors(texture);
+    if (!tintedImgCache) {
+      return null;
+    }
+
     context.globalCompositeOperation = "lighter";
     context.drawImage(tintedImgCache[3], x, y, w, h, 0, 0, w, h);
     if (r > 0) {
@@ -312,7 +401,7 @@ export default class CanvasTextureRenderer extends Texture2DRenderer {
     }
     if (onlyCanvas) return canvas;
 
-    var newTexture = new Texture2D();
+    const newTexture = new Texture2D();
     newTexture.htmlElement = canvas;
     newTexture.renderer.handleLoadedTexture();
     return newTexture;

@@ -101,7 +101,7 @@ export class SpriteBatchNodeAliased extends SpriteTestDemo {
       label.y = winSize.height / 2;
     } else {
       var sprite = this.getChildByTag(TAG_SPRITE_BATCH_NODE);
-      sprite.texture.renderer.setAliasTexParameters();
+      sprite.texture.renderer.aliasing = true;
     }
     //----end25----
   }
@@ -113,7 +113,7 @@ export class SpriteBatchNodeAliased extends SpriteTestDemo {
         ServiceLocator.sys.rendererConfig.isWebGL)
     ) {
       var sprite = this.getChildByTag(TAG_SPRITE_BATCH_NODE);
-      sprite.texture.renderer.setAntiAliasTexParameters();
+      sprite.texture.renderer.aliasing = false;
     }
     super.onExit();
     //----end25----

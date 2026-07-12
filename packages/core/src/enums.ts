@@ -129,9 +129,9 @@ export enum PIXEL_FORMAT {
   I8 = 6,
   AI88 = 7,
   RGBA4444 = 8,
-  RGB5A1 = 7,
-  PVRTC4 = 9,
-  PVRTC2 = 10,
+  RGB5A1 = 9,
+  PVRTC4 = 10,
+  PVRTC2 = 11,
   DEFAULT = RGBA8888
 }
 
