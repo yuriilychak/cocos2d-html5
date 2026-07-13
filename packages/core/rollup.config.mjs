@@ -15,6 +15,11 @@ const PKG_DIR = process.cwd();
 const inputFile = existsSync(join(PKG_DIR, "src", "index.ts"))
   ? join(PKG_DIR, "src", "index.ts")
   : join(PKG_DIR, "src", "index.js");
+const TYPESCRIPT_HELPER_REUSE = /\(this && this\.(__[A-Za-z0-9_$]+)\) \|\| /g;
+
+function stripTypescriptHelperReuse(code) {
+  return code.replace(TYPESCRIPT_HELPER_REUSE, "");
+}
 
 function typescriptPlugin() {
   return {
@@ -50,7 +55,7 @@ function typescriptPlugin() {
       }
 
       return {
-        code: result.outputText,
+        code: stripTypescriptHelperReuse(result.outputText),
         map: result.sourceMapText ? JSON.parse(result.sourceMapText) : null
       };
     }

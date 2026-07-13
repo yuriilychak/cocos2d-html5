@@ -243,11 +243,11 @@ export class ParticleBatchNode extends Node {
     var locTextureAtlas = this.textureAtlas;
     var totalQuads = locTextureAtlas.totalQuads;
     pSystem.setAtlasIndex(index);
-    if (totalQuads + totalParticles > locTextureAtlas.getCapacity()) {
+    if (totalQuads + totalParticles > locTextureAtlas.capacity) {
       this._increaseAtlasCapacityTo(totalQuads + totalParticles);
       // after a realloc empty quads of textureAtlas can be filled with gibberish (realloc doesn't perform calloc), insert empty quads to prevent it
       locTextureAtlas.fillWithEmptyQuadsFromIndex(
-        locTextureAtlas.getCapacity() - totalParticles,
+        locTextureAtlas.capacity - totalParticles,
         totalParticles
       );
     }
@@ -394,7 +394,7 @@ export class ParticleBatchNode extends Node {
       quad.bl.vertices.x =
       quad.bl.vertices.y =
         0.0;
-    this.textureAtlas._setDirty(true);
+    this.textureAtlas.markDirty();
   }
 
   /**
@@ -461,13 +461,14 @@ export class ParticleBatchNode extends Node {
   _increaseAtlasCapacityTo(quantity) {
     log(
       "cocos2d: ParticleBatchNode: resizing TextureAtlas capacity from [" +
-        this.textureAtlas.getCapacity() +
+        this.textureAtlas.capacity +
         "] to [" +
         quantity +
         "]."
     );
 
-    if (!this.textureAtlas.resizeCapacity(quantity)) {
+    this.textureAtlas.capacity = quantity;
+    if (this.textureAtlas.capacity !== quantity) {
       // serious problems
       log(
         "ParticleBatchNode._increaseAtlasCapacityTo() : WARNING: Not enough memory to resize the atlas"

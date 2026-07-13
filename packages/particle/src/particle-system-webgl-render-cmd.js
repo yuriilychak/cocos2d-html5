@@ -77,7 +77,7 @@ export class ParticleSystemWebGLRenderCmd extends Node.WebGLRenderCmd {
         node.texture = oldBatch.texture;
         this._setupVBO();
       } else if (!oldBatch) {
-        node._batchNode.textureAtlas._copyQuadsToTextureAtlas(
+        node._batchNode.textureAtlas.copyQuadsToTextureAtlas(
           this._quads,
           node.atlasIndex
         );
@@ -118,7 +118,7 @@ export class ParticleSystemWebGLRenderCmd extends Node.WebGLRenderCmd {
     if (node._batchNode) {
       const batchQuads = node._batchNode.textureAtlas.quads;
       quad = batchQuads[node.atlasIndex + particle.atlasIndex];
-      node._batchNode.textureAtlas.dirty = true;
+      node._batchNode.textureAtlas.markDirty();
     } else quad = this._quads[node._particleIdx];
 
     let r, g, b, a;

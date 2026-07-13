@@ -65,7 +65,7 @@ export class LabelAtlasWebGLRenderCmd extends AtlasNode.WebGLRenderCmd {
       itemWidthInPixels = node._itemWidth * contentScaleFactor();
       itemHeightInPixels = node._itemHeight * contentScaleFactor();
     }
-    if (n > locTextureAtlas.getCapacity())
+    if (n > locTextureAtlas.capacity)
       log("LabelAtlas._updateAtlasValues(): Invalid String length");
     const quads = locTextureAtlas.quads;
     const locItemWidth = node._itemWidth;
@@ -129,7 +129,7 @@ export class LabelAtlasWebGLRenderCmd extends AtlasNode.WebGLRenderCmd {
 
     this.updateContentSize(i, cr + 1);
     if (n > 0) {
-      locTextureAtlas.dirty = true;
+      locTextureAtlas.markDirty();
       const totalQuads = locTextureAtlas.totalQuads;
       if (n > totalQuads)
         locTextureAtlas.increaseTotalQuadsWith(n - totalQuads);
@@ -151,7 +151,7 @@ export class LabelAtlasWebGLRenderCmd extends AtlasNode.WebGLRenderCmd {
   set string(label) {
     const len = label.length;
     if (len > this._textureAtlas.totalQuads)
-      this._textureAtlas.resizeCapacity(len);
+      this._textureAtlas.capacity = len;
   }
 
   _addChild() {}

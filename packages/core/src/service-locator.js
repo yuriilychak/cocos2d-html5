@@ -107,7 +107,7 @@ export class ServiceLocator {
       ServiceLocator.#screen,
       ServiceLocator.#eventManager
     );
-    ServiceLocator.#textureCache = new TextureCache();
+    ServiceLocator.#textureCache = new TextureCache(ServiceLocator.#loader);
     ServiceLocator.#spriteFrameCache = new SpriteFrameCache();
     ServiceLocator.#animationCache = new AnimationCache();
     ServiceLocator.#shaderCache = new ShaderCache(ServiceLocator.#sys);
@@ -145,11 +145,6 @@ export class ServiceLocator {
       loader: ServiceLocator.#loader,
       rendererConfig: renderingConfig,
       textureCache: ServiceLocator.#textureCache
-    });
-
-    ServiceLocator.#textureCache.injectServices({
-      loader: ServiceLocator.#loader,
-      rendererConfig: renderingConfig
     });
 
     ServiceLocator.#spriteFrameCache.injectServices({

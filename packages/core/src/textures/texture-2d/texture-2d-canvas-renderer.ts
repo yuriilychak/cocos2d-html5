@@ -381,7 +381,7 @@ export default class CanvasTextureRenderer extends Texture2DRenderer {
     }
 
     const tintedImgCache = ServiceLocator.textureCache.getTextureColors(texture);
-    if (!tintedImgCache) {
+    if (tintedImgCache.length < 4) {
       return null;
     }
 

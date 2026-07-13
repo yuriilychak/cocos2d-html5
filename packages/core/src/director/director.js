@@ -236,7 +236,7 @@ export class Director extends BaseClass {
   purgeCachedData() {
     this._animationCache._clear();
     this._spriteFrameCache._clear();
-    this._textureCache._clear();
+    this._textureCache.clear();
   }
 
   purgeDirector() {
