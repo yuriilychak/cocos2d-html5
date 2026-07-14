@@ -1,6 +1,7 @@
 import type { PointLike, RectLike, SizeLike } from "../../geometry";
 import type { GLState, PIXEL_FORMAT } from "../../enums";
 import type { ShaderProgram } from "../../shaders";
+import type { EventHelperInterface } from "../../event-manager/event-helper";
 
 export type TextureElement = (HTMLImageElement | HTMLCanvasElement) & SizeLike;
 
@@ -109,7 +110,7 @@ export interface Texture2DRendererInterface {
   shaderProgram: ShaderProgram | null;
 }
 
-export interface Texture2DInterface {
+export interface Texture2DInterface extends EventHelperInterface {
   contentSize: SizeLike;
   pixelSize: SizeLike;
   htmlElement: TextureElement | null;

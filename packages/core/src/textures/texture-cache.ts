@@ -30,15 +30,7 @@ import { Texture2D } from "./texture-2d";
 import type Loader from "../boot/loader";
 import type { Texture2DInterface, TextureElement } from "./texture-2d/types";
 
-type TextureLoadCallback = (texture: Texture2DInterface | Error) => void;
-type CachedTexture = Texture2D & {
-  readonly instanceId: number;
-  addEventListener(
-    type: "load",
-    callback: () => void,
-    target?: unknown
-  ): void;
-};
+type TextureLoadCallback = (texture: Texture2DInterface | Error, data?: unknown) => void;
 type TextureLoader = Loader & {
   getBasePath?: () => string;
   loadImg(
@@ -54,7 +46,7 @@ export default class TextureCache {
   #loader: TextureLoader;
   #rendererInitialized: boolean;
   #textureColorsCache: Map<string, HTMLCanvasElement[]>;
-  #textures: Map<string, CachedTexture>;
+  #textures: Map<string, Texture2D>;
 
   constructor(loader: TextureLoader) {
     this.#loader = loader;
@@ -102,7 +94,7 @@ export default class TextureCache {
    * //example
    * var key = textureCache.getTextureForKey("hello.png");
    */
-  getTextureForKey(textureKeyName: string): CachedTexture | null {
+  getTextureForKey(textureKeyName: string): Texture2D | null {
     return (
       this.#textures.get(textureKeyName) ||
       this.#textures.get(this.#loader._getAliase(textureKeyName)) || null
@@ -114,7 +106,7 @@ export default class TextureCache {
    * //example
    * var key = textureCache.getKeyByTexture(texture);
    */
-  getKeyByTexture(texture: CachedTexture): string | null {
+  getKeyByTexture(texture: Texture2D): string | null {
     for (const [key, cachedTexture] of this.#textures) {
       if (cachedTexture === texture) {
         return key;
@@ -132,7 +124,7 @@ export default class TextureCache {
    * //example
    * var cacheTextureForColor = textureCache.getTextureColors(texture);
    */
-  getTextureColors(texture: CachedTexture): HTMLCanvasElement[] {
+  getTextureColors(texture: Texture2D): HTMLCanvasElement[] {
     const image = texture.htmlElement;
     let key = this.getKeyByTexture(texture);
 
@@ -186,7 +178,7 @@ export default class TextureCache {
    * //example
    * textureCache.removeTexture(texture);
    */
-  removeTexture(texture: CachedTexture | null): void {
+  removeTexture(texture: Texture2D | null): void {
     if (!texture) return;
 
     const locTextures = this.#textures;
@@ -218,10 +210,10 @@ export default class TextureCache {
    */
   cacheImage(path: string, texture: Texture2D | TextureElement): void {
     if (texture instanceof Texture2D) {
-      this.#textures.set(path, texture as CachedTexture);
+      this.#textures.set(path, texture as Texture2D);
       return;
     }
-    const texture2d = new Texture2D() as CachedTexture;
+    const texture2d = new Texture2D() as Texture2D;
     texture2d.htmlElement = texture;
     texture2d.renderer.handleLoadedTexture();
     this.#textures.set(path, texture2d);
@@ -237,7 +229,7 @@ export default class TextureCache {
   addUIImage(
     image: TextureElement,
     key?: string | null
-  ): CachedTexture {
+  ): Texture2D {
     assert(image, _LogInfos.textureCache_addUIImage_2);
 
     if (key) {
@@ -246,7 +238,7 @@ export default class TextureCache {
     }
 
     // prevents overloading the autorelease pool
-    const texture = new Texture2D() as CachedTexture;
+    const texture = new Texture2D() as Texture2D;
     texture.initWithImage(image);
     if (key != null) this.#textures.set(key, texture);
     else log(_LogInfos.textureCache_addUIImage);
@@ -311,11 +303,11 @@ export default class TextureCache {
     this.#textureColorsCache.clear();
   }
 
-  handleLoadedTexture(url: string, img: TextureElement): CachedTexture {
+  handleLoadedTexture(url: string, img: TextureElement): Texture2D {
     let texture = this.#textures.get(url);
 
     if (!texture) {
-      texture = new Texture2D() as CachedTexture;
+      texture = new Texture2D() as Texture2D;
       texture.url = url;
       this.#textures.set(url, texture);
     }
@@ -338,18 +330,18 @@ export default class TextureCache {
     url: string,
     cb?: TextureLoadCallback,
     target?: unknown
-  ): CachedTexture {
+  ): Texture2D {
     assert(url, _LogInfos.Texture2D_addImage);
 
     const callCallback = (
       target: unknown,
-      tex: Texture2DInterface | Error
+      data: Texture2D | Error
     ): void => {
-      cb?.call(target, tex);
+      cb?.call(target, data);
     };
     let texture =
       this.#textures.get(url) ||
-      this.#textures.get(this.#loader._getAliase(url));
+      this.#textures.get(this.#loader._getAliase(url))!;
 
     if (texture) {
       if (texture.loaded) {
@@ -357,17 +349,16 @@ export default class TextureCache {
         return texture;
       }
 
-      const pendingTexture = texture;
-      pendingTexture.addEventListener(
+      texture.addEventListener(
         "load",
-        () => callCallback(target, pendingTexture),
+        () => callCallback(target, texture),
         target
       );
 
-      return pendingTexture;
+      return texture;
     }
 
-    texture = new Texture2D() as CachedTexture;
+    texture = new Texture2D() as Texture2D;
     texture.url = url;
     this.#textures.set(url, texture);
     const basePath = this.#loader.getBasePath
@@ -388,7 +379,7 @@ export default class TextureCache {
     url: string,
     cb?: TextureLoadCallback,
     target?: unknown
-  ): CachedTexture {
+  ): Texture2D {
     return this.addImage(url, cb, target);
   }
 }

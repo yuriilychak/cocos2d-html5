@@ -39,7 +39,7 @@ import type { SizeLike } from "../../geometry";
 
 
 
-const Texture2DEventBase = EventHelper(BaseClass) as typeof BaseClass;
+const Texture2DEventBase = EventHelper(BaseClass);
 
 /**
  * <p>
@@ -59,9 +59,6 @@ export class Texture2D extends Texture2DEventBase implements Texture2DInterface 
   #channelCache: HTMLCanvasElement[] | null = null;
   #pattern = "";
   #url: string | null = null;
-
-  declare removeEventTarget: (type: string, target: unknown) => void;
-  declare dispatchEvent: (event: string, clearAfterDispatch?: boolean) => void;
 
   constructor() {
     super();
