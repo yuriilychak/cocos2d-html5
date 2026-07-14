@@ -27,6 +27,7 @@
 import Path from "../boot/path";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import { Texture2D } from "./texture-2d";
+
 import type Loader from "../boot/loader";
 import type { Texture2DInterface, TextureElement } from "./texture-2d/types";
 
