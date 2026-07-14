@@ -225,7 +225,7 @@ export class ComAudio extends Component {
    * @param {String} pszFilePath
    */
   preloadEffect(pszFilePath) {
-    ServiceLocator.loader.getRes(pszFilePath);
+    ServiceLocator.loader.get(pszFilePath);
     this.setFile(pszFilePath);
     this.setLoop(false);
   }

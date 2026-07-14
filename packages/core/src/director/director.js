@@ -36,6 +36,7 @@ import {
   GameEvent
 } from "../enums";
 import { log, assert, _LogInfos } from "../boot/debugger";
+import { _fpsImage } from "../boot/base64-images";
 import { checkGLErrorDebug } from "../platform/macro/utils";
 
 /**
@@ -73,7 +74,6 @@ export class Director extends BaseClass {
   _rendererConfig = null;
   _spriteFrameCache = null;
   _textureCache = null;
-  _loader = null;
   _showEventListenerRegistered = false;
 
   injectServices({
@@ -83,8 +83,7 @@ export class Director extends BaseClass {
     profiler,
     rendererConfig,
     spriteFrameCache,
-    textureCache,
-    loader
+    textureCache
   }) {
     this._animationCache = animationCache;
     this._eventManager = eventManager;
@@ -93,7 +92,6 @@ export class Director extends BaseClass {
     this._rendererConfig = rendererConfig;
     this._spriteFrameCache = spriteFrameCache;
     this._textureCache = textureCache;
-    this._loader = loader;
   }
 
   init() {
@@ -126,8 +124,8 @@ export class Director extends BaseClass {
         this._fpsImageLoaded = true;
       });
 
-      if (this._loader._fpsImage) {
-        this._fpsImage.src = this._loader._fpsImage;
+      if (_fpsImage) {
+        this._fpsImage.src = _fpsImage;
       }
 
       this._eventManager.addCustomListener(

@@ -8,7 +8,6 @@ export {
   ResolutionPolicy
 } from "./egl-view";
 export { InputManager } from "./input-manager";
-export { _txtLoader } from "./loaders";
 export * from "./macro";
 export { SAXParser, plistParser } from "./sax-parser";
 export { Screen } from "./screen";

@@ -133,7 +133,7 @@ export default class AnimationCache {
   addAnimations(plist) {
     assert(plist, _LogInfos.animationCache_addAnimations_2);
 
-    var dict = this._loader.getRes(plist);
+    var dict = this._loader.get(plist);
 
     if (!dict) {
       log(_LogInfos.animationCache_addAnimations);

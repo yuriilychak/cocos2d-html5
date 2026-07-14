@@ -36,6 +36,7 @@ import { Texture2D } from "../textures/texture-2d";
 import { Sprite } from "../sprites/sprite";
 import { ServiceLocator } from "../service-locator";
 import { BYTE } from "../constants";
+import { _loaderImage } from "../boot/base64-images";
 
 /**
  * LoaderScene is a scene that you can load it when you loading files
@@ -80,9 +81,9 @@ export class LoaderScene extends Scene {
 
     var fontSize = 24,
       lblHeight = -logoHeight / 2 + 100;
-    if (ServiceLocator.loader._loaderImage) {
+    if (_loaderImage) {
       ServiceLocator.loader.loadImg(
-        ServiceLocator.loader._loaderImage,
+        _loaderImage,
         { isCrossOrigin: false },
         function (err, img) {
           logoWidth = img.width;

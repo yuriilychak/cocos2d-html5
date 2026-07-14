@@ -1448,7 +1448,7 @@ export class ParticleSystem extends Node {
    */
   initWithFile(plistFile) {
     this._plistFile = plistFile;
-    var dict = ServiceLocator.loader.getRes(plistFile);
+    var dict = ServiceLocator.loader.get(plistFile);
     if (!dict) {
       log("ParticleSystem.initWithFile(): Particles: file not found");
       return false;

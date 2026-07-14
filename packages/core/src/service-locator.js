@@ -35,23 +35,6 @@ import { Profiler } from "./utils/profiler";
 import { InputManager } from "./platform/input-manager";
 import { Screen } from "./platform/screen";
 
-// Service configuration data: loader handlers and base64 boot images. Imported
-// here (not in index.js) so all service wiring lives in the locator. These are
-// only used at construct() time (runtime), so the circular import with the
-// loaders module is safe.
-import {
-  _txtLoader,
-  _jsonLoader,
-  _jsLoader,
-  _imgLoader,
-  _serverImgLoader,
-  _plistLoader,
-  _fontLoader,
-  _csbLoader
-} from "./platform/loaders";
-import { _LogInfos, _loadingImage, _fpsImage, _loaderImage } from "./boot";
-import { initBinaryLoader } from "./utils/binary-loader";
-
 export class ServiceLocator {
   static #director;
   static #sys;
@@ -98,7 +81,7 @@ export class ServiceLocator {
 
     ServiceLocator.#director = new DisplayLinkDirector();
     ServiceLocator.#sys = new Sys();
-    ServiceLocator.#loader = new Loader();
+    ServiceLocator.#loader = new Loader(ServiceLocator.#sys);
     ServiceLocator.#game = new Game();
     ServiceLocator.#eventManager = new EventManager(ServiceLocator.#director);
     ServiceLocator.#screen = new Screen();
@@ -127,14 +110,7 @@ export class ServiceLocator {
       profiler: ServiceLocator.#profiler,
       rendererConfig: renderingConfig,
       spriteFrameCache: ServiceLocator.#spriteFrameCache,
-      textureCache: ServiceLocator.#textureCache,
-      loader: ServiceLocator.#loader
-    });
-
-    ServiceLocator.#loader.injectServices({
-      game: ServiceLocator.#game,
-      rendererConfig: renderingConfig,
-      sys: ServiceLocator.#sys
+      textureCache: ServiceLocator.#textureCache
     });
 
     ServiceLocator.#game.injectServices({
@@ -177,30 +153,9 @@ export class ServiceLocator {
       sys: ServiceLocator.#sys
     });
 
-    // Configure services: register the loader's file-type handlers and boot
-    // images and initialise the matrix stacks. Kept here so index.js never
-    // manipulates service instances directly.
-    const loader = ServiceLocator.#loader;
-    loader._LogInfos = _LogInfos;
-    loader._loadingImage = _loadingImage;
-    loader._fpsImage = _fpsImage;
-    loader._loaderImage = _loaderImage;
-
-    loader.register(["txt", "xml", "vsh", "fsh", "atlas"], _txtLoader);
-    loader.register(["json", "ExportJson"], _jsonLoader);
-    loader.register(["js"], _jsLoader);
-    loader.register(
-      ["png", "jpg", "bmp", "jpeg", "gif", "ico", "tiff", "webp"],
-      _imgLoader
-    );
-    loader.register(["serverImg"], _serverImgLoader);
-    loader.register(["plist"], _plistLoader);
-    loader.register(["font", "eot", "ttf", "woff", "svg", "ttc"], _fontLoader);
-    loader.register(["csb"], _csbLoader);
-
-    // Attach binary-loading methods to the loader (+ IE VBScript shim).
-    initBinaryLoader(loader);
-
+    // Configure services and initialise the matrix stacks. Kept here so
+    // index.js never manipulates service instances directly.
+    ServiceLocator.#loader.registerDefaultLoaders(ServiceLocator.#textureCache);
     ServiceLocator.#kmglMatrix.lazyInitialize();
   }
 

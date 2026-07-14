@@ -91,7 +91,7 @@ export class XHRTestLayer extends BaseTestLayer {
     responseLabel.x = 10;
     responseLabel.y = winSize.height / 2;
 
-    var xhr = ServiceLocator.loader.getXMLHttpRequest();
+    var xhr = ServiceLocator.loader.XMLHttpRequest;
     this.streamXHREventsToLabel(
       xhr,
       statusGetLabel,
@@ -126,7 +126,7 @@ export class XHRTestLayer extends BaseTestLayer {
     responseLabel.x = (winSize.width / 10) * 3;
     responseLabel.y = winSize.height / 2;
 
-    var xhr = ServiceLocator.loader.getXMLHttpRequest();
+    var xhr = ServiceLocator.loader.XMLHttpRequest;
     this.streamXHREventsToLabel(
       xhr,
       statusPostLabel,
@@ -160,7 +160,7 @@ export class XHRTestLayer extends BaseTestLayer {
     responseLabel.x = (winSize.width / 10) * 7;
     responseLabel.y = winSize.height / 2;
 
-    var xhr = ServiceLocator.loader.getXMLHttpRequest();
+    var xhr = ServiceLocator.loader.XMLHttpRequest;
     this.streamXHREventsToLabel(
       xhr,
       statusPostLabel,

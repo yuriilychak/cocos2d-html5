@@ -192,7 +192,7 @@ export class ComAttribute extends Component {
    * @param  filename
    */
   parse(filename) {
-    this._jsonDict = ServiceLocator.loader.getRes(filename);
+    this._jsonDict = ServiceLocator.loader.get(filename);
   }
 };
 

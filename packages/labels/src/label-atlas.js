@@ -84,7 +84,7 @@ export class LabelAtlas extends LabelBMFont {
     self._string = theString;
 
     if (itemWidth === undefined) {
-      var dict = ServiceLocator.loader.getRes(charMapFile);
+      var dict = ServiceLocator.loader.get(charMapFile);
       if (!dict || parseInt(dict["version"], 10) !== 1) {
         log(
           "LabelAtlas.initWithString(): Unsupported version. Upgrade cocos2d version"

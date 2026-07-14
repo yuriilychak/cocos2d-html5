@@ -207,7 +207,7 @@ export class IAPTestLayer extends PluginXTest {
   }
   postServerData(data) {
     var that = this;
-    var xhr = ServiceLocator.loader.getXMLHttpRequest();
+    var xhr = ServiceLocator.loader.XMLHttpRequest;
 
     //replace to your own server address
     xhr.open("POST", "http://localhost/");

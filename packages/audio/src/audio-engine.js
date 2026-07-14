@@ -40,7 +40,7 @@ export class AudioEngine {
       bgMusic.stop();
     }
     const musicVolume = this._musicVolume;
-    let audio = ServiceLocator.loader.getRes(url);
+    let audio = ServiceLocator.loader.get(url);
     if (!audio) {
       ServiceLocator.loader.load(url, function () {
         if (!audio.getPlaying() && !audio.interruptPlay) {
@@ -48,7 +48,7 @@ export class AudioEngine {
           audio.play(0, loop || false);
         }
       });
-      audio = ServiceLocator.loader.getRes(url);
+      audio = ServiceLocator.loader.get(url);
     }
     audio.setVolume(musicVolume);
     audio.play(0, loop || false);
@@ -205,7 +205,7 @@ export class AudioEngine {
       return audio;
     }
 
-    audio = ServiceLocator.loader.getRes(url);
+    audio = ServiceLocator.loader.get(url);
 
     if (audio && audioSupport.WEB_AUDIO && audio._AUDIO_TYPE === "AUDIO") {
       ServiceLocator.loader.release(url);
@@ -231,7 +231,7 @@ export class AudioEngine {
     const cache = loader.useWebAudio;
     loader.useWebAudio = true;
     ServiceLocator.loader.load(url, (audio) => {
-      audio = ServiceLocator.loader.getRes(url);
+      audio = ServiceLocator.loader.get(url);
       audio = audio.cloneNode();
       audio.setVolume(this._effectVolume);
       audio.play(0, loop || false);

@@ -49,7 +49,7 @@ export class TMXOrthoFromXMLTest extends TileDemo {
 
     var resources = s_resprefix + "TileMaps";
     var filePath = s_resprefix + "TileMaps/orthogonal-test1.tmx";
-    var xmlStr = ServiceLocator.loader.getRes(filePath);
+    var xmlStr = ServiceLocator.loader.get(filePath);
     var map = new TMXTiledMap(xmlStr, resources);
     this.addChild(map, 0, TAG_TILE_MAP);
 

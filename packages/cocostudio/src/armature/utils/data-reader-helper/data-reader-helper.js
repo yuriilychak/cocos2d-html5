@@ -1392,7 +1392,7 @@ export const dataReaderHelper = {
     /*
      *  Need to get the full path of the xml file, or the Tiny XML can't find the xml at IOS
      */
-    var xmlStr = ServiceLocator.loader.getRes(xml);
+    var xmlStr = ServiceLocator.loader.get(xml);
     if (!xmlStr) throw new Error("Please load the resource first : " + xml);
     var skeletonXML = new SAXParser().parse(xmlStr);
     var skeleton = skeletonXML.documentElement;
@@ -1405,7 +1405,7 @@ export const dataReaderHelper = {
    * @param {DataInfo} dataInfo
    */
   addDataFromJson: function (filePath, dataInfo) {
-    var fileContent = ServiceLocator.loader.getRes(filePath);
+    var fileContent = ServiceLocator.loader.get(filePath);
     this.addDataFromJsonCache(fileContent, dataInfo);
   }
 };

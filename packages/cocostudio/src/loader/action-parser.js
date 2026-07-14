@@ -211,7 +211,7 @@ import { _ccsLoad } from "./load/utils.js";
                     path = texture["Path"];
                     spriteFrame = ServiceLocator.spriteFrameCache.getSpriteFrame(path);
                     if(!spriteFrame && plist){
-                        if(ServiceLocator.loader.getRes(resourcePath + plist)){
+                        if(ServiceLocator.loader.get(resourcePath + plist)){
                             ServiceLocator.spriteFrameCache.addSpriteFrames(resourcePath + plist);
                             spriteFrame = ServiceLocator.spriteFrameCache.getSpriteFrame(path);
                         }else{

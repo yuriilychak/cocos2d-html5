@@ -178,7 +178,6 @@ export {
   Vertex3F,
   VisibleRect,
   ZOOM_ACTION_TAG,
-  _txtLoader,
   arrayRemoveObject,
   arrayVerifyType,
   classManager,
@@ -277,5 +276,4 @@ export { ActionManager } from "./action-manager";
 export { LayerMultiplex } from "./layers/layer-multiplex";
 export { isArray, isNumber } from "./boot/utils";
 export { DirtyRegion } from "./renderer/dirty-region";
-export { _convertResponseBodyToText } from "./utils/binary-loader";
 export { ServiceLocator } from "./service-locator";

@@ -98,7 +98,7 @@ export default class TextureCache {
   getTextureForKey(textureKeyName: string): Texture2D | null {
     return (
       this.#textures.get(textureKeyName) ||
-      this.#textures.get(this.#loader._getAliase(textureKeyName)) || null
+      this.#textures.get(this.#loader.getAliase(textureKeyName)) || null
     );
   }
 
@@ -342,7 +342,7 @@ export default class TextureCache {
     };
     let texture =
       this.#textures.get(url) ||
-      this.#textures.get(this.#loader._getAliase(url))!;
+      this.#textures.get(this.#loader.getAliase(url))!;
 
     if (texture) {
       if (texture.loaded) {

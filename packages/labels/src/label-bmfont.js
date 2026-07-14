@@ -155,7 +155,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
 
     var texture;
     if (fntFile) {
-      var newConf = ServiceLocator.loader.getRes(fntFile);
+      var newConf = ServiceLocator.loader.get(fntFile);
       if (!newConf) {
         newConf =
           FntFrameCache[fntFile] || FntFrameCache[Path.basename(fntFile)];
@@ -703,7 +703,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
   setFntFile(fntFile) {
     var self = this;
     if (fntFile != null && fntFile !== self._fntFile) {
-      var newConf = ServiceLocator.loader.getRes(fntFile);
+      var newConf = ServiceLocator.loader.get(fntFile);
 
       if (!newConf) {
         log(

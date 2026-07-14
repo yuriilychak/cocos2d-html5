@@ -63,7 +63,7 @@ class AudioLoader {
   loadBuffer(url, cb) {
     if (!audioSupport.WEB_AUDIO) return; // WebAudio Buffer
 
-    const request = ServiceLocator.loader.getXMLHttpRequest();
+    const request = ServiceLocator.loader.XMLHttpRequest;
     request.open("GET", url, true);
     request.responseType = "arraybuffer";
 
@@ -99,7 +99,7 @@ class AudioLoader {
   load(realUrl, url, res, cb) {
     if (supportedFormats.length === 0) return cb("can not support audio!");
 
-    let audio = ServiceLocator.loader.getRes(url);
+    let audio = ServiceLocator.loader.get(url);
     if (audio) return cb(null, audio);
 
     if (ServiceLocator.loader.audioPath)
@@ -115,7 +115,7 @@ class AudioLoader {
     }
 
     audio = new Audio(realUrl);
-    ServiceLocator.loader.cache[url] = audio;
+    ServiceLocator.loader.set(url, audio);
     this.loadAudioFromExtList(realUrl, typeList, audio, cb);
     return audio;
   }

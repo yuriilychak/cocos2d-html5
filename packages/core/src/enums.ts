@@ -17,6 +17,17 @@ export enum Language {
   UNKNOWN = "unkonwn"
 }
 
+export enum LoaderStrategyKey {
+  IMAGE = "image",
+  SERVER_IMAGE = "server-image",
+  TEXT = "text",
+  JSON = "json",
+  PLIST = "plist",
+  FONT = "font",
+  CSB = "csb",
+  BINARY = "binary"
+}
+
 export enum OperatingSystem {
   IOS = "iOS",
   ANDROID = "Android",

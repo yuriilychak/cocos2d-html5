@@ -239,7 +239,7 @@ parser.initParticle = function (json, resourcePath) {
   var node,
     self = this;
   loadTexture(json["FileData"], resourcePath, function (path, type) {
-    if (!ServiceLocator.loader.getRes(path))
+    if (!ServiceLocator.loader.get(path))
       log("%s need to be preloaded", path);
     node = new ParticleSystem(path);
     self.generalAttributes(node, json);
@@ -906,7 +906,7 @@ parser.initSlider = function (json, resourcePath) {
   ];
   textureList.forEach(function (item) {
     loadTexture(json[item.name], resourcePath, function (path, type) {
-      if (type === 0 && !loader.getRes(path))
+      if (type === 0 && !loader.get(path))
         log("%s need to be preloaded", path);
       item.handle.call(widget, path, type);
     });
@@ -1072,7 +1072,7 @@ parser.initTextAtlas = function (json, resourcePath) {
     json["LabelAtlasFileImage_CNB"],
     resourcePath,
     function (path, type) {
-      if (!ServiceLocator.loader.getRes(path))
+      if (!ServiceLocator.loader.get(path))
         log("%s need to be preloaded", path);
       if (type === 0) {
         widget.setProperty(
@@ -1104,7 +1104,7 @@ parser.initTextBMFont = function (json, resourcePath) {
   this.widgetAttributes(widget, json);
 
   loadTexture(json["LabelBMFontFile_CNB"], resourcePath, function (path, type) {
-    if (!ServiceLocator.loader.getRes(path))
+    if (!ServiceLocator.loader.get(path))
       log("%s need to be pre loaded", path);
     widget.setFntFile(path);
   });
@@ -1228,7 +1228,7 @@ parser.initProjectNode = function (json, resourcePath) {
   var projectFile = json["FileData"];
   if (projectFile != null && projectFile["Path"]) {
     var file = resourcePath + projectFile["Path"];
-    if (ServiceLocator.loader.getRes(file)) {
+    if (ServiceLocator.loader.get(file)) {
       var obj = load(file, resourcePath);
       parser.generalAttributes(obj.node, json);
       if (obj.action && obj.node) {
@@ -1267,7 +1267,7 @@ parser.initArmature = function (json, resourcePath) {
 
   loadTexture(json["FileData"], resourcePath, function (path, type) {
     var plists, pngs;
-    var armJson = ServiceLocator.loader.getRes(path);
+    var armJson = ServiceLocator.loader.get(path);
     if (!armJson) log("%s need to be preloaded", path);
     else {
       plists = armJson["config_file_path"];
@@ -1343,7 +1343,7 @@ var loadTexture = function (json, resourcePath, cb) {
     else type = 1;
     var plist = json["Plist"];
     if (plist) {
-      if (ServiceLocator.loader.getRes(resourcePath + plist)) {
+      if (ServiceLocator.loader.get(resourcePath + plist)) {
         loadedPlist[resourcePath + plist] = true;
         ServiceLocator.spriteFrameCache.addSpriteFrames(resourcePath + plist);
       } else {

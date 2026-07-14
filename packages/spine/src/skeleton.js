@@ -99,7 +99,7 @@ export class Skeleton extends Node {
 
     if (isString(skeletonDataFile)) {
       if (isString(atlasFile)) {
-        const data = ServiceLocator.loader.getRes(atlasFile);
+        const data = ServiceLocator.loader.get(atlasFile);
         atlas = new TextureAtlas(data);
         _atlasLoader.loadAtlas(atlas, atlasFile);
       } else {
@@ -112,7 +112,7 @@ export class Skeleton extends Node {
       skeletonJsonReader.scale = scale;
 
       const skeletonJson = _normalizeLegacyJson(
-        ServiceLocator.loader.getRes(skeletonDataFile)
+        ServiceLocator.loader.get(skeletonDataFile)
       );
       skeletonData = skeletonJsonReader.readSkeletonData(skeletonJson);
       ownsSkeletonData = true;

@@ -155,10 +155,10 @@ export default class GLProgram extends BaseClass {
     vShaderFilename: string,
     fShaderFileName: string
   ): boolean {
-    const vertexSource = ServiceLocator.loader.getRes(vShaderFilename);
+    const vertexSource = ServiceLocator.loader.get(vShaderFilename);
     if (!vertexSource)
       throw new Error("Please load the resource firset : " + vShaderFilename);
-    const fragmentSource = ServiceLocator.loader.getRes(fShaderFileName);
+    const fragmentSource = ServiceLocator.loader.get(fShaderFileName);
     if (!fragmentSource)
       throw new Error("Please load the resource firset : " + fShaderFileName);
     return this.initWithVertexShaderByteArray(vertexSource, fragmentSource);

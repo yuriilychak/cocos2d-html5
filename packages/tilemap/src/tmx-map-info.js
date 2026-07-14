@@ -4,7 +4,6 @@ import {
   Point,
   Path,
   log,
-  _txtLoader,
   ServiceLocator
 } from "@aspect/core";
 import {
@@ -213,7 +212,7 @@ export class TMXMapInfo extends SAXParser {
 
   parseXMLFile(tmxFile, isXmlString) {
     isXmlString = isXmlString || false;
-    var xmlStr = isXmlString ? tmxFile : ServiceLocator.loader.getRes(tmxFile);
+    var xmlStr = isXmlString ? tmxFile : ServiceLocator.loader.get(tmxFile);
     if (!xmlStr) throw new Error("Please load the resource first : " + tmxFile);
 
     var mapXML = this._parseXML(xmlStr);
@@ -554,4 +553,4 @@ export class TMXMapInfo extends SAXParser {
   }
 }
 
-ServiceLocator.loader.register(["tmx", "tsx"], _txtLoader);
+ServiceLocator.loader.registerTileMap();

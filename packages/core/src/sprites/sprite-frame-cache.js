@@ -109,7 +109,7 @@ export default class SpriteFrameCache {
   }
 
   _getFrameConfig(url) {
-    var dict = this._loader.getRes(url);
+    var dict = this._loader.get(url);
 
     assert(dict, _LogInfos.spriteFrameCache__getFrameConfig_2, url);
 
@@ -346,7 +346,7 @@ export default class SpriteFrameCache {
     assert(url, _LogInfos.spriteFrameCache_addSpriteFrames_2);
 
     //Is it a SpriteFrame plist?
-    var dict = this._frameConfigCache[url] || this._loader.getRes(url);
+    var dict = this._frameConfigCache[url] || this._loader.get(url);
     if (!dict || !dict["frames"]) return;
 
     var frameConfig = this._frameConfigCache[url] || this._getFrameConfig(url);

@@ -89,7 +89,7 @@ export class XHRArrayBufferTestLayer extends BaseTestLayer {
     responseLabel.x = 10;
     responseLabel.y = winSize.height / 2;
 
-    var xhr = ServiceLocator.loader.getXMLHttpRequest();
+    var xhr = ServiceLocator.loader.XMLHttpRequest;
     this.streamXHREventsToLabel(
       xhr,
       statusPostLabel,

@@ -12,7 +12,7 @@ export const _ccsLoad = (function () {
      */
     var load = function (file, type, path) {
 
-        var json = ServiceLocator.loader.getRes(file);
+        var json = ServiceLocator.loader.get(file);
 
         if (!json)
             return log("%s does not exist", file);

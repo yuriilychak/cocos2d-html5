@@ -60,10 +60,10 @@ export class LoaderCycleLayer extends BaseTestLayer {
   regLoad() {
     ServiceLocator.loader.register(["_test1"], {
       load: function (realUrl, url, res, cb) {
-        ServiceLocator.loader.cache[url] = {};
+        ServiceLocator.loader.set(url, {});
         setTimeout(function () {
-          cb && cb(null, ServiceLocator.loader.cache[url]);
-          return ServiceLocator.loader.cache[url];
+          cb && cb(null, ServiceLocator.loader.get(url));
+          return ServiceLocator.loader.get(url);
         }, Math.random() * 1000);
       }
     });
@@ -102,7 +102,7 @@ export class LoaderCycleLayer extends BaseTestLayer {
     ServiceLocator.loader.load(layer.list, function () {
       var num = 0;
       layer.list.forEach(function (item) {
-        if (!ServiceLocator.loader.getRes(item)) {
+        if (!ServiceLocator.loader.get(item)) {
           num++;
         }
       });

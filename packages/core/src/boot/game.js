@@ -346,6 +346,7 @@ export default class Game extends EventHelper(BaseClass) {
     var config = this.config || document["ccConfig"];
     if (config) {
       this.#initConfig(config);
+      this.#loader.setNoCache(!!this.config["noCache"]);
       cb && cb();
     } else {
       var cocos_script = document.getElementsByTagName("script");
@@ -358,13 +359,14 @@ export default class Game extends EventHelper(BaseClass) {
       var loaded = (err, txt) => {
         var data = JSON.parse(txt);
         this.#initConfig(data);
+        this.#loader.setNoCache(!!this.config["noCache"]);
         cb && cb();
       };
-      var _src, txt, _resPath;
+      var _src, txt;
       if (i < cocos_script.length) {
         _src = cocos_script[i].src;
         if (_src) {
-          _resPath = /(.*)\//.exec(_src)[0];
+          const _resPath = /(.*)\//.exec(_src)[0];
           this.#loader.resPath = _resPath;
           _src = Path.join(_resPath, "project.json");
         }
