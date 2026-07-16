@@ -61,12 +61,12 @@ export default class Game extends EventHelper(BaseClass) {
   frame = null;
   /**
    * The container of game canvas, equals to container
-   * @type {Object}
+   * @type {HTMLElement}
    */
   container = null;
   /**
    * The canvas of the game, equals to _canvas
-   * @type {Object}
+   * @type {HTMLCanvasElement}
    */
   canvas = null;
 

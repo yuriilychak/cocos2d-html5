@@ -6,8 +6,10 @@ export type LoaderError = LoadError | {
   errorMessage: string;
 };
 
+export type LoaderAsyncPoolCallback = (errors: LoadError[] | null, results?: unknown[]) => void;
+
 export type LoadOptions = {
-  cb?: ImageLoaderCallback;
+  cb?: LoaderAsyncPoolCallback;
   cbTarget?: unknown;
   trigger?: TriggerCallback;
   triggerTarget?: unknown;
@@ -64,13 +66,13 @@ export interface LoaderInterface {
     extensions: string[],
     strategy: LoaderRegistration
   ): void;
-  load(resources: string | string[]): AsyncPool<string, LoadError>;
-  load(resources: string | string[], callback: ImageLoaderCallback): AsyncPool<string, LoadError>;
-  load(resources: string | string[], options: LoadOptions): AsyncPool<string, LoadError>;
-  load(resources: string | string[], callback: ImageLoaderCallback): AsyncPool<string, LoadError>;
-  load(resources: string | string[], optioloadns: ImageLoaderCallback, loadCallback: ImageLoaderCallback): AsyncPool<string, LoadError>;
-  load(resources: string | string[], trigger: TriggerCallback, loadCallback: ImageLoaderCallback): AsyncPool<string, LoadError>;
-  load(resources: string | string[], loadCallback: ImageLoaderCallback, target: unknown): AsyncPool<string, LoadError>;
+  load(resources: string | string[]): AsyncPool<string, LoadError, string[]>;
+  load(resources: string | string[], callback: ImageLoaderCallback): AsyncPool<string, LoadError, string[]>;
+  load(resources: string | string[], options: LoadOptions): AsyncPool<string, LoadError, string[]>;
+  load(resources: string | string[], callback: ImageLoaderCallback): AsyncPool<string, LoadError, string[]>;
+  load(resources: string | string[], optioloadns: ImageLoaderCallback, loadCallback: ImageLoaderCallback): AsyncPool<string, LoadError, string[]>;
+  load(resources: string | string[], trigger: TriggerCallback, loadCallback: ImageLoaderCallback): AsyncPool<string, LoadError, string[]>;
+  load(resources: string | string[], loadCallback: ImageLoaderCallback, target: unknown): AsyncPool<string, LoadError, string[]>;
   loadTxt(url: string, callback: LoaderCallback<string>): unknown;
   loadJson(url: string, callback: LoaderCallback): unknown;
   loadImg(url: string): HTMLImageElement | null;

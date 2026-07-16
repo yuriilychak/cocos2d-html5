@@ -66,7 +66,7 @@ export default class ImageLoaderStrategy extends LoaderStrategy<Texture2D> {
     }
 
     if (this.loader.has(url)) {
-      const texture = this.loader.get(url)!;
+      const texture = this.loader.get<HTMLImageElement>(url)!;
 
       cb && cb(null, texture);
       return null;

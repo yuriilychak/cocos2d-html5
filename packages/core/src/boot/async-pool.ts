@@ -1,60 +1,67 @@
-type AsyncPoolSource<T> = T[] | Record<string, T>;
-
-type AsyncPoolIterator<ValueType, ErrorType, DataType> = (
-  value: any,
-  index: number | string,
-  callback: (error: ErrorType | unknown, result?: DataType) => void,
-  pool: AsyncPool<ValueType, ErrorType, DataType>
-) => void;
-
-type AsyncPoolEndCallback = (...args: any[]) => void;
-
-type PoolItem<T> = { index: number | string; value: T };
+import type {
+  AsyncPoolEndCallback,
+  AsyncPoolErrors,
+  AsyncPoolIndex,
+  AsyncPoolItem,
+  AsyncPoolIterator,
+  AsyncPoolResults,
+  AsyncPoolSource,
+} from "./types";
 
 /**
  * Async Pool class, a helper of async.
  */
-export default class AsyncPool<ValueType, ErrorType, DataType = unknown> {
+export default class AsyncPool<
+  ValueType = unknown,
+  ErrorType = unknown,
+  Source extends AsyncPoolSource<ValueType> = AsyncPoolSource<ValueType>,
+  DataType = unknown,
+  IteratorTarget = unknown,
+  CallbackTarget = unknown
+> {
   #finished: boolean = false;
-  #source: AsyncPoolSource<ValueType> | null = null;
+  #source: Source | null = null;
   #limit: number;
-  #pool: PoolItem<ValueType>[] = [];
-  #iterator: AsyncPoolIterator<ValueType, ErrorType, DataType>;
-  #iteratorTarget: unknown;
-  #onEnd: AsyncPoolEndCallback | null;
-  #onEndTarget: unknown;
-  #results: DataType[] | Record<string, DataType>;
-  #errors: ErrorType[] | Record<string, ErrorType>;
+  #pool: AsyncPoolItem<ValueType, Source>[] = [];
+  #iterator: AsyncPoolIterator<ValueType, ErrorType, Source, DataType, IteratorTarget, CallbackTarget>;
+  #iteratorTarget: IteratorTarget | null = null;
+  #onEnd: AsyncPoolEndCallback<Source, ErrorType, DataType, CallbackTarget> | null;
+  #onEndTarget: CallbackTarget | null = null;
+  #results: AsyncPoolResults<Source, DataType>;
+  #errors: AsyncPoolErrors<Source, ErrorType>;
   #workingSize: number = 0;
   #size: number;
   #finishedSize: number = 0;
 
   constructor(
-    source: AsyncPoolSource<ValueType> | null,
+    source: Source | null,
     limit: number,
-    iterator: AsyncPoolIterator<ValueType, ErrorType, DataType>,
-    onEnd: AsyncPoolEndCallback | null = null,
-    target: unknown = null
+    iterator: AsyncPoolIterator<ValueType, ErrorType, Source, DataType, IteratorTarget, CallbackTarget>,
+    onEnd: AsyncPoolEndCallback<Source, ErrorType, DataType, CallbackTarget> | null = null,
+    iteratorTarget: IteratorTarget | null = null,
+    callbackTarget: CallbackTarget | null = null
   ) {
     const isArray = source instanceof Array;
 
     this.#source = source;
     this.#limit = limit;
     this.#iterator = iterator;
-    this.#iteratorTarget = target;
+    this.#iteratorTarget = iteratorTarget;
     this.#onEnd = onEnd ?? null;
-    this.#onEndTarget = target;
-    this.#results = isArray ? [] : {};
-    this.#errors = isArray ? [] : {};
+    this.#onEndTarget = callbackTarget === null
+      ? iteratorTarget as unknown as CallbackTarget
+      : callbackTarget;
+    this.#results = (isArray ? [] : {}) as AsyncPoolResults<Source, DataType>;
+    this.#errors = (isArray ? [] : {}) as AsyncPoolErrors<Source, ErrorType>;
 
     if (source) {
       if (isArray) {
         for (let i = 0; i < source.length; ++i) {
-          this.#addToPoll(source[i], i);
+          this.#addToPoll(i as AsyncPoolIndex<Source>, source[i]);
         }
       } else {
         for (const key in source) {
-          this.#addToPoll(source[key], key);
+          this.#addToPoll(key as AsyncPoolIndex<Source>, (source as Record<string, ValueType>)[key]);
         }
       }
     }
@@ -63,12 +70,12 @@ export default class AsyncPool<ValueType, ErrorType, DataType = unknown> {
     this.#limit = this.#limit || this.#size;
   }
 
-  public onIterator(iterator: AsyncPoolIterator<ValueType, ErrorType, DataType>, target?: unknown): void {
+  public onIterator(iterator: AsyncPoolIterator<ValueType, ErrorType, Source, DataType, IteratorTarget, CallbackTarget>, target?: IteratorTarget): void {
     this.#iterator = iterator;
-    this.#iteratorTarget = target;
+    this.#iteratorTarget = target ?? null;
   }
 
-  public onEnd(errors: unknown, results: unknown): void {
+  public onEnd(errors: AsyncPoolErrors<Source, ErrorType> | null, results: AsyncPoolResults<Source, DataType>): void {
     this.#finished = true;
 
     if (this.#onEnd) {
@@ -76,14 +83,14 @@ export default class AsyncPool<ValueType, ErrorType, DataType = unknown> {
       const target = this.#onEndTarget;
       this.#onEnd = null;
       this.#onEndTarget = null;
-      selector.call(target, errors, results);
+      selector.call(target as CallbackTarget, errors, results);
     }
   }
 
   public flow(): void {
     if (this.#pool.length === 0) {
       if (this.#onEnd) {
-        this.#onEnd.call(this.#onEndTarget, null, []);
+        this.#onEnd.call(this.#onEndTarget as CallbackTarget, null, this.#results);
       }
       return;
     }
@@ -93,7 +100,7 @@ export default class AsyncPool<ValueType, ErrorType, DataType = unknown> {
     }
   }
 
-  #addToPoll(value: ValueType, index: number | string): void {
+  #addToPoll(index: AsyncPoolIndex<Source>, value: ValueType): void {
     this.#pool.push({ index, value });
   }
 
@@ -106,7 +113,7 @@ export default class AsyncPool<ValueType, ErrorType, DataType = unknown> {
     const { value, index } = item;
     this.#workingSize++;
     this.#iterator.call(
-      this.#iteratorTarget,
+      this.#iteratorTarget as IteratorTarget,
       value,
       index,
       (error: ErrorType | unknown, result?: DataType) => {
@@ -115,9 +122,9 @@ export default class AsyncPool<ValueType, ErrorType, DataType = unknown> {
         }
 
         if (error) {
-          this.#setError(index, error as ErrorType);
+          (this.#errors as Record<number | string, ErrorType>)[index] = error as ErrorType;
         } else {
-          this.#setResult(index, result!);
+          (this.#results as Record<number | string, DataType>)[index] = result!;
         }
 
         this.#finishedSize++;
@@ -135,27 +142,11 @@ export default class AsyncPool<ValueType, ErrorType, DataType = unknown> {
     );
   }
 
-  #setError(index: number | string, error: ErrorType): void {
-    if(this.#errors instanceof Array) {
-      this.#errors[index as number] = error;
-    } else {
-      this.#errors[index as string] = error;
-    }
-  }
-
-  #setResult(index: number | string, error: DataType): void {
-    if(this.#results instanceof Array) {
-      this.#results[index as number] = error;
-    } else {
-      this.#results[index as string] = error;
-    }
-  }
-
   get #hasErrors() {
     return (this.#errors instanceof Array && !!this.#errors.length) || (this.#errors instanceof Object && !!Object.keys(this.#errors).length);
   }
 
-  public get source(): AsyncPoolSource<ValueType> | null {
+  public get source(): Source | null {
     return this.#source;
   }
 
