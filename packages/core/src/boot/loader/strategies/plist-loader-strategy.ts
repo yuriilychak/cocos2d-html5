@@ -1,15 +1,16 @@
-import { LoaderStrategyKey } from "../../enums";
 import FileLoaderStrategy from "./file-loader-strategy";
+import { plistParser } from "../../../platform/sax-parser";
+import { LoaderStrategyKey } from "../../../enums";
 
 import type { LoaderInterface } from "../types";
 
-export default class JsonLoaderStrategy extends FileLoaderStrategy<object> {
+export default class PlistLoaderStrategy extends FileLoaderStrategy<object> {
   constructor(loader: LoaderInterface) {
-    super(loader, LoaderStrategyKey.JSON, ["json", "ExportJson"]);
+    super(loader, LoaderStrategyKey.PLIST, ["plist"]);
   }
 
   protected resultMiddleware(request: XMLHttpRequest): object {
-      return JSON.parse(request.responseText);
+    return plistParser.parse(request.responseText) as object;
   }
 
   protected prepareRequest(request: XMLHttpRequest): void {

@@ -1,7 +1,7 @@
-import Path from "../path";
-import { isString } from "../utils";
+import Path from "../../path";
+import { isString } from "../../utils";
 import LoaderStrategy from "./loader-strategy";
-import { LoaderStrategyKey } from "../../enums";
+import { LoaderStrategyKey } from "../../../enums";
 import type { LoaderCallback, LoaderInterface } from "../types";
 
 export default class FontLoaderStrategy extends LoaderStrategy<boolean> {

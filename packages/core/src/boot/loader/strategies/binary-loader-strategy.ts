@@ -1,5 +1,5 @@
-import { log } from "../debugger";
-import { LoaderStrategyKey } from "../../enums";
+import { log } from "../../debugger";
+import { LoaderStrategyKey } from "../../../enums";
 import FileLoaderStrategy from "./file-loader-strategy";
 
 import type { LoaderInterface } from "../types";

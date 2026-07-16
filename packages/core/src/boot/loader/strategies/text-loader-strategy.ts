@@ -1,4 +1,4 @@
-import { LoaderStrategyKey } from "../../enums";
+import { LoaderStrategyKey } from "../../../enums";
 import FileLoaderStrategy from "./file-loader-strategy";
 
 import type { LoaderInterface } from '../types';

@@ -28,28 +28,22 @@ import Path from "../boot/path";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import { Texture2D } from "./texture-2d";
 
-import type Loader from "../boot/loader";
+import type { LoaderInterface } from "../boot/loader/types";
 import type { Texture2DInterface, TextureElement } from "./texture-2d/types";
+import LoadError from "../boot/loader/load-error";
 
 type TextureLoadCallback = (texture: Texture2DInterface | Error, data?: unknown) => void;
-type TextureLoader = Loader & {
-  getBasePath?: () => string;
-  loadImg(
-    url: string,
-    callback: (err: Error | null, img: TextureElement) => void
-  ): unknown;
-};
 
 /**
  * TextureCache is a singleton class, it's the global cache for Texture2D
  */
 export default class TextureCache {
-  #loader: TextureLoader;
+  #loader: LoaderInterface;
   #rendererInitialized: boolean;
   #textureColorsCache: Map<string, HTMLCanvasElement[]>;
   #textures: Map<string, Texture2D>;
 
-  constructor(loader: TextureLoader) {
+  constructor(loader: LoaderInterface) {
     this.#loader = loader;
     this.#textures = new Map();
     this.#textureColorsCache = new Map();
@@ -362,14 +356,12 @@ export default class TextureCache {
     texture = new Texture2D() as Texture2D;
     texture.url = url;
     this.#textures.set(url, texture);
-    const basePath = this.#loader.getBasePath
-      ? this.#loader.getBasePath()
-      : this.#loader.resPath;
+    const basePath = this.#loader.resPath;
 
-    this.#loader.loadImg(Path.join(basePath || "", url), (err, img) => {
-      if (err) return callCallback(target, err);
+    this.#loader.loadImg(Path.join(basePath || "", url), (err: unknown, img?: HTMLImageElement) => {
+      if (err) return callCallback(target, err as LoadError);
 
-      const texResult = this.handleLoadedTexture(url, img);
+      const texResult = this.handleLoadedTexture(url, img!);
       callCallback(target, texResult);
     });
 

@@ -21,7 +21,7 @@
 
 import { DisplayLinkDirector } from "./director/director";
 import { Sys } from "./sys";
-import Loader from "./boot/loader";
+import { Loader } from "./boot/loader";
 import Game from "./boot/game";
 import EventManager from "./event-manager/event-manager";
 import { EGLView } from "./platform/egl-view/egl-view";

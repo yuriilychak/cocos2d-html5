@@ -1,11 +1,11 @@
-import ImagePool from "../image-pool";
+import ImagePool from "../../image-pool";
 import LoaderStrategy from "./loader-strategy";
-import { LoaderStrategyKey } from "../../enums";
+import { LoaderStrategyKey } from "../../../enums";
 import LoadError from "../load-error";
 
-import type { Sys } from "../../sys";
+import type { Sys } from "../../../sys";
 import type { ImageQueueEntry, LoaderCallback, LoaderInterface, ImageLoaderCallback } from "../types";
-import type { Texture2D, TextureCache } from "../../textures";
+import type { Texture2D, TextureCache } from "../../../textures";
 
 export default class ImageLoaderStrategy extends LoaderStrategy<Texture2D> {
   #queue: Map<string, ImageQueueEntry> = new Map();

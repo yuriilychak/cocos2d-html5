@@ -8,16 +8,16 @@ import {
   BinaryLoaderStrategy,
   ServerImageLoaderStrategy
 } from "./strategies";
-import { LoaderStrategyKey } from "../enums";
-import AsyncPool from "./async-pool";
-import Path from "./path";
-import { log } from "./debugger";
-import { isString } from "./utils";
+import { LoaderStrategyKey } from "../../enums";
+import AsyncPool from "../async-pool";
+import Path from "../path";
+import { log } from "../debugger";
+import { isString } from "../utils";
 import LoadError from "./load-error";
 
 import type { ImageLoaderCallback, LoaderCallback, LoaderError, LoaderInterface, LoaderRegistration, LoaderStrategyInterface, LoadOptions, TriggerCallback } from "./types";
-import type { Sys } from "../sys";
-import type { TextureCache } from "../textures";
+import type { Sys } from "../../sys";
+import type { TextureCache } from "../../textures";
 
 /**
  * Resource loading management. Singleton accessed via this.
@@ -169,35 +169,18 @@ export default class Loader implements LoaderInterface {
 
   /**
    * Iterator function to load res
-   * @param {object} item
-   * @param {number} index
-   * @param {function} [cb]
-   * @returns {*}
-   * @private
    */
-  #loadResIterator(item: { type?: string, src?: string, name: string } | string, index: number, cb: LoaderCallback) {
-    let url: string;
-    let type: string;
-
-    if (typeof item === 'object') {
-      type = item.type ? "." + item.type.toLowerCase() : "";
-      url = item.src || item.name + type;
-      if (!type) {
-        type = Path.extname(url);
-      }
-    } else {
-      url = item;
-      type = Path.extname(item);
-    }
+  #loadResIterator(url: string, callback: LoaderCallback) {
+    const type = Path.extname(url);
 
     var obj = this.get(url);
-    if (obj) return cb(null, obj);
+    if (obj) return callback(null, obj);
     let loader: LoaderStrategyInterface | undefined;
     if (type) {
       loader = this.#register.get(type.toLowerCase());
     }
     if (!loader) {
-      return cb(new LoadError("loader for [" + type + "] doesn't exist!", 0));
+      return callback(new LoadError("loader for [" + type + "] doesn't exist!", 0));
     }
     var realUrl = url;
     if (!Loader.#urlRegExp.test(url)) {
@@ -210,14 +193,14 @@ export default class Loader implements LoaderInterface {
         realUrl += `&_t=${Date.now()}`;
       else realUrl += `?_t=${Date.now()}`;
     }
-    loader.load(realUrl, url, item, (err: unknown, data?: unknown) => {
+    loader.load(realUrl, url, url, (err: unknown, data?: unknown) => {
       if (err !== null) {
         log(err);
         this.#cache.delete(url);
-        cb(err as LoaderError);
+        callback(err as LoaderError);
       } else {
         this.#cache.set(url, data!);
-        cb(null, data);
+        callback(null, data);
       }
     });
   }
@@ -252,14 +235,14 @@ export default class Loader implements LoaderInterface {
   /**
    * Load resources then call the callback.
    */
-  load(resources: string | string[]): AsyncPool;
-  load(resources: string | string[], callback: ImageLoaderCallback): AsyncPool;
-  load(resources: string | string[], options: LoadOptions): AsyncPool;
-  load(resources: string | string[], callback: ImageLoaderCallback): AsyncPool;
-  load(resources: string | string[], optioloadns: ImageLoaderCallback, loadCallback: ImageLoaderCallback): AsyncPool;
-  load(resources: string | string[], trigger: TriggerCallback, loadCallback: ImageLoaderCallback): AsyncPool;
-  load(resources: string | string[], loadCallback: ImageLoaderCallback, target: unknown): AsyncPool;
-  load(resources: string | string[], option?: LoadOptions | ImageLoaderCallback | TriggerCallback, loadCallback?: ImageLoaderCallback | unknown): AsyncPool {
+  load(resources: string | string[]): AsyncPool<string, LoadError>;
+  load(resources: string | string[], callback: ImageLoaderCallback): AsyncPool<string, LoadError>;
+  load(resources: string | string[], options: LoadOptions): AsyncPool<string, LoadError>;
+  load(resources: string | string[], callback: ImageLoaderCallback): AsyncPool<string, LoadError>;
+  load(resources: string | string[], optioloadns: ImageLoaderCallback, loadCallback: ImageLoaderCallback): AsyncPool<string, LoadError>;
+  load(resources: string | string[], trigger: TriggerCallback, loadCallback: ImageLoaderCallback): AsyncPool<string, LoadError>;
+  load(resources: string | string[], loadCallback: ImageLoaderCallback, target: unknown): AsyncPool<string, LoadError>;
+  load(resources: string | string[], option?: LoadOptions | ImageLoaderCallback | TriggerCallback, loadCallback?: ImageLoaderCallback | unknown): AsyncPool<string, LoadError> {
     let localOptions: LoadOptions = option as LoadOptions;
     switch (arguments.length) {
       case 0:
@@ -283,20 +266,20 @@ export default class Loader implements LoaderInterface {
 
     const localResources = resources instanceof Array ? resources : [resources];
     const limit = this.#sys.specification.isMobile ? 20 : 0;
-    const asyncPool = new AsyncPool(
+    const asyncPool = new AsyncPool<string, LoadError>(
       localResources,
       limit,
-      (value: string, index: number, asyncPoolCallback: LoaderCallback, aPool: AsyncPool) => {
-        this.#loadResIterator(value, index, (err, ...rest) => {
+      (value: string, _index: number | string, asyncPoolCallback: LoaderCallback, aPool: AsyncPool<string, LoadError>) => {
+        this.#loadResIterator(value, (errOrTarget: LoadError | unknown, data?: unknown) => {
           if (localOptions.trigger) {
             localOptions.trigger.call(
               localOptions.triggerTarget,
-              rest[0],
+              data,
               aPool.size,
               aPool.finishedSize
             );
           }
-          asyncPoolCallback(err, rest[0]);
+          asyncPoolCallback(errOrTarget, data);
         });
       },
       localOptions.cb,

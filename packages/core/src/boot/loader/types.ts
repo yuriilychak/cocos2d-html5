@@ -1,11 +1,10 @@
-import type AsyncPool from "./async-pool";
+import type AsyncPool from "../async-pool";
 import type LoadError from "./load-error";
 
 export type LoaderError = LoadError | {
   status: number;
   errorMessage: string;
 };
-
 
 export type LoadOptions = {
   cb?: ImageLoaderCallback;
@@ -65,13 +64,13 @@ export interface LoaderInterface {
     extensions: string[],
     strategy: LoaderRegistration
   ): void;
-  load(resources: string | string[]): AsyncPool;
-  load(resources: string | string[], callback: ImageLoaderCallback): AsyncPool;
-  load(resources: string | string[], options: LoadOptions): AsyncPool;
-  load(resources: string | string[], callback: ImageLoaderCallback): AsyncPool;
-  load(resources: string | string[], optioloadns: ImageLoaderCallback, loadCallback: ImageLoaderCallback): AsyncPool;
-  load(resources: string | string[], trigger: TriggerCallback, loadCallback: ImageLoaderCallback): AsyncPool;
-  load(resources: string | string[], loadCallback: ImageLoaderCallback, target: unknown): AsyncPool;
+  load(resources: string | string[]): AsyncPool<string, LoadError>;
+  load(resources: string | string[], callback: ImageLoaderCallback): AsyncPool<string, LoadError>;
+  load(resources: string | string[], options: LoadOptions): AsyncPool<string, LoadError>;
+  load(resources: string | string[], callback: ImageLoaderCallback): AsyncPool<string, LoadError>;
+  load(resources: string | string[], optioloadns: ImageLoaderCallback, loadCallback: ImageLoaderCallback): AsyncPool<string, LoadError>;
+  load(resources: string | string[], trigger: TriggerCallback, loadCallback: ImageLoaderCallback): AsyncPool<string, LoadError>;
+  load(resources: string | string[], loadCallback: ImageLoaderCallback, target: unknown): AsyncPool<string, LoadError>;
   loadTxt(url: string, callback: LoaderCallback<string>): unknown;
   loadJson(url: string, callback: LoaderCallback): unknown;
   loadImg(url: string): HTMLImageElement | null;
