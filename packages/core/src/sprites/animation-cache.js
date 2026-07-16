@@ -42,15 +42,13 @@ import { Animation } from "./animation/animation";
  * </p>
  */
 export default class AnimationCache {
-  constructor() {
-    this._animations = {};
-    this._loader = null;
-    this._spriteFrameCache = null;
-  }
+  #loader;
+  #spriteFrameCache;
 
-  injectServices({ loader, spriteFrameCache }) {
-    this._loader = loader;
-    this._spriteFrameCache = spriteFrameCache;
+  constructor(loader, spriteFrameCache) {
+    this.#loader = loader;
+    this.#spriteFrameCache = spriteFrameCache;
+    this._animations = {};
   }
 
   /**
@@ -102,7 +100,7 @@ export default class AnimationCache {
       version =
         properties["format"] != null ? parseInt(properties["format"]) : version;
       var spritesheets = properties["spritesheets"];
-      var spriteFrameCache = this._spriteFrameCache;
+      var spriteFrameCache = this.#spriteFrameCache;
       for (var i = 0; i < spritesheets.length; i++) {
         spriteFrameCache.addSpriteFrames(
           Path.changeBasename(plist, spritesheets[i])
@@ -133,7 +131,7 @@ export default class AnimationCache {
   addAnimations(plist) {
     assert(plist, _LogInfos.animationCache_addAnimations_2);
 
-    var dict = this._loader.get(plist);
+    var dict = this.#loader.get(plist);
 
     if (!dict) {
       log(_LogInfos.animationCache_addAnimations);
@@ -144,7 +142,7 @@ export default class AnimationCache {
   }
 
   _parseVersion1(animations) {
-    var frameCache = this._spriteFrameCache;
+    var frameCache = this.#spriteFrameCache;
 
     for (var key in animations) {
       var animationDict = animations[key];
@@ -160,11 +158,7 @@ export default class AnimationCache {
       for (var i = 0; i < frameNames.length; i++) {
         var spriteFrame = frameCache.getSpriteFrame(frameNames[i]);
         if (!spriteFrame) {
-          log(
-            _LogInfos.animationCache__parseVersion1_2,
-            key,
-            frameNames[i]
-          );
+          log(_LogInfos.animationCache__parseVersion1_2, key, frameNames[i]);
           continue;
         }
         var animFrame = new AnimationFrame();
@@ -184,7 +178,7 @@ export default class AnimationCache {
   }
 
   _parseVersion2(animations) {
-    var frameCache = this._spriteFrameCache;
+    var frameCache = this.#spriteFrameCache;
 
     for (var key in animations) {
       var animationDict = animations[key];
@@ -211,11 +205,7 @@ export default class AnimationCache {
         var spriteFrameName = entry["spriteframe"];
         var spriteFrame = frameCache.getSpriteFrame(spriteFrameName);
         if (!spriteFrame) {
-          log(
-            _LogInfos.animationCache__parseVersion2_2,
-            key,
-            spriteFrameName
-          );
+          log(_LogInfos.animationCache__parseVersion2_2, key, spriteFrameName);
           continue;
         }
 

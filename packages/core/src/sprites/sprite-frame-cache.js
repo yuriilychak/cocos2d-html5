@@ -43,7 +43,11 @@ import { isString } from "../boot/utils";
  * </p>
  */
 export default class SpriteFrameCache {
-  constructor() {
+  #sys;
+  #loader = null;
+  #textureCache = null;
+  
+  constructor(sys, loader, textureCache) {
     this._CCNS_REG1 =
       /^\s*\{\s*([\-]?\d+[.]?\d*)\s*,\s*([\-]?\d+[.]?\d*)\s*\}\s*$/;
     this._CCNS_REG2 =
@@ -52,15 +56,15 @@ export default class SpriteFrameCache {
     this._spriteFrames = {};
     this._spriteFramesAliases = {};
     this._frameConfigCache = {};
-    this._loader = null;
-    this._rendererConfig = null;
-    this._textureCache = null;
+    this.#sys = sys;
+    this.#loader = loader;
+    this.#textureCache = textureCache;
   }
 
   injectServices({ loader, rendererConfig, textureCache }) {
-    this._loader = loader;
-    this._rendererConfig = rendererConfig;
-    this._textureCache = textureCache;
+    this.#loader = loader;
+    this.#sys.rendererConfig = rendererConfig;
+    this.#textureCache = textureCache;
   }
 
   _rectFromString(content) {
@@ -109,11 +113,11 @@ export default class SpriteFrameCache {
   }
 
   _getFrameConfig(url) {
-    var dict = this._loader.get(url);
+    var dict = this.#loader.get(url);
 
     assert(dict, _LogInfos.spriteFrameCache__getFrameConfig_2, url);
 
-    this._loader.release(url); //release it in loader
+    this.#loader.release(url); //release it in loader
     if (dict._inited) {
       this._frameConfigCache[url] = dict;
       return dict;
@@ -239,12 +243,12 @@ export default class SpriteFrameCache {
       meta = frameConfig.meta;
     if (!texture) {
       var texturePath = Path.changeBasename(url, meta.image || ".png");
-      texture = this._textureCache.addImage(texturePath);
+      texture = this.#textureCache.addImage(texturePath);
     } else if (texture instanceof Texture2D) {
       //do nothing
     } else if (isString(texture)) {
       //string
-      texture = this._textureCache.addImage(texture);
+      texture = this.#textureCache.addImage(texture);
     } else {
       assert(0, _LogInfos.spriteFrameCache_addSpriteFrames_3);
     }
@@ -305,7 +309,7 @@ export default class SpriteFrameCache {
           }
         }
 
-        if (this._rendererConfig.isCanvas && spriteFrame.isRotated()) {
+        if (this.#sys.rendererConfig.isCanvas && spriteFrame.isRotated()) {
           //clip to canvas
           var locTexture = spriteFrame.getTexture();
           if (locTexture.loaded) {
@@ -346,7 +350,7 @@ export default class SpriteFrameCache {
     assert(url, _LogInfos.spriteFrameCache_addSpriteFrames_2);
 
     //Is it a SpriteFrame plist?
-    var dict = this._frameConfigCache[url] || this._loader.get(url);
+    var dict = this._frameConfigCache[url] || this.#loader.get(url);
     if (!dict || !dict["frames"]) return;
 
     var frameConfig = this._frameConfigCache[url] || this._getFrameConfig(url);

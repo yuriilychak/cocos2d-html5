@@ -91,8 +91,12 @@ export class ServiceLocator {
       ServiceLocator.#eventManager
     );
     ServiceLocator.#textureCache = new TextureCache(ServiceLocator.#loader);
-    ServiceLocator.#spriteFrameCache = new SpriteFrameCache();
-    ServiceLocator.#animationCache = new AnimationCache();
+    ServiceLocator.#spriteFrameCache = new SpriteFrameCache(
+      ServiceLocator.#sys,
+      ServiceLocator.#loader,
+      ServiceLocator.#textureCache
+    );
+    ServiceLocator.#animationCache = new AnimationCache(ServiceLocator.#loader, ServiceLocator.#spriteFrameCache);
     ServiceLocator.#shaderCache = new ShaderCache(ServiceLocator.#sys);
     ServiceLocator.#kmglMatrix = new KMGLMatrix();
     ServiceLocator.#glStateCache = new GLStateCache(ServiceLocator.#sys, ServiceLocator.#kmglMatrix);
@@ -121,17 +125,6 @@ export class ServiceLocator {
       loader: ServiceLocator.#loader,
       rendererConfig: renderingConfig,
       textureCache: ServiceLocator.#textureCache
-    });
-
-    ServiceLocator.#spriteFrameCache.injectServices({
-      loader: ServiceLocator.#loader,
-      rendererConfig: renderingConfig,
-      textureCache: ServiceLocator.#textureCache
-    });
-
-    ServiceLocator.#animationCache.injectServices({
-      loader: ServiceLocator.#loader,
-      spriteFrameCache: ServiceLocator.#spriteFrameCache
     });
 
     ServiceLocator.#kmglMatrix.injectServices({
