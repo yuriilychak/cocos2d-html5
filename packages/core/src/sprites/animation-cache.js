@@ -26,9 +26,7 @@
 
 import Path from '../boot/path';
 import { log, assert, _LogInfos } from '../boot/debugger';
-import {
-  REPEAT_FOREVER
-} from "../platform/macro/constants";
+import { REPEAT_FOREVER } from "../platform/macro/constants";
 import { AnimationFrame } from "./animation/animation-frame";
 import { Animation } from "./animation/animation";
 
@@ -38,87 +36,52 @@ import { Animation } from "./animation/animation";
  *     It saves in a cache the animations. You should use this class if you want to save your animations in a cache.<br/>
  * <br/>
  * example<br/>
- * ServiceLocator.animationCache.addAnimation(animation,"animation1");<br/>
+ * ServiceLocator.animationCache.set("animation1", animation);<br/>
  * </p>
  */
 export default class AnimationCache {
   #loader;
   #spriteFrameCache;
+  #animations = new Map();
 
   constructor(loader, spriteFrameCache) {
     this.#loader = loader;
     this.#spriteFrameCache = spriteFrameCache;
-    this._animations = {};
   }
 
   /**
-   * Adds a Animation with a name.
+   * Adds or replaces an Animation with a name.
+   * @param {String} name
    * @param {Animation} animation
-   * @param {String} name
    */
-  addAnimation(animation, name) {
-    this._animations[name] = animation;
+  set(name, animation) {
+    this.#animations.set(name, animation);
+    return this;
   }
 
   /**
-   * Deletes a Animation from the cache.
+   * Deletes an Animation from the cache.
    * @param {String} name
    */
-  removeAnimation(name) {
-    if (!name) {
-      return;
-    }
-    if (this._animations[name]) {
-      delete this._animations[name];
-    }
+  delete(name) {
+    return this.#animations.delete(name);
   }
 
   /**
    * <p>
-   *     Returns a Animation that was previously added.<br/>
+   *     Returns an Animation that was previously added.<br/>
    *      If the name is not found it will return nil.<br/>
    *      You should retain the returned copy if you are going to use it.</br>
    * </p>
    * @param {String} name
-   * @return {Animation}
+   * @return {Animation | null}
    */
-  getAnimation(name) {
-    if (this._animations[name]) return this._animations[name];
-    return null;
+  get(name) {
+    return this.#animations.get(name) || null;
   }
 
-  _addAnimationsWithDictionary(dictionary, plist) {
-    var animations = dictionary["animations"];
-    if (!animations) {
-      log(_LogInfos.animationCache__addAnimationsWithDictionary);
-      return;
-    }
-
-    var version = 1;
-    var properties = dictionary["properties"];
-    if (properties) {
-      version =
-        properties["format"] != null ? parseInt(properties["format"]) : version;
-      var spritesheets = properties["spritesheets"];
-      var spriteFrameCache = this.#spriteFrameCache;
-      for (var i = 0; i < spritesheets.length; i++) {
-        spriteFrameCache.addSpriteFrames(
-          Path.changeBasename(plist, spritesheets[i])
-        );
-      }
-    }
-
-    switch (version) {
-      case 1:
-        this._parseVersion1(animations);
-        break;
-      case 2:
-        this._parseVersion2(animations);
-        break;
-      default:
-        log(_LogInfos.animationCache__addAnimationsWithDictionary_2);
-        break;
-    }
+  clear() {
+    this.#animations.clear();
   }
 
   /**
@@ -131,37 +94,71 @@ export default class AnimationCache {
   addAnimations(plist) {
     assert(plist, _LogInfos.animationCache_addAnimations_2);
 
-    var dict = this.#loader.get(plist);
+    const dict = this.#loader.get(plist);
 
     if (!dict) {
       log(_LogInfos.animationCache_addAnimations);
       return;
     }
 
-    this._addAnimationsWithDictionary(dict, plist);
+    this.#addAnimationsWithDictionary(dict, plist);
   }
 
-  _parseVersion1(animations) {
-    var frameCache = this.#spriteFrameCache;
+  #addAnimationsWithDictionary(dictionary, plist) {
+    const animations = dictionary["animations"];
+    if (!animations) {
+      log(_LogInfos.animationCache__addAnimationsWithDictionary);
+      return;
+    }
 
-    for (var key in animations) {
-      var animationDict = animations[key];
-      var frameNames = animationDict["frames"];
-      var delay = parseFloat(animationDict["delay"]) || 0;
-      var animation = null;
+    let version = 1;
+    const properties = dictionary["properties"];
+    if (properties) {
+      version =
+        properties["format"] != null ? parseInt(properties["format"]) : version;
+      const spritesheets = properties["spritesheets"];
+      const spriteFrameCache = this.#spriteFrameCache;
+      for (let i = 0; i < spritesheets.length; i++) {
+        spriteFrameCache.addSpriteFrames(
+          Path.changeBasename(plist, spritesheets[i])
+        );
+      }
+    }
+
+    switch (version) {
+      case 1:
+        this.#parseVersion1(animations);
+        break;
+      case 2:
+        this.#parseVersion2(animations);
+        break;
+      default:
+        log(_LogInfos.animationCache__addAnimationsWithDictionary_2);
+        break;
+    }
+  }
+
+  #parseVersion1(animations) {
+    const frameCache = this.#spriteFrameCache;
+
+    for (const key in animations) {
+      const animationDict = animations[key];
+      const frameNames = animationDict["frames"];
+      const delay = parseFloat(animationDict["delay"]) || 0;
+      let animation = null;
       if (!frameNames) {
         log(_LogInfos.animationCache__parseVersion1, key);
         continue;
       }
 
-      var frames = [];
-      for (var i = 0; i < frameNames.length; i++) {
-        var spriteFrame = frameCache.getSpriteFrame(frameNames[i]);
+      const frames = [];
+      for (let i = 0; i < frameNames.length; i++) {
+        const spriteFrame = frameCache.getSpriteFrame(frameNames[i]);
         if (!spriteFrame) {
           log(_LogInfos.animationCache__parseVersion1_2, key, frameNames[i]);
           continue;
         }
-        var animFrame = new AnimationFrame();
+        const animFrame = new AnimationFrame();
         animFrame.initWithSpriteFrame(spriteFrame, 1, null);
         frames.push(animFrame);
       }
@@ -173,25 +170,25 @@ export default class AnimationCache {
         log(_LogInfos.animationCache__parseVersion1_4, key);
       }
       animation = new Animation(frames, delay, 1);
-      this.addAnimation(animation, key);
+      this.set(key, animation);
     }
   }
 
-  _parseVersion2(animations) {
-    var frameCache = this.#spriteFrameCache;
+  #parseVersion2(animations) {
+    const frameCache = this.#spriteFrameCache;
 
-    for (var key in animations) {
-      var animationDict = animations[key];
+    for (const key in animations) {
+      const animationDict = animations[key];
 
-      var isLoop = animationDict["loop"];
-      var loopsTemp = parseInt(animationDict["loops"]);
-      var loops = isLoop ? REPEAT_FOREVER : isNaN(loopsTemp) ? 1 : loopsTemp;
-      var restoreOriginalFrame =
+      const isLoop = animationDict["loop"];
+      const loopsTemp = parseInt(animationDict["loops"]);
+      const loops = isLoop ? REPEAT_FOREVER : isNaN(loopsTemp) ? 1 : loopsTemp;
+      const restoreOriginalFrame =
         animationDict["restoreOriginalFrame"] &&
         animationDict["restoreOriginalFrame"] == true
           ? true
           : false;
-      var frameArray = animationDict["frames"];
+      const frameArray = animationDict["frames"];
 
       if (!frameArray) {
         log(_LogInfos.animationCache__parseVersion2, key);
@@ -199,32 +196,28 @@ export default class AnimationCache {
       }
 
       //Array of AnimationFrames
-      var arr = [];
-      for (var i = 0; i < frameArray.length; i++) {
-        var entry = frameArray[i];
-        var spriteFrameName = entry["spriteframe"];
-        var spriteFrame = frameCache.getSpriteFrame(spriteFrameName);
+      const arr = [];
+      for (let i = 0; i < frameArray.length; i++) {
+        const entry = frameArray[i];
+        const spriteFrameName = entry["spriteframe"];
+        const spriteFrame = frameCache.getSpriteFrame(spriteFrameName);
         if (!spriteFrame) {
           log(_LogInfos.animationCache__parseVersion2_2, key, spriteFrameName);
           continue;
         }
 
-        var delayUnits = parseFloat(entry["delayUnits"]) || 0;
-        var userInfo = entry["notification"];
-        var animFrame = new AnimationFrame();
+        const delayUnits = parseFloat(entry["delayUnits"]) || 0;
+        const userInfo = entry["notification"];
+        const animFrame = new AnimationFrame();
         animFrame.initWithSpriteFrame(spriteFrame, delayUnits, userInfo);
         arr.push(animFrame);
       }
 
-      var delayPerUnit = parseFloat(animationDict["delayPerUnit"]) || 0;
-      var animation = new Animation();
+      const delayPerUnit = parseFloat(animationDict["delayPerUnit"]) || 0;
+      const animation = new Animation();
       animation.initWithAnimationFrames(arr, delayPerUnit, loops);
       animation.setRestoreOriginalFrame(restoreOriginalFrame);
-      this.addAnimation(animation, key);
+      this.set(key, animation);
     }
-  }
-
-  _clear() {
-    this._animations = {};
   }
 }

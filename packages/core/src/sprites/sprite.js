@@ -392,7 +392,7 @@ export class Sprite extends EventHelper(Node) {
   setDisplayFrameWithAnimationName(animationName, frameIndex) {
     assert(animationName, _LogInfos.Sprite_setDisplayFrameWithAnimationName_3);
 
-    var cache = ServiceLocator.animationCache.getAnimation(animationName);
+    var cache = ServiceLocator.animationCache.get(animationName);
     if (!cache) {
       log(_LogInfos.Sprite_setDisplayFrameWithAnimationName);
       return;

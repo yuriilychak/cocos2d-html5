@@ -232,7 +232,7 @@ export class Director extends BaseClass {
   }
 
   purgeCachedData() {
-    this._animationCache._clear();
+    this._animationCache.clear();
     this._spriteFrameCache.clear();
     this._textureCache.clear();
   }
