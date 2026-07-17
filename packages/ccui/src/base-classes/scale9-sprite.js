@@ -68,9 +68,9 @@ var simpleQuadGenerator = {
       r = contentSize.width;
       t = contentSize.height;
     } else {
-      var originalSize = spriteFrame._originalSize;
-      var rect = spriteFrame._rect;
-      var offset = spriteFrame._offset;
+      var originalSize = spriteFrame.originalSize;
+      var rect = spriteFrame.rect;
+      var offset = spriteFrame.offset;
       var scaleX = contentSize.width / originalSize.width;
       var scaleY = contentSize.height / originalSize.height;
       var trimmLeft = offset.x + (originalSize.width - rect.width) / 2;
@@ -124,9 +124,9 @@ var simpleQuadGenerator = {
 
   _calculateUVs: function (sprite, spriteFrame) {
     var uvs = sprite._uvs;
-    var atlasWidth = spriteFrame._texture.pixelsWidth;
-    var atlasHeight = spriteFrame._texture.pixelsHeight;
-    var textureRect = spriteFrame._rect;
+    var atlasWidth = spriteFrame.texture.pixelsWidth;
+    var atlasHeight = spriteFrame.texture.pixelsHeight;
+    var textureRect = spriteFrame.rect;
     textureRect = rectPointsToPixels(textureRect);
 
     if (uvs.length < 8) {
@@ -138,7 +138,7 @@ var simpleQuadGenerator = {
     var l, b, r, t;
     var texelCorrect = FIX_ARTIFACTS_BY_STRECHING_TEXEL ? 0.5 : 0;
 
-    if (spriteFrame._rotated) {
+    if (spriteFrame.rotated) {
       l = (textureRect.x + texelCorrect) / atlasWidth;
       b = (textureRect.y + textureRect.width - texelCorrect) / atlasHeight;
       r = (textureRect.x + textureRect.height - texelCorrect) / atlasWidth;
@@ -184,7 +184,7 @@ var scale9QuadGenerator = {
     var wt = sprite._renderCmd._worldTransform;
     var leftWidth, centerWidth, rightWidth;
     var topHeight, centerHeight, bottomHeight;
-    var rect = spriteFrame._rect;
+    var rect = spriteFrame.rect;
 
     leftWidth = insetLeft;
     rightWidth = insetRight;
@@ -265,13 +265,13 @@ var scale9QuadGenerator = {
     insetBottom
   ) {
     var uvs = sprite._uvs;
-    var rect = spriteFrame._rect;
-    var atlasWidth = spriteFrame._texture.pixelsWidth;
-    var atlasHeight = spriteFrame._texture.pixelsHeight;
+    var rect = spriteFrame.rect;
+    var atlasWidth = spriteFrame.texture.pixelsWidth;
+    var atlasHeight = spriteFrame.texture.pixelsHeight;
 
     var leftWidth, centerWidth, rightWidth;
     var topHeight, centerHeight, bottomHeight;
-    var textureRect = spriteFrame._rect;
+    var textureRect = spriteFrame.rect;
     textureRect = rectPointsToPixels(textureRect);
     rect = rectPointsToPixels(rect);
     var scale = contentScaleFactor();
@@ -296,7 +296,7 @@ var scale9QuadGenerator = {
       row,
       col;
 
-    if (spriteFrame._rotated) {
+    if (spriteFrame.rotated) {
       u[0] = (textureRect.x + texelCorrect) / atlasWidth;
       u[1] = (bottomHeight + textureRect.x) / atlasWidth;
       u[2] = (bottomHeight + centerHeight + textureRect.x) / atlasWidth;
@@ -457,7 +457,7 @@ export class Scale9Sprite extends EventHelper(Node) {
     }
 
     this._capInsetsInternal = capInsets;
-    this._updateCapInsets(this._spriteFrame._rect, this._capInsetsInternal);
+    this._updateCapInsets(this._spriteFrame.rect, this._capInsetsInternal);
   }
 
   _updateCapInsets(rect, capInsets) {
@@ -568,7 +568,7 @@ export class Scale9Sprite extends EventHelper(Node) {
 
     capInsets = capInsets || new Rect();
 
-    this._updateCapInsets(spriteFrame._rect, capInsets);
+    this._updateCapInsets(spriteFrame.rect, capInsets);
   }
 
   initWithSpriteFrameName(spriteFrameName, capInsets) {
@@ -589,14 +589,14 @@ export class Scale9Sprite extends EventHelper(Node) {
 
     capInsets = capInsets || new Rect();
 
-    this._updateCapInsets(frame._rect, capInsets);
+    this._updateCapInsets(frame.rect, capInsets);
   }
 
   loaded() {
     if (this._spriteFrame === null) {
       return false;
     } else {
-      return this._spriteFrame.textureLoaded();
+      return this._spriteFrame.textureLoaded;
     }
   }
 
@@ -609,7 +609,7 @@ export class Scale9Sprite extends EventHelper(Node) {
     var blendFunc = this._blendFunc;
     if (
       !this._spriteFrame ||
-      !this._spriteFrame._texture.renderer.hasPremultipliedAlpha
+      !this._spriteFrame.texture.renderer.hasPremultipliedAlpha
     ) {
       if (
         blendFunc.src === GLState.ONE &&
@@ -648,13 +648,13 @@ export class Scale9Sprite extends EventHelper(Node) {
       var self = this;
       var onResourceDataLoaded = function () {
         if (Size.equalTo(self._contentSize, new Size(0, 0))) {
-          self.setContentSize(self._spriteFrame._rect);
+          self.setContentSize(self._spriteFrame.rect);
         }
         self._textureLoaded = true;
         self._renderCmd.setDirtyFlag(Node._dirtyFlags.contentDirty);
         ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty = true;
       };
-      self._textureLoaded = spriteFrame.textureLoaded();
+      self._textureLoaded = spriteFrame.textureLoaded;
       if (self._textureLoaded) {
         onResourceDataLoaded();
       } else {
@@ -715,7 +715,7 @@ export class Scale9Sprite extends EventHelper(Node) {
   getContentSize() {
     if (this._renderingType === Scale9Sprite.RenderingType.SIMPLE) {
       if (this._spriteFrame) {
-        return this._spriteFrame._originalSize;
+        return this._spriteFrame.originalSize;
       }
       return new Size(this._contentSize);
     } else {
@@ -801,7 +801,7 @@ export class Scale9Sprite extends EventHelper(Node) {
   }
 
   _rebuildQuads() {
-    if (!this._spriteFrame || !this._spriteFrame._textureLoaded) {
+    if (!this._spriteFrame || !this._spriteFrame.textureLoaded) {
       return;
     }
 

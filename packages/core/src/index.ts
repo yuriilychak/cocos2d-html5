@@ -258,7 +258,8 @@ export { SpriteBatchNode } from "./sprites/sprite-batch-node";
 export { Layer } from "./layers/layer";
 export { isFunction, isString } from "./boot/utils";
 export { SpriteFrame } from "./sprites/sprite-frame";
-export { PolygonInfo, Triangles } from "./sprites/polygon-info";
+export { PolygonInfo, Triangles } from "./sprites";
+export type { TriangleLike, TriangleVertex } from "./sprites/types";
 export { Component, ComponentContainer } from "./components";
 export { assert, error, Path, Loader, isObject, isUndefined } from "./boot";
 export {

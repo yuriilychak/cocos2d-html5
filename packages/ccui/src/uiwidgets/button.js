@@ -304,7 +304,7 @@ export class Button extends Widget {
       return;
     }
 
-    if (!normalSpriteFrame._textureLoaded) {
+    if (!normalSpriteFrame.textureLoaded) {
       this._normalLoader.clear();
       this._normalLoader.once(
         normalSpriteFrame,
@@ -316,7 +316,7 @@ export class Button extends Widget {
       return;
     }
 
-    this._normalTextureLoaded = normalSpriteFrame._textureLoaded;
+    this._normalTextureLoaded = normalSpriteFrame.textureLoaded;
     this._buttonNormalSpriteFrame = normalSpriteFrame;
     this._buttonScale9Renderer.setSpriteFrame(normalSpriteFrame);
     if (this._scale9Enabled) {
@@ -371,7 +371,7 @@ export class Button extends Widget {
 
     if (!clickedSpriteFrame) return;
 
-    if (!clickedSpriteFrame._textureLoaded) {
+    if (!clickedSpriteFrame.textureLoaded) {
       this._clickedLoader.clear();
       this._clickedLoader.once(
         clickedSpriteFrame,
@@ -418,7 +418,7 @@ export class Button extends Widget {
 
     if (!disabledSpriteframe) return;
 
-    if (!disabledSpriteframe._textureLoaded) {
+    if (!disabledSpriteframe.textureLoaded) {
       this._disabledLoader.clear();
       this._disabledLoader.once(
         disabledSpriteframe,

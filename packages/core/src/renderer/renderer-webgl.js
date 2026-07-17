@@ -466,7 +466,7 @@ var rendererWebGL = {
     // Check batching
     var node = cmd._node;
     var texture =
-      node._texture || (node._spriteFrame && node._spriteFrame._texture);
+      node._texture || (node._spriteFrame && node._spriteFrame.texture);
     var blendSrc = node._blendFunc.src;
     var blendDst = node._blendFunc.dst;
     var glProgramState = cmd._glProgramState;

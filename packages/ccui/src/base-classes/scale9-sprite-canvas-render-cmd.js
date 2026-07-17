@@ -40,7 +40,7 @@ export class Scale9SpriteCanvasRenderCmd extends Node.CanvasRenderCmd {
     var locDisplayOpacity = this._displayedOpacity;
     var alpha = locDisplayOpacity / 255;
     var locTexture = null;
-    if (node._spriteFrame) locTexture = node._spriteFrame._texture;
+    if (node._spriteFrame) locTexture = node._spriteFrame.texture;
     if (!node.loaded() || locDisplayOpacity === 0) return;
     if (
       this._textureToRender === null ||

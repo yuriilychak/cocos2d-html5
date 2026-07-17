@@ -780,8 +780,8 @@ export class Sprite extends EventHelper(Node) {
     this.setNodeDirty(true);
 
     // update rect
-    var pNewTexture = newFrame.getTexture();
-    _t._textureLoaded = newFrame.textureLoaded();
+    var pNewTexture = newFrame.texture;
+    _t._textureLoaded = newFrame.textureLoaded;
     this._loader.clear();
     if (!_t._textureLoaded) {
       this._loader.once(
@@ -795,7 +795,7 @@ export class Sprite extends EventHelper(Node) {
       return false;
     }
 
-    var frameOffset = newFrame.getOffset();
+    var frameOffset = newFrame.offset;
     _t._unflippedOffsetPositionFromCenter.x = frameOffset.x;
     _t._unflippedOffsetPositionFromCenter.y = frameOffset.y;
 
@@ -804,18 +804,18 @@ export class Sprite extends EventHelper(Node) {
       _t.color = _t._realColor;
     }
     _t.setTextureRect(
-      newFrame.getRect(),
-      newFrame.isRotated(),
-      newFrame.getOriginalSize()
+      newFrame.rect,
+      newFrame.rotated,
+      newFrame.originalSize
     );
 
     // Propagate polygon mesh from the frame (or clear it if the new frame
     // is a plain quad). Done last so the render command picks up the rect
     // that was just installed by setTextureRect.
-    if (newFrame.hasPolygonInfo && newFrame.hasPolygonInfo()) {
-      this.setPolygonInfo(newFrame.getPolygonInfo());
+    if (newFrame.hasPolygonInfo) {
+      this.polygonInfo = newFrame.polygonInfo;
     } else if (this._polygonInfo) {
-      this.setPolygonInfo(null);
+      this.polygonInfo = null;
     }
   }
 

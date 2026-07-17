@@ -117,7 +117,7 @@ export class LabelAtlas extends LabelBMFont {
           Path.basename(spriteFrameBaseName)
         );
       if (spriteFrame) {
-        texture = spriteFrame.getTexture();
+        texture = spriteFrame.texture;
         this._spriteFrame = spriteFrame;
       } else {
         texture = ServiceLocator.textureCache.addImage(textureFilename);

@@ -135,9 +135,9 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
   isFrameDisplayed(frame) {
     const node = this._node;
     return (
-      Rect.equalTo(frame.getRect(), node._rect) &&
-      frame.getTexture().renderer.webTexture === node._texture.renderer.webTexture &&
-      Point.equalTo(frame.getOffset(), node._unflippedOffsetPositionFromCenter)
+      Rect.equalTo(frame.rect, node._rect) &&
+      frame.texture.renderer.webTexture === node._texture.renderer.webTexture &&
+      Point.equalTo(frame.offset, node._unflippedOffsetPositionFromCenter)
     );
   }
 

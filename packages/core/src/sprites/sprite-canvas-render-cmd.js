@@ -72,8 +72,8 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
 
   isFrameDisplayed(frame) {
     const node = this._node;
-    if (frame.getTexture() !== node._texture) return false;
-    return Rect.equalTo(frame.getRect(), node._rect);
+    if (frame.texture !== node._texture) return false;
+    return Rect.equalTo(frame.rect, node._rect);
   }
 
   updateBlendFunc(blendFunc) {

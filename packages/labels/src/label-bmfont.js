@@ -176,7 +176,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
           Path.basename(spriteFrameBaseName)
         );
       if (spriteFrame) {
-        texture = spriteFrame.getTexture();
+        texture = spriteFrame.texture;
         this._spriteFrame = spriteFrame;
       } else {
         texture = ServiceLocator.textureCache.addImage(newConf.atlasName);
@@ -306,8 +306,8 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
       var isRotated = false;
       if (this._spriteFrame) {
         var textureWidth = locTexture.width;
-        var spriteFrameRect = this._spriteFrame._rect;
-        if (!this._spriteFrame._rotated) {
+        var spriteFrameRect = this._spriteFrame.rect;
+        if (!this._spriteFrame.rotated) {
           rect.x = rect.x + spriteFrameRect.x;
           rect.y = rect.y + spriteFrameRect.y;
         } else {
