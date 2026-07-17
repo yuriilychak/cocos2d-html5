@@ -214,9 +214,7 @@ export default class AnimationCache {
       }
 
       const delayPerUnit = parseFloat(animationDict["delayPerUnit"]) || 0;
-      const animation = new Animation();
-      animation.initWithAnimationFrames(arr, delayPerUnit, loops);
-      animation.setRestoreOriginalFrame(restoreOriginalFrame);
+      const animation = new Animation(arr, delayPerUnit, loops, restoreOriginalFrame);
       this.set(key, animation);
     }
   }

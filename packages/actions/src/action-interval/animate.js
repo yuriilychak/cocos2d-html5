@@ -58,8 +58,8 @@ export default class Animate extends ActionInterval {
       throw new Error(
         "Animate.initWithAnimation(): animation must be non-NULL"
       );
-    var singleDuration = animation.getDuration();
-    if (this.initWithDuration(singleDuration * animation.getLoops())) {
+    var singleDuration = animation.duration;
+    if (this.initWithDuration(singleDuration * animation.loops)) {
       this._nextFrame = 0;
       this.setAnimation(animation);
 
@@ -69,15 +69,15 @@ export default class Animate extends ActionInterval {
       locTimes.length = 0;
 
       var accumUnitsOfTime = 0;
-      var newUnitOfTimeValue = singleDuration / animation.getTotalDelayUnits();
+      var newUnitOfTimeValue = singleDuration / animation.totalDelayUnits;
 
-      var frames = animation.getFrames();
+      var frames = animation.frames;
       arrayVerifyType(frames, AnimationFrame);
 
       for (var i = 0; i < frames.length; i++) {
         var frame = frames[i];
         var value = (accumUnitsOfTime * newUnitOfTimeValue) / singleDuration;
-        accumUnitsOfTime += frame.getDelayUnits();
+        accumUnitsOfTime += frame.delayUnits;
         locTimes.push(value);
       }
       return true;
@@ -102,7 +102,7 @@ export default class Animate extends ActionInterval {
    */
   startWithTarget(target) {
     super.startWithTarget(target);
-    if (this._animation.getRestoreOriginalFrame())
+    if (this._animation.restoreOriginalFrame)
       this._origFrame = target.getSpriteFrame();
     this._nextFrame = 0;
     this._executedLoops = 0;
@@ -116,7 +116,7 @@ export default class Animate extends ActionInterval {
     dt = this._computeEaseTime(dt);
     // if t==1, ignore. Animation should finish with t==1
     if (dt < 1.0) {
-      dt *= this._animation.getLoops();
+      dt *= this._animation.loops;
 
       // new loop?  If so, reset frame counter
       var loopNumber = 0 | dt;
@@ -129,14 +129,14 @@ export default class Animate extends ActionInterval {
       dt = dt % 1.0;
     }
 
-    var frames = this._animation.getFrames();
+    var frames = this._animation.frames;
     var numberOfFrames = frames.length,
       locSplitTimes = this._splitTimes;
     for (var i = this._nextFrame; i < numberOfFrames; i++) {
       if (locSplitTimes[i] <= dt) {
         this._currFrameIndex = i;
         this.target.setSpriteFrame(
-          frames[this._currFrameIndex].getSpriteFrame()
+          frames[this._currFrameIndex].spriteFrame
         );
         this._nextFrame = i + 1;
       } else {
@@ -152,7 +152,7 @@ export default class Animate extends ActionInterval {
    */
   reverse() {
     var locAnimation = this._animation;
-    var oldArray = locAnimation.getFrames();
+    var oldArray = locAnimation.frames;
     var newArray = [];
     arrayVerifyType(oldArray, AnimationFrame);
     if (oldArray.length > 0) {
@@ -164,10 +164,10 @@ export default class Animate extends ActionInterval {
     }
     var newAnim = new Animation(
       newArray,
-      locAnimation.getDelayPerUnit(),
-      locAnimation.getLoops()
+      locAnimation.delayPerUnit,
+      locAnimation.loops,
+      locAnimation.restoreOriginalFrame
     );
-    newAnim.setRestoreOriginalFrame(locAnimation.getRestoreOriginalFrame());
     var action = new Animate(newAnim);
     this._cloneDecoration(action);
     this._reverseEaseList(action);
@@ -179,7 +179,7 @@ export default class Animate extends ActionInterval {
    * stop the action
    */
   stop() {
-    if (this._animation.getRestoreOriginalFrame() && this.target)
+    if (this._animation.restoreOriginalFrame && this.target)
       this.target.setSpriteFrame(this._origFrame);
     super.stop();
   }

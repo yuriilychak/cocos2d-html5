@@ -397,12 +397,12 @@ export class Sprite extends EventHelper(Node) {
       log(_LogInfos.Sprite_setDisplayFrameWithAnimationName);
       return;
     }
-    var animFrame = cache.getFrames()[frameIndex];
+    var animFrame = cache.frames[frameIndex];
     if (!animFrame) {
       log(_LogInfos.Sprite_setDisplayFrameWithAnimationName_2);
       return;
     }
-    this.setSpriteFrame(animFrame.getSpriteFrame());
+    this.setSpriteFrame(animFrame.spriteFrame);
   }
 
   /**
