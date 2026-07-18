@@ -36,10 +36,7 @@ import type EventManager from "../../event-manager/event-manager/event-manager";
 import type Touch from "../../event-manager/touch";
 import type { Screen } from "../screen";
 import type Sys from "../../sys/sys";
-import type {
-  DensityDPIValue,
-  EGLViewRelatedPosition,
-} from "./types";
+import type { DensityDPIValue } from "./types";
 import { ResolutionPolicy } from "./resolution-policy";
 import { EventCustom } from "../../event-manager";
 import {
@@ -348,13 +345,12 @@ export class EGLView extends BaseClass {
    * Returns the real location in view for a translation based on a related position
    */
   convertToLocationInView(
-    tx: number,
-    ty: number,
-    relatedPos: EGLViewRelatedPosition
+    point: PointLike,
+    relatedPos: Rect
   ): Point {
-    const x = this.#devicePixelRatio * (tx - relatedPos.left);
+    const x = this.#devicePixelRatio * (point.x - relatedPos.x);
     const y =
-      this.#devicePixelRatio * (relatedPos.top + relatedPos.height - ty);
+      this.#devicePixelRatio * (relatedPos.y + relatedPos.height - point.y);
     return this.#domAdapter.rotated
       ? new Point(this.#viewPortRect.width - y, x)
       : new Point(x, y);
@@ -383,14 +379,14 @@ export class EGLView extends BaseClass {
 
   convertMouseToLocationInView(
     point: PointLike,
-    relatedPos: EGLViewRelatedPosition
+    relatedPos: Rect
   ): void {
     const viewport = this.#viewPortRect;
     point.x =
-      (this.#devicePixelRatio * (point.x - relatedPos.left) - viewport.x) /
+      (this.#devicePixelRatio * (point.x - relatedPos.x) - viewport.x) /
       this.#scale.x;
     point.y =
-      (this.#devicePixelRatio * (relatedPos.top + relatedPos.height - point.y) -
+      (this.#devicePixelRatio * (relatedPos.y + relatedPos.height - point.y) -
         viewport.y) /
       this.#scale.y;
   }
@@ -406,7 +402,7 @@ export class EGLView extends BaseClass {
 
       this.convertPointWithScale(touch);
       this.convertPointWithScale(previousLocation);
-      touch._setPrevPoint(previousLocation);
+      touch.setPrev(previousLocation);
     }
   }
 
@@ -454,12 +450,6 @@ export class EGLView extends BaseClass {
       : this.#designResolution;
 
     this.setDesignResolutionSize(size, this.#resolutionPolicy!);
-  }
-
-  // hack
-  #adjustSizeKeepCanvasSize(): void {
-    if (this.#originalDesignResolution.width > 0)
-      this.#resetDesignResolution(true);
   }
 
   #setViewportMeta(metas: ViewportMeta, overwrite: boolean): void {

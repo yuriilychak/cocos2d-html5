@@ -39,4 +39,13 @@ export class Acceleration {
     this.z = z;
     this.timestamp = timestamp;
   }
+
+  public set(x: number, y: number, z: number | null = null) {
+    this.x = x;
+    this.y = y;
+
+    if(z !== null) {
+      this.z = z;
+    }
+  }
 }

@@ -2,3 +2,4 @@ export { ContainerStrategy } from './container-strategy';
 export { ContentStrategy } from './content-strategy';
 export { ResolutionPolicy } from './resolution-policy';
 export { EGLView } from './egl-view';
+export type { EGLViewLike } from './types'; 

@@ -526,6 +526,7 @@ export enum MouseEvent {
 }
 
 export enum MouseButton {
+  NONE = -1,
   /**
    * The tag of Mouse left button
    */
@@ -565,6 +566,13 @@ export enum MouseButton {
    * The tag of Mouse button 8
    */
   B8 = 7
+}
+
+export enum UIInterfaceOrientation {
+  LANDSCAPE_LEFT = -90,
+  LANDSCAPE_RIGHT = 90,
+  PORTRAIT_UPSIDE_DOWN = 180,
+  PORTRAIT = 0
 }
 
 export enum TouchEvent {

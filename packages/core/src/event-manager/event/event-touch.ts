@@ -35,10 +35,13 @@ export default class EventTouch extends Event {
 
   #eventCode: TouchEvent = TouchEvent.NONE;
 
-  constructor(touches: Touch[] = []) {
+  constructor(
+    touches: Touch[] = [],
+    eventCode: TouchEvent = TouchEvent.NONE
+  ) {
     super(EventType.TOUCH);
-    this.#eventCode = TouchEvent.BEGAN;
     this.#touches = touches;
+    this.#eventCode = eventCode;
   }
 
   /**

@@ -99,7 +99,12 @@ export class ServiceLocator {
     ServiceLocator.#kmglMatrix = new KMGLMatrix();
     ServiceLocator.#glStateCache = new GLStateCache(ServiceLocator.#sys, ServiceLocator.#kmglMatrix);
     ServiceLocator.#profiler = new Profiler();
-    ServiceLocator.#inputManager = new InputManager();
+    ServiceLocator.#inputManager = new InputManager(
+      ServiceLocator.#sys,
+      ServiceLocator.#eglView,
+      ServiceLocator.#eventManager,
+      ServiceLocator.#director.scheduler
+    );
 
     const renderingConfig = ServiceLocator.#sys.rendererConfig;
 
@@ -134,13 +139,6 @@ export class ServiceLocator {
       eventManager: ServiceLocator.#eventManager,
       game: ServiceLocator.#game,
       rendererConfig: renderingConfig
-    });
-
-    ServiceLocator.#inputManager.injectServices({
-      director: ServiceLocator.#director,
-      eglView: ServiceLocator.#eglView,
-      eventManager: ServiceLocator.#eventManager,
-      sys: ServiceLocator.#sys
     });
 
     // Configure services and initialise the matrix stacks. Kept here so

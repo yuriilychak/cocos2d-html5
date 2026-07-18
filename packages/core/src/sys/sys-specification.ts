@@ -24,6 +24,7 @@ export default class SysSpecification {
   #osMainVersion = 0;
   #browserType: BrowserType = BrowserType.UNKNOWN;
   #browserVersion = "";
+  #isAccelerometerNegative: boolean = false;
 
   constructor(nav: BrowserNavigator) {
     const ua = nav.userAgent.toLowerCase();
@@ -47,6 +48,8 @@ export default class SysSpecification {
     this.#osMainVersion = parseInt(osMainVersionValue) || 0;
     this.#browserType = SysSpecification.#detectBrowserType(ua, isAndroid);
     this.#browserVersion = SysSpecification.#detectBrowserVersion(ua);
+    this.#isAccelerometerNegative =
+      /android/.test(ua) || (/adr/.test(ua) && this.#browserType === BrowserType.UC);
   }
 
   public toString(): string {
@@ -131,6 +134,10 @@ export default class SysSpecification {
 
   get browserVersion(): string {
     return this.#browserVersion;
+  }
+
+  get isAccelerometerNegative(): boolean {
+    return this.#isAccelerometerNegative;
   }
 
   static #detectOperatingSystem(

@@ -38,16 +38,28 @@ export default class EventMouse extends Event implements PointLike {
   #eventType: MouseEvent = MouseEvent.NONE;
   #button: MouseButton = MouseButton.LEFT;
 
-  constructor(eventType: MouseEvent) {
+  constructor(
+    eventType: MouseEvent,
+    location: PointLike | null = null,
+    prevLocation: PointLike | null = null
+  ) {
     super(EventType.MOUSE);
     this.#eventType = eventType;
+    if (location) {
+      this.#curr.set(location);
+    }
+    
+    if (prevLocation) {
+      this.#prev.set(prevLocation);
+    }
   }
 
-  /**
-   * Sets scroll data
-   */
-  setScrollData(x: number, y: number) {
-    this.#scroll.set(x, y);
+  set scrollData(point: PointLike) {
+    this.#scroll.set(point);
+  }
+
+  get scrollData(): Point {
+    return this.#scroll.clone();
   }
 
   /**
@@ -66,24 +78,20 @@ export default class EventMouse extends Event implements PointLike {
 
   /**
    * Sets cursor location
-   * @param {number} x
-   * @param {number} y
+   * @param {PointLike} point
    */
-  setLocation(x: number, y: number): void {
-    this.#curr.set(x, y);
+  set(point: PointLike): void {
+    this.#curr.set(point);
   }
 
   /**
    * Returns cursor location
    */
   clone(): EventMouse {
-    const result = new EventMouse(this.#eventType);
+    const result = new EventMouse(this.#eventType, this.#curr, this.#prev);
 
-    result.x = this.x;
-    result.y = this.y;
     result.button = this.#button;
-    result.setScrollData(this.#scroll.x, this.#scroll.y);
-    result._setPrevCursor(this.#prev.x, this.#prev.y);
+    result.scrollData = this.#scroll;
 
     return result;
   }
@@ -98,8 +106,12 @@ export default class EventMouse extends Event implements PointLike {
     );
   }
 
-  _setPrevCursor(x: number, y: number): void {
-    this.#prev.set(x, y);
+  set prevCursor(point: PointLike) {
+    this.#prev.set(point);
+  }
+
+  get prevCursor(): Point {
+    return this.#prev.clone();
   }
 
   /**

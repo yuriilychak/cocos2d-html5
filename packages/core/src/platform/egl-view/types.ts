@@ -1,4 +1,5 @@
 import type { PointLike, RectLike, SizeLike } from "../../geometry/types";
+import type Rect from "../../geometry/rect";
 import type { DensityDPI, DeviceOrientation, DirectorProjection } from "../../enums";
 import type { ResolutionPolicy } from "./resolution-policy";
 import type { DirectorRenderer } from "./renderer";
@@ -68,13 +69,12 @@ export interface EGLViewLike {
   readonly viewPortRect: RectLike;
   readonly viewPortOriginInPoints: PointLike;
   convertToLocationInView(
-    tx: number,
-    ty: number,
-    relatedPos: EGLViewRelatedPosition
+    point: PointLike,
+    relatedPos: Rect
   ): PointLike;
   convertMouseToLocationInView(
     point: PointLike,
-    relatedPos: EGLViewRelatedPosition
+    relatedPos: Rect
   ): void;
   convertPointWithScale(point: PointLike): void;
   convertTouchesWithScale(

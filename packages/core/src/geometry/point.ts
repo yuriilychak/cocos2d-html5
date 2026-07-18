@@ -190,6 +190,17 @@ export default class Point implements PointLike {
     return new Point(size.width, size.height);
   }
 
+  public static fromEvent(data: { pageX: number; pageY: number }): Point {
+    return new Point(data.pageX, data.pageY);
+  }
+
+  public static fromClientEvent(data: {
+    clientX: number;
+    clientY: number;
+  }): Point {
+    return new Point(data.clientX, data.clientY);
+  }
+
   public static compOp(pt: PointLike, opFunc: (value: number) => number): Point {
     return new Point(opFunc(pt.x), opFunc(pt.y));
   }

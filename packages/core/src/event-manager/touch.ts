@@ -30,8 +30,7 @@ import { ServiceLocator } from "../service-locator";
 /**
  * The touch event class
  *
- * @param {Number} x
- * @param {Number} y
+ * @param {PointLike} pos
  * @param {Number} id
  */
 export default class Touch extends BaseClass implements PointLike {
@@ -42,9 +41,9 @@ export default class Touch extends BaseClass implements PointLike {
   #startPointCaptured = false;
   #id = 0;
 
-  constructor(x: number, y: number, id: number) {
+  constructor(pos: PointLike, id: number = 0) {
     super();
-    this.setTouchInfo(id, x, y);
+    this.setTouchInfo(id, pos.x, pos.y);
   }
   
   /**
@@ -121,13 +120,13 @@ export default class Touch extends BaseClass implements PointLike {
   }
 
   clone(): Touch {
-    return new Touch(this.x, this.y, this.id);
+    return new Touch(this, this.id);
   }
 
-  _setPoint(): void 
-  _setPoint(point: PointLike): void 
-  _setPoint(x: number, y: number): void 
-  _setPoint(xOrPoint: PointLike | number = 0,  y: number = 0) {
+  set(): void
+  set(point: PointLike): void
+  set(x: number, y: number): void
+  set(xOrPoint: PointLike | number = 0,  y: number = 0) {
     if (Point.isLike(xOrPoint)) {
       this.#curr.set(xOrPoint);
     } else if (typeof xOrPoint === 'number' && typeof y === "number") {
@@ -135,10 +134,10 @@ export default class Touch extends BaseClass implements PointLike {
     }
   }
 
-  _setPrevPoint(): void 
-  _setPrevPoint(point: PointLike): void 
-  _setPrevPoint(x: number, y: number): void 
-  _setPrevPoint(xOrPoint: PointLike | number = 0,  y: number = 0) {
+  setPrev(): void
+  setPrev(point: PointLike): void
+  setPrev(x: number, y: number): void
+  setPrev(xOrPoint: PointLike | number = 0,  y: number = 0) {
     if (Point.isLike(xOrPoint)) {
       this.#prev.set(xOrPoint);
     } else if (typeof xOrPoint === 'number' && typeof y === "number") {
