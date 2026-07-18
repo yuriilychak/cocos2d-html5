@@ -129,7 +129,7 @@ load.preload = true;
  */
 export function loadWithVisibleSize (file, path) {
     var object = load(file, path);
-    var size = ServiceLocator.eglView.rendererDelegate.getVisibleSize();
+    var size = ServiceLocator.eglView.rendererDelegate.visibleSize;
     if (object.node && size) {
         object.node.setContentSize(size.width, size.height);
         helper.doLayout(object.node);
@@ -166,4 +166,3 @@ ServiceLocator.loader.register(["json"], {
         });
     }
 });
-

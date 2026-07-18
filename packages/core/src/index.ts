@@ -235,8 +235,6 @@ export type {
 } from "./kazmath";
 export { BYTE, FULL_BYTE } from "./constants";
 export { GlobalVertexBuffer } from "./renderer/global-vertex-buffer";
-export { Animation } from "./sprites/animation/animation";
-export { AnimationFrame } from "./sprites/animation/animation-frame";
 export { Node } from "./base-nodes/node";
 export { Scene } from "./scenes/scene";
 export { LoaderScene } from "./scenes/loader-scene";
@@ -257,9 +255,7 @@ export { AtlasNode } from "./base-nodes/atlas-node";
 export { SpriteBatchNode } from "./sprites/sprite-batch-node";
 export { Layer } from "./layers/layer";
 export { isFunction, isString } from "./boot/utils";
-export { SpriteFrame } from "./sprites/sprite-frame";
-export { PolygonInfo, Triangles } from "./sprites";
-export type { TriangleLike, TriangleVertex } from "./sprites/types";
+export { Animation, AnimationFrame, PolygonInfo, Triangles, SpriteFrame, type TriangleLike, type TriangleVertex } from "./sprites";
 export { Component, ComponentContainer } from "./components";
 export { assert, error, Path, Loader, isObject, isUndefined } from "./boot";
 export {
@@ -267,11 +263,9 @@ export {
   s_globalOrderOfArrival,
   setGlobalOrderOfArrival
 } from "./base-nodes/node";
-export { default as SpriteFrameCache } from "./sprites/sprite-frame-cache";
 export { LayerGradient } from "./layers/layer-gradient";
 export { TextureAtlas } from "./textures/texture-atlas";
 export { GLProgram } from "./shaders";
-export { default as AnimationCache } from "./sprites/animation-cache";
 export { Scheduler } from "./scheduler";
 export { ActionManager } from "./action-manager";
 export { LayerMultiplex } from "./layers/layer-multiplex";

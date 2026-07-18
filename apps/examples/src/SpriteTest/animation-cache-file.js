@@ -34,7 +34,7 @@ import {
 } from "../resources";
 import { winSize } from "../constants";
 import { Animate, Sequence } from "@aspect/actions";
-import { AnimationCache, Sprite, ServiceLocator } from "@aspect/core";
+import { Sprite, ServiceLocator } from "@aspect/core";
 export class AnimationCacheFile extends SpriteTestDemo {
   constructor() {
     //----start54----ctor

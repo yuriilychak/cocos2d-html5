@@ -73,7 +73,7 @@ export class SchedulerUnscheduleAllHard extends SchedulerTestLayer {
   }
   onUnscheduleAll(dt) {
     //----start3----onUnscheduleAll
-    director.getScheduler().unscheduleAllCallbacks();
+    director.scheduler.unscheduleAllCallbacks();
     //----end3----
   }
 }

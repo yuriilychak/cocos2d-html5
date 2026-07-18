@@ -112,8 +112,8 @@ export class LabelAtlas extends LabelBMFont {
       self._fntFile = "dummy_fnt_file:" + textureFilename;
       var spriteFrameBaseName = textureFilename;
       var spriteFrame =
-        ServiceLocator.spriteFrameCache.getSpriteFrame(spriteFrameBaseName) ||
-        ServiceLocator.spriteFrameCache.getSpriteFrame(
+        ServiceLocator.spriteFrameCache.get(spriteFrameBaseName) ||
+        ServiceLocator.spriteFrameCache.get(
           Path.basename(spriteFrameBaseName)
         );
       if (spriteFrame) {

@@ -80,7 +80,7 @@ export class SpriteFrameAliasNameTest extends SpriteTestDemo {
         for (var i = 1; i < 15; i++) {
             // Obtain frames by alias name
             str = "dance_" + (i < 10 ? ("0" + i) : i);
-            var frame = ServiceLocator.spriteFrameCache.getSpriteFrame(str);
+            var frame = ServiceLocator.spriteFrameCache.get(str);
             animFrames.push(frame);
         }
 

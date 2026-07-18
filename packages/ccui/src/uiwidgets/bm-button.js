@@ -272,7 +272,7 @@ export class BMButton extends Widget {
   }
 
   _createSpriteFrameWithName(name) {
-    var frame = ServiceLocator.spriteFrameCache.getSpriteFrame(name);
+    var frame = ServiceLocator.spriteFrameCache.get(name);
     if (frame == null) {
       log(
         "Scale9Sprite.initWithSpriteFrameName(): can't find the sprite frame by spriteFrameName"

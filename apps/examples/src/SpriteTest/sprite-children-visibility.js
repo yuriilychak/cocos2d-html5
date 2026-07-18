@@ -70,15 +70,15 @@ export class SpriteChildrenVisibility extends SpriteTestDemo {
         aParent.y = winSize.height / 2;
         this.addChild(aParent, 0);
 
-        var sprite1 = new Sprite(ServiceLocator.spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
+        var sprite1 = new Sprite(ServiceLocator.spriteFrameCache.get("grossini_dance_01.png"));
         sprite1.x = 0;
         sprite1.y = 0;
 
-        var sprite2 = new Sprite(ServiceLocator.spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
+        var sprite2 = new Sprite(ServiceLocator.spriteFrameCache.get("grossini_dance_02.png"));
         sprite2.x = 20;
         sprite2.y = 30;
 
-        var sprite3 = new Sprite(ServiceLocator.spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
+        var sprite3 = new Sprite(ServiceLocator.spriteFrameCache.get("grossini_dance_03.png"));
         sprite3.x = -20;
         sprite3.y = 30;
 
@@ -96,15 +96,15 @@ export class SpriteChildrenVisibility extends SpriteTestDemo {
         aParent.y = winSize.height / 2;
         this.addChild(aParent, 0);
 
-        sprite1 = new Sprite(ServiceLocator.spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
+        sprite1 = new Sprite(ServiceLocator.spriteFrameCache.get("grossini_dance_01.png"));
         sprite1.x = 0;
         sprite1.y = 0;
 
-        sprite2 = new Sprite(ServiceLocator.spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
+        sprite2 = new Sprite(ServiceLocator.spriteFrameCache.get("grossini_dance_02.png"));
         sprite2.x = 20;
         sprite2.y = 30;
 
-        sprite3 = new Sprite(ServiceLocator.spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
+        sprite3 = new Sprite(ServiceLocator.spriteFrameCache.get("grossini_dance_03.png"));
         sprite3.x = -20;
         sprite3.y = 30;
 

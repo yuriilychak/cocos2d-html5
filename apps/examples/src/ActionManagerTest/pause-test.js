@@ -75,7 +75,7 @@ export class PauseTest extends ActionManagerTest {
 
     var action = new MoveBy(1, new Point(150, 0));
 
-    director.getActionManager().addAction(action, grossini, true);
+    director.actionManager.addAction(action, grossini, true);
 
     this.schedule(this.onUnpause, 3);
 
@@ -94,7 +94,7 @@ export class PauseTest extends ActionManagerTest {
     //----start2----onUnpause
     this.unschedule(this.onUnpause);
     var node = this.getChildByTag(TAG_GROSSINI);
-    director.getActionManager().resumeTarget(node);
+    director.actionManager.resumeTarget(node);
     //----end2----
   }
 

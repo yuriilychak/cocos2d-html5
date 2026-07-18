@@ -40,7 +40,7 @@ export class UIFocusTestBase extends UIMainLayer {
   init() {
     if (super.init()) {
 
-      var winSize = ServiceLocator.eglView.rendererDelegate.getVisibleSize();
+      var winSize = ServiceLocator.eglView.rendererDelegate.visibleSize;
       this._dpadMenu = new ButtonLayout(
         [
           { label: "Left", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },

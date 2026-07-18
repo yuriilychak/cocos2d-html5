@@ -135,7 +135,7 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
       ServiceLocator.eventManager.addListener(touchAllAtOnceListener.clone(), sprite2);
       ServiceLocator.eventManager.addListener(keyboardEventListener.clone(), sprite2);
 
-      var visibleSize = ServiceLocator.eglView.rendererDelegate.getVisibleSize();
+      var visibleSize = ServiceLocator.eglView.rendererDelegate.visibleSize;
       sprite1.x =
         ServiceLocator.eglView.visibleRect.left.x + (visibleSize.width / (SPRITE_COUNT - 1)) * i;
       sprite1.y =

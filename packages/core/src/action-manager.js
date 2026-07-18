@@ -220,7 +220,7 @@ export class ActionManager extends BaseClass {
   }
 
   purgeSharedManager() {
-    ServiceLocator.director.getScheduler().unscheduleUpdate(this);
+    ServiceLocator.director.scheduler.unscheduleUpdate(this);
   }
 
   _removeActionAtIndex(index, element) {

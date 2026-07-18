@@ -206,7 +206,7 @@ parser.initSprite = function (json, resourcePath) {
   loadTexture(json["FileData"], resourcePath, function (path, type) {
     if (type === 0) node.setTexture(path);
     else if (type === 1) {
-      var spriteFrame = ServiceLocator.spriteFrameCache.getSpriteFrame(path);
+      var spriteFrame = ServiceLocator.spriteFrameCache.get(path);
       if (spriteFrame) node.setSpriteFrame(spriteFrame);
     }
   });
@@ -1349,13 +1349,13 @@ var loadTexture = function (json, resourcePath, cb) {
       } else {
         if (
           !loadedPlist[resourcePath + plist] &&
-          !ServiceLocator.spriteFrameCache.getSpriteFrame(path)
+          !ServiceLocator.spriteFrameCache.get(path)
         )
           log("%s need to be preloaded", resourcePath + plist);
       }
     }
     if (type !== 0) {
-      if (ServiceLocator.spriteFrameCache.getSpriteFrame(path)) cb(path, type);
+      if (ServiceLocator.spriteFrameCache.get(path)) cb(path, type);
       else log("failed to get spriteFrame: %s", path);
     } else cb(resourcePath + path, type);
   }

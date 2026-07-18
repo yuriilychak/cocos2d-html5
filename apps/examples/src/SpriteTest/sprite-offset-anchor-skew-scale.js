@@ -59,7 +59,7 @@ export class SpriteOffsetAnchorSkewScale extends SpriteTestDemo {
       // Animation using Sprite batch
       //
       var sprite = new Sprite(
-        ServiceLocator.spriteFrameCache.getSpriteFrame("grossini_dance_01.png")
+        ServiceLocator.spriteFrameCache.get("grossini_dance_01.png")
       );
       sprite.x = (winSize.width / 4) * (i + 1);
       sprite.y = winSize.height / 2;
@@ -92,7 +92,7 @@ export class SpriteOffsetAnchorSkewScale extends SpriteTestDemo {
       var tmp = "";
       for (var j = 1; j <= 14; j++) {
         tmp = "grossini_dance_" + (j < 10 ? "0" + j : j) + ".png";
-        var frame = ServiceLocator.spriteFrameCache.getSpriteFrame(tmp);
+        var frame = ServiceLocator.spriteFrameCache.get(tmp);
         animFrames.push(frame);
       }
 

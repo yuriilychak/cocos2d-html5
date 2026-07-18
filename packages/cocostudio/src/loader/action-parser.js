@@ -209,11 +209,11 @@ import { _ccsLoad } from "./load/utils.js";
                 if(texture != null) {
                     plist = texture["Plist"];
                     path = texture["Path"];
-                    spriteFrame = ServiceLocator.spriteFrameCache.getSpriteFrame(path);
+                    spriteFrame = ServiceLocator.spriteFrameCache.get(path);
                     if(!spriteFrame && plist){
                         if(ServiceLocator.loader.get(resourcePath + plist)){
                             ServiceLocator.spriteFrameCache.addSpriteFrames(resourcePath + plist);
-                            spriteFrame = ServiceLocator.spriteFrameCache.getSpriteFrame(path);
+                            spriteFrame = ServiceLocator.spriteFrameCache.get(path);
                         }else{
                             log("%s need to be preloaded", resourcePath + plist);
                         }

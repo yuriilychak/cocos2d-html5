@@ -33,8 +33,8 @@ export class Issue4160 extends EventDispatcherTestDemo {
   constructor() {
     //----start10----ctor
     super();
-    var origin = ServiceLocator.eglView.rendererDelegate.getVisibleOrigin();
-    var size = ServiceLocator.eglView.rendererDelegate.getVisibleSize();
+    var origin = ServiceLocator.eglView.rendererDelegate.visibleOrigin;
+    var size = ServiceLocator.eglView.rendererDelegate.visibleSize;
 
     var sprite1 = TouchableSprite.create(-30);
     sprite1.color = new Color(0, 255, 255);

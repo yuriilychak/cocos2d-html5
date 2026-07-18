@@ -36,7 +36,7 @@ export class UIFocusTestVertical extends UIFocusTestBase {
 
   init() {
     if (super.init()) {
-      var winSize = ServiceLocator.eglView.rendererDelegate.getVisibleSize();
+      var winSize = ServiceLocator.eglView.rendererDelegate.visibleSize;
 
       this._verticalLayout = new VBox();
       this._verticalLayout.setPosition(

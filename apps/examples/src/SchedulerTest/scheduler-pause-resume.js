@@ -61,7 +61,7 @@ export class SchedulerPauseResume extends SchedulerTestLayer {
   }
   onPause(dt) {
     //----start1----onPause
-    director.getScheduler().pauseTarget(this);
+    director.scheduler.pauseTarget(this);
     //----end1----
   }
 }

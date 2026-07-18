@@ -272,7 +272,7 @@ export const dataReaderHelper = {
       );
     };
     ServiceLocator.director
-      .getScheduler()
+      .scheduler
       .schedule(fun, this, 0.1, false, 0, false, "armatrueDataHelper");
   },
 

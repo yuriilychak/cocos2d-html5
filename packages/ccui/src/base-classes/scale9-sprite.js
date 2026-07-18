@@ -381,7 +381,7 @@ export class Scale9Sprite extends EventHelper(Node) {
       if (file instanceof SpriteFrame)
         this.initWithSpriteFrame(file, rectOrCapInsets);
       else {
-        var frame = ServiceLocator.spriteFrameCache.getSpriteFrame(file);
+        var frame = ServiceLocator.spriteFrameCache.get(file);
         if (frame) this.initWithSpriteFrame(frame, rectOrCapInsets);
         else this.initWithFile(file, rectOrCapInsets, capInsets);
       }
@@ -578,7 +578,7 @@ export class Scale9Sprite extends EventHelper(Node) {
       );
     capInsets = capInsets || new Rect();
 
-    var frame = ServiceLocator.spriteFrameCache.getSpriteFrame(spriteFrameName);
+    var frame = ServiceLocator.spriteFrameCache.get(spriteFrameName);
     if (frame == null) {
       log(
         "Scale9Sprite.initWithSpriteFrameName(): can't find the sprite frame by spriteFrameName"

@@ -76,7 +76,7 @@ import { GLState } from "../enums";
  * var sprite = new Sprite('#grossini_dance_01.png');
  *
  * 3.Create a sprite with a sprite frame
- * var spriteFrame = spriteFrameCache.getSpriteFrame("grossini_dance_01.png");
+ * var spriteFrame = spriteFrameCache.get("grossini_dance_01.png");
  * var sprite = new Sprite(spriteFrame);
  *
  * 4.Create a sprite with an existing texture contained in a Texture2D object
@@ -269,7 +269,7 @@ export class Sprite extends EventHelper(Node) {
    */
   initWithSpriteFrameName(spriteFrameName) {
     assert(spriteFrameName, _LogInfos.Sprite_initWithSpriteFrameName);
-    var frame = ServiceLocator.spriteFrameCache.getSpriteFrame(spriteFrameName);
+    var frame = ServiceLocator.spriteFrameCache.get(spriteFrameName);
     assert(frame, spriteFrameName + _LogInfos.Sprite_initWithSpriteFrameName1);
     return this.initWithSpriteFrame(frame);
   }
@@ -511,7 +511,7 @@ export class Sprite extends EventHelper(Node) {
         // Init with a sprite frame name
         var frameName = fileName.substr(1, fileName.length - 1);
         var spriteFrame =
-          ServiceLocator.spriteFrameCache.getSpriteFrame(frameName);
+          ServiceLocator.spriteFrameCache.get(frameName);
         if (spriteFrame) this.initWithSpriteFrame(spriteFrame);
         else log("%s does not exist", fileName);
       } else {
@@ -772,7 +772,7 @@ export class Sprite extends EventHelper(Node) {
   setSpriteFrame(newFrame) {
     var _t = this;
     if (typeof newFrame === "string") {
-      newFrame = ServiceLocator.spriteFrameCache.getSpriteFrame(newFrame);
+      newFrame = ServiceLocator.spriteFrameCache.get(newFrame);
       assert(newFrame, _LogInfos.Sprite_setSpriteFrame);
     }
     this._loader.clear();

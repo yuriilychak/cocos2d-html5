@@ -57,11 +57,11 @@ export class PauseResumeActions extends ActionsDemo {
 
   pause() {
     log("Pausing");
-    this._pausedTargets = director.getActionManager().pauseAllRunningActions();
+    this._pausedTargets = director.actionManager.pauseAllRunningActions();
   }
   resume() {
     log("Resuming");
-    director.getActionManager().resumeTargets(this._pausedTargets);
+    director.actionManager.resumeTargets(this._pausedTargets);
   }
 
   title() {

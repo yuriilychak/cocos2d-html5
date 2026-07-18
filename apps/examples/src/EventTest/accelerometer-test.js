@@ -50,8 +50,8 @@ export class AccelerometerTest extends EventTest {
     if (ServiceLocator.sys.capabilities.accelerometer) {
       var self = this;
       // call is called 30 times per second
-      ServiceLocator.inputManager.setAccelerometerInterval(1 / 30);
-      ServiceLocator.inputManager.setAccelerometerEnabled(true);
+      ServiceLocator.inputManager.accelerometerInterval = 1 / 30;
+      ServiceLocator.inputManager.accelerometerEnabled = true;
       ServiceLocator.eventManager.addListener(
         {
           event: EventListenerType.ACCELERATION,
@@ -107,7 +107,7 @@ export class AccelerometerTest extends EventTest {
   onExit() {
     super.onExit();
     if (ServiceLocator.sys.capabilities.accelerometer)
-      ServiceLocator.inputManager.setAccelerometerEnabled(false);
+      ServiceLocator.inputManager.accelerometerEnabled = false;
   }
 
   subtitle() {

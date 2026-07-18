@@ -38,7 +38,7 @@ import {
 } from "../resources";
 import { winSize } from "../constants";
 import { Animate, Sequence } from "@aspect/actions";
-import { Animation, AnimationCache, AnimationFrame, Sprite, ServiceLocator } from "@aspect/core";
+import { Animation, AnimationFrame, Sprite, ServiceLocator } from "@aspect/core";
 export class AnimationCacheTest extends SpriteTestDemo {
   constructor() {
     //----start40----ctor
@@ -73,7 +73,7 @@ export class AnimationCacheTest extends SpriteTestDemo {
     var str = "";
     for (var i = 1; i < 15; i++) {
       str = "grossini_dance_" + (i < 10 ? "0" + i : i) + ".png";
-      frame = ServiceLocator.spriteFrameCache.getSpriteFrame(str);
+      frame = ServiceLocator.spriteFrameCache.get(str);
       animFrame = new AnimationFrame(frame, 1);
       animFrames.push(animFrame);
     }
@@ -89,7 +89,7 @@ export class AnimationCacheTest extends SpriteTestDemo {
     animFrames = [];
     for (i = 1; i < 15; i++) {
       str = "grossini_dance_gray_" + (i < 10 ? "0" + i : i) + ".png";
-      frame = ServiceLocator.spriteFrameCache.getSpriteFrame(str);
+      frame = ServiceLocator.spriteFrameCache.get(str);
       animFrames.push(frame);
     }
 
@@ -104,7 +104,7 @@ export class AnimationCacheTest extends SpriteTestDemo {
     animFrames = [];
     for (i = 1; i < 4; i++) {
       str = "grossini_blue_0" + i + ".png";
-      frame = ServiceLocator.spriteFrameCache.getSpriteFrame(str);
+      frame = ServiceLocator.spriteFrameCache.get(str);
       animFrames.push(frame);
     }
 
@@ -128,7 +128,7 @@ export class AnimationCacheTest extends SpriteTestDemo {
 
     var seq = new Sequence(animN, animG, animB);
 
-    frame = ServiceLocator.spriteFrameCache.getSpriteFrame(
+    frame = ServiceLocator.spriteFrameCache.get(
       "grossini_dance_01.png"
     );
     var grossini = new Sprite(frame);

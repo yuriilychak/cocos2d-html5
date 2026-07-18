@@ -54,19 +54,19 @@ export class SpriteBatchNodeChildren extends SpriteTestDemo {
     ServiceLocator.spriteFrameCache.addSpriteFrames(s_grossiniPlist);
 
     var sprite1 = new Sprite(
-      ServiceLocator.spriteFrameCache.getSpriteFrame("grossini_dance_01.png")
+      ServiceLocator.spriteFrameCache.get("grossini_dance_01.png")
     );
     sprite1.x = winSize.width / 3;
     sprite1.y = winSize.height / 2;
 
     var sprite2 = new Sprite(
-      ServiceLocator.spriteFrameCache.getSpriteFrame("grossini_dance_02.png")
+      ServiceLocator.spriteFrameCache.get("grossini_dance_02.png")
     );
     sprite2.x = 50;
     sprite2.y = 50;
 
     var sprite3 = new Sprite(
-      ServiceLocator.spriteFrameCache.getSpriteFrame("grossini_dance_03.png")
+      ServiceLocator.spriteFrameCache.get("grossini_dance_03.png")
     );
     sprite3.x = -50;
     sprite3.y = -50;
@@ -80,7 +80,7 @@ export class SpriteBatchNodeChildren extends SpriteTestDemo {
     var str = "";
     for (var i = 1; i < 15; i++) {
       str = "grossini_dance_" + (i < 10 ? "0" + i : i) + ".png";
-      var frame = ServiceLocator.spriteFrameCache.getSpriteFrame(str);
+      var frame = ServiceLocator.spriteFrameCache.get(str);
       animFrames.push(frame);
     }
 

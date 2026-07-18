@@ -69,7 +69,7 @@ export class ResumeTest extends ActionManagerTest {
 
     grossini.runAction(new ScaleBy(2, 2));
 
-    director.getActionManager().pauseTarget(grossini);
+    director.actionManager.pauseTarget(grossini);
     grossini.runAction(new RotateBy(2, 360));
 
     this.schedule(this.resumeGrossini, 3.0);
@@ -80,7 +80,7 @@ export class ResumeTest extends ActionManagerTest {
     this.unschedule(this.resumeGrossini);
 
     var grossini = this.getChildByTag(TAG_GROSSINI);
-    director.getActionManager().resumeTarget(grossini);
+    director.actionManager.resumeTarget(grossini);
     //----end4----
   }
 

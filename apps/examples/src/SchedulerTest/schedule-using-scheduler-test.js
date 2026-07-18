@@ -43,7 +43,7 @@ export class ScheduleUsingSchedulerTest extends SchedulerTestLayer {
     super.onEnter();
 
     this._accum = 0;
-    var scheduler = director.getScheduler();
+    var scheduler = director.scheduler;
 
     var priority = 0; // priority 0. default.
     var paused = false; // not paused, queue it now.
@@ -93,7 +93,7 @@ export class ScheduleUsingSchedulerTest extends SchedulerTestLayer {
     //----end9----
   }
   unscheduleAll() {
-    var scheduler = director.getScheduler();
+    var scheduler = director.scheduler;
     scheduler.unscheduleUpdate(this);
     scheduler.unscheduleAllForTarget(this);
   }

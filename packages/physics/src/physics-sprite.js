@@ -22,7 +22,7 @@ export class PhysicsSprite extends Sprite {
       if (fileName[0] === "#") {
         var frameName = fileName.substr(1, fileName.length - 1);
         var spriteFrame =
-          ServiceLocator.spriteFrameCache.getSpriteFrame(frameName);
+          ServiceLocator.spriteFrameCache.get(frameName);
         this.initWithSpriteFrame(spriteFrame);
       } else {
         this.init(fileName, rect);

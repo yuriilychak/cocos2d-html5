@@ -64,7 +64,7 @@ export class PageTurn3DInRectTest extends BaseTestLayer {
     super.onEnter();
 
     //var node = new Node();
-    var visiableSize = ServiceLocator.eglView.rendererDelegate.getVisibleSize();
+    var visiableSize = ServiceLocator.eglView.rendererDelegate.visibleSize;
     var gridRect = new Rect(
       visiableSize.width * 0.1,
       visiableSize.height * 0.1,

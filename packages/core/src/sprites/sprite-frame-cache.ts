@@ -61,6 +61,104 @@ export default class SpriteFrameCache {
     this.#textureCache = textureCache;
   }
 
+  addSpriteFrames(url: string, texture?: string | Texture2D): void {
+    assert(url, _LogInfos.spriteFrameCache_addSpriteFrames_2);
+
+    const dict = this.#frameConfigCache.get(url) || this.#loader.get(url);
+    if (!dict || !dict.frames) return;
+
+    const frameConfig = this.#frameConfigCache.get(url) || this.#getFrameConfig(url);
+    this.#createSpriteFrames(url, frameConfig, texture);
+  }
+
+  removeSpriteFrames(): void {
+    this.#spriteFrames.clear();
+    this.#spriteFramesAliases.clear();
+  }
+
+  removeSpriteFramesFromFile(url: string): void {
+    const cfg = this.#frameConfigCache.get(url);
+    if (!cfg) return;
+
+    for (const key in cfg.frames) {
+      if (this.#spriteFrames.has(key)) {
+        this.#spriteFrames.delete(key);
+        for (const [alias, frameKey] of this.#spriteFramesAliases) {
+          if (frameKey === key) this.#spriteFramesAliases.delete(alias);
+        }
+      }
+    }
+  }
+
+  removeSpriteFramesFromTexture(texture: unknown): void {
+    for (const [key, frame] of this.#spriteFrames) {
+      if (frame.texture === texture) {
+        this.#spriteFrames.delete(key);
+        for (const [alias, frameKey] of this.#spriteFramesAliases) {
+          if (frameKey === key) this.#spriteFramesAliases.delete(alias);
+        }
+      }
+    }
+  }
+
+  set(frameName: string, frame: SpriteFrame): this {
+    this.#spriteFrames.set(frameName, frame);
+    return this;
+  }
+
+  get(name: string): SpriteFrame | null {
+    if(this.#spriteFrames.has(name)) {
+      return this.#spriteFrames.get(name)!;
+    }
+
+    if(!this.#spriteFramesAliases.has(name)) {
+      return null;
+    }
+
+    const key = this.#spriteFramesAliases.get(name)!;
+
+    if(!this.#spriteFrames.has(key)) {
+      this.#spriteFramesAliases.delete(name);
+
+      return null;
+    }
+
+    return this.#spriteFrames.get(key)!;
+  }
+
+  has(name: string): boolean {
+    if(this.#spriteFrames.has(name)) {
+      return true;
+    }
+
+    if(!this.#spriteFramesAliases.has(name)) {
+      return false;
+    }
+
+    const key = this.#spriteFramesAliases.get(name)!;
+
+    if(!this.#spriteFrames.has(key)) {
+      this.#spriteFramesAliases.delete(name);
+
+      return false;
+    }
+
+    return true;
+  }
+
+  delete(name: string): boolean {
+    if (!name) return false;
+    const aliasDeleted = this.#spriteFramesAliases.delete(name);
+    const frameDeleted = this.#spriteFrames.delete(name);
+    return aliasDeleted || frameDeleted;
+  }
+
+  clear(): void {
+    this.#spriteFrames.clear();
+    this.#spriteFramesAliases.clear();
+    this.#frameConfigCache.clear();
+  }
+
   #rectFromString(content: string): Rect {
     const result = SpriteFrameCache.#CCNS_REG2.exec(content);
     if (!result) return new Rect();
@@ -106,13 +204,6 @@ export default class SpriteFrameCache {
     }
 
     const frameConfig = this.#parseFrameConfig(dict);
-    this.#frameConfigCache.set(url, frameConfig);
-    return frameConfig;
-  }
-
-  #getFrameConfigByJsonObject(url: string, jsonObject: any): FrameConfig {
-    assert(jsonObject, _LogInfos.spriteFrameCache__getFrameConfig_2, url);
-    const frameConfig = this.#parseFrameConfig(jsonObject);
     this.#frameConfigCache.set(url, frameConfig);
     return frameConfig;
   }
@@ -195,16 +286,6 @@ export default class SpriteFrameCache {
     }
 
     return { _inited: true, frames, meta };
-  }
-
-  #addSpriteFramesByObject(url: string, jsonObject: any, texture?: string | Texture2D): void {
-    assert(url, _LogInfos.spriteFrameCache_addSpriteFrames_2);
-    if (!jsonObject || !jsonObject.frames) return;
-
-    const frameConfig =
-      this.#frameConfigCache.get(url) ||
-      this.#getFrameConfigByJsonObject(url, jsonObject);
-    this.#createSpriteFrames(url, frameConfig, texture);
   }
 
   #createSpriteFrames(url: string, frameConfig: FrameConfig, texture?: string | Texture2D): void {
@@ -290,81 +371,5 @@ export default class SpriteFrameCache {
       }
       this.#spriteFrames.set(key, spriteFrame);
     }
-  }
-
-  addSpriteFrames(url: string, texture?: string | Texture2D): void {
-    assert(url, _LogInfos.spriteFrameCache_addSpriteFrames_2);
-
-    const dict = this.#frameConfigCache.get(url) || this.#loader.get(url);
-    if (!dict || !dict.frames) return;
-
-    const frameConfig = this.#frameConfigCache.get(url) || this.#getFrameConfig(url);
-    this.#createSpriteFrames(url, frameConfig, texture);
-  }
-
-  #checkConflict(dictionary: FrameConfig): void {
-    for (const key in dictionary.frames) {
-      if (this.#spriteFrames.has(key)) {
-        log(_LogInfos.spriteFrameCache__checkConflict, key);
-      }
-    }
-  }
-
-  addSpriteFrame(frame: SpriteFrame, frameName: string): void {
-    this.#spriteFrames.set(frameName, frame);
-  }
-
-  removeSpriteFrames(): void {
-    this.#spriteFrames.clear();
-    this.#spriteFramesAliases.clear();
-  }
-
-  removeSpriteFrameByName(name: string): void {
-    if (!name) return;
-    this.#spriteFramesAliases.delete(name);
-    this.#spriteFrames.delete(name);
-  }
-
-  removeSpriteFramesFromFile(url: string): void {
-    const cfg = this.#frameConfigCache.get(url);
-    if (!cfg) return;
-
-    for (const key in cfg.frames) {
-      if (this.#spriteFrames.has(key)) {
-        this.#spriteFrames.delete(key);
-        for (const [alias, frameKey] of this.#spriteFramesAliases) {
-          if (frameKey === key) this.#spriteFramesAliases.delete(alias);
-        }
-      }
-    }
-  }
-
-  removeSpriteFramesFromTexture(texture: unknown): void {
-    for (const [key, frame] of this.#spriteFrames) {
-      if (frame.texture === texture) {
-        this.#spriteFrames.delete(key);
-        for (const [alias, frameKey] of this.#spriteFramesAliases) {
-          if (frameKey === key) this.#spriteFramesAliases.delete(alias);
-        }
-      }
-    }
-  }
-
-  getSpriteFrame(name: string): SpriteFrame | undefined {
-    let frame = this.#spriteFrames.get(name);
-    if (!frame) {
-      const key = this.#spriteFramesAliases.get(name);
-      if (key !== undefined) {
-        frame = this.#spriteFrames.get(key);
-        if (!frame) this.#spriteFramesAliases.delete(name);
-      }
-    }
-    return frame;
-  }
-
-  clear(): void {
-    this.#spriteFrames.clear();
-    this.#spriteFramesAliases.clear();
-    this.#frameConfigCache.clear();
   }
 }

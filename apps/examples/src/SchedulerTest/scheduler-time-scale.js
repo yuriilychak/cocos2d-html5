@@ -82,7 +82,7 @@ export class SchedulerTimeScale extends SchedulerTestLayer {
     tamara.runAction(new Speed(action2, 1.5));
     kathia.runAction(new Speed(action3, 1.0));
 
-    ServiceLocator.director.getScheduler().scheduleUpdate(this._newScheduler, 0, false);
+    ServiceLocator.director.scheduler.scheduleUpdate(this._newScheduler, 0, false);
 
     this._newScheduler.scheduleUpdate(this._newActionManager, 0, false);
 
@@ -150,7 +150,7 @@ export class SchedulerTimeScale extends SchedulerTestLayer {
       case Slider.EVENT_PERCENT_CHANGED:
         var slider = sender;
         var percent = (slider.getPercent() / 100.0) * 5;
-        ServiceLocator.director.getScheduler().setTimeScale(percent);
+        ServiceLocator.director.scheduler.setTimeScale(percent);
         break;
       default:
         break;
@@ -158,9 +158,9 @@ export class SchedulerTimeScale extends SchedulerTestLayer {
   }
 
   onExit() {
-    ServiceLocator.director.getScheduler().setTimeScale(1);
+    ServiceLocator.director.scheduler.setTimeScale(1);
     // restore scale
-    ServiceLocator.director.getScheduler().unscheduleUpdate(this._newScheduler);
+    ServiceLocator.director.scheduler.unscheduleUpdate(this._newScheduler);
     super.onExit();
   }
 

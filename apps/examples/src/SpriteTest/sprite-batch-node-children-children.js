@@ -67,7 +67,7 @@ export class SpriteBatchNodeChildrenChildren extends SpriteTestDemo {
 
     // parent
     var l1 = new Sprite(
-      ServiceLocator.spriteFrameCache.getSpriteFrame("father.gif")
+      ServiceLocator.spriteFrameCache.get("father.gif")
     );
     l1.x = winSize.width / 2;
     l1.y = winSize.height / 2;
@@ -78,7 +78,7 @@ export class SpriteBatchNodeChildrenChildren extends SpriteTestDemo {
 
     // child left
     var l2a = new Sprite(
-      ServiceLocator.spriteFrameCache.getSpriteFrame("sister1.gif")
+      ServiceLocator.spriteFrameCache.get("sister1.gif")
     );
     l2a.x = -50 + l1W / 2;
     l2a.y = 0 + l1H / 2;
@@ -89,7 +89,7 @@ export class SpriteBatchNodeChildrenChildren extends SpriteTestDemo {
 
     // child right
     var l2b = new Sprite(
-      ServiceLocator.spriteFrameCache.getSpriteFrame("sister2.gif")
+      ServiceLocator.spriteFrameCache.get("sister2.gif")
     );
     l2b.x = 50 + l1W / 2;
     l2b.y = 0 + l1H / 2;
@@ -100,7 +100,7 @@ export class SpriteBatchNodeChildrenChildren extends SpriteTestDemo {
 
     // child left bottom
     var l3a1 = new Sprite(
-      ServiceLocator.spriteFrameCache.getSpriteFrame("child1.gif")
+      ServiceLocator.spriteFrameCache.get("child1.gif")
     );
     l3a1.scale = 0.45;
     l3a1.x = 0 + l2aW / 2;
@@ -109,7 +109,7 @@ export class SpriteBatchNodeChildrenChildren extends SpriteTestDemo {
 
     // child left top
     var l3a2 = new Sprite(
-      ServiceLocator.spriteFrameCache.getSpriteFrame("child1.gif")
+      ServiceLocator.spriteFrameCache.get("child1.gif")
     );
     l3a2.scale = 0.45;
     l3a2.x = 0 + l2aW / 2;
@@ -118,7 +118,7 @@ export class SpriteBatchNodeChildrenChildren extends SpriteTestDemo {
 
     // child right bottom
     var l3b1 = new Sprite(
-      ServiceLocator.spriteFrameCache.getSpriteFrame("child1.gif")
+      ServiceLocator.spriteFrameCache.get("child1.gif")
     );
     l3b1.scale = 0.45;
     l3b1.setFlippedY(true);
@@ -128,7 +128,7 @@ export class SpriteBatchNodeChildrenChildren extends SpriteTestDemo {
 
     // child right top
     var l3b2 = new Sprite(
-      ServiceLocator.spriteFrameCache.getSpriteFrame("child1.gif")
+      ServiceLocator.spriteFrameCache.get("child1.gif")
     );
     l3b2.scale = 0.45;
     l3b2.setFlippedY(true);

@@ -44,8 +44,8 @@ export class TouchableSpriteTest extends EventDispatcherTestDemo {
     //----start0----onEnter
     super.onEnter();
 
-    var origin = ServiceLocator.eglView.rendererDelegate.getVisibleOrigin();
-    var size = ServiceLocator.eglView.rendererDelegate.getVisibleSize();
+    var origin = ServiceLocator.eglView.rendererDelegate.visibleOrigin;
+    var size = ServiceLocator.eglView.rendererDelegate.visibleSize;
 
     var containerForSprite1 = new Node();
     var sprite1 = createColoredView(new Color(0, 255, 255));

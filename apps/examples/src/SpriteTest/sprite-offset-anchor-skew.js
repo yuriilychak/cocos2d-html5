@@ -90,7 +90,7 @@ export class SpriteOffsetAnchorSkew extends SpriteTestDemo {
       var tmp = "";
       for (var j = 1; j <= 14; j++) {
         tmp = "grossini_dance_" + (j < 10 ? "0" + j : j) + ".png";
-        var frame = ServiceLocator.spriteFrameCache.getSpriteFrame(tmp);
+        var frame = ServiceLocator.spriteFrameCache.get(tmp);
         animFrames.push(frame);
       }
 

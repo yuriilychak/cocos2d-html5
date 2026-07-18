@@ -56,7 +56,7 @@ export class Effect4 extends EffectAdvanceTextLayer {
     // Please make sure the target been added to its parent.
     this.addChild(target);
 
-    director.getActionManager().addAction(seq, target, false);
+    director.actionManager.addAction(seq, target, false);
     bgNodeGrid.runAction(
       new Sequence(
         lens,

@@ -33,10 +33,10 @@ export class SpriteAccelerationEventTest extends EventDispatcherTestDemo {
     //----start5----onEnter
     super.onEnter();
 
-    var origin = ServiceLocator.eglView.rendererDelegate.getVisibleOrigin();
-    var size = ServiceLocator.eglView.rendererDelegate.getVisibleSize();
+    var origin = ServiceLocator.eglView.rendererDelegate.visibleOrigin;
+    var size = ServiceLocator.eglView.rendererDelegate.visibleSize;
 
-    ServiceLocator.inputManager.setAccelerometerEnabled(true);
+    ServiceLocator.inputManager.accelerometerEnabled = true;
 
     var sprite = new Sprite("Images/ball.png");
     sprite.setPosition(origin.x + size.width / 2, origin.y + size.height / 2);
@@ -69,7 +69,7 @@ export class SpriteAccelerationEventTest extends EventDispatcherTestDemo {
 
   onExit() {
     //----start5----onEnter
-    ServiceLocator.inputManager.setAccelerometerEnabled(false);
+    ServiceLocator.inputManager.accelerometerEnabled = false;
     super.onExit();
     //----end----
   }

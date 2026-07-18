@@ -56,7 +56,7 @@ export class SpriteOffsetAnchorRotation extends SpriteTestDemo {
             //
             // Animation using Sprite BatchNode
             //
-            var sprite = new Sprite(ServiceLocator.spriteFrameCache.getSpriteFrame("grossini_dance_01.png"));
+            var sprite = new Sprite(ServiceLocator.spriteFrameCache.get("grossini_dance_01.png"));
             sprite.x = winSize.width / 4 * (i + 1);
             sprite.y = winSize.height / 2;
 
@@ -89,7 +89,7 @@ export class SpriteOffsetAnchorRotation extends SpriteTestDemo {
             var str = "";
             for (var j = 1; j < 15; j++) {
                 str = "grossini_dance_" + (j < 10 ? ("0" + j) : j) + ".png";
-                var frame = ServiceLocator.spriteFrameCache.getSpriteFrame(str);
+                var frame = ServiceLocator.spriteFrameCache.get(str);
                 animFrames.push(frame);
             }
 

@@ -24,12 +24,10 @@ import { Sys } from "./sys";
 import { Loader } from "./boot/loader";
 import Game from "./boot/game";
 import EventManager from "./event-manager/event-manager";
-import { EGLView } from "./platform/egl-view/egl-view";
+import { EGLView } from "./platform/egl-view";
 import TextureCache from "./textures/texture-cache";
-import SpriteFrameCache from "./sprites/sprite-frame-cache";
-import AnimationCache from "./sprites/animation-cache";
-import ShaderCache from "./shaders/shader-cache";
-import { GLStateCache } from "./shaders/gl-state-cache";
+import { SpriteFrameCache, AnimationCache } from "./sprites";
+import { ShaderCache, GLStateCache } from "./shaders";
 import { KMGLMatrix } from "./kazmath/km-gl-matrix";
 import { Profiler } from "./utils/profiler";
 import { InputManager } from "./platform/input-manager";
@@ -142,7 +140,6 @@ export class ServiceLocator {
       director: ServiceLocator.#director,
       eglView: ServiceLocator.#eglView,
       eventManager: ServiceLocator.#eventManager,
-      game: ServiceLocator.#game,
       sys: ServiceLocator.#sys
     });
 

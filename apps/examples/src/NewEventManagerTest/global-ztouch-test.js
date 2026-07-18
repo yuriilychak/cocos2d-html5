@@ -89,7 +89,7 @@ export class GlobalZTouchTest extends EventDispatcherTestDemo {
       ServiceLocator.eventManager.addListener(listener.clone(), sprite);
       this.addChild(sprite);
 
-      var visibleSize = ServiceLocator.eglView.rendererDelegate.getVisibleSize();
+      var visibleSize = ServiceLocator.eglView.rendererDelegate.visibleSize;
       sprite.x =
         ServiceLocator.eglView.visibleRect.left.x +
         (visibleSize.width / (SPRITE_COUNT - 1)) * i;

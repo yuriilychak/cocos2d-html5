@@ -76,6 +76,13 @@ export class Director extends BaseClass {
   _textureCache = null;
   _showEventListenerRegistered = false;
 
+  constructor() {
+    super();
+
+    this._scheduler = new Scheduler();
+    this._actionManager = new ActionManager();
+  }
+
   injectServices({
     animationCache,
     eventManager,
@@ -102,17 +109,14 @@ export class Director extends BaseClass {
     this._totalFrames = 0;
     this._lastUpdate = Date.now();
 
-    this._paused = false;
-    this._purgeDirectorInNextLoop = false;
-
-    this._scheduler = new Scheduler();
-
-    this._actionManager = new ActionManager();
     this._scheduler.scheduleUpdate(
       this._actionManager,
       Scheduler.PRIORITY_SYSTEM,
       false
     );
+
+    this._paused = false;
+    this._purgeDirectorInNextLoop = false;
 
     this._eventAfterUpdate = new EventCustom(DirectorEvent.AFTER_UPDATE, this);
     this._eventAfterVisit = new EventCustom(DirectorEvent.AFTER_VISIT, this);
@@ -238,7 +242,7 @@ export class Director extends BaseClass {
   }
 
   purgeDirector() {
-    this.getScheduler().unscheduleAll();
+    this.scheduler.unscheduleAll();
 
     if (this._eventManager) this._eventManager.enabled = false;
 
@@ -433,24 +437,12 @@ export class Director extends BaseClass {
     this._sendCleanupToScene = true;
   }
 
-  getScheduler() {
+  get scheduler() {
     return this._scheduler;
   }
 
-  setScheduler(scheduler) {
-    if (this._scheduler !== scheduler) {
-      this._scheduler = scheduler;
-    }
-  }
-
-  getActionManager() {
+  get actionManager() {
     return this._actionManager;
-  }
-
-  setActionManager(actionManager) {
-    if (this._actionManager !== actionManager) {
-      this._actionManager = actionManager;
-    }
   }
 
   getDeltaTime() {
@@ -472,7 +464,7 @@ export class Director extends BaseClass {
       node._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
       var children = node._children;
       for (var i = 0; i < children.length; i++) {
-        recursiveChild(children[i]);
+        Director.recursiveChild(children[i]);
       }
     }
   }

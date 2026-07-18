@@ -81,7 +81,7 @@ export class Skin extends Sprite {
   initWithSpriteFrameName(spriteFrameName) {
     if (spriteFrameName === "") return false;
     var pFrame =
-      ServiceLocator.spriteFrameCache.getSpriteFrame(spriteFrameName);
+      ServiceLocator.spriteFrameCache.get(spriteFrameName);
     var ret = true;
     if (pFrame) this.initWithSpriteFrame(pFrame);
     else {

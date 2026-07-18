@@ -75,7 +75,7 @@ export class SpriteFrameTest extends SpriteTestDemo {
         var frame;
         for (var i = 1; i < 15; i++) {
             str = "grossini_dance_" + (i < 10 ? ("0" + i) : i) + ".png";
-            frame = ServiceLocator.spriteFrameCache.getSpriteFrame(str);
+            frame = ServiceLocator.spriteFrameCache.get(str);
             animFrames.push(frame);
         }
 
@@ -97,13 +97,13 @@ export class SpriteFrameTest extends SpriteTestDemo {
         var moreFrames = [];
         for (i = 1; i < 15; i++) {
             str = "grossini_dance_gray_" + (i < 10 ? ("0" + i) : i) + ".png";
-            frame = ServiceLocator.spriteFrameCache.getSpriteFrame(str);
+            frame = ServiceLocator.spriteFrameCache.get(str);
             moreFrames.push(frame);
         }
 
         for (i = 1; i < 5; i++) {
             str = "grossini_blue_0" + i + ".png";
-            frame = ServiceLocator.spriteFrameCache.getSpriteFrame(str);
+            frame = ServiceLocator.spriteFrameCache.get(str);
             moreFrames.push(frame);
         }
 

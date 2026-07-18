@@ -171,8 +171,8 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
       this._fntFile = fntFile;
       var spriteFrameBaseName = newConf.atlasName;
       var spriteFrame =
-        ServiceLocator.spriteFrameCache.getSpriteFrame(spriteFrameBaseName) ||
-        ServiceLocator.spriteFrameCache.getSpriteFrame(
+        ServiceLocator.spriteFrameCache.get(spriteFrameBaseName) ||
+        ServiceLocator.spriteFrameCache.get(
           Path.basename(spriteFrameBaseName)
         );
       if (spriteFrame) {

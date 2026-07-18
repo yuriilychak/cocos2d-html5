@@ -63,21 +63,21 @@ export class SpriteBatchNodeChildrenAnchorPoint extends SpriteTestDemo {
         this.addChild(aParent, 0);
 
         // anchor (0,0)
-        var sprite1 = new Sprite(ServiceLocator.spriteFrameCache.getSpriteFrame("grossini_dance_08.png"));
+        var sprite1 = new Sprite(ServiceLocator.spriteFrameCache.get("grossini_dance_08.png"));
         sprite1.x = winSize.width / 4;
         sprite1.y = winSize.height / 2;
         sprite1.anchorX = 0;
         sprite1.anchorY = 0;
 
-        var sprite2 = new Sprite(ServiceLocator.spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
+        var sprite2 = new Sprite(ServiceLocator.spriteFrameCache.get("grossini_dance_02.png"));
         sprite2.x = 20;
         sprite2.y = 30;
 
-        var sprite3 = new Sprite(ServiceLocator.spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
+        var sprite3 = new Sprite(ServiceLocator.spriteFrameCache.get("grossini_dance_03.png"));
         sprite3.x = -20;
         sprite3.y = 30;
 
-        var sprite4 = new Sprite(ServiceLocator.spriteFrameCache.getSpriteFrame("grossini_dance_04.png"));
+        var sprite4 = new Sprite(ServiceLocator.spriteFrameCache.get("grossini_dance_04.png"));
         sprite4.x = 0;
         sprite4.y = 0;
         sprite4.scale = 0.5;
@@ -94,21 +94,21 @@ export class SpriteBatchNodeChildrenAnchorPoint extends SpriteTestDemo {
         this.addChild(point, 10);
 
         // anchor (0.5, 0.5)
-        sprite1 = new Sprite(ServiceLocator.spriteFrameCache.getSpriteFrame("grossini_dance_08.png"));
+        sprite1 = new Sprite(ServiceLocator.spriteFrameCache.get("grossini_dance_08.png"));
         sprite1.x = winSize.width / 2;
         sprite1.y = winSize.height / 2;
         sprite1.anchorX = 0.5;
         sprite1.anchorY = 0.5;
 
-        sprite2 = new Sprite(ServiceLocator.spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
+        sprite2 = new Sprite(ServiceLocator.spriteFrameCache.get("grossini_dance_02.png"));
         sprite2.x = 20;
         sprite2.y = 30;
 
-        sprite3 = new Sprite(ServiceLocator.spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
+        sprite3 = new Sprite(ServiceLocator.spriteFrameCache.get("grossini_dance_03.png"));
         sprite3.x = -20;
         sprite3.y = 30;
 
-        sprite4 = new Sprite(ServiceLocator.spriteFrameCache.getSpriteFrame("grossini_dance_04.png"));
+        sprite4 = new Sprite(ServiceLocator.spriteFrameCache.get("grossini_dance_04.png"));
         sprite4.x = 0;
         sprite4.y = 0;
         sprite4.scale = 0.5;
@@ -126,21 +126,21 @@ export class SpriteBatchNodeChildrenAnchorPoint extends SpriteTestDemo {
 
 
         // anchor (1,1)
-        sprite1 = new Sprite(ServiceLocator.spriteFrameCache.getSpriteFrame("grossini_dance_08.png"));
+        sprite1 = new Sprite(ServiceLocator.spriteFrameCache.get("grossini_dance_08.png"));
         sprite1.x = winSize.width / 2 + winSize.width / 4;
         sprite1.y = winSize.height / 2;
         sprite1.anchorX = 1;
         sprite1.anchorY = 1;
 
-        sprite2 = new Sprite(ServiceLocator.spriteFrameCache.getSpriteFrame("grossini_dance_02.png"));
+        sprite2 = new Sprite(ServiceLocator.spriteFrameCache.get("grossini_dance_02.png"));
         sprite2.x = 20;
         sprite2.y = 30;
 
-        sprite3 = new Sprite(ServiceLocator.spriteFrameCache.getSpriteFrame("grossini_dance_03.png"));
+        sprite3 = new Sprite(ServiceLocator.spriteFrameCache.get("grossini_dance_03.png"));
         sprite3.x = -20;
         sprite3.y = 30;
 
-        sprite4 = new Sprite(ServiceLocator.spriteFrameCache.getSpriteFrame("grossini_dance_04.png"));
+        sprite4 = new Sprite(ServiceLocator.spriteFrameCache.get("grossini_dance_04.png"));
         sprite4.x = 0;
         sprite4.y = 0;
         sprite4.scale = 0.5;

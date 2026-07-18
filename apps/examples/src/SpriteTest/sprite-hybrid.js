@@ -79,7 +79,7 @@ export class SpriteHybrid extends SpriteTestDemo {
                 spriteIdx = 1;
             var str = "grossini_dance_" + (spriteIdx < 10 ? ("0" + spriteIdx) : spriteIdx) + ".png";
 
-            var frame = ServiceLocator.spriteFrameCache.getSpriteFrame(str);
+            var frame = ServiceLocator.spriteFrameCache.get(str);
             var sprite = new Sprite(frame);
             parent1.addChild(sprite, i, i);
 
@@ -152,7 +152,7 @@ export class SpriteHybrid extends SpriteTestDemo {
     }
     addTestSprite() {
         var p = this.getChildByTag(TAG_NODE);
-        var frame = ServiceLocator.spriteFrameCache.getSpriteFrame("grossini_dance_01.png");
+        var frame = ServiceLocator.spriteFrameCache.get("grossini_dance_01.png");
         var sprite1 = new Sprite(frame);
         p.addChild(sprite1, 1000);
         sprite1.x = winSize.width / 4;
