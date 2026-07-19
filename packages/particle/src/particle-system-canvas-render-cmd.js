@@ -141,7 +141,7 @@ export class ParticleSystemCanvasRenderCmd extends Node.CanvasRenderCmd {
         context.restore();
       }
     } else {
-      const drawTool = ServiceLocator.game.drawingUtil;
+      const drawTool = ServiceLocator.sys.rendererConfig.drawingUtil;
       for (i = 0; i < particleCount; i++) {
         particle = particles[i];
         lpx = 0 | (particle.size * 0.5);

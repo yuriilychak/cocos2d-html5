@@ -46,7 +46,7 @@ export class LabelAtlasWebGLRenderCmd extends AtlasNode.WebGLRenderCmd {
         new Point(s.width + posX, s.height + posY),
         new Point(posX, posY + s.height)
       ];
-      ServiceLocator.game.drawingUtil.drawPoly(vertices, 4, true);
+      ServiceLocator.sys.rendererConfig.drawingUtil.drawPoly(vertices, 4, true);
     }
   }
 

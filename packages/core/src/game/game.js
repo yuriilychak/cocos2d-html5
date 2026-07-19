@@ -17,7 +17,6 @@ export default class Game extends EventHelper(BaseClass) {
 
   #eventHide = null;
   #eventShow = null;
-
   #director = null;
   #eglView = null;
   #eventManager = null;
@@ -25,7 +24,6 @@ export default class Game extends EventHelper(BaseClass) {
   #loader = null;
   #sys = null;
   #textureCache = null;
-
   // states
   #paused = true;
   #configLoaded = false;
@@ -33,15 +31,9 @@ export default class Game extends EventHelper(BaseClass) {
   #prepareCalled = false;
   #prepared = false;
   rendererInitialized = false;
-
-  #renderContext = null;
-
   #intervalId = null;
-
   #lastTime = null;
   #frameTime = null;
-  #gameDiv = null;
-
   /**
    * The outer frame of the game canvas, parent of container
    * @type {Object}
@@ -77,10 +69,6 @@ export default class Game extends EventHelper(BaseClass) {
    * @type {Function|null}
    */
   onStop = null;
-
-  drawingUtil = null;
-
-  glExt = null;
 
   injectServices({
     director,
@@ -444,10 +432,6 @@ export default class Game extends EventHelper(BaseClass) {
     this.canvas.setAttribute("tabindex", 99);
 
     this.#sys.rendererConfig.createContext(this.canvas);
-    this.glExt = this.#sys.rendererConfig.glExtensions;
-    this.drawingUtil = this.#sys.rendererConfig.drawingUtil;
-
-    this.#gameDiv = this.container;
     this.canvas.oncontextmenu = function () {
       if (!Game.#isContextMenuEnable) {
         return false;

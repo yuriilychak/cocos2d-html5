@@ -470,8 +470,8 @@ export class Armature extends Node {
    * draw contour
    */
   drawContour() {
-    ServiceLocator.game.drawingUtil.setDrawColor(255, 255, 255, 255);
-    ServiceLocator.game.drawingUtil.setLineWidth(1);
+    ServiceLocator.sys.rendererConfig.drawingUtil.setDrawColor(255, 255, 255, 255);
+    ServiceLocator.sys.rendererConfig.drawingUtil.setLineWidth(1);
     var locBoneDic = this._boneDic;
     for (var key in locBoneDic) {
       var bone = locBoneDic[key];
@@ -481,7 +481,7 @@ export class Armature extends Node {
       for (var i = 0; i < bodyList.length; i++) {
         var body = bodyList[i];
         var vertexList = body.getCalculatedVertexList();
-        ServiceLocator.game.drawingUtil.drawPoly(
+        ServiceLocator.sys.rendererConfig.drawingUtil.drawPoly(
           vertexList,
           vertexList.length,
           true

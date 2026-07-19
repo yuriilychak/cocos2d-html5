@@ -196,7 +196,7 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
       ServiceLocator.kmglMatrix.matrixMode(KMGLMatrixMode.MODELVIEW);
       const currentStack = ServiceLocator.kmglMatrix.currentStack;
       currentStack.push(this._matrix);
-      const drawingUtil = ServiceLocator.game.drawingUtil;
+      const drawingUtil = ServiceLocator.sys.rendererConfig.drawingUtil;
 
       if (node._debugSlots && debugSlotsInfo && debugSlotsInfo.length > 0) {
         drawingUtil.setDrawColor(0, 0, 255, 255);

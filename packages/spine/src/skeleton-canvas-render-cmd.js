@@ -32,7 +32,7 @@ export class SkeletonCanvasRenderCmd extends Node.CanvasRenderCmd {
 
     wrapper.setTransform(this._worldTransform, { x: scaleX, y: scaleY });
     wrapper.globalAlpha = 1;
-    const drawingUtil = ServiceLocator.game.drawingUtil;
+    const drawingUtil = ServiceLocator.sys.rendererConfig.drawingUtil;
 
     if (node._debugSlots) {
       drawingUtil.setDrawColor(0, 0, 255, 255);
