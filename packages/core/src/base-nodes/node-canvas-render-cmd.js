@@ -24,7 +24,7 @@
 
 import { Point, Rect, AffineTransform } from "../geometry";
 import { Color } from "../platform/types/color";
-import { Region } from "../renderer/dirty-region";
+import Region from "../renderer/region";
 import { Node } from "./node";
 
 import { ServiceLocator } from "../service-locator";
@@ -584,7 +584,7 @@ export class CanvasRenderCmd extends RenderCmd {
     //hittest will call the transform, and set region flag to DirtyDouble, and the changes need to be considered for rendering
     if (
       CanvasRenderCmd.RegionStatus.DirtyDouble === this._regionFlag &&
-      !this._currentRegion.isEmpty()
+      !this._currentRegion.empty
     ) {
       this._oldRegion.union(this._currentRegion);
     }

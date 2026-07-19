@@ -28,7 +28,12 @@ import { BATCH_VERTEX_COUNT } from "../platform/macro/constants";
 import { GLProgramState } from "../shaders/program-state";
 import Matrix4 from "../kazmath/mat4";
 import { ServiceLocator } from "../service-locator";
-import { OperatingSystem, VertexAttribute, ShaderName } from "../enums";
+import {
+  OperatingSystem,
+  VertexAttribute,
+  VertexType,
+  ShaderName
+} from "../enums";
 import { BYTE } from "../constants";
 
 // Internal variables
@@ -120,31 +125,27 @@ function initQuadBuffer(numVertex) {
   updateBuffer(numVertex);
 }
 
-var VertexType = {
-  QUAD: 0,
-  TRIANGLE: 1,
-  CUSTOM: 2
-};
+class RendererWebGL {
+  constructor () {
+    this.mat4Identity = null;
 
-var rendererWebGL = {
-  mat4Identity: null,
+    this.childrenOrderDirty = true;
+    this.assignedZ = 0;
+    this.assignedZStep = 1 / 100;
 
-  childrenOrderDirty: true,
-  assignedZ: 0,
-  assignedZStep: 1 / 100,
+    this.VertexType = VertexType;
 
-  VertexType: VertexType,
+    this._transformNodePool = []; //save nodes transform dirty
+    this._renderCmds = []; //save renderer commands
 
-  _transformNodePool: [], //save nodes transform dirty
-  _renderCmds: [], //save renderer commands
+    this._isCacheToBufferOn = false; //a switch that whether cache the rendererCmd to cacheToCanvasCmds
+    this._cacheToBufferCmds = {}; // an array saves the renderer commands need for cache to other canvas
+    this._cacheInstanceIds = [];
+    this._currentID = 0;
+    this._clearColor = new Color(0, 0, 0, BYTE); //background color,default BLACK
+  }
 
-  _isCacheToBufferOn: false, //a switch that whether cache the rendererCmd to cacheToCanvasCmds
-  _cacheToBufferCmds: {}, // an array saves the renderer commands need for cache to other canvas
-  _cacheInstanceIds: [],
-  _currentID: 0,
-  _clearColor: new Color(0, 0, 0, BYTE), //background color,default BLACK
-
-  init: function () {
+  init () {
     var gl = ServiceLocator.sys.rendererConfig.renderContext;
     gl.disable(gl.CULL_FACE);
     gl.disable(gl.DEPTH_TEST);
@@ -170,15 +171,15 @@ var rendererWebGL = {
     if (ServiceLocator.sys.specification.os === OperatingSystem.IOS) {
       _IS_IOS = true;
     }
-  },
+  }
 
-  getSizePerVertex: function () {
+  getSizePerVertex () {
     return _sizePerVertex;
-  },
+  }
 
   // The shared GLProgramState for the multi-texture sprite program, used to
   // detect whether a render command participates in multi-texture batching.
-  _getMultiProgramState: function () {
+  _getMultiProgramState () {
     if (!_multiTexture) {
       return null;
     }
@@ -189,11 +190,11 @@ var rendererWebGL = {
       _multiProgramState = GLProgramState.getOrCreateWithGLProgram(program);
     }
     return _multiProgramState;
-  },
+  }
 
   // Find (or allocate) the texture-unit slot for a texture within the current
   // batch. Returns -1 when the slot set is full (caller must flush).
-  _resolveTextureSlot: function (texture, maxTextures) {
+  _resolveTextureSlot (texture, maxTextures) {
     for (var i = 0; i < _batchTextureCount; ++i) {
       if (_batchTextures[i] === texture) {
         return i;
@@ -204,17 +205,17 @@ var rendererWebGL = {
       return _batchTextureCount++;
     }
     return -1;
-  },
+  }
 
-  getVertexSize: function () {
+  getVertexSize () {
     return _maxVertexSize;
-  },
+  }
 
   // Current number of vertices accumulated in the open batch. Self-batching
   // commands (e.g. spine) use this to know where to write their next vertex.
-  getBatchingSize: function () {
+  getBatchingSize () {
     return _batchingSize;
-  },
+  }
 
   // Append geometry to the shared multi-texture batch on behalf of a
   // self-batching command (spine). Flushes the open batch when it is
@@ -222,7 +223,7 @@ var rendererWebGL = {
   // set or vertex buffer would overflow, then returns the texture-unit slot the
   // caller must write as the per-vertex texIndex. After calling this, the write
   // offset is getBatchingSize() * sizePerVertex.
-  _appendMultiBatch: function (texture, blendFunc, glProgramState, vertCount) {
+  _appendMultiBatch (texture, blendFunc, glProgramState, vertCount) {
     if (
       !_batchedInfo.isMulti ||
       _batchedInfo.glProgramState !== glProgramState ||
@@ -249,14 +250,14 @@ var rendererWebGL = {
       slot = this._resolveTextureSlot(texture, _maxBatchTextures);
     }
     return slot;
-  },
+  }
 
-  getRenderCmd: function (renderableObject) {
+  getRenderCmd (renderableObject) {
     //TODO Add renderCmd pool here
     return renderableObject._createRenderCmd();
-  },
+  }
 
-  _turnToCacheMode: function (renderTextureID) {
+  _turnToCacheMode (renderTextureID) {
     this._isCacheToBufferOn = true;
     renderTextureID = renderTextureID || 0;
     if (!this._cacheToBufferCmds[renderTextureID]) {
@@ -268,13 +269,13 @@ var rendererWebGL = {
       this._cacheInstanceIds.push(renderTextureID);
     }
     this._currentID = renderTextureID;
-  },
+  }
 
-  _turnToNormalMode: function () {
+  _turnToNormalMode () {
     this._isCacheToBufferOn = false;
-  },
+  }
 
-  _removeCache: function (instanceID) {
+  _removeCache (instanceID) {
     instanceID = instanceID || this._currentID;
     var cmds = this._cacheToBufferCmds[instanceID];
     if (cmds) {
@@ -284,13 +285,13 @@ var rendererWebGL = {
 
     var locIDs = this._cacheInstanceIds;
     arrayRemoveObject(locIDs, instanceID);
-  },
+  }
 
   /**
    * drawing all renderer command to cache canvas' context
    * @param {Number} [renderTextureId]
    */
-  _renderingToBuffer: function (renderTextureId) {
+  _renderingToBuffer (renderTextureId) {
     renderTextureId = renderTextureId || this._currentID;
     var locCmds = this._cacheToBufferCmds[renderTextureId];
     var ctx = ServiceLocator.sys.rendererConfig.renderContext;
@@ -300,18 +301,18 @@ var rendererWebGL = {
     var locIDs = this._cacheInstanceIds;
     if (locIDs.length === 0) this._isCacheToBufferOn = false;
     else this._currentID = locIDs[locIDs.length - 1];
-  },
+  }
 
   //reset renderer's flag
-  resetFlag: function () {
+  resetFlag () {
     if (this.childrenOrderDirty) {
       this.childrenOrderDirty = false;
     }
     this._transformNodePool.length = 0;
-  },
+  }
 
   //update the transform data
-  transform: function () {
+  transform () {
     var locPool = this._transformNodePool;
     //sort the pool
     locPool.sort(this._sortNodeByLevelAsc);
@@ -322,27 +323,27 @@ var rendererWebGL = {
       cmd.updateStatus();
     }
     locPool.length = 0;
-  },
+  }
 
-  transformDirty: function () {
+  transformDirty () {
     return this._transformNodePool.length > 0;
-  },
+  }
 
-  _sortNodeByLevelAsc: function (n1, n2) {
+  _sortNodeByLevelAsc (n1, n2) {
     return n1._curLevel - n2._curLevel;
-  },
+  }
 
-  pushDirtyNode: function (node) {
+  pushDirtyNode (node) {
     //if (this._transformNodePool.indexOf(node) === -1)
     this._transformNodePool.push(node);
-  },
+  }
 
-  clearRenderCommands: function () {
+  clearRenderCommands () {
     // Copy previous command list for late check in rendering
     this._renderCmds.length = 0;
-  },
+  }
 
-  clear: function () {
+  clear () {
     var gl = ServiceLocator.sys.rendererConfig.renderContext;
     gl.clearColor(
       this._clearColor.r / BYTE,
@@ -351,9 +352,9 @@ var rendererWebGL = {
       this._clearColor.a / BYTE
     );
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-  },
+  }
 
-  setDepthTest: function (enable) {
+  setDepthTest (enable) {
     var gl = ServiceLocator.sys.rendererConfig.renderContext;
     if (enable) {
       gl.clearDepth(1.0);
@@ -362,9 +363,9 @@ var rendererWebGL = {
     } else {
       gl.disable(gl.DEPTH_TEST);
     }
-  },
+  }
 
-  pushRenderCommand: function (cmd) {
+  pushRenderCommand (cmd) {
     if (!cmd.rendering && !cmd.uploadData) return;
     if (this._isCacheToBufferOn) {
       var currentId = this._currentID,
@@ -376,9 +377,9 @@ var rendererWebGL = {
         this._renderCmds.push(cmd);
       }
     }
-  },
+  }
 
-  _increaseBatchingSize: function (increment, vertexType, indices) {
+  _increaseBatchingSize (increment, vertexType, indices) {
     vertexType = vertexType || VertexType.QUAD;
     var i, curr;
     switch (vertexType) {
@@ -414,9 +415,9 @@ var rendererWebGL = {
         return;
     }
     _batchingSize += increment;
-  },
+  }
 
-  _updateBatchedInfo: function (texture, blendFunc, glProgramState) {
+  _updateBatchedInfo (texture, blendFunc, glProgramState) {
     if (
       _batchedInfo.isMulti ||
       _batchTextures[0] !== texture ||
@@ -438,13 +439,13 @@ var rendererWebGL = {
     } else {
       return false;
     }
-  },
+  }
 
-  _breakBatch: function () {
+  _breakBatch () {
     _batchBroken = true;
-  },
+  }
 
-  _uploadBufferData: function (cmd) {
+  _uploadBufferData (cmd) {
     // Self-batching commands (e.g. spine skeletons) emit many primitives with
     // their own per-slot textures/blend and drive the batcher directly. Let
     // them manage the shared batch state instead of resolving a single texture
@@ -530,9 +531,9 @@ var rendererWebGL = {
       _batchTextures[slot] = null;
       _batchTextureCount = beforeCount;
     }
-  },
+  }
 
-  _batchRendering: function () {
+  _batchRendering () {
     if (_batchingSize === 0 || _batchTextureCount === 0) {
       return;
     }
@@ -643,13 +644,13 @@ var rendererWebGL = {
     }
     _batchingSize = 0;
     _indexSize = 0;
-  },
+  }
 
   /**
    * drawing all renderer command to context (default is _renderContext)
    * @param {WebGLRenderingContext} [ctx=_renderContext]
    */
-  rendering: function (ctx, cmds) {
+  rendering (ctx, cmds) {
     var locCmds = cmds || this._renderCmds,
       i,
       len,
@@ -657,7 +658,7 @@ var rendererWebGL = {
       context = ctx || ServiceLocator.sys.rendererConfig.renderContext;
 
     // Reset buffer for rendering
-    context.bindBuffer(gl.ARRAY_BUFFER, null);
+    context.bindBuffer(context.ARRAY_BUFFER, null);
 
     for (i = 0, len = locCmds.length; i < len; ++i) {
       cmd = locCmds[i];
@@ -681,6 +682,8 @@ var rendererWebGL = {
     _batchedInfo.glProgramState = null;
     _batchedInfo.isMulti = false;
   }
-};
+}
 
-export { rendererWebGL };
+var rendererWebGL = new RendererWebGL();
+
+export { rendererWebGL, RendererWebGL };

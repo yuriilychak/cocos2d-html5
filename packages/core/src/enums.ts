@@ -394,6 +394,12 @@ export enum VertexAttribute {
   MAX = 7
 }
 
+export enum VertexType {
+  QUAD = 0,
+  TRIANGLE = 1,
+  CUSTOM = 2
+}
+
 export enum Uniform {
   PMATRIX = 0,
   MVMATRIX = 1,

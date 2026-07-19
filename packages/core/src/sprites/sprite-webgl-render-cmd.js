@@ -32,7 +32,7 @@ import {
 
 import { FIX_ARTIFACTS_BY_STRECHING_TEXEL } from "../platform/config";
 import { ServiceLocator } from "../service-locator";
-import { GLState, ShaderName } from "../enums";
+import { GLState, ShaderName, VertexType } from "../enums";
 import { BYTE } from "../constants";
 
 //Sprite's WebGL render command
@@ -53,7 +53,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
 
     // Polygon (triangle-list) rendering state. Populated lazily from the
     // node's PolygonInfo when it has one.
-    this.vertexType = 0; // VertexType.QUAD by default
+    this.vertexType = VertexType.QUAD;
     this._indices = null;
     this._polyUVDirty = true;
 

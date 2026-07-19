@@ -130,6 +130,7 @@ export {
   UniformName,
   VertexAttribFlag,
   VertexAttribute,
+  VertexType,
   VerticalTextAlignment,
   AttributeName,
   MouseEvent,
@@ -234,7 +235,7 @@ export type {
   Vec4Like
 } from "./kazmath";
 export { BYTE, FULL_BYTE } from "./constants";
-export { GlobalVertexBuffer } from "./renderer/global-vertex-buffer";
+export { default as GlobalVertexBuffer } from "./renderer/global-vertex-buffer";
 export { Node } from "./base-nodes/node";
 export { Scene } from "./scenes/scene";
 export { LoaderScene } from "./scenes/loader-scene";
@@ -270,5 +271,5 @@ export { Scheduler } from "./scheduler";
 export { ActionManager } from "./action-manager";
 export { LayerMultiplex } from "./layers/layer-multiplex";
 export { isArray, isNumber } from "./boot/utils";
-export { DirtyRegion } from "./renderer/dirty-region";
+export { default as DirtyRegion } from "./renderer/dirty-region";
 export { ServiceLocator } from "./service-locator";

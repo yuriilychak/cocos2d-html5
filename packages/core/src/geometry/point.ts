@@ -25,7 +25,7 @@
  ****************************************************************************/
 
 import { isNumber, isObject } from "../boot/utils";
-import type { PointLike, SizeLike } from "./types";
+import type { AffineTransformLike, PointLike, SizeLike } from "./types";
 
 export default class Point implements PointLike {
   private static EPSILON = parseFloat("1.192092896e-07F");
@@ -103,6 +103,21 @@ export default class Point implements PointLike {
 
   public static sub(v1: PointLike, v2: PointLike): Point {
     return new Point(v1.x - v2.x, v1.y - v2.y);
+  }
+
+  public static transform(point: PointLike, transform: AffineTransformLike): Point {
+    return new Point(
+      transform.a * point.x + transform.c * point.y + transform.tx,
+      transform.b * point.x + transform.d * point.y + transform.ty
+    );
+  }
+
+  public static min(v1: PointLike, v2: PointLike): Point {
+    return new Point(Math.min(v1.x, v2.x), Math.min(v1.y, v2.y));
+  }
+
+  public static max(v1: PointLike, v2: PointLike): Point {
+    return new Point(Math.max(v1.x, v2.x), Math.max(v1.y, v2.y));
   }
 
   public static mult(point: PointLike, floatVar: number): Point {
@@ -305,6 +320,34 @@ export default class Point implements PointLike {
   public static zeroIn(v: PointLike): void {
     v.x = 0;
     v.y = 0;
+  }
+
+  public static minIn(v1: PointLike, v2: PointLike): PointLike {
+    v1.x = Math.min(v1.x, v2.x);
+    v1.y = Math.min(v1.y, v2.y);
+
+    return v1;
+  }
+
+  public static maxIn(v1: PointLike, v2: PointLike): PointLike {
+    v1.x = Math.max(v1.x, v2.x);
+    v1.y = Math.max(v1.y, v2.y);
+
+    return v1;
+  }
+
+  public static floorIn(point: PointLike): PointLike {
+    point.x = Math.floor(point.x);
+    point.y = Math.floor(point.y);
+
+    return point;
+  }
+
+  public static ceilIn(point: PointLike): PointLike {
+    point.x = Math.ceil(point.x);
+    point.y = Math.ceil(point.y);
+
+    return point;
   }
 
   public static copyIn(v1: PointLike, v2: PointLike): PointLike {

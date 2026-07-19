@@ -103,7 +103,7 @@ import { AffineTransform, Node, Sprite } from "@aspect/core";
             var temp = this._currentRegion;
             this._currentRegion = this._oldRegion;
             this._oldRegion = temp;
-            if (Node.CanvasRenderCmd.RegionStatus.DirtyDouble === this._regionFlag && (!this._currentRegion.isEmpty())) {
+            if (Node.CanvasRenderCmd.RegionStatus.DirtyDouble === this._regionFlag && (!this._currentRegion.empty)) {
                 this._oldRegion.union(this._currentRegion);
             }
             this._currentRegion.updateRegion(this.getLocalBB(), this._realWorldTM);
