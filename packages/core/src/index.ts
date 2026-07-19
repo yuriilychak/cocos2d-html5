@@ -235,7 +235,7 @@ export type {
   Vec4Like
 } from "./kazmath";
 export { BYTE, FULL_BYTE } from "./constants";
-export { default as GlobalVertexBuffer } from "./renderer/global-vertex-buffer";
+export { default as GlobalVertexBuffer } from "./sys/renderer/global-vertex-buffer";
 export { Node } from "./base-nodes/node";
 export { Scene } from "./scenes/scene";
 export { LoaderScene } from "./scenes/loader-scene";
@@ -246,7 +246,7 @@ export {
   CustomRenderCmd
 } from "./base-nodes/node-canvas-render-cmd";
 export { WebGLRenderCmd as NodeWebGLRenderCmd } from "./base-nodes/node-webgl-render-cmd";
-export { CanvasContextWrapper, RendererCanvas } from "./renderer";
+export { CanvasContextWrapper, RendererCanvas } from "./sys/renderer";
 export { Sprite } from "./sprites/sprite";
 export { Configuration } from "./sys/configuration";
 export { setProgramForNode } from "./shaders/utils";
@@ -271,5 +271,5 @@ export { Scheduler } from "./scheduler";
 export { ActionManager } from "./action-manager";
 export { LayerMultiplex } from "./layers/layer-multiplex";
 export { isArray, isNumber } from "./boot/utils";
-export { default as DirtyRegion } from "./renderer/dirty-region";
+export { default as DirtyRegion } from "./sys/renderer/dirty-region";
 export { ServiceLocator } from "./service-locator";

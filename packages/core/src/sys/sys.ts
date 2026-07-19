@@ -5,20 +5,12 @@ import SysSpecification from './sys-specification';
 import RendererConfig from './renderer-config';
 import { Configuration } from './configuration';
 
-import type { BrowserNavigator, BrowserEnvironment, BrowserWindow, WebGLContext, StorageLike } from './types';
+import type { BrowserNavigator, BrowserEnvironment, BrowserWindow, StorageLike } from './types';
 
 /**
  * System variables singleton.
  */
 export default class Sys {
-  static readonly #webGLContextNames = [
-    "webgl2",
-    "webgl",
-    "experimental-webgl",
-    "webkit-3d",
-    "moz-webgl"
-  ];
-
   #windowPixelResolution: Size;
   #localStorage: StorageLike;
   #capabilities: SysCapabilities;
@@ -73,7 +65,7 @@ export default class Sys {
 
     const tmpCanvas = doc.createElement("canvas");
     try {
-      const context = Sys.create3DContext(tmpCanvas);
+      const context = RendererConfig.create3DContext(tmpCanvas);
       return !!context && this.#specification.detectWebGLSupport(win);
     } catch (e) {
       return false;
@@ -102,24 +94,6 @@ export default class Sys {
 
   public get configuration(): Configuration {
     return this.#configuration;
-  }
-
-  public static create3DContext(
-    canvas: HTMLCanvasElement,
-    optAttribs?: WebGLContextAttributes
-  ): WebGLContext | null {
-    for (let i = 0; i < Sys.#webGLContextNames.length; ++i) {
-      try {
-        const context = canvas.getContext(
-          Sys.#webGLContextNames[i] as any,
-          optAttribs
-        ) as WebGLContext | null;
-        if (context) {
-          return context;
-        }
-      } catch (e) {}
-    }
-    return null;
   }
 
   static #getBrowserEnvironment(): BrowserEnvironment {

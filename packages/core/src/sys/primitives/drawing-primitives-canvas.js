@@ -24,10 +24,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BaseClass } from "./platform/class";
-import { Point, cardinalSplineAt, getControlPointAt } from "./geometry";
-import { Color } from "./platform/types/color";
-import { ServiceLocator } from "./service-locator";
+import { BaseClass } from "../../platform/class";
+import { Point, cardinalSplineAt, getControlPointAt } from "../../geometry";
+import { Color } from "../../platform/types/color";
+import { ServiceLocator } from "../../service-locator";
 
 export const PI2 = Math.PI * 2;
 

@@ -24,14 +24,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BaseClass } from "./platform/class";
-import { Point, cardinalSplineAt, getControlPointAt } from "./geometry";
+import { BaseClass } from "../../platform/class";
+import { Point, cardinalSplineAt, getControlPointAt } from "../../geometry";
 
-import { incrementGLDraws, contentScaleFactor } from "./platform/macro/utils";
-import { GLProgramState } from "./shaders/program-state";
-import { ServiceLocator } from "./service-locator";
-import { ShaderName, VertexAttribute } from "./enums";
-import { BYTE } from "./constants";
+import { incrementGLDraws, contentScaleFactor } from "../../platform/macro/utils";
+import { GLProgramState } from "../../shaders/program-state";
+import { ServiceLocator } from "../../service-locator";
+import { ShaderName, VertexAttribute } from "../../enums";
+import { BYTE } from "../../constants";
 
 /**
  * Canvas of DrawingPrimitive implement version use for WebGlMode

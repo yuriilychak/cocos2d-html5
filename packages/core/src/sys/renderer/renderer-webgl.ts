@@ -22,21 +22,16 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Color, arrayRemoveObject } from "../platform";
-import Matrix4 from "../kazmath/mat4";
-import { ServiceLocator } from "../service-locator";
-import { VertexType } from "../enums";
-import { BYTE } from "../constants";
+import { arrayRemoveObject } from "../../platform";
+import Matrix4 from "../../kazmath/mat4";
+import { ServiceLocator } from "../../service-locator";
+import { VertexType } from "../../enums";
+import { BYTE } from "../../constants";
 import BatchedInfo from "./batched-info";
-import type { BlendFunc } from "../platform";
-import type { Texture2D } from "../textures";
-import type { GLProgramState } from "../shaders";
-
-
-type DirtyNode = {
-  _curLevel: number;
-  updateStatus(): void;
-};
+import type { BlendFunc } from "../../platform";
+import type { Texture2D } from "../../textures";
+import type { GLProgramState } from "../../shaders";
+import { RendererBase } from "./renderer-base";
 
 type RenderCommand = {
   needDraw(): boolean;
@@ -49,21 +44,16 @@ type RenderCommand = {
   _indices?: number[];
 };
 
-export default class RendererWebGL {
+export default class RendererWebGL extends RendererBase<RenderCommand> {
   static #batchedInfo = new BatchedInfo();
   #mat4Identity: Matrix4 = new Matrix4();
-  #childrenOrderDirty: boolean = true;
-  #assignedZ: number = 0;
-  #assignedZStep: number = 1 / 100;
-  #transformNodePool: DirtyNode[] = [];
-  #renderCmds: RenderCommand[] = [];
   #isCacheToBufferOn = false;
   #cacheToBufferCmds = new Map<number, RenderCommand[]>();
   #cacheInstanceIds: number[] = [];
   #currentID: number = 0;
-  #clearColor: Color = new Color(0, 0, 0, BYTE);
 
-  init(): void {
+  constructor() {
+    super(1 / 100);
     const gl: any = ServiceLocator.sys.rendererConfig.renderContext;
     gl.disable(gl.CULL_FACE);
     gl.disable(gl.DEPTH_TEST);
@@ -75,30 +65,6 @@ export default class RendererWebGL {
 
   get mat4Identity(): Matrix4 {
     return this.#mat4Identity;
-  }
-
-  get childrenOrderDirty(): boolean {
-    return this.#childrenOrderDirty;
-  }
-
-  set childrenOrderDirty(value: boolean) {
-    this.#childrenOrderDirty = value;
-  }
-
-  get assignedZ(): number {
-    return this.#assignedZ;
-  }
-
-  set assignedZ(value: number) {
-    this.#assignedZ = value;
-  }
-
-  get assignedZStep(): number {
-    return this.#assignedZStep;
-  }
-
-  set assignedZStep(value: number) {
-    this.#assignedZStep = value;
   }
 
   getBufferCmd(key: number): RenderCommand[] | null {
@@ -126,6 +92,12 @@ export default class RendererWebGL {
     return RendererWebGL.#batchedInfo.batchingSize;
   }
 
+
+  get allNeedDraw(): boolean {
+    return false;
+  }
+
+  set allNeedDraw(_value: boolean) {}
   // Append geometry to the shared multi-texture batch on behalf of a
   // self-batching command (spine). Flushes the open batch when it is
   // incompatible (not multi, different program/blend) or when the texture-unit
@@ -139,11 +111,6 @@ export default class RendererWebGL {
       glProgramState,
       vertCount
     );
-  }
-
-  getRenderCmd(renderableObject: { _createRenderCmd(): unknown }): unknown {
-    //TODO Add renderCmd pool here
-    return renderableObject._createRenderCmd();
   }
 
   turnToCacheMode(renderTextureID: number = 0): void {
@@ -195,51 +162,13 @@ export default class RendererWebGL {
   }
 
   //reset renderer's flag
-  resetFlag(): void {
-    if (this.childrenOrderDirty) {
-      this.childrenOrderDirty = false;
-    }
-    this.#transformNodePool.length = 0;
-  }
-
-  //update the transform data
-  transform(): void {
-    const locPool = this.#transformNodePool;
-    //sort the pool
-    locPool.sort(this.#sortNodeByLevelAsc);
-    //transform node
-    for (let i = 0; i < locPool.length; i++) {
-      const cmd = locPool[i];
-      cmd.updateStatus();
-    }
-    locPool.length = 0;
-  }
-
-  transformDirty(): boolean {
-    return this.#transformNodePool.length > 0;
-  }
-
-  #sortNodeByLevelAsc(n1: DirtyNode, n2: DirtyNode): number {
-    return n1._curLevel - n2._curLevel;
-  }
-
-  pushDirtyNode(node: DirtyNode): void {
-    //if (this.#transformNodePool.indexOf(node) === -1)
-    this.#transformNodePool.push(node);
-  }
-
-  clearRenderCommands(): void {
-    // Copy previous command list for late check in rendering
-    this.#renderCmds.length = 0;
-  }
-
   clear(): void {
     const gl: any = ServiceLocator.sys.rendererConfig.renderContext;
     gl.clearColor(
-      this.#clearColor.r / BYTE,
-      this.#clearColor.g / BYTE,
-      this.#clearColor.b / BYTE,
-      this.#clearColor.a / BYTE
+      this.clearColor.r / BYTE,
+      this.clearColor.g / BYTE,
+      this.clearColor.b / BYTE,
+      this.clearColor.a / BYTE
     );
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
   }
@@ -263,8 +192,8 @@ export default class RendererWebGL {
       const currentId = this.#currentID;
       const cmdList = this.#cacheToBufferCmds.get(currentId);
       if (cmdList && cmdList.indexOf(cmd) === -1) cmdList.push(cmd);
-    } else if (this.#renderCmds.indexOf(cmd) === -1) {
-        this.#renderCmds.push(cmd);
+    } else if (this.renderCmds.indexOf(cmd) === -1) {
+        this.renderCmds.push(cmd);
     }
   }
 
@@ -297,7 +226,7 @@ export default class RendererWebGL {
    * @param {WebGLRenderingContext} [ctx=_renderContext]
    */
   rendering(ctx: any, cmds?: RenderCommand[]): void {
-    const locCmds = cmds || this.#renderCmds,
+    const locCmds = cmds || this.renderCmds,
       context = ctx || ServiceLocator.sys.rendererConfig.renderContext;
 
     return RendererWebGL.#batchedInfo.rendering(context, locCmds);

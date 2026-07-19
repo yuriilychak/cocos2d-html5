@@ -1,43 +1,128 @@
-import {
-  CONFIG_KEY,
-  GLVersion,
-  RenderType,
-  UserRenderMode
-} from "../enums";
+import { CONFIG_KEY, GLVersion, RenderType, UserRenderMode } from "../enums";
 
 import type SysCapabilities from "./sys-capabilities";
-import type { RenderContext } from './types';
-import type { Color } from "../platform/types";
+import type { RenderContext, WebGLContext } from "./types";
 import type { PointLike } from "../geometry/types";
+import {
+  CanvasContextWrapper,
+  RendererCanvas,
+  RendererWebGL,
+  type RendererInterface
+} from "./renderer";
+import { DrawingPrimitiveCanvas, DrawingPrimitiveWebGL } from "./primitives";
 
 export type RendererConfigRenderContext = NonNullable<RenderContext> &
   WebGLRenderingContext & {
     offset?: PointLike;
   };
 
-export type RendererConfigRenderer = {
-  allNeedDraw: boolean;
-  assignedZ: number;
-  assignedZStep: number;
-  cacheToCanvasCmds: Map<number, unknown[]>;
-  childrenOrderDirty: boolean;
-  setDepthTest(on: boolean): void;
-  clearColor: Color;
-  clearFillStyle: string;
-};
-
 export class RendererConfig {
+  static readonly #webGLContextNames = [
+    "webgl2",
+    "webgl",
+    "experimental-webgl",
+    "webkit-3d",
+    "moz-webgl"
+  ];
+
   #renderType: RenderType = RenderType.CANVAS;
   #supportRender: boolean = false;
   #renderContext: RenderContext = null;
-  #renderer: RendererConfigRenderer | null = null;
+  #renderer: RendererInterface | null = null;
   #numberOfDraws: number = 0;
   #glVersion: GLVersion = GLVersion.CANVAS;
   #maxBatchTextures: number = 0;
   #capabilities: SysCapabilities;
+  #drawingUtil: DrawingPrimitiveWebGL | DrawingPrimitiveCanvas | null = null;
+  #glExtensions: object | null = null;
 
   constructor(capabilities: SysCapabilities) {
     this.#capabilities = capabilities;
+  }
+
+  public static create3DContext(
+    canvas: HTMLCanvasElement,
+    optAttribs?: WebGLContextAttributes
+  ): WebGLContext | null {
+    for (let i = 0; i < RendererConfig.#webGLContextNames.length; ++i) {
+      try {
+        const context = canvas.getContext(
+          RendererConfig.#webGLContextNames[i] as any,
+          optAttribs
+        ) as WebGLContext | null;
+        if (context) {
+          return context;
+        }
+      } catch (e) {}
+    }
+    return null;
+  }
+
+  public createContext(element: HTMLCanvasElement) {
+    if (!this.isWebGL || !this.#createWebGLContext(element)) {
+       this.#createCanvasContext(element);
+    }
+  }
+
+  #createWebGLContext(element: HTMLCanvasElement): boolean {
+    const renderContext = RendererConfig.create3DContext(element, {
+      stencil: true,
+      alpha: false
+    });
+
+    if (renderContext === null) {
+      return false;
+    }
+
+    this.#renderContext = renderContext;
+    //@ts-expect-error TODO deprecated remove when all references will be migrated
+    window.gl = this.#renderContext;
+    const isWebGL2 =
+      typeof WebGL2RenderingContext !== "undefined" &&
+      this.#renderContext instanceof WebGL2RenderingContext;
+    this.#glVersion = isWebGL2 ? GLVersion.WEBGL2 : GLVersion.WEBGL;
+    this.#renderer = new RendererWebGL();
+    this.#drawingUtil = new DrawingPrimitiveWebGL(this.#renderContext);
+
+    if (isWebGL2) {
+      const context = renderContext as WebGL2RenderingContext;
+      this.#glExtensions = {
+        instanced_arrays: {
+          drawArraysInstancedANGLE: context.drawArraysInstanced.bind(context),
+          drawElementsInstancedANGLE:
+            context.drawElementsInstanced.bind(context),
+          vertexAttribDivisorANGLE: context.vertexAttribDivisor.bind(context)
+        },
+        vertex_array_object: {
+          createVertexArrayOES: context.createVertexArray.bind(context),
+          bindVertexArrayOES: context.bindVertexArray.bind(context),
+          deleteVertexArrayOES: context.deleteVertexArray.bind(context),
+          isVertexArrayOES: context.isVertexArray.bind(context)
+        },
+        element_uint: { native: true }
+      };
+    } else {
+      this.#glExtensions = {
+        instanced_arrays: renderContext.getExtension("ANGLE_instanced_arrays"),
+        vertex_array_object: renderContext.getExtension(
+          "OES_vertex_array_object"
+        ),
+        element_uint: renderContext.getExtension("OES_element_index_uint")
+      };
+    }
+
+    return true;
+  }
+
+  #createCanvasContext(element: HTMLCanvasElement): void {
+    this.#renderType = RenderType.CANVAS;
+    this.#glVersion = GLVersion.CANVAS;
+    this.#renderer = new RendererCanvas();
+    this.#renderContext = new CanvasContextWrapper(
+      element.getContext("2d") as CanvasRenderingContext2D
+    ) as RenderContext;
+
+    this.#drawingUtil = new DrawingPrimitiveCanvas(this.#renderContext);
   }
 
   public incrementDrawCount(n: number = 1): void {
@@ -46,6 +131,10 @@ export class RendererConfig {
 
   public resetDrawCount(): void {
     this.#numberOfDraws = 0;
+  }
+
+  public get drawingUtil(): DrawingPrimitiveWebGL | DrawingPrimitiveCanvas {
+    return this.#drawingUtil!;
   }
 
   public determineRenderType(config: Record<CONFIG_KEY, unknown>): void {
@@ -89,6 +178,10 @@ export class RendererConfig {
     }
   }
 
+  public get glExtensions(): object | null {
+    return this.#glExtensions;
+  }
+
   public get renderContext(): RendererConfigRenderContext {
     return this.#renderContext as RendererConfigRenderContext;
   }
@@ -116,7 +209,11 @@ export class RendererConfig {
   public get maxBatchTextures(): number {
     if (this.#maxBatchTextures === 0) {
       if (this.isWebGL2 && this.#renderContext) {
-        const units = this.#renderContext.getParameter(this.#renderContext.MAX_TEXTURE_IMAGE_UNITS) || RendererConfig.HARD_MAX_BATCH_TEXTURES;
+        const units =
+          (this.#renderContext as WebGL2RenderingContext).getParameter(
+            (this.#renderContext as WebGL2RenderingContext)
+              .MAX_TEXTURE_IMAGE_UNITS
+          ) || RendererConfig.HARD_MAX_BATCH_TEXTURES;
         this.#maxBatchTextures = Math.max(
           1,
           Math.min(units, RendererConfig.HARD_MAX_BATCH_TEXTURES)
@@ -128,11 +225,11 @@ export class RendererConfig {
     return this.#maxBatchTextures;
   }
 
-  public get renderer(): RendererConfigRenderer {
-    return this.#renderer as RendererConfigRenderer;
+  public get renderer(): RendererInterface {
+    return this.#renderer!;
   }
 
-  public set renderer(value: RendererConfigRenderer) {
+  public set renderer(value: RendererInterface) {
     this.#renderer = value;
   }
 

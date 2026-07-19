@@ -113,6 +113,14 @@ export class Color {
     this.#val = (this.#val & 0xffffff00) | value;
   }
 
+  set(color: Color) {
+    this.r = color.r;
+    this.g = color.g;
+    this.b = color.b;
+    this.a = color.a;
+    
+  }
+
   get hsv(): HSV {
     const r = this.r / BYTE;
     const g = this.g / BYTE;

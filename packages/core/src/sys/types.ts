@@ -1,3 +1,5 @@
+import type { CanvasContextWrapperInterface } from "./renderer";
+
 export type WebGLContext = WebGLRenderingContext | WebGL2RenderingContext;
 export type BrowserNavigator = Navigator & {
   browserLanguage?: string;
@@ -34,5 +36,5 @@ type RenderContextExtensions = {
 };
 
 export type RenderContext =
-  | ((WebGLContext | CanvasRenderContext) & RenderContextExtensions)
+  | ((WebGLContext | CanvasRenderContext | CanvasContextWrapperInterface) & RenderContextExtensions) 
   | null;

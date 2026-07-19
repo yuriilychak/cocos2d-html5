@@ -1,4 +1,4 @@
-import type { PointLike } from "../geometry";
+import type { PointLike } from "../../geometry";
 import Region from "./region";
 
 export default class RegionPool {

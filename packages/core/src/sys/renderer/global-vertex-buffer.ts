@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { V3F_C4B_T2F_Quad } from "../platform/types/vertex";
+import { V3F_C4B_T2F_Quad } from "../../platform/types/vertex";
 
 type WebGLContext = WebGLRenderingContext | WebGL2RenderingContext;
 

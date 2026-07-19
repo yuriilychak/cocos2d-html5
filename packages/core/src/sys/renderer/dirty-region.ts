@@ -1,4 +1,4 @@
-import { Point, Size } from "../geometry";
+import { Point, Size } from "../../geometry";
 import Region from "./region";
 import RegionPool from "./region-pool";
 

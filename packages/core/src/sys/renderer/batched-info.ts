@@ -1,14 +1,14 @@
-import { BATCH_VERTEX_COUNT } from "../platform/macro/constants";
-import { GLProgramState } from "../shaders/program-state";
-import { ServiceLocator } from "../service-locator";
+import { BATCH_VERTEX_COUNT } from "../../platform/macro/constants";
+import { GLProgramState } from "../../shaders/program-state";
+import { ServiceLocator } from "../../service-locator";
 import {
   VertexAttribute,
   VertexType,
   ShaderName,
   GLState
-} from "../enums";
-import type { BlendFunc } from "../platform";
-import type { Texture2D } from "../textures";
+} from "../../enums";
+import type { BlendFunc } from "../../platform";
+import type { Texture2D } from "../../textures";
 
 export default class BatchedInfo {
   #blendSrc: GLState | null = null;

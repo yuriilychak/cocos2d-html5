@@ -22,7 +22,7 @@
 import { DisplayLinkDirector } from "./director/director";
 import { Sys } from "./sys";
 import { Loader } from "./boot/loader";
-import Game from "./boot/game";
+import { Game } from "./game";
 import EventManager from "./event-manager/event-manager";
 import { EGLView } from "./platform/egl-view";
 import TextureCache from "./textures/texture-cache";
@@ -126,7 +126,7 @@ export class ServiceLocator {
       eventManager: ServiceLocator.#eventManager,
       inputManager: ServiceLocator.#inputManager,
       loader: ServiceLocator.#loader,
-      rendererConfig: renderingConfig,
+      sys: ServiceLocator.#sys,
       textureCache: ServiceLocator.#textureCache
     });
 

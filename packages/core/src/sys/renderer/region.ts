@@ -4,7 +4,7 @@ import {
   type AffineTransformLike,
   type PointLike,
   type RectLike,
-} from "../geometry";
+} from "../../geometry";
 
 // Region labels a rect which is world axis aligned.
 export default class Region {

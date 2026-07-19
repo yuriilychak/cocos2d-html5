@@ -283,11 +283,11 @@ export class InputManager {
     return touchArr;
   }
 
-  registerSystemEvent(element: HTMLElement): void {
+  registerSystemEvent(): void {
     if (this.#isRegisterEvent) {
       return;
     }
-    this.#element = element;
+    this.#element = this.#eglView.canvas;
 
     //register touch event
     if (this.#sys.capabilities.mouse) {
@@ -297,7 +297,7 @@ export class InputManager {
       });
 
       //register canvas mouse event
-      this.#addEventListeners(element, {
+      this.#addEventListeners(this.#eglView.canvas, {
         mousedown: this.#onElementMouseDown,
         mouseup: this.#onElementMouseUp,
         mousemove: this.#onMouseMove,
@@ -309,7 +309,7 @@ export class InputManager {
 
     if (this.#sys.capabilities.touches) {
       //register canvas touch event
-      this.#addEventListeners(element, {
+      this.#addEventListeners(this.#eglView.canvas, {
         touchstart: this.#onTouchStart,
         touchmove: this.#onTouchMove,
         touchend: this.#onTouchEnd,

@@ -24,7 +24,7 @@
 
 import { Point, Rect, AffineTransform } from "../geometry";
 import { Color } from "../platform/types/color";
-import Region from "../renderer/region";
+import Region from "../sys/renderer/region";
 import { Node } from "./node";
 
 import { ServiceLocator } from "../service-locator";

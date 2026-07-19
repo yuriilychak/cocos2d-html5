@@ -25,7 +25,7 @@
 import { Sprite } from "./sprite";
 import { Rect } from "../geometry";
 import { Texture2D } from "../textures/texture-2d";
-import { CanvasContextWrapper } from "../renderer";
+import { CanvasContextWrapper } from "../sys/renderer";
 
 /**
  * BakeSprite is a type of sprite that will be cached.

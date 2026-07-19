@@ -1,6 +1,7 @@
-import { Point, type PointLike, type AffineTransformLike } from "../geometry";
+import { Point, type PointLike, type AffineTransformLike } from "../../geometry";
+import type { CanvasContextWrapperInterface } from "./types";
 
-export default class CanvasContextWrapper {
+export default class CanvasContextWrapper implements CanvasContextWrapperInterface {
   #context: CanvasRenderingContext2D;
   #saveCount = 0;
   #offset = new Point();

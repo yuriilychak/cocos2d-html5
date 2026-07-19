@@ -1,23 +1,11 @@
-import { BaseClass } from "../platform/class";
-import EventHelper from "../event-manager/event-helper";
-import EventCustom from "../event-manager/event/event-custom";
-import { DrawingPrimitiveCanvas } from "../drawing-primitives-canvas";
-import { DrawingPrimitiveWebGL } from "../drawing-primitives-webgl";
-import {
-  RendererCanvas,
-  RendererWebGL,
-  CanvasContextWrapper
-} from "../renderer";
-import Path from "./path";
-import { initDebugSetting, log } from "./debugger";
-import { Sys } from "../sys";
-import { isUndefined } from "./utils";
-import { ENGINE_VERSION } from "../platform/config";
+import { BaseClass, ENGINE_VERSION } from "../platform";
+import { EventHelper, EventCustom } from "../event-manager";
+import { initDebugSetting, log, Path, isUndefined } from "../boot";
+import { Sys, RendererConfig } from "../sys";
 import {
   CONFIG_KEY,
   GLVersion,
   GameEvent,
-  RenderType,
   UserRenderMode
 } from "../enums";
 
@@ -35,7 +23,7 @@ export default class Game extends EventHelper(BaseClass) {
   #eventManager = null;
   #inputManager = null;
   #loader = null;
-  #rendererConfig = null;
+  #sys = null;
   #textureCache = null;
 
   // states
@@ -100,7 +88,7 @@ export default class Game extends EventHelper(BaseClass) {
     eventManager,
     inputManager,
     loader,
-    rendererConfig,
+    sys,
     textureCache
   }) {
     this.#director = director;
@@ -108,7 +96,7 @@ export default class Game extends EventHelper(BaseClass) {
     this.#eventManager = eventManager;
     this.#inputManager = inputManager;
     this.#loader = loader;
-    this.#rendererConfig = rendererConfig;
+    this.#sys = sys;
     this.#textureCache = textureCache;
   }
 
@@ -268,7 +256,7 @@ export default class Game extends EventHelper(BaseClass) {
   }
 
   #initEngine() {
-    this.#rendererConfig.determineRenderType(this.config);
+    this.#sys.rendererConfig.determineRenderType(this.config);
     initDebugSetting(this.config[CONFIG_KEY.debugMode]);
     this.#engineLoaded = true;
     console.log(ENGINE_VERSION);
@@ -414,7 +402,7 @@ export default class Game extends EventHelper(BaseClass) {
   #initRenderer(width, height) {
     if (this.rendererInitialized) return;
 
-    if (!this.#rendererConfig.supportRenderer) {
+    if (!this.#sys.rendererConfig.supportRenderer) {
       throw new Error(
         "The renderer doesn't support the renderMode " +
           this.config[CONFIG_KEY.renderMode]
@@ -422,97 +410,48 @@ export default class Game extends EventHelper(BaseClass) {
     }
 
     var el = this.config[CONFIG_KEY.id],
-      win = window,
       element = document.getElementById(el),
-      localCanvas,
-      localContainer,
       localConStyle;
 
     if (element.tagName === "CANVAS") {
       width = width || element.width;
       height = height || element.height;
 
-      this.canvas = localCanvas = element;
-      this.container = localContainer = document.createElement("DIV");
-      if (localCanvas.parentNode)
-        localCanvas.parentNode.insertBefore(localContainer, localCanvas);
+      this.canvas = element;
+      this.container = document.createElement("DIV");
+      if (this.canvas.parentNode)
+        this.canvas.parentNode.insertBefore(this.container, this.canvas);
     } else {
       if (element.tagName !== "DIV") {
         log("Warning: target element is not a DIV or CANVAS");
       }
       width = width || element.clientWidth;
       height = height || element.clientHeight;
-      this.canvas = localCanvas = document.createElement("CANVAS");
-      this.container = localContainer = document.createElement("DIV");
-      element.appendChild(localContainer);
+      this.canvas = document.createElement("CANVAS");
+      this.container = this.container = document.createElement("DIV");
+      element.appendChild(this.container);
     }
-    localContainer.setAttribute("id", "Cocos2dGameContainer");
-    localContainer.appendChild(localCanvas);
+    this.container.setAttribute("id", "Cocos2dGameContainer");
+    this.container.appendChild(this.canvas);
     this.frame =
-      localContainer.parentNode === document.body
+      this.container.parentNode === document.body
         ? document.documentElement
-        : localContainer.parentNode;
+        : this.container.parentNode;
 
-    localCanvas.classList.add("gameCanvas");
-    localCanvas.setAttribute("width", width || 480);
-    localCanvas.setAttribute("height", height || 320);
-    localCanvas.setAttribute("tabindex", 99);
+    this.canvas.classList.add("gameCanvas");
+    this.canvas.setAttribute("width", width || 480);
+    this.canvas.setAttribute("height", height || 320);
+    this.canvas.setAttribute("tabindex", 99);
 
-    if (this.#rendererConfig.isWebGL) {
-      this.#renderContext = Sys.create3DContext(localCanvas, {
-        stencil: true,
-        alpha: false
-      });
-      this.#rendererConfig.renderContext = this.#renderContext;
-    }
-    if (this.#renderContext) {
-      win.gl = this.#renderContext;
-      const gl = this.#renderContext;
-      const isWebGL2 =
-        typeof WebGL2RenderingContext !== "undefined" &&
-        gl instanceof WebGL2RenderingContext;
-      this.#rendererConfig.glVersion = isWebGL2
-        ? GLVersion.WEBGL2
-        : GLVersion.WEBGL;
-      this.#rendererConfig.renderer = new RendererWebGL();
-      this.#rendererConfig.renderer.init();
-      this.drawingUtil = new DrawingPrimitiveWebGL(this.#renderContext);
-      this.glExt = isWebGL2
-        ? {
-            instanced_arrays: {
-              drawArraysInstancedANGLE: gl.drawArraysInstanced.bind(gl),
-              drawElementsInstancedANGLE: gl.drawElementsInstanced.bind(gl),
-              vertexAttribDivisorANGLE: gl.vertexAttribDivisor.bind(gl)
-            },
-            vertex_array_object: {
-              createVertexArrayOES: gl.createVertexArray.bind(gl),
-              bindVertexArrayOES: gl.bindVertexArray.bind(gl),
-              deleteVertexArrayOES: gl.deleteVertexArray.bind(gl),
-              isVertexArrayOES: gl.isVertexArray.bind(gl)
-            },
-            element_uint: { native: true }
-          }
-        : {
-            instanced_arrays: gl.getExtension("ANGLE_instanced_arrays"),
-            vertex_array_object: gl.getExtension("OES_vertex_array_object"),
-            element_uint: gl.getExtension("OES_element_index_uint")
-          };
-    } else {
-      this.#rendererConfig.renderType = RenderType.CANVAS;
-      this.#rendererConfig.glVersion = GLVersion.CANVAS;
-      this.#rendererConfig.renderer = new RendererCanvas();
-      this.#renderContext = new CanvasContextWrapper(
-        localCanvas.getContext("2d")
-      );
-      this.#rendererConfig.renderContext = this.#renderContext;
-      this.drawingUtil = DrawingPrimitiveCanvas
-        ? new DrawingPrimitiveCanvas(this.#renderContext)
-        : null;
-    }
+    this.#sys.rendererConfig.createContext(this.canvas);
+    this.glExt = this.#sys.rendererConfig.glExtensions;
+    this.drawingUtil = this.#sys.rendererConfig.drawingUtil;
 
-    this.#gameDiv = localContainer;
+    this.#gameDiv = this.container;
     this.canvas.oncontextmenu = function () {
-      if (!Game.#isContextMenuEnable) return false;
+      if (!Game.#isContextMenuEnable) {
+        return false;
+      }
     };
 
     this.dispatchEvent(GameEvent.RENDERER_INITED, true);
@@ -526,13 +465,11 @@ export default class Game extends EventHelper(BaseClass) {
   #initEvents() {
     let hidden = "";
 
-    this.#eventHide = this.#eventHide || new EventCustom(GameEvent.HIDE);
-    this.#eventHide.userData = this;
-    this.#eventShow = this.#eventShow || new EventCustom(GameEvent.SHOW);
-    this.#eventShow.userData = this;
+    this.#eventHide = this.#eventHide || new EventCustom(GameEvent.HIDE, this);
+    this.#eventShow = this.#eventShow || new EventCustom(GameEvent.SHOW, this);
 
     if (this.config[CONFIG_KEY.registerSystemEvent])
-      this.#inputManager.registerSystemEvent(this.canvas);
+      this.#inputManager.registerSystemEvent();
 
     if (!isUndefined(document.hidden)) {
       hidden = "hidden";

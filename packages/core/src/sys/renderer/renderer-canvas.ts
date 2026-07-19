@@ -23,20 +23,14 @@
  ****************************************************************************/
 
 import DirtyRegion from "./dirty-region";
-import { Color } from "../platform/types/color";
-import { log } from "../boot/debugger";
-import { arrayRemoveObject } from "../platform/macro/utils";
-import { CanvasRenderCmd as NodeCanvasRenderCmd } from "../base-nodes/node-canvas-render-cmd";
-import { ServiceLocator } from "../service-locator";
-import { BYTE } from "../constants";
-import { AffineTransform } from "../geometry";
+import { log } from "../../boot/debugger";
+import { arrayRemoveObject } from "../../platform/macro/utils";
+import { CanvasRenderCmd as NodeCanvasRenderCmd } from "../../base-nodes/node-canvas-render-cmd";
+import { ServiceLocator } from "../../service-locator";
+import { BYTE } from "../../constants";
+import { AffineTransform } from "../../geometry";
 import type CanvasContextWrapper from "./canvas-context-wrapper";
-
-type DirtyNode = {
-  _dirtyFlag: number;
-  updateStatus(): void;
-  _curLevel: number;
-};
+import { RendererBase } from "./renderer-base";
 
 type RenderCommand = {
   _canUseDirtyRegion: boolean;
@@ -47,16 +41,10 @@ type RenderCommand = {
   rendering(ctx: CanvasContextWrapper, scaleX: number, scaleY: number): void;
 };
 
-export default class RendererCanvas {
-  #childrenOrderDirty: boolean = true;
-  #assignedZ: number = 0;
-  #assignedZStep: number = 1 / 10000;
+export default class RendererCanvas extends RendererBase<RenderCommand> {
   #cacheToCanvasCmds: Map<number, RenderCommand[]> = new Map();
-  #clearColor: Color = new Color();
   #clearFillStyle: string = "rgb(0, 0, 0)";
   #allNeedDraw: boolean = true;
-  #transformNodePool: DirtyNode[] = [];
-  #renderCmds: RenderCommand[] = [];
   #isCacheToCanvasOn: boolean = false;
   #cacheInstanceIds: number[] = [];
   #currentID: number = 0;
@@ -67,12 +55,16 @@ export default class RendererCanvas {
   #dirtyRegionCountThreshold: number = 10;
   #identityTransform: AffineTransform = AffineTransform.makeIdentity();
 
-  getRenderCmd(renderableObject: { _createRenderCmd(): unknown }): unknown {
-    return renderableObject._createRenderCmd();
+  constructor() {
+    super(1 / 10000);
   }
 
   setDirtyRegionCountThreshold(threshold: number): void {
     this.#dirtyRegionCountThreshold = threshold;
+  }
+
+  setDepthTest(on: boolean) {
+    //Need only for compability
   }
 
   rendering(ctxWrapper?: CanvasContextWrapper): void {
@@ -87,7 +79,6 @@ export default class RendererCanvas {
     wrapper.viewScale = scale;
     wrapper.computeRealOffsetY();
     const dirtyList = dirtyRegion.dirtyRegions;
-    const locCmds = this.#renderCmds;
     let allNeedDraw =
       this.#allNeedDraw || !this.#enableDirtyRegion || !this.#canUseDirtyRegion;
     let collectResult = true;
@@ -99,16 +90,16 @@ export default class RendererCanvas {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, viewport.width, viewport.height);
     if (
-      this.#clearColor.r !== BYTE ||
-      this.#clearColor.g !== BYTE ||
-      this.#clearColor.b !== BYTE
+      this.clearColor.r !== BYTE ||
+      this.clearColor.g !== BYTE ||
+      this.clearColor.b !== BYTE
     ) {
       wrapper.fillStyle = this.#clearFillStyle;
-      wrapper.globalAlpha = this.#clearColor.a;
+      wrapper.globalAlpha = this.clearColor.a;
       ctx.fillRect(0, 0, viewport.width, viewport.height);
     }
 
-    for (const cmd of locCmds) {
+    for (const cmd of this.renderCmds) {
       const cmdRegion = cmd._currentRegion;
       let needRendering = !cmdRegion || allNeedDraw;
       
@@ -188,31 +179,10 @@ export default class RendererCanvas {
     arrayRemoveObject(this.#cacheInstanceIds, instanceID);
   }
 
-  resetFlag(): void {
-    this.#childrenOrderDirty = false;
-    this.#transformNodePool.length = 0;
-  }
-
-  transform(): void {
-    this.#transformNodePool.sort(this.#sortNodeByLevelAsc);
-    for (const node of this.#transformNodePool) {
-      if (node._dirtyFlag !== 0) node.updateStatus();
-    }
-    this.#transformNodePool.length = 0;
-  }
-
-  transformDirty(): boolean {
-    return this.#transformNodePool.length > 0;
-  }
-
-  pushDirtyNode(node: DirtyNode): void {
-    this.#transformNodePool.push(node);
-  }
-
   clear(): void {}
 
   clearRenderCommands(): void {
-    this.#renderCmds.length = 0;
+    super.clearRenderCommands();
     this.#cacheInstanceIds.length = 0;
     this.#isCacheToCanvasOn = false;
     this.#allNeedDraw = true;
@@ -233,8 +203,8 @@ export default class RendererCanvas {
       if (cmdList && cmdList.indexOf(cmd) === -1) {
         cmdList.push(cmd);
       }
-    } else if (this.#renderCmds.indexOf(cmd) === -1) {
-      this.#renderCmds.push(cmd);
+    } else if (this.renderCmds.indexOf(cmd) === -1) {
+      this.renderCmds.push(cmd);
     }
   }
 
@@ -244,7 +214,7 @@ export default class RendererCanvas {
     let result = true;
     const localStatus = (NodeCanvasRenderCmd as any).RegionStatus;
 
-    for (const cmd of this.#renderCmds) {
+    for (const cmd of this.renderCmds) {
       if (cmd._regionFlag > localStatus.NotDirty) {
         ++dirtyRegionCount;
         if (dirtyRegionCount > this.#dirtyRegionCountThreshold) {
@@ -300,40 +270,8 @@ export default class RendererCanvas {
     ctx.fillStyle = oldStyle;
   }
 
-  #sortNodeByLevelAsc(n1: DirtyNode, n2: DirtyNode): number {
-    return n1._curLevel - n2._curLevel;
-  }
-
-  get childrenOrderDirty(): boolean {
-    return this.#childrenOrderDirty;
-  }
-
-  set childrenOrderDirty(value: boolean) {
-    this.#childrenOrderDirty = value;
-  }
-
-  get assignedZ(): number {
-    return this.#assignedZ;
-  }
-
-  set assignedZ(value: number) {
-    this.#assignedZ = value;
-  }
-
-  get assignedZStep(): number {
-    return this.#assignedZStep;
-  }
-
   get cacheToCanvasCmds(): Map<number, RenderCommand[]> {
     return this.#cacheToCanvasCmds;
-  }
-
-  get clearColor(): Color {
-    return this.#clearColor;
-  }
-
-  set clearColor(value: Color) {
-    this.#clearColor = value;
   }
 
   get clearFillStyle(): string {
