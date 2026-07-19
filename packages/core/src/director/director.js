@@ -69,7 +69,6 @@ export class Director extends BaseClass {
   _lastUpdate = Date.now();
   _animationCache = null;
   _eventManager = null;
-  _game = null;
   _profiler = null;
   _rendererConfig = null;
   _spriteFrameCache = null;
@@ -86,7 +85,6 @@ export class Director extends BaseClass {
   injectServices({
     animationCache,
     eventManager,
-    game,
     profiler,
     rendererConfig,
     spriteFrameCache,
@@ -94,7 +92,6 @@ export class Director extends BaseClass {
   }) {
     this._animationCache = animationCache;
     this._eventManager = eventManager;
-    this._game = game;
     this._profiler = profiler;
     this._rendererConfig = rendererConfig;
     this._spriteFrameCache = spriteFrameCache;
@@ -148,7 +145,7 @@ export class Director extends BaseClass {
     return true;
   }
 
-  calculateDeltaTime() {
+  calculateDeltaTime(debugMode) {
     var now = Date.now();
 
     if (this._nextDeltaTimeZero) {
@@ -158,16 +155,16 @@ export class Director extends BaseClass {
       this._deltaTime = (now - this._lastUpdate) / 1000;
     }
 
-    if (this._game.config[CONFIG_KEY.debugMode] > 0 && this._deltaTime > 0.2)
+    if (debugMode > 0 && this._deltaTime > 0.2)
       this._deltaTime = 1 / 60.0;
 
     this._lastUpdate = now;
   }
 
-  drawScene() {
+  drawScene(debugMode) {
     var renderer = this._rendererConfig.renderer;
 
-    this.calculateDeltaTime();
+    this.calculateDeltaTime(debugMode);
 
     if (!this._paused) {
       this._scheduler.update(this._deltaTime);
@@ -481,12 +478,12 @@ export class DisplayLinkDirector extends Director {
     this.invalid = false;
   }
 
-  mainLoop() {
+  mainLoop(debugMode) {
     if (this._purgeDirectorInNextLoop) {
       this._purgeDirectorInNextLoop = false;
       this.purgeDirector();
     } else if (!this.invalid) {
-      this.drawScene();
+      this.drawScene(debugMode);
     }
   }
 

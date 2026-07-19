@@ -113,7 +113,6 @@ export class ServiceLocator {
     ServiceLocator.#director.injectServices({
       animationCache: ServiceLocator.#animationCache,
       eventManager: ServiceLocator.#eventManager,
-      game: ServiceLocator.#game,
       profiler: ServiceLocator.#profiler,
       rendererConfig: renderingConfig,
       spriteFrameCache: ServiceLocator.#spriteFrameCache,

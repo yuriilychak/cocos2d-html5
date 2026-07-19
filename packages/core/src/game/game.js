@@ -111,7 +111,7 @@ export default class Game extends EventHelper(BaseClass) {
    * Run the game frame by frame.
    */
   step() {
-    this.#director.mainLoop();
+    this.#director.mainLoop(this.config[CONFIG_KEY.debugMode]);
   }
 
   /**
@@ -309,7 +309,7 @@ export default class Game extends EventHelper(BaseClass) {
           }
         }
 
-        this.#director.mainLoop();
+        this.#director.mainLoop(this.config[CONFIG_KEY.debugMode]);
         this.#intervalId = window.requestAnimFrame(callback);
       }
     };
