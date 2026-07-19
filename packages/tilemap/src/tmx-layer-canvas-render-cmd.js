@@ -106,7 +106,7 @@ export class TMXLayerCanvasRenderCmd extends Node.CanvasRenderCmd {
       mapy = ox * b + oy * d + wt.ty;
 
     const wrapper = ctx || rendererConfig.renderContext,
-      context = wrapper.getContext();
+      context = wrapper.context;
 
     let startCol = 0,
       startRow = 0,
@@ -159,8 +159,8 @@ export class TMXLayerCanvasRenderCmd extends Node.CanvasRenderCmd {
       }
     }
 
-    wrapper.setTransform(wt, scaleX, scaleY);
-    wrapper.setGlobalAlpha(alpha);
+      wrapper.setTransform(wt, { x: scaleX, y: scaleY });
+    wrapper.globalAlpha = alpha;
 
     for (row = startRow; row < maxRow; ++row) {
       for (col = startCol; col < maxCol; ++col) {
@@ -169,8 +169,8 @@ export class TMXLayerCanvasRenderCmd extends Node.CanvasRenderCmd {
           cmd = spTiles[z]._renderCmd;
           if (spTiles[z]._localZOrder === 0 && !!cmd.rendering) {
             cmd.rendering(ctx, scaleX, scaleY);
-            wrapper.setTransform(wt, scaleX, scaleY);
-            wrapper.setGlobalAlpha(alpha);
+            wrapper.setTransform(wt, { x: scaleX, y: scaleY });
+            wrapper.globalAlpha = alpha;
           }
           continue;
         }

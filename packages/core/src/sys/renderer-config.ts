@@ -8,18 +8,22 @@ import {
 import type SysCapabilities from "./sys-capabilities";
 import type { RenderContext } from './types';
 import type { Color } from "../platform/types";
+import type { PointLike } from "../geometry/types";
 
 export type RendererConfigRenderContext = NonNullable<RenderContext> &
   WebGLRenderingContext & {
-    setOffset?: (x: number, y: number) => void;
+    offset?: PointLike;
   };
 
 export type RendererConfigRenderer = {
-  _allNeedDraw: boolean;
+  allNeedDraw: boolean;
+  assignedZ: number;
+  assignedZStep: number;
+  cacheToCanvasCmds: Map<number, unknown[]>;
   childrenOrderDirty: boolean;
   setDepthTest(on: boolean): void;
-  _clearColor: Color;
-  _clearFillStyle: string;
+  clearColor: Color;
+  clearFillStyle: string;
 };
 
 export class RendererConfig {

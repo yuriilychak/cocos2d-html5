@@ -10,10 +10,9 @@ export class ScrollViewCanvasRenderCmd extends LayoutCanvasRenderCmd {
   rendering(ctx) {
     var currentID = this._node.__instanceId;
     var i,
-      locCmds =
-        ServiceLocator.sys.rendererConfig.renderer._cacheToCanvasCmds[
-          currentID
-        ],
+      locCmds = ServiceLocator.sys.rendererConfig.renderer.cacheToCanvasCmds.get(
+        currentID
+      ) || [],
       len,
       scaleX = ServiceLocator.eglView.scaleX,
       scaleY = ServiceLocator.eglView.scaleY;

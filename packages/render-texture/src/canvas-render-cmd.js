@@ -87,10 +87,10 @@ export class RenderTextureCanvasRenderCmd extends Node.CanvasRenderCmd {
     b = b || 0;
     a = isNaN(a) ? 255 : a;
 
-    const context = this._cacheContext.getContext();
+    const context = this._cacheContext.context;
     const locCanvas = this._cacheCanvas;
     context.setTransform(1, 0, 0, 1, 0, 0);
-    this._cacheContext.setFillStyle(Color.toRgba(0 | r, 0 | g, 0 | b, a));
+    this._cacheContext.fillStyle = Color.toRgba(0 | r, 0 | g, 0 | b, a);
     context.clearRect(0, 0, locCanvas.width, locCanvas.height);
     context.fillRect(0, 0, locCanvas.width, locCanvas.height);
   }
@@ -99,7 +99,7 @@ export class RenderTextureCanvasRenderCmd extends Node.CanvasRenderCmd {
     const node = this._node;
 
     const scale = contentScaleFactor();
-    ServiceLocator.sys.rendererConfig.renderer._renderingToCacheCanvas(
+    ServiceLocator.sys.rendererConfig.renderer.renderingToCacheCanvas(
       this._cacheContext,
       node.__instanceId,
       scale,

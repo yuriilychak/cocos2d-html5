@@ -570,7 +570,7 @@ export class CanvasRenderCmd extends LabelRenderMixin(SpriteCanvasRenderCmd) {
   _measure(text) {
     if (text) {
       const context =
-        ServiceLocator.sys.rendererConfig.renderContext.getContext();
+        ServiceLocator.sys.rendererConfig.renderContext.context;
       context.font = this._fontStyleStr;
       return context.measureText(text).width;
     } else {
@@ -599,7 +599,7 @@ export class CanvasRenderCmd extends LabelRenderMixin(SpriteCanvasRenderCmd) {
     const scaleX = ServiceLocator.eglView.scaleX,
       scaleY = ServiceLocator.eglView.scaleY;
     const wrapper = ctx || ServiceLocator.sys.rendererConfig.renderContext,
-      context = wrapper.getContext();
+      context = wrapper.context;
     if (!context) return;
     const node = this._node;
     wrapper.computeRealOffsetY();
@@ -617,9 +617,9 @@ export class CanvasRenderCmd extends LabelRenderMixin(SpriteCanvasRenderCmd) {
 
     const alpha = this._displayedOpacity / BYTE;
 
-    wrapper.setTransform(this._worldTransform, scaleX, scaleY);
-    wrapper.setCompositeOperation(this._blendFuncStr);
-    wrapper.setGlobalAlpha(alpha);
+    wrapper.setTransform(this._worldTransform, { x: scaleX, y: scaleY });
+    wrapper.compositeOperation = this._blendFuncStr;
+    wrapper.globalAlpha = alpha;
 
     wrapper.save();
 

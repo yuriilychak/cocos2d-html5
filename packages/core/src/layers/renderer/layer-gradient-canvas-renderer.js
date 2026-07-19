@@ -44,7 +44,7 @@ export default class LayerGradientCanvasRenderer extends LayerColorCanvasRendere
 
   rendering(ctx, scaleX, scaleY) {
     const wrapper = ctx || ServiceLocator.sys.rendererConfig.renderContext,
-      context = wrapper.getContext(),
+      context = wrapper.context,
       node = this._node,
       opacity = this._displayedOpacity / BYTE;
 
@@ -52,8 +52,8 @@ export default class LayerGradientCanvasRenderer extends LayerColorCanvasRendere
 
     const locWidth = node._contentSize.width,
       locHeight = node._contentSize.height;
-    wrapper.setCompositeOperation(this._blendFuncStr);
-    wrapper.setGlobalAlpha(opacity);
+    wrapper.compositeOperation = this._blendFuncStr;
+    wrapper.globalAlpha = opacity;
     const gradient = context.createLinearGradient(
       this._startPoint.x,
       this._startPoint.y,
@@ -71,9 +71,9 @@ export default class LayerGradientCanvasRenderer extends LayerColorCanvasRendere
       gradient.addColorStop(1, this._endStopStr);
     }
 
-    wrapper.setFillStyle(gradient);
+    wrapper.fillStyle = gradient;
 
-    wrapper.setTransform(this._worldTransform, scaleX, scaleY);
+    wrapper.setTransform(this._worldTransform, { x: scaleX, y: scaleY });
     context.fillRect(0, 0, locWidth, -locHeight);
     ServiceLocator.sys.rendererConfig.incrementDrawCount();
   }

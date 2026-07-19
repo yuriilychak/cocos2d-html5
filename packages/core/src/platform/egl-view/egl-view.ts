@@ -263,8 +263,12 @@ export class EGLView extends BaseClass {
     Size.copy(this.#innerVisibleRect, this.#domAdapter.canvas);
     Size.compDivIn(this.#innerVisibleRect, this.#scale);
     const renderContext = this.#sys.rendererConfig.renderContext;
-    renderContext.setOffset &&
-      renderContext.setOffset(this.#viewPortRect.x, -this.#viewPortRect.y);
+    if (renderContext) {
+      renderContext.offset = new Point(
+        this.#viewPortRect.x,
+        -this.#viewPortRect.y
+      );
+    }
 
     // reset director's member variables to fit visible rect
     this.#winSizeInPoints.set(this.#designResolution);
@@ -274,7 +278,7 @@ export class EGLView extends BaseClass {
       // reset director's member variables to fit visible rect
       this.rendererDelegate.setGLDefaultValues();
     } else if (this.#sys.rendererConfig.isCanvas) {
-      this.#sys.rendererConfig.renderer._allNeedDraw = true;
+      this.#sys.rendererConfig.renderer.allNeedDraw = true;
     }
 
     this.#originalScale.set(this.#scale);
@@ -879,6 +883,10 @@ export class EGLView extends BaseClass {
    */
   get scaleY(): number {
     return this.#scale.y;
+  }
+
+  get scale(): Point {
+    return this.#scale.clone();
   }
 
   get canvas(): HTMLCanvasElement {

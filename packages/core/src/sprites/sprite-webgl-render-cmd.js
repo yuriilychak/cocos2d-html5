@@ -419,7 +419,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
     }
 
     const stride =
-      ServiceLocator.sys.rendererConfig.renderer.getSizePerVertex();
+      ServiceLocator.sys.rendererConfig.renderer.sizePerVertex;
     const vertices = this._vertices;
     const len = vertices.length;
     const ti = texIndex || 0;
@@ -493,7 +493,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
     let offset = vertexDataOffset;
     const color = this._color[0];
     const stride =
-      ServiceLocator.sys.rendererConfig.renderer.getSizePerVertex();
+      ServiceLocator.sys.rendererConfig.renderer.sizePerVertex;
     const ti = texIndex || 0;
 
     for (let i = 0; i < vertCount; i++) {

@@ -25,7 +25,7 @@
 import { Sprite } from "./sprite";
 import { Rect } from "../geometry";
 import { Texture2D } from "../textures/texture-2d";
-import { CanvasContextWrapper } from "../renderer/renderer-canvas";
+import { CanvasContextWrapper } from "../renderer";
 
 /**
  * BakeSprite is a type of sprite that will be cached.
@@ -65,18 +65,18 @@ export class BakeSprite extends Sprite {
   resetCanvasSize(sizeOrWidth, height) {
     var locCanvas = this._cacheCanvas,
       locContext = this._cacheContext,
-      strokeStyle = locContext._context.strokeStyle,
-      fillStyle = locContext._context.fillStyle;
+      strokeStyle = locContext.context.strokeStyle,
+      fillStyle = locContext.context.fillStyle;
     if (height === undefined) {
       height = sizeOrWidth.height;
       sizeOrWidth = sizeOrWidth.width;
     }
     locCanvas.width = sizeOrWidth;
     locCanvas.height = height;
-    if (strokeStyle !== locContext._context.strokeStyle)
-      locContext._context.strokeStyle = strokeStyle;
-    if (fillStyle !== locContext._context.fillStyle)
-      locContext._context.fillStyle = fillStyle;
+    if (strokeStyle !== locContext.context.strokeStyle)
+      locContext.context.strokeStyle = strokeStyle;
+    if (fillStyle !== locContext.context.fillStyle)
+      locContext.context.fillStyle = fillStyle;
     this.getTexture().renderer.handleLoadedTexture();
     this.setTextureRect(
       new Rect(0, 0, sizeOrWidth, height),

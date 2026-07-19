@@ -83,11 +83,11 @@ export class ParticleSystemCanvasRenderCmd extends Node.CanvasRenderCmd {
   rendering(ctx, scaleX, scaleY) {
     //TODO: need refactor rendering for performance
     const wrapper = ctx || ServiceLocator.sys.rendererConfig.renderContext,
-      context = wrapper.getContext(),
+      context = wrapper.context,
       node = this._node,
       pointRect = this._pointRect;
 
-    wrapper.setTransform(this._worldTransform, scaleX, scaleY);
+      wrapper.setTransform(this._worldTransform, { x: scaleX, y: scaleY });
     wrapper.save();
     if (node.isBlendAdditive()) context.globalCompositeOperation = "lighter";
     else context.globalCompositeOperation = "source-over";

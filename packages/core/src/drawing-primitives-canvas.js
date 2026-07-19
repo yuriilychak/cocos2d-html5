@@ -47,7 +47,7 @@ export class DrawingPrimitiveCanvas extends BaseClass {
     if (!size) {
       size = 1;
     }
-    var ctx = this._renderContext.getContext();
+    var ctx = this._renderContext.context;
     ctx.beginPath();
     ctx.arc(point.x, -point.y, size, 0, Math.PI * 2, false);
     ctx.closePath();
@@ -60,7 +60,7 @@ export class DrawingPrimitiveCanvas extends BaseClass {
     if (!size) {
       size = 1;
     }
-    var locContext = this._renderContext.getContext();
+    var locContext = this._renderContext.context;
 
     locContext.beginPath();
     for (var i = 0, len = points.length; i < len; i++)
@@ -70,7 +70,7 @@ export class DrawingPrimitiveCanvas extends BaseClass {
   }
 
   drawLine(origin, destination) {
-    var locContext = this._renderContext.getContext();
+    var locContext = this._renderContext.context;
     locContext.beginPath();
     locContext.moveTo(origin.x, -origin.y);
     locContext.lineTo(destination.x, -destination.y);
@@ -117,7 +117,7 @@ export class DrawingPrimitiveCanvas extends BaseClass {
       throw new Error("Polygon's point must greater than 2");
 
     var firstPoint = vertices[0],
-      locContext = this._renderContext.getContext();
+      locContext = this._renderContext.context;
     locContext.beginPath();
     locContext.moveTo(firstPoint.x, -firstPoint.y);
     for (var i = 1, len = vertices.length; i < len; i++)
@@ -136,7 +136,7 @@ export class DrawingPrimitiveCanvas extends BaseClass {
 
   drawCircle(center, radius, angle, segments, drawLineToCenter) {
     drawLineToCenter = drawLineToCenter || false;
-    var locContext = this._renderContext.getContext();
+    var locContext = this._renderContext.context;
     locContext.beginPath();
     var endAngle = angle - Math.PI * 2;
     locContext.arc(
@@ -204,9 +204,7 @@ export class DrawingPrimitiveCanvas extends BaseClass {
   }
 
   drawCardinalSpline(config, tension, segments) {
-    ServiceLocator.sys.rendererConfig.renderContext.setStrokeStyle(
-      Color.toRgba()
-    );
+    ServiceLocator.sys.rendererConfig.renderContext.strokeStyle = Color.toRgba();
     var points = this._cacheArray;
     points.length = 0;
     var p, lt;
@@ -238,7 +236,7 @@ export class DrawingPrimitiveCanvas extends BaseClass {
 
   drawImage(image, sourcePoint, sourceSize, destPoint, destSize) {
     var len = arguments.length;
-    var ctx = this._renderContext.getContext();
+    var ctx = this._renderContext.context;
     switch (len) {
       case 2:
         var height = image.height;
@@ -273,8 +271,8 @@ export class DrawingPrimitiveCanvas extends BaseClass {
 
   drawStar(ctx, radius, color) {
     var wrapper = ctx || this._renderContext;
-    var context = wrapper.getContext();
-    wrapper.setFillStyle(Color.toRgba(0 | color.r, 0 | color.g, 0 | color.b));
+    var context = wrapper.context;
+    wrapper.fillStyle = Color.toRgba(0 | color.r, 0 | color.g, 0 | color.b);
     var subRadius = radius / 10;
 
     context.beginPath();
@@ -300,7 +298,7 @@ export class DrawingPrimitiveCanvas extends BaseClass {
       1.0,
       Color.toRgba(0 | color.r, 0 | color.g, 0 | color.b, 0)
     );
-    wrapper.setFillStyle(rg);
+    wrapper.fillStyle = rg;
     context.beginPath();
     var startAngle_1 = 0;
     var endAngle_1 = PI2;
@@ -311,7 +309,7 @@ export class DrawingPrimitiveCanvas extends BaseClass {
 
   drawColorBall(ctx, radius, color) {
     var wrapper = ctx || this._renderContext;
-    var context = wrapper.getContext();
+    var context = wrapper.context;
     var subRadius = radius / 10;
 
     var g1 = context.createRadialGradient(0, 0, subRadius, 0, 0, radius);
@@ -328,7 +326,7 @@ export class DrawingPrimitiveCanvas extends BaseClass {
       1.0,
       Color.toRgba(0 | color.r, 0 | color.g, 0 | color.b, 0)
     );
-    wrapper.setFillStyle(g1);
+    wrapper.fillStyle = g1;
     context.beginPath();
     var startAngle_1 = 0;
     var endAngle_1 = PI2;
@@ -338,17 +336,17 @@ export class DrawingPrimitiveCanvas extends BaseClass {
   }
 
   fillText(strText, x, y) {
-    this._renderContext.getContext().fillText(strText, x, -y);
+    this._renderContext.context.fillText(strText, x, -y);
   }
 
   setDrawColor(r, g, b, a) {
-    this._renderContext.setFillStyle(Color.toRgba(r, g, b, a));
-    this._renderContext.setStrokeStyle(Color.toRgba(r, g, b, a));
+    this._renderContext.fillStyle = Color.toRgba(r, g, b, a);
+    this._renderContext.strokeStyle = Color.toRgba(r, g, b, a);
   }
 
   setPointSize(pointSize) {}
 
   setLineWidth(width) {
-    this._renderContext.getContext().lineWidth = width;
+    this._renderContext.context.lineWidth = width;
   }
 }

@@ -395,6 +395,7 @@ export enum VertexAttribute {
 }
 
 export enum VertexType {
+  NONE = -1,
   QUAD = 0,
   TRIANGLE = 1,
   CUSTOM = 2

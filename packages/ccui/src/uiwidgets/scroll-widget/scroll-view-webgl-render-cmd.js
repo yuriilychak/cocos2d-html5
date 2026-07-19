@@ -11,7 +11,7 @@ export class ScrollViewWebGLRenderCmd extends LayoutWebGLRenderCmd {
   rendering(ctx) {
     var renderer = ServiceLocator.sys.rendererConfig.renderer;
     var currentID = this._node.__instanceId,
-      locCmds = renderer._cacheToBufferCmds[currentID],
+      locCmds = renderer.getBufferCmd(currentID) || [],
       i,
       len,
       checkNode,
@@ -36,12 +36,12 @@ export class ScrollViewWebGLRenderCmd extends LayoutWebGLRenderCmd {
         continue;
 
       if (cmd.uploadData) {
-        renderer._uploadBufferData(cmd);
+        renderer.uploadBufferData(cmd);
       } else {
-        renderer._batchRendering();
+        renderer.batchRendering();
         cmd.rendering(context);
       }
     }
-    renderer._batchRendering();
+    renderer.batchRendering();
   }
 }

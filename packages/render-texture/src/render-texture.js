@@ -184,7 +184,7 @@ export class RenderTexture extends Node {
    * starts grabbing
    */
   begin() {
-    ServiceLocator.sys.rendererConfig.renderer._turnToCacheMode(
+    ServiceLocator.sys.rendererConfig.renderer.turnToCacheMode(
       this.__instanceId
     );
     this._renderCmd.begin();

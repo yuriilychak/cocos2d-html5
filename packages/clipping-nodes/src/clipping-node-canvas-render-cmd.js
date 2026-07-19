@@ -49,7 +49,7 @@ export class ClippingNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
 
   _saveCmdCallback(ctx, scaleX, scaleY) {
     const wrapper = ctx || ServiceLocator.sys.rendererConfig.renderContext,
-      context = wrapper.getContext();
+      context = wrapper.context;
 
     if (this._clipElemType) {
       const locCache = ClippingNodeCanvasRenderCmd._getSharedCache();
@@ -60,7 +60,7 @@ export class ClippingNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
       locCacheCtx.drawImage(canvas, 0, 0);
     } else {
       wrapper.save();
-      wrapper.setTransform(this._worldTransform, scaleX, scaleY);
+      wrapper.setTransform(this._worldTransform, { x: scaleX, y: scaleY });
 
       if (this._node.inverted) {
         context.beginPath();
@@ -88,7 +88,7 @@ export class ClippingNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
   _clipCmdCallback(ctx) {
     const node = this._node;
     const wrapper = ctx || ServiceLocator.sys.rendererConfig.renderContext,
-      context = wrapper.getContext();
+      context = wrapper.context;
 
     if (this._clipElemType) {
       this._setStencilCompositionOperation(node._stencil);
@@ -113,7 +113,7 @@ export class ClippingNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
   _restoreCmdCallback(ctx) {
     const locCache = ClippingNodeCanvasRenderCmd._getSharedCache();
     const wrapper = ctx || ServiceLocator.sys.rendererConfig.renderContext,
-      context = wrapper.getContext();
+      context = wrapper.context;
     if (this._clipElemType) {
       context.save();
       context.setTransform(1, 0, 0, 1, 0, 0);

@@ -143,23 +143,23 @@ export default class LayerCanvasRenderer extends NodeCanvasRenderCmd {
       boundingBox.height = 0 | (boundingBox.height + 0.5);
 
       const bakeContext = locBakeSprite.getCacheContext();
-      const ctx = bakeContext.getContext();
+      const ctx = bakeContext.context;
 
       locBakeSprite.setPosition(boundingBox.x, boundingBox.y);
 
       if (this._updateCache > 0) {
         locBakeSprite.resetCanvasSize(boundingBox.width, boundingBox.height);
-        bakeContext.setOffset(
-          0 - boundingBox.x,
-          ctx.canvas.height - boundingBox.height + boundingBox.y
-        );
+        bakeContext.offset = {
+          x: 0 - boundingBox.x,
+          y: ctx.canvas.height - boundingBox.height + boundingBox.y
+        };
         node.sortAllChildren();
         const _r = ServiceLocator.sys.rendererConfig.renderer;
-        _r._turnToCacheMode(this.__instanceId);
+        _r.turnToCacheMode(this.__instanceId);
         for (let i = 0, len = children.length; i < len; i++) {
           children[i].visit(this);
         }
-        _r._renderingToCacheCanvas(bakeContext, this.__instanceId);
+        _r.renderingToCacheCanvas(bakeContext, this.__instanceId);
         locBakeSprite.transform();
         this._updateCache--;
       }

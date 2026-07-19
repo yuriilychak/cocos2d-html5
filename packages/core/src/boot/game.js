@@ -4,10 +4,10 @@ import EventCustom from "../event-manager/event/event-custom";
 import { DrawingPrimitiveCanvas } from "../drawing-primitives-canvas";
 import { DrawingPrimitiveWebGL } from "../drawing-primitives-webgl";
 import {
-  rendererCanvas,
+  RendererCanvas,
+  RendererWebGL,
   CanvasContextWrapper
-} from "../renderer/renderer-canvas";
-import { rendererWebGL } from "../renderer/renderer-webgl";
+} from "../renderer";
 import Path from "./path";
 import { initDebugSetting, log } from "./debugger";
 import { Sys } from "../sys";
@@ -474,7 +474,7 @@ export default class Game extends EventHelper(BaseClass) {
       this.#rendererConfig.glVersion = isWebGL2
         ? GLVersion.WEBGL2
         : GLVersion.WEBGL;
-      this.#rendererConfig.renderer = rendererWebGL;
+      this.#rendererConfig.renderer = new RendererWebGL();
       this.#rendererConfig.renderer.init();
       this.drawingUtil = new DrawingPrimitiveWebGL(this.#renderContext);
       this.glExt = isWebGL2
@@ -500,7 +500,7 @@ export default class Game extends EventHelper(BaseClass) {
     } else {
       this.#rendererConfig.renderType = RenderType.CANVAS;
       this.#rendererConfig.glVersion = GLVersion.CANVAS;
-      this.#rendererConfig.renderer = rendererCanvas;
+      this.#rendererConfig.renderer = new RendererCanvas();
       this.#renderContext = new CanvasContextWrapper(
         localCanvas.getContext("2d")
       );

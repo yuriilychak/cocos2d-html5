@@ -246,7 +246,7 @@ export {
   CustomRenderCmd
 } from "./base-nodes/node-canvas-render-cmd";
 export { WebGLRenderCmd as NodeWebGLRenderCmd } from "./base-nodes/node-webgl-render-cmd";
-export { CanvasContextWrapper } from "./renderer/renderer-canvas";
+export { CanvasContextWrapper, RendererCanvas } from "./renderer";
 export { Sprite } from "./sprites/sprite";
 export { Configuration } from "./sys/configuration";
 export { setProgramForNode } from "./shaders/utils";

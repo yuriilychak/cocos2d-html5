@@ -153,7 +153,7 @@ export class ScrollView extends Layout {
   }
 
   onExit() {
-    ServiceLocator.sys.rendererConfig.renderer._removeCache(this.__instanceId);
+    ServiceLocator.sys.rendererConfig.renderer.removeCache(this.__instanceId);
     super.onExit();
   }
 
@@ -176,7 +176,7 @@ export class ScrollView extends Layout {
     renderer.pushRenderCommand(cmd);
     if (cmd instanceof ScrollViewWebGLRenderCmd) {
       var currentID = this.__instanceId;
-      renderer._turnToCacheMode(currentID);
+      renderer.turnToCacheMode(currentID);
     }
 
     var stencilClipping =
@@ -222,7 +222,7 @@ export class ScrollView extends Layout {
     }
 
     if (cmd instanceof ScrollViewWebGLRenderCmd) {
-      renderer._turnToNormalMode();
+      renderer.turnToNormalMode();
     }
 
     // Need to update children after do layout

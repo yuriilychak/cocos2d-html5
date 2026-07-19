@@ -108,7 +108,7 @@ export class ArmatureWebGLRenderCmd extends Node.WebGLRenderCmd {
                   selNode.setBlendFunc(node._blendFunc);
                 }
               }
-              ServiceLocator.sys.rendererConfig.renderer._uploadBufferData(cmd);
+              ServiceLocator.sys.rendererConfig.renderer.uploadBufferData(cmd);
             }
             break;
           case DISPLAY_TYPE_ARMATURE:
@@ -120,9 +120,9 @@ export class ArmatureWebGLRenderCmd extends Node.WebGLRenderCmd {
             boneCmd._syncStatus(parentCmd);
             cmd._syncStatus(boneCmd);
             if (cmd.uploadData) {
-              ServiceLocator.sys.rendererConfig.renderer._uploadBufferData(cmd);
+              ServiceLocator.sys.rendererConfig.renderer.uploadBufferData(cmd);
             } else if (cmd.rendering) {
-              ServiceLocator.sys.rendererConfig.renderer._batchRendering();
+              ServiceLocator.sys.rendererConfig.renderer.batchRendering();
               cmd.rendering(ServiceLocator.sys.rendererConfig.renderContext);
             }
             break;
@@ -131,9 +131,9 @@ export class ArmatureWebGLRenderCmd extends Node.WebGLRenderCmd {
         selBone.setShaderProgram(this._shaderProgram);
         boneCmd._syncStatus(parentCmd);
         if (boneCmd.uploadData) {
-          ServiceLocator.sys.rendererConfig.renderer._uploadBufferData(boneCmd);
+          ServiceLocator.sys.rendererConfig.renderer.uploadBufferData(boneCmd);
         } else if (boneCmd.rendering) {
-          ServiceLocator.sys.rendererConfig.renderer._batchRendering();
+          ServiceLocator.sys.rendererConfig.renderer.batchRendering();
           boneCmd.rendering(ServiceLocator.sys.rendererConfig.renderContext);
         }
       }

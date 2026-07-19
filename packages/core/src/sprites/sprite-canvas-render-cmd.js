@@ -160,16 +160,16 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
       return;
 
     const wrapper = ctx || ServiceLocator.sys.rendererConfig.renderContext,
-      context = wrapper.getContext();
+      context = wrapper.context;
     let locX = node._offsetPosition.x;
     const locHeight = node._rect.height,
       locWidth = node._rect.width;
     let locY = -node._offsetPosition.y - locHeight,
       image;
 
-    wrapper.setTransform(this._worldTransform, scaleX, scaleY);
-    wrapper.setCompositeOperation(this._blendFuncStr);
-    wrapper.setGlobalAlpha(alpha);
+      wrapper.setTransform(this._worldTransform, { x: scaleX, y: scaleY });
+    wrapper.compositeOperation = this._blendFuncStr;
+    wrapper.globalAlpha = alpha;
 
     if (node._flippedX || node._flippedY) wrapper.save();
     if (node._flippedX) {
@@ -200,7 +200,7 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
     if (texture && texture.htmlElement) {
       image = texture.htmlElement;
       if (texture.pattern !== "") {
-        wrapper.setFillStyle(context.createPattern(image, texture.pattern));
+        wrapper.fillStyle = context.createPattern(image, texture.pattern);
         context.fillRect(x, y, w, h);
       } else {
         // Polygonal sprite: clip drawImage to the polygon's outline so
@@ -222,7 +222,7 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
       const contentSize = node._contentSize;
       if (locTextureCoord.validRect) {
         const curColor = this._displayedColor;
-        wrapper.setFillStyle(Color.toRgba(curColor.r, curColor.g, curColor.b));
+        wrapper.fillStyle = Color.toRgba(curColor.r, curColor.g, curColor.b);
         context.fillRect(
           x,
           y,

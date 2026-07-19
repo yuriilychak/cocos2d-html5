@@ -11,7 +11,7 @@ export default class DirectorCanvasRenderer extends DirectorRenderer {
 
   public set clearColor(clearColor: Color) {
     super.clearColor = clearColor;
-    this.sys.rendererConfig.renderer._clearFillStyle = Color.toRgb(clearColor);
+    this.sys.rendererConfig.renderer.clearFillStyle = Color.toRgb(clearColor);
   }
 
   public get visibleSize(): SizeLike {

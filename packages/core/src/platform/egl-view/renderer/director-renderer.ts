@@ -40,11 +40,11 @@ export default abstract class DirectorRenderer {
   }
 
   public get clearColor(): Color {
-    return this.sys.rendererConfig.renderer._clearColor;
+    return this.sys.rendererConfig.renderer.clearColor;
   }
 
   public set clearColor(clearColor: Color) {
-    this.sys.rendererConfig.renderer._clearColor = clearColor;
+    this.sys.rendererConfig.renderer.clearColor = clearColor;
   }
 
   abstract get visibleSize(): SizeLike;

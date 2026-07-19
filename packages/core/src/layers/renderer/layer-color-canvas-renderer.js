@@ -50,7 +50,7 @@ export default class LayerColorCanvasRenderer extends LayerCanvasRenderer {
 
   rendering(ctx, scaleX, scaleY) {
     const wrapper = ctx || ServiceLocator.sys.rendererConfig.renderContext,
-      context = wrapper.getContext(),
+      context = wrapper.context,
       node = this._node,
       curColor = this._displayedColor,
       opacity = this._displayedOpacity / BYTE,
@@ -59,13 +59,12 @@ export default class LayerColorCanvasRenderer extends LayerCanvasRenderer {
 
     if (opacity === 0) return;
 
-    wrapper.setCompositeOperation(this._blendFuncStr);
-    wrapper.setGlobalAlpha(opacity);
-    wrapper.setFillStyle(
-      Color.toRgba(0 | curColor.r, 0 | curColor.g, 0 | curColor.b)
-    );
+    wrapper.compositeOperation = this._blendFuncStr;
+    wrapper.globalAlpha = opacity;
+    wrapper.fillStyle =
+      Color.toRgba(0 | curColor.r, 0 | curColor.g, 0 | curColor.b);
 
-    wrapper.setTransform(this._worldTransform, scaleX, scaleY);
+    wrapper.setTransform(this._worldTransform, { x: scaleX, y: scaleY });
     context.fillRect(0, 0, locWidth, -locHeight);
 
     ServiceLocator.sys.rendererConfig.incrementDrawCount();
@@ -94,21 +93,21 @@ export default class LayerColorCanvasRenderer extends LayerCanvasRenderer {
       boundingBox.height = 0 | (boundingBox.height + 0.5);
 
       const bakeContext = locBakeSprite.getCacheContext();
-      const ctx = bakeContext.getContext();
+      const ctx = bakeContext.context;
 
       locBakeSprite.setPosition(boundingBox.x, boundingBox.y);
 
       if (this._updateCache > 0) {
-        ctx.fillStyle = bakeContext._currentFillStyle;
+      ctx.fillStyle = bakeContext.fillStyle;
         locBakeSprite.resetCanvasSize(boundingBox.width, boundingBox.height);
-        bakeContext.setOffset(
-          0 - boundingBox.x,
-          ctx.canvas.height - boundingBox.height + boundingBox.y
-        );
+        bakeContext.offset = {
+          x: 0 - boundingBox.x,
+          y: ctx.canvas.height - boundingBox.height + boundingBox.y
+        };
 
         let child;
         const _r = ServiceLocator.sys.rendererConfig.renderer;
-        _r._turnToCacheMode(this.__instanceId);
+        _r.turnToCacheMode(this.__instanceId);
         if (len > 0) {
           node.sortAllChildren();
           for (i = 0; i < len; i++) {
@@ -121,7 +120,7 @@ export default class LayerColorCanvasRenderer extends LayerCanvasRenderer {
             children[i].visit(node);
           }
         } else _r.pushRenderCommand(this);
-        _r._renderingToCacheCanvas(bakeContext, this.__instanceId);
+        _r.renderingToCacheCanvas(bakeContext, this.__instanceId);
         locBakeSprite.transform();
         this._updateCache--;
       }

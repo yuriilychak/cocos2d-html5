@@ -60,12 +60,11 @@ export class Scale9SpriteCanvasRenderCmd extends Node.CanvasRenderCmd {
     }
 
     var wrapper = ctx || ServiceLocator.sys.rendererConfig.renderContext,
-      context = wrapper.getContext();
-    wrapper.setTransform(this._worldTransform, scaleX, scaleY);
-    wrapper.setCompositeOperation(
-      NodeCanvasRenderCmd._getCompositeOperationByBlendFunc(node._blendFunc)
-    );
-    wrapper.setGlobalAlpha(alpha);
+      context = wrapper.context;
+    wrapper.setTransform(this._worldTransform, { x: scaleX, y: scaleY });
+    wrapper.compositeOperation =
+      NodeCanvasRenderCmd._getCompositeOperationByBlendFunc(node._blendFunc);
+    wrapper.globalAlpha = alpha;
 
     if (this._textureToRender) {
       if (node._quadsDirty) {
@@ -117,9 +116,8 @@ export class Scale9SpriteCanvasRenderCmd extends Node.CanvasRenderCmd {
           sh = (uvs[off + 1] - uvs[off + 7]) * textureHeight;
 
           if (this._textureToRender.pattern !== "") {
-            wrapper.setFillStyle(
-              context.createPattern(image, this._textureToRender.pattern)
-            );
+            wrapper.fillStyle =
+              context.createPattern(image, this._textureToRender.pattern);
             context.fillRect(x, y, w, h);
           } else {
             if (sw > 0 && sh > 0 && w > 0 && h > 0) {

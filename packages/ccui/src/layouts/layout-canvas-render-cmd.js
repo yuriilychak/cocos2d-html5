@@ -14,10 +14,10 @@ export class LayoutCanvasRenderCmd extends ProtectedNodeCanvasRenderCmd {
 
   _onRenderSaveCmd(ctx, scaleX, scaleY) {
     var wrapper = ctx || ServiceLocator.sys.rendererConfig.renderContext,
-      context = wrapper.getContext();
+      context = wrapper.context;
     wrapper.save();
     wrapper.save();
-    wrapper.setTransform(this._worldTransform, scaleX, scaleY);
+    wrapper.setTransform(this._worldTransform, { x: scaleX, y: scaleY });
     var buffer = this._node._clippingStencil._renderCmd._buffer;
 
     for (var i = 0, bufLen = buffer.length; i < bufLen; i++) {
@@ -34,7 +34,7 @@ export class LayoutCanvasRenderCmd extends ProtectedNodeCanvasRenderCmd {
 
   _onRenderClipCmd(ctx) {
     var wrapper = ctx || ServiceLocator.sys.rendererConfig.renderContext,
-      context = wrapper.getContext();
+      context = wrapper.context;
     wrapper.restore();
     context.clip();
   }

@@ -17,20 +17,20 @@ export class DrawNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
 
   rendering(ctx, scaleX, scaleY) {
     const wrapper = ctx || ServiceLocator.sys.rendererConfig.renderContext,
-      context = wrapper.getContext(),
+      context = wrapper.context,
       node = this._node;
     const alpha = this._displayedOpacity / 255;
     if (alpha === 0) return;
 
-    wrapper.setTransform(this._worldTransform, scaleX, scaleY);
+    wrapper.setTransform(this._worldTransform, { x: scaleX, y: scaleY });
 
-    wrapper.setGlobalAlpha(alpha);
+    wrapper.globalAlpha = alpha;
     if (
       this._blendFunc &&
       this._blendFunc.src === GLState.SRC_ALPHA &&
       this._blendFunc.dst === GLState.ONE
     )
-      wrapper.setCompositeOperation("lighter");
+      wrapper.compositeOperation = "lighter";
     const locBuffer = this._buffer;
     for (let i = 0, len = locBuffer.length; i < len; i++) {
       const element = locBuffer[i];
@@ -53,8 +53,8 @@ export class DrawNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
       locPos = element.verts[0],
       locRadius = element.lineWidth;
 
-    const ctx = wrapper.getContext();
-    wrapper.setFillStyle(Color.toRgba(locColor));
+    const ctx = wrapper.context;
+    wrapper.fillStyle = Color.toRgba(locColor);
 
     ctx.beginPath();
     ctx.arc(locPos.x, -locPos.y, locRadius, 0, Math.PI * 2, false);
@@ -69,8 +69,8 @@ export class DrawNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
     const locLineWidth = element.lineWidth,
       locLineCap = element.lineCap;
 
-    const ctx = wrapper.getContext();
-    wrapper.setStrokeStyle(Color.toRgba(locColor));
+    const ctx = wrapper.context;
+    wrapper.strokeStyle = Color.toRgba(locColor);
 
     ctx.lineWidth = locLineWidth * scaleX;
     ctx.beginPath();
@@ -92,12 +92,12 @@ export class DrawNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
     const locIsFill = element.isFill,
       locIsStroke = element.isStroke;
 
-    const ctx = wrapper.getContext();
+    const ctx = wrapper.context;
     const firstPoint = locVertices[0];
     ctx.lineCap = locLineCap;
-    if (locFillColor) wrapper.setFillStyle(Color.toRgba(locFillColor));
+    if (locFillColor) wrapper.fillStyle = Color.toRgba(locFillColor);
     if (locLineWidth) ctx.lineWidth = locLineWidth * scaleX;
-    if (locLineColor) wrapper.setStrokeStyle(Color.toRgba(locLineColor));
+    if (locLineColor) wrapper.strokeStyle = Color.toRgba(locLineColor);
 
     ctx.beginPath();
     ctx.moveTo(firstPoint.x, -firstPoint.y);

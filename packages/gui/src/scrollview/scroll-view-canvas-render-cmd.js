@@ -14,12 +14,12 @@ export class GuiScrollViewCanvasRenderCmd extends Layer.CanvasRenderCmd {
   _startCmd(ctx, scaleX, scaleY) {
     var node = this._node;
     var wrapper = ctx || ServiceLocator.sys.rendererConfig.renderContext,
-      context = wrapper.getContext();
+      context = wrapper.context;
     wrapper.save();
 
     if (node._clippingToBounds) {
       this._scissorRestored = false;
-      wrapper.setTransform(this._worldTransform, scaleX, scaleY);
+      wrapper.setTransform(this._worldTransform, { x: scaleX, y: scaleY });
 
       var locScaleX = node.getScaleX(),
         locScaleY = node.getScaleY();

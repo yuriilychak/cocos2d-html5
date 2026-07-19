@@ -43,10 +43,10 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
   _canMultiBatch(locSkeleton) {
     const renderer = ServiceLocator.sys.rendererConfig.renderer;
     if (!ServiceLocator.sys.rendererConfig.isWebGL2) return false;
-    if (!renderer._getMultiProgramState || !renderer._appendMultiBatch) {
+    if (!renderer.multiProgramState || !renderer.appendMultiBatch) {
       return false;
     }
-    if (!renderer._getMultiProgramState()) return false;
+    if (!renderer.multiProgramState) return false;
     const drawOrder = locSkeleton.drawOrder;
     for (let i = 0, n = drawOrder.length; i < n; i++) {
       const slot = drawOrder[i];
@@ -76,10 +76,10 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
     if (node._debugSlots) debugSlotsInfo = [];
 
     const renderer = ServiceLocator.sys.rendererConfig.renderer;
-    const stride = renderer.getSizePerVertex();
+    const stride = renderer.sizePerVertex;
     const multiBatch = !node._debugSlots && this._canMultiBatch(locSkeleton);
     const multiProgramState = multiBatch
-      ? renderer._getMultiProgramState()
+      ? renderer.multiProgramState
       : null;
 
     for (let i = 0, n = locSkeleton.drawOrder.length; i < n; i++) {
@@ -107,13 +107,13 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
       if (multiBatch) {
         // Append the region quad into the shared multi-texture sprite batch so
         // it can be drawn together with surrounding sprites.
-        const texSlot = renderer._appendMultiBatch(
+        const texSlot = renderer.appendMultiBatch(
           this._currTexture,
           blendFunc,
           multiProgramState,
           vertCount
         );
-        const offset = renderer.getBatchingSize() * stride;
+        const offset = renderer.batchingSize * stride;
         slotDebugPoints = this._uploadRegionAttachmentData(
           attachment,
           slot,
@@ -123,12 +123,12 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
           offset,
           texSlot
         );
-        renderer._increaseBatchingSize(vertCount, renderer.VertexType.TRIANGLE);
+        renderer.increaseBatchingSize(vertCount, renderer.VertexType.TRIANGLE);
         if (node._debugSlots) debugSlotsInfo[i] = slotDebugPoints;
         continue;
       }
 
-      const batchBroken = renderer._updateBatchedInfo(
+      const batchBroken = renderer.updateBatchedInfo(
         this._currTexture,
         blendFunc,
         this._glProgramState
@@ -138,7 +138,7 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
         vertexDataOffset / stride + vertCount >
         (BATCH_VERTEX_COUNT - 200) * 0.5;
       if (!batchBroken && uploadAll) {
-        renderer._batchRendering();
+        renderer.batchRendering();
       }
       if (batchBroken || uploadAll) {
         vertexDataOffset = 0;
@@ -170,9 +170,9 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
       if (node._debugSlots) debugSlotsInfo[i] = slotDebugPoints;
 
       if (attachment instanceof RegionAttachment) {
-        renderer._increaseBatchingSize(vertCount, renderer.VertexType.TRIANGLE);
+        renderer.increaseBatchingSize(vertCount, renderer.VertexType.TRIANGLE);
       } else {
-        renderer._increaseBatchingSize(
+        renderer.increaseBatchingSize(
           vertCount,
           renderer.VertexType.CUSTOM,
           attachment.triangles
@@ -183,7 +183,7 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
     }
 
     if (node._debugBones || node._debugSlots) {
-      renderer._batchRendering();
+      renderer.batchRendering();
 
       const wt = this._worldTransform,
         mat = this._matrix.mat;
@@ -305,7 +305,7 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
 
     let offset = vertexDataOffset;
     const stride =
-      ServiceLocator.sys.rendererConfig.renderer.getSizePerVertex();
+      ServiceLocator.sys.rendererConfig.renderer.sizePerVertex;
     for (let i = 0; i < 6; i++) {
       const srcIdx = i < 4 ? i % 3 : i - 2;
       const vx = vertices[srcIdx * 2],
@@ -375,7 +375,7 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
 
     let offset = vertexDataOffset;
     const stride =
-      ServiceLocator.sys.rendererConfig.renderer.getSizePerVertex();
+      ServiceLocator.sys.rendererConfig.renderer.sizePerVertex;
     const nodeColor = this._displayedColor;
     const nodeR = nodeColor.r,
       nodeG = nodeColor.g,

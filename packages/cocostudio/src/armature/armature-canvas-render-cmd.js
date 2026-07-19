@@ -80,7 +80,7 @@ export class ArmatureCanvasRenderCmd extends Node.CanvasRenderCmd {
 
     var wrapper = ctx || ServiceLocator.sys.rendererConfig.renderContext;
     wrapper.save();
-    wrapper._switchToArmatureMode(true, this._worldTransform, scaleX, scaleY);
+    wrapper.switchToArmatureMode(true, this._worldTransform, { x: scaleX, y: scaleY });
   }
 
   transform(parentCmd, recursive) {
@@ -132,7 +132,7 @@ export class ArmatureCanvasRenderCmd extends Node.CanvasRenderCmd {
 
   _RestoreCmdCallback(wrapper) {
     this._cacheDirty = false;
-    wrapper._switchToArmatureMode(false);
+    wrapper.switchToArmatureMode(false);
     wrapper.restore();
   }
 

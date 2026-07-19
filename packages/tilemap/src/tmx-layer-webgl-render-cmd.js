@@ -44,7 +44,7 @@ export class TMXLayerWebGLRenderCmd extends Node.WebGLRenderCmd {
 
     const winSize = ServiceLocator.eglView.winSizeInPoints;
     const rendererConfig = ServiceLocator.sys.rendererConfig;
-    const stride = rendererConfig.renderer.getSizePerVertex();
+    const stride = rendererConfig.renderer.sizePerVertex;
     const ti = texIndex || 0;
 
     const maptw = node._mapTileSize.width,
@@ -134,10 +134,10 @@ export class TMXLayerWebGLRenderCmd extends Node.WebGLRenderCmd {
     for (row = startRow; row < maxRow; ++row) {
       for (col = startCol; col < maxCol; ++col) {
         if (offset + stride * 4 > f32buffer.length) {
-          rendererConfig.renderer._increaseBatchingSize(
+          rendererConfig.renderer.increaseBatchingSize(
             (offset - vertexDataOffset) / stride
           );
-          rendererConfig.renderer._batchRendering();
+          rendererConfig.renderer.batchRendering();
           vertexDataOffset = 0;
           offset = 0;
         }

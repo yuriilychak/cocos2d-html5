@@ -101,7 +101,7 @@ export class Scale9SpriteWebGLRenderCmd extends Node.WebGLRenderCmd {
     }
 
     var ti = texIndex || 0;
-    var stride = ServiceLocator.sys.rendererConfig.renderer.getSizePerVertex();
+    var stride = ServiceLocator.sys.rendererConfig.renderer.sizePerVertex;
 
     var opacity = this._displayedOpacity;
     var r = this._displayedColor.r,

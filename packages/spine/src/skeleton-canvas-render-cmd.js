@@ -30,8 +30,8 @@ export class SkeletonCanvasRenderCmd extends Node.CanvasRenderCmd {
 
     if (!node._debugSlots && !node._debugBones) return;
 
-    wrapper.setTransform(this._worldTransform, scaleX, scaleY);
-    wrapper.setGlobalAlpha(1);
+    wrapper.setTransform(this._worldTransform, { x: scaleX, y: scaleY });
+    wrapper.globalAlpha = 1;
     const drawingUtil = ServiceLocator.game.drawingUtil;
 
     if (node._debugSlots) {

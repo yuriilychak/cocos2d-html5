@@ -28,7 +28,7 @@ export class ProgressTimerCanvasRenderCmd extends Node.CanvasRenderCmd {
 
   rendering(ctx, scaleX, scaleY) {
     const wrapper = ctx || ServiceLocator.sys.rendererConfig.renderContext;
-    const context = wrapper.getContext();
+    const context = wrapper.context;
     const node = this._node;
     const locSprite = node._sprite;
     const locTextureCoord = locSprite._renderCmd._textureCoord;
@@ -38,9 +38,9 @@ export class ProgressTimerCanvasRenderCmd extends Node.CanvasRenderCmd {
     if (!locSprite._texture || !locTextureCoord.validRect || alpha === 0)
       return;
 
-    wrapper.setTransform(this._worldTransform, scaleX, scaleY);
-    wrapper.setCompositeOperation(locSprite._blendFuncStr);
-    wrapper.setGlobalAlpha(alpha);
+    wrapper.setTransform(this._worldTransform, { x: scaleX, y: scaleY });
+    wrapper.compositeOperation = locSprite._blendFuncStr;
+    wrapper.globalAlpha = alpha;
 
     const locRect = locSprite._rect,
       locOffsetPosition = locSprite._offsetPosition;
