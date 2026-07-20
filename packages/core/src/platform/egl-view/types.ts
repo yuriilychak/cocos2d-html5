@@ -34,7 +34,7 @@ export interface EGLViewLike {
   resizeWithBrowserSize: boolean;
   resizeCallback: (() => void) | null;
   setDocumentPixelWidth(width: number): void;
-  initialize(canvas: HTMLCanvasElement, container: HTMLElement): void;
+  initialize(id: string, width?: number, height?: number): void;
   setupContainer(size: SizeLike): void;
   setViewport(): void;
   postInit(): void;

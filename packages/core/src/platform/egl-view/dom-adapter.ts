@@ -1,7 +1,10 @@
+import { log } from "../../boot";
 import { DeviceOrientation } from "../../enums";
 import { Point, PointLike, Size, SizeLike } from "../../geometry";
 
 export default class DOMAdapter {
+  #contextMenuEnabled: boolean = false;
+
   #canvas: HTMLCanvasElement | null = null;
 
   #container: HTMLElement | null = null;
@@ -20,14 +23,49 @@ export default class DOMAdapter {
 
   #isMobile: boolean = false;
 
-  initialize(canvas: HTMLCanvasElement, container: HTMLElement, isMobile: boolean) {
-    this.#canvas = canvas;
-    this.#container = container;
-    this.#frame =
-      container.parentNode === document.body
+  initialize(elementId: string, inputWidth: number, inputHeight: number, isMobile: boolean) {
+    this.#isMobile = isMobile;
+    const element = document.getElementById(elementId) as HTMLElement;
+    let width: number = inputWidth;
+    let height: number = inputHeight;
+
+    if (element.tagName === "CANVAS") {
+      this.#canvas = element as HTMLCanvasElement;
+      this.#container = document.createElement("DIV");
+      
+      width = width || this.#canvas.width;
+      height = height || this.#canvas.height;
+
+      if (this.#canvas.parentNode) {
+        this.#canvas.parentNode.insertBefore(this.#container, this.#canvas);
+      }
+    
+    } else {
+      if (element.tagName !== "DIV") {
+        log("Warning: target element is not a DIV or CANVAS");
+      }
+      width = width || element.clientWidth;
+      height = height || element.clientHeight;
+      this.#canvas = document.createElement("CANVAS") as HTMLCanvasElement;
+      this.#container = document.createElement("DIV");
+      element.appendChild(this.container);
+    }
+    this.#container.setAttribute("id", "Cocos2dGameContainer");
+    this.#container.appendChild(this.canvas);
+    this.#frame = this.#container.parentNode === document.body
         ? document.documentElement
-        : (container.parentNode as HTMLElement);
-        this.#isMobile = isMobile;
+        : (this.#container.parentNode as HTMLElement);
+
+    this.#canvas.classList.add("gameCanvas");
+    this.#canvas.setAttribute("width", `${width || 480}px`);
+    this.#canvas.setAttribute("height", `${height || 320}px`);
+    this.#canvas.setAttribute("tabindex", '99');
+
+    this.#canvas.oncontextmenu =  () => {
+      if (!this.#contextMenuEnabled) {
+        return false;
+      }
+    };
   }
 
   initFrameSize(): void {

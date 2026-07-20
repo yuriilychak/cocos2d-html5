@@ -166,12 +166,12 @@ export class EGLView extends BaseClass {
     this.#sys.rendererConfig.renderContext?.resetCache?.();
   }
 
-  initialize(canvas: HTMLCanvasElement, container: HTMLElement): void {
+  initialize(elementId: string, inputWidth: number = 0, inputHeight: number = 0): void {
     if (this.#initialized) {
       return;
     }
 
-    this.#domAdapter.initialize(canvas, container, this.#sys.specification.isMobile);
+    this.#domAdapter.initialize(elementId, inputWidth, inputHeight, this.#sys.specification.isMobile);
 
     this.#rendererDelegate = this.#sys.rendererConfig.isCanvas
       ? new DirectorCanvasRenderer(this, this.#sys)

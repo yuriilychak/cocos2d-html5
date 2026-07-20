@@ -186,11 +186,8 @@ export default class Game extends EventHelper(BaseClass) {
     if (this.#engineLoaded) {
       this.#prepareCalled = true;
 
-      this.#initRenderer(config[CONFIG_KEY.width], config[CONFIG_KEY.height]);
+      this.#initRenderer();
 
-      // eglView is wired lazily; initialize it now that the renderer (and thus
-      // game.container/canvas) is ready.
-      this.#eglView.initialize(this.canvas, this.container);
       // Director is created lazily; this is its first access, so initialize it here.
       this.#director.init();
       this.#eglView.postInit();
@@ -387,8 +384,10 @@ export default class Game extends EventHelper(BaseClass) {
     this.#configLoaded = true;
   }
 
-  #initRenderer(width, height) {
-    if (this.rendererInitialized) return;
+  #initRenderer() {
+    if (this.rendererInitialized) {
+      return;
+    }
 
     if (!this.#sys.rendererConfig.supportRenderer) {
       throw new Error(
@@ -397,46 +396,17 @@ export default class Game extends EventHelper(BaseClass) {
       );
     }
 
-    var el = this.config[CONFIG_KEY.id],
-      element = document.getElementById(el),
-      localConStyle;
+    // eglView is wired lazily; initialize it now that the renderer.
+    this.#eglView.initialize(
+      this.config[CONFIG_KEY.id],
+      this.config[CONFIG_KEY.width],
+      this.config[CONFIG_KEY.height]
+    );
+    this.#sys.rendererConfig.createContext(this.#eglView.canvas);
 
-    if (element.tagName === "CANVAS") {
-      width = width || element.width;
-      height = height || element.height;
-
-      this.canvas = element;
-      this.container = document.createElement("DIV");
-      if (this.canvas.parentNode)
-        this.canvas.parentNode.insertBefore(this.container, this.canvas);
-    } else {
-      if (element.tagName !== "DIV") {
-        log("Warning: target element is not a DIV or CANVAS");
-      }
-      width = width || element.clientWidth;
-      height = height || element.clientHeight;
-      this.canvas = document.createElement("CANVAS");
-      this.container = this.container = document.createElement("DIV");
-      element.appendChild(this.container);
-    }
-    this.container.setAttribute("id", "Cocos2dGameContainer");
-    this.container.appendChild(this.canvas);
-    this.frame =
-      this.container.parentNode === document.body
-        ? document.documentElement
-        : this.container.parentNode;
-
-    this.canvas.classList.add("gameCanvas");
-    this.canvas.setAttribute("width", width || 480);
-    this.canvas.setAttribute("height", height || 320);
-    this.canvas.setAttribute("tabindex", 99);
-
-    this.#sys.rendererConfig.createContext(this.canvas);
-    this.canvas.oncontextmenu = function () {
-      if (!Game.#isContextMenuEnable) {
-        return false;
-      }
-    };
+    this.canvas = this.#eglView.canvas;
+    this.container = this.#eglView.container;
+    this.frame = this.#eglView.frame;
 
     this.dispatchEvent(GameEvent.RENDERER_INITED, true);
 
