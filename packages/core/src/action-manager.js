@@ -27,7 +27,6 @@
 import { BaseClass } from "./platform/class";
 import { log, assert, _LogInfos } from "./boot/debugger";
 import { ACTION_TAG_INVALID } from "./platform/macro/constants";
-import { ServiceLocator } from "./service-locator";
 
 /**
  * @example
@@ -54,6 +53,7 @@ export var HashElement = function () {
  * var mng = new ActionManager();
  */
 export class ActionManager extends BaseClass {
+  #scheduler;
   _searchElementByTarget(arr, target) {
     for (var k = 0; k < arr.length; k++) {
       if (target === arr[k].target) return arr[k];
@@ -61,8 +61,9 @@ export class ActionManager extends BaseClass {
     return null;
   }
 
-  constructor() {
+  constructor(scheduler) {
     super();
+    this.#scheduler = scheduler;
     this._elementPool = [];
     this._hashTargets = {};
     this._arrayTargets = [];
@@ -220,7 +221,7 @@ export class ActionManager extends BaseClass {
   }
 
   purgeSharedManager() {
-    ServiceLocator.director.scheduler.unscheduleUpdate(this);
+    this.#scheduler.unscheduleUpdate(this);
   }
 
   _removeActionAtIndex(index, element) {

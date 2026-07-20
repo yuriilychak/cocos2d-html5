@@ -78,7 +78,7 @@ export class MobileEditBoxInput extends EditBoxInputBase {
     var self = this;
     setTimeout(function () {
       if (self.__rotateScreen) {
-        var containerStyle = ServiceLocator.game.container.style;
+        var containerStyle = ServiceLocator.eglView.container.style;
         containerStyle["-webkit-transform"] = "rotate(90deg)";
         containerStyle.transform = "rotate(90deg)";
 
@@ -109,7 +109,7 @@ export class MobileEditBoxInput extends EditBoxInputBase {
   _onFocus() {
     var editBox = this._editBox;
     if (ServiceLocator.eglView.rotated) {
-      var containerStyle = ServiceLocator.game.container.style;
+      var containerStyle = ServiceLocator.eglView.container.style;
       containerStyle["-webkit-transform"] = "rotate(0deg)";
       containerStyle.transform = "rotate(0deg)";
       containerStyle.margin = "0px";

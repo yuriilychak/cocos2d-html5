@@ -50,7 +50,7 @@ export class WebView extends Widget {
   visit() {
     var cmd = this._renderCmd,
       div = cmd._div,
-      container = ServiceLocator.game.container,
+      container = ServiceLocator.eglView.container,
       eventManager = ServiceLocator.eventManager;
     if (this._visible) {
       container.appendChild(div);
@@ -362,7 +362,7 @@ if (webViewSys.specification.isMobile) {
         scaleY = scaleY / dpr;
       }
       if (this._loaded === false) return;
-      var containerStyle = ServiceLocator.game.container.style,
+      var containerStyle = ServiceLocator.eglView.container.style,
         offsetX = parseInt(containerStyle.paddingLeft),
         offsetY = parseInt(containerStyle.paddingBottom),
         cw = node._contentSize.width,
@@ -423,13 +423,13 @@ if (webViewSys.specification.isMobile) {
       var div = this._div;
       if (div) {
         var hasChild = false;
-        if ("contains" in ServiceLocator.game.container) {
-          hasChild = ServiceLocator.game.container.contains(div);
+        if ("contains" in ServiceLocator.eglView.container) {
+          hasChild = ServiceLocator.eglView.container.contains(div);
         } else {
           hasChild =
-            ServiceLocator.game.container.compareDocumentPosition(div) % 16;
+            ServiceLocator.eglView.container.compareDocumentPosition(div) % 16;
         }
-        if (hasChild) ServiceLocator.game.container.removeChild(div);
+        if (hasChild) ServiceLocator.eglView.container.removeChild(div);
       }
     }
   };

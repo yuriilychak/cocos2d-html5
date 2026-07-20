@@ -160,7 +160,7 @@ export class EditBoxInputBase {
                 if (editBox._delegate && editBox._delegate.editBoxReturn) {
                     editBox._delegate.editBoxReturn(editBox);
                 }
-                ServiceLocator.game.canvas.focus();
+                ServiceLocator.eglView.canvas.focus();
             }
         });
 
@@ -462,13 +462,13 @@ export class EditBoxInputBase {
     }
 
     _addDomToGameContainer() {
-        ServiceLocator.game.container.appendChild(this._edTxt);
+        ServiceLocator.eglView.container.appendChild(this._edTxt);
     }
 
     _removeDomFromGameContainer() {
         var dom = this._edTxt;
         if (dom) {
-            var container = ServiceLocator.game.container;
+            var container = ServiceLocator.eglView.container;
             var hasChild = 'contains' in container
                 ? container.contains(dom)
                 : container.compareDocumentPosition(dom) % 16;

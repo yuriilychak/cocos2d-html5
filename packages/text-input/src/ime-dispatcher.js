@@ -224,7 +224,7 @@ export class IMEDispatcher extends BaseClass {
 
     this._delegateWithIme = null;
     delegate.didDetachWithIME();
-    ServiceLocator.game.canvas.focus();
+    ServiceLocator.eglView.canvas.focus();
     return true;
   }
 

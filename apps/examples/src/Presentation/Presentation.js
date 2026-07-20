@@ -380,11 +380,11 @@ export class ParticlesPage extends PresentationBaseLayer {
       );
 
     this.onExitTransitionDidStart = function () {
-      director.setDisplayStats(false);
+      ServiceLocator.profiler.statsShowing = false;
     };
 
     this.onEnterTransitionDidFinish = function () {
-      director.setDisplayStats(true);
+      ServiceLocator.profiler.statsShowing = true;
     };
   }
 }

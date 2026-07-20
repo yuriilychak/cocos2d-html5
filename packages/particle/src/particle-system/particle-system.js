@@ -1466,8 +1466,8 @@ export class ParticleSystem extends Node {
     return new Rect(
       0,
       0,
-      ServiceLocator.game.canvas.width,
-      ServiceLocator.game.canvas.height
+      ServiceLocator.eglView.canvas.width,
+      ServiceLocator.eglView.canvas.height
     );
   }
 

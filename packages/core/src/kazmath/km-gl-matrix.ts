@@ -19,14 +19,12 @@ export class KMGLMatrix {
   public _initialized = false;
   public tmpMatrix = new Matrix4();
   public tmpVector = new Vec3();
-  public _director: DirectorLike | null = null;
+  #director: DirectorLike | null = null;
 
-  public injectServices({ director }: { director: DirectorLike }): void {
-    this._director = director;
-  }
-
-  public lazyInitialize(): void {
+  public lazyInitialize(director: DirectorLike): void {
     if (this._initialized) return;
+
+    this.#director = director;
 
     const identity = new Matrix4();
     this.modelViewStack = this.modelViewStack || new Matrix4Stack();
@@ -82,7 +80,7 @@ export class KMGLMatrix {
       default:
         throw new Error("Invalid matrix mode specified");
     }
-    this.currentStack.lastUpdated = this._director!.getTotalFrames();
+    this.currentStack.lastUpdated = this.#director!.getTotalFrames();
   }
 
   public loadIdentity(): void {

@@ -62,7 +62,7 @@ export class Audio extends BaseClass {
     if (Audio.bindTouch === false) {
       Audio.bindTouch = true;
       // Listen to the touchstart body event and play the audio when necessary.
-      ServiceLocator.game.canvas.addEventListener("touchstart", Audio.touchStart);
+      ServiceLocator.eglView.canvas.addEventListener("touchstart", Audio.touchStart);
     }
   }
 

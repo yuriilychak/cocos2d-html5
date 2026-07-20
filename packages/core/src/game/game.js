@@ -1,5 +1,6 @@
 import { BaseClass, ENGINE_VERSION } from "../platform";
 import { EventHelper, EventCustom } from "../event-manager";
+import { ServiceLocator } from "../service-locator";
 import { initDebugSetting, log, Path, isUndefined } from "../boot";
 import { Sys, RendererConfig } from "../sys";
 import {
@@ -13,17 +14,8 @@ import {
  * An object to boot the game.
  */
 export default class Game extends EventHelper(BaseClass) {
-  static #isContextMenuEnable = false;
-
   #eventHide = null;
   #eventShow = null;
-  #director = null;
-  #eglView = null;
-  #eventManager = null;
-  #inputManager = null;
-  #loader = null;
-  #sys = null;
-  #textureCache = null;
   // states
   #paused = true;
   #configLoaded = false;
@@ -34,22 +26,6 @@ export default class Game extends EventHelper(BaseClass) {
   #intervalId = null;
   #lastTime = null;
   #frameTime = null;
-  /**
-   * The outer frame of the game canvas, parent of container
-   * @type {Object}
-   */
-  frame = null;
-  /**
-   * The container of game canvas, equals to container
-   * @type {HTMLElement}
-   */
-  container = null;
-  /**
-   * The canvas of the game, equals to _canvas
-   * @type {HTMLCanvasElement}
-   */
-  canvas = null;
-
   /**
    * Config of game
    * @type {Object}
@@ -70,27 +46,23 @@ export default class Game extends EventHelper(BaseClass) {
    */
   onStop = null;
 
-  injectServices({
-    director,
-    eglView,
-    eventManager,
-    inputManager,
-    loader,
-    sys,
-    textureCache
-  }) {
-    this.#director = director;
+  #director;
+  #eglView;
+  #eventManager;
+  #inputManager;
+  #loader;
+  #sys;
+  #textureCache;
+
+  constructor(sys, loader, eglView, director, eventManager, inputManager, textureCache) {
+    super();
+    this.#sys = sys;
+    this.#loader = loader;
     this.#eglView = eglView;
+    this.#director = director;
     this.#eventManager = eventManager;
     this.#inputManager = inputManager;
-    this.#loader = loader;
-    this.#sys = sys;
     this.#textureCache = textureCache;
-  }
-
-  constructor() {
-    super();
-    this.CONFIG_KEY = CONFIG_KEY;
   }
 
   /**
@@ -295,7 +267,7 @@ export default class Game extends EventHelper(BaseClass) {
     var skip = true,
       frameRate = this.config[CONFIG_KEY.frameRate];
 
-    this.#director.setDisplayStats(this.config[CONFIG_KEY.showFPS]);
+    ServiceLocator.profiler.statsShowing = this.config[CONFIG_KEY.showFPS];
 
     var callback = () => {
       if (!this.#paused) {
@@ -403,10 +375,6 @@ export default class Game extends EventHelper(BaseClass) {
       this.config[CONFIG_KEY.height]
     );
     this.#sys.rendererConfig.createContext(this.#eglView.canvas);
-
-    this.canvas = this.#eglView.canvas;
-    this.container = this.#eglView.container;
-    this.frame = this.#eglView.frame;
 
     this.dispatchEvent(GameEvent.RENDERER_INITED, true);
 

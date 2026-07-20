@@ -1,17 +1,18 @@
 import type { EventListener } from "../event-listener";
+import type { Event } from "../event";
 
-export default class ListenersQueue {
-  #listeners: EventListener[] = [];
+export default class ListenersQueue<T extends Event = Event> {
+  #listeners: EventListener<T>[] = [];
 
-  protected get listeners(): EventListener[] {
+  protected get listeners(): EventListener<T>[] {
     return this.#listeners;
   }
 
-  add(listener: EventListener): void {
+  add(listener: EventListener<T>): void {
     this.#listeners.push(listener);
   }
 
-  apply(): EventListener[] {
+  apply(): EventListener<T>[] {
     const result = this.#listeners.slice();
     this.#listeners.length = 0;
 

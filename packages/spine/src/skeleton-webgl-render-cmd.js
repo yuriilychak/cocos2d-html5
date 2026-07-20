@@ -6,7 +6,8 @@ import {
   BATCH_VERTEX_COUNT,
   ServiceLocator,
   GLState,
-  ShaderName
+  ShaderName,
+  VertexType
 } from "@aspect/core";
 import {
   RegionAttachment,
@@ -26,8 +27,7 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
     this._matrix.identity();
     this._currTexture = null;
     this._currBlendFunc = {};
-    this.vertexType =
-      ServiceLocator.sys.rendererConfig.renderer.VertexType.CUSTOM;
+    this.vertexType = VertexType.CUSTOM;
     this.setShaderProgram(
       ServiceLocator.shaderCache.get(
         ShaderName.SPRITE_POSITION_TEXTURECOLOR
@@ -123,7 +123,7 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
           offset,
           texSlot
         );
-        renderer.increaseBatchingSize(vertCount, renderer.VertexType.TRIANGLE);
+        renderer.increaseBatchingSize(vertCount, VertexType.TRIANGLE);
         if (node._debugSlots) debugSlotsInfo[i] = slotDebugPoints;
         continue;
       }
@@ -170,11 +170,11 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
       if (node._debugSlots) debugSlotsInfo[i] = slotDebugPoints;
 
       if (attachment instanceof RegionAttachment) {
-        renderer.increaseBatchingSize(vertCount, renderer.VertexType.TRIANGLE);
+        renderer.increaseBatchingSize(vertCount, VertexType.TRIANGLE);
       } else {
         renderer.increaseBatchingSize(
           vertCount,
-          renderer.VertexType.CUSTOM,
+          VertexType.CUSTOM,
           attachment.triangles
         );
       }

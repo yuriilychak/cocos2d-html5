@@ -24,14 +24,14 @@ import { Sys } from "./sys";
 import { Loader } from "./boot/loader";
 import { Game } from "./game";
 import EventManager from "./event-manager/event-manager";
-import { EGLView } from "./platform/egl-view";
+import { EGLView, Screen, InputManager } from "./platform";
 import TextureCache from "./textures/texture-cache";
 import { SpriteFrameCache, AnimationCache } from "./sprites";
 import { ShaderCache, GLStateCache } from "./shaders";
 import { KMGLMatrix } from "./kazmath/km-gl-matrix";
-import { Profiler } from "./utils/profiler";
-import { InputManager } from "./platform/input-manager";
-import { Screen } from "./platform/screen";
+import { Profiler } from "./profiler";
+import { ActionManager } from "./action-manager";
+import Scheduler from "./scheduler/scheduler";
 
 export class ServiceLocator {
   static #director;
@@ -49,6 +49,8 @@ export class ServiceLocator {
   static #profiler;
   static #inputManager;
   static #screen;
+  static #scheduler;
+  static #actionManager;
 
   static #constructed = false;
 
@@ -76,11 +78,30 @@ export class ServiceLocator {
       return;
     }
     ServiceLocator.#constructed = true;
-
-    ServiceLocator.#director = new DisplayLinkDirector();
+    ServiceLocator.#scheduler = new Scheduler();
+    ServiceLocator.#actionManager = new ActionManager(
+      ServiceLocator.#actionManager
+    );
     ServiceLocator.#sys = new Sys();
     ServiceLocator.#loader = new Loader(ServiceLocator.#sys);
-    ServiceLocator.#game = new Game();
+    ServiceLocator.#textureCache = new TextureCache(ServiceLocator.#loader);
+    ServiceLocator.#spriteFrameCache = new SpriteFrameCache(
+      ServiceLocator.#sys,
+      ServiceLocator.#loader,
+      ServiceLocator.#textureCache
+    );
+    ServiceLocator.#animationCache = new AnimationCache(
+      ServiceLocator.#loader,
+      ServiceLocator.#spriteFrameCache
+    );
+    ServiceLocator.#director = new DisplayLinkDirector(
+      ServiceLocator.#sys,
+      ServiceLocator.#scheduler,
+      ServiceLocator.#actionManager,
+      ServiceLocator.#spriteFrameCache,
+      ServiceLocator.#textureCache,
+      ServiceLocator.#animationCache
+    );
     ServiceLocator.#eventManager = new EventManager(ServiceLocator.#director);
     ServiceLocator.#screen = new Screen();
     ServiceLocator.#eglView = new EGLView(
@@ -88,62 +109,43 @@ export class ServiceLocator {
       ServiceLocator.#screen,
       ServiceLocator.#eventManager
     );
-    ServiceLocator.#textureCache = new TextureCache(ServiceLocator.#loader);
-    ServiceLocator.#spriteFrameCache = new SpriteFrameCache(
-      ServiceLocator.#sys,
-      ServiceLocator.#loader,
-      ServiceLocator.#textureCache
-    );
-    ServiceLocator.#animationCache = new AnimationCache(ServiceLocator.#loader, ServiceLocator.#spriteFrameCache);
     ServiceLocator.#shaderCache = new ShaderCache(ServiceLocator.#sys);
     ServiceLocator.#kmglMatrix = new KMGLMatrix();
-    ServiceLocator.#glStateCache = new GLStateCache(ServiceLocator.#sys, ServiceLocator.#kmglMatrix);
-    ServiceLocator.#profiler = new Profiler();
+    ServiceLocator.#glStateCache = new GLStateCache(
+      ServiceLocator.#sys,
+      ServiceLocator.#kmglMatrix
+    );
+    ServiceLocator.#profiler = new Profiler(
+      ServiceLocator.#sys,
+      ServiceLocator.#director,
+      ServiceLocator.#eventManager
+    );
     ServiceLocator.#inputManager = new InputManager(
       ServiceLocator.#sys,
       ServiceLocator.#eglView,
       ServiceLocator.#eventManager,
       ServiceLocator.#director.scheduler
     );
-
-    const renderingConfig = ServiceLocator.#sys.rendererConfig;
+    ServiceLocator.#game = new Game(
+      ServiceLocator.#sys,
+      ServiceLocator.#loader,
+      ServiceLocator.#eglView,
+      ServiceLocator.#director,
+      ServiceLocator.#eventManager,
+      ServiceLocator.#inputManager,
+      ServiceLocator.#textureCache
+    );
 
     // Wire dependencies (assignment-only). Every instance already exists,
     // so the cyclic service graph resolves to the constructed singletons.
     ServiceLocator.#director.injectServices({
-      animationCache: ServiceLocator.#animationCache,
-      eventManager: ServiceLocator.#eventManager,
-      profiler: ServiceLocator.#profiler,
-      rendererConfig: renderingConfig,
-      spriteFrameCache: ServiceLocator.#spriteFrameCache,
-      textureCache: ServiceLocator.#textureCache
-    });
-
-    ServiceLocator.#game.injectServices({
-      director: ServiceLocator.#director,
-      eglView: ServiceLocator.#eglView,
-      eventManager: ServiceLocator.#eventManager,
-      inputManager: ServiceLocator.#inputManager,
-      loader: ServiceLocator.#loader,
-      sys: ServiceLocator.#sys,
-      textureCache: ServiceLocator.#textureCache
-    });
-
-    ServiceLocator.#kmglMatrix.injectServices({
-      director: ServiceLocator.#director
-    });
-
-    ServiceLocator.#profiler.injectServices({
-      director: ServiceLocator.#director,
-      eventManager: ServiceLocator.#eventManager,
-      game: ServiceLocator.#game,
-      rendererConfig: renderingConfig
+      eventManager: ServiceLocator.#eventManager
     });
 
     // Configure services and initialise the matrix stacks. Kept here so
     // index.js never manipulates service instances directly.
     ServiceLocator.#loader.registerDefaultLoaders(ServiceLocator.#textureCache);
-    ServiceLocator.#kmglMatrix.lazyInitialize();
+    ServiceLocator.#kmglMatrix.lazyInitialize(ServiceLocator.#director);
   }
 
   static get director() {
@@ -204,6 +206,14 @@ export class ServiceLocator {
 
   static get screen() {
     return ServiceLocator.#screen;
+  }
+
+  static get scheduler() {
+    return ServiceLocator.#scheduler;
+  }
+
+  static get actionManager() {
+    return ServiceLocator.#actionManager;
   }
 }
 

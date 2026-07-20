@@ -16,7 +16,7 @@ export default class ShowAll extends ContentStrategy {
   ): ContentStrategyResult {
     void view;
 
-    const canvas = ServiceLocator.game.canvas as HTMLCanvasElement;
+    const canvas = ServiceLocator.eglView.canvas as HTMLCanvasElement;
     const containerW = canvas.width;
     const containerH = canvas.height;
     const designW = designedResolution.width;

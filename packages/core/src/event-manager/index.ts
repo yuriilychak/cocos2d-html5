@@ -18,3 +18,4 @@ export {
 } from './event';
 
 export { EventListener } from './event-listener';
+export type { CustomEventCallback } from './event-listener/types';

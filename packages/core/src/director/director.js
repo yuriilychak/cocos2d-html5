@@ -61,41 +61,32 @@ export class Director extends BaseClass {
   _totalFrames = 0;
   _secondsPerFrame = 0;
   _dirtyRegion = null;
-  _scheduler = null;
-  _actionManager = null;
+  #scheduler;
+  #actionManager;
   _eventAfterUpdate = null;
   _eventAfterVisit = null;
   _eventAfterDraw = null;
   _lastUpdate = Date.now();
-  _animationCache = null;
+  #animationCache;
   _eventManager = null;
-  _profiler = null;
-  _rendererConfig = null;
-  _spriteFrameCache = null;
-  _textureCache = null;
+  #sys;
+  #spriteFrameCache;
+  #textureCache;
   _showEventListenerRegistered = false;
 
-  constructor() {
+  constructor(sys, scheduler, actionManager, spriteFrameCache, textureCache, animationCache) {
     super();
 
-    this._scheduler = new Scheduler();
-    this._actionManager = new ActionManager();
+    this.#sys = sys;
+    this.#scheduler = scheduler;
+    this.#actionManager = actionManager;
+    this.#spriteFrameCache = spriteFrameCache;
+    this.#textureCache = textureCache;
+    this.#animationCache = animationCache;
   }
 
-  injectServices({
-    animationCache,
-    eventManager,
-    profiler,
-    rendererConfig,
-    spriteFrameCache,
-    textureCache
-  }) {
-    this._animationCache = animationCache;
+  injectServices({ eventManager }) {
     this._eventManager = eventManager;
-    this._profiler = profiler;
-    this._rendererConfig = rendererConfig;
-    this._spriteFrameCache = spriteFrameCache;
-    this._textureCache = textureCache;
   }
 
   init() {
@@ -106,8 +97,8 @@ export class Director extends BaseClass {
     this._totalFrames = 0;
     this._lastUpdate = Date.now();
 
-    this._scheduler.scheduleUpdate(
-      this._actionManager,
+    this.#scheduler.scheduleUpdate(
+      this.#actionManager,
       Scheduler.PRIORITY_SYSTEM,
       false
     );
@@ -119,7 +110,7 @@ export class Director extends BaseClass {
     this._eventAfterVisit = new EventCustom(DirectorEvent.AFTER_VISIT, this);
     this._eventAfterDraw = new EventCustom(DirectorEvent.AFTER_DRAW, this);
 
-    if (!this._rendererConfig.isCanvas) {
+    if (!this.#sys.rendererConfig.isCanvas) {
       this._fpsImage = new Image();
       this._fpsImage.addEventListener("load", () => {
         this._fpsImageLoaded = true;
@@ -155,19 +146,18 @@ export class Director extends BaseClass {
       this._deltaTime = (now - this._lastUpdate) / 1000;
     }
 
-    if (debugMode > 0 && this._deltaTime > 0.2)
-      this._deltaTime = 1 / 60.0;
+    if (debugMode > 0 && this._deltaTime > 0.2) this._deltaTime = 1 / 60.0;
 
     this._lastUpdate = now;
   }
 
   drawScene(debugMode) {
-    var renderer = this._rendererConfig.renderer;
+    var renderer = this.#sys.rendererConfig.renderer;
 
     this.calculateDeltaTime(debugMode);
 
     if (!this._paused) {
-      this._scheduler.update(this._deltaTime);
+      this.#scheduler.update(this._deltaTime);
       this._eventManager.dispatchEvent(this._eventAfterUpdate);
     }
 
@@ -177,8 +167,8 @@ export class Director extends BaseClass {
 
     if (this._runningScene) {
       if (renderer.childrenOrderDirty) {
-        this._rendererConfig.renderer.clearRenderCommands();
-        this._rendererConfig.renderer.assignedZ = 0;
+        this.#sys.rendererConfig.renderer.clearRenderCommands();
+        this.#sys.rendererConfig.renderer.assignedZ = 0;
         this._runningScene._renderCmd._curLevel = 0;
         this._runningScene.visit();
         renderer.resetFlag();
@@ -192,9 +182,9 @@ export class Director extends BaseClass {
     if (this._notificationNode) this._notificationNode.visit();
 
     this._eventManager.dispatchEvent(this._eventAfterVisit);
-    this._rendererConfig.resetDrawCount();
+    this.#sys.rendererConfig.resetDrawCount();
 
-    renderer.rendering(this._rendererConfig.renderContext);
+    renderer.rendering(this.#sys.rendererConfig.renderContext);
     this._totalFrames++;
 
     this._eventManager.dispatchEvent(this._eventAfterDraw);
@@ -233,9 +223,9 @@ export class Director extends BaseClass {
   }
 
   purgeCachedData() {
-    this._animationCache.clear();
-    this._spriteFrameCache.clear();
-    this._textureCache.clear();
+    this.#animationCache.clear();
+    this.#spriteFrameCache.clear();
+    this.#textureCache.clear();
   }
 
   purgeDirector() {
@@ -339,7 +329,7 @@ export class Director extends BaseClass {
     }
 
     this._runningScene = this._nextScene;
-    this._rendererConfig.renderer.childrenOrderDirty = true;
+    this.#sys.rendererConfig.renderer.childrenOrderDirty = true;
 
     this._nextScene = null;
     if (!runningIsTransition && this._runningScene !== null) {
@@ -351,7 +341,7 @@ export class Director extends BaseClass {
   }
 
   setNotificationNode(node) {
-    this._rendererConfig.renderer.childrenOrderDirty = true;
+    this.#sys.rendererConfig.renderer.childrenOrderDirty = true;
     if (this._notificationNode) {
       this._notificationNode._performRecursive(
         Node._stateCallbackType.onExitTransitionDidStart
@@ -377,14 +367,6 @@ export class Director extends BaseClass {
 
   getAnimationInterval() {
     return this._animationInterval;
-  }
-
-  isDisplayStats() {
-    return this._profiler.isShowingStats();
-  }
-
-  setDisplayStats(displayStats) {
-    displayStats ? this._profiler.showStats() : this._profiler.hideStats();
   }
 
   getSecondsPerFrame() {
@@ -435,11 +417,11 @@ export class Director extends BaseClass {
   }
 
   get scheduler() {
-    return this._scheduler;
+    return this.#scheduler;
   }
 
   get actionManager() {
-    return this._actionManager;
+    return this.#actionManager;
   }
 
   getDeltaTime() {
@@ -468,8 +450,22 @@ export class Director extends BaseClass {
 }
 
 export class DisplayLinkDirector extends Director {
-  constructor() {
-    super();
+  constructor(
+    sys,
+    scheduler,
+    actionManager,
+    spriteFrameCache,
+    textureCache,
+    animationCache
+  ) {
+    super(
+      sys,
+      scheduler,
+      actionManager,
+      spriteFrameCache,
+      textureCache,
+      animationCache
+    );
     this.invalid = false;
   }
 

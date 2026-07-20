@@ -58,7 +58,7 @@ export class VideoPlayer extends Widget {
   visit() {
     var cmd = this._renderCmd,
       div = cmd._div,
-      container = ServiceLocator.game.container,
+      container = ServiceLocator.eglView.container,
       eventManager = ServiceLocator.eventManager;
     if (this._visible) {
       container.appendChild(cmd._video);
@@ -433,7 +433,7 @@ document.head.appendChild(style);
         scaleY = scaleY / dpr;
       }
       if (this._loaded === false) return;
-      var containerStyle = ServiceLocator.game.container.style,
+      var containerStyle = ServiceLocator.eglView.container.style,
         offsetX = parseInt(containerStyle.paddingLeft),
         offsetY = parseInt(containerStyle.paddingBottom),
         cw = node._contentSize.width,
@@ -476,7 +476,7 @@ document.head.appendChild(style);
         path = Path.join(ServiceLocator.loader.resPath, path);
 
       hasChild = false;
-      container = ServiceLocator.game.container;
+      container = ServiceLocator.eglView.container;
       if ("contains" in container) {
         hasChild = container.contains(this._video);
       } else {
@@ -571,13 +571,13 @@ document.head.appendChild(style);
       var video = this._video;
       if (video) {
         var hasChild = false;
-        if ("contains" in ServiceLocator.game.container) {
-          hasChild = ServiceLocator.game.container.contains(video);
+        if ("contains" in ServiceLocator.eglView.container) {
+          hasChild = ServiceLocator.eglView.container.contains(video);
         } else {
           hasChild =
-            ServiceLocator.game.container.compareDocumentPosition(video) % 16;
+            ServiceLocator.eglView.container.compareDocumentPosition(video) % 16;
         }
-        if (hasChild) ServiceLocator.game.container.removeChild(video);
+        if (hasChild) ServiceLocator.eglView.container.removeChild(video);
       }
     }
   };

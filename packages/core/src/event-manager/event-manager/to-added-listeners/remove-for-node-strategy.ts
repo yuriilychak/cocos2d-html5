@@ -1,8 +1,10 @@
 import type { EventListener } from "../../event-listener";
+import type { Event } from "../../event";
 import RemoveStrategy from "./remove-strategy";
 
-export default class RemoveForNodeStrategy extends RemoveStrategy<unknown> {
-  shouldRemove(listener: EventListener): boolean {
+export default class RemoveForNodeStrategy<T extends Event = Event>
+  extends RemoveStrategy<EventListener<T>, unknown> {
+  shouldRemove(listener: EventListener<T>): boolean {
     if (listener.sceneGraphPriority !== this.value) {
       return false;
     }

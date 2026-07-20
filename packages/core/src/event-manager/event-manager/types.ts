@@ -1,5 +1,5 @@
 import type { Node } from "../../base-nodes/node";
-import type { EventTouch } from "../event";
+import type { EventTouch, Event } from "../event";
 import type {
   EventListener,
   _EventListenerTouchAllAtOnce,
@@ -17,8 +17,8 @@ export type DeprecatedEventListenerFactory = typeof EventListener & {
   create: (argObj: ListenerCreateOptions) => EventListener | null;
 };
 
-export type RemoveCheck = (
-  listener: EventListener,
+export type RemoveCheck<T extends Event> = (
+  listener: EventListener<T>,
   listeners: _EventListenerVector,
   listenerID: string
 ) => boolean;

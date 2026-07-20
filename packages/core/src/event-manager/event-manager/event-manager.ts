@@ -56,6 +56,7 @@ import type {
 import type {
   DeprecatedEventListenerFactory,
   DirectorLike,
+  RemoveCheck,
   TouchEventCallbackArgs,
   TouchesEventCallbackArgs
 } from "./types";
@@ -192,16 +193,18 @@ export default class EventManager {
   /**
    * Remove a listener
    */
-  removeListener(listener: EventListener | null): void {
+  removeListener<T extends Event>(listener: EventListener<T> | null): void {
     if (listener == null) return;
 
     const isFound = this.#listeners.removeFromListeners(
-      listener,
-      this.#removeListenerInner.bind(this)
+      listener as unknown as EventListener<Event>,
+      this.#removeListenerInner.bind(this) as unknown as RemoveCheck<Event>
     );
 
     if (!isFound) {
-      this.#toAddedListeners.remove(listener);
+      this.#toAddedListeners.remove(
+        listener as unknown as EventListener<Event>
+      );
     }
   }
 

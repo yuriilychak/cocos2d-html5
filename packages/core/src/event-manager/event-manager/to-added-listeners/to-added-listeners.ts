@@ -4,18 +4,19 @@ import RemoveListenerStrategy from "./remove-listener-strategy";
 import ListenersQueue from "../listeners-queue";
 
 import type { EventListener } from "../../event-listener";
+import type { Event } from '../../event';
 import type { ToAddedListenersRemoveStrategy } from "./types";
 
-export default class ToAddedListeners extends ListenersQueue {
-  #removeForListenerIDStrategy: RemoveForListenerIDStrategy;
-  #removeForNodeStrategy: RemoveForNodeStrategy;
-  #removeListenerStrategy: RemoveListenerStrategy;
+export default class ToAddedListeners<T extends Event> extends ListenersQueue<T> {
+  #removeForListenerIDStrategy: RemoveForListenerIDStrategy<T>;
+  #removeForNodeStrategy: RemoveForNodeStrategy<T>;
+  #removeListenerStrategy: RemoveListenerStrategy<T>;
 
   constructor() {
     super();
-    this.#removeForListenerIDStrategy = new RemoveForListenerIDStrategy();
-    this.#removeForNodeStrategy = new RemoveForNodeStrategy();
-    this.#removeListenerStrategy = new RemoveListenerStrategy();
+    this.#removeForListenerIDStrategy = new RemoveForListenerIDStrategy<T>();
+    this.#removeForNodeStrategy = new RemoveForNodeStrategy<T>();
+    this.#removeListenerStrategy = new RemoveListenerStrategy<T>();
   }
 
   removeForListenerID(listenerID: string): void {
@@ -28,12 +29,14 @@ export default class ToAddedListeners extends ListenersQueue {
     this.#remove(this.#removeForNodeStrategy);
   }
 
-  remove(listener: EventListener): void {
+  remove(listener: EventListener<T>): void {
     this.#removeListenerStrategy.value = listener;
     this.#remove(this.#removeListenerStrategy);
   }
 
-  #remove(strategy: ToAddedListenersRemoveStrategy): void {
+  #remove<TValue>(
+    strategy: ToAddedListenersRemoveStrategy<EventListener<T>, TValue>
+  ): void {
     for (let i = 0; i < this.listeners.length; ) {
       if (strategy.shouldRemove(this.listeners[i])) {
         this.listeners.splice(i, 1);

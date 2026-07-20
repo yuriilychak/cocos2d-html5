@@ -73,7 +73,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
       node.hasPolygonInfo &&
       node.hasPolygonInfo()
     ) {
-      this.vertexType = renderer.VertexType.CUSTOM;
+      this.vertexType = VertexType.CUSTOM;
       const tris = node._polygonInfo.triangles;
       // Use a typed array of indices for the batcher.
       this._indices =
@@ -82,7 +82,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
           : new Uint16Array(tris.indices);
       this._polyUVDirty = true;
     } else {
-      this.vertexType = renderer.VertexType.QUAD;
+      this.vertexType = VertexType.QUAD;
       this._indices = null;
     }
     this.setDirtyFlag(this._dirtyFlag || 0);

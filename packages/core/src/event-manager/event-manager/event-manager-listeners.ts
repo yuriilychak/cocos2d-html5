@@ -35,7 +35,7 @@ export default class EventManagerListeners {
     this.#priorityDirtyFlags.setDirty(listenerID, flag);
   }
 
-  removeFromListeners(listener: EventListener, removeCheck: RemoveCheck): boolean {
+  removeFromListeners<T extends Event>(listener: EventListener<T>, removeCheck: RemoveCheck<T>): boolean {
     for (const [listenerID, listeners] of this.#listeners) {
       if (removeCheck(listener, listeners, listenerID)) {
         return true;

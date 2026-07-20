@@ -1,13 +1,12 @@
-import type { EventListener } from "../../event-listener";
 import type { ToAddedListenersRemoveStrategy } from "./types";
 
-export default abstract class RemoveStrategy<TValue>
-  implements ToAddedListenersRemoveStrategy<TValue> {
+export default abstract class RemoveStrategy<TListener, TValue = TListener>
+  implements ToAddedListenersRemoveStrategy<TListener, TValue> {
   value: TValue | null = null;
 
   get stopAfterRemove(): boolean {
     return false;
   }
 
-  abstract shouldRemove(listener: EventListener): boolean;
+  abstract shouldRemove(listener: TListener): boolean;
 }
