@@ -395,7 +395,7 @@ export default class EventManager {
   }
 
   #sortEventListeners(listenerID: string): void {
-    const rootNode = this.#director.getRunningScene();
+    const rootNode = this.#director.runningScene;
 
     if (this.#listeners.sortEventListeners(listenerID, Boolean(rootNode))) {
       this.#sortListenersOfSceneGraphPriority(listenerID, rootNode!);

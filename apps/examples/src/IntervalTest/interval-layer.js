@@ -134,16 +134,16 @@ export class IntervalLayer extends LayerGradient {
   }
 
   onPause(sender) {
-    if (director.isPaused()) {
-      director.resume();
+    if (director.paused) {
+      director.paused = false;
     } else {
-      director.pause();
+      director.paused = true;
     }
   }
 
   onExit() {
-    if (director.isPaused()) {
-      director.resume();
+    if (director.paused) {
+      director.paused = false;
     }
     super.onExit();
   }

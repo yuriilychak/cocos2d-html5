@@ -37,7 +37,6 @@ export interface EGLViewLike {
   initialize(id: string, width?: number, height?: number): void;
   setupContainer(size: SizeLike): void;
   setViewport(): void;
-  postInit(): void;
   adjustViewPort: boolean;
   readonly openGLReady: boolean;
   readonly rendererDelegate: DirectorRenderer;

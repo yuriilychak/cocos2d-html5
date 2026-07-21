@@ -30,7 +30,7 @@
 */
 import { SchedulerTestLayer } from "./scheduler-test-layer";
 import { director } from "../constants";
-import { log, REPEAT_FOREVER } from "@aspect/core";
+import { log, REPEAT_FOREVER, ServiceLocator } from "@aspect/core";
 
 export class ScheduleUsingSchedulerTest extends SchedulerTestLayer {
   constructor() {
@@ -43,7 +43,7 @@ export class ScheduleUsingSchedulerTest extends SchedulerTestLayer {
     super.onEnter();
 
     this._accum = 0;
-    var scheduler = director.scheduler;
+    var scheduler = ServiceLocator.scheduler;
 
     var priority = 0; // priority 0. default.
     var paused = false; // not paused, queue it now.
@@ -93,7 +93,7 @@ export class ScheduleUsingSchedulerTest extends SchedulerTestLayer {
     //----end9----
   }
   unscheduleAll() {
-    var scheduler = director.scheduler;
+    var scheduler = ServiceLocator.scheduler;
     scheduler.unscheduleUpdate(this);
     scheduler.unscheduleAllForTarget(this);
   }

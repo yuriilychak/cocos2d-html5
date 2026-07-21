@@ -78,15 +78,15 @@ export class CurrentLanguageTest extends BaseTestLayer {
     }
 
     onRestartCallback() {
-        ServiceLocator.director.getRunningScene().runThisTest();
+        ServiceLocator.director.runningScene.runThisTest();
     }
 
     onNextCallback() {
-        ServiceLocator.director.getRunningScene().runThisTest();
+        ServiceLocator.director.runningScene.runThisTest();
     }
 
     onBackCallback() {
-        ServiceLocator.director.getRunningScene().runThisTest();
+        ServiceLocator.director.runningScene.runThisTest();
     }
 
     numberOfPendingTests() {

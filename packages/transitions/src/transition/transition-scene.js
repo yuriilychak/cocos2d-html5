@@ -16,7 +16,7 @@ export class TransitionScene extends Scene {
   _setNewScene(dt) {
     this.unschedule(this._setNewScene);
     var director = ServiceLocator.director;
-    this._isSendCleanupToScene = director.isSendCleanupToScene();
+    this._isSendCleanupToScene = director.sendCleanupToScene;
     director.runScene(this._inScene);
     ServiceLocator.eventManager.enabled = true;
     this._outScene.visible = true;
@@ -76,7 +76,7 @@ export class TransitionScene extends Scene {
         anchorY: 0
       });
       this._inScene = scene;
-      this._outScene = ServiceLocator.director.getRunningScene();
+      this._outScene = ServiceLocator.director.runningScene;
       if (!this._outScene) {
         this._outScene = new Scene();
         this._outScene.init();

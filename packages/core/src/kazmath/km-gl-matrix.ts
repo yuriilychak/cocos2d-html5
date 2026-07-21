@@ -8,7 +8,7 @@ import type { EGLViewLike } from "../platform/egl-view/types";
 import type { Mat4Like } from "./types";
 
 interface DirectorLike {
-  getTotalFrames(): number;
+  readonly totalFrames: number;
 }
 
 export class KMGLMatrix {
@@ -80,7 +80,7 @@ export class KMGLMatrix {
       default:
         throw new Error("Invalid matrix mode specified");
     }
-    this.currentStack.lastUpdated = this.#director!.getTotalFrames();
+    this.currentStack.lastUpdated = this.#director!.totalFrames;
   }
 
   public loadIdentity(): void {

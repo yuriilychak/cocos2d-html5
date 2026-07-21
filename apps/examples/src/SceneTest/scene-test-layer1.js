@@ -38,8 +38,8 @@ const MENU_ITEMS = [
   { title: "Test pushScene" },
   { title: "Test pushScene w/transition" },
   { title: "Quit" },
-  { title: "setNotificationNode" },
-  { title: "clearNotificationNode" }
+  { title: "Set notificationNode" },
+  { title: "Clear notificationNode" }
 ];
 
 export class SceneTestLayer1 extends MenuTestLayer {
@@ -91,18 +91,18 @@ export class SceneTestLayer1 extends MenuTestLayer {
     const sprite = new Sprite(s_pathGrossini);
     sprite.setPosition(new Point(winSize.width / 2, winSize.height / 2));
     layerTemp.addChild(sprite);
-    ServiceLocator.director.setNotificationNode(layerTemp);
+    ServiceLocator.director.notificationNode = layerTemp;
     sprite.runAction(new RotateBy(2, 360).repeatForever());
-    log("setNotificationNode!");
+    log("notificationNode set!");
   }
 
   _onClearNotificationNode() {
-    log("clearNotificationNode!");
-    ServiceLocator.director.setNotificationNode(null);
+    log("notificationNode cleared!");
+    ServiceLocator.director.notificationNode = null;
   }
 
   onExit() {
-    ServiceLocator.director.setNotificationNode(null);
+    ServiceLocator.director.notificationNode = null;
     super.onExit();
   }
 }

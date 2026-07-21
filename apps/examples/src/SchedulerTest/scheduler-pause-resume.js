@@ -30,7 +30,7 @@
 */
 import { SchedulerTestLayer } from "./scheduler-test-layer";
 import { director } from "../constants";
-import { log } from "@aspect/core";
+import { log, ServiceLocator } from "@aspect/core";
 
 export class SchedulerPauseResume extends SchedulerTestLayer {
   onEnter() {
@@ -61,7 +61,7 @@ export class SchedulerPauseResume extends SchedulerTestLayer {
   }
   onPause(dt) {
     //----start1----onPause
-    director.scheduler.pauseTarget(this);
+    ServiceLocator.scheduler.pauseTarget(this);
     //----end1----
   }
 }

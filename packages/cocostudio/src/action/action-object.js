@@ -45,7 +45,7 @@ export class ActionObject extends BaseClass {
     this._unitTime = 0.1;
     this._currentTime = 0;
     this._fTotalTime = 0;
-    this._scheduler = ServiceLocator.director.scheduler;
+    this._scheduler = ServiceLocator.scheduler;
   }
 
   /**

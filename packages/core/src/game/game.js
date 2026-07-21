@@ -162,7 +162,7 @@ export default class Game extends EventHelper(BaseClass) {
 
       // Director is created lazily; this is its first access, so initialize it here.
       this.#director.init();
-      this.#eglView.postInit();
+      this.#eventManager.enabled = true;
 
       this.#initEvents();
 
@@ -374,7 +374,6 @@ export default class Game extends EventHelper(BaseClass) {
       this.config[CONFIG_KEY.width],
       this.config[CONFIG_KEY.height]
     );
-    this.#sys.rendererConfig.createContext(this.#eglView.canvas);
 
     this.dispatchEvent(GameEvent.RENDERER_INITED, true);
 

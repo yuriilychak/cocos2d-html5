@@ -1127,7 +1127,7 @@ export class Node extends BaseClass {
    * @return {ActionManager} A ActionManager object.
    */
   getActionManager() {
-    return this._actionManager || ServiceLocator.director.actionManager;
+    return this._actionManager || ServiceLocator.actionManager;
   }
 
   /**
@@ -1151,7 +1151,7 @@ export class Node extends BaseClass {
    * @return {Scheduler} A Scheduler object.
    */
   getScheduler() {
-    return this._scheduler || ServiceLocator.director.scheduler;
+    return this._scheduler || ServiceLocator.scheduler;
   }
 
   /**

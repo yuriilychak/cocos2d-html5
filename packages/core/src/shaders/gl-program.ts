@@ -533,8 +533,8 @@ export default class GLProgram extends BaseClass {
       // Cocos2D doesn't store a high precision time value, so this will have to do.
       // Getting Mach time per frame per shader using time could be extremely expensive.
       const time =
-        ServiceLocator.director.getTotalFrames() *
-        ServiceLocator.director.getAnimationInterval();
+        ServiceLocator.director.totalFrames *
+        ServiceLocator.director.animationInterval;
 
       this.setUniformLocationWith4f(
         this.#uniform(UniformName.TIME),
@@ -685,7 +685,7 @@ export default class GLProgram extends BaseClass {
       // This doesn't give the most accurate global time value.
       // Cocos2D doesn't store a high precision time value, so this will have to do.
       // Getting Mach time per frame per shader using time could be extremely expensive.
-      const time = ServiceLocator.director.getTotalFrames() * ServiceLocator.director.getAnimationInterval();
+      const time = ServiceLocator.director.totalFrames * ServiceLocator.director.animationInterval;
 
       this.setUniformLocationWith4f(
         this.#uniform(UniformName.TIME),

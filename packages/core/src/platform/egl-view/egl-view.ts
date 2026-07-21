@@ -173,6 +173,10 @@ export class EGLView extends BaseClass {
 
     this.#domAdapter.initialize(elementId, inputWidth, inputHeight, this.#sys.specification.isMobile);
 
+    // The renderer delegate applies its initial GL state below, so the
+    // rendering context must exist before setGLDefaultValues() is called.
+    this.#sys.rendererConfig.createContext(this.#domAdapter.canvas);
+
     this.#rendererDelegate = this.#sys.rendererConfig.isCanvas
       ? new DirectorCanvasRenderer(this, this.#sys)
       : new DirectorWebGLRenderer(this, this.#sys);
@@ -201,10 +205,6 @@ export class EGLView extends BaseClass {
       this.#orientationChanging = false;
     }
 
-    this.#initialized = true;
-  }
-
-  postInit(): void {
     this.#winSizeInPoints.set(this.#domAdapter.canvas);
 
     if(!this.#sys.rendererConfig.isCanvas) {
@@ -213,7 +213,7 @@ export class EGLView extends BaseClass {
         this.#rendererDelegate!.setGLDefaultValues();
     }
 
-    this.#eventManager.enabled = true;
+    this.#initialized = true;
   }
 
   /**

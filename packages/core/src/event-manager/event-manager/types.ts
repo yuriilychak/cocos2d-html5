@@ -10,7 +10,7 @@ import type Touch from "../touch";
 import type { ListenerCreateOptions } from "../event-listener/types";
 
 export type DirectorLike = {
-  getRunningScene(): Node | null;
+  readonly runningScene: Node | null;
 };
 
 export type DeprecatedEventListenerFactory = typeof EventListener & {

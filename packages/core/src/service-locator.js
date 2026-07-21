@@ -19,7 +19,7 @@
 // `ServiceLocator` class in its temporal dead zone). Lazy access from inside
 // methods/constructors is safe.
 
-import { DisplayLinkDirector } from "./director/director";
+import Director from "./director";
 import { Sys } from "./sys";
 import { Loader } from "./boot/loader";
 import { Game } from "./game";
@@ -78,63 +78,61 @@ export class ServiceLocator {
       return;
     }
     ServiceLocator.#constructed = true;
-    ServiceLocator.#scheduler = new Scheduler();
-    ServiceLocator.#actionManager = new ActionManager(
-      ServiceLocator.#actionManager
+    const scheduler = new Scheduler();
+    const actionManager = new ActionManager(scheduler);
+    const sys = new Sys();
+    const loader = new Loader(sys);
+    const textureCache = new TextureCache(loader);
+    const spriteFrameCache = new SpriteFrameCache(sys, loader, textureCache);
+    const animationCache = new AnimationCache(loader, spriteFrameCache);
+    const director = new Director(
+      sys,
+      scheduler,
+      actionManager,
+      spriteFrameCache,
+      textureCache,
+      animationCache
     );
-    ServiceLocator.#sys = new Sys();
-    ServiceLocator.#loader = new Loader(ServiceLocator.#sys);
-    ServiceLocator.#textureCache = new TextureCache(ServiceLocator.#loader);
-    ServiceLocator.#spriteFrameCache = new SpriteFrameCache(
-      ServiceLocator.#sys,
-      ServiceLocator.#loader,
-      ServiceLocator.#textureCache
+    const eventManager = new EventManager(director);
+    const screen = new Screen();
+    const eglView = new EGLView(sys, screen, eventManager);
+    const shaderCache = new ShaderCache(sys);
+    const kmglMatrix = new KMGLMatrix();
+    const glStateCache = new GLStateCache(sys, kmglMatrix);
+    const profiler = new Profiler(sys, director, eventManager);
+    const inputManager = new InputManager(
+      sys,
+      eglView,
+      eventManager,
+      scheduler
     );
-    ServiceLocator.#animationCache = new AnimationCache(
-      ServiceLocator.#loader,
-      ServiceLocator.#spriteFrameCache
+    const game = new Game(
+      sys,
+      loader,
+      eglView,
+      director,
+      eventManager,
+      inputManager,
+      textureCache
     );
-    ServiceLocator.#director = new DisplayLinkDirector(
-      ServiceLocator.#sys,
-      ServiceLocator.#scheduler,
-      ServiceLocator.#actionManager,
-      ServiceLocator.#spriteFrameCache,
-      ServiceLocator.#textureCache,
-      ServiceLocator.#animationCache
-    );
-    ServiceLocator.#eventManager = new EventManager(ServiceLocator.#director);
-    ServiceLocator.#screen = new Screen();
-    ServiceLocator.#eglView = new EGLView(
-      ServiceLocator.#sys,
-      ServiceLocator.#screen,
-      ServiceLocator.#eventManager
-    );
-    ServiceLocator.#shaderCache = new ShaderCache(ServiceLocator.#sys);
-    ServiceLocator.#kmglMatrix = new KMGLMatrix();
-    ServiceLocator.#glStateCache = new GLStateCache(
-      ServiceLocator.#sys,
-      ServiceLocator.#kmglMatrix
-    );
-    ServiceLocator.#profiler = new Profiler(
-      ServiceLocator.#sys,
-      ServiceLocator.#director,
-      ServiceLocator.#eventManager
-    );
-    ServiceLocator.#inputManager = new InputManager(
-      ServiceLocator.#sys,
-      ServiceLocator.#eglView,
-      ServiceLocator.#eventManager,
-      ServiceLocator.#director.scheduler
-    );
-    ServiceLocator.#game = new Game(
-      ServiceLocator.#sys,
-      ServiceLocator.#loader,
-      ServiceLocator.#eglView,
-      ServiceLocator.#director,
-      ServiceLocator.#eventManager,
-      ServiceLocator.#inputManager,
-      ServiceLocator.#textureCache
-    );
+
+    ServiceLocator.#scheduler = scheduler;
+    ServiceLocator.#actionManager = actionManager;
+    ServiceLocator.#sys = sys;
+    ServiceLocator.#loader = loader;
+    ServiceLocator.#textureCache = textureCache;
+    ServiceLocator.#spriteFrameCache = spriteFrameCache;
+    ServiceLocator.#animationCache = animationCache;
+    ServiceLocator.#director = director;
+    ServiceLocator.#eventManager = eventManager;
+    ServiceLocator.#screen = screen;
+    ServiceLocator.#eglView = eglView;
+    ServiceLocator.#shaderCache = shaderCache;
+    ServiceLocator.#kmglMatrix = kmglMatrix;
+    ServiceLocator.#glStateCache = glStateCache;
+    ServiceLocator.#profiler = profiler;
+    ServiceLocator.#inputManager = inputManager;
+    ServiceLocator.#game = game;
 
     // Wire dependencies (assignment-only). Every instance already exists,
     // so the cyclic service graph resolves to the constructed singletons.

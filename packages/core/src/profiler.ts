@@ -14,8 +14,8 @@ import type {
 } from "./event-manager";
 
 interface DirectorLike {
-  getSecondsPerFrame(): number;
-  getDeltaTime(): number;
+  readonly secondsPerFrame: number;
+  readonly deltaTime: number;
 }
 
 export class Profiler {
@@ -134,9 +134,9 @@ export class Profiler {
   };
 
   #afterVisit: CustomEventCallback = (): void => {
-    this.#lastSPF = this.#director.getSecondsPerFrame();
+    this.#lastSPF = this.#director.secondsPerFrame;
     this.#frames++;
-    this.#accumDt += this.#director.getDeltaTime();
+    this.#accumDt += this.#director.deltaTime;
 
     if (this.#accumDt > DIRECTOR_FPS_INTERVAL) {
       this.#frameRate = this.#frames / this.#accumDt;

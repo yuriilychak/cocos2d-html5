@@ -197,7 +197,7 @@ export {
 } from "./platform";
 export { log, warn } from "./boot/debugger";
 export { RendererConfig } from "./sys/renderer-config";
-export { Director, DisplayLinkDirector } from "./director/director";
+export { default as Director } from "./director";
 export { Sys } from "./sys";
 export { Texture2D, defaultPixelFormat, PIXEL_FORMAT_NAMES, PIXEL_FORMAT_BITS } from "./textures";
 // Export TextureCache class

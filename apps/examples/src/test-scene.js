@@ -161,8 +161,8 @@ export class TestScene extends Scene {
   }
 
   onMainMenuCallback() {
-    if (director.isPaused()) {
-      director.resume();
+    if (director.paused) {
+      director.paused = false;
     }
     this._mainMenu.enabled = false;
     const scene = new TestScene("Examples", "Close");

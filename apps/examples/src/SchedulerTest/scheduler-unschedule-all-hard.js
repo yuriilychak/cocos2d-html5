@@ -30,7 +30,7 @@
 */
 import { SchedulerTestLayer } from "./scheduler-test-layer";
 import { director } from "../constants";
-import { log } from "@aspect/core";
+import { log, ServiceLocator } from "@aspect/core";
 
 export class SchedulerUnscheduleAllHard extends SchedulerTestLayer {
   onEnter() {
@@ -73,7 +73,7 @@ export class SchedulerUnscheduleAllHard extends SchedulerTestLayer {
   }
   onUnscheduleAll(dt) {
     //----start3----onUnscheduleAll
-    director.scheduler.unscheduleAllCallbacks();
+    ServiceLocator.scheduler.unscheduleAllCallbacks();
     //----end3----
   }
 }

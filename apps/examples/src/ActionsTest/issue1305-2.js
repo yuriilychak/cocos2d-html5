@@ -33,7 +33,7 @@
 import { ActionsDemo } from "./actions-demo";
 import { s_pathGrossini } from "../resources";
 import { director } from "../constants";
-import { Point, Sprite, log } from "@aspect/core";
+import { Point, Sprite, log, ServiceLocator } from "@aspect/core";
 import { CallFunc, MoveBy, Sequence } from "@aspect/actions";
 
 export class Issue1305_2 extends ActionsDemo {
@@ -60,7 +60,7 @@ export class Issue1305_2 extends ActionsDemo {
     var actF = new Sequence(act1, act2, act3, act4, act5, act6, act7, act8);
 
     //    [spr runAction:actF];
-    director.actionManager.addAction(actF, spr, false);
+    ServiceLocator.actionManager.addAction(actF, spr, false);
     //----end40----
   }
   onLog1() {
