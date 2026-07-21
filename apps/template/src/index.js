@@ -20,7 +20,7 @@ const projectConfig = {
 
 const game = ServiceLocator.game;
 
-game.onStart = function () {
+game.run(projectConfig, function () {
   if (!ServiceLocator.sys.isNative && document.getElementById("cocosLoading"))
     document.body.removeChild(document.getElementById("cocosLoading"));
 
@@ -49,5 +49,4 @@ game.onStart = function () {
     },
     this
   );
-};
-game.run(projectConfig);
+});

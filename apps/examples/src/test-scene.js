@@ -168,7 +168,7 @@ export class TestScene extends Scene {
     const scene = new TestScene("Examples", "Close");
     scene.onMainMenuCallback = () => {
       if (ServiceLocator.sys.isNative) {
-        ServiceLocator.game.end();
+        ServiceLocator.game.close();
       } else {
         window.history && window.history.go(-1);
       }

@@ -49,7 +49,7 @@ const projectConfig = {
   height: 720
 };
 
-ServiceLocator.game.onStart = function () {
+ServiceLocator.game.run(projectConfig, function () {
   ServiceLocator.eglView.retinaEnabled = true;
   ServiceLocator.eglView.orientation = DeviceOrientation.LANDSCAPE;
   ServiceLocator.eglView.setDesignResolutionSize(
@@ -74,7 +74,7 @@ ServiceLocator.game.onStart = function () {
         const scene = new TestScene("Examples", "Close");
         scene.onMainMenuCallback = () => {
           if (ServiceLocator.sys.isNative) {
-            ServiceLocator.game.end();
+            ServiceLocator.game.close();
           } else {
             window.history && window.history.go(-1);
           }
@@ -85,5 +85,4 @@ ServiceLocator.game.onStart = function () {
     },
     this
   );
-};
-ServiceLocator.game.run(projectConfig);
+});

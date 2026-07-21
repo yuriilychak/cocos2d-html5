@@ -32,7 +32,7 @@ import { log } from "../boot/debugger";
 import Matrix4 from "../kazmath/mat4";
 import { checkGLErrorDebug } from "../platform/macro/utils";
 import { ServiceLocator } from "../service-locator";
-import { CONFIG_KEY, KMGLMatrixMode, UniformName } from "../enums";
+import { KMGLMatrixMode, UniformName } from "../enums";
 import { WebGLContext } from "../sys/types";
 import type {
   ResolvedUniformLocation,
@@ -199,7 +199,7 @@ export default class GLProgram extends BaseClass {
 
     this.#clearShaders();
 
-    if (ServiceLocator.game.config[CONFIG_KEY.debugMode]) {
+    if (ServiceLocator.game.debugMode) {
       const status = this.#context.getProgramParameter(
         this.program,
         this.#context.LINK_STATUS

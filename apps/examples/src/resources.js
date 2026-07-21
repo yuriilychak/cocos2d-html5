@@ -28,15 +28,6 @@ import { ServiceLocator } from "@aspect/core";
 export var s_resprefix = "";
 
 export var ccbjs = "";
-// js-test use cpptest resource in debug mode , and in the release mode, console will copy the resource into the res dir
-// so the respath will modify to res,
-if (!ServiceLocator.sys.isNative) {
-    if (ServiceLocator.game.config && ServiceLocator.game.config[ServiceLocator.game.CONFIG_KEY.engineDir] !== "frameworks/cocos2d-html5") {
-        ccbjs = "";
-    } else {
-        ccbjs = "";
-    }
-}
 
 export var s_pathGrossini = "Images/grossini.png";
 export var s_pathSister1 = "Images/grossinis_sister1.png";
