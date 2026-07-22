@@ -33,24 +33,26 @@ import { Profiler } from "./profiler";
 import { ActionManager } from "./action-manager";
 import Scheduler from "./scheduler/scheduler";
 
+type Service<T> = T | null;
+
 export class ServiceLocator {
-  static #director;
-  static #sys;
-  static #loader;
-  static #game;
-  static #eventManager;
-  static #eglView;
-  static #textureCache;
-  static #spriteFrameCache;
-  static #animationCache;
-  static #shaderCache;
-  static #glStateCache;
-  static #kmglMatrix;
-  static #profiler;
-  static #inputManager;
-  static #screen;
-  static #scheduler;
-  static #actionManager;
+  static #director: Service<Director> = null;
+  static #sys: Service<Sys> = null;
+  static #loader: Service<Loader> = null;
+  static #game: Service<Game> = null;
+  static #eventManager: Service<EventManager> = null;
+  static #eglView: Service<EGLView> = null;
+  static #textureCache: Service<TextureCache> = null;
+  static #spriteFrameCache: Service<SpriteFrameCache> = null;
+  static #animationCache: Service<AnimationCache> = null;
+  static #shaderCache: Service<ShaderCache> = null;
+  static #glStateCache: Service<GLStateCache> = null;
+  static #kmglMatrix: Service<KMGLMatrix> = null;
+  static #profiler: Service<Profiler> = null;
+  static #inputManager: Service<InputManager> = null;
+  static #screen: Service<Screen> = null;
+  static #scheduler: Service<Scheduler> = null;
+  static #actionManager: Service<ActionManager> = null;
 
   static #constructed = false;
 
@@ -73,7 +75,7 @@ export class ServiceLocator {
   // game<->eglView, sys<->renderingConfig, director<->eventManager) resolves to
   // the already-constructed singletons; configuration runs last because it
   // touches live services. Idempotent.
-  static construct() {
+  static construct(): void {
     if (ServiceLocator.#constructed) {
       return;
     }
@@ -136,82 +138,82 @@ export class ServiceLocator {
 
     // Wire dependencies (assignment-only). Every instance already exists,
     // so the cyclic service graph resolves to the constructed singletons.
-    ServiceLocator.#director.injectServices({
-      eventManager: ServiceLocator.#eventManager
+    ServiceLocator.#director!.injectServices({
+      eventManager: ServiceLocator.#eventManager!
     });
 
     // Configure services and initialise the matrix stacks. Kept here so
     // index.js never manipulates service instances directly.
-    ServiceLocator.#loader.registerDefaultLoaders(ServiceLocator.#textureCache);
-    ServiceLocator.#kmglMatrix.lazyInitialize(ServiceLocator.#director);
+    ServiceLocator.#loader!.registerDefaultLoaders(ServiceLocator.#textureCache!);
+    ServiceLocator.#kmglMatrix!.lazyInitialize(ServiceLocator.#director!);
   }
 
-  static get director() {
-    return ServiceLocator.#director;
+  static get director(): Director {
+    return ServiceLocator.#director!;
   }
 
-  static get sys() {
-    return ServiceLocator.#sys;
+  static get sys(): Sys {
+    return ServiceLocator.#sys!;
   }
 
-  static get loader() {
-    return ServiceLocator.#loader;
+  static get loader(): Loader {
+    return ServiceLocator.#loader!;
   }
 
-  static get game() {
-    return ServiceLocator.#game;
+  static get game(): Game {
+    return ServiceLocator.#game!;
   }
 
-  static get eventManager() {
-    return ServiceLocator.#eventManager;
+  static get eventManager(): EventManager {
+    return ServiceLocator.#eventManager!;
   }
 
-  static get eglView() {
-    return ServiceLocator.#eglView;
+  static get eglView(): EGLView {
+    return ServiceLocator.#eglView!;
   }
 
-  static get textureCache() {
-    return ServiceLocator.#textureCache;
+  static get textureCache(): TextureCache {
+    return ServiceLocator.#textureCache!;
   }
 
-  static get spriteFrameCache() {
-    return ServiceLocator.#spriteFrameCache;
+  static get spriteFrameCache(): SpriteFrameCache {
+    return ServiceLocator.#spriteFrameCache!;
   }
 
-  static get animationCache() {
-    return ServiceLocator.#animationCache;
+  static get animationCache(): AnimationCache {
+    return ServiceLocator.#animationCache!;
   }
 
-  static get shaderCache() {
-    return ServiceLocator.#shaderCache;
+  static get shaderCache(): ShaderCache {
+    return ServiceLocator.#shaderCache!;
   }
 
-  static get glStateCache() {
-    return ServiceLocator.#glStateCache;
+  static get glStateCache(): GLStateCache {
+    return ServiceLocator.#glStateCache!;
   }
 
-  static get kmglMatrix() {
-    return ServiceLocator.#kmglMatrix;
+  static get kmglMatrix(): KMGLMatrix {
+    return ServiceLocator.#kmglMatrix!;
   }
 
-  static get profiler() {
-    return ServiceLocator.#profiler;
+  static get profiler(): Profiler {
+    return ServiceLocator.#profiler!;
   }
 
-  static get inputManager() {
-    return ServiceLocator.#inputManager;
+  static get inputManager(): InputManager {
+    return ServiceLocator.#inputManager!;
   }
 
-  static get screen() {
-    return ServiceLocator.#screen;
+  static get screen(): Screen {
+    return ServiceLocator.#screen!;
   }
 
-  static get scheduler() {
-    return ServiceLocator.#scheduler;
+  static get scheduler(): Scheduler {
+    return ServiceLocator.#scheduler!;
   }
 
-  static get actionManager() {
-    return ServiceLocator.#actionManager;
+  static get actionManager(): ActionManager {
+    return ServiceLocator.#actionManager!;
   }
 }
 

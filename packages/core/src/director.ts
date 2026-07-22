@@ -29,22 +29,28 @@ import { ActionManager } from "./action-manager";
 import EventCustom from "./event-manager/event/event-custom";
 import { Node } from "./base-nodes/node";
 import {
-  CONFIG_KEY,
   DirectorEvent,
-  DirectorProjection,
   GameEvent
 } from "./enums";
-import { log, assert, _LogInfos } from "./boot/debugger";
+import { assert, _LogInfos } from "./boot/debugger";
 import { _fpsImage } from "./boot/base64-images";
 import { checkGLErrorDebug } from "./platform/macro/utils";
+import Sys from "./sys/sys";
+import Scheduler from "./scheduler/scheduler";
+import SpriteFrameCache from "./sprites/sprite-frame-cache";
+import AnimationCache from "./sprites/animation-cache";
+import TextureCache from "./textures/texture-cache";
+import EventManager from "./event-manager/event-manager";
+
+type Scene = Node;
 
 /**
  * Director is a singleton object which manage your game's logic flow.
  */
 export default class Director extends BaseClass {
-  static defaultFPS = 60;
+  static readonly defaultFPS = 60;
 
-  TransitionSceneClass = null;
+  TransitionSceneClass: (new (...args: any[]) => unknown) | null = null;
   #nextDeltaTimeZero = false;
   #paused = false;
   #purgeDirectorInNextLoop = false;
@@ -53,33 +59,32 @@ export default class Director extends BaseClass {
   #oldAnimationInterval = 1.0 / Director.defaultFPS;
   #deltaTime = 0.0;
   #lastUpdate = Date.now();
-  #nextScene = null;
-  #notificationNode = null;
-  #scenesStack = [];
-  #runningScene = null;
+  #nextScene: Scene | null = null;
+  #notificationNode: Scene | null = null;
+  #scenesStack: Scene[] = [];
+  #runningScene: Scene | null = null;
   #totalFrames = 0;
   #secondsPerFrame = 0;
   #animationEnabled = false;
-  #animationCache;
-  #eventManager = null;
-  #fpsImage = null;
-  #fpsImageLoaded = false;
-  #eventAfterUpdate;
-  #eventAfterVisit;
-  #eventAfterDraw;
-  #sys;
-  #scheduler;
-  #spriteFrameCache;
-  #actionManager;
-  #textureCache;
+  #animationCache: AnimationCache;
+  #eventManager: EventManager | null = null;
+  #fpsImage: HTMLImageElement | null = null;
+  #eventAfterUpdate: EventCustom<Director>;
+  #eventAfterVisit: EventCustom<Director>;
+  #eventAfterDraw: EventCustom<Director>;
+  #sys: Sys;
+  #scheduler: Scheduler;
+  #spriteFrameCache: SpriteFrameCache;
+  #actionManager: ActionManager;
+  #textureCache: TextureCache;
 
   constructor(
-    sys,
-    scheduler,
-    actionManager,
-    spriteFrameCache,
-    textureCache,
-    animationCache
+    sys: Sys,
+    scheduler: Scheduler,
+    actionManager: ActionManager,
+    spriteFrameCache: SpriteFrameCache,
+    textureCache: TextureCache,
+    animationCache: AnimationCache
   ) {
     super();
 
@@ -94,11 +99,11 @@ export default class Director extends BaseClass {
     this.#eventAfterDraw = new EventCustom(DirectorEvent.AFTER_DRAW, this);
   }
 
-  injectServices({ eventManager }) {
+  injectServices({ eventManager }: { eventManager: EventManager }): void {
     this.#eventManager = eventManager;
   }
 
-  init() {
+  init(): boolean {
     this.#oldAnimationInterval = this.#animationInterval =
       1.0 / Director.defaultFPS;
 
@@ -108,21 +113,18 @@ export default class Director extends BaseClass {
 
     if (!this.#sys.rendererConfig.isCanvas) {
       this.#fpsImage = new Image();
-      this.#fpsImage.addEventListener("load", () => {
-        this.#fpsImageLoaded = true;
-      });
 
       if (_fpsImage) {
-        this.#fpsImage.src = _fpsImage;
+        this.#fpsImage!.src = _fpsImage;
       }
 
-      this.#eventManager.addCustomListener(
+      this.#eventManager!.addCustomListener(
         DirectorEvent.PROJECTION_CHANGED,
         this.#onProjectionChange.bind(this)
       );
     }
 
-    this.#eventManager.addCustomListener(
+    this.#eventManager!.addCustomListener(
       GameEvent.SHOW,
       this.#onGameShow.bind(this)
     );
@@ -130,7 +132,7 @@ export default class Director extends BaseClass {
     return true;
   }
 
-  calculateDeltaTime(debugMode) {
+  calculateDeltaTime(debugMode: number): void {
     const now = Date.now();
 
     this.#deltaTime = this.#nextDeltaTimeZero
@@ -146,14 +148,14 @@ export default class Director extends BaseClass {
     this.#lastUpdate = now;
   }
 
-  drawScene(debugMode) {
+  drawScene(debugMode: number): void {
     const renderer = this.#sys.rendererConfig.renderer;
 
     this.calculateDeltaTime(debugMode);
 
     if (!this.#paused) {
       this.#scheduler.update(this.#deltaTime);
-      this.#eventManager.dispatchEvent(this.#eventAfterUpdate);
+      this.#eventManager!.dispatchEvent(this.#eventAfterUpdate);
     }
 
     if (this.#nextScene) {
@@ -178,19 +180,19 @@ export default class Director extends BaseClass {
       this.notificationNode.visit();
     }
 
-    this.#eventManager.dispatchEvent(this.#eventAfterVisit);
+    this.#eventManager!.dispatchEvent(this.#eventAfterVisit);
     this.#sys.rendererConfig.resetDrawCount();
 
     renderer.rendering(this.#sys.rendererConfig.renderContext);
     this.#totalFrames++;
 
-    this.#eventManager.dispatchEvent(this.#eventAfterDraw);
-    this.#eventManager.frameUpdateListeners();
+    this.#eventManager!.dispatchEvent(this.#eventAfterDraw);
+    this.#eventManager!.frameUpdateListeners();
 
     this.#calculateMPF();
   }
 
-  mainLoop(debugMode) {
+  mainLoop(debugMode: number): void {
     if (this.#purgeDirectorInNextLoop) {
       this.#purgeDirectorInNextLoop = false;
       this.purgeDirector();
@@ -202,11 +204,11 @@ export default class Director extends BaseClass {
     }
   }
 
-  end() {
+  end(): void {
     this.#purgeDirectorInNextLoop = true;
   }
 
-  popScene() {
+  popScene(): void {
     assert(this.#runningScene, _LogInfos.Director_popScene);
 
     this.#scenesStack.pop();
@@ -221,13 +223,13 @@ export default class Director extends BaseClass {
     this.#changeScene(this.#scenesStack[stackSize - 1], true);
   }
 
-  purgeCachedData() {
+  purgeCachedData(): void {
     this.#animationCache.clear();
     this.#spriteFrameCache.clear();
     this.#textureCache.clear();
   }
 
-  purgeDirector() {
+  purgeDirector(): void {
     this.#scheduler.unscheduleAll();
 
     if (this.#eventManager) {
@@ -249,12 +251,12 @@ export default class Director extends BaseClass {
     checkGLErrorDebug();
   }
 
-  pushScene(scene) {
+  pushScene(scene: Scene): void {
     assert(scene, _LogInfos.Director_pushScene);
     this.#changeScene(scene, false);
   }
 
-  runScene(scene) {
+  runScene(scene: Scene): void {
     assert(scene, _LogInfos.Director_pushScene);
 
     if (!this.#runningScene) {
@@ -267,7 +269,7 @@ export default class Director extends BaseClass {
     this.#changeScene(scene, true, index);
   }
 
-  setNextScene() {
+  setNextScene(): void {
     const runningIsTransition =
       !!this.TransitionSceneClass &&
       this.#runningScene instanceof this.TransitionSceneClass;
@@ -288,11 +290,11 @@ export default class Director extends BaseClass {
     }
   }
 
-  popToRootScene() {
+  popToRootScene(): void {
     this.popToSceneStackLevel(1);
   }
 
-  popToSceneStackLevel(level) {
+  popToSceneStackLevel(level: number): void {
     assert(this.#runningScene, _LogInfos.Director_popToSceneStackLevel_2);
 
     let stackSize = this.#scenesStack.length;
@@ -306,14 +308,14 @@ export default class Director extends BaseClass {
     }
 
     while (stackSize > level) {
-      this.#performSceneActions(this.#scenesStack.pop());
+      this.#performSceneActions(this.#scenesStack.pop()!);
       stackSize--;
     }
 
     this.#changeScene(this.#scenesStack[this.#scenesStack.length - 1], true);
   }
 
-  #changeScene(scene, sendCleanupToScene, index = -1) {
+  #changeScene(scene: Scene, sendCleanupToScene: boolean, index = -1): void {
     this.#sendCleanupToScene = sendCleanupToScene;
 
     if (!sendCleanupToScene) {
@@ -325,12 +327,12 @@ export default class Director extends BaseClass {
     this.#nextScene = scene;
   }
 
-  #calculateMPF() {
-    var now = Date.now();
+  #calculateMPF(): void {
+    const now = Date.now();
     this.#secondsPerFrame = (now - this.#lastUpdate) / 1000;
   }
 
-  #setRunningSceneState(entering) {
+  #setRunningSceneState(entering: boolean): void {
     if (!this.#runningScene) {
       return;
     }
@@ -340,7 +342,7 @@ export default class Director extends BaseClass {
       : this.#performSceneActions(this.#runningScene, this.#sendCleanupToScene);
   }
 
-  #performSceneActions(scene, cleanup = true) {
+  #performSceneActions(scene: Scene, cleanup = true): void {
     if (scene.running) {
       scene._performRecursive(Node._stateCallbackType.onExitTransitionDidStart);
       scene._performRecursive(Node._stateCallbackType.onExit);
@@ -351,26 +353,26 @@ export default class Director extends BaseClass {
     }
   }
 
-  #enterScene(scene) {
+  #enterScene(scene: Scene): void {
     scene._performRecursive(Node._stateCallbackType.onEnter);
     scene._performRecursive(Node._stateCallbackType.onEnterTransitionDidFinish);
   }
 
-  #onProjectionChange() {
+  #onProjectionChange(): void {
     for (let i = 0; i < this.#scenesStack.length; ++i) {
       Director.recursiveChild(this.#scenesStack[i]);
     }
   }
 
-  #onGameShow() {
+  #onGameShow(): void {
     this.#lastUpdate = Date.now();
   }
 
-  get animationEnabled() {
+  get animationEnabled(): boolean {
     return this.#animationEnabled;
   }
 
-  set animationEnabled(enabled) {
+  set animationEnabled(enabled: boolean) {
     if (this.#animationEnabled === enabled) {
       return;
     }
@@ -380,27 +382,27 @@ export default class Director extends BaseClass {
     }
   }
 
-  get deltaTime() {
+  get deltaTime(): number {
     return this.#deltaTime;
   }
 
-  get totalFrames() {
+  get totalFrames(): number {
     return this.#totalFrames;
   }
 
-  get sendCleanupToScene() {
+  get sendCleanupToScene(): boolean {
     return this.#sendCleanupToScene;
   }
 
-  get runningScene() {
+  get runningScene(): Scene | null {
     return this.#runningScene;
   }
 
-  get animationInterval() {
+  get animationInterval(): number {
     return this.#animationInterval;
   }
 
-  set animationInterval(value) {
+  set animationInterval(value: number) {
     this.#animationInterval = value;
     if (this.animationEnabled) {
       this.animationEnabled = false;
@@ -408,23 +410,23 @@ export default class Director extends BaseClass {
     }
   }
 
-  get secondsPerFrame() {
+  get secondsPerFrame(): number {
     return this.#secondsPerFrame;
   }
 
-  get nextDeltaTimeZero() {
+  get nextDeltaTimeZero(): boolean {
     return this.#nextDeltaTimeZero;
   }
 
-  set nextDeltaTimeZero(nextDeltaTimeZero) {
+  set nextDeltaTimeZero(nextDeltaTimeZero: boolean) {
     this.#nextDeltaTimeZero = nextDeltaTimeZero;
   }
 
-  get paused() {
+  get paused(): boolean {
     return this.#paused;
   }
 
-  set paused(paused) {
+  set paused(paused: boolean) {
     if (this.#paused === paused) {
       return;
     }
@@ -441,11 +443,11 @@ export default class Director extends BaseClass {
     }
   }
 
-  get notificationNode() {
+  get notificationNode(): Scene | null {
     return this.#notificationNode;
   }
 
-  set notificationNode(node) {
+  set notificationNode(node: Scene | null) {
     this.#sys.rendererConfig.renderer.childrenOrderDirty = true;
     if (this.#notificationNode) {
       this.#performSceneActions(this.#notificationNode);
@@ -456,14 +458,15 @@ export default class Director extends BaseClass {
     if (!node) {
       return;
     }
-    this.#enterScene(this.#notificationNode);
+    
+    this.#enterScene(this.#notificationNode!);
   }
 
-  static recursiveChild(node) {
+  static recursiveChild(node: Scene): void {
     if (node && node._renderCmd) {
       node._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
-      var children = node._children;
-      for (var i = 0; i < children.length; i++) {
+      const children = node._children;
+      for (let i = 0; i < children.length; i++) {
         Director.recursiveChild(children[i]);
       }
     }

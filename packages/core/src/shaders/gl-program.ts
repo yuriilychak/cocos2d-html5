@@ -155,10 +155,10 @@ export default class GLProgram extends BaseClass {
     vShaderFilename: string,
     fShaderFileName: string
   ): boolean {
-    const vertexSource = ServiceLocator.loader.get(vShaderFilename);
+    const vertexSource = ServiceLocator.loader.get<string>(vShaderFilename);
     if (!vertexSource)
       throw new Error("Please load the resource firset : " + vShaderFilename);
-    const fragmentSource = ServiceLocator.loader.get(fShaderFileName);
+    const fragmentSource = ServiceLocator.loader.get<string>(fShaderFileName);
     if (!fragmentSource)
       throw new Error("Please load the resource firset : " + fShaderFileName);
     return this.initWithVertexShaderByteArray(vertexSource, fragmentSource);
@@ -576,8 +576,8 @@ export default class GLProgram extends BaseClass {
     this.setUniformLocationWithMatrix4fv(
       this.#uniform(UniformName.MVPMATRIX),
       Matrix4.getMultiplyValue(
-        ServiceLocator.kmglMatrix.projectionStack.top,
-        ServiceLocator.kmglMatrix.modelViewStack.top
+        ServiceLocator.kmglMatrix.projectionStack!.top!,
+        ServiceLocator.kmglMatrix.modelViewStack!.top!
       )
     );
   }
@@ -585,8 +585,8 @@ export default class GLProgram extends BaseClass {
   setUniformForModelViewProjectionMatrixWithMat4(swapMat4: Matrix4): void {
     Matrix4.multiply(
       swapMat4,
-      ServiceLocator.kmglMatrix.projectionStack.top,
-      ServiceLocator.kmglMatrix.modelViewStack.top
+      ServiceLocator.kmglMatrix.projectionStack!.top!,
+      ServiceLocator.kmglMatrix.modelViewStack!.top!
     );
     this.setUniformLocationWithMatrix4fv(
       this.#uniform(UniformName.MVPMATRIX),
@@ -597,11 +597,11 @@ export default class GLProgram extends BaseClass {
   setUniformForModelViewAndProjectionMatrixWithMat4(): void {
     this.setUniformLocationWithMatrix4fv(
       this.#uniform(UniformName.MVMATRIX),
-      ServiceLocator.kmglMatrix.modelViewStack.top.mat
+      ServiceLocator.kmglMatrix.modelViewStack!.top!.mat
     );
     this.setUniformLocationWithMatrix4fv(
       this.#uniform(UniformName.PMATRIX),
-      ServiceLocator.kmglMatrix.projectionStack.top.mat
+      ServiceLocator.kmglMatrix.projectionStack!.top!.mat
     );
   }
 
@@ -617,17 +617,17 @@ export default class GLProgram extends BaseClass {
 
     this.setUniformLocationWithMatrix4fv(
       this.#uniform(UniformName.PMATRIX),
-      ServiceLocator.kmglMatrix.projectionStack.top.mat
+      ServiceLocator.kmglMatrix.projectionStack!.top!.mat
     );
   }
 
   updateProjectionUniform(): void {
-    const stack = ServiceLocator.kmglMatrix.projectionStack;
+    const stack = ServiceLocator.kmglMatrix.projectionStack!;
     if (stack.lastUpdated !== this.#projectionUpdated) {
       this.#context.uniformMatrix4fv(
         this.#uniform(UniformName.PMATRIX),
         false,
-        stack.top.mat
+        stack.top!.mat
       );
       this.#projectionUpdated = stack.lastUpdated;
     }
@@ -883,7 +883,7 @@ export default class GLProgram extends BaseClass {
         ctx.FRAGMENT_SHADER,
         ctx.HIGH_FLOAT
       );
-      GLProgram.#highpSupported = highp.precision !== 0;
+      GLProgram.#highpSupported = highp!.precision !== 0;
     }
     return GLProgram.#highpSupported;
   }

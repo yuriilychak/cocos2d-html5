@@ -30,7 +30,7 @@ import { ACTION_TAG_INVALID } from "../platform/macro/constants";
 import Scheduler from "../scheduler/scheduler";
 import HashElement from "./hash-element";
 import HashElementPool from "./hash-element-pool";
-import type { ActionLike, ActionTarget, SchedulerLike } from "./types";
+import type { ActionLike, ActionTarget } from "./types";
 
 /**
  * ActionManager is a class that can manage actions.<br/>
@@ -44,12 +44,12 @@ import type { ActionLike, ActionTarget, SchedulerLike } from "./types";
  * var mng = new ActionManager();
  */
 export default class ActionManager extends BaseClass {
-  #scheduler: SchedulerLike;
+  #scheduler: Scheduler;
   #elementPool: HashElementPool = new HashElementPool();
   #hashTargets: Map<number, HashElement> = new Map();
   #targets: HashElement[] = [];
 
-  constructor(scheduler: SchedulerLike) {
+  constructor(scheduler: Scheduler) {
     super();
     this.#scheduler = scheduler;
   }

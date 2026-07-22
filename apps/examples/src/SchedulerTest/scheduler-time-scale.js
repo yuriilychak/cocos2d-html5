@@ -138,7 +138,7 @@ export class SchedulerTimeScale extends SchedulerTestLayer {
       case Slider.EVENT_PERCENT_CHANGED:
         var slider = sender;
         var percent = (slider.getPercent() / 100.0) * 5;
-        this._newScheduler.setTimeScale(percent);
+        this._newScheduler.timeScale = percent;
         break;
       default:
         break;
@@ -150,7 +150,7 @@ export class SchedulerTimeScale extends SchedulerTestLayer {
       case Slider.EVENT_PERCENT_CHANGED:
         var slider = sender;
         var percent = (slider.getPercent() / 100.0) * 5;
-        ServiceLocator.scheduler.setTimeScale(percent);
+        ServiceLocator.scheduler.timeScale = percent;
         break;
       default:
         break;
@@ -158,7 +158,7 @@ export class SchedulerTimeScale extends SchedulerTestLayer {
   }
 
   onExit() {
-    ServiceLocator.scheduler.setTimeScale(1);
+        ServiceLocator.scheduler.timeScale = 1;
     // restore scale
     ServiceLocator.scheduler.unscheduleUpdate(this._newScheduler);
     super.onExit();

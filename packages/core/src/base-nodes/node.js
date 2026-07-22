@@ -2105,7 +2105,7 @@ export class Node extends BaseClass {
    * @function
    * @param {Node} parent
    */
-  visit(parent) {
+  visit(parent = null) {
     var cmd = this._renderCmd,
       parentCmd = parent ? parent._renderCmd : null;
 

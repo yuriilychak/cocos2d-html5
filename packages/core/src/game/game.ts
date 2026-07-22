@@ -1,9 +1,23 @@
 import { BaseClass, ENGINE_VERSION } from "../platform";
 import { EventHelper, EventCustom } from "../event-manager";
 import { ServiceLocator } from "../service-locator";
-import { initDebugSetting, log, Path } from "../boot";
-import { Sys, RendererConfig } from "../sys";
-import { CONFIG_KEY, GLVersion, GameEvent, UserRenderMode } from "../enums";
+import { initDebugSetting, Loader } from "../boot";
+import { Sys } from "../sys";
+import { CONFIG_KEY, GameEvent, UserRenderMode } from "../enums";
+import type { EGLView, InputManager } from "../platform";
+import type Director from "../director";
+import type EventManager from "../event-manager/event-manager";
+import type TextureCache from "../textures/texture-cache";
+
+type GameConfig = Record<string, any>;
+type GameCallback = () => void;
+type AnimationCallback = () => void;
+
+interface AudioEngine {
+  end(): void;
+  _pausePlaying(): void;
+  _resumePlaying(): void;
+}
 
 /**
  * An object to boot the game.
@@ -12,53 +26,54 @@ export default class Game extends EventHelper(BaseClass) {
   // states
   #paused = true;
   #initialized = false;
-  #intervalId = null;
+  #intervalId: number | null = null;
   #lastTime = 0;
   #frameTime = 0;
   #frameRate = 60;
   #debugMode = 0;
   #showFPS = false;
-  #requestAnimFrame = null;
-  #cancelAnimFrame = null;
+  #requestAnimFrame: ((callback: AnimationCallback) => number) | null = null;
+  #cancelAnimFrame: ((id: number) => void) | null = null;
   /**
    * Config of game
    * @type {Object}
    */
-  #config = null;
+  #config: GameConfig = {};
 
   /**
    * Callback when the scripts of engine have been load.
    * @type {Function|null}
    */
-  #onStart = null;
+  #onStart: GameCallback | null = null;
 
-  audioEngine = null;
+  audioEngine: AudioEngine | null = null;
+  rendererInitialized = false;
 
   /**
    * Callback when game exits.
    * @type {Function|null}
    */
-  #onStop = null;
+  #onStop: GameCallback | null = null;
 
-  #director;
-  #eglView;
-  #eventManager;
-  #inputManager;
-  #loader;
-  #sys;
-  #textureCache;
+  #director: Director;
+  #eglView: EGLView;
+  #eventManager: EventManager;
+  #inputManager: InputManager;
+  #loader: Loader;
+  #sys: Sys;
+  #textureCache: TextureCache;
 
-  #eventHide;
-  #eventShow;
+  #eventHide: EventCustom<Game>;
+  #eventShow: EventCustom<Game>;
 
   constructor(
-    sys,
-    loader,
-    eglView,
-    director,
-    eventManager,
-    inputManager,
-    textureCache
+    sys: Sys,
+    loader: Loader,
+    eglView: EGLView,
+    director: Director,
+    eventManager: EventManager,
+    inputManager: InputManager,
+    textureCache: TextureCache
   ) {
     super();
     this.#sys = sys;
@@ -75,7 +90,7 @@ export default class Game extends EventHelper(BaseClass) {
   /**
    * Restart game.
    */
-  restart() {
+  restart(): void {
     this.#director.popToSceneStackLevel(0);
     this.audioEngine && this.audioEngine.end();
     this.#handleStart();
@@ -84,7 +99,7 @@ export default class Game extends EventHelper(BaseClass) {
   /**
    * Close the game window.
    */
-  close() {
+  close(): void {
     if (this.#onStop) {
       this.#onStop();
     }
@@ -96,7 +111,7 @@ export default class Game extends EventHelper(BaseClass) {
    * @param {Object} [config] Pass configuration object or onStart function
    * @param {onStart} [onStart] onStart function to be executed after game initialized
    */
-  run(config, onStart = null, onStop = null) {
+  run(config: GameConfig, onStart: GameCallback | null = null, onStop: GameCallback | null = null): void {
     if (this.#initialized) {
       return;
     }
@@ -122,34 +137,34 @@ export default class Game extends EventHelper(BaseClass) {
   /**
    * Run the game frame by frame.
    */
-  step() {
+  step(): void {
     this.#director.mainLoop(this.#debugMode);
   }
 
-  #onHidden() {
+  #onHidden(): void {
     this.paused = true;
   }
 
-  #onShow() {
+  #onShow(): void {
     this.paused = false;
   }
 
-  #handleStart() {
+  #handleStart(): void {
     if (this.#onStart) {
       this.#onStart();
     }
   }
 
-  #initEngine() {
-    this.#sys.rendererConfig.determineRenderType(this.#config);
+  #initEngine(): void {
+    this.#sys.rendererConfig.determineRenderType(this.#config as Record<CONFIG_KEY, unknown>);
     initDebugSetting(this.#debugMode);
     console.log(ENGINE_VERSION);
   }
 
-  #setAnimFrame() {
+  #setAnimFrame(): void {
     const standardFrameRate = this.#frameRate === 60 || this.#frameRate === 30;
 
-    this.#lastTime = new Date();
+    this.#lastTime = Date.now();
     this.#frameTime = 1000 / this.#frameRate;
     this.#requestAnimFrame =
       standardFrameRate && window.requestAnimationFrame
@@ -161,42 +176,42 @@ export default class Game extends EventHelper(BaseClass) {
         : this.#ctTime;
   }
 
-  #stTime = (callback) => {
-    var currTime = new Date().getTime();
-    var timeToCall = Math.max(0, this.#frameTime - (currTime - this.#lastTime));
-    var id = window.setTimeout(() => {
+  #stTime = (callback: AnimationCallback): number => {
+    const currTime = Date.now();
+    const timeToCall = Math.max(0, this.#frameTime - (currTime - this.#lastTime));
+    const id = window.setTimeout(() => {
       callback();
     }, timeToCall);
     this.#lastTime = currTime + timeToCall;
     return id;
   };
 
-  #ctTime = (id) => {
+  #ctTime = (id: number): void => {
     window.clearTimeout(id);
   };
 
-  #runMainLoop() {
+  #runMainLoop(): void {
     let skip = true;
 
     const callback = () => {
       if (!this.#paused) {
         if (this.#frameRate === 30) {
           if ((skip = !skip)) {
-            this.#intervalId = this.#requestAnimFrame(callback);
+            this.#intervalId = this.#requestAnimFrame!(callback);
             return;
           }
         }
 
         this.#director.mainLoop(this.#debugMode);
-        this.#intervalId = this.#requestAnimFrame(callback);
+        this.#intervalId = this.#requestAnimFrame!(callback);
       }
     };
 
-    this.#intervalId = this.#requestAnimFrame(callback);
+    this.#intervalId = this.#requestAnimFrame!(callback);
     this.#paused = false;
   }
 
-  #initConfig(value) {
+  #initConfig(value: GameConfig): void {
     this.#config = value;
     this.#showFPS = this.#config[CONFIG_KEY.showFPS] ?? true;
     this.#config[CONFIG_KEY.engineDir] =
@@ -213,7 +228,7 @@ export default class Game extends EventHelper(BaseClass) {
     this.#loader.setNoCache(!!this.#config["noCache"]);
   }
 
-  #initRenderer() {
+  #initRenderer(): void {
     if (!this.#sys.rendererConfig.supportRenderer) {
       throw new Error(
         "The renderer doesn't support the renderMode " +
@@ -236,7 +251,7 @@ export default class Game extends EventHelper(BaseClass) {
     this.#textureCache.initRenderer();
   }
 
-  #initEvents() {
+  #initEvents(): void {
     this.#eventManager.enabled = true;
 
     if (this.#config[CONFIG_KEY.registerSystemEvent])
@@ -255,19 +270,19 @@ export default class Game extends EventHelper(BaseClass) {
     window.addEventListener("pageshow", showCallback, false);
   }
 
-  get frameRate() {
+  get frameRate(): number {
     return this.#frameRate;
   }
 
-  get debugMode() {
+  get debugMode(): number {
     return this.#debugMode;
   }
 
-  get showFPS() {
+  get showFPS(): boolean {
     return this.#showFPS;
   }
 
-  set showFPS(value) {
+  set showFPS(value: boolean) {
     this.#showFPS = !!value;
 
     if (!ServiceLocator.eglView?.container) {
@@ -281,11 +296,11 @@ export default class Game extends EventHelper(BaseClass) {
    * Set frameRate of game.
    * @param frameRate
    */
-  set frameRate(frameRate) {
+  set frameRate(frameRate: number) {
     this.#frameRate = frameRate;
 
     if (this.#intervalId) {
-      this.#cancelAnimFrame(this.#intervalId);
+      this.#cancelAnimFrame!(this.#intervalId);
     }
 
     this.#intervalId = 0;
@@ -294,7 +309,7 @@ export default class Game extends EventHelper(BaseClass) {
     this.#runMainLoop();
   }
 
-  get config() {
+  get config(): GameConfig {
     return this.#config;
   }
 
@@ -302,7 +317,7 @@ export default class Game extends EventHelper(BaseClass) {
    * Set whether the game is paused.
    * @param paused
    */
-  set paused(paused) {
+  set paused(paused: boolean) {
     if (this.#paused === paused) {
       return;
     }
@@ -316,7 +331,7 @@ export default class Game extends EventHelper(BaseClass) {
 
     if (paused) {
       if (this.#intervalId) {
-        this.#cancelAnimFrame(this.#intervalId);
+        this.#cancelAnimFrame!(this.#intervalId);
       }
 
       this.#intervalId = 0;
@@ -332,7 +347,7 @@ export default class Game extends EventHelper(BaseClass) {
   /**
    * Check whether the game is paused.
    */
-  get paused() {
+  get paused(): boolean {
     return this.#paused;
   }
 }
