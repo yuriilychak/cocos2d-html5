@@ -25,7 +25,6 @@
  ****************************************************************************/
 
 import { BaseClass } from "./platform/class";
-import Scheduler from "./scheduler/scheduler";
 import { ActionManager } from "./action-manager";
 import EventCustom from "./event-manager/event/event-custom";
 import { Node } from "./base-nodes/node";
@@ -105,11 +104,7 @@ export default class Director extends BaseClass {
 
     this.#lastUpdate = Date.now();
 
-    this.#scheduler.scheduleUpdate(
-      this.#actionManager,
-      Scheduler.PRIORITY_SYSTEM,
-      false
-    );
+    this.#actionManager.scheduleUpdate();
 
     if (!this.#sys.rendererConfig.isCanvas) {
       this.#fpsImage = new Image();

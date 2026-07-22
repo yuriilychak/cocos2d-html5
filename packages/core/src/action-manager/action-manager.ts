@@ -27,6 +27,7 @@
 import { BaseClass } from "../platform/class";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import { ACTION_TAG_INVALID } from "../platform/macro/constants";
+import Scheduler from "../scheduler/scheduler";
 import HashElement from "./hash-element";
 import HashElementPool from "./hash-element-pool";
 import type { ActionLike, ActionTarget, SchedulerLike } from "./types";
@@ -195,6 +196,10 @@ export default class ActionManager extends BaseClass {
 
   purgeSharedManager(): void {
     this.#scheduler.unscheduleUpdate(this);
+  }
+
+  scheduleUpdate(): void {
+    this.#scheduler.scheduleUpdate(this, Scheduler.PRIORITY_SYSTEM, false);
   }
 
   update(dt: number): void {

@@ -14,5 +14,10 @@ export interface ActionLike {
 }
 
 export interface SchedulerLike {
+  scheduleUpdate(
+    target: { update(dt: number): void },
+    priority: number,
+    paused: boolean
+  ): void;
   unscheduleUpdate(target: { update(dt: number): void }): void;
 }
