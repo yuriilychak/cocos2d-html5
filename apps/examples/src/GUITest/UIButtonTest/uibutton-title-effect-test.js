@@ -31,7 +31,7 @@ import { Button } from "@aspect/ccui";
 export class UIButtonTitleEffectTest extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
 
       // Add a label in which the button events will be displayed
       this._topDisplayLabel.string = "Button Title Effect";

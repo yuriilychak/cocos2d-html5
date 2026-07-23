@@ -315,7 +315,7 @@ export class Sprite extends EventHelper(Node) {
   setFlippedX(flippedX) {
     if (this._flippedX !== flippedX) {
       this._flippedX = flippedX;
-      this.setTextureRect(this._rect, this._rectRotated, this._contentSize);
+      this.setTextureRect(this._rect, this._rectRotated, this.contentSize);
       this.setNodeDirty(true);
     }
   }
@@ -327,7 +327,7 @@ export class Sprite extends EventHelper(Node) {
   setFlippedY(flippedY) {
     if (this._flippedY !== flippedY) {
       this._flippedY = flippedY;
-      this.setTextureRect(this._rect, this._rectRotated, this._contentSize);
+      this.setTextureRect(this._rect, this._rectRotated, this.contentSize);
       this.setNodeDirty(true);
     }
   }
@@ -735,9 +735,9 @@ export class Sprite extends EventHelper(Node) {
     if (_t._flippedY) relativeOffsetY = -relativeOffsetY;
     var locRect = _t._rect;
     _t._offsetPosition.x =
-      relativeOffsetX + (_t._contentSize.width - locRect.width) / 2;
+      relativeOffsetX + (_t.width - locRect.width) / 2;
     _t._offsetPosition.y =
-      relativeOffsetY + (_t._contentSize.height - locRect.height) / 2;
+      relativeOffsetY + (_t.height - locRect.height) / 2;
   }
 
   // BatchNode methods
@@ -839,7 +839,7 @@ export class Sprite extends EventHelper(Node) {
       rectPointsToPixels(this._rect),
       this._rectRotated,
       pointPointsToPixels(this._unflippedOffsetPositionFromCenter),
-      sizePointsToPixels(this._contentSize)
+      sizePointsToPixels(this.contentSize)
     );
   }
 

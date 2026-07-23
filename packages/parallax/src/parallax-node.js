@@ -86,10 +86,8 @@ export class ParallaxNode extends Node {
     obj.setChild(child);
     this.parallaxArray.push(obj);
 
-    child.setPosition(
-      this._position.x * ratio.x + offset.x,
-      this._position.y * ratio.y + offset.y
-    );
+    child.x = this.x * ratio.x + offset.x;
+    child.y = this.y * ratio.y + offset.y;
 
     super.addChild(child, z, child.tag);
   }
@@ -140,7 +138,7 @@ export class ParallaxNode extends Node {
   }
 
   _absolutePosition() {
-    var ret = this._position;
+    var ret = this.position;
     var cn = this;
     while (cn.parent !== null) {
       cn = cn.parent;

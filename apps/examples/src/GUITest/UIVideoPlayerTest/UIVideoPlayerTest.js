@@ -37,7 +37,7 @@ export class UIVideoPlayerTest extends UIMainLayer {
     window.video = video;
     this.addChild(video);
 
-    var widgetSize = this._widget.getContentSize();
+    var widgetSize = this._widget.contentSize;
     var playState = this._topDisplayLabel;
     playState.string = "Press buttons to start";
     playState.y = widgetSize.height / 2.0 + playState.height * 1.5;

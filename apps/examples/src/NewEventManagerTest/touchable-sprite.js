@@ -79,7 +79,7 @@ export class TouchableSprite extends ImageView {
       swallowTouches: true,
       onTouchBegan: function (touch, event) {
         var locationInNode = selfPointer.convertToNodeSpace(touch);
-        var s = selfPointer.getContentSize();
+        var s = selfPointer.contentSize;
         var rect = new Rect(0, 0, s.width, s.height);
 
         if (Rect.containsPoint(rect, locationInNode)) {

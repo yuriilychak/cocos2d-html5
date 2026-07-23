@@ -32,17 +32,14 @@ import { Text } from "@aspect/ccui";
 export class UITextTest extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
 
       this._bottomDisplayLabel.string = "Text";
 
       // Create the text
       var text = new Text("Text", "AmericanTypewriter", 30);
       text.setPosition(
-        new Point(
-          widgetSize.width / 2,
-          widgetSize.height / 2 + text.height / 4
-        )
+        new Point(widgetSize.width / 2, widgetSize.height / 2 + text.height / 4)
       );
       this._mainNode.addChild(text);
 

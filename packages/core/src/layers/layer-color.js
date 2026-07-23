@@ -132,22 +132,6 @@ export class LayerColor extends Layer {
     this._renderCmd.updateBlendFunc(locBlendFunc);
   }
 
-  get width() {
-    return this._getWidth();
-  }
-
-  set width(value) {
-    this._setWidth(value);
-  }
-
-  get height() {
-    return this._getHeight();
-  }
-
-  set height(value) {
-    this._setHeight(value);
-  }
-
   _createRenderCmd() {
     if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new LayerColorCanvasRenderer(this);

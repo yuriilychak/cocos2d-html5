@@ -31,10 +31,11 @@ import { ImageView, Layout, ScrollView } from "@aspect/ccui";
 export class UIScrollViewTest_ScrollToPercentBothDirection extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
       //init text
       this._topDisplayLabel.string = "";
-      this._bottomDisplayLabel.string = "ScrollView scroll to percent both directrion";
+      this._bottomDisplayLabel.string =
+        "ScrollView scroll to percent both directrion";
       this._bottomDisplayLabel.x = widgetSize.width / 2;
       this._bottomDisplayLabel.y =
         widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
@@ -47,12 +48,10 @@ export class UIScrollViewTest_ScrollToPercentBothDirection extends UIMainLayer {
       scrollView.setDirection(ScrollView.DIR_BOTH);
       scrollView.setInnerContainerSize(new Size(480, 320));
       scrollView.setContentSize(new Size(100, 100));
-      var scrollViewSize = scrollView.getContentSize();
+      var scrollViewSize = scrollView.contentSize;
 
-      scrollView.x =
-        (widgetSize.width - scrollViewSize.width) / 2;
-      scrollView.y =
-        (widgetSize.height - scrollViewSize.height) / 2;
+      scrollView.x = (widgetSize.width - scrollViewSize.width) / 2;
+      scrollView.y = (widgetSize.height - scrollViewSize.height) / 2;
       scrollView.scrollToPercentBothDirection(new Point(50, 50), 1, true);
 
       this._mainNode.addChild(scrollView);

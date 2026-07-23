@@ -36,10 +36,10 @@ export class WidgetCanvasRenderCmd extends ProtectedNodeCanvasRenderCmd {
       if (!this._usingLayoutComponent) {
         var widgetParent = node.widgetParent;
         if (widgetParent) {
-          var parentSize = widgetParent.getContentSize();
+          var parentSize = widgetParent.contentSize;
           if (parentSize.width !== 0 && parentSize.height !== 0) {
-            node._position.x = parentSize.width * node._positionPercent.x;
-            node._position.y = parentSize.height * node._positionPercent.y;
+            node.x = parentSize.width * node._positionPercent.x;
+            node.y = parentSize.height * node._positionPercent.y;
           }
         }
       }
@@ -86,10 +86,9 @@ export class WidgetWebGLRenderCmd extends ProtectedNodeWebGLRenderCmd {
       if (!this._usingLayoutComponent) {
         var widgetParent = node.widgetParent;
         if (widgetParent) {
-          var parentSize = widgetParent.getContentSize();
-          if (parentSize.width !== 0 && parentSize.height !== 0) {
-            node._position.x = parentSize.width * node._positionPercent.x;
-            node._position.y = parentSize.height * node._positionPercent.y;
+          if (widgetParent.width !== 0 && widgetParent.height !== 0) {
+            node.x = widgetParent.width * node._positionPercent.x;
+            node.y = widgetParent.height * node._positionPercent.y;
           }
         }
       }

@@ -152,8 +152,8 @@ export const LabelRenderMixin = (Base) =>
       const node = this._node;
       localBB.x = localBB.y = 0;
       const pixelRatio = ServiceLocator.eglView.devicePixelRatio;
-      localBB.width = node._getWidth() * pixelRatio;
-      localBB.height = node._getHeight() * pixelRatio;
+      localBB.width = node.width * pixelRatio;
+      localBB.height = node.height * pixelRatio;
       return localBB;
     }
 
@@ -278,7 +278,7 @@ export const LabelRenderMixin = (Base) =>
       const locStrokeShadowOffsetX = node._strokeShadowOffsetX,
         locStrokeShadowOffsetY = node._strokeShadowOffsetY;
       const locContentSizeHeight =
-          node._contentSize.height - locStrokeShadowOffsetY,
+          node.height - locStrokeShadowOffsetY,
         locVAlignment = node._vAlignment,
         locHAlignment = node._hAlignment;
       const dx = locStrokeShadowOffsetX * 0.5,
@@ -286,7 +286,7 @@ export const LabelRenderMixin = (Base) =>
       let xOffset = 0,
         yOffset = 0;
       const OffsetYArray = [];
-      const locContentWidth = node._contentSize.width - locStrokeShadowOffsetX;
+      const locContentWidth = node.width - locStrokeShadowOffsetX;
 
       //lineHeight
       const lineHeight = node.getLineHeight() * scale;
@@ -504,7 +504,7 @@ export const CacheLabelRenderMixin = (Base) =>
         (this._dirtyFlag & Node._dirtyFlags.textDirty) ^ this._dirtyFlag;
       const node = this._node;
       node._needUpdateTexture = false;
-      const locContentSize = node._contentSize;
+      const locContentSize = node.contentSize;
       this._updateTTF();
       const width = locContentSize.width,
         height = locContentSize.height;
@@ -582,7 +582,7 @@ export class CanvasRenderCmd extends LabelRenderMixin(SpriteCanvasRenderCmd) {
     this._dirtyFlag =
       (this._dirtyFlag & Node._dirtyFlags.textDirty) ^ this._dirtyFlag;
     const node = this._node;
-    const locContentSize = node._contentSize;
+    const locContentSize = node.contentSize;
     this._updateTTF();
     const width = locContentSize.width,
       height = locContentSize.height;

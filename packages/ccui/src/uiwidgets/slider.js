@@ -164,9 +164,9 @@ export class Slider extends Widget {
 
     this._barRendererAdaptDirty = true;
     this._progressBarRendererDirty = true;
-    this._updateContentSizeWithTextureSize(this._barRenderer.getContentSize());
+    this._updateContentSizeWithTextureSize(this._barRenderer.contentSize);
     this._findLayout();
-    this._barTextureSize = this._barRenderer.getContentSize();
+    this._barTextureSize = this._barRenderer.contentSize;
   }
 
   /**
@@ -208,7 +208,7 @@ export class Slider extends Widget {
     this._updateChildrenDisplayedRGBA();
 
     this._progressBarRenderer.setAnchorPoint(new Point(0, 0.5));
-    var tz = this._progressBarRenderer.getContentSize();
+    var tz = this._progressBarRenderer.contentSize;
     this._progressBarTextureSize = { width: tz.width, height: tz.height };
     this._progressBarRendererDirty = true;
     this._findLayout();
@@ -476,11 +476,9 @@ export class Slider extends Widget {
     this._percent = percent;
     var res = percent / 100.0;
     var dis = this._barLength * res;
-    this._slidBallRenderer.setPosition(dis, this._contentSize.height / 2);
+    this._slidBallRenderer.setPosition(dis, this.height / 2);
     if (this._scale9Enabled)
-      this._progressBarRenderer.setPreferredSize(
-        new Size(dis, this._contentSize.height)
-      );
+      this._progressBarRenderer.setPreferredSize(new Size(dis, this.height));
     else {
       var spriteRenderer = this._progressBarRenderer;
       var rect = spriteRenderer.getTextureRect();
@@ -499,7 +497,7 @@ export class Slider extends Widget {
    */
   hitTest(pt) {
     var nsp = this._slidBallNormalRenderer.convertToNodeSpace(pt);
-    var ballSize = this._slidBallNormalRenderer.getContentSize();
+    var ballSize = this._slidBallNormalRenderer.contentSize;
     var ballRect = new Rect(0, 0, ballSize.width, ballSize.height);
     return (
       nsp.x >= ballRect.x &&
@@ -606,7 +604,7 @@ export class Slider extends Widget {
    * @returns {Size}
    */
   getVirtualRendererSize() {
-    return this._barRenderer.getContentSize();
+    return this._barRenderer.contentSize;
   }
 
   /**
@@ -619,49 +617,46 @@ export class Slider extends Widget {
 
   _barRendererScaleChangedWithSize() {
     if (this._unifySize) {
-      this._barLength = this._contentSize.width;
-      this._barRenderer.setPreferredSize(this._contentSize);
+      this._barLength = this.width;
+      this._barRenderer.setPreferredSize(this.contentSize);
     } else if (this._ignoreSize) {
       this._barRenderer.scale = 1.0;
-      this._barLength = this._contentSize.width;
+      this._barLength = this.width;
     } else {
-      this._barLength = this._contentSize.width;
+      this._barLength = this.width;
       if (this._scale9Enabled) {
-        this._barRenderer.setPreferredSize(this._contentSize);
+        this._barRenderer.setPreferredSize(this.contentSize);
         this._barRenderer.scale = 1.0;
       } else {
         var btextureSize = this._barTextureSize;
         if (btextureSize.width <= 0.0 || btextureSize.height <= 0.0) {
           this._barRenderer.scale = 1.0;
         } else {
-          var bscaleX = this._contentSize.width / btextureSize.width;
-          var bscaleY = this._contentSize.height / btextureSize.height;
+          var bscaleX = this.width / btextureSize.width;
+          var bscaleY = this.height / btextureSize.height;
           this._barRenderer.scaleX = bscaleX;
           this._barRenderer.scaleY = bscaleY;
         }
       }
     }
-    this._barRenderer.setPosition(
-      this._contentSize.width / 2.0,
-      this._contentSize.height / 2.0
-    );
+    this._barRenderer.setPosition(this.width / 2.0, this.height / 2.0);
     this.setPercent(this._percent);
   }
 
   _progressBarRendererScaleChangedWithSize() {
     if (this._unifySize) {
-      this._progressBarRenderer.setPreferredSize(this._contentSize);
+      this._progressBarRenderer.setPreferredSize(this.contentSize);
     } else if (this._ignoreSize) {
       if (!this._scale9Enabled) {
         var ptextureSize = this._progressBarTextureSize;
-        var pscaleX = this._contentSize.width / ptextureSize.width;
-        var pscaleY = this._contentSize.height / ptextureSize.height;
+        var pscaleX = this.width / ptextureSize.width;
+        var pscaleY = this.height / ptextureSize.height;
         this._progressBarRenderer.scaleX = pscaleX;
         this._progressBarRenderer.scaleY = pscaleY;
       }
     } else {
       if (this._scale9Enabled) {
-        this._progressBarRenderer.setPreferredSize(this._contentSize);
+        this._progressBarRenderer.setPreferredSize(this.contentSize);
         this._progressBarRenderer.scale = 1;
       } else {
         var ptextureSize = this._progressBarTextureSize;
@@ -669,13 +664,13 @@ export class Slider extends Widget {
           this._progressBarRenderer.scale = 1.0;
           return;
         }
-        var pscaleX = this._contentSize.width / ptextureSize.width;
-        var pscaleY = this._contentSize.height / ptextureSize.height;
+        var pscaleX = this.width / ptextureSize.width;
+        var pscaleY = this.height / ptextureSize.height;
         this._progressBarRenderer.scaleX = pscaleX;
         this._progressBarRenderer.scaleY = pscaleY;
       }
     }
-    this._progressBarRenderer.setPosition(0.0, this._contentSize.height / 2.0);
+    this._progressBarRenderer.setPosition(0.0, this.height / 2.0);
     this.setPercent(this._percent);
   }
 

@@ -33,7 +33,7 @@ import { TextField } from "@aspect/ccui";
 export class UITextFieldTest_PlaceHolderColor extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
 
       // Add a label in which the textfield events will be displayed
       this._topDisplayLabel.string = "Set place hold color";
@@ -66,7 +66,7 @@ export class UITextFieldTest_PlaceHolderColor extends UIMainLayer {
   }
 
   textFieldEvent(textField, type) {
-    var widgetSize = this._widget.getContentSize();
+    var widgetSize = this._widget.contentSize;
     switch (type) {
       case TextField.EVENT_ATTACH_WITH_IME:
         textField.runAction(

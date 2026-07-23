@@ -33,10 +33,11 @@ export class UIButtonTestRemoveSelf extends UIMainLayer {
     if (super.init()) {
       //init text
       this._topDisplayLabel.string = "No Event";
-      this._bottomDisplayLabel.string = "Remove Self in the Button's Callback shouldn't cause crash!";
+      this._bottomDisplayLabel.string =
+        "Remove Self in the Button's Callback shouldn't cause crash!";
       this._bottomDisplayLabel.setFontSize(15);
 
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
 
       var layout = new Layout();
       layout.setContentSize(widgetSize.width * 0.6, widgetSize.height * 0.6);

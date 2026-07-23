@@ -31,7 +31,7 @@ import { Button, Text } from "@aspect/ccui";
 export class UIButtonDisableDefaultTest extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
 
       this._topDisplayLabel.string = "";
       this._bottomDisplayLabel.string = "";

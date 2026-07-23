@@ -69,7 +69,7 @@ export class ControlSaturationBrightnessPicker extends Control {
       );
       this._startPos = pos;
       this._boxPos = 35;
-      this._boxSize = this._background.getContentSize().width / 2;
+      this._boxSize = this._background.width / 2;
       return true;
     }
     return false;

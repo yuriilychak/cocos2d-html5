@@ -31,18 +31,14 @@ import { Button, Text } from "@aspect/ccui";
 export class UIButtonNormalDefaultTest extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
 
       // Add a label in which the button events will be displayed
       this._topDisplayLabel.string = "";
       this._bottomDisplayLabel.string = "";
 
       // Add the alert
-      var alert = new Text(
-        "Button should scale when clicked",
-        "Arial",
-        20
-      );
+      var alert = new Text("Button should scale when clicked", "Arial", 20);
       alert.color = new Color(159, 168, 176);
       alert.setPosition(
         widgetSize.width / 2.0,

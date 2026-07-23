@@ -31,7 +31,7 @@ import { ImageView, ScrollView } from "@aspect/ccui";
 export class UIScrollViewTest_Both extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
       //init text
       this._topDisplayLabel.string = "Move by any direction";
       this._topDisplayLabel.x = widgetSize.width / 2.0;
@@ -50,12 +50,10 @@ export class UIScrollViewTest_Both extends UIMainLayer {
       scrollView.setBackGroundImageScale9Enabled(true);
       scrollView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
       scrollView.setContentSize(new Size(210, 122));
-      var scrollViewSize = scrollView.getContentSize();
+      var scrollViewSize = scrollView.contentSize;
 
-      scrollView.x =
-        (widgetSize.width - scrollViewSize.width) / 2;
-      scrollView.y =
-        (widgetSize.height - scrollViewSize.height) / 2;
+      scrollView.x = (widgetSize.width - scrollViewSize.width) / 2;
+      scrollView.y = (widgetSize.height - scrollViewSize.height) / 2;
       this._mainNode.addChild(scrollView);
 
       var imageView = new ImageView();

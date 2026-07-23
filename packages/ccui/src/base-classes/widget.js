@@ -336,24 +336,31 @@ export class Widget extends ProtectedNode {
 
   _initRenderer() {}
 
+  get contentSize() {
+    return super.contentSize;
+  }
+
+  set contentSize(value) {
+    this.setContentSize(value);
+  }
+
   setContentSize(contentSize, height) {
     Node.prototype.setContentSize.call(this, contentSize, height);
 
-    var locWidth = this._contentSize.width;
-    var locHeight = this._contentSize.height;
+    var locWidth = this.width;
+    var locHeight = this.height;
 
-    this._customSize.width = locWidth;
-    this._customSize.height = locHeight;
+    this._customSize.set(this.contentSize);
     if (this._unifySize) {
       //unify size logic
     } else if (this._ignoreSize) {
-      this._contentSize = this.getVirtualRendererSize();
+      super.contentSize = this.getVirtualRendererSize();
     }
     if (!this._usingLayoutComponent && this._running) {
       var widgetParent = this.widgetParent;
       var pSize = widgetParent
-        ? widgetParent.getContentSize()
-        : this._parent.getContentSize();
+        ? widgetParent.contentSize
+        : this._parent.contentSize;
       this._sizePercent.x = pSize.width > 0.0 ? locWidth / pSize.width : 0.0;
       this._sizePercent.y = pSize.height > 0.0 ? locHeight / pSize.height : 0.0;
     }
@@ -364,16 +371,20 @@ export class Widget extends ProtectedNode {
       this._sizeDirty = true;
     }
   }
-  _setWidth(w) {
-    if (w === this._contentSize.width) {
+  get width() {
+    return super.width;
+  }
+
+  set width(w) {
+    if (w === this.width) {
       return;
     }
-    Node.prototype._setWidth.call(this, w);
+    super.width = w;
     this._customSize.width = w;
     if (this._unifySize) {
       //unify size logic
     } else if (this._ignoreSize) {
-      this._contentSize = this.getVirtualRendererSize();
+      super.contentSize = this.getVirtualRendererSize();
     }
 
     if (!this._usingLayoutComponent && this._running) {
@@ -389,17 +400,21 @@ export class Widget extends ProtectedNode {
       this._sizeDirty = true;
     }
   }
-  _setHeight(h) {
-    if (h === this._contentSize.height) {
+  get height() {
+    return super.height;
+  }
+
+  set height(h) {
+    if (h === this.height) {
       return;
     }
 
-    Node.prototype._setHeight.call(this, h);
+    super.height = h;
     this._customSize.height = h;
     if (this._unifySize) {
       //unify size logic
     } else if (this._ignoreSize) {
-      this._contentSize = this.getVirtualRendererSize();
+      super.contentSize = this.getVirtualRendererSize();
     }
 
     if (!this._usingLayoutComponent && this._running) {
@@ -452,8 +467,7 @@ export class Widget extends ProtectedNode {
       width =
         (widgetParent ? widgetParent.width : this._parent.width) * percent;
     }
-    if (this._ignoreSize) this._setWidth(this.getVirtualRendererSize().width);
-    else this._setWidth(width);
+    this.width = this._ignoreSize ? this.getVirtualRendererSize().width : width;
     this._customSize.width = width;
   }
   _setHeightPercent(percent) {
@@ -464,16 +478,17 @@ export class Widget extends ProtectedNode {
       height =
         (widgetParent ? widgetParent.height : this._parent.height) * percent;
     }
-    if (this._ignoreSize) this._setHeight(this.getVirtualRendererSize().height);
-    else this._setHeight(height);
+    this.height = this._ignoreSize
+      ? this.getVirtualRendererSize().height
+      : height;
     this._customSize.height = height;
   }
 
   updateSizeAndPosition(parentSize) {
     if (!parentSize) {
       var widgetParent = this.widgetParent;
-      if (widgetParent) parentSize = widgetParent.getLayoutSize();
-      else parentSize = this._parent.getContentSize();
+      if (widgetParent) parentSize = widgetParent.contentSize;
+      else parentSize = this._parent.contentSize;
     }
 
     switch (this._sizeType) {
@@ -562,11 +577,11 @@ export class Widget extends ProtectedNode {
   }
 
   getCustomSize() {
-    return new Size(this._customSize);
+    return this._customSize.clone();
   }
 
   getLayoutSize() {
-    return new Size(this._contentSize);
+    return super.contentSize;
   }
 
   getSizePercent() {
@@ -586,8 +601,8 @@ export class Widget extends ProtectedNode {
   getWorldPosition() {
     return this.convertToWorldSpace(
       new Point(
-        this._anchorPoint.x * this._contentSize.width,
-        this._anchorPoint.y * this._contentSize.height
+        this._anchorPoint.x * this.width,
+        this._anchorPoint.y * this.height
       )
     );
   }
@@ -597,7 +612,7 @@ export class Widget extends ProtectedNode {
   }
 
   getVirtualRendererSize() {
-    return new Size(this._contentSize);
+    return this.contentSize;
   }
 
   _onSizeChanged() {
@@ -876,7 +891,7 @@ export class Widget extends ProtectedNode {
   }
 
   hitTest(pt) {
-    var bb = new Rect(0, 0, this._contentSize.width, this._contentSize.height);
+    var bb = new Rect(0, 0, this.width, this.height);
     return Rect.containsPoint(bb, this.convertToNodeSpace(pt));
   }
 
@@ -915,7 +930,7 @@ export class Widget extends ProtectedNode {
     if (!this._usingLayoutComponent && this._running) {
       var widgetParent = this.widgetParent;
       if (widgetParent) {
-        var pSize = widgetParent.getContentSize();
+        var pSize = widgetParent.contentSize;
         if (pSize.width <= 0 || pSize.height <= 0) {
           this._positionPercent.x = 0;
           this._positionPercent.y = 0;
@@ -1076,19 +1091,19 @@ export class Widget extends ProtectedNode {
   }
 
   getLeftBoundary() {
-    return this.x - this._getAnchorX() * this._contentSize.width;
+    return this.x - this._getAnchorX() * this.width;
   }
 
   getBottomBoundary() {
-    return this.y - this._getAnchorY() * this._contentSize.height;
+    return this.y - this._getAnchorY() * this.height;
   }
 
   getRightBoundary() {
-    return this.getLeftBoundary() + this._contentSize.width;
+    return this.getLeftBoundary() + this.width;
   }
 
   getTopBoundary() {
-    return this.getBottomBoundary() + this._contentSize.height;
+    return this.getBottomBoundary() + this.height;
   }
 
   getTouchBeganPosition() {
@@ -1151,7 +1166,7 @@ export class Widget extends ProtectedNode {
 
     this._ignoreSize = widget._ignoreSize;
 
-    this.setContentSize(widget._contentSize);
+    this.contentSize = widget.contentSize;
     this._customSize.width = widget._customSize.width;
     this._customSize.height = widget._customSize.height;
 
@@ -1169,8 +1184,8 @@ export class Widget extends ProtectedNode {
     this.scaleX = widget.scaleX;
     this.scaleY = widget.scaleY;
     this.rotation = widget.rotation;
-    this.setRotationX(widget.getRotationX());
-    this.setRotationY(widget.getRotationY());
+    this.rotationX = widget.rotationX;
+    this.rotationY = widget.rotationY;
     this.setFlippedX(widget.isFlippedX());
     this.setFlippedY(widget.isFlippedY());
     this.color = widget.color;
@@ -1251,7 +1266,7 @@ export class Widget extends ProtectedNode {
   }
 
   getSize() {
-    return this.getContentSize();
+    return this.contentSize;
   }
 
   addNode(node, zOrder, tag) {

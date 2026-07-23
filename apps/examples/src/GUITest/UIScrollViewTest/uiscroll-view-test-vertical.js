@@ -31,7 +31,7 @@ import { Button, ImageView, ScrollView } from "@aspect/ccui";
 export class UIScrollViewTest_Vertical extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
       //init text
       this._topDisplayLabel.string = "Move by vertical direction";
       this._topDisplayLabel.x = widgetSize.width / 2.0;
@@ -48,10 +48,8 @@ export class UIScrollViewTest_Vertical extends UIMainLayer {
       scrollView.setTouchEnabled(true);
       scrollView.setContentSize(new Size(280, 150));
 
-      scrollView.x =
-        (widgetSize.width - scrollView.width) / 2;
-      scrollView.y =
-        (widgetSize.height - scrollView.height) / 2;
+      scrollView.x = (widgetSize.width - scrollView.width) / 2;
+      scrollView.y = (widgetSize.height - scrollView.height) / 2;
       this._mainNode.addChild(scrollView);
 
       var imageView = new ImageView();

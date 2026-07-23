@@ -114,22 +114,18 @@ export class ListView extends ScrollView {
         var totalHeight =
           (length - 1) * this._itemsMargin + this._scrollPadding * 2;
         for (i = 0; i < length; i++) {
-          totalHeight += locItems[i].getContentSize().height;
+          totalHeight += locItems[i].height;
         }
-        this.setInnerContainerSize(
-          new Size(this._contentSize.width, totalHeight)
-        );
+        this.setInnerContainerSize(new Size(this.width, totalHeight));
         break;
       case ScrollView.DIR_HORIZONTAL:
         length = locItems.length;
         var totalWidth =
           (length - 1) * this._itemsMargin + this._scrollPadding * 2;
         for (i = 0; i < length; i++) {
-          totalWidth += locItems[i].getContentSize().width;
+          totalWidth += locItems[i].width;
         }
-        this.setInnerContainerSize(
-          new Size(totalWidth, this._contentSize.height)
-        );
+        this.setInnerContainerSize(new Size(totalWidth, this.height));
         break;
       default:
         break;
@@ -488,7 +484,7 @@ export class ListView extends ScrollView {
     var bottomBoundary = this._bottomBoundary;
 
     var lastItemIndex = this._items.length - 1;
-    var contentSize = this.getContentSize();
+    var contentSize = this.contentSize;
     var firstItemAdjustment = new Point();
     var lastItemAdjustment = new Point();
 
@@ -558,7 +554,7 @@ export class ListView extends ScrollView {
 
   _calculateItemPositionWithAnchor(item, itemAnchorPoint) {
     var origin = new Point(item.getLeftBoundary(), item.getBottomBoundary());
-    var size = item.getContentSize();
+    var size = item.contentSize;
 
     return new Point(
       origin.x + size.width * itemAnchorPoint.x,
@@ -677,7 +673,7 @@ export class ListView extends ScrollView {
    */
   getClosestItemToPositionInCurrentView(positionRatioInView, itemAnchorPoint) {
     // Calculate the target position
-    var contentSize = this.getContentSize();
+    var contentSize = this.contentSize;
     var targetPosition = Point.mult(this._innerContainer.getPosition(), -1);
     targetPosition.x += contentSize.width * positionRatioInView.x;
     targetPosition.y += contentSize.height * positionRatioInView.y;
@@ -757,7 +753,7 @@ export class ListView extends ScrollView {
   }
 
   _calculateItemDestination(positionRatioInView, item, itemAnchorPoint) {
-    var contentSize = this.getContentSize();
+    var contentSize = this.contentSize;
     var positionInView = new Point();
     positionInView.x += contentSize.width * positionRatioInView.x;
     positionInView.y += contentSize.height * positionRatioInView.y;

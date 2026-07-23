@@ -31,7 +31,7 @@ import { Button, Slider } from "@aspect/ccui";
 export class UIButtonTestZoomScale extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
 
       // Add a label in which the button events will be displayed
       this._topDisplayLabel.string = "Zoom Scale: -0.5";
@@ -45,9 +45,7 @@ export class UIButtonTestZoomScale extends UIMainLayer {
       button.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0);
       button.setPressedActionEnabled(true);
       button.addClickEventListener(function () {
-        log(
-          "Button clicked, position = (" + button.x + ", " + button.y + ")"
-        );
+        log("Button clicked, position = (" + button.x + ", " + button.y + ")");
       });
       button.name = "button";
       this._mainNode.addChild(button);

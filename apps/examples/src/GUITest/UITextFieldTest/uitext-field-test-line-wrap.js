@@ -26,14 +26,19 @@
 
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
-import { Color, Point, TextAlignment, VerticalTextAlignment } from "@aspect/core";
+import {
+  Color,
+  Point,
+  TextAlignment,
+  VerticalTextAlignment
+} from "@aspect/core";
 import { MoveTo } from "@aspect/actions";
 import { Text, TextField } from "@aspect/ccui";
 
 export class UITextFieldTest_LineWrap extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
 
       // Add a label in which the textfield events will be displayed
       this._topDisplayLabel.string = "No Event";
@@ -70,7 +75,7 @@ export class UITextFieldTest_LineWrap extends UIMainLayer {
   }
 
   textFieldEvent(textField, type) {
-    var widgetSize = this._widget.getContentSize();
+    var widgetSize = this._widget.contentSize;
     switch (type) {
       case TextField.EVENT_ATTACH_WITH_IME:
         textField.runAction(

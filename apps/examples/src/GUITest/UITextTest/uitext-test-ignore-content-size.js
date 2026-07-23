@@ -31,7 +31,7 @@ import { Button, Text } from "@aspect/ccui";
 export class UITextTest_IgnoreContentSize extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
 
       this._bottomDisplayLabel.string = "";
 
@@ -41,7 +41,8 @@ export class UITextTest_IgnoreContentSize extends UIMainLayer {
       );
       leftText.ignoreContentAdaptWithSize(false);
       leftText.setTextAreaSize(new Size(60, 60));
-      leftText.string = "Text line with break\nText line with break\nText line with break\nText line with break\n";
+      leftText.string =
+        "Text line with break\nText line with break\nText line with break\nText line with break\n";
       leftText.setTouchScaleChangeEnabled(true);
       leftText.setTouchEnabled(true);
       this._mainNode.addChild(leftText);
@@ -50,7 +51,8 @@ export class UITextTest_IgnoreContentSize extends UIMainLayer {
       rightText.setPosition(
         new Point(widgetSize.width / 2 + 50, widgetSize.height / 2)
       );
-      rightText.string = "Text line with break\nText line with break\nText line with break\nText line with break\n";
+      rightText.string =
+        "Text line with break\nText line with break\nText line with break\nText line with break\n";
       //note: setTextAreaSize must be used with ignoreContentAdaptWithSize(false)
       rightText.setTextAreaSize(new Size(100, 30));
       rightText.ignoreContentAdaptWithSize(false);

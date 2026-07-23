@@ -26,29 +26,24 @@
  ****************************************************************************/
 import { Node } from "@aspect/core";
 
-
 export class Lens3DTarget extends Node {
+  constructor() {
+    super();
 
-    constructor() {
-        super();
+    this._lens3D = null;
+    this.init();
+  }
 
+  update(dt) {
+    this._lens3D.setPosition(this.position);
+  }
+  onEnter() {
+    super.onEnter();
+    this.scheduleUpdate();
+  }
 
-        this._lens3D = null;
-        this.init();
-    }
-
-    update(dt) {
-        this._lens3D.setPosition(this._position);
-    }
-    onEnter() {
-        super.onEnter();
-        this.scheduleUpdate();
-    }
-
-    onExit() {
-        super.onExit();
-        this.unscheduleUpdate();
-    }
-
-
+  onExit() {
+    super.onExit();
+    this.unscheduleUpdate();
+  }
 }

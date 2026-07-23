@@ -21,8 +21,7 @@ export class PhysicsSprite extends Sprite {
     } else if (isString(fileName)) {
       if (fileName[0] === "#") {
         var frameName = fileName.substr(1, fileName.length - 1);
-        var spriteFrame =
-          ServiceLocator.spriteFrameCache.get(frameName);
+        var spriteFrame = ServiceLocator.spriteFrameCache.get(frameName);
         this.initWithSpriteFrame(spriteFrame);
       } else {
         this.init(fileName, rect);
@@ -100,16 +99,14 @@ export class PhysicsSprite extends Sprite {
   }
 
   _syncPosition() {
-    var locPosition = this._position,
-      locBody = this._body;
-    if (locPosition.x !== locBody.p.x || locPosition.y !== locBody.p.y) {
-      Sprite.prototype.setPosition.call(this, locBody.p.x, locBody.p.y);
+    if (super.x !== this.x || super.y !== this.y) {
+      super.position = this._body.p;
     }
   }
 
   get rotation() {
     return this._ignoreBodyRotation
-      ? this._rotationX
+      ? this.rotationX
       : -radiansToDegrees(this._body.a);
   }
 
@@ -123,7 +120,7 @@ export class PhysicsSprite extends Sprite {
 
   _syncRotation() {
     var a = -radiansToDegrees(this._body.a);
-    if (this._rotationX !== a) {
+    if (this.rotationX !== a) {
       Sprite.prototype.setRotation.call(this, a);
     }
   }

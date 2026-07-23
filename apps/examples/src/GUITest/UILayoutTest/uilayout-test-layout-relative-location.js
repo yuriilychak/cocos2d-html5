@@ -31,7 +31,7 @@ import { ImageView, Layout, RelativeLayoutParameter, Text } from "@aspect/ccui";
 export class UILayoutTest_Layout_Relative_Location extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
 
       // Add the alert
       var alert = new Text("Layout Relative Location", "Marker Felt", 20);
@@ -53,9 +53,7 @@ export class UILayoutTest_Layout_Relative_Location extends UIMainLayer {
       this._mainNode.addChild(layout);
 
       // center
-      var imageView_Center = new ImageView(
-        "ccs-res/cocosui/scrollviewbg.png"
-      );
+      var imageView_Center = new ImageView("ccs-res/cocosui/scrollviewbg.png");
       layout.addChild(imageView_Center);
       var rp_Center = new RelativeLayoutParameter();
       rp_Center.setRelativeName("rp_Center");
@@ -69,9 +67,7 @@ export class UILayoutTest_Layout_Relative_Location extends UIMainLayer {
       layout.addChild(imageView_AboveCenter);
       var rp_AboveCenter = new RelativeLayoutParameter();
       rp_AboveCenter.relativeToWidgetName = "rp_Center";
-      rp_AboveCenter.setAlign(
-        RelativeLayoutParameter.LOCATION_ABOVE_CENTER
-      );
+      rp_AboveCenter.setAlign(RelativeLayoutParameter.LOCATION_ABOVE_CENTER);
       imageView_AboveCenter.setLayoutParameter(rp_AboveCenter);
 
       // below center
@@ -81,9 +77,7 @@ export class UILayoutTest_Layout_Relative_Location extends UIMainLayer {
       layout.addChild(imageView_BelowCenter);
       var rp_BelowCenter = new RelativeLayoutParameter();
       rp_BelowCenter.relativeToWidgetName = "rp_Center";
-      rp_BelowCenter.setAlign(
-        RelativeLayoutParameter.LOCATION_BELOW_CENTER
-      );
+      rp_BelowCenter.setAlign(RelativeLayoutParameter.LOCATION_BELOW_CENTER);
       imageView_BelowCenter.setLayoutParameter(rp_BelowCenter);
 
       // left center
@@ -93,9 +87,7 @@ export class UILayoutTest_Layout_Relative_Location extends UIMainLayer {
       layout.addChild(imageView_LeftCenter);
       var rp_LeftCenter = new RelativeLayoutParameter();
       rp_LeftCenter.relativeToWidgetName = "rp_Center";
-      rp_LeftCenter.setAlign(
-        RelativeLayoutParameter.LOCATION_LEFT_OF_CENTER
-      );
+      rp_LeftCenter.setAlign(RelativeLayoutParameter.LOCATION_LEFT_OF_CENTER);
       imageView_LeftCenter.setLayoutParameter(rp_LeftCenter);
 
       // right center
@@ -105,9 +97,7 @@ export class UILayoutTest_Layout_Relative_Location extends UIMainLayer {
       layout.addChild(imageView_RightCenter);
       var rp_RightCenter = new RelativeLayoutParameter();
       rp_RightCenter.relativeToWidgetName = "rp_Center";
-      rp_RightCenter.setAlign(
-        RelativeLayoutParameter.LOCATION_RIGHT_OF_CENTER
-      );
+      rp_RightCenter.setAlign(RelativeLayoutParameter.LOCATION_RIGHT_OF_CENTER);
       imageView_RightCenter.setLayoutParameter(rp_RightCenter);
 
       return true;

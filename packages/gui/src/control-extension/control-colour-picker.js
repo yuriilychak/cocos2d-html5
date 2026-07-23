@@ -65,8 +65,8 @@ export class ControlColourPicker extends Control {
       var backgroundPointZero = Point.sub(
         this._background.getPosition(),
         new Point(
-          this._background.getContentSize().width / 2 + 2,
-          this._background.getContentSize().height / 2 + 2
+          this._background.width / 2 + 2,
+          this._background.height / 2 + 2
         )
       );
 
@@ -103,7 +103,7 @@ export class ControlColourPicker extends Control {
       this.addChild(this._huePicker);
       this.addChild(this._colourPicker);
 
-      this.setContentSize(this._background.getContentSize());
+      this.setContentSize(this._background.contentSize);
       return true;
     }
     return false;

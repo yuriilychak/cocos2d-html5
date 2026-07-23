@@ -31,7 +31,7 @@ import { Slider } from "@aspect/ccui";
 export class UISliderTest_Scale9 extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
       //init text
       this._topDisplayLabel.string = "Move the slider thumb";
       this._bottomDisplayLabel.string = "Slider scale9 render";

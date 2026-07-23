@@ -32,7 +32,7 @@ import { ImageView, Layout, PageView, Slider, Text } from "@aspect/ccui";
 export class UIPageViewCustomScrollThreshold extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
 
       // Add a label in which the dragpanel events will be displayed
       this._topDisplayLabel.string = "Scroll Threshold";
@@ -54,9 +54,8 @@ export class UIPageViewCustomScrollThreshold extends UIMainLayer {
       pageView.setContentSize(new Size(240.0, 100.0));
       pageView.setPosition(
         new Point(
-          (widgetSize.width - pageView.getContentSize().width) / 2.0,
-          (widgetSize.height - pageView.getContentSize().height) / 2.0 +
-            20
+          (widgetSize.width - pageView.width) / 2.0,
+          (widgetSize.height - pageView.contentSize.height) / 2.0 + 20
         )
       );
 
@@ -69,20 +68,14 @@ export class UIPageViewCustomScrollThreshold extends UIMainLayer {
         imageView.setScale9Enabled(true);
         imageView.setContentSize(new Size(240, 130));
         imageView.setPosition(
-          new Point(
-            layout.getContentSize().width / 2.0,
-            layout.getContentSize().height / 2.0
-          )
+          new Point(layout.width / 2.0, layout.contentSize.height / 2.0)
         );
         layout.addChild(imageView);
 
         var label = new Text("page " + (i + 1), "Marker Felt", 30);
         label.color = new Color(192, 192, 192);
         label.setPosition(
-          new Point(
-            layout.getContentSize().width / 2.0,
-            layout.getContentSize().height / 2.0
-          )
+          new Point(layout.width / 2.0, layout.contentSize.height / 2.0)
         );
         layout.addChild(label);
 
@@ -118,7 +111,8 @@ export class UIPageViewCustomScrollThreshold extends UIMainLayer {
       if (percent == 0) percent = 1;
       pageView.setCustomScrollThreshold(percent * 0.01 * pageView.width);
 
-      this._topDisplayLabel.string = "Scroll Threshold: " + pageView.getCustomScrollThreshold().toFixed(2);
+      this._topDisplayLabel.string =
+        "Scroll Threshold: " + pageView.getCustomScrollThreshold().toFixed(2);
     }
   }
 }

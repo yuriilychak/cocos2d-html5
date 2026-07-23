@@ -219,7 +219,7 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
         if (hasPoly) wrapper.restore();
       }
     } else {
-      const contentSize = node._contentSize;
+      const contentSize = node.contentSize;
       if (locTextureCoord.validRect) {
         const curColor = this._displayedColor;
         wrapper.fillStyle = Color.toRgba(curColor.r, curColor.g, curColor.b);

@@ -465,8 +465,8 @@ export class Scale9Sprite extends EventHelper(Node) {
       rect = rect || {
         x: 0,
         y: 0,
-        width: this._contentSize.width,
-        height: this._contentSize.height
+        width: this.width,
+        height: this.height
       };
       this._capInsetsInternal = new Rect(
         rect.width / 3,
@@ -647,7 +647,7 @@ export class Scale9Sprite extends EventHelper(Node) {
       this._uvsDirty = true;
       var self = this;
       var onResourceDataLoaded = function () {
-        if (Size.equalTo(self._contentSize, new Size(0, 0))) {
+        if (Size.equalTo(self.contentSize, new Size(0, 0))) {
           self.setContentSize(self._spriteFrame.rect);
         }
         self._textureLoaded = true;
@@ -687,13 +687,13 @@ export class Scale9Sprite extends EventHelper(Node) {
   }
 
   setPreferredSize(preferredSize) {
-    if (!preferredSize || Size.equalTo(this._contentSize, preferredSize))
+    if (!preferredSize || Size.equalTo(this.contentSize, preferredSize))
       return;
     this.setContentSize(preferredSize);
   }
 
   getPreferredSize() {
-    return this.getContentSize();
+    return this.contentSize;
   }
 
   setContentSize(width, height) {
@@ -701,10 +701,7 @@ export class Scale9Sprite extends EventHelper(Node) {
       height = width.height;
       width = width.width;
     }
-    if (
-      width === this._contentSize.width &&
-      height === this._contentSize.height
-    ) {
+    if (Size.equalTo(super.contentSize, new Size(width, height))) {
       return;
     }
 
@@ -712,24 +709,31 @@ export class Scale9Sprite extends EventHelper(Node) {
     this._quadsDirty = true;
   }
 
-  getContentSize() {
-    if (this._renderingType === Scale9Sprite.RenderingType.SIMPLE) {
-      if (this._spriteFrame) {
-        return this._spriteFrame.originalSize;
-      }
-      return new Size(this._contentSize);
-    } else {
-      return new Size(this._contentSize);
-    }
+  set contentSize(value) {
+    this.setContentSize(value);
   }
 
-  _setWidth(value) {
-    super._setWidth(value);
+  get contentSize() {
+    return this._renderingType === Scale9Sprite.RenderingType.SIMPLE && this._spriteFrame
+        ? this._spriteFrame.originalSize
+        : super.contentSize;
+  }
+
+  get width() {
+    return super.width;
+  }
+
+  set width(value) {
+    super.width = value;
     this._quadsDirty = true;
   }
 
-  _setHeight(value) {
-    super._setHeight(value);
+  get height() {
+    return super.height;
+  }
+
+  set height(value) {
+    super.height = value;
     this._quadsDirty = true;
   }
 
@@ -813,7 +817,7 @@ export class Scale9Sprite extends EventHelper(Node) {
         simpleQuadGenerator._rebuildQuads_base(
           this,
           this._spriteFrame,
-          this._contentSize,
+          this.contentSize,
           this._isTrimmedContentSize
         );
         break;
@@ -821,7 +825,7 @@ export class Scale9Sprite extends EventHelper(Node) {
         scale9QuadGenerator._rebuildQuads_base(
           this,
           this._spriteFrame,
-          this._contentSize,
+          this.contentSize,
           this._insetLeft,
           this._insetRight,
           this._insetTop,

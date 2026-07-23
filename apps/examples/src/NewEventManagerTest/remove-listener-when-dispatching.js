@@ -29,7 +29,13 @@ import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { createColoredView } from "./touchable-sprite";
 import { s_simpleFont_fnt } from "../resources";
 import { director } from "../constants";
-import { Color, EventListener, EventListenerType, Rect, ServiceLocator } from "@aspect/core";
+import {
+  Color,
+  EventListener,
+  EventListenerType,
+  Rect,
+  ServiceLocator
+} from "@aspect/core";
 import { TextBMFont } from "@aspect/ccui";
 import { ButtonLayout } from "../button-layout";
 
@@ -51,7 +57,7 @@ export class RemoveListenerWhenDispatching extends EventDispatcherTestDemo {
       swallowTouches: true,
       onTouchBegan: function (touch, event) {
         var locationInNode = sprite1.convertToNodeSpace(touch);
-        var s = sprite1.getContentSize();
+        var s = sprite1.contentSize;
         var rect = new Rect(0, 0, s.width, s.height);
 
         if (Rect.containsPoint(rect, locationInNode)) {
@@ -68,7 +74,10 @@ export class RemoveListenerWhenDispatching extends EventDispatcherTestDemo {
 
     ServiceLocator.eventManager.addListener(listener1, sprite1);
 
-    var statusLabel = new TextBMFont("The sprite could be touched!", s_simpleFont_fnt);
+    var statusLabel = new TextBMFont(
+      "The sprite could be touched!",
+      s_simpleFont_fnt
+    );
     statusLabel.setPosition(
       origin.x + size.width / 2,
       origin.y + size.height - 90
@@ -78,7 +87,13 @@ export class RemoveListenerWhenDispatching extends EventDispatcherTestDemo {
     var enable = true;
 
     const layout = new ButtonLayout(
-      [{ label: "Enabled", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) }],
+      [
+        {
+          label: "Enabled",
+          tintDefault: new Color(0x44, 0x55, 0x77),
+          tintPressed: new Color(0x22, 0x33, 0x55)
+        }
+      ],
       196,
       "Touch",
       () => {

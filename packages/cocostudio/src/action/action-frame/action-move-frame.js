@@ -7,12 +7,12 @@ import { FRAME_TYPE_MOVE } from "./constants.js";
  * The Cocostudio's move action frame.
  */
 export class ActionMoveFrame extends ActionFrame {
+  #position = new Point();
   /**
    * Construction of ActionMoveFrame
    */
   constructor() {
     super();
-    this._position = new Point();
     this.frameType = FRAME_TYPE_MOVE;
   }
 
@@ -22,12 +22,10 @@ export class ActionMoveFrame extends ActionFrame {
    * @param {Number} y
    */
   setPosition(pos, y) {
-    if (y === undefined) {
-      this._position.x = pos.x;
-      this._position.y = pos.y;
-    } else {
-      this._position.x = pos;
-      this._position.y = y;
+    if (Point.isLike(pos)) {
+      this.#position.set(pos);
+    } else if (typeof pos === 'number' && typeof y === 'number') {
+      this.#position.set(pos, y);
     }
   }
 
@@ -36,7 +34,7 @@ export class ActionMoveFrame extends ActionFrame {
    * @returns {Point}
    */
   getPosition() {
-    return this._position;
+    return this.#position;
   }
 
   /**
@@ -45,6 +43,6 @@ export class ActionMoveFrame extends ActionFrame {
    * @returns {MoveTo}
    */
   getAction(duration) {
-    return this._getEasingAction(new MoveTo(duration, this._position));
+    return this._getEasingAction(new MoveTo(duration, this.#position));
   }
 }

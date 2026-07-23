@@ -32,16 +32,12 @@ import { Slider, Text } from "@aspect/ccui";
 export class UISliderDisabledDefaultTest extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
 
       this._bottomDisplayLabel.string = "";
 
       // Add the alert
-      var alert = new Text(
-        "slider ball should be gray.",
-        "Marker Felt",
-        20
-      );
+      var alert = new Text("slider ball should be gray.", "Marker Felt", 20);
       alert.color = new Color(159, 168, 176);
       alert.setPosition(
         new Point(

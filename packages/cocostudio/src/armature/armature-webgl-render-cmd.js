@@ -50,7 +50,7 @@ export class ArmatureWebGLRenderCmd extends Node.WebGLRenderCmd {
 
   _updateAnchorPointInPoint() {
     var node = this._node;
-    var contentSize = node._contentSize,
+    var contentSize = node.contentSize,
       anchorPoint = node._anchorPoint,
       offsetPoint = node._offsetPoint;
     this._anchorPointInPoints.x =

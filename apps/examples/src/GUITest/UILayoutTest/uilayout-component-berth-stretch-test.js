@@ -30,9 +30,7 @@ import { ImageView, LayoutComponent, helper } from "@aspect/ccui";
 export class UILayoutComponent_Berth_Stretch_Test extends UILayoutComponentTest {
   init() {
     if (super.init()) {
-      var leftTopSprite = new ImageView(
-        "ccs-res/cocosui/CloseSelected.png"
-      );
+      var leftTopSprite = new ImageView("ccs-res/cocosui/CloseSelected.png");
       leftTopSprite.ignoreContentAdaptWithSize(false);
       var leftTop = LayoutComponent.bindLayoutComponent(leftTopSprite);
       leftTop.setHorizontalEdge(LayoutComponent.horizontalEdge.LEFT);
@@ -40,28 +38,23 @@ export class UILayoutComponent_Berth_Stretch_Test extends UILayoutComponentTest 
       leftTop.setStretchWidthEnabled(true);
       leftTop.setStretchHeightEnabled(true);
       this._baseLayer.addChild(leftTopSprite);
-      leftTop.setSize(leftTopSprite.getContentSize());
+      leftTop.setSize(leftTopSprite.contentSize);
       leftTop.setLeftMargin(0);
       leftTop.setTopMargin(0);
 
-      var leftBottomSprite = new ImageView(
-        "ccs-res/cocosui/CloseSelected.png"
-      );
+      var leftBottomSprite = new ImageView("ccs-res/cocosui/CloseSelected.png");
       leftBottomSprite.ignoreContentAdaptWithSize(false);
-      var leftBottom =
-        LayoutComponent.bindLayoutComponent(leftBottomSprite);
+      var leftBottom = LayoutComponent.bindLayoutComponent(leftBottomSprite);
       leftBottom.setHorizontalEdge(LayoutComponent.horizontalEdge.LEFT);
       leftBottom.setVerticalEdge(LayoutComponent.verticalEdge.BOTTOM);
       leftBottom.setStretchWidthEnabled(true);
       leftBottom.setStretchHeightEnabled(true);
       this._baseLayer.addChild(leftBottomSprite);
-      leftBottom.setSize(leftBottomSprite.getContentSize());
+      leftBottom.setSize(leftBottomSprite.contentSize);
       leftBottom.setLeftMargin(0);
       leftBottom.setBottomMargin(0);
 
-      var rightTopSprite = new ImageView(
-        "ccs-res/cocosui/CloseSelected.png"
-      );
+      var rightTopSprite = new ImageView("ccs-res/cocosui/CloseSelected.png");
       rightTopSprite.ignoreContentAdaptWithSize(false);
       var rightTop = LayoutComponent.bindLayoutComponent(rightTopSprite);
       rightTop.setHorizontalEdge(LayoutComponent.horizontalEdge.RIGHT);
@@ -69,7 +62,7 @@ export class UILayoutComponent_Berth_Stretch_Test extends UILayoutComponentTest 
       rightTop.setStretchWidthEnabled(true);
       rightTop.setStretchHeightEnabled(true);
       this._baseLayer.addChild(rightTopSprite);
-      rightTop.setSize(rightTopSprite.getContentSize());
+      rightTop.setSize(rightTopSprite.contentSize);
       rightTop.setTopMargin(0);
       rightTop.setRightMargin(0);
 
@@ -77,14 +70,13 @@ export class UILayoutComponent_Berth_Stretch_Test extends UILayoutComponentTest 
         "ccs-res/cocosui/CloseSelected.png"
       );
       rightBottomSprite.ignoreContentAdaptWithSize(false);
-      var rightBottom =
-        LayoutComponent.bindLayoutComponent(rightBottomSprite);
+      var rightBottom = LayoutComponent.bindLayoutComponent(rightBottomSprite);
       rightBottom.setHorizontalEdge(LayoutComponent.horizontalEdge.RIGHT);
       rightBottom.setVerticalEdge(LayoutComponent.verticalEdge.BOTTOM);
       rightBottom.setStretchWidthEnabled(true);
       rightBottom.setStretchHeightEnabled(true);
       this._baseLayer.addChild(rightBottomSprite);
-      rightBottom.setSize(rightBottomSprite.getContentSize());
+      rightBottom.setSize(rightBottomSprite.contentSize);
       rightBottom.setBottomMargin(0);
       rightBottom.setRightMargin(0);
 

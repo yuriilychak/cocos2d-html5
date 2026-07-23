@@ -31,7 +31,7 @@ import { Color, Size, log } from "@aspect/core";
 export class UIPageViewTest extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
       //init text
       this._topDisplayLabel.string = "Move by horizontal direction";
       this._topDisplayLabel.x = widgetSize.width / 2.0;
@@ -46,15 +46,13 @@ export class UIPageViewTest extends UIMainLayer {
       var pageView = new PageView();
       pageView.setTouchEnabled(true);
       pageView.setContentSize(new Size(240, 130));
-      pageView.x =
-        (widgetSize.width - pageView.width) / 2;
-      pageView.y =
-        (widgetSize.height - pageView.height) / 2;
+      pageView.x = (widgetSize.width - pageView.width) / 2;
+      pageView.y = (widgetSize.height - pageView.height) / 2;
 
       for (var i = 0; i < 3; ++i) {
         var layout = new Layout();
         layout.setContentSize(new Size(240, 130));
-        var layoutRect = layout.getContentSize();
+        var layoutRect = layout.contentSize;
 
         var imageView = new ImageView();
         imageView.setTouchEnabled(true);
@@ -92,7 +90,8 @@ export class UIPageViewTest extends UIMainLayer {
     switch (type) {
       case PageView.EVENT_TURNING:
         var pageView = sender;
-        this._topDisplayLabel.string = "page = " + (pageView.getCurPageIndex().valueOf() - 0 + 1);
+        this._topDisplayLabel.string =
+          "page = " + (pageView.getCurPageIndex().valueOf() - 0 + 1);
         break;
       default:
         break;

@@ -34,7 +34,7 @@ export class LabelAtlasWebGLRenderCmd extends AtlasNode.WebGLRenderCmd {
     AtlasNode.WebGLRenderCmd.prototype.rendering.call(this, ctx);
     if (LABELATLAS_DEBUG_DRAW) {
       const node = this._node;
-      const s = node.getContentSize();
+      const s = node.contentSize;
       const locRect = node.getBoundingBoxToWorld();
       const posX = locRect.x,
         posY = locRect.y;
@@ -138,7 +138,7 @@ export class LabelAtlasWebGLRenderCmd extends AtlasNode.WebGLRenderCmd {
 
   updateContentSize(i, cr) {
     const node = this._node,
-      contentSize = node._contentSize;
+      contentSize = node.contentSize;
     if (
       i !== cr &&
       i * node._itemWidth === contentSize.width &&

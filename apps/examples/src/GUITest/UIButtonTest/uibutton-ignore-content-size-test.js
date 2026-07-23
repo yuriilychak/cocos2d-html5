@@ -32,7 +32,7 @@ import { Button } from "@aspect/ccui";
 export class UIButtonIgnoreContentSizeTest extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
 
       // Add a label in which the button events will be displayed
       this._topDisplayLabel.string = "Button IgnoreContent Size Test";

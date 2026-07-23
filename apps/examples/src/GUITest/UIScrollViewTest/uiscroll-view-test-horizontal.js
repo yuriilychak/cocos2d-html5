@@ -31,7 +31,7 @@ import { Button, ImageView, ScrollView } from "@aspect/ccui";
 export class UIScrollViewTest_Horizontal extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
       //init text
       this._topDisplayLabel.string = "Move by horizontal direction";
       this._topDisplayLabel.x = widgetSize.width / 2.0;
@@ -47,21 +47,19 @@ export class UIScrollViewTest_Horizontal extends UIMainLayer {
       scrollView.setDirection(ScrollView.DIR_HORIZONTAL);
       scrollView.setTouchEnabled(true);
       scrollView.setContentSize(new Size(280, 150));
-      var scrollViewRect = scrollView.getContentSize();
+      var scrollViewRect = scrollView.contentSize;
       scrollView.setInnerContainerSize(
         new Size(scrollViewRect.width, scrollViewRect.height)
       );
 
-      scrollView.x =
-        (widgetSize.width - scrollViewRect.width) / 2;
-      scrollView.y =
-        (widgetSize.height - scrollViewRect.height) / 2;
+      scrollView.x = (widgetSize.width - scrollViewRect.width) / 2;
+      scrollView.y = (widgetSize.height - scrollViewRect.height) / 2;
       this._mainNode.addChild(scrollView);
 
       var imageView = new ImageView();
       imageView.loadTexture("ccs-res/cocosui/ccicon.png");
 
-      var innerWidth = scrollViewRect.width + imageView.getContentSize().width;
+      var innerWidth = scrollViewRect.width + imageView.width;
       var innerHeight = scrollViewRect.height;
 
       scrollView.setInnerContainerSize(new Size(innerWidth, innerHeight));

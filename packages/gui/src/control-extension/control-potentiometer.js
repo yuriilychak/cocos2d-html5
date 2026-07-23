@@ -41,7 +41,7 @@ export class ControlPotentiometer extends Control {
       this.addChild(thumbSprite, 2);
       this.addChild(progressTimer, 1);
       this.addChild(trackSprite);
-      this.setContentSize(trackSprite.getContentSize());
+      this.setContentSize(trackSprite.contentSize);
       this._minimumValue = 0.0;
       this._maximumValue = 1.0;
       this.value = this._minimumValue;
@@ -59,8 +59,8 @@ export class ControlPotentiometer extends Control {
     return (
       distance <
       Math.min(
-        this.getContentSize().width / 2,
-        this.getContentSize().height / 2
+        this.width / 2,
+        this.height / 2
       )
     );
   }

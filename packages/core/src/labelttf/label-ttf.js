@@ -819,24 +819,30 @@ export class LabelTTF extends Sprite {
    * Returns the actual content size of the label, the content size is the real size that the label occupied while dimension is the outer bounding box of the label.
    * @returns {Size} The content size
    */
-  getContentSize() {
+  get contentSize() {
     if (this._needUpdateTexture) this._renderCmd._updateTTF();
     var ratio = ServiceLocator.eglView.devicePixelRatio;
     return new Size(
-      this._contentSize.width / ratio,
-      this._contentSize.height / ratio
+      super.width / ratio,
+      super.height / ratio
     );
   }
-  _getWidth() {
+
+  set contentSize(value) {
+    this.setContentSize(value);
+  }
+
+  get width() {
     if (this._needUpdateTexture) this._renderCmd._updateTTF();
     return (
-      this._contentSize.width / ServiceLocator.eglView.devicePixelRatio
+      super.width / ServiceLocator.eglView.devicePixelRatio
     );
   }
-  _getHeight() {
+
+  get height() {
     if (this._needUpdateTexture) this._renderCmd._updateTTF();
     return (
-      this._contentSize.height / ServiceLocator.eglView.devicePixelRatio
+      super.height / ServiceLocator.eglView.devicePixelRatio
     );
   }
   setTextureRect(rect, rotated, untrimmedSize) {

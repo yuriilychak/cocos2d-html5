@@ -1890,8 +1890,8 @@ export class ParticleSystem extends Node {
     if (this.positionType === ParticleSystem.TYPE_FREE)
       particle.startPos = this.convertToWorldSpace(this._pointZeroForParticle);
     else if (this.positionType === ParticleSystem.TYPE_RELATIVE) {
-      particle.startPos.x = this._position.x;
-      particle.startPos.y = this._position.y;
+      particle.startPos.x = this.x;
+      particle.startPos.y = this.y;
     }
 
     // direction
@@ -2027,8 +2027,8 @@ export class ParticleSystem extends Node {
         this.convertToWorldSpace(this._pointZeroForParticle)
       );
     } else if (this.positionType === ParticleSystem.TYPE_RELATIVE) {
-      currentPosition.x = this._position.x;
-      currentPosition.y = this._position.y;
+      currentPosition.x = this.x;
+      currentPosition.y = this.y;
     }
 
     if (this._visible) {
@@ -2125,8 +2125,8 @@ export class ParticleSystem extends Node {
           // translate newPos to correct position, since matrix transform isn't performed in batchnode
           // don't update the particle with the new position information, it will interfere with the radius and tangential calculations
           if (this._batchNode) {
-            newPos.x += this._position.x;
-            newPos.y += this._position.y;
+            newPos.x += this.x;
+            newPos.y += this.y;
           }
           this._renderCmd.updateParticlePosition(selParticle, newPos);
 

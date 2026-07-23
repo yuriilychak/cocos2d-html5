@@ -12,7 +12,7 @@ import { Point } from "@aspect/core";
  * @param {Number} amplitude
  */
 export default class Ripple3D extends Grid3DAction {
-  _position = null;
+  #position = new Point();
   _radius = 0;
   _waves = 0;
   _amplitude = 0;
@@ -29,7 +29,6 @@ export default class Ripple3D extends Grid3DAction {
    */
   constructor(duration, gridSize, position, radius, waves, amplitude) {
     super();
-    this._position = new Point();
     amplitude !== undefined &&
       this.initWithDuration(
         duration,
@@ -42,11 +41,10 @@ export default class Ripple3D extends Grid3DAction {
   }
 
   getPosition() {
-    return this._position;
+    return this.#position;
   }
   setPosition(position) {
-    this._position.x = position.x;
-    this._position.y = position.y;
+    this.#position.set(position);
   }
   getAmplitude() {
     return this._amplitude;
@@ -103,8 +101,8 @@ export default class Ripple3D extends Grid3DAction {
         locPos.y = j;
         v = this.getOriginalVertex(locPos);
 
-        tempPos.x = this._position.x - v.x;
-        tempPos.y = this._position.y - v.y;
+        tempPos.set(this.#position);
+        Point.subIn(tempPos, v);
         r = Point.vectorLength(tempPos);
 
         if (r < locRadius) {

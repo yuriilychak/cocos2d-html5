@@ -1,3 +1,4 @@
+import { s_tilesHdPng } from "../../../../apps/examples/src/resources";
 import Grid3DAction from "../action-grid/grid3d-action";
 import { Point } from "@aspect/core";
 
@@ -11,7 +12,7 @@ import { Point } from "@aspect/core";
  */
 export default class Lens3D extends Grid3DAction {
   // lens center position
-  _position = null;
+  #position = new Point();
   _radius = 0;
   // lens effect. Defaults to 0.7 - 0 means no effect, 1 is very strong effect
   _lensEffect = 0;
@@ -28,7 +29,6 @@ export default class Lens3D extends Grid3DAction {
    */
   constructor(duration, gridSize, position, radius) {
     super();
-    this._position = new Point();
     radius !== undefined &&
       this.initWithDuration(duration, gridSize, position, radius);
   }
@@ -43,13 +43,12 @@ export default class Lens3D extends Grid3DAction {
     this._concave = concave;
   }
   getPosition() {
-    return this._position;
+    return this.#position;
   }
 
   setPosition(position) {
-    if (!Point.equalTo(position, this._position)) {
-      this._position.x = position.x;
-      this._position.y = position.y;
+    if (!Point.equalTo(position, this.#position)) {
+      this.#position.set(position);
       this._dirty = true;
     }
   }
@@ -91,8 +90,8 @@ export default class Lens3D extends Grid3DAction {
           locPos.x = i;
           locPos.y = j;
           v = this.getOriginalVertex(locPos);
-          vect.x = this._position.x - v.x;
-          vect.y = this._position.y - v.y;
+          vect.set(this.#position);
+          Point.subIn(vect, v);
           r = Point.vectorLength(vect);
 
           if (r < locRadius) {

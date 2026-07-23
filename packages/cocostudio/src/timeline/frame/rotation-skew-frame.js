@@ -36,8 +36,8 @@ export class RotationSkewFrame extends SkewFrame {
    */
   onEnter(nextFrame) {
     if (!this._node) return;
-    this._node.setRotationX(this._skewX);
-    this._node.setRotationY(this._skewY);
+    this._node.rotationX = this._skewX;
+    this._node.rotationY = this._skewY;
 
     if (this._tween) {
       this._betweenSkewX = nextFrame._skewX - this._skewX;
@@ -51,11 +51,8 @@ export class RotationSkewFrame extends SkewFrame {
    */
   _onApply(percent) {
     if (this._node && (this._betweenSkewX !== 0 || this._betweenSkewY !== 0)) {
-      var skewx = this._skewX + percent * this._betweenSkewX;
-      var skewy = this._skewY + percent * this._betweenSkewY;
-
-      this._node.setRotationX(skewx);
-      this._node.setRotationY(skewy);
+      this._node.rotationX = this._skewX + percent * this._betweenSkewX;
+      this._node.rotationY = this._skewY + percent * this._betweenSkewY;
     }
   }
 

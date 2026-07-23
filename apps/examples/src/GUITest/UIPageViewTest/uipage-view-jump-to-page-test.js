@@ -31,7 +31,7 @@ import { Button, ImageView, Layout, PageView, Text } from "@aspect/ccui";
 export class UIPageViewJumpToPageTest extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
       //init text
       this._topDisplayLabel.string = "setCurrentPageIndex API Test";
       this._topDisplayLabel.setFontSize(14);
@@ -47,10 +47,8 @@ export class UIPageViewJumpToPageTest extends UIMainLayer {
       var pageView = new PageView();
       pageView.setTouchEnabled(true);
       pageView.setContentSize(new Size(240, 130));
-      pageView.x =
-        (widgetSize.width - pageView.width) / 2;
-      pageView.y =
-        (widgetSize.height - pageView.height) / 2;
+      pageView.x = (widgetSize.width - pageView.width) / 2;
+      pageView.y = (widgetSize.height - pageView.height) / 2;
       pageView.setIndicatorEnabled(true);
       pageView.removeAllItems();
 
@@ -69,9 +67,7 @@ export class UIPageViewJumpToPageTest extends UIMainLayer {
 
         var label = new Text("page " + (i + 1), "Arial", 30);
         label.color = new Color(192, 192, 192);
-        label.setPosition(
-          new Point(layout.width / 2.0, layout.height / 2.0)
-        );
+        label.setPosition(new Point(layout.width / 2.0, layout.height / 2.0));
         layout.addChild(label);
 
         pageView.insertCustomItem(layout, i);

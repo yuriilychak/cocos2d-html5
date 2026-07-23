@@ -27,13 +27,20 @@
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
 import { Color, Point, Size, log } from "@aspect/core";
-import { Button, HBox, Layout, LinearLayoutParameter, PageView, VBox } from "@aspect/ccui";
+import {
+  Button,
+  HBox,
+  Layout,
+  LinearLayoutParameter,
+  PageView,
+  VBox
+} from "@aspect/ccui";
 
 export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
   init() {
     var self = this;
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
 
       // Add a label in which the dragpanel events will be displayed
       this._topDisplayLabel.string = "Click Buttons on the Left";
@@ -119,7 +126,8 @@ export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
         }
 
         pageView.addPage(outerBox);
-        self._topDisplayLabel.string = "page count = " + pageView.getPages().length;
+        self._topDisplayLabel.string =
+          "page count = " + pageView.getPages().length;
       });
       this._mainNode.addChild(button);
 
@@ -137,7 +145,8 @@ export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
         } else {
           log("There is no page to remove!");
         }
-        self._topDisplayLabel.string = "page count = " + pageView.getPages().length;
+        self._topDisplayLabel.string =
+          "page count = " + pageView.getPages().length;
       });
       this._mainNode.addChild(button2);
 
@@ -151,7 +160,8 @@ export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
       button3.setTitleColor(Color.RED);
       button3.addClickEventListener(function (sender) {
         pageView.removeAllPages();
-        self._topDisplayLabel.string = "page count = " + pageView.getPages().length;
+        self._topDisplayLabel.string =
+          "page count = " + pageView.getPages().length;
       });
       this._mainNode.addChild(button3);
 
@@ -162,7 +172,8 @@ export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
   pageViewEvent(pageView, type) {
     switch (type) {
       case PageView.EVENT_TURNING:
-        this._topDisplayLabel.string = "page = " + (pageView.getCurPageIndex() + 1);
+        this._topDisplayLabel.string =
+          "page = " + (pageView.getCurPageIndex() + 1);
         break;
       default:
         break;

@@ -266,12 +266,11 @@ export class GScrollView extends Layer {
   }
 
   minContainerOffset() {
-    var locContainer = this._container;
-    var locContentSize = locContainer.getContentSize(),
-      locViewSize = this._viewSize;
     return new Point(
-      locViewSize.width - locContentSize.width * locContainer.getScaleX(),
-      locViewSize.height - locContentSize.height * locContainer.getScaleY()
+      this._viewSize.width -
+        this._container.width * this._container.getScaleX(),
+      this._viewSize.height -
+        this._container.height * this._container.getScaleY()
     );
   }
 
@@ -529,36 +528,44 @@ export class GScrollView extends Layer {
     }
   }
 
-  _setWidth(value) {
+  get width() {
+    var container = this.getContainer();
+    return container ? container.width : 0;
+  }
+
+  set width(value) {
     var container = this.getContainer();
     if (container) {
-      container._setWidth(value);
+      container.width = value;
       this.updateInset();
     }
   }
 
-  _setHeight(value) {
+  get height() {
+    var container = this.getContainer();
+    return container ? container.height : 0;
+  }
+
+  set height(value) {
     var container = this.getContainer();
     if (container) {
-      container._setHeight(value);
+      container.height = value;
       this.updateInset();
     }
   }
 
-  getContentSize() {
-    if (this._container) return this._container.getContentSize();
-    return new Size();
+  get contentSize() {
+    return this._container ? this._container.contentSize : new Size();
   }
 
   updateInset() {
     if (this.getContainer()) {
-      var locViewSize = this._viewSize;
       var tempOffset = this.maxContainerOffset();
-      this._maxInset.x = tempOffset.x + locViewSize.width * INSET_RATIO;
-      this._maxInset.y = tempOffset.y + locViewSize.height * INSET_RATIO;
+      this._maxInset.x = tempOffset.x + this._viewSize.width * INSET_RATIO;
+      this._maxInset.y = tempOffset.y + this._viewSize.height * INSET_RATIO;
       tempOffset = this.minContainerOffset();
-      this._minInset.x = tempOffset.x - locViewSize.width * INSET_RATIO;
-      this._minInset.y = tempOffset.y - locViewSize.height * INSET_RATIO;
+      this._minInset.x = tempOffset.x - this._viewSize.width * INSET_RATIO;
+      this._minInset.y = tempOffset.y - this._viewSize.height * INSET_RATIO;
     }
   }
 

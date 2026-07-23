@@ -30,7 +30,7 @@ import { Button, Widget } from "@aspect/ccui";
 export class UIButtonTest_Title extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
       //init text
       this._topDisplayLabel.string = "No Event";
       this._bottomDisplayLabel.string = "Button with title";

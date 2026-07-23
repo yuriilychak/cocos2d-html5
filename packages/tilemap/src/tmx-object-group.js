@@ -7,26 +7,23 @@ import { BaseClass, Point } from "@aspect/core";
  * @property {String}   groupName   - Name of the group
  */
 export class TMXObjectGroup extends BaseClass {
+  #positionOffset = new Point();
   constructor() {
     super();
     this.properties = null;
     this.groupName = "";
-    this._positionOffset = null;
     this._objects = null;
-
     this.groupName = "";
-    this._positionOffset = new Point();
     this.properties = [];
     this._objects = [];
   }
 
   getPositionOffset() {
-    return new Point(this._positionOffset);
+    return this.#positionOffset.clone();
   }
 
   setPositionOffset(offset) {
-    this._positionOffset.x = offset.x;
-    this._positionOffset.y = offset.y;
+    this.#positionOffset.set(offset);
   }
 
   getProperties() {

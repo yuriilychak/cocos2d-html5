@@ -31,9 +31,10 @@ import { ImageView, Layout, PageView, Text } from "@aspect/ccui";
 export class UIPageViewIndicatorTest extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
 
-      this._topDisplayLabel.string = "PageView indicator custom texture\nscale : 0.5, index color: RED";
+      this._topDisplayLabel.string =
+        "PageView indicator custom texture\nscale : 0.5, index color: RED";
       this._topDisplayLabel.setFontSize(14);
       this._topDisplayLabel.x = widgetSize.width / 2.0;
       this._topDisplayLabel.y =
@@ -46,10 +47,8 @@ export class UIPageViewIndicatorTest extends UIMainLayer {
 
       var pageView = new PageView();
       pageView.setContentSize(new Size(240, 130));
-      pageView.x =
-        (widgetSize.width - pageView.width) / 2;
-      pageView.y =
-        (widgetSize.height - pageView.height) / 2;
+      pageView.x = (widgetSize.width - pageView.width) / 2;
+      pageView.y = (widgetSize.height - pageView.height) / 2;
       pageView.removeAllPages();
 
       pageView.setIndicatorEnabled(true);
@@ -67,17 +66,14 @@ export class UIPageViewIndicatorTest extends UIMainLayer {
         imageView.setScale9Enabled(true);
         imageView.loadTexture("ccs-res/cocosui/scrollviewbg.png");
         imageView.setContentSize(new Size(240, 130));
-        imageView.x = layout.getContentSize().width / 2;
-        imageView.y = layout.getContentSize().height / 2;
+        imageView.x = layout.width / 2;
+        imageView.y = layout.contentSize.height / 2;
         layout.addChild(imageView);
         var pageNumber = i + 1;
         var label = new Text("page" + pageNumber, "Marker Felt", 30);
         label.color = new Color(192, 192, 192);
         label.setPosition(
-          new Point(
-            layout.getContentSize().width / 2,
-            layout.getContentSize().height / 2
-          )
+          new Point(layout.width / 2, layout.contentSize.height / 2)
         );
         layout.addChild(label);
 

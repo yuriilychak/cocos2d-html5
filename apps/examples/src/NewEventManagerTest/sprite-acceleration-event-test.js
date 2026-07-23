@@ -27,7 +27,13 @@
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { director } from "../constants";
-import { EventListener, EventListenerType, Sprite, log, ServiceLocator } from "@aspect/core";
+import {
+  EventListener,
+  EventListenerType,
+  Sprite,
+  log,
+  ServiceLocator
+} from "@aspect/core";
 export class SpriteAccelerationEventTest extends EventDispatcherTestDemo {
   onEnter() {
     //----start5----onEnter
@@ -47,7 +53,7 @@ export class SpriteAccelerationEventTest extends EventDispatcherTestDemo {
         event: EventListenerType.ACCELERATION,
         callback: function (accumulator, event) {
           var target = event.currentTarget;
-          var ballSize = target.getContentSize();
+          var ballSize = target.contentSize;
           var ptNow = target.getPosition();
 
           target.x = SpriteAccelerationEventTest._fix_pos(

@@ -32,19 +32,15 @@ import { ImageView, Text, Widget } from "@aspect/ccui";
 export class UIImageViewTest_ContentSize extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
 
       this._bottomDisplayLabel.string = "";
-      var alert = new Text(
-        "ImageView ContentSize Change",
-        "Marker Felt",
-        26
-      );
+      var alert = new Text("ImageView ContentSize Change", "Marker Felt", 26);
       alert.color = new Color(159, 168, 176);
       alert.setPosition(
         new Point(
           widgetSize.width / 2,
-          widgetSize.height / 2 - alert.getContentSize().height * 2.125
+          widgetSize.height / 2 - alert.contentSize.height * 2.125
         )
       );
 
@@ -62,9 +58,7 @@ export class UIImageViewTest_ContentSize extends UIMainLayer {
       this._mainNode.addChild(status, 20);
 
       // Create the imageview
-      var imageView = new ImageView(
-        "ccs-res/cocosui/buttonHighlighted.png"
-      );
+      var imageView = new ImageView("ccs-res/cocosui/buttonHighlighted.png");
       imageView.setScale9Enabled(true);
       imageView.setContentSize(new Size(200, 80));
       imageView.setPosition(
@@ -104,10 +98,11 @@ export class UIImageViewTest_ContentSize extends UIMainLayer {
           imageViewChild.setPositionPercent(
             new Point(Math.random().toFixed(2), Math.random().toFixed(2))
           );
-          status.string = "child ImageView position percent: " +
-              imageViewChild.getPositionPercent().x +
-              ", " +
-              imageViewChild.getPositionPercent().y;
+          status.string =
+            "child ImageView position percent: " +
+            imageViewChild.getPositionPercent().x +
+            ", " +
+            imageViewChild.getPositionPercent().y;
         }
       });
       this._mainNode.addChild(imageView);

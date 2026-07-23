@@ -32,7 +32,7 @@ import { Button, ImageView, ScrollView } from "@aspect/ccui";
 export class UIScrollViewRotated extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
 
       // Add a label in which the scrollview alert will be displayed
       this._topDisplayLabel.string = "Move by vertical direction";
@@ -50,9 +50,8 @@ export class UIScrollViewRotated extends UIMainLayer {
       scrollView.setDirection(ScrollView.DIR_BOTH);
       scrollView.setPosition(
         new Point(
-          (widgetSize.width - scrollView.getContentSize().width) / 2.0,
-          (widgetSize.height - scrollView.getContentSize().height) / 2.0 +
-            100
+          (widgetSize.width - scrollView.width) / 2.0,
+          (widgetSize.height - scrollView.height) / 2.0 + 100
         )
       );
       scrollView.rotation = 45;
@@ -60,9 +59,8 @@ export class UIScrollViewRotated extends UIMainLayer {
 
       var imageView = new ImageView("ccs-res/cocosui/ccicon.png");
 
-      var innerWidth = scrollView.getContentSize().width;
-      var innerHeight =
-        scrollView.getContentSize().height + imageView.getContentSize().height;
+      var innerWidth = scrollView.width;
+      var innerHeight = scrollView.height + imageView.height;
       scrollView.setInnerContainerSize(new Size(innerWidth, innerHeight));
 
       var button = new Button(
@@ -72,8 +70,7 @@ export class UIScrollViewRotated extends UIMainLayer {
       button.setPosition(
         new Point(
           innerWidth / 2.0,
-          scrollView.getInnerContainerSize().height -
-            button.getContentSize().height / 2.0
+          scrollView.getInnerContainerSize().height - button.height / 2.0
         )
       );
       scrollView.addChild(button);
@@ -84,10 +81,7 @@ export class UIScrollViewRotated extends UIMainLayer {
       );
       titleButton.setTitleText("Title Button");
       titleButton.setPosition(
-        new Point(
-          innerWidth / 2.0,
-          button.getBottomBoundary() - button.getContentSize().height
-        )
+        new Point(innerWidth / 2.0, button.getBottomBoundary() - button.height)
       );
       scrollView.addChild(titleButton);
 
@@ -102,13 +96,13 @@ export class UIScrollViewRotated extends UIMainLayer {
       button_scale9.setPosition(
         new Point(
           innerWidth / 2.0,
-          titleButton.getBottomBoundary() - titleButton.getContentSize().height
+          titleButton.getBottomBoundary() - titleButton.height
         )
       );
       scrollView.addChild(button_scale9);
 
       imageView.setPosition(
-        new Point(innerWidth / 2.0, imageView.getContentSize().height / 2.0)
+        new Point(innerWidth / 2.0, imageView.height / 2.0)
       );
       scrollView.addChild(imageView);
 

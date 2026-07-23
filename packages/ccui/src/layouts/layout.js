@@ -295,7 +295,7 @@ export class Layout extends Widget {
             this._clippingStencil._performRecursive(
               Node._stateCallbackType.onEnter
             );
-          this._setStencilClippingSize(this._contentSize);
+          this._setStencilClippingSize(this.contentSize);
         } else {
           if (this._running && this._clippingStencil)
             this._clippingStencil._performRecursive(
@@ -343,8 +343,8 @@ export class Layout extends Widget {
     if (this._clippingRectDirty) {
       var worldPos = this.convertToWorldSpace(new Point(0, 0));
       var t = this.getNodeToWorldTransform();
-      var scissorWidth = this._contentSize.width * t.a;
-      var scissorHeight = this._contentSize.height * t.d;
+      var scissorWidth = this.width * t.a;
+      var scissorHeight = this.height * t.d;
       var parentClippingRect;
       var parent = this;
 
@@ -386,24 +386,20 @@ export class Layout extends Widget {
 
   _onSizeChanged() {
     super._onSizeChanged();
-    var locContentSize = this._contentSize;
-    this._setStencilClippingSize(locContentSize);
+    this._setStencilClippingSize(this.contentSize);
     this._doLayoutDirty = true;
     this._clippingRectDirty = true;
     if (this._backGroundImage) {
-      this._backGroundImage.setPosition(
-        locContentSize.width * 0.5,
-        locContentSize.height * 0.5
-      );
+      this._backGroundImage.setPosition(this.width * 0.5, this.height * 0.5);
       if (
         this._backGroundScale9Enabled &&
         this._backGroundImage instanceof Scale9Sprite
       )
-        this._backGroundImage.setPreferredSize(locContentSize);
+        this._backGroundImage.setPreferredSize(this.contentSize);
     }
-    if (this._colorRender) this._colorRender.setContentSize(locContentSize);
+    if (this._colorRender) this._colorRender.setContentSize(this.contentSize);
     if (this._gradientRender)
-      this._gradientRender.setContentSize(locContentSize);
+      this._gradientRender.setContentSize(this.contentSize);
   }
 
   setBackGroundImageScale9Enabled(able) {
@@ -444,13 +440,10 @@ export class Layout extends Widget {
         break;
     }
     if (this._backGroundScale9Enabled)
-      locBackgroundImage.setPreferredSize(this._contentSize);
+      locBackgroundImage.setPreferredSize(this.contentSize);
 
-    this._backGroundImageTextureSize = locBackgroundImage.getContentSize();
-    locBackgroundImage.setPosition(
-      this._contentSize.width * 0.5,
-      this._contentSize.height * 0.5
-    );
+    this._backGroundImageTextureSize = locBackgroundImage.contentSize;
+    locBackgroundImage.setPosition(this.width * 0.5, this.height * 0.5);
     this._updateBackGroundImageColor();
   }
 
@@ -497,20 +490,16 @@ export class Layout extends Widget {
   }
 
   _addBackGroundImage() {
-    var contentSize = this._contentSize;
     if (this._backGroundScale9Enabled) {
       this._backGroundImage = new Scale9Sprite();
-      this._backGroundImage.setPreferredSize(contentSize);
+      this._backGroundImage.setPreferredSize(this.contentSize);
     } else this._backGroundImage = new Sprite();
     this.addProtectedChild(
       this._backGroundImage,
       Layout.BACKGROUND_IMAGE_ZORDER,
       -1
     );
-    this._backGroundImage.setPosition(
-      contentSize.width * 0.5,
-      contentSize.height * 0.5
-    );
+    this._backGroundImage.setPosition(this.width * 0.5, this.height * 0.5);
   }
 
   removeBackGroundImage() {
@@ -556,7 +545,7 @@ export class Layout extends Widget {
         break;
       case Layout.BG_COLOR_SOLID:
         this._colorRender = new LayerColor();
-        this._colorRender.setContentSize(this._contentSize);
+        this._colorRender.contentSize = this.contentSize;
         this._colorRender.opacity = this._opacity;
         this._colorRender.color = this._color;
         this.addProtectedChild(
@@ -570,7 +559,7 @@ export class Layout extends Widget {
           new Color(255, 0, 0, 255),
           new Color(0, 255, 0, 255)
         );
-        this._gradientRender.setContentSize(this._contentSize);
+        this._gradientRender.contentSize = this.contentSize;
         this._gradientRender.opacity = this._opacity;
         this._gradientRender.setStartColor(this._startColor);
         this._gradientRender.setEndColor(this._endColor);
@@ -718,7 +707,7 @@ export class Layout extends Widget {
   }
 
   _getLayoutContentSize() {
-    return this.getContentSize();
+    return this.contentSize;
   }
 
   _getLayoutElements() {
@@ -752,7 +741,7 @@ export class Layout extends Widget {
         if (layout instanceof Widget) {
           widgetCount++;
           var m = layout.getLayoutParameter().getMargin();
-          locSize = layout.getContentSize();
+          locSize = layout.contentSize;
           layoutSize.width += locSize.width + (m.right + m.left) * 0.5;
           layoutSize.height += locSize.height + (m.top + m.bottom) * 0.5;
         }
@@ -964,7 +953,7 @@ export class Layout extends Widget {
     var widgetSize =
       widget instanceof Layout
         ? widget._getLayoutAccumulatedSize()
-        : widget.getContentSize();
+        : widget.contentSize;
     return widget.convertToWorldSpace(
       new Point(widgetSize.width / 2, widgetSize.height / 2)
     );

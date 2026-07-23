@@ -133,9 +133,7 @@ export class Text extends Widget {
     if (text === this._labelRenderer.string) return;
     this._setString(text);
 
-    this._updateContentSizeWithTextureSize(
-      this._labelRenderer.getContentSize()
-    );
+    this._updateContentSizeWithTextureSize(this._labelRenderer.contentSize);
   }
 
   _setString(text) {
@@ -165,9 +163,7 @@ export class Text extends Widget {
    */
   setFontSize(size) {
     this._setFontSize(size);
-    this._updateContentSizeWithTextureSize(
-      this._labelRenderer.getContentSize()
-    );
+    this._updateContentSizeWithTextureSize(this._labelRenderer.contentSize);
   }
 
   _setFontSize(size) {
@@ -190,9 +186,7 @@ export class Text extends Widget {
    */
   setFontName(name) {
     this._setFontName(name);
-    this._updateContentSizeWithTextureSize(
-      this._labelRenderer.getContentSize()
-    );
+    this._updateContentSizeWithTextureSize(this._labelRenderer.contentSize);
   }
 
   _setFontName(name) {
@@ -202,9 +196,7 @@ export class Text extends Widget {
   }
 
   _updateUITextContentSize() {
-    this._updateContentSizeWithTextureSize(
-      this._labelRenderer.getContentSize()
-    );
+    this._updateContentSizeWithTextureSize(this._labelRenderer.contentSize);
   }
 
   /**
@@ -242,9 +234,7 @@ export class Text extends Widget {
    */
   setTextAreaSize(size) {
     this._setTextAreaSize(size);
-    this._updateContentSizeWithTextureSize(
-      this._labelRenderer.getContentSize()
-    );
+    this._updateContentSizeWithTextureSize(this._labelRenderer.contentSize);
   }
 
   _setTextAreaSize(size) {
@@ -269,9 +259,7 @@ export class Text extends Widget {
    */
   setTextHorizontalAlignment(alignment) {
     this._setTextHorizontalAlignment(alignment);
-    this._updateContentSizeWithTextureSize(
-      this._labelRenderer.getContentSize()
-    );
+    this._updateContentSizeWithTextureSize(this._labelRenderer.contentSize);
   }
 
   _setTextHorizontalAlignment(alignment) {
@@ -293,9 +281,7 @@ export class Text extends Widget {
    */
   setTextVerticalAlignment(alignment) {
     this._setTextVerticalAlignment(alignment);
-    this._updateContentSizeWithTextureSize(
-      this._labelRenderer.getContentSize()
-    );
+    this._updateContentSizeWithTextureSize(this._labelRenderer.contentSize);
   }
 
   _setTextVerticalAlignment(alignment) {
@@ -361,7 +347,7 @@ export class Text extends Widget {
    * @returns {Size}
    */
   getVirtualRendererSize() {
-    return this._labelRenderer.getContentSize();
+    return this._labelRenderer.contentSize;
   }
 
   /**
@@ -374,20 +360,17 @@ export class Text extends Widget {
 
   //@since v3.3
   getAutoRenderSize() {
-    var virtualSize = this._labelRenderer.getContentSize();
+    var virtualSize = this._labelRenderer.contentSize;
     if (!this._ignoreSize) {
       this._labelRenderer.setDimensions(0, 0);
-      virtualSize = this._labelRenderer.getContentSize();
-      this._labelRenderer.setDimensions(
-        this._contentSize.width,
-        this._contentSize.height
-      );
+      virtualSize = this._labelRenderer.contentSize;
+      this._labelRenderer.setDimensions(this.width, this.height);
     }
     return virtualSize;
   }
 
   _labelScaleChangedWithSize() {
-    var locContentSize = this._contentSize;
+    var locContentSize = this.contentSize;
     if (this._ignoreSize) {
       this._labelRenderer.scale = 1.0;
       this._normalScaleValueX = this._normalScaleValueY = 1;
@@ -395,7 +378,7 @@ export class Text extends Widget {
       this._labelRenderer.setDimensions(
         new Size(locContentSize.width, locContentSize.height)
       );
-      var textureSize = this._labelRenderer.getContentSize();
+      var textureSize = this._labelRenderer.contentSize;
       if (textureSize.width <= 0.0 || textureSize.height <= 0.0) {
         this._labelRenderer.scale = 1.0;
         return;
@@ -472,7 +455,7 @@ export class Text extends Widget {
       this.setTextVerticalAlignment(
         uiLabel._labelRenderer.getVerticalAlignment()
       );
-      this.setContentSize(uiLabel.getContentSize());
+      this.setContentSize(uiLabel.contentSize);
       this.setTextColor(uiLabel.getTextColor());
     }
   }

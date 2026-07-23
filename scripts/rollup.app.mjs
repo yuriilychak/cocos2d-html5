@@ -177,7 +177,7 @@ export function createAppConfig({ outputFile = 'dist/cocos2d.min.js' } = {}) {
         }
       },
       terser({
-        ecma: 5,
+        ecma: 2022,
         module: false,
         compress: {
           dead_code: true,
@@ -264,7 +264,7 @@ export function createTestsBundleConfig({
       typescriptPlugin(),
       commonjs(),
       ...(minify ? [terser({
-        ecma: 2020,
+        ecma: 2022,
         module: false,
         compress: {
           dead_code: true,

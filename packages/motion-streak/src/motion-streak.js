@@ -19,6 +19,7 @@ import {
  * new MotionStreak(2, 3, 32, Color.GREEN, s_streak);
  */
 export class MotionStreak extends Node {
+  #positionR = new Point();
   texture = null;
   fastMode = false;
   startingPositionInitialized = false;
@@ -47,7 +48,7 @@ export class MotionStreak extends Node {
 
   constructor(fade, minSeg, stroke, color, texture) {
     super();
-    this._positionR = new Point();
+    
     this._blendFunc = new BlendFunc(
       GLState.SRC_ALPHA,
       GLState.ONE_MINUS_SRC_ALPHA
@@ -202,30 +203,28 @@ export class MotionStreak extends Node {
   setPosition(position, yValue) {
     this.startingPositionInitialized = true;
     if (yValue === undefined) {
-      this._positionR.x = position.x;
-      this._positionR.y = position.y;
+      this.#positionR.set(position);
     } else {
-      this._positionR.x = position;
-      this._positionR.y = yValue;
+      this.#positionR.set(position, yValue);
     }
   }
 
   get x() {
-    return this._positionR.x;
+    return this.#positionR.x;
   }
 
   set x(x) {
-    this._positionR.x = x;
+    this.#positionR.x = x;
     if (!this.startingPositionInitialized)
       this.startingPositionInitialized = true;
   }
 
   get y() {
-    return this._positionR.y;
+    return this.#positionR.y;
   }
 
   set y(y) {
-    this._positionR.y = y;
+    this.#positionR.y = y;
     if (!this.startingPositionInitialized)
       this.startingPositionInitialized = true;
   }
@@ -294,7 +293,7 @@ export class MotionStreak extends Node {
             locPointVertexes[(locNuPoints - 1) * 2],
             locPointVertexes[(locNuPoints - 1) * 2 + 1]
           ),
-          this._positionR
+          this.#positionR
         ) < this._minSeg;
       var a2 =
         locNuPoints === 1
@@ -304,15 +303,15 @@ export class MotionStreak extends Node {
                 locPointVertexes[(locNuPoints - 2) * 2],
                 locPointVertexes[(locNuPoints - 2) * 2 + 1]
               ),
-              this._positionR
+              this.#positionR
             ) <
             this._minSeg * 2.0;
       if (a1 || a2) appendNewPoint = false;
     }
 
     if (appendNewPoint) {
-      locPointVertexes[locNuPoints * 2] = this._positionR.x;
-      locPointVertexes[locNuPoints * 2 + 1] = this._positionR.y;
+      locPointVertexes[locNuPoints * 2] = this.#positionR.x;
+      locPointVertexes[locNuPoints * 2 + 1] = this.#positionR.y;
       locPointState[locNuPoints] = 1.0;
 
       var offset = locNuPoints * 8;

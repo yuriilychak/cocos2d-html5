@@ -43,7 +43,7 @@ export class UIListViewTest_Vertical extends UIMainLayer {
 
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
 
       this._topDisplayLabel.string = "We only create 8 item templates here.";
       this._topDisplayLabel.x = widgetSize.width / 2.0;
@@ -64,10 +64,8 @@ export class UIListViewTest_Vertical extends UIMainLayer {
       this.listView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
       this.listView.setBackGroundImageScale9Enabled(true);
       this.listView.setContentSize(new Size(240, 130));
-      this.listView.x =
-        (widgetSize.width - this.listView.width) / 2;
-      this.listView.y =
-        (widgetSize.height - this.listView.height) / 2;
+      this.listView.x = (widgetSize.width - this.listView.width) / 2;
+      this.listView.y = (widgetSize.height - this.listView.height) / 2;
       this.listView.addEventListener(this.selectedItemEvent, this);
       this._mainNode.addChild(this.listView);
 
@@ -83,7 +81,7 @@ export class UIListViewTest_Vertical extends UIMainLayer {
 
       var default_item = new Layout();
       default_item.setTouchEnabled(true);
-      default_item.setContentSize(default_button.getContentSize());
+      default_item.setContentSize(default_button.contentSize);
       default_item.width = this.listView.width;
       default_button.x = default_item.width / 2;
       default_button.y = default_item.height / 2;
@@ -106,7 +104,7 @@ export class UIListViewTest_Vertical extends UIMainLayer {
 
       var spacing = 4;
       this.listView.setItemsMargin(spacing);
-      this._itemTemplateHeight = default_item.getContentSize().height;
+      this._itemTemplateHeight = default_item.contentSize.height;
       this._reuseItemOffset =
         (this._itemTemplateHeight + spacing) * this._spawnCount;
 
@@ -153,7 +151,7 @@ export class UIListViewTest_Vertical extends UIMainLayer {
     //here 4 is the spacing between items
     var totalHeight =
       this._itemTemplateHeight * this._totalCount + (this._totalCount - 1) * 4;
-    var listViewHeight = this.listView.getContentSize().height;
+    var listViewHeight = this.listView.contentSize.height;
     var items = this.listView.getItems();
     var isDown =
       this.listView.getInnerContainer().getPosition().y < this._lastContentPosY;

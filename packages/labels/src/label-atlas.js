@@ -158,8 +158,8 @@ export class LabelAtlas extends LabelBMFont {
       self._realOpacity = 255;
       self._realColor = new Color(255, 255, 255, 255);
 
-      self._contentSize.width = 0;
-      self._contentSize.height = 0;
+      self.width = 0;
+      self.height = 0;
 
       self.string = theString;
       return true;

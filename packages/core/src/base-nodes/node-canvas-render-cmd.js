@@ -128,7 +128,7 @@ export class RenderCmd {
 
   _updateAnchorPointInPoint() {
     const locAPP = this._anchorPointInPoints,
-      locSize = this._node._contentSize,
+      locSize = this._node.contentSize,
       locAnchorPoint = this._node._anchorPoint;
     locAPP.x = locSize.width * locAnchorPoint.x;
     locAPP.y = locSize.height * locAnchorPoint.y;
@@ -159,13 +159,13 @@ export class RenderCmd {
       wt = this._worldTransform; //get the world transform
 
     if (node._usingNormalizedPosition && node._parent) {
-      const conSize = node._parent._contentSize;
-      node._position.x = node._normalizedPosition.x * conSize.width;
-      node._position.y = node._normalizedPosition.y * conSize.height;
+      const conSize = node._parent.contentSize;
+      node.x = node._normalizedPosition.x * conSize.width;
+      node.y = node._normalizedPosition.y * conSize.height;
       node._normalizedPositionDirty = false;
     }
 
-    const hasRotation = node._rotationX || node._rotationY;
+    const hasRotation = node.rotationX || node.rotationY;
     const hasSkew = node._skewX || node._skewY;
     const sx = node._scaleX,
       sy = node._scaleY;
@@ -177,19 +177,19 @@ export class RenderCmd {
       d = 1;
     if (hasRotation || hasSkew) {
       // position
-      t.tx = node._position.x;
-      t.ty = node._position.y;
+      t.tx = node.x;
+      t.ty = node.y;
 
       // rotation
       if (hasRotation) {
-        const rotationRadiansX = node._rotationX * ONE_DEGREE;
+        const rotationRadiansX = node.rotationX * ONE_DEGREE;
         c = Math.sin(rotationRadiansX);
         d = Math.cos(rotationRadiansX);
-        if (node._rotationY === node._rotationX) {
+        if (node.rotationY === node.rotationX) {
           a = d;
           b = -c;
         } else {
-          const rotationRadiansY = node._rotationY * ONE_DEGREE;
+          const rotationRadiansY = node.rotationY * ONE_DEGREE;
           a = Math.cos(rotationRadiansY);
           b = -Math.sin(rotationRadiansY);
         }
@@ -248,8 +248,8 @@ export class RenderCmd {
       t.b = 0;
       t.c = 0;
       t.d = sy;
-      t.tx = node._position.x;
-      t.ty = node._position.y;
+      t.tx = node.x;
+      t.ty = node.y;
 
       if (appX || appY) {
         t.tx -= t.a * appX;
@@ -572,8 +572,8 @@ export class CanvasRenderCmd extends RenderCmd {
   getLocalBB() {
     const node = this._node;
     localBB.x = localBB.y = 0;
-    localBB.width = node._contentSize.width;
-    localBB.height = node._contentSize.height;
+    localBB.width = node.width;
+    localBB.height = node.height;
     return localBB;
   }
 

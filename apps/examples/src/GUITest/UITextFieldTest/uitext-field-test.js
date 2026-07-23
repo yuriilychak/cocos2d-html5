@@ -32,7 +32,7 @@ import { TextField } from "@aspect/ccui";
 export class UITextFieldTest extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
       //init text
       this._topDisplayLabel.string = "No Event";
       this._topDisplayLabel.setAnchorPoint(new Point(0.5, -1));
@@ -40,7 +40,7 @@ export class UITextFieldTest extends UIMainLayer {
         new Point(
           widgetSize.width / 2.0,
           widgetSize.height / 2.0 +
-            this._topDisplayLabel.getContentSize().height * 1.5
+            this._topDisplayLabel.contentSize.height * 1.5
         )
       );
 
@@ -49,7 +49,7 @@ export class UITextFieldTest extends UIMainLayer {
         new Point(
           widgetSize.width / 2.0,
           widgetSize.height / 2.0 -
-            this._bottomDisplayLabel.getContentSize().height * 3.4
+            this._bottomDisplayLabel.contentSize.height * 3.4
         )
       );
       this._bottomDisplayLabel.color = new Color(255, 255, 255, 255);
@@ -69,7 +69,7 @@ export class UITextFieldTest extends UIMainLayer {
   textFieldEvent(textField, type) {
     switch (type) {
       case TextField.EVENT_ATTACH_WITH_IME:
-        var widgetSize = this._widget.getContentSize();
+        var widgetSize = this._widget.contentSize;
         textField.runAction(
           new MoveTo(
             0.225,
@@ -79,7 +79,7 @@ export class UITextFieldTest extends UIMainLayer {
         this._topDisplayLabel.string = "attach with IME";
         break;
       case TextField.EVENT_DETACH_WITH_IME:
-        var widgetSize = this._widget.getContentSize();
+        var widgetSize = this._widget.contentSize;
         textField.runAction(
           new MoveTo(
             0.175,

@@ -48,11 +48,11 @@ export class DoubleSprite extends Sprite {
     }
 
     get width() {
-        return super._getWidth();
+        return super.width;
     }
 
     get height() {
-        return super._getHeight();
+        return super.height;
     }
     
 	set width(value) {

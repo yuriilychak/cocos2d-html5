@@ -98,7 +98,7 @@ export class MenuPassive extends Layer {
         if (this._children && this._children.length > 0) {
             for (i = 0; i < this._children.length; i++) {
                 if (this._children[i]) {
-                    height += this._children[i].getContentSize().height * this._children[i].scaleY + padding;
+                    height += this._children[i].height * this._children[i].scaleY + padding;
                 }
             }
         }
@@ -107,9 +107,9 @@ export class MenuPassive extends Layer {
         if (this._children && this._children.length > 0) {
             for (i = 0; i < this._children.length; i++) {
                 if (this._children[i]) {
-                    width = Math.max(width, this._children[i].getContentSize().width);
-                    this._children[i].setPosition(0, y - this._children[i].getContentSize().height * this._children[i].scaleY / 2.0);
-                    y -= this._children[i].getContentSize().height * this._children[i].scaleY + padding;
+                    width = Math.max(width, this._children[i].width);
+                    this._children[i].setPosition(0, y - this._children[i].height * this._children[i].scaleY / 2.0);
+                    y -= this._children[i].height * this._children[i].scaleY + padding;
                 }
             }
         }
@@ -126,7 +126,7 @@ export class MenuPassive extends Layer {
         if (this._children && this._children.length > 0) {
             for (i = 0; i < this._children.length; i++) {
                 if (this._children[i]) {
-                    width += this._children[i].getContentSize().width * this._children[i].scaleX + padding;
+                    width += this._children[i].width * this._children[i].scaleX + padding;
                 }
             }
         }
@@ -135,9 +135,9 @@ export class MenuPassive extends Layer {
         if (this._children && this._children.length > 0) {
             for (i = 0; i < this._children.length; i++) {
                 if (this._children[i]) {
-                    height = Math.max(height, this._children[i].getContentSize().height);
-                    this._children[i].setPosition(x + this._children[i].getContentSize().width * this._children[i].scaleX / 2.0, 0);
-                    x += this._children[i].getContentSize().width * this._children[i].scaleX + padding;
+                    height = Math.max(height, this._children[i].height);
+                    this._children[i].setPosition(x + this._children[i].width * this._children[i].scaleX / 2.0, 0);
+                    x += this._children[i].width * this._children[i].scaleX + padding;
                 }
             }
         }
@@ -168,7 +168,7 @@ export class MenuPassive extends Layer {
                         log("MenuPassive.alignItemsInColumns(): can not have zero columns on a row");
                         continue;
                     }
-                    tmp = this._children[i].getContentSize().height;
+                    tmp = this._children[i].height;
                     rowHeight = 0 | ((rowHeight >= tmp || (tmp == null)) ? rowHeight : tmp);
                     ++columnsOccupied;
                     if (columnsOccupied >= rowColumns) {
@@ -191,9 +191,9 @@ export class MenuPassive extends Layer {
                         w = winSize.width / (1 + rowColumns);
                         x = w;
                     }
-                    tmp = this._children[i].getContentSize().height;
+                    tmp = this._children[i].height;
                     rowHeight = 0 | ((rowHeight >= tmp || (tmp == null)) ? rowHeight : tmp);
-                    this._children[i].setPosition(x - winSize.width / 2, y - this._children[i].getContentSize().height / 2);
+                    this._children[i].setPosition(x - winSize.width / 2, y - this._children[i].height / 2);
                     x += w;
                     ++columnsOccupied;
                     if (columnsOccupied >= rowColumns) {
@@ -229,9 +229,9 @@ export class MenuPassive extends Layer {
                         log("MenuPassive.alignItemsInColumns(): can't have zero rows on a column");
                         continue;
                     }
-                    tmp = this._children[i].getContentSize().width;
+                    tmp = this._children[i].width;
                     columnWidth = 0 | ((columnWidth >= tmp || (tmp == null)) ? columnWidth : tmp);
-                    columnHeight += 0 | (this._children[i].getContentSize().height + 5);
+                    columnHeight += 0 | (this._children[i].height + 5);
                     ++rowsOccupied;
                     if (rowsOccupied >= columnRows) {
                         columnWidths.push(columnWidth);
@@ -255,10 +255,10 @@ export class MenuPassive extends Layer {
                         columnRows = columns[column];
                         y = columnHeights[column];
                     }
-                    tmp = this._children[i].getContentSize().width;
+                    tmp = this._children[i].width;
                     columnWidth = 0 | ((columnWidth >= tmp || (tmp == null)) ? columnWidth : tmp);
                     this._children[i].setPosition(x + columnWidths[column] / 2, y - winSize.height / 2);
-                    y -= this._children[i].getContentSize().height + 10;
+                    y -= this._children[i].height + 10;
                     ++rowsOccupied;
                     if (rowsOccupied >= columnRows) {
                         x += columnWidth + 5;

@@ -32,7 +32,7 @@ import { Slider, Text } from "@aspect/ccui";
 export class UISliderNormalDefaultTest extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
 
       this._bottomDisplayLabel.string = "";
 

@@ -378,9 +378,7 @@ export class TextField extends Widget {
       this._textFieldRenderer.insertText(text, text.length);
     } else this._textFieldRenderer.string = text;
     this._textFieldRendererAdaptDirty = true;
-    this._updateContentSizeWithTextureSize(
-      this._textFieldRenderer.getContentSize()
-    );
+    this._updateContentSizeWithTextureSize(this._textFieldRenderer.contentSize);
   }
 
   /**
@@ -391,9 +389,7 @@ export class TextField extends Widget {
   setPlaceHolder(value) {
     this._textFieldRenderer.setPlaceHolder(value);
     this._textFieldRendererAdaptDirty = true;
-    this._updateContentSizeWithTextureSize(
-      this._textFieldRenderer.getContentSize()
-    );
+    this._updateContentSizeWithTextureSize(this._textFieldRenderer.contentSize);
   }
 
   /**
@@ -436,9 +432,7 @@ export class TextField extends Widget {
     this._textFieldRenderer.setFontSize(size);
     this._fontSize = size;
     this._textFieldRendererAdaptDirty = true;
-    this._updateContentSizeWithTextureSize(
-      this._textFieldRenderer.getContentSize()
-    );
+    this._updateContentSizeWithTextureSize(this._textFieldRenderer.contentSize);
   }
 
   /**
@@ -457,9 +451,7 @@ export class TextField extends Widget {
     this._textFieldRenderer.setFontName(name);
     this._fontName = name;
     this._textFieldRendererAdaptDirty = true;
-    this._updateContentSizeWithTextureSize(
-      this._textFieldRenderer.getContentSize()
-    );
+    this._updateContentSizeWithTextureSize(this._textFieldRenderer.contentSize);
   }
 
   /**
@@ -596,7 +588,7 @@ export class TextField extends Widget {
     if (this.getInsertText()) {
       this._textFieldRendererAdaptDirty = true;
       this._updateContentSizeWithTextureSize(
-        this._textFieldRenderer.getContentSize()
+        this._textFieldRenderer.contentSize
       );
 
       this._insertTextEvent();
@@ -605,7 +597,7 @@ export class TextField extends Widget {
     if (this.getDeleteBackward()) {
       this._textFieldRendererAdaptDirty = true;
       this._updateContentSizeWithTextureSize(
-        this._textFieldRenderer.getContentSize()
+        this._textFieldRenderer.contentSize
       );
 
       this._deleteBackwardEvent();
@@ -768,23 +760,17 @@ export class TextField extends Widget {
 
   _textfieldRendererScaleChangedWithSize() {
     if (!this._ignoreSize)
-      this._textFieldRenderer.setDimensions(this._contentSize);
-    this._textFieldRenderer.setPosition(
-      this._contentSize.width / 2,
-      this._contentSize.height / 2
-    );
+      this._textFieldRenderer.setDimensions(this.contentSize);
+    this._textFieldRenderer.setPosition(this.width / 2, this.height / 2);
   }
 
   //@since v3.3
   getAutoRenderSize() {
-    var virtualSize = this._textFieldRenderer.getContentSize();
+    var virtualSize = this._textFieldRenderer.contentSize;
     if (!this._ignoreSize) {
       this._textFieldRenderer.setDimensions(0, 0);
-      virtualSize = this._textFieldRenderer.getContentSize();
-      this._textFieldRenderer.setDimensions(
-        this._contentSize.width,
-        this._contentSize.height
-      );
+      virtualSize = this._textFieldRenderer.contentSize;
+      this._textFieldRenderer.setDimensions(this.width, this.height);
     }
     return virtualSize;
   }
@@ -794,7 +780,7 @@ export class TextField extends Widget {
    * @returns {Size}
    */
   getVirtualRendererSize() {
-    return this._textFieldRenderer.getContentSize();
+    return this._textFieldRenderer.contentSize;
   }
 
   /**

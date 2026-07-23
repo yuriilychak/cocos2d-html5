@@ -40,7 +40,7 @@ export class UIWebViewTest extends UIMainLayer {
     window.webView = webView;
     this.addChild(webView);
 
-    var widgetSize = this._widget.getContentSize();
+    var widgetSize = this._widget.contentSize;
     var playState = this._topDisplayLabel;
     playState.string = "Press buttons to start";
     playState.y = widgetSize.height / 2.0 + playState.height * 1.5;

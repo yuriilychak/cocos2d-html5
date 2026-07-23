@@ -82,17 +82,28 @@ export class ActionCustomTest extends ActionsDemo {
     this._layer = new Layer();
     this.addChild(this._layer);
 
-    this.addChild(new ButtonLayout(
-      [
-        { label: "showInterval", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
-        { label: "showInstant", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) }
-      ],
-      196, "Actions",
-      (i) => {
-        if (i === 0) this.createActionInterval();
-        else this.createActionInstant();
-      }
-    ));
+    this.addChild(
+      new ButtonLayout(
+        [
+          {
+            label: "showInterval",
+            tintDefault: new Color(0x44, 0x55, 0x77),
+            tintPressed: new Color(0x22, 0x33, 0x55)
+          },
+          {
+            label: "showInstant",
+            tintDefault: new Color(0x44, 0x55, 0x77),
+            tintPressed: new Color(0x22, 0x33, 0x55)
+          }
+        ],
+        196,
+        "Actions",
+        (i) => {
+          if (i === 0) this.createActionInterval();
+          else this.createActionInstant();
+        }
+      )
+    );
 
     this.createActionInterval();
   }
@@ -310,7 +321,7 @@ export class ActionCustomTest extends ActionsDemo {
     var spriteTemp = new Sprite(s_pathGrossini);
     this._layer.addChild(spriteTemp);
     spriteTemp.setPosition(this._spritePos);
-    var spriteContentSize = spriteTemp.getContentSize();
+    var spriteContentSize = spriteTemp.contentSize;
     this._spritePos.y += spriteContentSize.height;
     if (this._spritePos.y > winSize.height - spriteContentSize.height) {
       this._spritePos.x += spriteContentSize.width;

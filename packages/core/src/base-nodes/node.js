@@ -150,6 +150,10 @@ export function setGlobalOrderOfArrival(val) {
 export class Node extends BaseClass {
   #tag = NODE_TAG_INVALID;
   #userData = null;
+  #rotation = new Point();
+  #position = new Point();
+  #contentSize = new Size();
+
   /**
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
    * @function
@@ -160,11 +164,8 @@ export class Node extends BaseClass {
     this._globalZOrder = 0;
     this._vertexZ = 0.0;
     this._customZ = NaN;
-    this._rotationX = 0;
-    this._rotationY = 0.0;
     this._scaleX = 1.0;
     this._scaleY = 1.0;
-    this._position = null;
     this._normalizedPosition = null;
     this._usingNormalizedPosition = false;
     this._normalizedPositionDirty = false;
@@ -173,11 +174,9 @@ export class Node extends BaseClass {
     this._children = null;
     this._visible = true;
     this._anchorPoint = null;
-    this._contentSize = null;
     this._running = false;
     this._parent = null;
     this._ignoreAnchorPointForPosition = false;
-    this.#userData = null;
     this.userObject = null;
     this._reorderChildDirty = false;
     this.arrivalOrder = 0;
@@ -196,8 +195,6 @@ export class Node extends BaseClass {
     this._cascadeOpacityEnabled = false;
     this._renderCmd = null;
     this._anchorPoint = new Point();
-    this._contentSize = new Size();
-    this._position = new Point();
     this._normalizedPosition = new Point();
     this._children = [];
 
@@ -211,17 +208,19 @@ export class Node extends BaseClass {
   }
 
   get width() {
-    return this._getWidth();
+    return this.#contentSize.width;
   }
-  set width(v) {
-    this._setWidth(v);
+  set width(value) {
+    this.#contentSize.width = value;
+    this._renderCmd._updateAnchorPointInPoint();
   }
 
   get height() {
-    return this._getHeight();
+    return this.#contentSize.height;
   }
-  set height(v) {
-    this._setHeight(v);
+  set height(value) {
+    this.#contentSize.height = value;
+    this._renderCmd._updateAnchorPointInPoint();
   }
 
   get anchorX() {
@@ -245,18 +244,33 @@ export class Node extends BaseClass {
     this.setVertexZ(v);
   }
 
+  /**
+   * Returns the X axis rotation (angle) which represent a horizontal rotational skew of the node in degrees. <br/>
+   * 0 is the default rotation angle. Positive values rotate node clockwise<br/>
+   * (support only in WebGL rendering mode)
+   */
+
   get rotationX() {
-    return this.getRotationX();
+    return this.#rotation.x;
   }
-  set rotationX(v) {
-    this.setRotationX(v);
+  set rotationX(value) {
+    this.#rotation.x = value;
+    this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
   }
 
+  /**
+   * Returns the Y axis rotation (angle) which represent a vertical rotational skew of the node in degrees. <br/>
+   * 0 is the default rotation angle. Positive values rotate node clockwise<br/>
+   * (support only in WebGL rendering mode)
+   */
+
   get rotationY() {
-    return this.getRotationY();
+    return this.#rotation.y;
   }
-  set rotationY(v) {
-    this.setRotationY(v);
+
+  set rotationY(value) {
+    this.#rotation.y = value;
+    this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
   }
 
   get scale() {
@@ -508,8 +522,8 @@ export class Node extends BaseClass {
    * @return {Number} The rotation of the node in degrees.
    */
   get rotation() {
-    if (this._rotationX !== this._rotationY) log(_LogInfos.Node_getRotation);
-    return this._rotationX;
+    if (this.#rotation.x !== this.#rotation.y) log(_LogInfos.Node_getRotation);
+    return this.#rotation.x;
   }
 
   /**
@@ -523,57 +537,7 @@ export class Node extends BaseClass {
    * @param {Number} newRotation The rotation of the node in degrees.
    */
   set rotation(newRotation) {
-    this._rotationX = this._rotationY = newRotation;
-    this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
-  }
-
-  /**
-   * Returns the X axis rotation (angle) which represent a horizontal rotational skew of the node in degrees. <br/>
-   * 0 is the default rotation angle. Positive values rotate node clockwise<br/>
-   * (support only in WebGL rendering mode)
-   * @function
-   * @return {Number} The X rotation in degrees.
-   */
-  getRotationX() {
-    return this._rotationX;
-  }
-
-  /**
-   * <p>
-   *     Sets the X rotation (angle) of the node in degrees which performs a horizontal rotational skew.        <br/>
-   *     (support only in WebGL rendering mode)                                                                 <br/>
-   *     0 is the default rotation angle.                                                                       <br/>
-   *     Positive values rotate node clockwise, and negative values for anti-clockwise.
-   * </p>
-   * @param {Number} rotationX The X rotation in degrees which performs a horizontal rotational skew.
-   */
-  setRotationX(rotationX) {
-    this._rotationX = rotationX;
-    this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
-  }
-
-  /**
-   * Returns the Y axis rotation (angle) which represent a vertical rotational skew of the node in degrees. <br/>
-   * 0 is the default rotation angle. Positive values rotate node clockwise<br/>
-   * (support only in WebGL rendering mode)
-   * @function
-   * @return {Number} The Y rotation in degrees.
-   */
-  getRotationY() {
-    return this._rotationY;
-  }
-
-  /**
-   * <p>
-   *    Sets the Y rotation (angle) of the node in degrees which performs a vertical rotational skew.         <br/>
-   *    (support only in WebGL rendering mode)                                                                <br/>
-   *    0 is the default rotation angle.                                                                      <br/>
-   *    Positive values rotate node clockwise, and negative values for anti-clockwise.
-   * </p>
-   * @param rotationY The Y rotation in degrees.
-   */
-  setRotationY(rotationY) {
-    this._rotationY = rotationY;
+    this.#rotation.x = this.#rotation.y = newRotation;
     this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
   }
 
@@ -659,7 +623,7 @@ export class Node extends BaseClass {
    *    node.setPosition(size.width/2, size.height/2);
    */
   setPosition(newPosOrxValue, yValue) {
-    var locPosition = this._position;
+    var locPosition = this.#position;
     if (yValue === undefined) {
       if (
         locPosition.x === newPosOrxValue.x &&
@@ -681,7 +645,7 @@ export class Node extends BaseClass {
    * <p>
    * Sets the position (x,y) using values between 0 and 1.                                                <br/>
    * The positions in pixels is calculated like the following:                                            <br/>
-   *   _position = _normalizedPosition * parent.getContentSize()
+   *   #position = _normalizedPosition * parent.contentSize
    * </p>
    * @param {Point|Number} posOrX
    * @param {Number} [y]
@@ -705,7 +669,7 @@ export class Node extends BaseClass {
    * @return {Point} The position (x,y) of the node in OpenGL coordinates
    */
   getPosition() {
-    return new Point(this._position);
+    return this.#position.clone();
   }
 
   /**
@@ -716,13 +680,22 @@ export class Node extends BaseClass {
     return new Point(this._normalizedPosition);
   }
 
+  get position() {
+    return this.#position.clone();
+  }
+
+  set position(value) {
+    this.#position.set(value);
+    this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
+  }
+
   /**
    * <p>Returns the x axis position of the node in cocos2d coordinates.</p>
    * @function
    * @return {Number}
    */
   get x() {
-    return this._position.x;
+    return this.#position.x;
   }
 
   /**
@@ -731,7 +704,7 @@ export class Node extends BaseClass {
    * @param {Number} x The new position in x axis
    */
   set x(x) {
-    this._position.x = x;
+    this.#position.x = x;
     this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
   }
 
@@ -741,7 +714,7 @@ export class Node extends BaseClass {
    * @return {Number}
    */
   get y() {
-    return this._position.y;
+    return this.#position.y;
   }
 
   /**
@@ -750,7 +723,7 @@ export class Node extends BaseClass {
    * @param {Number} y The new position in y axis
    */
   set y(y) {
-    this._position.y = y;
+    this.#position.y = y;
     this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
   }
 
@@ -815,7 +788,7 @@ export class Node extends BaseClass {
    * @return {Point}  The anchor point of node.
    */
   getAnchorPoint() {
-    return new Point(this._anchorPoint);
+    return this._anchorPoint.clone();
   }
 
   /**
@@ -874,21 +847,6 @@ export class Node extends BaseClass {
     return this._renderCmd.getAnchorPointInPoints();
   }
 
-  _getWidth() {
-    return this._contentSize.width;
-  }
-  _setWidth(width) {
-    this._contentSize.width = width;
-    this._renderCmd._updateAnchorPointInPoint();
-  }
-  _getHeight() {
-    return this._contentSize.height;
-  }
-  _setHeight(height) {
-    this._contentSize.height = height;
-    this._renderCmd._updateAnchorPointInPoint();
-  }
-
   /**
    * <p>Returns a copy the untransformed size of the node. <br/>
    * The contentSize remains the same no matter the node is scaled or rotated.<br/>
@@ -896,8 +854,20 @@ export class Node extends BaseClass {
    * @function
    * @return {Size} The untransformed size of the node.
    */
-  getContentSize() {
-    return new Size(this._contentSize);
+  get contentSize() {
+    return this.#contentSize.clone();
+  }
+
+  set contentSize(value) {
+    var locContentSize = this.#contentSize;
+    if (
+      value.width === locContentSize.width &&
+      value.height === locContentSize.height
+    ) {
+      return;
+    }
+    locContentSize.set(value);
+    this._renderCmd._updateAnchorPointInPoint();
   }
 
   /**
@@ -912,7 +882,7 @@ export class Node extends BaseClass {
    * @param {Number} [height] The untransformed size's height of the node.
    */
   setContentSize(size, height) {
-    var locContentSize = this._contentSize;
+    var locContentSize = this.#contentSize;
     if (height === undefined) {
       if (
         size.width === locContentSize.width &&
@@ -1177,12 +1147,7 @@ export class Node extends BaseClass {
    * @return {Rect} The calculated bounding box of the node
    */
   get boundingBox() {
-    var rect = new Rect(
-      0,
-      0,
-      this._contentSize.width,
-      this._contentSize.height
-    );
+    var rect = new Rect(0, 0, this.width, this.height);
     return AffineTransform._applyToRectIn(
       rect,
       this.getNodeToParentTransform()
@@ -2218,12 +2183,7 @@ export class Node extends BaseClass {
    * @return {Rect}
    */
   getBoundingBoxToWorld() {
-    var rect = new Rect(
-      0,
-      0,
-      this._contentSize.width,
-      this._contentSize.height
-    );
+    var rect = new Rect(0, 0, this.width, this.height);
     var trans = this.getNodeToWorldTransform();
     rect = AffineTransform.applyToRect(rect, trans);
 
@@ -2242,12 +2202,7 @@ export class Node extends BaseClass {
   }
 
   _getBoundingBoxToCurrentNode(parentTransform) {
-    var rect = new Rect(
-      0,
-      0,
-      this._contentSize.width,
-      this._contentSize.height
-    );
+    var rect = new Rect(0, 0, this.width, this.height);
     var trans =
       parentTransform === undefined
         ? this.getNodeToParentTransform()

@@ -34,7 +34,7 @@ export class TMXLayerWebGLRenderCmd extends Node.WebGLRenderCmd {
 
   uploadData(f32buffer, ui32buffer, vertexDataOffset, texIndex) {
     const node = this._node,
-      hasRotation = node._rotationX || node._rotationY,
+      hasRotation = node.rotationX || node.rotationY,
       layerOrientation = node.layerOrientation,
       tiles = node.tiles;
 
@@ -68,8 +68,8 @@ export class TMXLayerWebGLRenderCmd extends Node.WebGLRenderCmd {
       d = wt.d,
       tx = wt.tx,
       ty = wt.ty,
-      ox = -node._contentSize.width * node._anchorPoint.x,
-      oy = -node._contentSize.height * node._anchorPoint.y,
+      ox = -node.width * node._anchorPoint.x,
+      oy = -node.height * node._anchorPoint.y,
       mapx = ox * a + oy * c + tx,
       mapy = ox * b + oy * d + ty;
 

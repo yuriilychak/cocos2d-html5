@@ -31,9 +31,10 @@ import { Layout, ScrollView } from "@aspect/ccui";
 export class UIScrollViewTest_ScrollBar extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
       //init text
-      this._topDisplayLabel.string = "Scroll bar is red, 65% opacity, auto hide time: 5 sec";
+      this._topDisplayLabel.string =
+        "Scroll bar is red, 65% opacity, auto hide time: 5 sec";
       this._topDisplayLabel.setFontSize(14);
       this._topDisplayLabel.x = widgetSize.width / 2.0;
       this._topDisplayLabel.y =
@@ -53,12 +54,10 @@ export class UIScrollViewTest_ScrollBar extends UIMainLayer {
       scrollView.setDirection(ScrollView.DIR_BOTH);
       scrollView.setInnerContainerSize(new Size(480, 320));
       scrollView.setContentSize(new Size(100, 100));
-      var scrollViewSize = scrollView.getContentSize();
+      var scrollViewSize = scrollView.contentSize;
 
-      scrollView.x =
-        (widgetSize.width - scrollViewSize.width) / 2;
-      scrollView.y =
-        (widgetSize.height - scrollViewSize.height) / 2;
+      scrollView.x = (widgetSize.width - scrollViewSize.width) / 2;
+      scrollView.y = (widgetSize.height - scrollViewSize.height) / 2;
 
       this._mainNode.addChild(scrollView);
 

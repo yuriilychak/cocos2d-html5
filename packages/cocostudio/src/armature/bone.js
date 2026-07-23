@@ -214,14 +214,14 @@ export class Bone extends Node {
 
       var locWorldInfo = this._worldInfo;
       locWorldInfo.copy(locTweenData);
-      locWorldInfo.x = locTweenData.x + this._position.x;
-      locWorldInfo.y = locTweenData.y + this._position.y;
+      locWorldInfo.x = locTweenData.x + this.x;
+      locWorldInfo.y = locTweenData.y + this.y;
       locWorldInfo.scaleX = locTweenData.scaleX * this._scaleX;
       locWorldInfo.scaleY = locTweenData.scaleY * this._scaleY;
       locWorldInfo.skewX =
-        locTweenData.skewX + this._skewX + degreesToRadians(this._rotationX);
+        locTweenData.skewX + this._skewX + degreesToRadians(this.rotationX);
       locWorldInfo.skewY =
-        locTweenData.skewY + this._skewY - degreesToRadians(this._rotationY);
+        locTweenData.skewY + this._skewY - degreesToRadians(this.rotationY);
 
       if (this._parentBone) this._applyParentTransform(this._parentBone);
       else {

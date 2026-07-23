@@ -188,7 +188,7 @@ export class EditBox extends Node {
     this._renderCmd.transform();
 
     this.string = oldText;
-    this._input._updateLabelPosition(this.getContentSize());
+    this._input._updateLabelPosition(this.contentSize);
   }
 
   get returnType() {
@@ -276,7 +276,7 @@ export class EditBox extends Node {
 
   _onTouchBegan(touch) {
     if (!this.visible || !this._isAncestorsVisible(this)) return;
-    var bb = new Rect(0, 0, this._contentSize.width, this._contentSize.height);
+    var bb = new Rect(0, 0, this.width, this.height);
     var hitted = Rect.containsPoint(bb, this.convertToNodeSpace(touch));
     if (hitted) {
       return true;

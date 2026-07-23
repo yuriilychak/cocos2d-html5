@@ -317,7 +317,7 @@ export class RichText extends Widget {
       fontNameOrFontDef instanceof FontDefinition
         ? new LabelTTF(text, fontNameOrFontDef)
         : new LabelTTF(text, fontNameOrFontDef, fontSize);
-    var textRendererWidth = textRenderer.getContentSize().width;
+    var textRendererWidth = textRenderer.width;
     this._leftSpaceWidth -= textRendererWidth;
     if (this._leftSpaceWidth < 0) {
       var overstepPercent = -this._leftSpaceWidth / textRendererWidth;
@@ -374,7 +374,7 @@ export class RichText extends Widget {
   }
 
   _handleCustomRenderer(renderer) {
-    var imgSize = renderer.getContentSize();
+    var imgSize = renderer.contentSize;
     this._leftSpaceWidth -= imgSize.width;
     if (this._leftSpaceWidth < 0) {
       this._addNewLine();
@@ -410,7 +410,7 @@ export class RichText extends Widget {
 
         lineHeight = l.getLineHeight ? l.getLineHeight() : newContentSizeHeight;
 
-        var iSize = l.getContentSize();
+        var iSize = l.contentSize;
         newContentSizeWidth += iSize.width;
         newContentSizeHeight = Math.max(
           Math.min(newContentSizeHeight, lineHeight),
@@ -423,9 +423,9 @@ export class RichText extends Widget {
       if (this._textHorizontalAlignment !== TextAlignment.LEFT) {
         offsetX = 0;
         if (this._textHorizontalAlignment === TextAlignment.RIGHT)
-          offsetX = this._contentSize.width - nextPosX;
+          offsetX = this.width - nextPosX;
         else if (this._textHorizontalAlignment === TextAlignment.CENTER)
-          offsetX = (this._contentSize.width - nextPosX) / 2;
+          offsetX = (this.width - nextPosX) / 2;
 
         for (j = 0; j < row.length; j++) row[j].x += offsetX;
       }
@@ -441,13 +441,8 @@ export class RichText extends Widget {
         var maxHeight = 0;
         for (j = 0; j < row.length; j++) {
           l = row[j];
-          lineHeight = l.getLineHeight
-            ? l.getLineHeight()
-            : l.getContentSize().height;
-          maxHeight = Math.max(
-            Math.min(l.getContentSize().height, lineHeight),
-            maxHeight
-          );
+          lineHeight = l.getLineHeight ? l.getLineHeight() : l.height;
+          maxHeight = Math.max(Math.min(l.height, lineHeight), maxHeight);
         }
         maxHeights[i] = maxHeight;
         newContentSizeHeight += maxHeights[i];
@@ -465,7 +460,7 @@ export class RichText extends Widget {
           l.setAnchorPoint(new Point(0, 0));
           l.setPosition(new Point(nextPosX, nextPosY));
           locRenderersContainer.addChild(l, 1);
-          nextPosX += l.getContentSize().width;
+          nextPosX += l.width;
         }
         //Text flow alignment(s)
         if (
@@ -474,9 +469,9 @@ export class RichText extends Widget {
         ) {
           offsetX = 0;
           if (this._textHorizontalAlignment === TextAlignment.RIGHT)
-            offsetX = this._contentSize.width - nextPosX;
+            offsetX = this.width - nextPosX;
           else if (this._textHorizontalAlignment === TextAlignment.CENTER)
-            offsetX = (this._contentSize.width - nextPosX) / 2;
+            offsetX = (this.width - nextPosX) / 2;
 
           var offsetY = 0;
           if (this._textVerticalAlignment === VerticalTextAlignment.BOTTOM)
@@ -492,7 +487,7 @@ export class RichText extends Widget {
         }
       }
 
-      locRenderersContainer.setContentSize(this._contentSize);
+      locRenderersContainer.contentSize = this.contentSize;
     }
 
     var length = locElementRenders.length;
@@ -501,15 +496,12 @@ export class RichText extends Widget {
     }
     this._elementRenders.length = 0;
 
-    this.setContentSize(
-      this._ignoreSize ? this.getVirtualRendererSize() : this._customSize
-    );
-    this._updateContentSizeWithTextureSize(this._contentSize);
+    this.contentSize = this._ignoreSize
+      ? this.getVirtualRendererSize()
+      : this._customSize;
+    this._updateContentSizeWithTextureSize(this.contentSize);
 
-    locRenderersContainer.setPosition(
-      this._contentSize.width * 0.5,
-      this._contentSize.height * 0.5
-    );
+    locRenderersContainer.setPosition(this.width * 0.5, this.height * 0.5);
   }
 
   _pushToContainer(renderer) {
@@ -553,7 +545,7 @@ export class RichText extends Widget {
    * @returns {Size}
    */
   getVirtualRendererSize() {
-    return this._elementRenderersContainer.getContentSize();
+    return this._elementRenderersContainer.contentSize;
   }
 
   /**
@@ -573,17 +565,31 @@ export class RichText extends Widget {
    * @override
    * @return {Size}
    */
-  getContentSize() {
+  get contentSize() {
     this.formatText();
-    return Node.prototype.getContentSize.call(this);
+    return super.contentSize;
   }
-  _getWidth() {
-    this.formatText();
-    return Node.prototype._getWidth.call(this);
+
+  set contentSize(value) {
+    this.setContentSize(value);
   }
-  _getHeight() {
+
+  get width() {
     this.formatText();
-    return Node.prototype._getHeight.call(this);
+    return super.width;
+  }
+
+  set width(value) {
+    super.width = value;
+  }
+
+  get height() {
+    this.formatText();
+    return super.height;
+  }
+
+  set height(value) {
+    super.height = value;
   }
 
   setContentSize(contentSize, height) {

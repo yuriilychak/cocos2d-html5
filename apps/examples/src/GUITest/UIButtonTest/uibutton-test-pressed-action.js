@@ -34,7 +34,7 @@ export class UIButtonTest_PressedAction extends UIMainLayer {
       this._topDisplayLabel.string = "No Event";
       this._bottomDisplayLabel.string = "Button Pressed Action";
 
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
       // Create the button
       var button = new Button();
       button.setTouchEnabled(true);

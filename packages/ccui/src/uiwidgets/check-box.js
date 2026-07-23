@@ -194,7 +194,7 @@ export class CheckBox extends Widget {
         "load",
         function () {
           this._updateContentSizeWithTextureSize(
-            this._backGroundBoxRenderer.getContentSize()
+            this._backGroundBoxRenderer.contentSize
           );
           this.loadTextureBackGround(
             this._backGroundFileName,
@@ -223,7 +223,7 @@ export class CheckBox extends Widget {
     this._updateChildrenDisplayedRGBA();
 
     this._updateContentSizeWithTextureSize(
-      this._backGroundBoxRenderer.getContentSize()
+      this._backGroundBoxRenderer.contentSize
     );
     this._backGroundBoxRendererAdaptDirty = true;
     this._findLayout();
@@ -575,7 +575,7 @@ export class CheckBox extends Widget {
    * @returns {Size}
    */
   getVirtualRendererSize() {
-    return this._backGroundBoxRenderer.getContentSize();
+    return this._backGroundBoxRenderer.contentSize;
   }
 
   _onSizeChanged() {
@@ -598,12 +598,12 @@ export class CheckBox extends Widget {
 
   _backGroundTextureScaleChangedWithSize() {
     var locRenderer = this._backGroundBoxRenderer,
-      locContentSize = this._contentSize;
+      locContentSize = this.contentSize;
     if (this._ignoreSize) {
       locRenderer.scale = 1.0;
       this._backgroundTextureScaleX = this._backgroundTextureScaleY = 1;
     } else {
-      var textureSize = locRenderer.getContentSize();
+      var textureSize = locRenderer.contentSize;
       if (textureSize.width <= 0.0 || textureSize.height <= 0.0) {
         locRenderer.scale = 1.0;
         this._backgroundTextureScaleX = this._backgroundTextureScaleY = 1;
@@ -624,10 +624,10 @@ export class CheckBox extends Widget {
 
   _backGroundSelectedTextureScaleChangedWithSize() {
     var locRenderer = this._backGroundSelectedBoxRenderer,
-      locContentSize = this._contentSize;
+      locContentSize = this.contentSize;
     if (this._ignoreSize) locRenderer.scale = 1.0;
     else {
-      var textureSize = locRenderer.getContentSize();
+      var textureSize = locRenderer.contentSize;
       if (textureSize.width <= 0.0 || textureSize.height <= 0.0) {
         locRenderer.scale = 1.0;
         return;
@@ -645,10 +645,10 @@ export class CheckBox extends Widget {
 
   _frontCrossTextureScaleChangedWithSize() {
     var locRenderer = this._frontCrossRenderer,
-      locContentSize = this._contentSize;
+      locContentSize = this.contentSize;
     if (this._ignoreSize) locRenderer.scale = 1.0;
     else {
-      var textureSize = locRenderer.getContentSize();
+      var textureSize = locRenderer.contentSize;
       if (textureSize.width <= 0.0 || textureSize.height <= 0.0) {
         locRenderer.scale = 1.0;
         return;
@@ -666,10 +666,10 @@ export class CheckBox extends Widget {
 
   _backGroundDisabledTextureScaleChangedWithSize() {
     var locRenderer = this._backGroundBoxDisabledRenderer,
-      locContentSize = this._contentSize;
+      locContentSize = this.contentSize;
     if (this._ignoreSize) locRenderer.scale = 1.0;
     else {
-      var textureSize = locRenderer.getContentSize();
+      var textureSize = locRenderer.contentSize;
       if (textureSize.width <= 0.0 || textureSize.height <= 0.0) {
         locRenderer.scale = 1.0;
         return;
@@ -687,11 +687,11 @@ export class CheckBox extends Widget {
 
   _frontCrossDisabledTextureScaleChangedWithSize() {
     var locRenderer = this._frontCrossDisabledRenderer,
-      locContentSize = this._contentSize;
+      locContentSize = this.contentSize;
     if (this._ignoreSize) {
       locRenderer.scale = 1.0;
     } else {
-      var textureSize = locRenderer.getContentSize();
+      var textureSize = locRenderer.contentSize;
       if (textureSize.width <= 0.0 || textureSize.height <= 0.0) {
         locRenderer.scale = 1.0;
         return;

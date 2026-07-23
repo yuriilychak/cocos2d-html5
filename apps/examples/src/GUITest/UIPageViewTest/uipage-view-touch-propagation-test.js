@@ -27,12 +27,22 @@
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
 import { Color, Point, Size, log } from "@aspect/core";
-import { Button, CheckBox, HBox, Layout, LinearLayoutParameter, PageView, Text, VBox, Widget } from "@aspect/ccui";
+import {
+  Button,
+  CheckBox,
+  HBox,
+  Layout,
+  LinearLayoutParameter,
+  PageView,
+  Text,
+  VBox,
+  Widget
+} from "@aspect/ccui";
 
 export class UIPageViewTouchPropagationTest extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
 
       // Add a label in which the dragpanel events will be displayed
       this._topDisplayLabel.string = "Move by horizontal direction";
@@ -102,9 +112,7 @@ export class UIPageViewTouchPropagationTest extends UIMainLayer {
       var propagationText = new Text("Allow Propagation", "Arial", 10);
       propagationText.setAnchorPoint(new Point(0, 0.5));
       propagationText.setTextColor(Color.RED);
-      propagationText.setPosition(
-        new Point(20, pageView.getPosition().y + 50)
-      );
+      propagationText.setPosition(new Point(20, pageView.getPosition().y + 50));
       this._mainNode.addChild(propagationText);
 
       var swallowTouchText = new Text("Swallow Touches", "Arial", 10);
@@ -123,7 +131,7 @@ export class UIPageViewTouchPropagationTest extends UIMainLayer {
       );
       var propagationPosition = propagationText.getPosition();
       checkBox1.setPosition(
-        propagationPosition.x + propagationText.getContentSize().width / 2,
+        propagationPosition.x + propagationText.width / 2,
         propagationPosition.y - 20
       );
 
@@ -140,7 +148,7 @@ export class UIPageViewTouchPropagationTest extends UIMainLayer {
       );
       var swallowPosition = swallowTouchText.getPosition();
       checkBox2.setPosition(
-        swallowPosition.x + swallowTouchText.getContentSize().width / 2,
+        swallowPosition.x + swallowTouchText.width / 2,
         swallowPosition.y - 20
       );
 
@@ -186,7 +194,8 @@ export class UIPageViewTouchPropagationTest extends UIMainLayer {
   pageViewEvent(pageView, type) {
     switch (type) {
       case PageView.EVENT_TURNING:
-        this._topDisplayLabel.string = "page = " + (pageView.getCurPageIndex() - 0 + 1);
+        this._topDisplayLabel.string =
+          "page = " + (pageView.getCurPageIndex() - 0 + 1);
         break;
       default:
         break;

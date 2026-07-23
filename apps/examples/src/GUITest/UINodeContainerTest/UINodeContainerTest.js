@@ -31,7 +31,7 @@ import { Widget } from "@aspect/ccui";
 export class UIWidgetAddNodeTest extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
       //init text
       this._topDisplayLabel.string = "";
       this._bottomDisplayLabel.string = "NodeContainer";

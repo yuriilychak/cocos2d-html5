@@ -436,8 +436,8 @@ document.head.appendChild(style);
       var containerStyle = ServiceLocator.eglView.container.style,
         offsetX = parseInt(containerStyle.paddingLeft),
         offsetY = parseInt(containerStyle.paddingBottom),
-        cw = node._contentSize.width,
-        ch = node._contentSize.height;
+        cw = node.width,
+        ch = node.height;
       var a = t.a * scaleX,
         b = t.b,
         c = t.c,
@@ -557,7 +557,7 @@ document.head.appendChild(style);
     }
 
     changeSize(w, h) {
-      var contentSize = this._node._contentSize;
+      var contentSize = this._node.contentSize;
       w = w || contentSize.width;
       h = h || contentSize.height;
       var video = this._video;

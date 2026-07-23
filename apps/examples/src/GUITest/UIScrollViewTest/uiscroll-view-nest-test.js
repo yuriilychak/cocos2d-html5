@@ -32,7 +32,7 @@ import { Button, ImageView, Layout, ScrollView } from "@aspect/ccui";
 export class UIScrollViewNestTest extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
 
       // Add a label in which the scrollview alert will be displayed
       this._topDisplayLabel.string = "Move by vertical direction";
@@ -50,17 +50,17 @@ export class UIScrollViewNestTest extends UIMainLayer {
       scrollView.setDirection(ScrollView.DIR_BOTH);
       scrollView.setPosition(
         new Point(
-          (widgetSize.width - scrollView.getContentSize().width) / 2.0,
-          (widgetSize.height - scrollView.getContentSize().height) / 2.0
+          (widgetSize.width - scrollView.width) / 2.0,
+          (widgetSize.height - scrollView.contentSize.height) / 2.0
         )
       );
       this._mainNode.addChild(scrollView);
 
       var imageView = new ImageView("ccs-res/cocosui/ccicon.png");
 
-      var innerWidth = scrollView.getContentSize().width;
+      var innerWidth = scrollView.width;
       var innerHeight =
-        scrollView.getContentSize().height + imageView.getContentSize().height;
+        scrollView.contentSize.height + imageView.contentSize.height;
 
       scrollView.setInnerContainerSize(new Size(innerWidth, innerHeight));
 
@@ -72,7 +72,7 @@ export class UIScrollViewNestTest extends UIMainLayer {
         new Point(
           innerWidth / 2.0,
           scrollView.getInnerContainerSize().height -
-            button.getContentSize().height / 2.0
+            button.contentSize.height / 2.0
         )
       );
       scrollView.addChild(button);
@@ -85,7 +85,7 @@ export class UIScrollViewNestTest extends UIMainLayer {
       titleButton.setPosition(
         new Point(
           innerWidth / 2.0,
-          button.getBottomBoundary() - button.getContentSize().height
+          button.getBottomBoundary() - button.contentSize.height
         )
       );
       scrollView.addChild(titleButton);
@@ -101,13 +101,13 @@ export class UIScrollViewNestTest extends UIMainLayer {
       button_scale9.setPosition(
         new Point(
           innerWidth / 2.0,
-          titleButton.getBottomBoundary() - titleButton.getContentSize().height
+          titleButton.getBottomBoundary() - titleButton.contentSize.height
         )
       );
       scrollView.addChild(button_scale9);
 
       imageView.setPosition(
-        new Point(innerWidth / 2.0, imageView.getContentSize().height / 2.0)
+        new Point(innerWidth / 2.0, imageView.contentSize.height / 2.0)
       );
       scrollView.addChild(imageView);
 

@@ -60,7 +60,7 @@ export class TextBMFont extends Widget {
   set fontSize(v) {
     this._labelBMFontRenderer.fontSize = v;
     this._updateContentSizeWithTextureSize(
-      this._labelBMFontRenderer.getContentSize()
+      this._labelBMFontRenderer.contentSize
     );
     this._labelBMFontRendererAdaptDirty = true;
   }
@@ -85,7 +85,7 @@ export class TextBMFont extends Widget {
     this._fntFileHasInit = true;
     this._labelBMFontRenderer.initWithString(this._stringValue, fileName);
     this._updateContentSizeWithTextureSize(
-      this._labelBMFontRenderer.getContentSize()
+      this._labelBMFontRenderer.contentSize
     );
     this._labelBMFontRendererAdaptDirty = true;
 
@@ -119,7 +119,7 @@ export class TextBMFont extends Widget {
     this._labelBMFontRenderer.string = value;
     if (!this._fntFileHasInit) return;
     this._updateContentSizeWithTextureSize(
-      this._labelBMFontRenderer.getContentSize()
+      this._labelBMFontRenderer.contentSize
     );
     this._labelBMFontRendererAdaptDirty = true;
   }
@@ -158,7 +158,7 @@ export class TextBMFont extends Widget {
    * @returns {Size}
    */
   getVirtualRendererSize() {
-    return this._labelBMFontRenderer.getContentSize();
+    return this._labelBMFontRenderer.contentSize;
   }
 
   /**
@@ -174,18 +174,15 @@ export class TextBMFont extends Widget {
     var locRenderer = this._labelBMFontRenderer;
     if (this._ignoreSize) locRenderer.scale = 1.0;
     else {
-      var textureSize = locRenderer.getContentSize();
+      var textureSize = locRenderer.contentSize;
       if (textureSize.width <= 0.0 || textureSize.height <= 0.0) {
         locRenderer.scale = 1.0;
         return;
       }
-      locRenderer.scaleX = this._contentSize.width / textureSize.width;
-      locRenderer.scaleY = this._contentSize.height / textureSize.height;
+      locRenderer.scaleX = this.width / textureSize.width;
+      locRenderer.scaleY = this.height / textureSize.height;
     }
-    locRenderer.setPosition(
-      this._contentSize.width / 2.0,
-      this._contentSize.height / 2.0
-    );
+    locRenderer.setPosition(this.width / 2.0, this.height / 2.0);
   }
 
   /**

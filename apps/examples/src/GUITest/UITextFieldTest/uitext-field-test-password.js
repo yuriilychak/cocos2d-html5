@@ -32,7 +32,7 @@ import { TextField } from "@aspect/ccui";
 export class UITextFieldTest_Password extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
       //init text
       this._topDisplayLabel.string = "No Event";
       this._bottomDisplayLabel.string = "TextField max length";
@@ -56,7 +56,7 @@ export class UITextFieldTest_Password extends UIMainLayer {
   }
 
   textFieldEvent(textField, type) {
-    var widgetSize = this._widget.getContentSize();
+    var widgetSize = this._widget.contentSize;
     switch (type) {
       case TextField.EVENT_ATTACH_WITH_IME:
         textField.runAction(

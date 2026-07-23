@@ -60,8 +60,8 @@ export default class LayerColorWebGLRenderer extends LayerWebGLRenderer {
     this.originTransform(parentCmd, recursive);
 
     const node = this._node,
-      width = node._contentSize.width,
-      height = node._contentSize.height;
+      width = node.width,
+      height = node.height;
 
     const pos = this._positionView;
     pos[FLOAT_PER_VERTEX_COLOR] = width;

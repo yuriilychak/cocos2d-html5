@@ -80,8 +80,8 @@ export class LayerColorWebGLRenderCmd extends LayerWebGLRenderCmd {
     this.originTransform(parentCmd, recursive);
 
     const node = this._node,
-      width = node._contentSize.width,
-      height = node._contentSize.height;
+      width = node.width,
+      height = node.height;
 
     const pos = this._positionView;
     pos[FLOAT_PER_VERTEX_COLOR] = width;
@@ -215,7 +215,7 @@ export class LayerGradientWebGLRenderCmd extends LayerColorWebGLRenderCmd {
     let i;
     const stopsLen = stops.length,
       verticesLen = stopsLen * 2,
-      contentSize = node._contentSize;
+      contentSize = node.contentSize;
     if (this._positionView.length / FLOAT_PER_VERTEX_GRADIENT < verticesLen) {
       this.initData(verticesLen);
     }
@@ -364,8 +364,8 @@ export class LayerGradientWebGLRenderCmd extends LayerColorWebGLRenderCmd {
       const rect = new Rect(
         0,
         0,
-        node._contentSize.width,
-        node._contentSize.height
+        node.width,
+        node.height
       );
       const trans = node.getNodeToWorldTransform();
       this._clipRect = AffineTransform._applyToRectIn(rect, trans);

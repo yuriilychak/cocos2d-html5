@@ -39,7 +39,7 @@ export class UILayoutTestBase extends UIMainLayer {
 
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
       //init text
       this._topDisplayLabel.string = "";
       this._bottomDisplayLabel.string = this.getText();
@@ -52,11 +52,9 @@ export class UILayoutTestBase extends UIMainLayer {
 
       // Create the layout
       this.layout = this.createLayout();
-      var layoutRect = this.layout.getContentSize();
-      this.layout.x =
-        (widgetSize.width - layoutRect.width) / 2;
-      this.layout.y =
-        (widgetSize.height - layoutRect.height) / 2;
+      var layoutRect = this.layout.contentSize;
+      this.layout.x = (widgetSize.width - layoutRect.width) / 2;
+      this.layout.y = (widgetSize.height - layoutRect.height) / 2;
       this._mainNode.addChild(this.layout);
 
       this.button = new Button();

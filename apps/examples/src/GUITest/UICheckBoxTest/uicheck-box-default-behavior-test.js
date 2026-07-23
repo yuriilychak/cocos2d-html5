@@ -32,7 +32,7 @@ import { CheckBox, Text } from "@aspect/ccui";
 export class UICheckBoxDefaultBehaviorTest extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
 
       // Add a label in which the checkbox events will be displayed
       this._displayValueLabel = new Text("No Event", "Marker Felt", 32);
@@ -44,16 +44,12 @@ export class UICheckBoxDefaultBehaviorTest extends UIMainLayer {
       this._bottomDisplayLabel.string = "";
 
       // Add the alert
-      var alert = new Text(
-        "Only left two can be clicked!",
-        "Marker Felt",
-        20
-      );
+      var alert = new Text("Only left two can be clicked!", "Marker Felt", 20);
       alert.color = new Color(159, 168, 176);
       alert.setPosition(
         new Point(
           widgetSize.width / 2,
-          widgetSize.height / 2 - alert.getContentSize().height * 1.75
+          widgetSize.height / 2 - alert.contentSize.height * 1.75
         )
       );
       this._mainNode.addChild(alert);

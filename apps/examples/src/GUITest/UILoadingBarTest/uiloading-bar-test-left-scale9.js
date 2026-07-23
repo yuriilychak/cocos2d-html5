@@ -30,7 +30,7 @@ import { LoadingBar } from "@aspect/ccui";
 
 export class UILoadingBarTest_Left_Scale9 extends UILoadingBarTest {
   createLoadingBar() {
-    var widgetSize = this._widget.getContentSize();
+    var widgetSize = this._widget.contentSize;
     var loadingBar = new LoadingBar();
     loadingBar.name = "LoadingBar";
     loadingBar.setScale9Enabled(true);

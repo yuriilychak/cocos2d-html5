@@ -41,7 +41,7 @@ export class UIButtonTest extends UIMainLayer {
       this._topDisplayLabel.string = "No Event";
       this._bottomDisplayLabel.string = "Button";
 
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
       // Create the button
       var button = (this._button = new Button());
       button.setTouchEnabled(true);
@@ -55,11 +55,20 @@ export class UIButtonTest extends UIMainLayer {
       button.addTouchEventListener(this.touchEvent, this);
       this._mainNode.addChild(button);
 
-      this.addChild(new ButtonLayout(
-        [{ label: "setOpacity", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) }],
-        196, "Actions",
-        () => this.setOpacityTest()
-      ));
+      this.addChild(
+        new ButtonLayout(
+          [
+            {
+              label: "setOpacity",
+              tintDefault: new Color(0x44, 0x55, 0x77),
+              tintPressed: new Color(0x22, 0x33, 0x55)
+            }
+          ],
+          196,
+          "Actions",
+          () => this.setOpacityTest()
+        )
+      );
       return true;
     }
     return false;

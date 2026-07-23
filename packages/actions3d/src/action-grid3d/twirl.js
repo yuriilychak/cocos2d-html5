@@ -11,7 +11,7 @@ import { Point } from "@aspect/core";
  * @param {Number} amplitude
  */
 export default class Twirl extends Grid3DAction {
-  _position = null;
+  #position = new Point();
   _twirls = 0;
   _amplitude = 0;
   _amplitudeRate = 0;
@@ -26,17 +26,15 @@ export default class Twirl extends Grid3DAction {
    */
   constructor(duration, gridSize, position, twirls, amplitude) {
     super();
-    this._position = new Point();
     amplitude !== undefined &&
       this.initWithDuration(duration, gridSize, position, twirls, amplitude);
   }
 
   getPosition() {
-    return this._position;
+    return this.#position;
   }
   setPosition(position) {
-    this._position.x = position.x;
-    this._position.y = position.y;
+    this.#position.set(position);
   }
   getAmplitude() {
     return this._amplitude;
@@ -68,7 +66,7 @@ export default class Twirl extends Grid3DAction {
    * @param {Number} dt
    */
   update(dt) {
-    const c = this._position;
+    const c = this.#position;
     const locSizeWidth = this._gridSize.width;
     const locSizeHeight = this._gridSize.height;
     const locPos = new Point();

@@ -50,8 +50,8 @@ export default class LayerGradientCanvasRenderer extends LayerColorCanvasRendere
 
     if (opacity === 0) return;
 
-    const locWidth = node._contentSize.width,
-      locHeight = node._contentSize.height;
+    const locWidth = node.width,
+      locHeight = node.height;
     wrapper.compositeOperation = this._blendFuncStr;
     wrapper.globalAlpha = opacity;
     const gradient = context.createLinearGradient(
@@ -102,7 +102,7 @@ export default class LayerGradientCanvasRenderer extends LayerColorCanvasRendere
 
   _updateColor() {
     const node = this._node;
-    const contentSize = node._contentSize;
+    const contentSize = node.contentSize;
     const tWidth = contentSize.width * 0.5,
       tHeight = contentSize.height * 0.5;
 

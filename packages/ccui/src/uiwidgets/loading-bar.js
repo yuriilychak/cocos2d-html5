@@ -73,16 +73,13 @@ export class LoadingBar extends Widget {
     switch (this._direction) {
       case LoadingBar.TYPE_LEFT:
         this._barRenderer.setAnchorPoint(0, 0.5);
-        this._barRenderer.setPosition(0, this._contentSize.height * 0.5);
+        this._barRenderer.setPosition(0, this.height * 0.5);
         if (!this._scale9Enabled) this._barRenderer.setFlippedX(false);
 
         break;
       case LoadingBar.TYPE_RIGHT:
         this._barRenderer.setAnchorPoint(1, 0.5);
-        this._barRenderer.setPosition(
-          this._totalLength,
-          this._contentSize.height * 0.5
-        );
+        this._barRenderer.setPosition(this._totalLength, this.height * 0.5);
         if (!this._scale9Enabled) this._barRenderer.setFlippedX(true);
 
         break;
@@ -119,7 +116,7 @@ export class LoadingBar extends Widget {
         break;
     }
 
-    var bz = barRenderer.getContentSize();
+    var bz = barRenderer.contentSize;
     this._barRendererTextureSize.width = bz.width;
     this._barRendererTextureSize.height = bz.height;
 
@@ -250,9 +247,9 @@ export class LoadingBar extends Widget {
 
   _barRendererScaleChangedWithSize() {
     var locBarRender = this._barRenderer,
-      locContentSize = this._contentSize;
+      locContentSize = this.contentSize;
     if (this._unifySize) {
-      this._totalLength = this._contentSize.width;
+      this._totalLength = this.width;
       this.setPercent(this._percent);
     } else if (this._ignoreSize) {
       if (!this._scale9Enabled) {
@@ -293,9 +290,7 @@ export class LoadingBar extends Widget {
 
   _setScale9Scale() {
     var width = (this._percent / 100) * this._totalLength;
-    this._barRenderer.setPreferredSize(
-      new Size(width, this._contentSize.height)
-    );
+    this._barRenderer.setPreferredSize(new Size(width, this.height));
   }
 
   getDescription() {

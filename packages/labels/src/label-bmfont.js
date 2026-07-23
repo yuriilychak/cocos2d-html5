@@ -212,8 +212,8 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
       this._realOpacity = 255;
       this._realColor = new Color(255, 255, 255, 255);
 
-      this._contentSize.width = 0;
-      this._contentSize.height = 0;
+      this.width = 0;
+      this.height = 0;
 
       this.setAnchorPoint(0.5, 0.5);
 
@@ -564,7 +564,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
 
           var lastChar = this.getChildByTag(index);
           if (lastChar == null) continue;
-          lineWidth = lastChar.x + lastChar._getWidth() * lastChar._scaleX / 2;
+          lineWidth = lastChar.x + lastChar.width * lastChar._scaleX / 2;
 
           var shift = 0;
           switch (this._alignment) {
@@ -795,14 +795,14 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
   _getLetterPosXLeft(sp) {
     return (
       sp.x * this._scaleX -
-      sp._getWidth() * sp._scaleX * this._scaleX * sp._getAnchorX()
+      sp.width * sp._scaleX * this._scaleX * sp._getAnchorX()
     );
   }
 
   _getLetterPosXRight(sp) {
     return (
       sp.x * this._scaleX +
-      sp._getWidth() * sp._scaleX * this._scaleX * sp._getAnchorX()
+      sp.width * sp._scaleX * this._scaleX * sp._getAnchorX()
     );
   }
 

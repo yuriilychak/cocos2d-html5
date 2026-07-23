@@ -27,7 +27,14 @@
 import { UIMainLayer } from "../uimain-layer";
 import { Point, Size, Color } from "@aspect/core";
 import { Armature, armatureDataManager } from "@aspect/cocostudio";
-import { Button, RichElementCustomNode, RichElementImage, RichElementText, RichText, Widget } from "@aspect/ccui";
+import {
+  Button,
+  RichElementCustomNode,
+  RichElementImage,
+  RichElementText,
+  RichText,
+  Widget
+} from "@aspect/ccui";
 
 export class UIRichTextTest extends UIMainLayer {
   constructor() {
@@ -41,7 +48,7 @@ export class UIRichTextTest extends UIMainLayer {
       this._topDisplayLabel.string = "";
       this._bottomDisplayLabel.string = "RichText";
 
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
       var button = new Button();
       button.setTouchEnabled(true);
       button.loadTextures(
@@ -53,7 +60,7 @@ export class UIRichTextTest extends UIMainLayer {
       button.setPosition(
         new Point(
           widgetSize.width / 2,
-          widgetSize.height / 2 + button.getContentSize().height * 2.5
+          widgetSize.height / 2 + button.contentSize.height * 2.5
         )
       );
       button.addTouchEventListener(this.touchEvent, this);
@@ -119,12 +126,7 @@ export class UIRichTextTest extends UIMainLayer {
       var pAr = new Armature("100");
       pAr.getAnimation().play("Animation1");
 
-      var recustom = new RichElementCustomNode(
-        1,
-        Color.WHITE,
-        255,
-        pAr
-      );
+      var recustom = new RichElementCustomNode(1, Color.WHITE, 255, pAr);
       var re6 = new RichElementText(
         7,
         Color.ORANGE,

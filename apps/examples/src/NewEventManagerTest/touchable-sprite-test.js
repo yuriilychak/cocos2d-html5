@@ -72,7 +72,7 @@ export class TouchableSpriteTest extends EventDispatcherTestDemo {
         var target = event.currentTarget;
 
         var locationInNode = target.convertToNodeSpace(touch);
-        var s = target.getContentSize();
+        var s = target.contentSize;
         var rect = new Rect(0, 0, s.width, s.height);
 
         if (Rect.containsPoint(rect, locationInNode)) {

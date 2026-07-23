@@ -31,7 +31,7 @@ import { Button, ImageView, ScrollView } from "@aspect/ccui";
 export class UIScrollViewDisableTest extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
 
       this._topDisplayLabel.string = "ScrollView Disable Test";
       this._topDisplayLabel.x = widgetSize.width / 2.0;
@@ -45,10 +45,8 @@ export class UIScrollViewDisableTest extends UIMainLayer {
 
       var scrollView = new ScrollView();
       scrollView.setContentSize(new Size(280, 150));
-      scrollView.x =
-        (widgetSize.width - scrollView.width) / 2;
-      scrollView.y =
-        (widgetSize.height - scrollView.height) / 2;
+      scrollView.x = (widgetSize.width - scrollView.width) / 2;
+      scrollView.y = (widgetSize.height - scrollView.height) / 2;
       scrollView.setTouchEnabled(false);
 
       this._mainNode.addChild(scrollView);
@@ -99,7 +97,7 @@ export class UIScrollViewDisableTest extends UIMainLayer {
       scrollView.addChild(button_scale9);
 
       imageView.setPosition(
-        new Point(innerWidth / 2, imageView.getContentSize().height / 2)
+        new Point(innerWidth / 2, imageView.contentSize.height / 2)
       );
       scrollView.addChild(imageView);
 

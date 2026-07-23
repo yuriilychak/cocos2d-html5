@@ -149,7 +149,7 @@ export class TableView extends GScrollView {
     var maxIdx = locDataSource.numberOfCellsInTableView(this) - 1;
 
     if (this._vOrdering === TABLEVIEW_FILL_TOPDOWN)
-      locOffset.y = this.getContainer().getContentSize().height - locOffset.y;
+      locOffset.y = this.getContainer().height - locOffset.y;
 
     var index = this.__indexFromOffset(locOffset);
     if (index !== -1) {
@@ -178,9 +178,7 @@ export class TableView extends GScrollView {
     var cellSize = this._dataSource.tableCellSizeForIndex(this, index);
     if (this._vOrdering === TABLEVIEW_FILL_TOPDOWN)
       offset.y =
-        this.getContainer().getContentSize().height -
-        offset.y -
-        cellSize.height;
+        this.getContainer().height - offset.y - cellSize.height;
 
     return offset;
   }

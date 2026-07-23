@@ -30,9 +30,22 @@ import { Frame } from "./frame.js";
  * @extend Frame
  */
 export class PositionFrame extends Frame {
-  constructor() {
-    super();
-    this._position = new Point();
+  #position = new Point();
+
+  get x() {
+    return this.#position.x;
+  }
+
+  set x(value) {
+    this.#position.x = value;
+  }
+
+  get y() {
+    return this.#position.y;
+  }
+
+  set y(value) {
+    this.#position.y = value;
   }
 
   /**
@@ -42,11 +55,11 @@ export class PositionFrame extends Frame {
   onEnter(nextFrame) {
     if (!this._node) return;
 
-    this._node.setPosition(this._position);
+    this._node.setPosition(this.#position);
 
     if (this._tween) {
-      this._betweenX = nextFrame._position.x - this._position.x;
-      this._betweenY = nextFrame._position.y - this._position.y;
+      this._betweenX = nextFrame.x - this.#position.x;
+      this._betweenY = nextFrame.y - this.#position.y;
     }
   }
 
@@ -57,8 +70,8 @@ export class PositionFrame extends Frame {
   _onApply(percent) {
     if (this._node && (this._betweenX !== 0 || this._betweenY !== 0)) {
       var p = new Point();
-      p.x = this._position.x + this._betweenX * percent;
-      p.y = this._position.y + this._betweenY * percent;
+      p.x = this.#position.x + this._betweenX * percent;
+      p.y = this.#position.y + this._betweenY * percent;
 
       this._node.setPosition(p);
     }
@@ -71,7 +84,7 @@ export class PositionFrame extends Frame {
    */
   clone() {
     var frame = new PositionFrame();
-    frame.setPosition(this._position);
+    frame.setPosition(this.#position);
 
     frame._cloneProperty(this);
 
@@ -83,7 +96,7 @@ export class PositionFrame extends Frame {
    * @param {p} position
    */
   setPosition(position) {
-    this._position = position;
+    this.#position = position;
   }
 
   /**
@@ -91,7 +104,7 @@ export class PositionFrame extends Frame {
    * @returns {p}
    */
   getPosition() {
-    return this._position;
+    return this.#position;
   }
 
   /**
@@ -99,7 +112,7 @@ export class PositionFrame extends Frame {
    * @param {Number} x
    */
   setX(x) {
-    this._position.x = x;
+    this.#position.x = x;
   }
 
   /**
@@ -107,7 +120,7 @@ export class PositionFrame extends Frame {
    * @returns {Number}
    */
   getX() {
-    return this._position.x;
+    return this.#position.x;
   }
 
   /**
@@ -115,7 +128,7 @@ export class PositionFrame extends Frame {
    * @param {Number} y
    */
   setY(y) {
-    this._position.y = y;
+    this.#position.y = y;
   }
 
   /**
@@ -123,6 +136,6 @@ export class PositionFrame extends Frame {
    * @returns {Number}
    */
   getY() {
-    return this._position.y;
+    return this.#position.y;
   }
 }

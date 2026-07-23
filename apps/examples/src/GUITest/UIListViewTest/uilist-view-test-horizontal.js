@@ -36,7 +36,7 @@ export class UIListViewTest_Horizontal extends UIMainLayer {
 
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
 
       // create list view ex data
       this._array = [];
@@ -54,10 +54,8 @@ export class UIListViewTest_Horizontal extends UIMainLayer {
       listView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
       listView.setBackGroundImageScale9Enabled(true);
       listView.setContentSize(new Size(240, 130));
-      listView.x =
-        (widgetSize.width - listView.width) / 2;
-      listView.y =
-        (widgetSize.height - listView.height) / 2;
+      listView.x = (widgetSize.width - listView.width) / 2;
+      listView.y = (widgetSize.height - listView.height) / 2;
       listView.addEventListener(this.selectedItemEvent, this);
       this._mainNode.addChild(listView);
 
@@ -73,7 +71,7 @@ export class UIListViewTest_Horizontal extends UIMainLayer {
 
       var default_item = new Layout();
       default_item.setTouchEnabled(true);
-      default_item.setContentSize(default_button.getContentSize());
+      default_item.setContentSize(default_button.contentSize);
       default_button.x = default_item.width / 2;
       default_button.y = default_item.height / 2;
       default_item.addChild(default_button);
@@ -102,10 +100,10 @@ export class UIListViewTest_Horizontal extends UIMainLayer {
           "ccs-res/cocosui/buttonHighlighted.png",
           ""
         );
-        custom_button.setContentSize(default_button.getContentSize());
+        custom_button.setContentSize(default_button.contentSize);
 
         var custom_item = new Layout();
-        custom_item.setContentSize(custom_button.getContentSize());
+        custom_item.setContentSize(custom_button.contentSize);
         custom_button.x = custom_item.width / 2;
         custom_button.y = custom_item.height / 2;
         custom_item.addChild(custom_button);
@@ -124,10 +122,10 @@ export class UIListViewTest_Horizontal extends UIMainLayer {
           "ccs-res/cocosui/buttonHighlighted.png",
           ""
         );
-        custom_button.setContentSize(default_button.getContentSize());
+        custom_button.setContentSize(default_button.contentSize);
 
         var custom_item = new Layout();
-        custom_item.setContentSize(custom_button.getContentSize());
+        custom_item.setContentSize(custom_button.contentSize);
         custom_button.x = custom_item.width / 2;
         custom_button.y = custom_item.height / 2;
         custom_item.addChild(custom_button);

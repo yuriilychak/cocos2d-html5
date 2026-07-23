@@ -240,7 +240,7 @@ export class BMButton extends Widget {
 
     if (!this._normalTextureLoaded) {
       if (this._titleRenderer && this._titleRenderer.string.length > 0) {
-        return this._titleRenderer.getContentSize();
+        return this._titleRenderer.contentSize;
       }
     }
     return new Size(this._normalTextureSize);
@@ -334,10 +334,10 @@ export class BMButton extends Widget {
     }
 
     if (!this._ignoreSize && Size.equalTo(this._customSize, new Size(0, 0))) {
-      this._customSize = this._buttonScale9Renderer.getContentSize();
+      this._customSize = this._buttonScale9Renderer.contentSize;
     }
 
-    this._normalTextureSize = this._buttonScale9Renderer.getContentSize();
+    this._normalTextureSize = this._buttonScale9Renderer.contentSize;
     this._updateChildrenDisplayedRGBA();
     if (this._unifySize) {
       if (this._scale9Enabled) {
@@ -783,11 +783,8 @@ export class BMButton extends Widget {
   }
 
   _normalTextureScaleChangedWithSize() {
-    this._buttonScale9Renderer.setContentSize(this._contentSize);
-    this._buttonScale9Renderer.setPosition(
-      this._contentSize.width / 2,
-      this._contentSize.height / 2
-    );
+    this._buttonScale9Renderer.setContentSize(this.contentSize);
+    this._buttonScale9Renderer.setPosition(this.width / 2, this.height / 2);
   }
 
   _adaptRenderers() {
@@ -798,10 +795,7 @@ export class BMButton extends Widget {
   }
 
   _updateTitleLocation() {
-    this._titleRenderer.setPosition(
-      this._contentSize.width * 0.5,
-      this._contentSize.height * 0.5
-    );
+    this._titleRenderer.setPosition(this.width * 0.5, this.height * 0.5);
   }
 
   /**
@@ -979,9 +973,9 @@ export class BMButton extends Widget {
   _getNormalSize() {
     var titleSize;
     if (this._titleRenderer !== null)
-      titleSize = this._titleRenderer.getContentSize();
+      titleSize = this._titleRenderer.contentSize;
 
-    var imageSize = this._buttonScale9Renderer.getContentSize();
+    var imageSize = this._buttonScale9Renderer.contentSize;
     var width =
       titleSize.width > imageSize.width ? titleSize.width : imageSize.width;
     var height =

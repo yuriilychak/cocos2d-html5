@@ -25,13 +25,13 @@
  ****************************************************************************/
 
 import { UIMainLayer } from "../uimain-layer";
-import { Text } from '@aspect/ccui';
+import { Text } from "@aspect/ccui";
 
 import { TextAlignment } from "@aspect/core";
 export class UILabelTest_LineWrap extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
       //init text
       this._topDisplayLabel.string = "";
       this._bottomDisplayLabel.string = "Label line wrap";

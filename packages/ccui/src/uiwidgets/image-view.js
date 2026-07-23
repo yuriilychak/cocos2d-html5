@@ -23,209 +23,212 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Rect, Size, warn } from '@aspect/core';
-import { Widget } from '../base-classes/widget';
-import { Scale9Sprite } from '../base-classes/scale9-sprite';
+import { Rect, Size, warn } from "@aspect/core";
+import { Widget } from "../base-classes/widget";
+import { Scale9Sprite } from "../base-classes/scale9-sprite";
 
 /**
  * The ImageView control of Cocos GUI
  */
 export class ImageView extends Widget {
+  constructor(imageFileName, texType) {
+    super();
+    this._capInsets = new Rect(0, 0, 0, 0);
+    this._imageTextureSize = new Size(
+      this._capInsets.width,
+      this._capInsets.height
+    );
+    this._scale9Enabled = false;
+    this._prevIgnoreSize = true;
+    this._textureFile = "";
+    this._imageTexType = Widget.LOCAL_TEXTURE;
+    this._className = "ImageView";
+    this._imageRendererAdaptDirty = true;
+    texType = texType === undefined ? 0 : texType;
 
-    constructor(imageFileName, texType) {
-        super();
-        this._capInsets = new Rect(0,0,0,0);
-        this._imageTextureSize = new Size(this._capInsets.width, this._capInsets.height);
-        this._scale9Enabled = false;
-        this._prevIgnoreSize = true;
-        this._textureFile = "";
-        this._imageTexType = Widget.LOCAL_TEXTURE;
-        this._className = "ImageView";
-        this._imageRendererAdaptDirty = true;
-        texType = texType === undefined ? 0 : texType;
+    if (imageFileName) {
+      this.loadTexture(imageFileName, texType);
+    } else {
+      this._imageTexType = Widget.LOCAL_TEXTURE;
+    }
+  }
 
-        if(imageFileName) {
-            this.loadTexture(imageFileName, texType);
+  _initRenderer() {
+    this._imageRenderer = new Scale9Sprite();
+    this._imageRenderer.setRenderingType(Scale9Sprite.RenderingType.SIMPLE);
+    this.addProtectedChild(this._imageRenderer, ImageView.RENDERER_ZORDER, -1);
+  }
+
+  loadTexture(fileName, texType) {
+    if (
+      !fileName ||
+      (this._textureFile == fileName && this._imageTexType == texType)
+    ) {
+      return;
+    }
+    var self = this;
+    texType = texType || Widget.LOCAL_TEXTURE;
+    this._textureFile = fileName;
+    this._imageTexType = texType;
+    var imageRenderer = self._imageRenderer;
+
+    switch (self._imageTexType) {
+      case Widget.LOCAL_TEXTURE:
+        if (self._scale9Enabled) {
+          imageRenderer.initWithFile(fileName);
+          imageRenderer.setCapInsets(self._capInsets);
+        } else {
+          imageRenderer.initWithFile(fileName);
         }
-        else {
-            this._imageTexType = Widget.LOCAL_TEXTURE;
+        break;
+      case Widget.PLIST_TEXTURE:
+        if (self._scale9Enabled) {
+          imageRenderer.initWithSpriteFrameName(fileName);
+          imageRenderer.setCapInsets(self._capInsets);
+        } else {
+          imageRenderer.initWithSpriteFrameName(fileName);
         }
+        break;
+      default:
+        break;
     }
 
-    _initRenderer() {
-        this._imageRenderer = new Scale9Sprite();
-        this._imageRenderer.setRenderingType(Scale9Sprite.RenderingType.SIMPLE);
-        this.addProtectedChild(this._imageRenderer, ImageView.RENDERER_ZORDER, -1);
-    }
+    if (!imageRenderer._textureLoaded) {
+      var handleTextureLoadedEvent = function () {
+        imageRenderer.removeEventListener("load", handleTextureLoadedEvent);
 
-    loadTexture(fileName, texType) {
-        if (!fileName || (this._textureFile == fileName && this._imageTexType == texType)) {
-            return;
-        }
-        var self = this;
-        texType = texType || Widget.LOCAL_TEXTURE;
-        this._textureFile = fileName;
-        this._imageTexType = texType;
-        var imageRenderer = self._imageRenderer;
-
-        switch (self._imageTexType) {
-            case Widget.LOCAL_TEXTURE:
-                if(self._scale9Enabled){
-                    imageRenderer.initWithFile(fileName);
-                    imageRenderer.setCapInsets(self._capInsets);
-                }else{
-                    imageRenderer.initWithFile(fileName);
-                }
-                break;
-            case Widget.PLIST_TEXTURE:
-                if(self._scale9Enabled){
-                    imageRenderer.initWithSpriteFrameName(fileName);
-                    imageRenderer.setCapInsets(self._capInsets);
-                }else{
-                    imageRenderer.initWithSpriteFrameName(fileName);
-                }
-                break;
-            default:
-                break;
+        if (
+          !self._ignoreSize &&
+          Size.equalTo(self._customSize, new Size(0, 0))
+        ) {
+          self._customSize = self._imageRenderer.contentSize;
         }
 
-        if(!imageRenderer._textureLoaded){
-            var handleTextureLoadedEvent = function(){
-                imageRenderer.removeEventListener("load", handleTextureLoadedEvent);
+        self._imageTextureSize = imageRenderer.contentSize;
 
-                if(!self._ignoreSize && Size.equalTo(self._customSize, new Size(0, 0))) {
-                    self._customSize = self._imageRenderer.getContentSize();
-                }
-
-                self._imageTextureSize = imageRenderer.getContentSize();
-
-                self._updateChildrenDisplayedRGBA();
-
-                self._updateContentSizeWithTextureSize(self._imageTextureSize);
-            };
-
-            imageRenderer.addEventListener("load", handleTextureLoadedEvent);
-        }
-
-        if(!this._ignoreSize && Size.equalTo(this._customSize, new Size(0, 0))) {
-            this._customSize = this._imageRenderer.getContentSize();
-        }
-
-        self._imageTextureSize = imageRenderer.getContentSize();
-
-        this._updateChildrenDisplayedRGBA();
+        self._updateChildrenDisplayedRGBA();
 
         self._updateContentSizeWithTextureSize(self._imageTextureSize);
-        self._imageRendererAdaptDirty = true;
-        self._findLayout();
+      };
 
+      imageRenderer.addEventListener("load", handleTextureLoadedEvent);
     }
 
-    setTextureRect() {
-        warn('ImageView.setTextureRect  is deprecated!');
+    if (!this._ignoreSize && Size.equalTo(this._customSize, new Size(0, 0))) {
+      this._customSize = this._imageRenderer.contentSize;
     }
 
-    setScale9Enabled(able) {
-        if (this._scale9Enabled === able)
-            return;
+    self._imageTextureSize = imageRenderer.contentSize;
 
-        this._scale9Enabled = able;
+    this._updateChildrenDisplayedRGBA();
 
-        if (this._scale9Enabled) {
-            this._imageRenderer.setRenderingType(Scale9Sprite.RenderingType.SLICED);
-        } else {
-            this._imageRenderer.setRenderingType(Scale9Sprite.RenderingType.SIMPLE);
-        }
+    self._updateContentSizeWithTextureSize(self._imageTextureSize);
+    self._imageRendererAdaptDirty = true;
+    self._findLayout();
+  }
 
-        if (this._scale9Enabled) {
-            var ignoreBefore = this._ignoreSize;
-            this.ignoreContentAdaptWithSize(false);
-            this._prevIgnoreSize = ignoreBefore;
-        } else
-            this.ignoreContentAdaptWithSize(this._prevIgnoreSize);
-        this.setCapInsets(this._capInsets);
-        this._imageRendererAdaptDirty = true;
+  setTextureRect() {
+    warn("ImageView.setTextureRect  is deprecated!");
+  }
+
+  setScale9Enabled(able) {
+    if (this._scale9Enabled === able) return;
+
+    this._scale9Enabled = able;
+
+    if (this._scale9Enabled) {
+      this._imageRenderer.setRenderingType(Scale9Sprite.RenderingType.SLICED);
+    } else {
+      this._imageRenderer.setRenderingType(Scale9Sprite.RenderingType.SIMPLE);
     }
 
-    isScale9Enabled(){
-        return this._scale9Enabled;
+    if (this._scale9Enabled) {
+      var ignoreBefore = this._ignoreSize;
+      this.ignoreContentAdaptWithSize(false);
+      this._prevIgnoreSize = ignoreBefore;
+    } else this.ignoreContentAdaptWithSize(this._prevIgnoreSize);
+    this.setCapInsets(this._capInsets);
+    this._imageRendererAdaptDirty = true;
+  }
+
+  isScale9Enabled() {
+    return this._scale9Enabled;
+  }
+
+  ignoreContentAdaptWithSize(ignore) {
+    if (!this._scale9Enabled || (this._scale9Enabled && !ignore)) {
+      super.ignoreContentAdaptWithSize(ignore);
+      this._prevIgnoreSize = ignore;
+    }
+  }
+
+  setCapInsets(capInsets) {
+    if (!capInsets) return;
+
+    var locInsets = this._capInsets;
+    locInsets.x = capInsets.x;
+    locInsets.y = capInsets.y;
+    locInsets.width = capInsets.width;
+    locInsets.height = capInsets.height;
+
+    if (!this._scale9Enabled) return;
+    this._imageRenderer.setCapInsets(capInsets);
+  }
+
+  getCapInsets() {
+    return new Rect(this._capInsets);
+  }
+
+  _onSizeChanged() {
+    super._onSizeChanged();
+    this._imageRendererAdaptDirty = true;
+  }
+
+  _adaptRenderers() {
+    if (this._imageRendererAdaptDirty) {
+      this._imageTextureScaleChangedWithSize();
+      this._imageRendererAdaptDirty = false;
+    }
+  }
+
+  getVirtualRendererSize() {
+    return new Size(this._imageTextureSize);
+  }
+
+  getVirtualRenderer() {
+    return this._imageRenderer;
+  }
+
+  _imageTextureScaleChangedWithSize() {
+    this._imageRenderer.setContentSize(this.contentSize);
+    this._imageRenderer.setPosition(this.width / 2.0, this.height / 2.0);
+  }
+
+  getDescription() {
+    return "ImageView";
+  }
+
+  _createCloneInstance() {
+    return new ImageView();
+  }
+
+  _copySpecialProperties(imageView) {
+    if (imageView instanceof ImageView) {
+      this._prevIgnoreSize = imageView._prevIgnoreSize;
+      this._capInsets = imageView._capInsets;
+      this.loadTexture(imageView._textureFile, imageView._imageTexType);
+      this.setScale9Enabled(imageView._scale9Enabled);
+    }
+  }
+
+  setContentSize(contentSize, height) {
+    if (height) {
+      contentSize = new Size(contentSize, height);
     }
 
-    ignoreContentAdaptWithSize(ignore) {
-        if (!this._scale9Enabled || (this._scale9Enabled && !ignore)) {
-            super.ignoreContentAdaptWithSize(ignore);
-            this._prevIgnoreSize = ignore;
-        }
-    }
-
-    setCapInsets(capInsets) {
-        if(!capInsets) return;
-
-        var locInsets = this._capInsets;
-        locInsets.x = capInsets.x;
-        locInsets.y = capInsets.y;
-        locInsets.width = capInsets.width;
-        locInsets.height = capInsets.height;
-
-        if (!this._scale9Enabled) return;
-        this._imageRenderer.setCapInsets(capInsets);
-    }
-
-    getCapInsets(){
-        return new Rect(this._capInsets);
-    }
-
-    _onSizeChanged() {
-        super._onSizeChanged();
-        this._imageRendererAdaptDirty = true;
-    }
-
-    _adaptRenderers(){
-        if (this._imageRendererAdaptDirty){
-            this._imageTextureScaleChangedWithSize();
-            this._imageRendererAdaptDirty = false;
-        }
-    }
-
-    getVirtualRendererSize(){
-        return new Size(this._imageTextureSize);
-    }
-
-    getVirtualRenderer() {
-        return this._imageRenderer;
-    }
-
-    _imageTextureScaleChangedWithSize() {
-        this._imageRenderer.setContentSize(this._contentSize);
-        this._imageRenderer.setPosition(this._contentSize.width / 2.0, this._contentSize.height / 2.0);
-    }
-
-    getDescription() {
-        return "ImageView";
-    }
-
-    _createCloneInstance(){
-        return new ImageView();
-    }
-
-    _copySpecialProperties(imageView) {
-        if(imageView instanceof ImageView){
-            this._prevIgnoreSize = imageView._prevIgnoreSize;
-            this._capInsets = imageView._capInsets;
-            this.loadTexture(imageView._textureFile, imageView._imageTexType);
-            this.setScale9Enabled(imageView._scale9Enabled);
-        }
-    }
-
-    setContentSize(contentSize, height){
-        if (height) {
-            contentSize = new Size(contentSize, height);
-        }
-
-        super.setContentSize(contentSize);
-        this._imageRenderer.setContentSize(contentSize);
-    }
-
+    super.setContentSize(contentSize);
+    this._imageRenderer.setContentSize(contentSize);
+  }
 }
 
 ImageView.RENDERER_ZORDER = -1;

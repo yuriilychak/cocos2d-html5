@@ -38,13 +38,14 @@ export class UIScrollViewTest_Vertical_Multiple extends UIMainLayer {
 
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
       //init text
       this._topDisplayLabel.string = "Move by vertical direction";
       this._topDisplayLabel.x = widgetSize.width / 2.0;
       this._topDisplayLabel.y =
         widgetSize.height / 2.0 + this._topDisplayLabel.height * 1.5;
-      this._bottomDisplayLabel.string = "Compare drawCalls and FPS with Previous Version";
+      this._bottomDisplayLabel.string =
+        "Compare drawCalls and FPS with Previous Version";
       this._bottomDisplayLabel.setFontSize(25);
       this._bottomDisplayLabel.x = widgetSize.width / 2;
       this._bottomDisplayLabel.y =
@@ -56,25 +57,39 @@ export class UIScrollViewTest_Vertical_Multiple extends UIMainLayer {
       scrollView.setTouchEnabled(true);
       scrollView.setContentSize(new Size(280, 150));
 
-      scrollView.x =
-        (widgetSize.width - scrollView.width) / 2;
-      scrollView.y =
-        (widgetSize.height - scrollView.height) / 2;
+      scrollView.x = (widgetSize.width - scrollView.width) / 2;
+      scrollView.y = (widgetSize.height - scrollView.height) / 2;
       this._mainNode.addChild(scrollView);
 
-      this.addChild(new ButtonLayout(
-        [
-          { label: "Texts", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
-          { label: "Buttons", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) },
-          { label: "s9Sprites", tintDefault: new Color(0x44, 0x55, 0x77), tintPressed: new Color(0x22, 0x33, 0x55) }
-        ],
-        196, "Draw Mode",
-        (i) => {
-          if (i === 0) this.drawTexts();
-          else if (i === 1) this.drawButtons();
-          else this.drawS9Buttons();
-        }
-      ), 1);
+      this.addChild(
+        new ButtonLayout(
+          [
+            {
+              label: "Texts",
+              tintDefault: new Color(0x44, 0x55, 0x77),
+              tintPressed: new Color(0x22, 0x33, 0x55)
+            },
+            {
+              label: "Buttons",
+              tintDefault: new Color(0x44, 0x55, 0x77),
+              tintPressed: new Color(0x22, 0x33, 0x55)
+            },
+            {
+              label: "s9Sprites",
+              tintDefault: new Color(0x44, 0x55, 0x77),
+              tintPressed: new Color(0x22, 0x33, 0x55)
+            }
+          ],
+          196,
+          "Draw Mode",
+          (i) => {
+            if (i === 0) this.drawTexts();
+            else if (i === 1) this.drawButtons();
+            else this.drawS9Buttons();
+          }
+        ),
+        1
+      );
       this.drawTexts();
       return true;
     }

@@ -365,8 +365,8 @@ if (webViewSys.specification.isMobile) {
       var containerStyle = ServiceLocator.eglView.container.style,
         offsetX = parseInt(containerStyle.paddingLeft),
         offsetY = parseInt(containerStyle.paddingBottom),
-        cw = node._contentSize.width,
-        ch = node._contentSize.height;
+        cw = node.width,
+        ch = node.height;
       var a = t.a * scaleX,
         b = t.b,
         c = t.c,

@@ -31,7 +31,7 @@ import { ImageView, PageView, Text } from "@aspect/ccui";
 export class UIPageViewChildSizeTest extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
       //init text
       this._topDisplayLabel.string = "Move by horizontal direction";
       this._topDisplayLabel.setFontSize(14);
@@ -47,10 +47,8 @@ export class UIPageViewChildSizeTest extends UIMainLayer {
       var pageView = new PageView();
       pageView.setTouchEnabled(true);
       pageView.setContentSize(new Size(240, 130));
-      pageView.x =
-        (widgetSize.width - pageView.width) / 2;
-      pageView.y =
-        (widgetSize.height - pageView.height) / 2;
+      pageView.x = (widgetSize.width - pageView.width) / 2;
+      pageView.y = (widgetSize.height - pageView.height) / 2;
       pageView.setIndicatorEnabled(true);
       pageView.removeAllItems();
 
@@ -80,7 +78,8 @@ export class UIPageViewChildSizeTest extends UIMainLayer {
     switch (type) {
       case PageView.EVENT_TURNING:
         var pageView = sender;
-        this._topDisplayLabel.string = "page = " + (pageView.getCurPageIndex().valueOf() - 0 + 1);
+        this._topDisplayLabel.string =
+          "page = " + (pageView.getCurPageIndex().valueOf() - 0 + 1);
         break;
       default:
         break;

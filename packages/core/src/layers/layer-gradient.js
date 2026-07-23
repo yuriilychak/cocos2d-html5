@@ -98,13 +98,21 @@ export class LayerGradient extends LayerColor {
     this._renderCmd.setDirtyFlag(Node._dirtyFlags.gradientDirty);
   }
 
-  _setWidth(width) {
-    super._setWidth(width);
+  get width() {
+    return super.width;
+  }
+
+  set width(width) {
+    super.width = width;
     this._renderCmd.setDirtyFlag(Node._dirtyFlags.gradientDirty);
   }
 
-  _setHeight(height) {
-    super._setHeight(height);
+  get height() {
+    return super.height;
+  }
+
+  set height(height) {
+    super.height = height;
     this._renderCmd.setDirtyFlag(Node._dirtyFlags.gradientDirty);
   }
 

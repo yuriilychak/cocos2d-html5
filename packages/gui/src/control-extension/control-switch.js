@@ -37,8 +37,8 @@ export class ControlSwitch extends Control {
       this._offProgress = offProgress;
       this._thumb = thumb;
       this._background = background;
-      this._minX = thumb.getContentSize().width / 2;
-      this._maxX = width - thumb.getContentSize().width / 2;
+      this._minX = thumb.width / 2;
+      this._maxX = width - thumb.width / 2;
 
       this.addChild(this._background);
       this.addChild(this._onProgress);
@@ -116,7 +116,7 @@ export class ControlSwitch extends Control {
     var location = this.locationFromTouch(touch);
 
     if (this.hasMoved) {
-      this.setOn(!(location.x < this.getContentSize().width / 2), true);
+      this.setOn(!(location.x < this.width / 2), true);
     } else {
       this.setOn(!this._on, true);
     }
@@ -126,18 +126,16 @@ export class ControlSwitch extends Control {
     var location = this.locationFromTouch(touch);
 
     if (this.hasMoved()) {
-      this.setOn(!(location.x < this.getContentSize().width / 2), true);
+      this.setOn(!(location.x < this.width / 2), true);
     } else {
       this.setOn(!this._on, true);
     }
   }
 
   needsLayout() {
-    const size = this.getContentSize();
-
     if (this._background !== null) {
-      this._background.width = size.width;
-      this._background.height = size.height;
+      this._background.width = this.width;
+      this._background.height = this.height;
       this._background.setAnchorPoint(new Point(0, 0));
       this._background.x = 0;
       this._background.y = 0;
@@ -145,16 +143,16 @@ export class ControlSwitch extends Control {
 
     if (this._onProgress !== null) {
       this._onProgress.width = this._sliderXPosition;
-      this._onProgress.height = size.height;
+      this._onProgress.height = this.height;
       this._onProgress.setAnchorPoint(new Point(0, 0));
       this._onProgress.x = 0;
       this._onProgress.y = 0;
     }
 
     if (this._offProgress !== null) {
-      this._offProgress.width = size.width - this._sliderXPosition;
+      this._offProgress.width = this.width - this._sliderXPosition;
       this._offProgress.x = this._sliderXPosition;
-      this._offProgress.height = size.height;
+      this._offProgress.height = this.height;
       this._offProgress.setAnchorPoint(new Point(0, 0));
       this._offProgress.y = 0;
     }
@@ -162,7 +160,7 @@ export class ControlSwitch extends Control {
     if (this._thumb !== null) {
       this._thumb.x = this._sliderXPosition;
       this._thumb.setAnchorPoint(new Point(0.5, 0.5));
-      this._thumb.y = size.height / 2;
+      this._thumb.y = this.height / 2;
     }
   }
 

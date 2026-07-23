@@ -34,7 +34,7 @@ export class UICheckBoxTest extends UIMainLayer {
       this._topDisplayLabel.string = "No Event";
       this._bottomDisplayLabel.string = "CheckBox";
 
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
       // Create the checkbox
       var checkBox = new CheckBox();
       checkBox.setTouchEnabled(true);

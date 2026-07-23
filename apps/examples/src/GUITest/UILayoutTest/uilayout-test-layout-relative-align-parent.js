@@ -31,14 +31,14 @@ import { Button, Layout, RelativeLayoutParameter, Text } from "@aspect/ccui";
 export class UILayoutTest_Layout_Relative_Align_Parent extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
 
       // Add the alert
       var alert = new Text("Layout Relative Align Parent", "Arial", 20);
       alert.color = new Color(159, 168, 176);
       alert.setPosition(
         widgetSize.width / 2.0,
-        widgetSize.height / 2.0 - alert.getContentSize().height * 4.5
+        widgetSize.height / 2.0 - alert.contentSize.height * 4.5
       );
       this._mainNode.addChild(alert);
 

@@ -31,7 +31,7 @@ import { Text, Widget } from "@aspect/ccui";
 export class UITextTest_LineWrap extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
 
       this._bottomDisplayLabel.string = "Text line wrap";
 

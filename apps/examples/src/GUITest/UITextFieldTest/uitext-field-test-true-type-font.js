@@ -33,7 +33,7 @@ import { TextField } from "@aspect/ccui";
 export class UITextFieldTest_TrueTypeFont extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
 
       // Add a label in which the textfield events will be displayed
       this._topDisplayLabel.string = "True Type Font Test - No Event";
@@ -61,7 +61,7 @@ export class UITextFieldTest_TrueTypeFont extends UIMainLayer {
   }
 
   textFieldEvent(textField, type) {
-    var widgetSize = this._widget.getContentSize();
+    var widgetSize = this._widget.contentSize;
     switch (type) {
       case TextField.EVENT_ATTACH_WITH_IME:
         textField.runAction(

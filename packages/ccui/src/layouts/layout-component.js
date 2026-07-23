@@ -114,7 +114,7 @@ export class LayoutComponent extends Component {
         x = position.x;
         y = position.y;
       } else x = position;
-      var parentSize = parent.getContentSize();
+      var parentSize = parent.contentSize;
 
       if (parentSize.width !== 0) this._positionPercentX = x / parentSize.width;
       else {
@@ -195,7 +195,7 @@ export class LayoutComponent extends Component {
     var parent = this._getOwnerParent();
     if (parent !== null) {
       var ownerPoint = this.owner.getPosition();
-      var parentSize = parent.getContentSize();
+      var parentSize = parent.contentSize;
       if (parentSize.width !== 0)
         this._positionPercentX = ownerPoint.x / parentSize.width;
       else {
@@ -219,7 +219,7 @@ export class LayoutComponent extends Component {
     var parent = this._getOwnerParent();
     if (parent !== null) {
       var ownerPoint = this.owner.getPosition();
-      var parentSize = parent.getContentSize();
+      var parentSize = parent.contentSize;
       if (parentSize.height !== 0)
         this._positionPercentY = ownerPoint.y / parentSize.height;
       else {
@@ -264,14 +264,14 @@ export class LayoutComponent extends Component {
   }
 
   getSize() {
-    return this.getOwner().getContentSize();
+    return this.getOwner().contentSize;
   }
 
   setSize(size) {
     var parent = this._getOwnerParent();
     if (parent !== null) {
       var ownerSize = size,
-        parentSize = parent.getContentSize();
+        parentSize = parent.contentSize;
 
       if (parentSize.width !== 0)
         this._percentWidth = ownerSize.width / parentSize.width;
@@ -308,12 +308,12 @@ export class LayoutComponent extends Component {
   }
 
   setSizeWidth(width) {
-    var ownerSize = this.owner.getContentSize();
+    var ownerSize = this.owner.contentSize;
     ownerSize.width = width;
 
     var parent = this._getOwnerParent();
     if (parent !== null) {
-      var parentSize = parent.getContentSize();
+      var parentSize = parent.contentSize;
       if (parentSize.width !== 0)
         this._percentWidth = ownerSize.width / parentSize.width;
       else {
@@ -334,7 +334,7 @@ export class LayoutComponent extends Component {
 
     var parent = this._getOwnerParent();
     if (parent !== null) {
-      var ownerSize = this.owner.getContentSize();
+      var ownerSize = this.owner.contentSize;
       ownerSize.width = parent.width * this._percentWidth;
       this.owner.setContentSize(ownerSize);
       this._refreshHorizontalMargin();
@@ -355,12 +355,12 @@ export class LayoutComponent extends Component {
   }
 
   setSizeHeight(height) {
-    var ownerSize = this.owner.getContentSize();
+    var ownerSize = this.owner.contentSize;
     ownerSize.height = height;
 
     var parent = this._getOwnerParent();
     if (parent !== null) {
-      var parentSize = parent.getContentSize();
+      var parentSize = parent.contentSize;
       if (parentSize.height !== 0)
         this._percentHeight = ownerSize.height / parentSize.height;
       else {
@@ -381,7 +381,7 @@ export class LayoutComponent extends Component {
 
     var parent = this._getOwnerParent();
     if (parent !== null) {
-      var ownerSize = this.owner.getContentSize();
+      var ownerSize = this.owner.contentSize;
       ownerSize.height = parent.height * this._percentHeight;
       this.owner.setContentSize(ownerSize);
       this._refreshVerticalMargin();
@@ -420,10 +420,10 @@ export class LayoutComponent extends Component {
     var parent = this._getOwnerParent();
     if (parent === null) return;
 
-    var parentSize = parent.getContentSize(),
+    var parentSize = parent.contentSize,
       locOwner = this.owner;
     var ownerAnchor = locOwner.getAnchorPoint(),
-      ownerSize = locOwner.getContentSize();
+      ownerSize = locOwner.contentSize;
     var ownerPosition = locOwner.getPosition();
 
     switch (this._horizontalEdge) {
@@ -539,8 +539,8 @@ export class LayoutComponent extends Component {
 
     var ownerPoint = this.owner.getPosition(),
       ownerAnchor = this.owner.getAnchorPoint();
-    var ownerSize = this.owner.getContentSize(),
-      parentSize = parent.getContentSize();
+    var ownerSize = this.owner.contentSize,
+      parentSize = parent.contentSize;
 
     this._leftMargin = ownerPoint.x - ownerAnchor.x * ownerSize.width;
     this._rightMargin =
@@ -553,8 +553,8 @@ export class LayoutComponent extends Component {
 
     var ownerPoint = this.owner.getPosition(),
       ownerAnchor = this.owner.getAnchorPoint();
-    var ownerSize = this.owner.getContentSize(),
-      parentSize = parent.getContentSize();
+    var ownerSize = this.owner.contentSize,
+      parentSize = parent.contentSize;
 
     this._bottomMargin = ownerPoint.y - ownerAnchor.y * ownerSize.height;
     this._topMargin =

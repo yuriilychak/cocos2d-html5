@@ -48,16 +48,16 @@ export class ControlStepper extends Control {
 
       this._minusButton = minusButton;
       this._minusButton.setPosition(
-        minusButton.getContentSize().width / 2,
-        minusButton.getContentSize().height / 2
+        minusButton.width / 2,
+        minusButton.height / 2
       );
       this.addChild(this._minusButton);
 
       this._plusButton = plusButton;
       this._plusButton.setPosition(
-        minusButton.getContentSize().width +
-          plusButton.getContentSize().width / 2,
-        minusButton.getContentSize().height / 2
+        minusButton.width +
+          plusButton.width / 2,
+        minusButton.height / 2
       );
       this.addChild(this._plusButton);
 
@@ -100,8 +100,8 @@ export class ControlStepper extends Control {
         this._plusButton.boundingBox
       );
       this.setContentSize(
-        this._minusButton.getContentSize().width +
-          this._plusButton.getContentSize().height,
+        this._minusButton.width +
+          this._plusButton.height,
         maxRect.height
       );
       return true;

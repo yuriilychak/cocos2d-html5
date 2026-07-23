@@ -33,15 +33,12 @@ export class UIImageViewFlipTest extends UIMainLayer {
   init() {
     if (super.init()) {
       ServiceLocator.spriteFrameCache.addSpriteFrames("Images/blocks9ss.plist");
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
 
       this._bottomDisplayLabel.string = "ImageView flip test";
 
       // Create the imageview
-      var imageView = new ImageView(
-        "blocks9r.png",
-        Widget.PLIST_TEXTURE
-      );
+      var imageView = new ImageView("blocks9r.png", Widget.PLIST_TEXTURE);
       imageView.setScale9Enabled(true);
       imageView.setContentSize(new Size(250, 115));
       imageView.setFlippedX(true);
@@ -58,7 +55,7 @@ export class UIImageViewFlipTest extends UIMainLayer {
       var ip = imageView.getPosition();
       toggleButton.setPosition(
         ip.x - 50,
-        ip.y - imageView.getContentSize().height / 2 - 20
+        ip.y - imageView.contentSize.height / 2 - 20
       );
       this.addChild(toggleButton);
       toggleButton.addClickEventListener(function () {
@@ -70,7 +67,7 @@ export class UIImageViewFlipTest extends UIMainLayer {
       var ip9 = imageView.getPosition();
       toggleScale9.setPosition(
         ip9.x + 50,
-        ip9.y - imageView.getContentSize().height / 2 - 20
+        ip9.y - imageView.contentSize.height / 2 - 20
       );
       this.addChild(toggleScale9);
       toggleScale9.addClickEventListener(function () {

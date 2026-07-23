@@ -30,7 +30,7 @@ import { Slider } from "@aspect/ccui";
 export class UISliderTest extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
       //init text
       this._topDisplayLabel.string = "Move the slider thumb";
       this._bottomDisplayLabel.string = "Slider";

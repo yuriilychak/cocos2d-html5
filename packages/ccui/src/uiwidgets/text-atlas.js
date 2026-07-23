@@ -75,7 +75,7 @@ export class TextAtlas extends Widget {
       "load",
       function () {
         this._updateContentSizeWithTextureSize(
-          this._labelAtlasRenderer.getContentSize()
+          this._labelAtlasRenderer.contentSize
         );
         this._findLayout();
       },
@@ -107,7 +107,7 @@ export class TextAtlas extends Widget {
     );
 
     this._updateContentSizeWithTextureSize(
-      this._labelAtlasRenderer.getContentSize()
+      this._labelAtlasRenderer.contentSize
     );
     this._labelAtlasRendererAdaptDirty = true;
   }
@@ -121,11 +121,10 @@ export class TextAtlas extends Widget {
     this._stringValue = value;
     this._labelAtlasRenderer.string = value;
     this._updateContentSizeWithTextureSize(
-      this._labelAtlasRenderer.getContentSize()
+      this._labelAtlasRenderer.contentSize
     );
     this._labelAtlasRendererAdaptDirty = true;
   }
-
 
   /**
    * get string value for ui text atlas.
@@ -161,7 +160,7 @@ export class TextAtlas extends Widget {
    * @returns {Size}
    */
   getVirtualRendererSize() {
-    return this._labelAtlasRenderer.getContentSize();
+    return this._labelAtlasRenderer.contentSize;
   }
 
   /**
@@ -177,18 +176,15 @@ export class TextAtlas extends Widget {
     if (this._ignoreSize) {
       locRenderer.scale = 1.0;
     } else {
-      var textureSize = locRenderer.getContentSize();
+      var textureSize = locRenderer.contentSize;
       if (textureSize.width <= 0.0 || textureSize.height <= 0.0) {
         locRenderer.scale = 1.0;
         return;
       }
-      locRenderer.scaleX = this._contentSize.width / textureSize.width;
-      locRenderer.scaleY = this._contentSize.height / textureSize.height;
+      locRenderer.scaleX = this.width / textureSize.width;
+      locRenderer.scaleY = this.height / textureSize.height;
     }
-    locRenderer.setPosition(
-      this._contentSize.width / 2.0,
-      this._contentSize.height / 2.0
-    );
+    locRenderer.setPosition(this.width / 2.0, this.height / 2.0);
   }
 
   /**

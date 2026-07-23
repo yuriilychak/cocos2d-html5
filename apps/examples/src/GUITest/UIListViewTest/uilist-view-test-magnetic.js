@@ -37,7 +37,7 @@ export class UIListViewTest_Magnetic extends UIMainLayer {
 
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
 
       this._topDisplayLabel.string = "1";
       this._topDisplayLabel.setFontSize(14);
@@ -92,7 +92,7 @@ export class UIListViewTest_Magnetic extends UIMainLayer {
             new Color(0, 0, 0, 255)
           );
         }
-        pNode.setContentSize(this._listView.getContentSize());
+        pNode.setContentSize(this._listView.contentSize);
         this._mainNode.addChild(pNode);
       }
 
@@ -126,9 +126,7 @@ export class UIListViewTest_Magnetic extends UIMainLayer {
             eNextType = ListView.MAGNETIC_BOTH_END;
             sString = "BOTH_END";
           } else if (eCurrentType == ListView.MAGNETIC_BOTH_END) {
-            if (
-              this._getListViewDirection() == ScrollView.DIR_HORIZONTAL
-            ) {
+            if (this._getListViewDirection() == ScrollView.DIR_HORIZONTAL) {
               eNextType = ListView.MAGNETIC_LEFT;
               sString = "LEFT";
             } else {

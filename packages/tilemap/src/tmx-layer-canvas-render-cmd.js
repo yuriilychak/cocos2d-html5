@@ -69,7 +69,7 @@ export class TMXLayerCanvasRenderCmd extends Node.CanvasRenderCmd {
 
   rendering(ctx, scaleX, scaleY) {
     const node = this._node,
-      hasRotation = node._rotationX || node._rotationY,
+      hasRotation = node.rotationX || node.rotationY,
       layerOrientation = node.layerOrientation,
       tiles = node.tiles,
       alpha = node._opacity / 255;
@@ -96,8 +96,8 @@ export class TMXLayerCanvasRenderCmd extends Node.CanvasRenderCmd {
       grids = node._texGrids,
       spTiles = node._spriteTiles,
       wt = this._worldTransform,
-      ox = -node._contentSize.width * node._anchorPoint.x,
-      oy = -node._contentSize.height * node._anchorPoint.y,
+      ox = -node.width * node._anchorPoint.x,
+      oy = -node.height * node._anchorPoint.y,
       a = wt.a,
       b = wt.b,
       c = wt.c,

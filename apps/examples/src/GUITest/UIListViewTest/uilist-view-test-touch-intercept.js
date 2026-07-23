@@ -29,52 +29,57 @@ import { Size } from "@aspect/core";
 import { Button, Layout, ListView, ScrollView } from "@aspect/ccui";
 
 export class UIListViewTest_TouchIntercept extends UIMainLayer {
-    init() {
-        if(super.init()) {
-            var widgetSize = this._widget.getContentSize();
+  init() {
+    if (super.init()) {
+      var widgetSize = this._widget.contentSize;
 
-            this._topDisplayLabel.string = "TouchIntercept";
-            this._topDisplayLabel.x = widgetSize.width / 2.0;
-            this._topDisplayLabel.y = widgetSize.height / 2.0 + this._topDisplayLabel.height * 1.5;
-            this._bottomDisplayLabel.string = "ListView Disable Touch";
-            this._bottomDisplayLabel.x = widgetSize.width / 2;
-            this._bottomDisplayLabel.y = widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
+      this._topDisplayLabel.string = "TouchIntercept";
+      this._topDisplayLabel.x = widgetSize.width / 2.0;
+      this._topDisplayLabel.y =
+        widgetSize.height / 2.0 + this._topDisplayLabel.height * 1.5;
+      this._bottomDisplayLabel.string = "ListView Disable Touch";
+      this._bottomDisplayLabel.x = widgetSize.width / 2;
+      this._bottomDisplayLabel.y =
+        widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
 
-            // Create the list view
-            var listView = new ListView();
-            // set list view ex direction
-            listView.setDirection(ScrollView.DIR_NONE);
-            listView.setBounceEnabled(true);
-            listView.setTouchEnabled(false);
-            listView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
-            listView.setBackGroundImageScale9Enabled(true);
-            listView.setContentSize(new Size(240, 130));
-            listView.x = (widgetSize.width - listView.width) / 2;
-            listView.y = (widgetSize.height - listView.height) / 2;
-            this._mainNode.addChild(listView);
+      // Create the list view
+      var listView = new ListView();
+      // set list view ex direction
+      listView.setDirection(ScrollView.DIR_NONE);
+      listView.setBounceEnabled(true);
+      listView.setTouchEnabled(false);
+      listView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
+      listView.setBackGroundImageScale9Enabled(true);
+      listView.setContentSize(new Size(240, 130));
+      listView.x = (widgetSize.width - listView.width) / 2;
+      listView.y = (widgetSize.height - listView.height) / 2;
+      this._mainNode.addChild(listView);
 
-            // create model
-            var default_button = new Button();
-            default_button.name = "Title Button";
-            default_button.loadTextures("ccs-res/cocosui/backtotoppressed.png", "ccs-res/cocosui/backtotopnormal.png", "");
+      // create model
+      var default_button = new Button();
+      default_button.name = "Title Button";
+      default_button.loadTextures(
+        "ccs-res/cocosui/backtotoppressed.png",
+        "ccs-res/cocosui/backtotopnormal.png",
+        ""
+      );
 
-            var default_item = new Layout();
-            default_item.setTouchEnabled(true);
-            default_item.setContentSize(default_button.getContentSize());
-            default_item.width = listView.width;
-            default_button.x = default_item.width / 2;
-            default_button.y = default_item.height / 2;
-            default_item.addChild(default_button);
+      var default_item = new Layout();
+      default_item.setTouchEnabled(true);
+      default_item.setContentSize(default_button.contentSize);
+      default_item.width = listView.width;
+      default_button.x = default_item.width / 2;
+      default_button.y = default_item.height / 2;
+      default_item.addChild(default_button);
 
-            // set model
-            listView.setItemModel(default_item);
-            listView.pushBackDefaultItem();
-            listView.pushBackDefaultItem();
-            listView.pushBackDefaultItem();
+      // set model
+      listView.setItemModel(default_item);
+      listView.pushBackDefaultItem();
+      listView.pushBackDefaultItem();
+      listView.pushBackDefaultItem();
 
-            return true;
-        }
-        return false;
+      return true;
     }
-
+    return false;
+  }
 }

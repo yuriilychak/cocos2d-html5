@@ -44,7 +44,7 @@ export function isSpriteContainPoint(sprite, point, outPoint) {
     outPoint.x = p.x;
     outPoint.y = p.y;
   }
-  var s = sprite.getContentSize();
+  var s = sprite.contentSize;
   return Rect.containsPoint(new Rect(0, 0, s.width, s.height), p);
 }
 export const SPRITE_CONTAIN_POINT = isSpriteContainPoint;

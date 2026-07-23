@@ -112,10 +112,10 @@ parser.generalAttributes = function (node, json) {
   }
 
   var rotationSkewX = json["RotationSkewX"];
-  if (rotationSkewX != null) node.setRotationX(rotationSkewX);
+  if (rotationSkewX != null) node.rotationX = rotationSkewX;
 
   var rotationSkewY = json["RotationSkewY"];
-  if (json["RotationSkewY"] != null) node.setRotationY(rotationSkewY);
+  if (json["RotationSkewY"] != null) node.rotationY = rotationSkewY;
 
   var anchor = json["AnchorPoint"];
   if (anchor != null) {
@@ -286,10 +286,10 @@ parser.widgetAttributes = function (widget, json, enableContent) {
   widget.addComponent(extensionData);
 
   var rotationSkewX = json["RotationSkewX"];
-  if (rotationSkewX) widget.setRotationX(rotationSkewX);
+  if (rotationSkewX) widget.rotationX = rotationSkewX;
 
   var rotationSkewY = json["RotationSkewY"];
-  if (rotationSkewY) widget.setRotationY(rotationSkewY);
+  if (rotationSkewY) widget.rotationY = rotationSkewY;
 
   //var rotation = json["Rotation"];
 

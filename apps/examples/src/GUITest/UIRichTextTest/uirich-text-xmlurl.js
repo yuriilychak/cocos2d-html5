@@ -43,7 +43,7 @@ export class UIRichTextXMLUrl extends UIMainLayer {
       this._topDisplayLabel.string = "";
       this._bottomDisplayLabel.string = "RichText";
 
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
       var button = new Button();
       button.setTouchEnabled(true);
       button.loadTextures(
@@ -55,7 +55,7 @@ export class UIRichTextXMLUrl extends UIMainLayer {
       button.setPosition(
         new Point(
           widgetSize.width / 2,
-          widgetSize.height / 2 + button.getContentSize().height * 2.5
+          widgetSize.height / 2 + button.contentSize.height * 2.5
         )
       );
       button.addTouchEventListener(this.touchEvent, this);

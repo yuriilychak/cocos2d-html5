@@ -61,9 +61,9 @@ export class LabelAtlasCanvasRenderCmd extends AtlasNode.CanvasRenderCmd {
 
     updateContentSize(i, cr) {
         const node = this._node,
-            contentSize = node._contentSize;
+            contentSize = node.contentSize;
         if(i !== cr && i*node._itemWidth === contentSize.width && node._itemHeight === contentSize.height){
-            node.setContentSize(cr * node._itemWidth, node._itemHeight);
+            node.contentSize = cr * node._itemWidth, node._itemHeight;
         }
     }
 

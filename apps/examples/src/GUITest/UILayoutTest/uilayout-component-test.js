@@ -36,7 +36,7 @@ export class UILayoutComponentTest extends UIMainLayer {
 
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
 
       this._baseLayer = new LayerColor();
       this._baseLayer.color = new Color(50, 100, 0);
@@ -67,8 +67,8 @@ export class UILayoutComponentTest extends UIMainLayer {
       case Widget.TOUCH_MOVED:
         break;
       case Widget.TOUCH_ENDED:
-        var widgetSize = this._widget.getContentSize();
-        var layerSize = this._baseLayer.getContentSize();
+        var widgetSize = this._widget.contentSize;
+        var layerSize = this._baseLayer.contentSize;
         if (
           layerSize.width == widgetSize.width &&
           layerSize.height == widgetSize.height

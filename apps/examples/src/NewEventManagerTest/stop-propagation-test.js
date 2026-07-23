@@ -27,7 +27,14 @@
 
 import { EventDispatcherTestDemo } from "./event-dispatcher-test-demo";
 import { createColoredView } from "./touchable-sprite";
-import { Color, EventListener, EventListenerType, Rect, log, ServiceLocator } from "@aspect/core";
+import {
+  Color,
+  EventListener,
+  EventListenerType,
+  Rect,
+  log,
+  ServiceLocator
+} from "@aspect/core";
 
 export class StopPropagationTest extends EventDispatcherTestDemo {
   constructor() {
@@ -39,8 +46,7 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
       swallowTouches: true,
       onTouchBegan: function (touch, event) {
         // Skip if don't touch top half screen.
-        if (!this._isPointInTopHalfAreaOfScreen(touch))
-          return false;
+        if (!this._isPointInTopHalfAreaOfScreen(touch)) return false;
 
         var target = event.currentTarget;
         if (target.tag != StopPropagationTest._TAG_BLUE_SPRITE)
@@ -64,29 +70,25 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
       event: EventListenerType.TOUCH_ALL_AT_ONCE,
       onTouchesBegan: function (touches, event) {
         // Skip if don't touch top half screen.
-        if (this._isPointInTopHalfAreaOfScreen(touches[0]))
-          return;
+        if (this._isPointInTopHalfAreaOfScreen(touches[0])) return;
 
         var target = event.currentTarget;
         if (target.tag != StopPropagationTest._TAG_BLUE_SPRITE2)
           log("Yellow blocks shouldn't response event.");
 
-        if (this._isPointInNode(touches[0], target))
-          target.opacity = 180;
+        if (this._isPointInNode(touches[0], target)) target.opacity = 180;
         // Stop propagation, so yellow blocks will not be able to receive event.
         event.stopPropagation();
       }.bind(this),
       onTouchesEnded: function (touches, event) {
         // Skip if don't touch top half screen.
-        if (this._isPointInTopHalfAreaOfScreen(touches[0]))
-          return;
+        if (this._isPointInTopHalfAreaOfScreen(touches[0])) return;
 
         var target = event.currentTarget;
         if (target.tag != StopPropagationTest._TAG_BLUE_SPRITE2)
           log("Yellow blocks shouldn't response event.");
 
-        if (this._isPointInNode(touches[0], target))
-          target.opacity = 255;
+        if (this._isPointInNode(touches[0], target)) target.opacity = 255;
         // Stop propagation, so yellow blocks will not be able to receive event.
         event.stopPropagation();
       }.bind(this)
@@ -129,28 +131,46 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
         this.addChild(sprite2, 0);
       }
 
-      ServiceLocator.eventManager.addListener(touchOneByOneListener.clone(), sprite1);
-      ServiceLocator.eventManager.addListener(keyboardEventListener.clone(), sprite1);
+      ServiceLocator.eventManager.addListener(
+        touchOneByOneListener.clone(),
+        sprite1
+      );
+      ServiceLocator.eventManager.addListener(
+        keyboardEventListener.clone(),
+        sprite1
+      );
 
-      ServiceLocator.eventManager.addListener(touchAllAtOnceListener.clone(), sprite2);
-      ServiceLocator.eventManager.addListener(keyboardEventListener.clone(), sprite2);
+      ServiceLocator.eventManager.addListener(
+        touchAllAtOnceListener.clone(),
+        sprite2
+      );
+      ServiceLocator.eventManager.addListener(
+        keyboardEventListener.clone(),
+        sprite2
+      );
 
       var visibleSize = ServiceLocator.eglView.rendererDelegate.visibleSize;
       sprite1.x =
-        ServiceLocator.eglView.visibleRect.left.x + (visibleSize.width / (SPRITE_COUNT - 1)) * i;
+        ServiceLocator.eglView.visibleRect.left.x +
+        (visibleSize.width / (SPRITE_COUNT - 1)) * i;
       sprite1.y =
-        ServiceLocator.eglView.visibleRect.center.y + sprite2.getContentSize().height / 2 + 10;
+        ServiceLocator.eglView.visibleRect.center.y +
+        sprite2.contentSize.height / 2 +
+        10;
       sprite2.x =
-        ServiceLocator.eglView.visibleRect.left.x + (visibleSize.width / (SPRITE_COUNT - 1)) * i;
+        ServiceLocator.eglView.visibleRect.left.x +
+        (visibleSize.width / (SPRITE_COUNT - 1)) * i;
       sprite2.y =
-        ServiceLocator.eglView.visibleRect.center.y - sprite2.getContentSize().height / 2 - 10;
+        ServiceLocator.eglView.visibleRect.center.y -
+        sprite2.contentSize.height / 2 -
+        10;
     }
     //----end9----
   }
 
   _isPointInNode(pt, node) {
     //----start9----_isPointInNode
-    var s = node.getContentSize();
+    var s = node.contentSize;
     return Rect.containsPoint(
       new Rect(0, 0, s.width, s.height),
       node.convertToNodeSpace(pt)

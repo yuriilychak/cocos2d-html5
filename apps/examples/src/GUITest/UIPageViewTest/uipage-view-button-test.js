@@ -27,12 +27,18 @@
 //2015-01-14
 import { UIMainLayer } from "../uimain-layer";
 import { Point, Size, log } from "@aspect/core";
-import { Button, HBox, LinearLayoutParameter, PageView, VBox } from "@aspect/ccui";
+import {
+  Button,
+  HBox,
+  LinearLayoutParameter,
+  PageView,
+  VBox
+} from "@aspect/ccui";
 
 export class UIPageViewButtonTest extends UIMainLayer {
   init() {
     if (super.init()) {
-      var widgetSize = this._widget.getContentSize();
+      var widgetSize = this._widget.contentSize;
 
       // Add a label in which the dragpanel events will be displayed
       this._topDisplayLabel.string = "Move by horizontal direction";
@@ -52,8 +58,8 @@ export class UIPageViewButtonTest extends UIMainLayer {
       pageView.setContentSize(new Size(240.0, 130.0));
       pageView.setPosition(
         new Point(
-          (widgetSize.width - pageView.getContentSize().width) / 2.0,
-          (widgetSize.height - pageView.getContentSize().height) / 2.0
+          (widgetSize.width - pageView.width) / 2.0,
+          (widgetSize.height - pageView.contentSize.height) / 2.0
         )
       );
 
@@ -101,7 +107,8 @@ export class UIPageViewButtonTest extends UIMainLayer {
   pageViewEvent(pageView, type) {
     switch (type) {
       case PageView.EVENT_TURNING:
-        this._topDisplayLabel.string = "page = " + pageView.getCurPageIndex() + 1;
+        this._topDisplayLabel.string =
+          "page = " + pageView.getCurPageIndex() + 1;
         break;
       default:
         break;

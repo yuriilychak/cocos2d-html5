@@ -54,8 +54,8 @@ export default class LayerColorCanvasRenderer extends LayerCanvasRenderer {
       node = this._node,
       curColor = this._displayedColor,
       opacity = this._displayedOpacity / BYTE,
-      locWidth = node._contentSize.width,
-      locHeight = node._contentSize.height;
+      locWidth = node.width,
+      locHeight = node.height;
 
     if (opacity === 0) return;
 
@@ -133,8 +133,8 @@ export default class LayerColorCanvasRenderer extends LayerCanvasRenderer {
     let rect = new Rect(
       0,
       0,
-      node._contentSize.width,
-      node._contentSize.height
+      node.width,
+      node.height
     );
     const trans = node.getNodeToWorldTransform();
     rect = AffineTransform.applyToRect(rect, node.getNodeToWorldTransform());

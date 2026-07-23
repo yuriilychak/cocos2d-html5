@@ -445,9 +445,9 @@ export class DisplayManager extends BaseClass {
     return this._visible;
   }
 
-  getContentSize() {
+  get contentSize() {
     if (!this._displayRenderNode) return new Size();
-    return this._displayRenderNode.getContentSize();
+    return this._displayRenderNode.contentSize;
   }
 
   get boundingBox() {
