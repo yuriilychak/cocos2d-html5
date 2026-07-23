@@ -648,7 +648,7 @@ export class Scale9Sprite extends EventHelper(Node) {
       var self = this;
       var onResourceDataLoaded = function () {
         if (Size.equalTo(self.contentSize, new Size(0, 0))) {
-          self.setContentSize(self._spriteFrame.rect);
+          self.contentSize = self._spriteFrame.rect;
         }
         self._textureLoaded = true;
         self._renderCmd.setDirtyFlag(Node._dirtyFlags.contentDirty);
@@ -689,28 +689,20 @@ export class Scale9Sprite extends EventHelper(Node) {
   setPreferredSize(preferredSize) {
     if (!preferredSize || Size.equalTo(this.contentSize, preferredSize))
       return;
-    this.setContentSize(preferredSize);
+    this.contentSize = preferredSize;
   }
 
   getPreferredSize() {
     return this.contentSize;
   }
 
-  setContentSize(width, height) {
-    if (height === undefined) {
-      height = width.height;
-      width = width.width;
-    }
-    if (Size.equalTo(super.contentSize, new Size(width, height))) {
+  set contentSize(value) {
+    if (Size.equalTo(super.contentSize, value)) {
       return;
     }
 
-    super.setContentSize(width, height);
+    super.contentSize = value;
     this._quadsDirty = true;
-  }
-
-  set contentSize(value) {
-    this.setContentSize(value);
   }
 
   get contentSize() {

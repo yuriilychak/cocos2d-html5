@@ -6,7 +6,7 @@ export class VBox extends Layout {
         this.setLayoutType(Layout.LINEAR_VERTICAL);
 
         if (size) {
-            this.setContentSize(size);
+            this.contentSize = size;
         }
     }
 

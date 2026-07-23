@@ -6,7 +6,7 @@ export class HBox extends Layout {
         this.setLayoutType(Layout.LINEAR_HORIZONTAL);
 
         if (size) {
-            this.setContentSize(size);
+            this.contentSize = size;
         }
     }
 }

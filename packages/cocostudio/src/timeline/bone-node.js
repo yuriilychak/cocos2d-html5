@@ -346,8 +346,12 @@ class BoneNode extends Node {
     }
   }
 
-  setContentSize(contentSize) {
-    super.setContentSize(contentSize);
+  get contentSize() {
+    return super.contentSize;
+  }
+
+  set contentSize(contentSize) {
+    super.contentSize = contentSize;
     this._updateVertices();
   }
 

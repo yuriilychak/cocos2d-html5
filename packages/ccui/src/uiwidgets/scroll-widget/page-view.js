@@ -216,7 +216,7 @@ export class PageView extends ListView {
   }
 
   _remedyLayoutParameter(item) {
-    item.setContentSize(this.contentSize);
+    item.contentSize = this.contentSize;
     super._remedyLayoutParameter(item);
   }
 

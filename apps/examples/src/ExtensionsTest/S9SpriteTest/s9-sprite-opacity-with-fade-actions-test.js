@@ -40,7 +40,8 @@ export class S9SpriteOpacityWithFadeActionsTest extends S9SpriteTestDemo {
       "Test opacity cascade for Scale9Sprite with fade actions\n(fade to opacity 144, then fadeOut, then fadeIn)";
 
     var colorLayer = new LayerColor(new Color(144, 144, 144));
-    colorLayer.setContentSize(winSize.width / 2, winSize.height / 2);
+    colorLayer.width = winSize.width / 2;
+    colorLayer.height = winSize.height / 2;
     colorLayer.x = winSize.width / 4;
     colorLayer.y = winSize.height / 4;
 

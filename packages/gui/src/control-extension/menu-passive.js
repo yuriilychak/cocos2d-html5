@@ -7,14 +7,16 @@ export class Spacer extends Layer {}
 Spacer.verticalSpacer = function (space) {
     var pRet = new Spacer();
     pRet.init();
-    pRet.setContentSize(0, space);
+    pRet.width = 0;
+    pRet.height = space;
     return pRet;
 };
 
 Spacer.horizontalSpacer = function (space) {
     var pRet = new Spacer();
     pRet.init();
-    pRet.setContentSize(space, 0);
+    pRet.width = space;
+    pRet.height = 0;
     return pRet;
 };
 
@@ -71,7 +73,7 @@ export class MenuPassive extends Layer {
             var winSize = ServiceLocator.eglView.winSizeInPoints;
             this.ignoreAnchorPointForPosition(true);
             this.setAnchorPoint(0.5, 0.5);
-            this.setContentSize(winSize);
+            this.contentSize = winSize;
             this.setPosition(winSize.width / 2, winSize.height / 2);
             var z = 0;
             if (item) {
@@ -113,7 +115,8 @@ export class MenuPassive extends Layer {
                 }
             }
         }
-        this.setContentSize(width, height);
+        this.width = width;
+        this.height = height;
     }
 
     alignItemsHorizontally() {
@@ -141,7 +144,8 @@ export class MenuPassive extends Layer {
                 }
             }
         }
-        this.setContentSize(width, height);
+        this.width = width;
+        this.height = height;
     }
 
     alignItemsInColumns(columns) {

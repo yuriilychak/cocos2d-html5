@@ -56,10 +56,8 @@ export class UIListViewTest_Magnetic extends UIMainLayer {
       this._listView.setBounceEnabled(true);
       this._listView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
       this._listView.setBackGroundImageScale9Enabled(true);
-      this._listView.setContentSize(
-        widgetSize.width / 2,
-        widgetSize.height / 2
-      );
+      this._listView.width = widgetSize.width / 2;
+      this._listView.height = widgetSize.height / 2;
       this._listView.setScrollBarPositionFromCorner(new Point(7, 7));
       this._listView.setItemsMargin(2.0);
       this._listView.setAnchorPoint(new Point(0.5, 0.5));
@@ -92,7 +90,7 @@ export class UIListViewTest_Magnetic extends UIMainLayer {
             new Color(0, 0, 0, 255)
           );
         }
-        pNode.setContentSize(this._listView.contentSize);
+        pNode.contentSize = this._listView.contentSize;
         this._mainNode.addChild(pNode);
       }
 
@@ -160,7 +158,8 @@ export class UIListViewTest_Magnetic extends UIMainLayer {
           "ccs-res/cocosui/buttonHighlighted.png"
         );
         button.setTitleText("Button-" + i);
-        button.setContentSize(100, 70);
+        button.width = 100;
+        button.height = 70;
         button.setScale9Enabled(true);
         this._listView.pushBackCustomItem(button);
       }

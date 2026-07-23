@@ -49,7 +49,7 @@ export class UIS9NinePatchTest extends UIMainLayer {
       //9-patch sprite with filename
       var playerSprite = new Scale9Sprite("ccs-res/cocosui/player.9.png");
       playerSprite.setPosition(x, y);
-      playerSprite.setContentSize(preferedSize);
+      playerSprite.contentSize = preferedSize;
       var capInsets = playerSprite.getCapInsets();
       log(
         "player sprite capInset = " +
@@ -83,7 +83,7 @@ export class UIS9NinePatchTest extends UIMainLayer {
       var monsterSprite = new Scale9Sprite("monster.9.png");
       monsterSprite.setPosition(x + 100, y - 100);
       capInsets = monsterSprite.getCapInsets();
-      monsterSprite.setContentSize(preferedSize);
+      monsterSprite.contentSize = preferedSize;
       log(
         "monsterSprite capInset = ",
         +capInsets.x +

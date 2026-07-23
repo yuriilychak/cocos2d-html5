@@ -834,7 +834,7 @@ export class TextField extends Widget {
    * @param {Size} size
    */
   setTextAreaSize(size) {
-    this.setContentSize(size);
+    this.contentSize = size;
   }
 
   /**

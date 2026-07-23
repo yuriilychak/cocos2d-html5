@@ -287,11 +287,11 @@ export class LayoutComponent extends Component {
         if (this._usingPercentHeight) ownerSize.height = 0;
       }
 
-      this.owner.setContentSize(ownerSize);
+      this.owner.contentSize = ownerSize;
 
       this._refreshHorizontalMargin();
       this._refreshVerticalMargin();
-    } else this.owner.setContentSize(size);
+    } else this.owner.contentSize = size;
   }
 
   isPercentWidthEnabled() {
@@ -320,9 +320,9 @@ export class LayoutComponent extends Component {
         this._percentWidth = 0;
         if (this._usingPercentWidth) ownerSize.width = 0;
       }
-      this.owner.setContentSize(ownerSize);
+      this.owner.contentSize = ownerSize;
       this._refreshHorizontalMargin();
-    } else this.owner.setContentSize(ownerSize);
+    } else this.owner.contentSize = ownerSize;
   }
 
   getPercentWidth() {
@@ -336,7 +336,7 @@ export class LayoutComponent extends Component {
     if (parent !== null) {
       var ownerSize = this.owner.contentSize;
       ownerSize.width = parent.width * this._percentWidth;
-      this.owner.setContentSize(ownerSize);
+      this.owner.contentSize = ownerSize;
       this._refreshHorizontalMargin();
     }
   }
@@ -367,9 +367,9 @@ export class LayoutComponent extends Component {
         this._percentHeight = 0;
         if (this._usingPercentHeight) ownerSize.height = 0;
       }
-      this.owner.setContentSize(ownerSize);
+      this.owner.contentSize = ownerSize;
       this._refreshVerticalMargin();
-    } else this.owner.setContentSize(ownerSize);
+    } else this.owner.contentSize = ownerSize;
   }
 
   getPercentHeight() {
@@ -383,7 +383,7 @@ export class LayoutComponent extends Component {
     if (parent !== null) {
       var ownerSize = this.owner.contentSize;
       ownerSize.height = parent.height * this._percentHeight;
-      this.owner.setContentSize(ownerSize);
+      this.owner.contentSize = ownerSize;
       this._refreshVerticalMargin();
     }
   }
@@ -515,7 +515,7 @@ export class LayoutComponent extends Component {
     }
 
     locOwner.setPosition(ownerPosition);
-    locOwner.setContentSize(ownerSize);
+    locOwner.contentSize = ownerSize;
 
     if (locOwner instanceof LayoutComponent.PageViewClass) {
       locOwner.forceDoLayout();

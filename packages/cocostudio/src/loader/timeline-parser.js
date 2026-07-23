@@ -1370,10 +1370,11 @@ var getColor = function (json) {
   return new Color(r, g, b, a);
 };
 
-var setContentSize = function (node, size) {
+function setContentSize(node, size) {
   var x = size["X"] || 0;
   var y = size["Y"] || 0;
-  if (size) node.setContentSize(new Size(x, y));
+  if (size) node.width = x;
+  if (size) node.height = y;
 };
 
 var register = [

@@ -93,8 +93,12 @@ export class LayerGradient extends LayerColor {
     return true;
   }
 
-  setContentSize(size, height) {
-    super.setContentSize(size, height);
+  get contentSize() {
+    return super.contentSize;
+  }
+
+  set contentSize(size) {
+    super.contentSize = size;
     this._renderCmd.setDirtyFlag(Node._dirtyFlags.gradientDirty);
   }
 

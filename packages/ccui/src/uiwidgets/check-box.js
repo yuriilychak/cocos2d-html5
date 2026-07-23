@@ -204,7 +204,7 @@ export class CheckBox extends Widget {
         this
       );
     } else {
-      this._backGroundBoxRenderer.setContentSize(this._customSize);
+      this._backGroundBoxRenderer.contentSize = this._customSize;
     }
 
     switch (this._backGroundTexType) {

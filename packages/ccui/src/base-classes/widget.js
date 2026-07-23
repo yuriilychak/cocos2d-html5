@@ -283,10 +283,10 @@ export class Widget extends ProtectedNode {
   }
   _updateContentSizeWithTextureSize(size) {
     if (this._unifySize) {
-      this.setContentSize(size);
+      this.contentSize = size;
       return;
     }
-    this.setContentSize(this._ignoreSize ? size : this._customSize);
+    this.contentSize = this._ignoreSize ? size : this._customSize;
   }
   _isAncestorsEnabled() {
     var parentWidget = this._getAncensterWidget(this);
@@ -341,11 +341,7 @@ export class Widget extends ProtectedNode {
   }
 
   set contentSize(value) {
-    this.setContentSize(value);
-  }
-
-  setContentSize(contentSize, height) {
-    Node.prototype.setContentSize.call(this, contentSize, height);
+    super.contentSize = value;
 
     var locWidth = this.width;
     var locHeight = this.height;
@@ -371,6 +367,7 @@ export class Widget extends ProtectedNode {
       this._sizeDirty = true;
     }
   }
+
   get width() {
     return super.width;
   }
@@ -453,8 +450,11 @@ export class Widget extends ProtectedNode {
         height = this._parent.height * percent.y;
       }
     }
-    if (this._ignoreSize) this.setContentSize(this.getVirtualRendererSize());
-    else this.setContentSize(width, height);
+    if (this._ignoreSize) this.contentSize = this.getVirtualRendererSize();
+    else {
+      this.width = width;
+      this.height = height;
+    }
 
     this._customSize.width = width;
     this._customSize.height = height;
@@ -494,8 +494,8 @@ export class Widget extends ProtectedNode {
     switch (this._sizeType) {
       case Widget.SIZE_ABSOLUTE:
         if (this._ignoreSize)
-          this.setContentSize(this.getVirtualRendererSize());
-        else this.setContentSize(this._customSize);
+          this.contentSize = this.getVirtualRendererSize();
+        else this.contentSize = this._customSize;
         this._sizePercent.x =
           parentSize.width > 0 ? this._customSize.width / parentSize.width : 0;
         this._sizePercent.y =
@@ -509,8 +509,8 @@ export class Widget extends ProtectedNode {
           parentSize.height * this._sizePercent.y
         );
         if (this._ignoreSize)
-          this.setContentSize(this.getVirtualRendererSize());
-        else this.setContentSize(cSize);
+          this.contentSize = this.getVirtualRendererSize();
+        else this.contentSize = cSize;
         this._customSize.width = cSize.width;
         this._customSize.height = cSize.height;
         break;
@@ -560,16 +560,14 @@ export class Widget extends ProtectedNode {
 
   ignoreContentAdaptWithSize(ignore) {
     if (this._unifySize) {
-      this.setContentSize(this._customSize);
+      this.contentSize = this._customSize;
       return;
     }
 
     if (this._ignoreSize === ignore) return;
 
     this._ignoreSize = ignore;
-    this.setContentSize(
-      ignore ? this.getVirtualRendererSize() : this._customSize
-    );
+    this.contentSize = ignore ? this.getVirtualRendererSize() : this._customSize;
   }
 
   isIgnoreContentAdaptWithSize() {
@@ -1262,7 +1260,7 @@ export class Widget extends ProtectedNode {
   }
 
   setSize(size) {
-    this.setContentSize(size);
+    this.contentSize = size;
   }
 
   getSize() {

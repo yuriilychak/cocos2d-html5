@@ -72,7 +72,7 @@ export class UIListViewTest_Horizontal extends UIMainLayer {
 
       var default_item = new Layout();
       default_item.setTouchEnabled(true);
-      default_item.setContentSize(default_button.contentSize);
+      default_item.contentSize = default_button.contentSize;
       default_button.x = default_item.width / 2;
       default_button.y = default_item.height / 2;
       default_item.addChild(default_button);
@@ -101,10 +101,10 @@ export class UIListViewTest_Horizontal extends UIMainLayer {
           "ccs-res/cocosui/buttonHighlighted.png",
           ""
         );
-        custom_button.setContentSize(default_button.contentSize);
+        custom_button.contentSize = default_button.contentSize;
 
         var custom_item = new Layout();
-        custom_item.setContentSize(custom_button.contentSize);
+        custom_item.contentSize = custom_button.contentSize;
         custom_button.x = custom_item.width / 2;
         custom_button.y = custom_item.height / 2;
         custom_item.addChild(custom_button);
@@ -123,10 +123,10 @@ export class UIListViewTest_Horizontal extends UIMainLayer {
           "ccs-res/cocosui/buttonHighlighted.png",
           ""
         );
-        custom_button.setContentSize(default_button.contentSize);
+        custom_button.contentSize = default_button.contentSize;
 
         var custom_item = new Layout();
-        custom_item.setContentSize(custom_button.contentSize);
+        custom_item.contentSize = custom_button.contentSize;
         custom_button.x = custom_item.width / 2;
         custom_button.y = custom_item.height / 2;
         custom_item.addChild(custom_button);

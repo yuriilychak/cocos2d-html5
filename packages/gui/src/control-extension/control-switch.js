@@ -31,7 +31,8 @@ export class ControlSwitch extends Control {
   initWithSprite(width, height, background, onProgress, offProgress, thumb) {
     if (this.init()) {
       this._on = true;
-      this.setContentSize(new Size(width, height));
+      this.width = width;
+      this.height = height;
 
       this._onProgress = onProgress;
       this._offProgress = offProgress;

@@ -279,12 +279,8 @@ export class ScrollView extends Layout {
     this._topBoundary = this.height;
     this._rightBoundary = this.width;
     var innerSize = this._innerContainer.contentSize;
-    this._innerContainer.setContentSize(
-      new Size(
-        Math.max(innerSize.width, this.width),
-        Math.max(innerSize.height, this.height)
-      )
-    );
+    this._innerContainer.width = Math.max(innerSize.width, this.width);
+    this._innerContainer.height = Math.max(innerSize.height, this.height);
     this._innerContainer.setPosition(
       0,
       this.height - this._innerContainer.height
@@ -316,7 +312,8 @@ export class ScrollView extends Layout {
       log("Inner height <= ScrollView height, it will be force sized!");
     else innerSizeHeight = size.height;
 
-    innerContainer.setContentSize(new Size(innerSizeWidth, innerSizeHeight));
+    innerContainer.width = innerSizeWidth;
+    innerContainer.height = innerSizeHeight;
 
     var pos = this._innerContainer.getPosition();
     var contAP = this._innerContainer.getAnchorPoint();

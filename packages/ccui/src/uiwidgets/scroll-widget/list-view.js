@@ -43,7 +43,8 @@ import {
  * listView.setBounceEnabled(true);
  * listView.setBackGroundImage("res/cocosui/green_edit.png");
  * listView.setBackGroundImageScale9Enabled(true);
- * listView.setContentSize(new Size(240, 130));
+ * listView.width = 240;
+ * listView.height = 130;
  * this.addChild(listView);
  */
 export class ListView extends ScrollView {

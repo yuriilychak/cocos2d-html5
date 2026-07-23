@@ -41,7 +41,7 @@ export class ControlPotentiometer extends Control {
       this.addChild(thumbSprite, 2);
       this.addChild(progressTimer, 1);
       this.addChild(trackSprite);
-      this.setContentSize(trackSprite.contentSize);
+      this.contentSize = trackSprite.contentSize;
       this._minimumValue = 0.0;
       this._maximumValue = 1.0;
       this.value = this._minimumValue;

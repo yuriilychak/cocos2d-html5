@@ -144,7 +144,8 @@ export class LabelAtlasWebGLRenderCmd extends AtlasNode.WebGLRenderCmd {
       i * node._itemWidth === contentSize.width &&
       node._itemHeight === contentSize.height
     ) {
-      node.setContentSize(cr * node._itemWidth, node._itemHeight);
+      node.width = cr * node._itemWidth;
+      node.height = node._itemHeight;
     }
   }
 

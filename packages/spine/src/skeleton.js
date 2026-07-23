@@ -218,10 +218,10 @@ export class Skeleton extends Node {
 
   setSkeletonData(skeletonData, ownsSkeletonData) {
     if (skeletonData.width != null && skeletonData.height != null)
-      this.setContentSize(
-        skeletonData.width / ServiceLocator.eglView.contentScaleFactor,
-        skeletonData.height / ServiceLocator.eglView.contentScaleFactor
-      );
+      this.width =
+        skeletonData.width / ServiceLocator.eglView.contentScaleFactor;
+      this.height =
+        skeletonData.height / ServiceLocator.eglView.contentScaleFactor;
 
     this._skeleton = new SpineSkeleton(skeletonData);
     this._skeleton.updateWorldTransform(Physics.update);

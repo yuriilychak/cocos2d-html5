@@ -330,7 +330,7 @@ export class GScrollView extends Layer {
 
   setViewSize(size) {
     this._viewSize = size;
-    Node.prototype.setContentSize.call(this, size);
+    super.contentSize = size;
   }
 
   getContainer() {
@@ -519,11 +519,10 @@ export class GScrollView extends Layer {
     this._touchMoved = false;
   }
 
-  setContentSize(size, height) {
+  set contentSize(size) {
     var container = this.getContainer();
     if (container) {
-      if (height === undefined) container.setContentSize(size);
-      else container.setContentSize(size, height);
+      container.contentSize = size;
       this.updateInset();
     }
   }

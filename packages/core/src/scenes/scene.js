@@ -38,6 +38,6 @@ export class Scene extends Node {
         this._className = "Scene";
         this._ignoreAnchorPointForPosition = true;
         this.setAnchorPoint(0.5, 0.5);
-        this.setContentSize(ServiceLocator.eglView.winSizeInPoints);
+        this.contentSize = ServiceLocator.eglView.winSizeInPoints;
     }
 }

@@ -859,44 +859,10 @@ export class Node extends BaseClass {
   }
 
   set contentSize(value) {
-    var locContentSize = this.#contentSize;
-    if (
-      value.width === locContentSize.width &&
-      value.height === locContentSize.height
-    ) {
+    if (Size.equalTo(value, this.#contentSize)) {
       return;
     }
-    locContentSize.set(value);
-    this._renderCmd._updateAnchorPointInPoint();
-  }
-
-  /**
-   * <p>
-   *     Sets the untransformed size of the node.                                             <br/>
-   *                                                                                          <br/>
-   *     The contentSize remains the same no matter the node is scaled or rotated.            <br/>
-   *     All nodes has a size. Layer and Scene has the same size of the screen.
-   * </p>
-   * @function
-   * @param {Size|Number} size The untransformed size of the node or The untransformed size's width of the node.
-   * @param {Number} [height] The untransformed size's height of the node.
-   */
-  setContentSize(size, height) {
-    var locContentSize = this.#contentSize;
-    if (height === undefined) {
-      if (
-        size.width === locContentSize.width &&
-        size.height === locContentSize.height
-      )
-        return;
-      locContentSize.width = size.width;
-      locContentSize.height = size.height;
-    } else {
-      if (size === locContentSize.width && height === locContentSize.height)
-        return;
-      locContentSize.width = size;
-      locContentSize.height = height;
-    }
+    this.#contentSize.set(value);
     this._renderCmd._updateAnchorPointInPoint();
   }
 

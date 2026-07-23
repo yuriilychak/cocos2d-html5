@@ -55,7 +55,8 @@ export class UIListViewTest_ScrollToItem extends UIMainLayer {
       listView.setBounceEnabled(true);
       listView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
       listView.setBackGroundImageScale9Enabled(true);
-      listView.setContentSize(widgetSize.width / 2, widgetSize.height / 2);
+      listView.width = widgetSize.width / 2;
+      listView.height = widgetSize.height / 2;
       listView.setScrollBarPositionFromCorner(new Point(7, 7));
       listView.setItemsMargin(2.0);
 
@@ -84,7 +85,7 @@ export class UIListViewTest_ScrollToItem extends UIMainLayer {
             new Color(0, 0, 0, 255)
           );
         }
-        pNode.setContentSize(listView.contentSize);
+        pNode.contentSize = listView.contentSize;
         this._mainNode.addChild(pNode);
       }
       var NUMBER_OF_ITEMS = 31;
@@ -130,7 +131,7 @@ export class UIListViewTest_ScrollToItem extends UIMainLayer {
 
       var default_item = new Layout();
       default_item.setTouchEnabled(true);
-      default_item.setContentSize(default_button.contentSize);
+      default_item.contentSize  = default_button.contentSize;
       default_button.x = default_item.width / 2;
       default_button.y = default_item.height / 2;
       default_item.addChild(default_button);

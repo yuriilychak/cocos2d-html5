@@ -151,7 +151,8 @@ export class Box2DTestLayer extends LayerColor {
     );
     btn.setScale9Enabled(true);
     btn.setCapInsets(new Rect(BOX_CAP, BOX_CAP, BOX_CAP, BOX_CAP));
-    btn.setContentSize(BOX_SIZE, BOX_SIZE);
+    btn.width = BOX_SIZE;
+    btn.height = BOX_SIZE;
     btn.setTitleFntFile(s_simpleFont_fnt);
     btn.setTitleText(label);
     btn.setTitleFontSize(18);

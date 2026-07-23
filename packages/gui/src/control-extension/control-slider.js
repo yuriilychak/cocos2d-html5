@@ -33,7 +33,8 @@ export class ControlSlider extends Control {
       maximumValue
     ]);
 
-    this.setContentSize(progessWidth, progressHeight);
+    this.width = progessWidth;
+    this.height = progressHeight;
 
     super.init();
   }

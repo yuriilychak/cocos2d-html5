@@ -40,7 +40,8 @@ export class UIButtonTestRemoveSelf extends UIMainLayer {
       var widgetSize = this._widget.contentSize;
 
       var layout = new Layout();
-      layout.setContentSize(widgetSize.width * 0.6, widgetSize.height * 0.6);
+      layout.width = widgetSize.width * 0.6;
+      layout.height = widgetSize.height * 0.6;
       layout.setBackGroundColor(Color.GREEN);
       layout.setBackGroundColorType(Layout.BG_COLOR_SOLID);
       layout.setBackGroundColorOpacity(100);

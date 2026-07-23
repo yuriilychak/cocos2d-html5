@@ -70,7 +70,8 @@ export class LayerColor extends Layer {
       Node._dirtyFlags.colorDirty | Node._dirtyFlags.opacityDirty
     );
 
-    LayerColor.prototype.setContentSize.call(this, width, height);
+    this.width = width;
+    this.height = height;
     return true;
   }
 

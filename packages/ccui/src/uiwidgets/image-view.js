@@ -200,7 +200,7 @@ export class ImageView extends Widget {
   }
 
   _imageTextureScaleChangedWithSize() {
-    this._imageRenderer.setContentSize(this.contentSize);
+    this._imageRenderer.contentSize = this.contentSize;
     this._imageRenderer.setPosition(this.width / 2.0, this.height / 2.0);
   }
 
@@ -221,13 +221,13 @@ export class ImageView extends Widget {
     }
   }
 
-  setContentSize(contentSize, height) {
-    if (height) {
-      contentSize = new Size(contentSize, height);
-    }
+  get contentSize() {
+    return super.contentSize;
+  }
 
-    super.setContentSize(contentSize);
-    this._imageRenderer.setContentSize(contentSize);
+  set contentSize(contentSize) {
+    super.contentSize = contentSize;
+    this._imageRenderer.contentSize = contentSize;
   }
 }
 

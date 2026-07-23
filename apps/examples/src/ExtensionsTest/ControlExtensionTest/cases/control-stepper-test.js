@@ -12,7 +12,8 @@ function makeBtn(text) {
   );
   b.setScale9Enabled(true);
   b.setCapInsets(new Rect(12, 12, 12, 12));
-  b.setContentSize(48, 48);
+  b.width = 48;
+  b.height = 48;
   b.setTitleFntFile(s_simpleFont_fnt);
   b.setTitleText(text);
   b.setTitleFontSize(28);

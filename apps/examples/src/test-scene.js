@@ -64,7 +64,8 @@ export class TestScene extends Scene {
     );
     header.setCapInsets(new Rect(12, 12, 12, 12));
     header.color = new Color(0x35, 0x39, 0x41);
-    header.setContentSize(winW, HEADER_HEIGHT);
+    header.width = winW;
+    header.height = HEADER_HEIGHT;
     header.x = winW / 2;
     header.y = winH - HEADER_HEIGHT / 2;
     this.addChild(header, 10);
@@ -85,7 +86,8 @@ export class TestScene extends Scene {
     );
     btn.setScale9Enabled(true);
     btn.setCapInsets(new Rect(12, 12, 12, 12));
-    btn.setContentSize(BTN_WIDTH, BTN_HEIGHT);
+    btn.width = BTN_WIDTH;
+    btn.height = BTN_HEIGHT;
     btn.setTitleFntFile(s_simpleFont_fnt);
     btn.setTitleText(backButtonText);
     btn.setTitleFontSize(18);
@@ -113,7 +115,8 @@ export class TestScene extends Scene {
       );
       b.setScale9Enabled(true);
       b.setCapInsets(new Rect(12, 12, 12, 12));
-      b.setContentSize(NAV_BTN_SIZE, NAV_BTN_SIZE);
+      b.width = NAV_BTN_SIZE;
+      b.height = NAV_BTN_SIZE;
       b.setTitleFntFile(s_simpleFont_fnt);
       b.setTitleText(text);
       b.setTitleFontSize(18);

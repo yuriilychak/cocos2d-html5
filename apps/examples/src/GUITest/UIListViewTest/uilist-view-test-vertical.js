@@ -82,7 +82,7 @@ export class UIListViewTest_Vertical extends UIMainLayer {
 
       var default_item = new Layout();
       default_item.setTouchEnabled(true);
-      default_item.setContentSize(default_button.contentSize);
+      default_item.contentSize = default_button.contentSize;
       default_item.width = this.listView.width;
       default_button.x = default_item.width / 2;
       default_button.y = default_item.height / 2;

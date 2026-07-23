@@ -22,7 +22,8 @@ function applyCommonAttributes(widget, opts) {
     if (opts.name != null) widget.name = opts.name;
     if (opts.tag != null) widget.tag = opts.tag;
     if (opts.width != null && opts.height != null)
-        widget.setContentSize(opts.width, opts.height);
+        widget.width = opts.width;
+        widget.height = opts.height;
     if (opts.x != null && opts.y != null)
         widget.setPosition(opts.x, opts.y);
     if (opts.anchorPointX != null && opts.anchorPointY != null)
@@ -74,7 +75,8 @@ function initButton(widget, opts, resourcePath) {
     if (opts.scale9Enable) {
         widget.setScale9Enabled(true);
         if (opts.scale9Width != null && opts.scale9Height != null)
-            widget.setContentSize(opts.scale9Width, opts.scale9Height);
+            widget.width = opts.scale9Width;
+            widget.height = opts.scale9Height;
     }
 }
 
@@ -93,7 +95,8 @@ function initImageView(widget, opts, resourcePath) {
         widget.loadTexture(resourcePath + opts.fileNameData.path);
     if (opts.scale9Enable) {
         widget.setScale9Enabled(true);
-        widget.setContentSize(opts.width, opts.height);
+        widget.width = opts.width;
+        widget.height = opts.height;
     }
 }
 

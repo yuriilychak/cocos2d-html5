@@ -41,7 +41,8 @@ export class UILayoutComponentTest extends UIMainLayer {
       this._baseLayer = new LayerColor();
       this._baseLayer.color = new Color(50, 100, 0);
       this._baseLayer.opacity = 100;
-      this._baseLayer.setContentSize(200, 200);
+      this._baseLayer.width = 200;
+      this._baseLayer.height = 200;
       this._mainNode.addChild(this._baseLayer);
 
       var button = new Button("ccs-res/cocosui/animationbuttonnormal.png");
@@ -72,9 +73,10 @@ export class UILayoutComponentTest extends UIMainLayer {
         if (
           layerSize.width == widgetSize.width &&
           layerSize.height == widgetSize.height
-        )
-          this._baseLayer.setContentSize(200, 200);
-        else this._baseLayer.setContentSize(widgetSize);
+        ) {
+          this._baseLayer.width = 200;
+          this._baseLayer.height = 200;
+        } else this._baseLayer.contentSize = widgetSize;
         helper.doLayout(this._baseLayer);
         break;
       case Widget.TOUCH_CANCELED:

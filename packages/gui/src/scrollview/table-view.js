@@ -223,7 +223,7 @@ export class TableView extends GScrollView {
       }
     }
 
-    this.setContentSize(size);
+    this.contentSize = size;
 
     if (this._oldDirection !== this._direction) {
       if (this._direction === SCROLLVIEW_DIRECTION_HORIZONTAL) {

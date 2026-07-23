@@ -60,7 +60,7 @@ export class MenuTestLayer extends Layer {
     const ITEM_MARGIN = 6;
 
     const layout = new Layout();
-    layout.setContentSize(winSizeLocal.width, winSizeLocal.height);
+    layout.contentSize = winSizeLocal;
     layout.x = 0;
     layout.y = 0;
 
@@ -104,7 +104,8 @@ export class MenuTestLayer extends Layer {
     listView.setGravity(ListView.GRAVITY_CENTER_HORIZONTAL);
     listView.setItemsMargin(ITEM_MARGIN);
     listView.setScrollContainerPadding(24);
-    listView.setContentSize(listWidth, listHeight);
+    listView.width = listWidth;
+    listView.height = listHeight;
     listView.x = PADDING;
     listView.y = PADDING;
     listView.setScrollBarThumbTexture(
@@ -130,7 +131,8 @@ export class MenuTestLayer extends Layer {
       );
       btn.setScale9Enabled(true);
       btn.setCapInsets(new Rect(12, 12, 12, 12));
-      btn.setContentSize(listWidth - 24 * 2, ITEM_HEIGHT);
+      btn.width = listWidth - 24 * 2;
+      btn.height = ITEM_HEIGHT;
       btn.setTitleFntFile(s_simpleFont_fnt);
       btn.setTitleText(item.title);
       btn.setTitleFontSize(16);
@@ -154,7 +156,7 @@ export class MenuTestLayer extends Layer {
     this._resizeListener = ServiceLocator.eventManager.addCustomListener(
       "canvas-resize",
       () => {
-        this.setContentSize(ServiceLocator.eglView.winSizeInPoints);
+        this.contentSize = ServiceLocator.eglView.winSizeInPoints;
         helper.doLayout(this);
       },
       this

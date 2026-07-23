@@ -45,7 +45,8 @@ export class UILayoutTest_Layout_Relative_Location extends UIMainLayer {
       // Create the layout
       var layout = new Layout();
       layout.setLayoutType(Layout.RELATIVE);
-      layout.setContentSize(280, 150);
+      layout.width = 280;
+      layout.height = 150;
       layout.setPosition(
         (widgetSize.width - layout.width) / 2.0,
         (widgetSize.height - layout.height) / 2.0

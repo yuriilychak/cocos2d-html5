@@ -60,7 +60,8 @@ export class Layout extends Widget {
     this._colorType = Layout.BG_COLOR_NONE;
 
     this.ignoreContentAdaptWithSize(false);
-    this.setContentSize(new Size(0, 0));
+    this.width = 0;
+    this.height = 0;
     this.setAnchorPoint(0, 0);
     this.onPassFocusToChild = this._findNearestChildWidgetIndex.bind(this);
 
@@ -397,9 +398,9 @@ export class Layout extends Widget {
       )
         this._backGroundImage.setPreferredSize(this.contentSize);
     }
-    if (this._colorRender) this._colorRender.setContentSize(this.contentSize);
+    if (this._colorRender) this._colorRender.contentSize = this.contentSize;
     if (this._gradientRender)
-      this._gradientRender.setContentSize(this.contentSize);
+      this._gradientRender.contentSize = this.contentSize;
   }
 
   setBackGroundImageScale9Enabled(able) {

@@ -189,12 +189,10 @@ export class TMXLayer extends SpriteBatchNode {
 
     this._parseInternalProperties();
 
-    this.setContentSize(
-      sizePixelsToPoints(
-        new Size(
-          this._layerSize.width * this._mapTileSize.width,
-          this._layerSize.height * this._mapTileSize.height
-        )
+    this.contentSize = sizePixelsToPoints(
+      new Size(
+        this._layerSize.width * this._mapTileSize.width,
+        this._layerSize.height * this._mapTileSize.height
       )
     );
     this._useAutomaticVertexZ = false;

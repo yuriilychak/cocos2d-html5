@@ -217,18 +217,14 @@ export class WebView extends Widget {
     return new WebView.RenderCmd(this);
   }
 
-  /**
-   * Set the contentSize
-   * @param {Number} w
-   * @param {Number} h
-   */
-  setContentSize(w, h) {
-    super.setContentSize(w, h);
-    if (h === undefined) {
-      h = w.height;
-      w = w.width;
-    }
-    this._renderCmd.changeSize(w, h);
+
+  get contentSize() {
+    return super.contentSize;
+  }
+
+  set contentSize(value) {
+    super.contentSize = value;
+    this._renderCmd.changeSize(value.width, value.height);
   }
 
   /**

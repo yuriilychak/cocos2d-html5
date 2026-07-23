@@ -455,7 +455,7 @@ export class Text extends Widget {
       this.setTextVerticalAlignment(
         uiLabel._labelRenderer.getVerticalAlignment()
       );
-      this.setContentSize(uiLabel.contentSize);
+      this.contentSize = uiLabel.contentSize;
       this.setTextColor(uiLabel.getTextColor());
     }
   }

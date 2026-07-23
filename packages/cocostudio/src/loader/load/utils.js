@@ -131,7 +131,8 @@ export function loadWithVisibleSize (file, path) {
     var object = load(file, path);
     var size = ServiceLocator.eglView.rendererDelegate.visibleSize;
     if (object.node && size) {
-        object.node.setContentSize(size.width, size.height);
+        object.node.width = size.width;
+        object.node.height = size.height;
         helper.doLayout(object.node);
     }
     return object;

@@ -254,10 +254,12 @@ export class ProgressTimer extends Node {
     if (this._sprite !== sprite) {
       this._sprite = sprite;
       if (sprite) {
-        this.setContentSize(sprite.width, sprite.height);
+        this.width = sprite.width;
+        this.height = sprite.height;
         sprite.ignoreAnchorPointForPosition(true);
       } else {
-        this.setContentSize(0, 0);
+        this.width = 0;
+        this.height = 0;
       }
       this._renderCmd.resetVertexData();
     }

@@ -724,7 +724,7 @@ export class Sprite extends EventHelper(Node) {
   setTextureRect(rect, rotated, untrimmedSize, needConvert) {
     var _t = this;
     _t._rectRotated = rotated || false;
-    _t.setContentSize(untrimmedSize || rect);
+    _t.contentSize = untrimmedSize || rect;
 
     _t.setVertexRect(rect);
     _t._renderCmd._setTextureCoords(rect, needConvert);

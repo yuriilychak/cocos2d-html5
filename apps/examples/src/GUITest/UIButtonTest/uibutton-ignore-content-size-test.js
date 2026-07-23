@@ -44,7 +44,8 @@ export class UIButtonIgnoreContentSizeTest extends UIMainLayer {
         "ccs-res/cocosui/animationbuttonpressed.png"
       );
       button.ignoreContentAdaptWithSize(false);
-      button.setContentSize(200, 100);
+      button.width = 200;
+      button.height = 100;
       button.setNormalizedPosition(0.3, 0.5);
       button.setTitleText("PLAY GAME");
       button.setZoomScale(0.3);
@@ -61,7 +62,8 @@ export class UIButtonIgnoreContentSizeTest extends UIMainLayer {
         "ccs-res/cocosui/animationbuttonpressed.png"
       );
       button2.ignoreContentAdaptWithSize(false);
-      button2.setContentSize(200, 100);
+      button2.width = 200;
+      button2.height = 100;
       button2.setNormalizedPosition(0.8, 0.5);
       button2.setTitleText("PLAY GAME");
       button2.setZoomScale(0.3);

@@ -430,10 +430,8 @@ export class RichText extends Widget {
         for (j = 0; j < row.length; j++) row[j].x += offsetX;
       }
 
-      locRenderersContainer.setContentSize(
-        newContentSizeWidth,
-        newContentSizeHeight
-      );
+      locRenderersContainer.width = newContentSizeWidth;
+      locRenderersContainer.height = newContentSizeHeight;
     } else {
       var maxHeights = [];
       for (i = 0; i < locElementRenders.length; i++) {
@@ -571,7 +569,8 @@ export class RichText extends Widget {
   }
 
   set contentSize(value) {
-    this.setContentSize(value);
+    super.contentSize = value;
+    this._formatTextDirty = true;
   }
 
   get width() {
@@ -590,13 +589,6 @@ export class RichText extends Widget {
 
   set height(value) {
     super.height = value;
-  }
-
-  setContentSize(contentSize, height) {
-    var locWidth = height === undefined ? contentSize.width : contentSize;
-    var locHeight = height === undefined ? contentSize.height : height;
-    super.setContentSize(locWidth, locHeight);
-    this._formatTextDirty = true;
   }
 
   /**

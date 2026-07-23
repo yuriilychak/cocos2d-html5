@@ -133,7 +133,8 @@ export class SkeletonCanvasRenderCmd extends Node.CanvasRenderCmd {
       );
       sprite._rect.width = attachment.width;
       sprite._rect.height = attachment.height;
-      sprite.setContentSize(attachment.width, attachment.height);
+      sprite.width = attachment.width;
+      sprite.height = attachment.height;
       sprite.rotation = -attachment.rotation;
       sprite.setScale(
         (rendererObject.width / rendererObject.originalWidth) *

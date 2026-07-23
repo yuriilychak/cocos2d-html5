@@ -117,10 +117,8 @@ export class ControlButton extends Control {
 
     if (this._doesAdjustBackgroundImage) {
       if (locBackgroundSprite)
-        locBackgroundSprite.setContentSize(
-          titleLabelSize.width + this._marginH * 2,
-          titleLabelSize.height + this._marginV * 2
-        );
+        locBackgroundSprite.width = titleLabelSize.width + this._marginH * 2;
+        locBackgroundSprite.height = titleLabelSize.height + this._marginV * 2;
     } else {
       if (locBackgroundSprite) {
         var preferredSize = locBackgroundSprite.getPreferredSize();
@@ -129,7 +127,7 @@ export class ControlButton extends Control {
           preferredSize.width = titleLabelSize.width;
         if (preferredSize.height <= 0)
           preferredSize.height = titleLabelSize.height;
-        locBackgroundSprite.setContentSize(preferredSize);
+        locBackgroundSprite.contentSize = preferredSize;
       }
     }
 
@@ -138,7 +136,8 @@ export class ControlButton extends Control {
       ? locBackgroundSprite.boundingBox
       : new Rect();
     var maxRect = Rect.union(rectTitle, rectBackground);
-    this.setContentSize(maxRect.width, maxRect.height);
+    this.width = maxRect.width;
+    this.height = maxRect.height;
     locContentSize = this.contentSize;
     if (label) {
       label.setPosition(locContentSize.width / 2, locContentSize.height / 2);

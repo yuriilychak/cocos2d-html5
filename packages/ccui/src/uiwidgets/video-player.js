@@ -263,13 +263,13 @@ export class VideoPlayer extends Widget {
         list[i].call(this, this, this._renderCmd._video.src);
   }
 
-  setContentSize(w, h) {
-    super.setContentSize(w, h);
-    if (h === undefined) {
-      h = w.height;
-      w = w.width;
-    }
-    this._renderCmd.changeSize(w, h);
+  get contentSize() {
+    return super.contentSize;
+  }
+
+  set contentSize(value) {
+    super.contentSize = value;
+    this._renderCmd.changeSize(value.width, value.height);
   }
 
   cleanup() {

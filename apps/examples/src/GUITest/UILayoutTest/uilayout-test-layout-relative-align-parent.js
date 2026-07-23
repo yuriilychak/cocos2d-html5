@@ -45,7 +45,8 @@ export class UILayoutTest_Layout_Relative_Align_Parent extends UIMainLayer {
       // Create the layout
       var layout = new Layout();
       layout.setLayoutType(Layout.RELATIVE);
-      layout.setContentSize(280, 150);
+      layout.width = 280;
+      layout.height = 150;
       layout.setBackGroundColorType(Layout.BG_COLOR_SOLID);
       layout.setBackGroundColor(Color.GREEN);
       layout.setPosition(

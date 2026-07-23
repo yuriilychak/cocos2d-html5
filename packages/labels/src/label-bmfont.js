@@ -357,7 +357,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
       tmpSize.width = longestLine - fontDef.xAdvance * locScale + fontDef.rect.width * locScale;
     else tmpSize.width = longestLine;
     tmpSize.height = totalHeight;
-    self.setContentSize(sizePixelsToPoints(tmpSize));
+    self.contentSize = sizePixelsToPoints(tmpSize);
   }
 
   /**

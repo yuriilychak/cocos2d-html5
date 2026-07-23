@@ -30,7 +30,8 @@ export class UIMainLayer extends Layer {
     this.addChild(mainNode);
 
     var widget = new Node();
-    widget.setContentSize(480, 320);
+    widget.width = 480;
+    widget.height = 320;
     mainNode.addChild(widget, -1);
 
     var widgetSize = { width: 480, height: 320 };

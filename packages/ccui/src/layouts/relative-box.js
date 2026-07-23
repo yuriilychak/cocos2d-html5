@@ -6,7 +6,7 @@ export class RelativeBox extends Layout {
         this.setLayoutType(Layout.RELATIVE);
 
         if (size) {
-            this.setContentSize(size);
+            this.contentSize = size;
         }
     }
 }

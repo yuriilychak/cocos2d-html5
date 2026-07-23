@@ -65,7 +65,8 @@ export class UIButtonTestSwitchScale9 extends UIMainLayer {
       case Widget.TOUCH_ENDED:
         this._topDisplayLabel.string = "Touch Up";
         sender.setScale9Enabled(!sender.isScale9Enabled());
-        sender.setContentSize(200, 100);
+        sender.width = 200;
+        sender.height = 100;
         break;
 
       case Widget.TOUCH_CANCELED:

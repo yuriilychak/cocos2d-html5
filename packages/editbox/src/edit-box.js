@@ -214,13 +214,13 @@ export class EditBox extends Node {
     if (this._input) this._input.updateMatrix(this._renderCmd._worldTransform);
   }
 
-  setContentSize(width, height) {
-    if (width.width !== undefined && width.height !== undefined) {
-      height = width.height;
-      width = width.width;
-    }
-    super.setContentSize(width, height);
-    this._updateEditBoxSize(width, height);
+  get contentSize() {
+    return super.contentSize;
+  }
+
+  set contentSize(value) {
+    super.contentSize = value;
+    this._updateEditBoxSize(value.width, value.height);
   }
 
   set visible(visible) {
@@ -295,10 +295,8 @@ export class EditBox extends Node {
     if (this._backgroundSprite) {
       var padding = this._backgroundPadding;
       this._backgroundSprite.setPosition(-padding.x, -padding.y);
-      this._backgroundSprite.setContentSize(
-        width + padding.x + padding.width,
-        height + padding.y + padding.height
-      );
+      this._backgroundSprite.width = width + padding.x + padding.width;
+      this._backgroundSprite.height = height + padding.y + padding.height;
     }
   }
 
@@ -328,7 +326,7 @@ export class EditBox extends Node {
       this._backgroundSprite.removeFromParent();
     }
     this._backgroundSprite = normal9SpriteBg;
-    this.setContentSize(size);
+    this.contentSize = size;
 
     if (this._backgroundSprite && !this._backgroundSprite.parent) {
       this._backgroundSprite.setAnchorPoint(new Point(0, 0));

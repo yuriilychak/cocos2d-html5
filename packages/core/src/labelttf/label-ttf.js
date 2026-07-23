@@ -829,7 +829,7 @@ export class LabelTTF extends Sprite {
   }
 
   set contentSize(value) {
-    this.setContentSize(value);
+    super.contentSize = value;
   }
 
   get width() {
@@ -848,7 +848,7 @@ export class LabelTTF extends Sprite {
   setTextureRect(rect, rotated, untrimmedSize) {
     var _t = this;
     _t._rectRotated = rotated || false;
-    _t.setContentSize(untrimmedSize || rect);
+    _t.contentSize = untrimmedSize || rect;
 
     var locRect = _t._rect;
     locRect.x = rect.x;

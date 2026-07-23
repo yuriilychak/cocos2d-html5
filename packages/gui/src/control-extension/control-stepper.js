@@ -99,11 +99,10 @@ export class ControlStepper extends Control {
         this._minusButton.boundingBox,
         this._plusButton.boundingBox
       );
-      this.setContentSize(
+      this.width =
         this._minusButton.width +
-          this._plusButton.height,
-        maxRect.height
-      );
+        this._plusButton.height;
+      this.height = maxRect.height;
       return true;
     }
     return false;

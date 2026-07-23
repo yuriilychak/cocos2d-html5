@@ -43,7 +43,8 @@ export class UIFocusTestListView extends UIFocusTestBase {
       this._listView.setBounceEnabled(true);
       this._listView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
       this._listView.setBackGroundImageScale9Enabled(true);
-      this._listView.setContentSize(240, 130);
+      this._listView.width = 240;
+      this._listView.height = 130;
 
       this._listView.setPosition(40, 70);
       this.addChild(this._listView);

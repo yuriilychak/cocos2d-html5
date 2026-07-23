@@ -103,7 +103,7 @@ export class ControlColourPicker extends Control {
       this.addChild(this._huePicker);
       this.addChild(this._colourPicker);
 
-      this.setContentSize(this._background.contentSize);
+      this.contentSize = this._background.contentSize;
       return true;
     }
     return false;

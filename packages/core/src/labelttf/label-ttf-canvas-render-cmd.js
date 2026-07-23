@@ -258,7 +258,7 @@ export const LabelRenderMixin = (Base) =>
         //add width for 'italic' and 'oblique'
         locSize.width = Math.ceil(locSize.width + node._fontSize * 0.3);
       }
-      node.setContentSize(locSize);
+      node.contentSize = locSize;
       node._strokeShadowOffsetX = locStrokeShadowOffsetX;
       node._strokeShadowOffsetY = locStrokeShadowOffsetY;
 

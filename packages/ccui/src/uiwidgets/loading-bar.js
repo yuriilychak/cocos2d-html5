@@ -209,9 +209,13 @@ export class LoadingBar extends Widget {
     }
   }
 
-  setContentSize(contentSize, height) {
-    super.setContentSize(contentSize, height);
-    this._totalLength = height === undefined ? contentSize.width : contentSize;
+  get contentSize() {
+    return super.contentSize;
+  }
+
+  set contentSize(contentSize) {
+    super.contentSize = contentSize;
+    this._totalLength = contentSize.width;
   }
 
   getPercent() {

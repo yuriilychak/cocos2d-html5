@@ -620,17 +620,12 @@ export class Button extends Widget {
 
   _updateContentSize() {
     if (this._unifySize) {
-      if (this._scale9Enabled)
-        ProtectedNode.prototype.setContentSize.call(this, this._customSize);
-      else {
-        var s = this._getNormalSize();
-        ProtectedNode.prototype.setContentSize.call(this, s);
-      }
+      super.contentSize = this._scale9Enabled ? this._customSize : this._getNormalSize();
       this._onSizeChanged();
       return;
     }
 
-    if (this._ignoreSize) this.setContentSize(this.getVirtualRendererSize());
+    if (this._ignoreSize) this.contentSize = this.getVirtualRendererSize();
   }
 
   _onSizeChanged() {
@@ -650,7 +645,7 @@ export class Button extends Widget {
   }
 
   _normalTextureScaleChangedWithSize() {
-    this._buttonScale9Renderer.setContentSize(this.contentSize);
+    this._buttonScale9Renderer.contentSize = this.contentSize;
     this._buttonScale9Renderer.setPosition(this.width / 2, this.height / 2);
   }
 
@@ -685,7 +680,7 @@ export class Button extends Widget {
     this._titleRenderer.string = text;
     if (this._ignoreSize) {
       var s = this.getVirtualRendererSize();
-      this.setContentSize(s);
+      this.contentSize = s;
     } else {
       this._titleRenderer._renderCmd._updateTTF();
     }
