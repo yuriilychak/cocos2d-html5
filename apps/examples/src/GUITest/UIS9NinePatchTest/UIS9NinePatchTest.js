@@ -99,7 +99,8 @@ export class UIS9NinePatchTest extends UIMainLayer {
       var spriteFrame =
         ServiceLocator.spriteFrameCache.get("buttonnormal.9.png");
       var buttonScale9Sprite = new Scale9Sprite(spriteFrame);
-      buttonScale9Sprite.setContentSize(new Size(150, 80));
+      buttonScale9Sprite.width = 150;
+      buttonScale9Sprite.height = 80;
       buttonScale9Sprite.setPosition(new Point(100, 200));
       this.addChild(buttonScale9Sprite);
 

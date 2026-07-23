@@ -49,7 +49,8 @@ export class UIScrollViewTest_Both extends UIMainLayer {
       scrollView.setBounceEnabled(true);
       scrollView.setBackGroundImageScale9Enabled(true);
       scrollView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
-      scrollView.setContentSize(new Size(210, 122));
+      scrollView.width = 210;
+      scrollView.height = 122;
       var scrollViewSize = scrollView.contentSize;
 
       scrollView.x = (widgetSize.width - scrollViewSize.width) / 2;

@@ -55,7 +55,8 @@ export class UIScrollViewTest_Vertical_Multiple extends UIMainLayer {
       var scrollView = (this._scrollView = new ScrollView());
       scrollView.setDirection(ScrollView.DIR_VERTICAL);
       scrollView.setTouchEnabled(true);
-      scrollView.setContentSize(new Size(280, 150));
+      scrollView.width = 280;
+      scrollView.height = 150;
 
       scrollView.x = (widgetSize.width - scrollView.width) / 2;
       scrollView.y = (widgetSize.height - scrollView.height) / 2;

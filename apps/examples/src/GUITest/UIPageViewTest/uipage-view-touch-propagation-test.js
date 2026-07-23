@@ -59,7 +59,8 @@ export class UIPageViewTouchPropagationTest extends UIMainLayer {
 
       // Create the page view
       var pageView = new PageView();
-      pageView.setContentSize(new Size(240.0, 130.0));
+      pageView.width = 240.0;
+      pageView.height = 130.0;
       pageView.setAnchorPoint(new Point(0.5, 0.5));
       pageView.setPosition(
         new Point(widgetSize.width / 2.0, widgetSize.height / 2.0)
@@ -70,7 +71,8 @@ export class UIPageViewTouchPropagationTest extends UIMainLayer {
       var pageCount = 4;
       for (var i = 0; i < pageCount; ++i) {
         var outerBox = new HBox();
-        outerBox.setContentSize(new Size(240.0, 130.0));
+        outerBox.width = 240.0;
+        outerBox.height = 130.0;
 
         for (var k = 0; k < 2; ++k) {
           var innerBox = new VBox();

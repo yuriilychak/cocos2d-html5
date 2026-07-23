@@ -46,7 +46,8 @@ export class UIScrollViewTest_Horizontal extends UIMainLayer {
       var scrollView = new ScrollView();
       scrollView.setDirection(ScrollView.DIR_HORIZONTAL);
       scrollView.setTouchEnabled(true);
-      scrollView.setContentSize(new Size(280, 150));
+      scrollView.width = 280;
+      scrollView.height = 150;
       var scrollViewRect = scrollView.contentSize;
       scrollView.setInnerContainerSize(
         new Size(scrollViewRect.width, scrollViewRect.height)

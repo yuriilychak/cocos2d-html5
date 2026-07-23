@@ -75,7 +75,8 @@ export class MotionStreakTest extends Layer {
     );
     modeBtn.setScale9Enabled(true);
     modeBtn.setCapInsets(new Rect(12, 12, 12, 12));
-    modeBtn.setContentSize(196, 32);
+    modeBtn.width = 196;
+    modeBtn.height = 32;
     modeBtn.setTitleFntFile(s_simpleFont_fnt);
     modeBtn.setTitleText("Use High Quality Mode");
     modeBtn.setTitleFontSize(12);

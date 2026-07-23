@@ -63,7 +63,8 @@ export class UITextFieldTest_LineWrap extends UIMainLayer {
       var textField = new TextField("input words here", "Marker Felt", 30);
       textField.ignoreContentAdaptWithSize(false);
       //textField.getVirtualRenderer().setLineBreakWithoutSpace(true);
-      textField.setContentSize(240, 120);
+      textField.width = 240;
+      textField.height = 120;
       textField.string = "input words here";
       textField.setTextHorizontalAlignment(TextAlignment.CENTER);
       textField.setTextVerticalAlignment(VerticalTextAlignment.CENTER);

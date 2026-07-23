@@ -51,7 +51,8 @@ export class UIPageViewCustomScrollThreshold extends UIMainLayer {
 
       // Create the page view
       var pageView = new PageView();
-      pageView.setContentSize(new Size(240.0, 100.0));
+      pageView.width = 240.0;
+      pageView.height = 100.0;
       pageView.setPosition(
         new Point(
           (widgetSize.width - pageView.width) / 2.0,
@@ -62,11 +63,13 @@ export class UIPageViewCustomScrollThreshold extends UIMainLayer {
       var pageCount = 4;
       for (var i = 0; i < pageCount; ++i) {
         var layout = new Layout();
-        layout.setContentSize(new Size(240.0, 130.0));
+        layout.width = 240.0;
+        layout.height = 130.0;
 
         var imageView = new ImageView("ccs-res/cocosui/scrollviewbg.png");
         imageView.setScale9Enabled(true);
-        imageView.setContentSize(new Size(240, 130));
+        imageView.width = 240;
+        imageView.height = 130;
         imageView.setPosition(
           new Point(layout.width / 2.0, layout.contentSize.height / 2.0)
         );

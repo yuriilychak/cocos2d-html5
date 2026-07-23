@@ -56,7 +56,8 @@ export class ButtonLayout extends Layout {
     const totalHeight =
       padding * 2 + TITLE_HEIGHT + BUTTON_HEIGHT * count + gap * count;
 
-    this.setContentSize(new Size(totalWidth, totalHeight));
+    this.width = totalWidth;
+    this.height = totalHeight;
 
     const bg = new ImageView();
     bg.setAnchorPoint(0, 0);
@@ -66,7 +67,8 @@ export class ButtonLayout extends Layout {
     bg.setCapInsets(new Rect(CAP_INSETS, CAP_INSETS, CAP_INSETS, CAP_INSETS));
     bg.color = new Color(255, 255, 255);
     bg.opacity = 64;
-    bg.setContentSize(new Size(totalWidth, totalHeight));
+    bg.width = totalWidth;
+    bg.height = totalHeight;
     this.addChild(bg, -1);
 
     const titleLabel = new TextBMFont(title, s_simpleFont_fnt);
@@ -102,7 +104,8 @@ export class ButtonLayout extends Layout {
         );
         item.setScale9Enabled(true);
         item.setCapInsets(new Rect(CAP_INSETS, CAP_INSETS, CAP_INSETS, CAP_INSETS));
-        item.setContentSize(new Size(buttonWidth, BUTTON_HEIGHT));
+        item.width = buttonWidth;
+        item.height = BUTTON_HEIGHT;
         item.setTitleFntFile(s_simpleFont_fnt);
         item.setTitleText(config.label);
         item.setTitleFontSize(FONT_SIZE);

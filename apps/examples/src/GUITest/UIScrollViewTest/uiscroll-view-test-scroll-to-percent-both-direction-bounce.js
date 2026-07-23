@@ -48,7 +48,8 @@ export class UIScrollViewTest_ScrollToPercentBothDirection_Bounce extends UIMain
       scrollView.setBackGroundColorType(Layout.BG_COLOR_SOLID);
       scrollView.setDirection(ScrollView.DIR_BOTH);
       scrollView.setInnerContainerSize(new Size(480, 320));
-      scrollView.setContentSize(new Size(100, 100));
+      scrollView.width = 100;
+      scrollView.height = 100;
       var scrollViewSize = scrollView.contentSize;
 
       scrollView.x = (widgetSize.width - scrollViewSize.width) / 2;

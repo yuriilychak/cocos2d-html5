@@ -40,7 +40,8 @@ export class UIImageViewFlipTest extends UIMainLayer {
       // Create the imageview
       var imageView = new ImageView("blocks9r.png", Widget.PLIST_TEXTURE);
       imageView.setScale9Enabled(true);
-      imageView.setContentSize(new Size(250, 115));
+      imageView.width = 250;
+      imageView.height = 115;
       imageView.setFlippedX(true);
       imageView.scale = 0.5;
       imageView.ignoreContentAdaptWithSize(false);
@@ -73,7 +74,8 @@ export class UIImageViewFlipTest extends UIMainLayer {
       toggleScale9.addClickEventListener(function () {
         imageView.setScale9Enabled(!imageView.isScale9Enabled());
         //after switching scale9, you must call setContentSize to keep the size not change
-        imageView.setContentSize(new Size(250, 115));
+        imageView.width = 250;
+        imageView.height = 115;
       });
       return true;
     }

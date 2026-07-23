@@ -72,7 +72,7 @@ export class PauseResumeTargetTest extends EventDispatcherTestDemo {
         overlay.setScale9Enabled(true);
         overlay.ignoreContentAdaptWithSize(false);
         overlay.loadTexture("default_theme/squere_shadow_0.png", Widget.PLIST_TEXTURE);
-        overlay.setContentSize(size.width, size.height);
+        overlay.contentSize = size;
         overlay.color = new Color(0, 0, 0);
         overlay.opacity = 128;
         overlay.x = origin.x + size.width / 2;
@@ -84,7 +84,8 @@ export class PauseResumeTargetTest extends EventDispatcherTestDemo {
         background.ignoreContentAdaptWithSize(false);
         background.loadTexture("default_theme/rounded_shadow_0.png", Widget.PLIST_TEXTURE);
         background.setCapInsets(new Rect(12, 12, 12, 12));
-        background.setContentSize(300, 170);
+        background.width = 300;
+        background.height = 170;
         background.x = size.width / 2 + 50;
         background.y = size.height / 2;
         overlay.addChild(background);
@@ -97,7 +98,8 @@ export class PauseResumeTargetTest extends EventDispatcherTestDemo {
         );
         closeBtn.setScale9Enabled(true);
         closeBtn.setCapInsets(new Rect(12, 12, 12, 12));
-        closeBtn.setContentSize(160, 40);
+        closeBtn.width = 160;
+        closeBtn.height = 40;
         closeBtn.setTitleFntFile(s_simpleFont_fnt);
         closeBtn.setTitleText("Close Dialog");
         closeBtn.setTitleFontSize(16);

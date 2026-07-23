@@ -31,7 +31,8 @@ export class UIVideoPlayerTest extends UIMainLayer {
     super.onEnter();
 
     var video = new VideoPlayer("cocosvideo.mp4");
-    video.setContentSize(320, 240);
+    video.width = 320;
+    video.height = 240;
     video.setPosition(800 / 2, 450 / 2);
     video.scale = 0.5;
     window.video = video;

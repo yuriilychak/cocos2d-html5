@@ -31,10 +31,9 @@
 //
 //------------------------------------------------------------------
 import { LayerTest } from "./layer-test";
-import { director, winSize } from "../constants";
+import { winSize } from "../constants";
 import {
   Color,
-  EventListener,
   EventListenerType,
   MouseButton,
   LayerColor,
@@ -80,7 +79,8 @@ export class LayerTest1 extends LayerTest {
     layer.ignoreAnchor = false;
     layer.anchorX = 0.5;
     layer.anchorY = 0.5;
-    layer.setContentSize(200, 200);
+    layer.width = 200;
+    layer.height = 200;
     layer.x = s.width / 2;
     layer.y = s.height / 2;
     this.addChild(layer, 1, TAG_LAYER);

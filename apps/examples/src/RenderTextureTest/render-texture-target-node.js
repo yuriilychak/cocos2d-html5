@@ -104,7 +104,8 @@ export class RenderTextureTargetNode extends RenderTextureBaseLayer {
     );
     clearOnOffBtn.setScale9Enabled(true);
     clearOnOffBtn.setCapInsets(new Rect(12, 12, 12, 12));
-    clearOnOffBtn.setContentSize(196, 32);
+    clearOnOffBtn.width = 196;
+    clearOnOffBtn.height = 32;
     clearOnOffBtn.setTitleFntFile(s_simpleFont_fnt);
     clearOnOffBtn.setTitleText("Clear On/Off");
     clearOnOffBtn.setTitleFontSize(12);

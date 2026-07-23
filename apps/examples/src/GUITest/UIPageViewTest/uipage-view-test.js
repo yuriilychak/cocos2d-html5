@@ -45,20 +45,23 @@ export class UIPageViewTest extends UIMainLayer {
       // Create the page view
       var pageView = new PageView();
       pageView.setTouchEnabled(true);
-      pageView.setContentSize(new Size(240, 130));
+      pageView.width = 240;
+      pageView.height = 130;
       pageView.x = (widgetSize.width - pageView.width) / 2;
       pageView.y = (widgetSize.height - pageView.height) / 2;
 
       for (var i = 0; i < 3; ++i) {
         var layout = new Layout();
-        layout.setContentSize(new Size(240, 130));
+        layout.width = 240;
+        layout.height = 130;
         var layoutRect = layout.contentSize;
 
         var imageView = new ImageView();
         imageView.setTouchEnabled(true);
         imageView.setScale9Enabled(true);
         imageView.loadTexture("ccs-res/cocosui/scrollviewbg.png");
-        imageView.setContentSize(new Size(240, 130));
+        imageView.width = 240;
+        imageView.height = 130;
         imageView.x = layoutRect.width / 2;
         imageView.y = layoutRect.height / 2;
         layout.addChild(imageView);

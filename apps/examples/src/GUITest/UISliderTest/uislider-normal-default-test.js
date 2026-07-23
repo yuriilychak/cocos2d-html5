@@ -67,7 +67,8 @@ export class UISliderNormalDefaultTest extends UIMainLayer {
       sliderScale9.setScale9Enabled(true);
       sliderScale9.setCapInsets(new Rect(0, 0, 0, 0));
       sliderScale9.setZoomScale(1);
-      sliderScale9.setContentSize(new Size(250, 19));
+      sliderScale9.width = 250;
+      sliderScale9.height = 19;
       sliderScale9.setPosition(
         new Point(widgetSize.width / 2, widgetSize.height / 2 - 20)
       );

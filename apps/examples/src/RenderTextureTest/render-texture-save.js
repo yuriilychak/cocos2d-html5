@@ -33,7 +33,6 @@ import { s_fire, s_simpleFont_fnt } from "../resources";
 import { winSize } from "../constants";
 import {
   Color,
-  EventListener,
   EventListenerType,
   Point,
   Rect,
@@ -91,7 +90,8 @@ export class RenderTextureSave extends RenderTextureBaseLayer {
     );
     saveBtn.setScale9Enabled(true);
     saveBtn.setCapInsets(new Rect(12, 12, 12, 12));
-    saveBtn.setContentSize(196, 32);
+    saveBtn.width = 196;
+    saveBtn.height = 32;
     saveBtn.setTitleFntFile(s_simpleFont_fnt);
     saveBtn.setTitleText("Save");
     saveBtn.setTitleFontSize(12);
@@ -112,7 +112,8 @@ export class RenderTextureSave extends RenderTextureBaseLayer {
     );
     clearBtn.setScale9Enabled(true);
     clearBtn.setCapInsets(new Rect(12, 12, 12, 12));
-    clearBtn.setContentSize(196, 32);
+    clearBtn.width = 196;
+    clearBtn.height = 32;
     clearBtn.setTitleFntFile(s_simpleFont_fnt);
     clearBtn.setTitleText("Clear");
     clearBtn.setTitleFontSize(12);

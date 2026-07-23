@@ -35,7 +35,8 @@ export class UILayoutTest_Layout_Relative extends UILayoutTestBase {
     layout.setLayoutType(Layout.RELATIVE);
     layout.sizeType = Widget.SIZE_PERCENT;
     layout.setSizePercent(new Point(0.5, 0.5));
-    //layout.setContentSize(new Size(280, 150));
+    //layout.width = 280;
+    //layout.height = 150;
     layout.setPositionType(Widget.POSITION_PERCENT);
     layout.setPositionPercent(new Point(0.25, 0.25));
     //layout.setPosition(new Point(winSize.width/2, winSize.height/2));

@@ -82,7 +82,8 @@ export class UIRichTextXMLInvalid extends UIMainLayer {
     if (type == Widget.TOUCH_ENDED) {
       if (this._richText.isIgnoreContentAdaptWithSize()) {
         this._richText.ignoreContentAdaptWithSize(false);
-        this._richText.setContentSize(new Size(120, 100));
+        this._richText.width = 120;
+        this._richText.height = 100;
       } else {
         this._richText.ignoreContentAdaptWithSize(true);
       }

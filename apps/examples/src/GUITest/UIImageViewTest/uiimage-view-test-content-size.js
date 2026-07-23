@@ -60,7 +60,8 @@ export class UIImageViewTest_ContentSize extends UIMainLayer {
       // Create the imageview
       var imageView = new ImageView("ccs-res/cocosui/buttonHighlighted.png");
       imageView.setScale9Enabled(true);
-      imageView.setContentSize(new Size(200, 80));
+      imageView.width = 200;
+      imageView.height = 80;
       imageView.setPosition(
         new Point(widgetSize.width / 2, widgetSize.height / 2)
       );
@@ -93,7 +94,8 @@ export class UIImageViewTest_ContentSize extends UIMainLayer {
         if (type == Widget.TOUCH_ENDED) {
           var width = ((Math.random() * 200) | 0) + 50;
           var height = ((Math.random() * 80) | 0) + 30;
-          imageView.setContentSize(new Size(width, height));
+          imageView.width = width;
+          imageView.height = height;
 
           imageViewChild.setPositionPercent(
             new Point(Math.random().toFixed(2), Math.random().toFixed(2))

@@ -63,7 +63,8 @@ export class UIListViewTest_Vertical extends UIMainLayer {
       this.listView.setBounceEnabled(true);
       this.listView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
       this.listView.setBackGroundImageScale9Enabled(true);
-      this.listView.setContentSize(new Size(240, 130));
+      this.listView.width = 240;
+      this.listView.height = 130;
       this.listView.x = (widgetSize.width - this.listView.width) / 2;
       this.listView.y = (widgetSize.height - this.listView.height) / 2;
       this.listView.addEventListener(this.selectedItemEvent, this);
@@ -120,11 +121,9 @@ export class UIListViewTest_Vertical extends UIMainLayer {
     this.listView.forceDoLayout();
     var totalHeight =
       this._itemTemplateHeight * this._totalCount + (this._totalCount - 1) * 4;
-    this.listView
-      .getInnerContainer()
-      .setContentSize(
-        new Size(this.listView.getInnerContainerSize().width, totalHeight)
-      );
+    this.listView.getInnerContainer().width =
+      this.listView.getInnerContainerSize().width;
+    this.listView.getInnerContainer().height = totalHeight;
     this.listView.jumpToTop();
   }
 

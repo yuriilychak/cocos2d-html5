@@ -31,7 +31,8 @@ import { Layout } from "@aspect/ccui";
 export class UILayoutTest extends UILayoutTestBase {
   createLayout() {
     var layout = new Layout();
-    layout.setContentSize(new Size(280, 150));
+    layout.width = 280;
+    layout.height = 150;
     return layout;
   }
   getText() {

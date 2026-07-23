@@ -70,7 +70,8 @@ export class WebSocketTestLayer extends BaseTestLayer {
     // Status labels inside a vertical layout
     const PADDING = 10;
     const statusBox = new VBox();
-    statusBox.setContentSize(new Size(winSize.width - PADDING * 2, 120));
+    statusBox.width = winSize.width - PADDING * 2;
+    statusBox.height = 120;
     statusBox.x = PADDING;
     statusBox.y = PADDING;
     this.addChild(statusBox);

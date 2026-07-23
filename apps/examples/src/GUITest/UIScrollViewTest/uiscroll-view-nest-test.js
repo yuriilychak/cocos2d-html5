@@ -46,7 +46,8 @@ export class UIScrollViewNestTest extends UIMainLayer {
 
       // Create the scrollview by vertical
       var scrollView = new ScrollView();
-      scrollView.setContentSize(new Size(280.0, 150.0));
+      scrollView.width = 280.0;
+      scrollView.height = 150.0;
       scrollView.setDirection(ScrollView.DIR_BOTH);
       scrollView.setPosition(
         new Point(
@@ -95,9 +96,8 @@ export class UIScrollViewNestTest extends UIMainLayer {
         "ccs-res/cocosui/buttonHighlighted.png"
       );
       button_scale9.setScale9Enabled(true);
-      button_scale9.setContentSize(
-        new Size(100.0, button_scale9.getVirtualRendererSize().height)
-      );
+      button_scale9.width = 100.0;
+      button_scale9.height = button_scale9.getVirtualRendererSize().height;
       button_scale9.setPosition(
         new Point(
           innerWidth / 2.0,
@@ -118,7 +118,8 @@ export class UIScrollViewNestTest extends UIMainLayer {
       sc.setBounceEnabled(true);
       sc.setDirection(ScrollView.DIR_BOTH);
       sc.setInnerContainerSize(new Size(480, 320));
-      sc.setContentSize(new Size(100, 100));
+      sc.width = 100;
+      sc.height = 100;
       sc.setPropagateTouchEvents(false);
       sc.setPosition(new Point(180, 100));
       sc.scrollToPercentBothDirection(new Point(50, 50), 1, true);

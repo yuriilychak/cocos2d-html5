@@ -27,7 +27,6 @@ import { RenderTextureBaseLayer } from "./render-texture-base-layer";
 import { s_fire, s_simpleFont_fnt } from "../resources";
 import {
   Color,
-  EventListener,
   EventListenerType,
   PIXEL_FORMAT,
   Rect,
@@ -75,7 +74,8 @@ export class RenderTextureTestDepthStencil extends RenderTextureBaseLayer {
     );
     clickBtn.setScale9Enabled(true);
     clickBtn.setCapInsets(new Rect(12, 12, 12, 12));
-    clickBtn.setContentSize(196, 32);
+    clickBtn.width = 196;
+    clickBtn.height = 32;
     clickBtn.setTitleFntFile(s_simpleFont_fnt);
     clickBtn.setTitleText("Click Me");
     clickBtn.setTitleFontSize(12);

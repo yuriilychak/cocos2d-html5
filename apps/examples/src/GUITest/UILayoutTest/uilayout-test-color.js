@@ -33,7 +33,8 @@ export class UILayoutTest_Color extends UILayoutTestBase {
     var layout = new Layout();
     layout.setBackGroundColorType(Layout.BG_COLOR_SOLID);
     layout.setBackGroundColor(new Color(128, 128, 128));
-    layout.setContentSize(new Size(280, 150));
+    layout.width = 280;
+    layout.height = 150;
     return layout;
   }
   getText() {

@@ -32,7 +32,8 @@ export class UILayoutTest_Layout_Linear_Vertical extends UILayoutTestBase {
   createLayout() {
     var layout = new Layout();
     layout.setLayoutType(Layout.LINEAR_VERTICAL);
-    layout.setContentSize(new Size(280, 150));
+    layout.width = 280;
+    layout.height = 150;
     return layout;
   }
   getText() {

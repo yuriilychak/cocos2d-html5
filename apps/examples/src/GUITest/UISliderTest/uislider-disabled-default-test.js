@@ -66,7 +66,8 @@ export class UISliderDisabledDefaultTest extends UIMainLayer {
       sliderScale9.enabled = false;
       sliderScale9.setBright(false);
       sliderScale9.setCapInsets(new Rect(0, 0, 0, 0));
-      sliderScale9.setContentSize(new Size(250, 10));
+      sliderScale9.width = 250;
+      sliderScale9.height = 10;
       sliderScale9.setPosition(
         new Point(widgetSize.width / 2, widgetSize.height / 2 - 20)
       );

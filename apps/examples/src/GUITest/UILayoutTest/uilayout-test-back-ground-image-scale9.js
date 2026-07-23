@@ -33,7 +33,8 @@ export class UILayoutTest_BackGroundImage_Scale9 extends UILayoutTestBase {
     var layout = new Layout();
     layout.setBackGroundImageScale9Enabled(true);
     layout.setBackGroundImage("ccs-res/cocosui/green_edit.png");
-    layout.setContentSize(new Size(280, 150));
+    layout.width = 280;
+    layout.height = 150;
     return layout;
   }
   getText() {

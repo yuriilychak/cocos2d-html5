@@ -33,7 +33,8 @@ export class UIWebViewTest extends UIMainLayer {
     super.onEnter();
 
     var webView = new WebView("http://www.baidu.com");
-    webView.setContentSize(320, 240);
+    webView.width = 320;
+    webView.height = 240;
     webView.setPosition(800 / 2, 450 / 2);
     webView.scale = 0.5;
     webView.setScalesPageToFit(true);

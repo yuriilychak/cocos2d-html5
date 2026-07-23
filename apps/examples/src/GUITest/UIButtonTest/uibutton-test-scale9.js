@@ -46,7 +46,8 @@ export class UIButtonTest_Scale9 extends UIMainLayer {
       );
       button.x = this._widget.width / 2.0;
       button.y = this._widget.height / 2.0;
-      button.setContentSize(new Size(150, 48));
+      button.width = 150;
+      button.height = 48;
       button.addTouchEventListener(this.touchEvent, this);
       this._mainNode.addChild(button);
 

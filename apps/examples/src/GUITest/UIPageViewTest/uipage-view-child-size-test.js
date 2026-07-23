@@ -46,7 +46,8 @@ export class UIPageViewChildSizeTest extends UIMainLayer {
       // Create the page view
       var pageView = new PageView();
       pageView.setTouchEnabled(true);
-      pageView.setContentSize(new Size(240, 130));
+      pageView.width = 240;
+      pageView.height = 130;
       pageView.x = (widgetSize.width - pageView.width) / 2;
       pageView.y = (widgetSize.height - pageView.height) / 2;
       pageView.setIndicatorEnabled(true);

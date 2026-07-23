@@ -37,14 +37,18 @@ export class DoubleSprite extends Sprite {
         //this.HD = ( resolutionType == kCCResolutioniPhoneRetinaDisplay || resolutionType == kCCResolutioniPadRetinaDisplay );
     }
 
-    setContentSize(size) {
+    get contentSize() {
+        return super.contentSize;
+    }
+
+    set contentSize(size) {
         var newSize = new Size(size.width, size.height);
         // If Retina Display and Texture is in HD then scale the vertex rect
         if (contentScaleFactor() == 2 && !this.HD) {
             newSize.width *= 2;
             newSize.height *= 2;
         }
-        super.setContentSize(newSize);
+        super.contentSize = newSize;
     }
 
     get width() {

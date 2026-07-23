@@ -46,7 +46,8 @@ export class UIScrollViewRotated extends UIMainLayer {
 
       // Create the scrollview by vertical
       var scrollView = new ScrollView();
-      scrollView.setContentSize(new Size(280.0, 150.0));
+      scrollView.width = 280.0;
+      scrollView.height = 150.0;
       scrollView.setDirection(ScrollView.DIR_BOTH);
       scrollView.setPosition(
         new Point(
@@ -90,9 +91,8 @@ export class UIScrollViewRotated extends UIMainLayer {
         "ccs-res/cocosui/buttonHighlighted.png"
       );
       button_scale9.setScale9Enabled(true);
-      button_scale9.setContentSize(
-        new Size(100.0, button_scale9.getVirtualRendererSize().height)
-      );
+      button_scale9.width = 100.0;
+      button_scale9.height = button_scale9.getVirtualRendererSize().height;
       button_scale9.setPosition(
         new Point(
           innerWidth / 2.0,

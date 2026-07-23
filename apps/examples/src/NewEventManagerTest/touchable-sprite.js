@@ -26,7 +26,6 @@
  ****************************************************************************/
 
 import {
-  Color,
   EventListener,
   EventListenerType,
   Rect,
@@ -45,7 +44,8 @@ export function createColoredView(color, size) {
   iv.ignoreContentAdaptWithSize(false);
   iv.loadTexture(SQUARE_TEXTURE, Widget.PLIST_TEXTURE);
   iv.setCapInsets(SQUARE_CAP);
-  iv.setContentSize(size, size);
+  iv.width = size;
+  iv.height = size;
   iv.color = color;
   return iv;
 }
@@ -63,7 +63,8 @@ export class TouchableSprite extends ImageView {
     this.ignoreContentAdaptWithSize(false);
     this.loadTexture(SQUARE_TEXTURE, Widget.PLIST_TEXTURE);
     this.setCapInsets(SQUARE_CAP);
-    this.setContentSize(SQUARE_SIZE, SQUARE_SIZE);
+    this.width = SQUARE_SIZE;
+    this.height = SQUARE_SIZE;
   }
 
   setPriority(fixedPriority) {

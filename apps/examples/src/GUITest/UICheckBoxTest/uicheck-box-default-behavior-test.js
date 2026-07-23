@@ -75,7 +75,8 @@ export class UICheckBoxDefaultBehaviorTest extends UIMainLayer {
       );
       checkBox2.ignoreContentAdaptWithSize(false);
       checkBox2.setZoomScale(0.5);
-      checkBox2.setContentSize(new Size(80, 80));
+      checkBox2.width = 80;
+      checkBox2.height = 80;
       checkBox2.name = "bigCheckBox";
       this._mainNode.addChild(checkBox2);
 

@@ -33,7 +33,8 @@ export class UILayoutTest_Layout_Linear_Horizontal extends UILayoutTestBase {
     var layout = new Layout();
     layout.setLayoutType(Layout.LINEAR_HORIZONTAL);
     layout.setClippingEnabled(true);
-    layout.setContentSize(new Size(280, 150));
+    layout.width = 280;
+    layout.height = 150;
     return layout;
   }
   getText() {

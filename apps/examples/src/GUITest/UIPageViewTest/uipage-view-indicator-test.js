@@ -46,7 +46,8 @@ export class UIPageViewIndicatorTest extends UIMainLayer {
         widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
 
       var pageView = new PageView();
-      pageView.setContentSize(new Size(240, 130));
+      pageView.width = 240;
+      pageView.height = 130;
       pageView.x = (widgetSize.width - pageView.width) / 2;
       pageView.y = (widgetSize.height - pageView.height) / 2;
       pageView.removeAllPages();
@@ -60,12 +61,14 @@ export class UIPageViewIndicatorTest extends UIMainLayer {
       var pageCount = 4;
       for (var i = 0; i < pageCount; i++) {
         var layout = new Layout();
-        layout.setContentSize(new Size(240, 130));
+        layout.width = 240;
+        layout.height = 130;
 
         var imageView = new ImageView();
         imageView.setScale9Enabled(true);
         imageView.loadTexture("ccs-res/cocosui/scrollviewbg.png");
-        imageView.setContentSize(new Size(240, 130));
+        imageView.width = 240;
+        imageView.height = 130;
         imageView.x = layout.width / 2;
         imageView.y = layout.contentSize.height / 2;
         layout.addChild(imageView);

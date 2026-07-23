@@ -36,7 +36,8 @@ export class UILayoutTest_Gradient extends UILayoutTestBase {
       new Color(64, 64, 64),
       new Color(192, 192, 192)
     );
-    layout.setContentSize(new Size(280, 150));
+    layout.width = 280;
+    layout.height = 150;
     return layout;
   }
   getText() {

@@ -40,7 +40,8 @@ export class UIImageViewTest_Scale9 extends UIMainLayer {
       var imageView = new ImageView();
       imageView.setScale9Enabled(true);
       imageView.loadTexture("ccs-res/cocosui/buttonHighlighted.png");
-      imageView.setContentSize(new Size(200, 85));
+      imageView.width = 200;
+      imageView.height = 85;
       imageView.x = widgetSize.width / 2;
       imageView.y = widgetSize.height / 2 + imageView.contentSize.height / 4;
       this._mainNode.addChild(imageView);
