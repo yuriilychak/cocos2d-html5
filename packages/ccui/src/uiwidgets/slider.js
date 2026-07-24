@@ -92,7 +92,8 @@ export class Slider extends Widget {
     //todo use Scale9Sprite
     this._barRenderer = new Sprite();
     this._progressBarRenderer = new Sprite();
-    this._progressBarRenderer.setAnchorPoint(0.0, 0.5);
+    this._progressBarRenderer.anchorX = 0.0;
+    this._progressBarRenderer.anchorY = 0.5;
     this.addProtectedChild(
       this._barRenderer,
       Slider.BASEBAR_RENDERER_ZORDER,
@@ -207,7 +208,7 @@ export class Slider extends Widget {
     }
     this._updateChildrenDisplayedRGBA();
 
-    this._progressBarRenderer.setAnchorPoint(new Point(0, 0.5));
+    this._progressBarRenderer.anchor = new Point(0, 0.5);
     var tz = this._progressBarRenderer.contentSize;
     this._progressBarTextureSize = { width: tz.width, height: tz.height };
     this._progressBarRendererDirty = true;
@@ -483,7 +484,7 @@ export class Slider extends Widget {
       var spriteRenderer = this._progressBarRenderer;
       var rect = spriteRenderer.getTextureRect();
       spriteRenderer.setTextureRect(
-        new Rect(rect.x, rect.y, dis / spriteRenderer._scaleX, rect.height),
+        new Rect(rect.x, rect.y, dis / spriteRenderer.scaleX, rect.height),
         spriteRenderer.isTextureRectRotated()
       );
     }
@@ -679,10 +680,8 @@ export class Slider extends Widget {
     this._slidBallPressedRenderer.visible = false;
     this._slidBallDisabledRenderer.visible = false;
 
-    this._slidBallNormalRenderer.setScale(
-      this._sliderBallNormalTextureScaleX,
-      this._sliderBallNormalTextureScaleY
-    );
+    this._slidBallNormalRenderer.scaleX = this._sliderBallNormalTextureScaleX;
+    this._slidBallNormalRenderer.scaleY = this._sliderBallNormalTextureScaleY;
     if (ServiceLocator.sys.rendererConfig.isWebGL) {
       this._slidBallNormalRenderer._renderCmd._shaderProgram =
         this._getNormalGLProgram();
@@ -693,10 +692,10 @@ export class Slider extends Widget {
 
   _onPressStateChangedToPressed() {
     if (!this._slidBallPressedTextureFile) {
-      this._slidBallNormalRenderer.setScale(
-        this._sliderBallNormalTextureScaleX + this._zoomScale,
-        this._sliderBallNormalTextureScaleY + this._zoomScale
-      );
+      this._slidBallNormalRenderer.scaleX =
+        this._sliderBallNormalTextureScaleX + this._zoomScale;
+      this._slidBallNormalRenderer.scaleY =
+        this._sliderBallNormalTextureScaleY + this._zoomScale;
     } else {
       this._slidBallNormalRenderer.visible = false;
       this._slidBallPressedRenderer.visible = true;
@@ -723,10 +722,8 @@ export class Slider extends Widget {
         // TODO: add canvas support
       }
     }
-    this._slidBallNormalRenderer.setScale(
-      this._sliderBallNormalTextureScaleX,
-      this._sliderBallNormalTextureScaleY
-    );
+    this._slidBallNormalRenderer.scaleX = this._sliderBallNormalTextureScaleX;
+    this._slidBallNormalRenderer.scaleY = this._sliderBallNormalTextureScaleY;
     this._slidBallPressedRenderer.visible = false;
   }
 

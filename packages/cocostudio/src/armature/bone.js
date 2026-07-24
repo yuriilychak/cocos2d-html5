@@ -216,8 +216,8 @@ export class Bone extends Node {
       locWorldInfo.copy(locTweenData);
       locWorldInfo.x = locTweenData.x + this.x;
       locWorldInfo.y = locTweenData.y + this.y;
-      locWorldInfo.scaleX = locTweenData.scaleX * this._scaleX;
-      locWorldInfo.scaleY = locTweenData.scaleY * this._scaleY;
+      locWorldInfo.scaleX = locTweenData.scaleX * this.scaleX;
+      locWorldInfo.scaleY = locTweenData.scaleY * this.scaleY;
       locWorldInfo.skewX =
         locTweenData.skewX + this._skewX + degreesToRadians(this.rotationX);
       locWorldInfo.skewY =

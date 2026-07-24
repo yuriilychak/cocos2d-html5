@@ -13,8 +13,7 @@ import ActionInterval from "./action-interval";
  * var actionTo = new ScaleTo(2, 0.5, 2);
  */
 export default class ScaleTo extends ActionInterval {
-  _scaleX = 1;
-  _scaleY = 1;
+  #scale = new Point(1, 1);
   _startScaleX = 1;
   _startScaleY = 1;
   _endScaleX = 0;
@@ -31,6 +30,22 @@ export default class ScaleTo extends ActionInterval {
   constructor(duration, sx, sy) {
     super();
     sx !== undefined && this.initWithDuration(duration, sx, sy);
+  }
+
+  get scaleX() {
+    return this.#scale.x;
+  }
+
+  set scaleX(value) {
+    this.#scale.x = value;
+  }
+
+  get scaleY() {
+    return this.#scale.y;
+  }
+
+  set scaleY(value) {
+    this.#scale.y = value;
   }
 
   /**

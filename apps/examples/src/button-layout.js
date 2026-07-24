@@ -60,7 +60,8 @@ export class ButtonLayout extends Layout {
     this.height = totalHeight;
 
     const bg = new ImageView();
-    bg.setAnchorPoint(0, 0);
+    bg.anchorX = 0;
+    bg.anchorY = 0;
     bg.setScale9Enabled(true);
     bg.ignoreContentAdaptWithSize(false);
     bg.loadTexture("default_theme/squere_shadow_0.png", Widget.PLIST_TEXTURE);

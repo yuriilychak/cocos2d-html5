@@ -98,7 +98,8 @@ export class SpriteBlendFuncTest extends SpriteTestDemo {
       title = destTitles[i];
       fontSize = title.length > 10 ? 14 : 18;
       titleLabel = new TextBMFont(title, s_simpleFont_fnt);
-      titleLabel.setAnchorPoint(0, 0.5);
+      titleLabel.anchorX = 0;
+      titleLabel.anchorY = 0.5;
       titleLabel.setPosition(0, 355 - 60 * i);
       this.addChild(titleLabel);
     }
@@ -107,7 +108,8 @@ export class SpriteBlendFuncTest extends SpriteTestDemo {
       title = srcTitles[i];
       fontSize = title.length > 10 ? 14 : 18;
       titleLabel = new TextBMFont(title, s_simpleFont_fnt);
-      titleLabel.setAnchorPoint(0, 0.5);
+      titleLabel.anchorX = 0;
+      titleLabel.anchorY = 0.5;
       titleLabel.setPosition(220 + i * 60, 390);
       titleLabel.rotation = -20;
       this.addChild(titleLabel);

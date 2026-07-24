@@ -90,7 +90,7 @@ export class ActionNode extends BaseClass {
         var positionX = actionFrameDic["positionx"];
         var positionY = actionFrameDic["positiony"];
         if (positionOffset && node.parent) {
-          var AnchorPointIn = node.parent.getAnchorPointInPoints();
+          var AnchorPointIn = node.parent.anchorPointInPoints;
           positionX += AnchorPointIn.x;
           positionY += AnchorPointIn.y;
         }

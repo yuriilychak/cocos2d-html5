@@ -85,21 +85,21 @@ export class LayoutComponent extends Component {
     return this._usingPercentWidth && this._usingPercentHeight;
   }
 
-  getAnchorPosition() {
-    return this.owner.getAnchorPoint();
+  get anchor() {
+    return this.owner.anchor;
   }
 
-  setAnchorPosition(point, y) {
+  set anchor(point) {
     var oldRect = this.owner.boundingBox;
-    this.owner.setAnchorPoint(point, y);
+    this.owner.anchor = point;
     var newRect = this.owner.boundingBox;
     var offSetX = oldRect.x - newRect.x,
       offSetY = oldRect.y - newRect.y;
 
-    var ownerPosition = this.owner.getPosition();
+    var ownerPosition = this.owner.position;
     ownerPosition.x += offSetX;
     ownerPosition.y += offSetY;
-    this.setPosition(ownerPosition);
+    this.position = ownerPosition;
   }
 
   getPosition() {
@@ -422,7 +422,7 @@ export class LayoutComponent extends Component {
 
     var parentSize = parent.contentSize,
       locOwner = this.owner;
-    var ownerAnchor = locOwner.getAnchorPoint(),
+    var ownerAnchor = locOwner.anchor,
       ownerSize = locOwner.contentSize;
     var ownerPosition = locOwner.getPosition();
 
@@ -537,8 +537,8 @@ export class LayoutComponent extends Component {
     var parent = this._getOwnerParent();
     if (parent === null) return;
 
-    var ownerPoint = this.owner.getPosition(),
-      ownerAnchor = this.owner.getAnchorPoint();
+    var ownerPoint = this.owner.anchor,
+      ownerAnchor = this.owner.anchor;
     var ownerSize = this.owner.contentSize,
       parentSize = parent.contentSize;
 
@@ -552,7 +552,7 @@ export class LayoutComponent extends Component {
     if (parent === null) return;
 
     var ownerPoint = this.owner.getPosition(),
-      ownerAnchor = this.owner.getAnchorPoint();
+      ownerAnchor = this.owner.anchor;
     var ownerSize = this.owner.contentSize,
       parentSize = parent.contentSize;
 

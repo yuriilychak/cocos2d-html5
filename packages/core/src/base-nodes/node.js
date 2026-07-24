@@ -153,6 +153,41 @@ export class Node extends BaseClass {
   #rotation = new Point();
   #position = new Point();
   #contentSize = new Size();
+  #scale = new Point(1, 1);
+  #anchor = new Point();
+
+  _localZOrder = 0;
+  _globalZOrder = 0;
+  _vertexZ = 0.0;
+  _customZ = NaN;
+  _normalizedPosition = null;
+  _usingNormalizedPosition = false;
+  _normalizedPositionDirty = false;
+  _skewX = 0.0;
+  _skewY = 0.0;
+  _visible = true;
+  _running = false;
+  _parent = null;
+  _ignoreAnchorPointForPosition = false;
+  userObject = null;
+  _reorderChildDirty = false;
+  arrivalOrder = 0;
+  _actionManager = null;
+  _scheduler = null;
+  _additionalTransformDirty = false;
+  _additionalTransform = AffineTransform.makeIdentity();
+  _componentContainer = new ComponentContainer(this);
+  _isTransitionFinished = false;
+  _className = "Node";
+  _showNode = false;
+  _name = "";
+  _realOpacity = BYTE;
+  _realColor = new Color(BYTE, BYTE, BYTE, BYTE);
+  _cascadeColorEnabled = false;
+  _cascadeOpacityEnabled = false;
+  _renderCmd = null;
+  _normalizedPosition = new Point();
+  _children = [];
 
   /**
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
@@ -160,50 +195,6 @@ export class Node extends BaseClass {
    */
   constructor() {
     super();
-    this._localZOrder = 0;
-    this._globalZOrder = 0;
-    this._vertexZ = 0.0;
-    this._customZ = NaN;
-    this._scaleX = 1.0;
-    this._scaleY = 1.0;
-    this._normalizedPosition = null;
-    this._usingNormalizedPosition = false;
-    this._normalizedPositionDirty = false;
-    this._skewX = 0.0;
-    this._skewY = 0.0;
-    this._children = null;
-    this._visible = true;
-    this._anchorPoint = null;
-    this._running = false;
-    this._parent = null;
-    this._ignoreAnchorPointForPosition = false;
-    this.userObject = null;
-    this._reorderChildDirty = false;
-    this.arrivalOrder = 0;
-    this._actionManager = null;
-    this._scheduler = null;
-    this._additionalTransformDirty = false;
-    this._additionalTransform = null;
-    this._componentContainer = null;
-    this._isTransitionFinished = false;
-    this._className = "Node";
-    this._showNode = false;
-    this._name = "";
-    this._realOpacity = BYTE;
-    this._realColor = null;
-    this._cascadeColorEnabled = false;
-    this._cascadeOpacityEnabled = false;
-    this._renderCmd = null;
-    this._anchorPoint = new Point();
-    this._normalizedPosition = new Point();
-    this._children = [];
-
-    this._additionalTransform = AffineTransform.makeIdentity();
-    if (ComponentContainer) {
-      this._componentContainer = new ComponentContainer(this);
-    }
-    this._realColor = new Color(BYTE, BYTE, BYTE, BYTE);
-
     this._renderCmd = this._createRenderCmd();
   }
 
@@ -223,18 +214,57 @@ export class Node extends BaseClass {
     this._renderCmd._updateAnchorPointInPoint();
   }
 
-  get anchorX() {
-    return this._getAnchorX();
+  /**
+   *  <p>Returns a copy of the anchor point.<br/>
+   *  Anchor point is the point around which all transformations and positioning manipulations take place.<br/>
+   *  It's like a pin in the node where it is "attached" to its parent. <br/>
+   *  The anchorPoint is normalized, like a percentage. (0,0) means the bottom-left corner and (1,1) means the top-right corner. <br/>
+   *  But you can use values higher than (1,1) and lower than (0,0) too.  <br/>
+   *  The default anchor point is (0.5,0.5), so it starts at the center of the node. <br/></p>
+   * @return {Point}  The anchor point of node.
+   */
+  get anchor() {
+    return this.#anchor.clone();
   }
-  set anchorX(v) {
-    this._setAnchorX(v);
+
+  /**
+   * <p>
+   *     Sets the anchor point in percent.                                                                                              <br/>
+   *                                                                                                                                    <br/>
+   *     anchor point is the point around which all transformations and positioning manipulations take place.                            <br/>
+   *     It's like a pin in the node where it is "attached" to its parent.                                                              <br/>
+   *     The anchorPoint is normalized, like a percentage. (0,0) means the bottom-left corner and (1,1) means the top-right corner.     <br/>
+   *     But you can use values higher than (1,1) and lower than (0,0) too.                                                             <br/>
+   *     The default anchor point is (0.5,0.5), so it starts at the center of the node.
+   * </p>
+   * @function
+   * @param {Point} point The anchor point of node or The x axis anchor of node.
+   */
+  set anchor(value) {
+    this.#anchor.set(value);
+    this._renderCmd._updateAnchorPointInPoint();
+  }
+
+  get anchorX() {
+    return this.#anchor.x;
+  }
+  set anchorX(value) {
+    if (this.#anchor.x === value) {
+      return;
+    }
+    this.#anchor.x = value;
+    this._renderCmd._updateAnchorPointInPoint();
   }
 
   get anchorY() {
-    return this._getAnchorY();
+    return this.#anchor.y;
   }
-  set anchorY(v) {
-    this._setAnchorY(v);
+  set anchorY(value) {
+    if (this.#anchor.y === value) {
+      return;
+    }
+    this.#anchor.y = value;
+    this._renderCmd._updateAnchorPointInPoint();
   }
 
   get vertexZ() {
@@ -273,11 +303,25 @@ export class Node extends BaseClass {
     this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
   }
 
+  /**
+   * Returns the scale factor of the node.
+   * @warning: Assertion will fail when #scale.x != #scale.y.
+   * @return {Number} The scale factor
+   */
   get scale() {
-    return this.getScale();
+    if (this.#scale.x !== this.#scale.y) {
+      log(_LogInfos.Node_getScale);
+    }
+    return this.#scale.x;
   }
-  set scale(v) {
-    this.setScale(v);
+
+  /**
+   * Sets the scale factor of the node. 1.0 is the default scale factor. This function can modify the X and Y scale at the same time.
+   * @param {Number} scale or scaleX value
+   */
+  set scale(value) {
+    this.#scale.set(value, value);
+    this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
   }
 
   get children() {
@@ -537,30 +581,7 @@ export class Node extends BaseClass {
    * @param {Number} newRotation The rotation of the node in degrees.
    */
   set rotation(newRotation) {
-    this.#rotation.x = this.#rotation.y = newRotation;
-    this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
-  }
-
-  /**
-   * Returns the scale factor of the node.
-   * @warning: Assertion will fail when _scaleX != _scaleY.
-   * @function
-   * @return {Number} The scale factor
-   */
-  getScale() {
-    if (this._scaleX !== this._scaleY) log(_LogInfos.Node_getScale);
-    return this._scaleX;
-  }
-
-  /**
-   * Sets the scale factor of the node. 1.0 is the default scale factor. This function can modify the X and Y scale at the same time.
-   * @function
-   * @param {Number} scale or scaleX value
-   * @param {Number} [scaleY=]
-   */
-  setScale(scale, scaleY) {
-    this._scaleX = scale;
-    this._scaleY = scaleY || scaleY === 0 ? scaleY : scale;
+    this.#rotation.set(newRotation, newRotation);
     this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
   }
 
@@ -570,7 +591,7 @@ export class Node extends BaseClass {
    * @return {Number} The scale factor on X axis.
    */
   get scaleX() {
-    return this._scaleX;
+    return this.#scale.x;
   }
 
   /**
@@ -582,7 +603,7 @@ export class Node extends BaseClass {
    * @param {Number} newScaleX The scale factor on X axis.
    */
   set scaleX(newScaleX) {
-    this._scaleX = newScaleX;
+    this.#scale.x = newScaleX;
     this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
   }
 
@@ -592,7 +613,7 @@ export class Node extends BaseClass {
    * @return {Number} The scale factor on Y axis.
    */
   get scaleY() {
-    return this._scaleY;
+    return this.#scale.y;
   }
 
   /**
@@ -604,7 +625,7 @@ export class Node extends BaseClass {
    * @param {Number} newScaleY The scale factor on Y axis.
    */
   set scaleY(newScaleY) {
-    this._scaleY = newScaleY;
+    this.#scale.y = newScaleY;
     this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
   }
 
@@ -778,73 +799,14 @@ export class Node extends BaseClass {
   }
 
   /**
-   *  <p>Returns a copy of the anchor point.<br/>
-   *  Anchor point is the point around which all transformations and positioning manipulations take place.<br/>
-   *  It's like a pin in the node where it is "attached" to its parent. <br/>
-   *  The anchorPoint is normalized, like a percentage. (0,0) means the bottom-left corner and (1,1) means the top-right corner. <br/>
-   *  But you can use values higher than (1,1) and lower than (0,0) too.  <br/>
-   *  The default anchor point is (0.5,0.5), so it starts at the center of the node. <br/></p>
-   * @function
-   * @return {Point}  The anchor point of node.
-   */
-  getAnchorPoint() {
-    return this._anchorPoint.clone();
-  }
-
-  /**
-   * <p>
-   *     Sets the anchor point in percent.                                                                                              <br/>
-   *                                                                                                                                    <br/>
-   *     anchor point is the point around which all transformations and positioning manipulations take place.                            <br/>
-   *     It's like a pin in the node where it is "attached" to its parent.                                                              <br/>
-   *     The anchorPoint is normalized, like a percentage. (0,0) means the bottom-left corner and (1,1) means the top-right corner.     <br/>
-   *     But you can use values higher than (1,1) and lower than (0,0) too.                                                             <br/>
-   *     The default anchor point is (0.5,0.5), so it starts at the center of the node.
-   * </p>
-   * @function
-   * @param {Point|Number} point The anchor point of node or The x axis anchor of node.
-   * @param {Number} [y] The y axis anchor of node.
-   */
-  setAnchorPoint(point, y) {
-    var locAnchorPoint = this._anchorPoint;
-    if (y === undefined) {
-      if (point.x === locAnchorPoint.x && point.y === locAnchorPoint.y) return;
-      locAnchorPoint.x = point.x;
-      locAnchorPoint.y = point.y;
-    } else {
-      if (point === locAnchorPoint.x && y === locAnchorPoint.y) return;
-      locAnchorPoint.x = point;
-      locAnchorPoint.y = y;
-    }
-    this._renderCmd._updateAnchorPointInPoint();
-  }
-
-  _getAnchorX() {
-    return this._anchorPoint.x;
-  }
-  _setAnchorX(x) {
-    if (this._anchorPoint.x === x) return;
-    this._anchorPoint.x = x;
-    this._renderCmd._updateAnchorPointInPoint();
-  }
-  _getAnchorY() {
-    return this._anchorPoint.y;
-  }
-  _setAnchorY(y) {
-    if (this._anchorPoint.y === y) return;
-    this._anchorPoint.y = y;
-    this._renderCmd._updateAnchorPointInPoint();
-  }
-
-  /**
    * Returns a copy of the anchor point in absolute pixels.  <br/>
-   * you can only read it. If you wish to modify it, use setAnchorPoint
-   * @see Node#getAnchorPoint
+   * you can only read it. If you wish to modify it, use anchor
+   * @see Node#anchor
    * @function
    * @return {Point} The anchor point in absolute pixels.
    */
-  getAnchorPointInPoints() {
-    return this._renderCmd.getAnchorPointInPoints();
+  get anchorPointInPoints() {
+    return this._renderCmd.anchorPointInPoints;
   }
 
   /**
@@ -1825,7 +1787,7 @@ export class Node extends BaseClass {
    * spriteB.setAdditionalTransform(t);
    *
    * //scale
-   * spriteA.setScale(2);
+   * spriteA.scale = 2;
    *
    * // Gets the spriteA's transform.
    * t = spriteA.getNodeToParentTransform();
@@ -1918,7 +1880,7 @@ export class Node extends BaseClass {
   convertToNodeSpaceAR(worldPoint) {
     return Point.sub(
       this.convertToNodeSpace(worldPoint),
-      this._renderCmd.getAnchorPointInPoints()
+      this._renderCmd.anchorPointInPoints
     );
   }
 
@@ -1931,7 +1893,7 @@ export class Node extends BaseClass {
    */
   convertToWorldSpaceAR(nodePoint) {
     nodePoint = nodePoint || new Point();
-    var pt = Point.add(nodePoint, this._renderCmd.getAnchorPointInPoints());
+    var pt = Point.add(nodePoint, this._renderCmd.anchorPointInPoints);
     return this.convertToWorldSpace(pt);
   }
 

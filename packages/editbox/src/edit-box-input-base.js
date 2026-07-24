@@ -234,13 +234,17 @@ export class EditBoxInputBase {
     this._placeholderLabel.boundingWidth = boundingWidth;
 
     if (this._editBox._editBoxInputMode === EDITBOX_INPUT_MODE_ANY) {
-      this._textLabel.setAnchorPoint(0, 1);
-      this._placeholderLabel.setAnchorPoint(0, 1);
+      this._textLabel.anchorX = 0;
+      this._textLabel.anchorY = 1;
+      this._placeholderLabel.anchorX = 0;
+      this._placeholderLabel.anchorY = 1;
       this._textLabel.setPosition(LEFT_PADDING, editBoxSize.height);
       this._placeholderLabel.setPosition(LEFT_PADDING, editBoxSize.height);
     } else {
-      this._textLabel.setAnchorPoint(0, 0.5);
-      this._placeholderLabel.setAnchorPoint(0, 0.5);
+      this._textLabel.anchorX = 0;
+      this._textLabel.anchorY = 0.5;
+      this._placeholderLabel.anchorX = 0;
+      this._placeholderLabel.anchorY = 0.5;
       this._textLabel.setPosition(LEFT_PADDING, editBoxSize.height / 2);
       this._placeholderLabel.setPosition(LEFT_PADDING, editBoxSize.height / 2);
     }

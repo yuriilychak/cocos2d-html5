@@ -20,7 +20,8 @@ export class Control extends Layer {
 
   static addSpriteToTargetWithPosAndAnchor(sprite, target, pos, anchor) {
     sprite.setPosition(pos.x, pos.y);
-    sprite.setAnchorPoint(anchor.x, anchor.y);
+    sprite.anchorX = anchor.x;
+    sprite.anchorY = anchor.y;
     target.addChild(sprite);
     return sprite;
   }

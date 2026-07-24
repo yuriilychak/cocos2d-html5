@@ -68,8 +68,8 @@ export class TMXLayerWebGLRenderCmd extends Node.WebGLRenderCmd {
       d = wt.d,
       tx = wt.tx,
       ty = wt.ty,
-      ox = -node.width * node._anchorPoint.x,
-      oy = -node.height * node._anchorPoint.y,
+      ox = -node.width * node.anchorX,
+      oy = -node.height * node.anchorY,
       mapx = ox * a + oy * c + tx,
       mapy = ox * b + oy * d + ty;
 

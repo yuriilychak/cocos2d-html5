@@ -21,8 +21,8 @@ export class GuiScrollViewCanvasRenderCmd extends Layer.CanvasRenderCmd {
       this._scissorRestored = false;
       wrapper.setTransform(this._worldTransform, { x: scaleX, y: scaleY });
 
-      var locScaleX = node.getScaleX(),
-        locScaleY = node.getScaleY();
+      var locScaleX = node.scaleX,
+        locScaleY = node.scaleY;
       var getWidth = node._viewSize.width * locScaleX;
       var getHeight = node._viewSize.height * locScaleY;
 

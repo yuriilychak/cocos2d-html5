@@ -455,14 +455,15 @@ export class DisplayManager extends BaseClass {
     return this._displayRenderNode.boundingBox;
   }
 
-  getAnchorPoint() {
+  get anchor() {
     if (!this._displayRenderNode) return new Point();
-    return this._displayRenderNode.getAnchorPoint();
+    return this._displayRenderNode.anchor;
   }
 
-  getAnchorPointInPoints() {
-    if (!this._displayRenderNode) return new Point();
-    return this._displayRenderNode.getAnchorPointInPoints();
+  get anchorPointInPoints() {
+    return !this._displayRenderNode 
+      ? new Point()
+      : this._displayRenderNode.anchorPointInPoints;
   }
 
   getForceChangeDisplay() {

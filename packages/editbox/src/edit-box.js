@@ -47,7 +47,8 @@ export class EditBox extends Node {
     this._touchListener = null;
     this._touchEnabled = true;
 
-    this._anchorPoint = new Point(0.5, 0.5);
+    this.anchorX = 0.5;
+    this.anchorY = 0.5;
     this._textColor = Color.WHITE;
     this._placeholderColor = Color.GRAY;
 
@@ -329,7 +330,7 @@ export class EditBox extends Node {
     this.contentSize = size;
 
     if (this._backgroundSprite && !this._backgroundSprite.parent) {
-      this._backgroundSprite.setAnchorPoint(new Point(0, 0));
+      this._backgroundSprite.anchor = new Point(0, 0);
       this.addChild(this._backgroundSprite);
       this._updateBackgroundSpriteSize(size.width, size.height);
     }

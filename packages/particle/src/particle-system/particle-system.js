@@ -987,10 +987,14 @@ export class ParticleSystem extends Node {
   }
   //////////////////////////////////////////////////////////////////////////
 
+  get scale() {
+    return super.scale;
+  }
+
   //don't use a transform matrix, this is faster
-  setScale(scale, scaleY) {
+  set scale(scale) {
     this._transformSystemDirty = true;
-    super.setScale(scale, scaleY);
+    super.scale = scale;
   }
 
   set rotation(newRotation) {
@@ -1003,9 +1007,17 @@ export class ParticleSystem extends Node {
     super.scaleX = newScaleX;
   }
 
+  get scaleX() {
+    return super.scaleX;
+  }
+
   set scaleY(newScaleY) {
     this._transformSystemDirty = true;
     super.scaleY = newScaleY;
+  }
+
+  get scaleY() {
+    return super.scaleY;
   }
 
   /**

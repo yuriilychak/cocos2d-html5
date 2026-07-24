@@ -72,7 +72,8 @@ export class MenuPassive extends Layer {
         if (this.init()) {
             var winSize = ServiceLocator.eglView.winSizeInPoints;
             this.ignoreAnchorPointForPosition(true);
-            this.setAnchorPoint(0.5, 0.5);
+            this.anchorX = 0.5;
+            this.anchorY = 0.5;
             this.contentSize = winSize;
             this.setPosition(winSize.width / 2, winSize.height / 2);
             var z = 0;

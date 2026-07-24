@@ -95,7 +95,8 @@ export class RenderTexture extends Node {
       depthStencilFormat = depthStencilFormat || 0;
       this.initWithWidthAndHeight(width, height, format, depthStencilFormat);
     }
-    this.setAnchorPoint(0, 0);
+    this.anchorX = 0;
+    this.anchorY = 0;
   }
 
   get clearColorVal() {

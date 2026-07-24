@@ -149,7 +149,8 @@ export class BMButton extends Widget {
   _createTitleRendererIfNeeded() {
     if (!this._titleRenderer) {
       this._titleRenderer = new LabelBMFont();
-      this._titleRenderer.setAnchorPoint(0.5, 0.5);
+      this._titleRenderer.anchorX = 0.5;
+      this._titleRenderer.anchorY = 0.5;
       this._titleColor = Color.WHITE;
       this.addProtectedChild(
         this._titleRenderer,
@@ -602,10 +603,8 @@ export class BMButton extends Widget {
       }
     } else {
       this._buttonScale9Renderer.setSpriteFrame(this._buttonClickedSpriteFrame);
-      this._buttonScale9Renderer.setScale(
-        1.0 + this._zoomScale,
-        1.0 + this._zoomScale
-      );
+      this._buttonScale9Renderer.scaleX = 1.0 + this._zoomScale;
+      this._buttonScale9Renderer.scaleY = 1.0 + this._zoomScale;
 
       if (this._titleRenderer) {
         this._titleRenderer.stopAllActions();

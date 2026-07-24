@@ -316,7 +316,7 @@ export class ScrollView extends Layout {
     innerContainer.height = innerSizeHeight;
 
     var pos = this._innerContainer.getPosition();
-    var contAP = this._innerContainer.getAnchorPoint();
+    var contAP = this._innerContainer.anchor;
 
     if (this._innerContainer.getLeftBoundary() != 0.0) {
       pos.x = contAP.x * innerSizeWidth;
@@ -441,7 +441,7 @@ export class ScrollView extends Layout {
     if (!this._clippingEnabled) return true;
     var wPos = widget.position,
       wSize = widget.contentSize,
-      wAnchor = widget._anchorPoint,
+      wAnchor = widget.anchor,
       size = this._customSize,
       pos = this._innerContainer.position,
       bottom = 0,

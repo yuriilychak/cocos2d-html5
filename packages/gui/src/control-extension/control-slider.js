@@ -46,17 +46,20 @@ export class ControlSlider extends Control {
 
     if (this._background) {
       this.addChild(this._background);
-      this._background.setAnchorPoint(0, 0);
+      this._background.anchorX = 0;
+      this._background.anchorY = 0;
     }
 
     if (this._progress) {
       this.addChild(this._progress);
-      this._progress.setAnchorPoint(0, 0);
+      this._progress.anchorX = 0;
+      this._progress.anchorY = 0;
     }
 
     if (this._thumb) {
       this.addChild(this._thumb);
-      this._thumb.setAnchorPoint(0.5, 0.5);
+      this._thumb.anchorX = 0.5;
+      this._thumb.anchorY = 0.5;
     }
 
     this.refresh();

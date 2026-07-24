@@ -64,7 +64,7 @@ export class TextAtlas extends Widget {
 
   _initRenderer() {
     this._labelAtlasRenderer = new LabelAtlas();
-    this._labelAtlasRenderer.setAnchorPoint(new Point(0.5, 0.5));
+    this._labelAtlasRenderer.anchor = new Point(0.5, 0.5);
     this.addProtectedChild(
       this._labelAtlasRenderer,
       TextAtlas.RENDERER_ZORDER,

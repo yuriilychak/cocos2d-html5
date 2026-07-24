@@ -137,7 +137,7 @@ export class ControlSwitch extends Control {
     if (this._background !== null) {
       this._background.width = this.width;
       this._background.height = this.height;
-      this._background.setAnchorPoint(new Point(0, 0));
+      this._background.anchor = new Point(0, 0);
       this._background.x = 0;
       this._background.y = 0;
     }
@@ -145,7 +145,7 @@ export class ControlSwitch extends Control {
     if (this._onProgress !== null) {
       this._onProgress.width = this._sliderXPosition;
       this._onProgress.height = this.height;
-      this._onProgress.setAnchorPoint(new Point(0, 0));
+      this._onProgress.anchor = new Point(0, 0);
       this._onProgress.x = 0;
       this._onProgress.y = 0;
     }
@@ -154,13 +154,13 @@ export class ControlSwitch extends Control {
       this._offProgress.width = this.width - this._sliderXPosition;
       this._offProgress.x = this._sliderXPosition;
       this._offProgress.height = this.height;
-      this._offProgress.setAnchorPoint(new Point(0, 0));
+      this._offProgress.anchor = new Point(0, 0);
       this._offProgress.y = 0;
     }
 
     if (this._thumb !== null) {
       this._thumb.x = this._sliderXPosition;
-      this._thumb.setAnchorPoint(new Point(0.5, 0.5));
+      this._thumb.anchor = new Point(0.5, 0.5);
       this._thumb.y = this.height / 2;
     }
   }

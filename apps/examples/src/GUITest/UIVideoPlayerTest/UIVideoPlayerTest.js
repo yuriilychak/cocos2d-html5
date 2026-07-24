@@ -108,10 +108,8 @@ export class UIVideoPlayerTest extends UIMainLayer {
       {
         name: "setAnchorPoint",
         func: function () {
-          var anpX =
-            video.getAnchorPoint().x === 1 ? 0 : video.getAnchorPoint().x + 0.5;
-          var anpY =
-            video.getAnchorPoint().y === 1 ? 0 : video.getAnchorPoint().y + 0.5;
+          var anpX = video.anchor.x === 1 ? 0 : video.anchor.x + 0.5;
+          var anpY = video.anchor.y === 1 ? 0 : video.anchor.y + 0.5;
           video.setAnchorPoint(anpX, anpY);
         }
       }

@@ -95,17 +95,17 @@ export class ScrollViewBar extends ProtectedNode {
      */
     init() {
         this._upperHalfCircle = helper._createSpriteFromBase64(ScrollViewBar.HALF_CIRCLE_IMAGE, ScrollViewBar.HALF_CIRCLE_IMAGE_KEY);
-        this._upperHalfCircle.setAnchorPoint(new Point(0.5, 0));
+        this._upperHalfCircle.anchor = new Point(0.5, 0);
 
         this._lowerHalfCircle = helper._createSpriteFromBase64(ScrollViewBar.HALF_CIRCLE_IMAGE, ScrollViewBar.HALF_CIRCLE_IMAGE_KEY);
-        this._lowerHalfCircle.setAnchorPoint(new Point(0.5, 0));
+        this._lowerHalfCircle.anchor = new Point(0.5, 0);
         this._lowerHalfCircle.scaleY = -1;
 
         this.addProtectedChild(this._upperHalfCircle);
         this.addProtectedChild(this._lowerHalfCircle);
 
         this._body = helper._createSpriteFromBase64(ScrollViewBar.BODY_IMAGE_1_PIXEL_HEIGHT, ScrollViewBar.BODY_IMAGE_1_PIXEL_HEIGHT_KEY);
-        this._body.setAnchorPoint(new Point(0.5, 0));
+        this._body.anchor = new Point(0.5, 0);
         this.addProtectedChild(this._body);
 
         this.color = ScrollViewBar.DEFAULT_COLOR;
@@ -241,7 +241,7 @@ export class ScrollViewBar extends ProtectedNode {
 
         var initialWidth = this.getWidth();
         this._thumbSprite = new Scale9Sprite(file, capInsets);
-        this._thumbSprite.setAnchorPoint(new Point(0.5, 0));
+        this._thumbSprite.anchor = new Point(0.5, 0);
         this._thumbSprite.setPreferredSize(new Size(initialWidth, 0));
         var alpha = color && color.a != null ? color.a : 255;
         if (color) {

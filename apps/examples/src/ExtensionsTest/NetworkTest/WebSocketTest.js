@@ -78,7 +78,8 @@ export class WebSocketTestLayer extends BaseTestLayer {
 
     const makeStatusLabel = (text) => {
       const label = new TextBMFont(text, s_simpleFont_fnt);
-      label.setAnchorPoint(0, 0.5);
+      label.anchorX = 0;
+      label.anchorY = 0.5;
       const param = new LinearLayoutParameter();
       param.setGravity(LinearLayoutParameter.NONE);
       param.setMargin(0, 8, 0, 0);

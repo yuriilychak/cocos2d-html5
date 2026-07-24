@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 import { isNumber } from "../boot/utils";
+import Point from "./point";
 import type { PointLike, SizeLike } from "./types";
 
 export default class Size implements SizeLike {
@@ -56,6 +57,10 @@ export default class Size implements SizeLike {
 
   set height(value: number) {
     this.#data[1] = value;
+  }
+
+  toPoint(): Point {
+    return new Point(this.#data[0], this.#data[1]);
   }
 
   clone(): Size {

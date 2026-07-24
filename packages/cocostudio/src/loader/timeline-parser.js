@@ -122,7 +122,7 @@ parser.generalAttributes = function (node, json) {
     if (anchor["ScaleX"] == null) anchor["ScaleX"] = 0;
     if (anchor["ScaleY"] == null) anchor["ScaleY"] = 0;
     if (anchor["ScaleX"] != 0.5 || anchor["ScaleY"] != 0.5)
-      node.setAnchorPoint(new Point(anchor["ScaleX"], anchor["ScaleY"]));
+      node.anchor = new Point(anchor["ScaleX"], anchor["ScaleY"]);
   }
 
   if (json["ZOrder"] != null) node.zIndex = json["ZOrder"];
@@ -166,7 +166,7 @@ parser.parseChild = function (node, children, resourcePath) {
           if (!(node instanceof Layout) && child instanceof Widget) {
             if (child.getPositionType() === Widget.POSITION_PERCENT) {
               var position = child.getPositionPercent();
-              var anchor = node.getAnchorPoint();
+              var anchor = node.anchor;
               child.setPositionPercent(
                 new Point(position.x + anchor.x, position.y + anchor.y)
               );
@@ -334,10 +334,8 @@ parser.widgetAttributes = function (widget, json, enableContent) {
 
   var anchorPoint = json["AnchorPoint"];
   if (anchorPoint != null)
-    widget.setAnchorPoint(
-      anchorPoint["ScaleX"] || 0,
-      anchorPoint["ScaleY"] || 0
-    );
+    widget.anchorX = anchorPoint["ScaleX"] || 0;
+    widget.anchorY = anchorPoint["ScaleY"] || 0;
 
   var color = json["CColor"];
   if (color != null) widget.color = getColor(color);

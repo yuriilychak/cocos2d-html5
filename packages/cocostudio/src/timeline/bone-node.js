@@ -355,8 +355,42 @@ class BoneNode extends Node {
     this._updateVertices();
   }
 
-  setAnchorPoint(anchorPoint) {
-    super.setAnchorPoint(anchorPoint);
+  get anchorX() {
+    return super.anchorX;
+  }
+
+  set anchorX(value) {
+    if (value === super.anchorX) {
+      return;
+    }
+
+    super.anchorX = value;
+    this._updateVertices();
+  }
+
+  get anchorY() {
+    return super.anchorY;
+  }
+
+  set anchorY(value) {
+    if (value === super.anchorY) {
+      return;
+    }
+
+    super.anchorY = value;
+    this._updateVertices();
+  }
+
+  get anchor() {
+    return super.anchor;
+  }
+
+  set anchor(value) {
+    if(Point.equalTo(value, super.anchor)) {
+      return;
+    }
+    
+    super.anchor = value;
     this._updateVertices();
   }
 

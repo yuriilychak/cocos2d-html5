@@ -30,7 +30,7 @@ export const linearVerticalLayoutManager = {
 
         if (layoutParameter) {
           var childGravity = layoutParameter.getGravity();
-          var ap = child.getAnchorPoint();
+          var ap = child.anchor;
           var cs = child.contentSize;
           var finalPosX = ap.x * cs.width;
           var finalPosY = topBoundary - (1.0 - ap.y) * cs.height;
@@ -69,7 +69,7 @@ export const linearHorizontalLayoutManager = {
         var layoutParameter = child.getLayoutParameter();
         if (layoutParameter) {
           var childGravity = layoutParameter.getGravity();
-          var ap = child.getAnchorPoint();
+          var ap = child.anchor;
           var cs = child.contentSize;
           var finalPosX = leftBoundary + ap.x * cs.width;
           var finalPosY = layoutSize.height - (1.0 - ap.y) * cs.height;
@@ -174,7 +174,7 @@ export const relativeLayoutManager = {
 
   _calculateFinalPositionWithRelativeWidget: function (layout) {
     var locWidget = this._widget;
-    var ap = locWidget.getAnchorPoint();
+    var ap = locWidget.anchor;
     var cs = locWidget.contentSize;
 
     this._finalPositionX = 0.0;

@@ -136,12 +136,12 @@ export class SkeletonCanvasRenderCmd extends Node.CanvasRenderCmd {
       sprite.width = attachment.width;
       sprite.height = attachment.height;
       sprite.rotation = -attachment.rotation;
-      sprite.setScale(
+      sprite.scaleX =
         (rendererObject.width / rendererObject.originalWidth) *
-          attachment.scaleX,
+        attachment.scaleX;
+      sprite.scaleY =
         (rendererObject.height / rendererObject.originalHeight) *
-          attachment.scaleY
-      );
+        attachment.scaleY;
     };
 
     if (texture.loaded) {
@@ -207,7 +207,8 @@ export class SkeletonCanvasRenderCmd extends Node.CanvasRenderCmd {
           bone.worldX + ax * bone.a + ay * bone.b,
           bone.worldY + ax * bone.c + ay * bone.d
         );
-        slotNode.setScale(bone.getWorldScaleX(), bone.getWorldScaleY());
+        slotNode.scaleX = bone.getWorldScaleX();
+        slotNode.scaleY = bone.getWorldScaleY();
 
         const selSprite = slot.currentSprite;
         selSprite._flippedX = bone.skeleton.scaleX < 0;

@@ -419,14 +419,10 @@ export class CheckBox extends Widget {
     this._backGroundBoxDisabledRenderer.visible = false;
     this._frontCrossDisabledRenderer.visible = false;
 
-    this._backGroundBoxRenderer.setScale(
-      this._backgroundTextureScaleX,
-      this._backgroundTextureScaleY
-    );
-    this._frontCrossRenderer.setScale(
-      this._backgroundTextureScaleX,
-      this._backgroundTextureScaleY
-    );
+    this._backGroundBoxRenderer.scaleX = this._backgroundTextureScaleX;
+    this._backGroundBoxRenderer.scaleY = this._backgroundTextureScaleY;
+    this._frontCrossRenderer.scaleX = this._backgroundTextureScaleX;
+    this._frontCrossRenderer.scaleY = this._backgroundTextureScaleY;
 
     if (this._isSelected) {
       this._frontCrossRenderer.visible = true;
@@ -436,14 +432,14 @@ export class CheckBox extends Widget {
 
   _onPressStateChangedToPressed() {
     if (!this._backGroundSelectedFileName) {
-      this._backGroundBoxRenderer.setScale(
-        this._backgroundTextureScaleX + this._zoomScale,
-        this._backgroundTextureScaleY + this._zoomScale
-      );
-      this._frontCrossRenderer.setScale(
-        this._backgroundTextureScaleX + this._zoomScale,
-        this._backgroundTextureScaleY + this._zoomScale
-      );
+      this._backGroundBoxRenderer.scaleX =
+        this._backgroundTextureScaleX + this._zoomScale;
+      this._backGroundBoxRenderer.scaleY =
+        this._backgroundTextureScaleY + this._zoomScale;
+      this._frontCrossRenderer.scaleX =
+        this._backgroundTextureScaleX + this._zoomScale;
+      this._frontCrossRenderer.scaleY =
+        this._backgroundTextureScaleY + this._zoomScale;
     } else {
       this._backGroundBoxRenderer.visible = false;
       this._backGroundSelectedBoxRenderer.visible = true;
@@ -460,14 +456,10 @@ export class CheckBox extends Widget {
 
     this._backGroundSelectedBoxRenderer.visible = false;
     this._frontCrossRenderer.visible = false;
-    this._backGroundBoxRenderer.setScale(
-      this._backgroundTextureScaleX,
-      this._backgroundTextureScaleY
-    );
-    this._frontCrossRenderer.setScale(
-      this._backgroundTextureScaleX,
-      this._backgroundTextureScaleY
-    );
+    this._backGroundBoxRenderer.scaleX = this._backgroundTextureScaleX;
+    this._backGroundBoxRenderer.scaleY = this._backgroundTextureScaleY;
+    this._frontCrossRenderer.scaleX = this._backgroundTextureScaleX;
+    this._frontCrossRenderer.scaleY = this._backgroundTextureScaleY;
 
     if (this._isSelected) {
       this._frontCrossDisabledRenderer.visible = true;

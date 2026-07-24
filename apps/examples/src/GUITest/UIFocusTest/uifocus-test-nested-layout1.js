@@ -56,7 +56,8 @@ export class UIFocusTestNestedLayout1 extends UIFocusTestBase {
         w;
       for (i = 0; i < count1; ++i) {
         w = new ImageView("ccs-res/cocosui/scrollviewbg.png");
-        w.setAnchorPoint(0, 0);
+        w.anchorX = 0;
+        w.anchorY = 0;
         w.setTouchEnabled(true);
         w.scaleX = 2.5;
         w.tag = i + count1;
@@ -72,7 +73,8 @@ export class UIFocusTestNestedLayout1 extends UIFocusTestBase {
       var count2 = 2;
       for (i = 0; i < count2; ++i) {
         w = new ImageView("ccs-res/cocosui/scrollviewbg.png");
-        w.setAnchorPoint(0, 1);
+        w.anchorX = 0;
+        w.anchorY = 1;
         w.scaleY = 2.0;
         w.setTouchEnabled(true);
         w.tag = i + count1 + count2;

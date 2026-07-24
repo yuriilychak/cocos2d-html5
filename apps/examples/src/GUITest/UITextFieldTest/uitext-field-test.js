@@ -35,7 +35,7 @@ export class UITextFieldTest extends UIMainLayer {
       var widgetSize = this._widget.contentSize;
       //init text
       this._topDisplayLabel.string = "No Event";
-      this._topDisplayLabel.setAnchorPoint(new Point(0.5, -1));
+      this._topDisplayLabel.anchor = new Point(0.5, -1);
       this._topDisplayLabel.setPosition(
         new Point(
           widgetSize.width / 2.0,

@@ -1,4 +1,24 @@
-import { EventHelper, SpriteBatchNode, RendererConfig, Node, Point, Rect, Size, Sprite, Texture2D, Color, log, contentScaleFactor, rectPixelsToPoints, pointPixelsToPoints, sizePixelsToPoints, TextAlignment, LabelTTF, Path, ServiceLocator } from "@aspect/core";
+import {
+  EventHelper,
+  SpriteBatchNode,
+  RendererConfig,
+  Node,
+  Point,
+  Rect,
+  Size,
+  Sprite,
+  Texture2D,
+  Color,
+  log,
+  contentScaleFactor,
+  rectPixelsToPoints,
+  pointPixelsToPoints,
+  sizePixelsToPoints,
+  TextAlignment,
+  LabelTTF,
+  Path,
+  ServiceLocator
+} from "@aspect/core";
 
 export class LabelBMFont extends EventHelper(SpriteBatchNode) {
   //property string is Getter and Setter.
@@ -92,7 +112,14 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
     this._cascadeColorEnabled = true;
     this._cascadeOpacityEnabled = true;
     if (str !== undefined && fntFile !== undefined)
-      this.initWithString(str, fntFile, width, alignment, imageOffset, fontSize);
+      this.initWithString(
+        str,
+        fntFile,
+        width,
+        alignment,
+        imageOffset,
+        fontSize
+      );
   }
 
   /**
@@ -172,9 +199,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
       var spriteFrameBaseName = newConf.atlasName;
       var spriteFrame =
         ServiceLocator.spriteFrameCache.get(spriteFrameBaseName) ||
-        ServiceLocator.spriteFrameCache.get(
-          Path.basename(spriteFrameBaseName)
-        );
+        ServiceLocator.spriteFrameCache.get(Path.basename(spriteFrameBaseName));
       if (spriteFrame) {
         texture = spriteFrame.texture;
         this._spriteFrame = spriteFrame;
@@ -186,7 +211,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
       if (!locIsLoaded) {
         texture.addEventListener(
           "load",
-           (sender) => {
+          (sender) => {
             this._textureLoaded = true;
             //reset the LabelBMFont
             this.initWithTexture(sender, this._initialString.length);
@@ -215,7 +240,8 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
       this.width = 0;
       this.height = 0;
 
-      this.setAnchorPoint(0.5, 0.5);
+      this.anchorX = 0.5;
+      this.anchorY = 0.5;
 
       this.string = theString;
 
@@ -250,9 +276,10 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
 
     // Compute proportional scale from desired font size vs native fnt size
     const locNativeFontSize = locCfg.fontSize || 0;
-    const locScale = this._fontSize > 0 && locNativeFontSize > 0
-      ? this._fontSize / locNativeFontSize
-      : 1;
+    const locScale =
+      this._fontSize > 0 && locNativeFontSize > 0
+        ? this._fontSize / locNativeFontSize
+        : 1;
     const locCommonH = locCfg.commonHeight * locScale;
 
     for (i = 0; i < stringLen - 1; i++) {
@@ -275,7 +302,8 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
         continue;
       }
 
-      var kerningAmount = (locKerningDict[(prev << 16) | (key & 0xffff)] || 0) * locScale;
+      var kerningAmount =
+        (locKerningDict[(prev << 16) | (key & 0xffff)] || 0) * locScale;
       fontDef = locFontDict[key];
       if (!fontDef) {
         log("cocos2d: LabelBMFont: character not found " + locStr[i]);
@@ -332,7 +360,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
       // Apply label properties
       fontChar.isOpacityModifyRGB = this.#opacityModifyRGB;
       cmd._updateCharColorAndOpacity(fontChar);
-      fontChar.setScale(locScale);
+      fontChar.scale = locScale;
 
       var yOffset = locCommonH - fontDef.yOffset * locScale;
       var fontPos = new Point(
@@ -340,7 +368,9 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
           fontDef.xOffset * locScale +
           fontDef.rect.width * locScale * 0.5 +
           kerningAmount,
-        nextFontPositionY + yOffset - rect.height * locScale * 0.5 * contentScaleFactor()
+        nextFontPositionY +
+          yOffset -
+          rect.height * locScale * 0.5 * contentScaleFactor()
       );
       fontChar.setPosition(pointPixelsToPoints(fontPos));
 
@@ -354,7 +384,10 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
     //If the last character processed has an xAdvance which is less that the width of the characters image, then we need
     // to adjust the width of the string to take this into account, or the character will overlap the end of the bounding box
     if (fontDef && fontDef.xAdvance < fontDef.rect.width)
-      tmpSize.width = longestLine - fontDef.xAdvance * locScale + fontDef.rect.width * locScale;
+      tmpSize.width =
+        longestLine -
+        fontDef.xAdvance * locScale +
+        fontDef.rect.width * locScale;
     else tmpSize.width = longestLine;
     tmpSize.height = totalHeight;
     self.contentSize = sizePixelsToPoints(tmpSize);
@@ -527,7 +560,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
       var oldArrLength = 0;
       for (i = 0; i < stringArr.length; i++) {
         oldArrLength = stringArr.length;
-        this._checkWarp(stringArr, i, this._width * this._scaleX, newWrapNum);
+        this._checkWarp(stringArr, i, this._width * this.scaleX, newWrapNum);
         if (oldArrLength < stringArr.length) {
           newWrapNum++;
         }
@@ -564,7 +597,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
 
           var lastChar = this.getChildByTag(index);
           if (lastChar == null) continue;
-          lineWidth = lastChar.x + lastChar.width * lastChar._scaleX / 2;
+          lineWidth = lastChar.x + (lastChar.width * lastChar.scaleX) / 2;
 
           var shift = 0;
           switch (this._alignment) {
@@ -635,14 +668,17 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
     this.updateLabel();
   }
 
+  get scale() {
+    return super.scale;
+  }
   /**
    * Set scale. <br />
    * Input a number, will be decrease or increase the font size. <br />
    * @param {Number} scale
    * @param {Number} [scaleY=null] default is scale
    */
-  setScale(scale, scaleY) {
-    Node.prototype.setScale.call(this, scale, scaleY);
+  set scale(scale) {
+    super.scale = scale;
     this.updateLabel();
   }
 
@@ -657,6 +693,10 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
     this.updateLabel();
   }
 
+  get scaleX() {
+    return super.scaleX;
+  }
+
   /**
    * Set scale of x. <br />
    * Input a number, will be decrease or increase the font size. <br />
@@ -668,13 +708,21 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
     this.updateLabel();
   }
 
+  get scaleY() {
+    return super.scaleY;
+  }
+
   /**
    * Get the current effective font size.
    * Returns the overridden size if set, otherwise the native size from the fnt file.
    * @return {Number}
    */
   get fontSize() {
-    return this._fontSize > 0 ? this._fontSize : (this._config ? this._config.fontSize : 0);
+    return this._fontSize > 0
+      ? this._fontSize
+      : this._config
+        ? this._config.fontSize
+        : 0;
   }
 
   /**
@@ -684,7 +732,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
    */
   set fontSize(fontSize) {
     fontSize = fontSize > 0 ? fontSize : 0;
-    
+
     if (this._fontSize === fontSize) {
       return;
     }
@@ -758,6 +806,10 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
     this._renderCmd.setTexture(texture);
   }
 
+  get anchor() {
+    return super.anchor;
+  }
+
   /**
    * Set the AnchorPoint of the labelBMFont. <br />
    * In order to change the location of label.
@@ -765,18 +817,26 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
    * @param {Point|Number} point The anchor point of labelBMFont or The anchor point.x of labelBMFont.
    * @param {Number} [y] The anchor point.y of labelBMFont.
    */
-  setAnchorPoint(point, y) {
-    Node.prototype.setAnchorPoint.call(this, point, y);
+  set anchor(point) {
+    super.anchor = point;
     this.updateLabel();
   }
 
-  _setAnchorX(x) {
-    Node.prototype._setAnchorX.call(this, x);
+  get anchorX() {
+    return super.anchorX;
+  }
+
+  set anchorX(x) {
+    super.anchorX = x;
     this.updateLabel();
   }
 
-  _setAnchorY(y) {
-    Node.prototype._setAnchorY.call(this, y);
+  get anchorY() {
+    return super.anchorY;
+  }
+
+  set anchorY(y) {
+    super.anchorY = y;
     this.updateLabel();
   }
 
@@ -794,15 +854,13 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
 
   _getLetterPosXLeft(sp) {
     return (
-      sp.x * this._scaleX -
-      sp.width * sp._scaleX * this._scaleX * sp._getAnchorX()
+      sp.x * this.scaleX - sp.width * sp.scaleX * this.scaleX * sp.anchorX
     );
   }
 
   _getLetterPosXRight(sp) {
     return (
-      sp.x * this._scaleX +
-      sp.width * sp._scaleX * this._scaleX * sp._getAnchorX()
+      sp.x * this.scaleX + sp.width * sp.scaleX * this.scaleX * sp.anchorX
     );
   }
 
@@ -887,7 +945,9 @@ const _fntLoader = {
     var self = this;
     //info (font size)
     var infoMatch = fntStr.match(self.INFO_EXP);
-    fnt.fontSize = infoMatch ? (self._parseStrToObj(infoMatch[0])["size"] || 0) : 0;
+    fnt.fontSize = infoMatch
+      ? self._parseStrToObj(infoMatch[0])["size"] || 0
+      : 0;
 
     //common
     var commonObj = self._parseStrToObj(fntStr.match(self.COMMON_EXP)[0]);
@@ -912,9 +972,7 @@ const _fntLoader = {
     if (!useAtlas) {
       fnt.atlasName = Path.changeBasename(url, pageObj["file"]);
     } else {
-      fnt.atlasName = Path.join(
-        Path.dirname(useAtlas.path) + pageObj["file"]
-      );
+      fnt.atlasName = Path.join(Path.dirname(useAtlas.path) + pageObj["file"]);
     }
 
     //char
@@ -973,10 +1031,7 @@ const _fntLoader = {
             var frameName = self._parseStrToObj(frameNameStr[0]);
             if (frameName && frameName.name) {
               fnt = {};
-              var realFntPathKey = Path.join(
-                Path.dirname(url),
-                frameName.name
-              );
+              var realFntPathKey = Path.join(Path.dirname(url), frameName.name);
               FntFrameCache[realFntPathKey] = this._parseFntContent(
                 fnt,
                 contentString.substr(frameNameStr[0].length),

@@ -116,9 +116,10 @@ export class ControlButton extends Control {
     }
 
     if (this._doesAdjustBackgroundImage) {
-      if (locBackgroundSprite)
+      if (locBackgroundSprite) {
         locBackgroundSprite.width = titleLabelSize.width + this._marginH * 2;
         locBackgroundSprite.height = titleLabelSize.height + this._marginV * 2;
+      }
     } else {
       if (locBackgroundSprite) {
         var preferredSize = locBackgroundSprite.getPreferredSize();
@@ -174,7 +175,8 @@ export class ControlButton extends Control {
       this.setPreferredSize(new Size(0, 0));
       this.zoomOnTouchDown = true;
       this.ignoreAnchorPointForPosition(false);
-      this.setAnchorPoint(0.5, 0.5);
+      this.anchorX = 0.5;
+      this.anchorY = 0.5;
       this._titleLabel = label;
       this._backgroundSprite = backgroundSprite;
       this.opacity = 255;
@@ -234,7 +236,7 @@ export class ControlButton extends Control {
 
   setLabelAnchorPoint(labelAnchorPoint) {
     this._labelAnchorPoint = labelAnchorPoint;
-    if (this._titleLabel) this._titleLabel.setAnchorPoint(labelAnchorPoint);
+    if (this._titleLabel) this._titleLabel.anchor = labelAnchorPoint;
   }
 
   _getCurrentTitle() {
@@ -420,7 +422,8 @@ export class ControlButton extends Control {
     }
     locTable[state] = titleLabel;
     titleLabel.visible = false;
-    titleLabel.setAnchorPoint(0.5, 0.5);
+    titleLabel.anchorX = 0.5;
+    titleLabel.anchorY = 0.5;
     this.addChild(titleLabel, 1);
     if (this.state === state) this.needsLayout();
   }
@@ -453,7 +456,8 @@ export class ControlButton extends Control {
     }
     locTable[state] = sprite;
     sprite.visible = false;
-    sprite.setAnchorPoint(0.5, 0.5);
+    sprite.anchorX = 0.5;
+    sprite.anchorY = 0.5;
     this.addChild(sprite);
     var locPreferredSize = this._preferredSize;
     if (locPreferredSize.width !== 0 || locPreferredSize.height !== 0) {

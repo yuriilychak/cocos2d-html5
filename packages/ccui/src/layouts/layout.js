@@ -62,7 +62,8 @@ export class Layout extends Widget {
     this.ignoreContentAdaptWithSize(false);
     this.width = 0;
     this.height = 0;
-    this.setAnchorPoint(0, 0);
+    this.anchorX = 0;
+    this.anchorY = 0;
     this.onPassFocusToChild = this._findNearestChildWidgetIndex.bind(this);
 
     this._backGroundImageCapInsets = new Rect();

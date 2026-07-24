@@ -61,7 +61,7 @@ export class UIPageViewTouchPropagationTest extends UIMainLayer {
       var pageView = new PageView();
       pageView.width = 240.0;
       pageView.height = 130.0;
-      pageView.setAnchorPoint(new Point(0.5, 0.5));
+      pageView.anchor = new Point(0.5, 0.5);
       pageView.setPosition(
         new Point(widgetSize.width / 2.0, widgetSize.height / 2.0)
       );
@@ -112,13 +112,13 @@ export class UIPageViewTouchPropagationTest extends UIMainLayer {
       this._mainNode.addChild(pageView);
 
       var propagationText = new Text("Allow Propagation", "Arial", 10);
-      propagationText.setAnchorPoint(new Point(0, 0.5));
+      propagationText.anchor = new Point(0, 0.5);
       propagationText.setTextColor(Color.RED);
       propagationText.setPosition(new Point(20, pageView.getPosition().y + 50));
       this._mainNode.addChild(propagationText);
 
       var swallowTouchText = new Text("Swallow Touches", "Arial", 10);
-      swallowTouchText.setAnchorPoint(new Point(0, 0.5));
+      swallowTouchText.anchor = new Point(0, 0.5);
       swallowTouchText.setTextColor(Color.RED);
       swallowTouchText.setPosition(new Point(20, pageView.getPosition().y));
       this._mainNode.addChild(swallowTouchText);

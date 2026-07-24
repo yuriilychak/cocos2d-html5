@@ -179,7 +179,8 @@ export class RichText extends Widget {
 
   _initRenderer() {
     this._elementRenderersContainer = new Node();
-    this._elementRenderersContainer.setAnchorPoint(0.5, 0.5);
+    this._elementRenderersContainer.anchorX = 0.5;
+    this._elementRenderersContainer.anchorY = 0.5;
     this.addProtectedChild(this._elementRenderersContainer, 0, -1);
   }
 
@@ -404,7 +405,7 @@ export class RichText extends Widget {
 
       for (j = 0; j < row.length; j++) {
         l = row[j];
-        l.setAnchorPoint(new Point(0, 0));
+        l.anchor = new Point(0, 0);
         l.setPosition(nextPosX, 0);
         locRenderersContainer.addChild(l, 1, j);
 
@@ -455,7 +456,7 @@ export class RichText extends Widget {
 
         for (j = 0; j < row.length; j++) {
           l = row[j];
-          l.setAnchorPoint(new Point(0, 0));
+          l.anchor = new Point(0, 0);
           l.setPosition(new Point(nextPosX, nextPosY));
           locRenderersContainer.addChild(l, 1);
           nextPosX += l.width;
@@ -519,22 +520,35 @@ export class RichText extends Widget {
     this._verticalSpace = space;
   }
 
+  get anchor() {
+    return super.anchor;
+  }
   /**
    * Sets anchor point
    * @override
    * @param {Point} pt
    */
-  setAnchorPoint(pt) {
-    super.setAnchorPoint(pt);
-    this._elementRenderersContainer.setAnchorPoint(pt);
+  set anchor(pt) {
+    super.anchor = pt;
+    this._elementRenderersContainer.anchor = pt;
   }
-  _setAnchorX(x) {
-    super._setAnchorX(x);
-    this._elementRenderersContainer._setAnchorX(x);
+
+  get anchorX() {
+    return super.anchorX;
   }
-  _setAnchorY(y) {
-    super._setAnchorY(y);
-    this._elementRenderersContainer._setAnchorY(y);
+
+  set anchorX(x) {
+    super.anchorX = x;
+    this._elementRenderersContainer.anchorX = x;
+  }
+
+  get anchorY() {
+    return super.anchorY;
+  }
+
+  set anchorY(y) {
+    super.anchorY = y;
+    this._elementRenderersContainer.anchorY = y;
   }
 
   /**

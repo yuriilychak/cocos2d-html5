@@ -144,7 +144,8 @@ export class Sprite extends EventHelper(Node) {
     this._polygonInfo = null;
 
     // default transform anchor: center
-    this.setAnchorPoint(0.5, 0.5);
+    this.anchorX = 0.5;
+    this.anchorY = 0.5;
 
     self._loader = new Sprite.LoadManager();
     self._shouldBeHidden = false;

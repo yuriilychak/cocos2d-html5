@@ -36,7 +36,7 @@ export class UICheckBoxDefaultBehaviorTest extends UIMainLayer {
 
       // Add a label in which the checkbox events will be displayed
       this._displayValueLabel = new Text("No Event", "Marker Felt", 32);
-      this._displayValueLabel.setAnchorPoint(new Point(0.5, -1));
+      this._displayValueLabel.anchor = new Point(0.5, -1);
       this._displayValueLabel.setPosition(
         new Point(widgetSize.width / 2, widgetSize.height / 2)
       );

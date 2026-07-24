@@ -155,7 +155,7 @@ import { _ccsLoad } from "./load/utils.js";
                 var frame = new AnchorPointFrame();
                 var anchorx = options["X"];
                 var anchory = options["Y"];
-                frame.setAnchorPoint(new Point(anchorx, anchory));
+                frame.anchor = new Point(anchorx, anchory);
                 return frame;
             }
         },{
@@ -164,7 +164,7 @@ import { _ccsLoad } from "./load/utils.js";
                 var frame = new AnchorPointFrame();
                 var anchorx = options["X"];
                 var anchory = options["Y"];
-                frame.setAnchorPoint(new Point(anchorx, anchory));
+                frame.anchor = new Point(anchorx, anchory);
                 return frame;
             }
         },{

@@ -250,7 +250,8 @@ export class TableView extends GScrollView {
   }
 
   _setIndexForCell(index, cell) {
-    cell.setAnchorPoint(0, 0);
+    cell.anchorX = 0;
+    cell.anchorY = 0;
     cell.setPosition(this._offsetFromIndex(index));
     cell.setIdx(index);
   }
@@ -442,14 +443,14 @@ export class TableView extends GScrollView {
     var maxIdx = Math.max(countOfItems - 1, 0);
 
     if (this._vOrdering === TABLEVIEW_FILL_TOPDOWN)
-      offset.y = offset.y + locViewSize.height / locContainer.getScaleY();
+      offset.y = offset.y + locViewSize.height / locContainer.scaleY;
     var startIdx = this._indexFromOffset(offset);
     if (startIdx === INVALID_INDEX) startIdx = countOfItems - 1;
 
     if (this._vOrdering === TABLEVIEW_FILL_TOPDOWN)
-      offset.y -= locViewSize.height / locContainer.getScaleY();
-    else offset.y += locViewSize.height / locContainer.getScaleY();
-    offset.x += locViewSize.width / locContainer.getScaleX();
+      offset.y -= locViewSize.height / locContainer.scaleY;
+    else offset.y += locViewSize.height / locContainer.scaleY;
+    offset.x += locViewSize.width / locContainer.scaleX;
 
     var endIdx = this._indexFromOffset(offset);
     if (endIdx === INVALID_INDEX) endIdx = countOfItems - 1;

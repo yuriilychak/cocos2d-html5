@@ -112,7 +112,7 @@ export const displayFactory = {
                     helpTransform.d = displayTransform.d;
                     helpTransform.tx = displayTransform.tx;
                     helpTransform.ty = displayTransform.ty;
-                    var anchorPoint = AffineTransform.applyToPoint(node.getAnchorPointInPoints(), helpTransform);
+                    var anchorPoint = AffineTransform.applyToPoint(node.anchorPointInPoints, helpTransform);
                     helpTransform.tx = anchorPoint.x;
                     helpTransform.ty = anchorPoint.y;
                     var t = AffineTransform.concat(helpTransform, bone.armature.getNodeToParentTransform());
@@ -168,7 +168,7 @@ export const displayFactory = {
         var textureData = armatureDataManager.getTextureData(textureName);
         if (textureData) {
             //! Init display anchorPoint, every Texture have a anchor point
-            skin.setAnchorPoint(new Point(textureData.pivotX, textureData.pivotY));
+            skin.anchor = new Point(textureData.pivotX, textureData.pivotY);
         }
 
         if (ENABLE_PHYSICS_CHIPMUNK_DETECT || ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX) {

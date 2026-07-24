@@ -103,15 +103,10 @@ export class UIWebViewTest extends UIMainLayer {
       {
         name: "setAnchorPoint",
         func: function () {
-          var anpX =
-            webView.getAnchorPoint().x === 1
-              ? 0
-              : webView.getAnchorPoint().x + 0.5;
-          var anpY =
-            webView.getAnchorPoint().y === 1
-              ? 0
-              : webView.getAnchorPoint().y + 0.5;
-          webView.setAnchorPoint(anpX, anpY);
+          var anpX = webView.anchorX === 1 ? 0 : webView.anchorX + 0.5;
+          var anpY = webView.anchorY === 1 ? 0 : webView.anchorY + 0.5;
+          webView.anchorX = anpX;
+          webView.anchorY = anpY;
         }
       }
     ];

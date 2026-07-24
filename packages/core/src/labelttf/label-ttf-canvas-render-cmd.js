@@ -263,7 +263,7 @@ export const LabelRenderMixin = (Base) =>
       node._strokeShadowOffsetY = locStrokeShadowOffsetY;
 
       // need computing _anchorPointInPoints
-      const locAP = node._anchorPoint;
+      const locAP = node.anchor;
       this._anchorPointInPoints.x =
         locStrokeShadowOffsetX * 0.5 +
         (locSize.width - locStrokeShadowOffsetX) * locAP.x;

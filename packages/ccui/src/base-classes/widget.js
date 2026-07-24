@@ -248,7 +248,8 @@ export class Widget extends ProtectedNode {
 
     this.onFocusChanged = this.onFocusChange;
     this.onNextFocusedWidget = null;
-    this.setAnchorPoint(new Point(0.5, 0.5));
+    this.anchorX = 0.5;
+    this.anchorY = 0.5;
 
     this.ignoreContentAdaptWithSize(true);
     return true;
@@ -599,8 +600,8 @@ export class Widget extends ProtectedNode {
   getWorldPosition() {
     return this.convertToWorldSpace(
       new Point(
-        this._anchorPoint.x * this.width,
-        this._anchorPoint.y * this.height
+        this.anchorX * this.width,
+        this.anchorY * this.height
       )
     );
   }
@@ -1089,11 +1090,11 @@ export class Widget extends ProtectedNode {
   }
 
   getLeftBoundary() {
-    return this.x - this._getAnchorX() * this.width;
+    return this.x - this.anchorX * this.width;
   }
 
   getBottomBoundary() {
-    return this.y - this._getAnchorY() * this.height;
+    return this.y - this.anchorY * this.height;
   }
 
   getRightBoundary() {
@@ -1177,8 +1178,8 @@ export class Widget extends ProtectedNode {
     this._positionPercent.x = widget._positionPercent.x;
     this._positionPercent.y = widget._positionPercent.y;
 
-    this.setPosition(widget.getPosition());
-    this.setAnchorPoint(widget.getAnchorPoint());
+    this.position = widget.position;
+    this.anchor = widget.anchor;
     this.scaleX = widget.scaleX;
     this.scaleY = widget.scaleY;
     this.rotation = widget.rotation;
@@ -1349,10 +1350,9 @@ export class Widget extends ProtectedNode {
     super.scaleY = this._flippedY ? -scaleY : scaleY;
   }
 
-  setScale(scaleX, scaleY) {
-    if (scaleY === undefined) scaleY = scaleX;
+  set scale(scaleX) {
     this.scaleX = scaleX;
-    this.scaleY = scaleY;
+    this.scaleY = scaleX;
   }
   get scaleX() {
     return this._flippedX ? -super.scaleX : super.scaleX;
@@ -1360,7 +1360,8 @@ export class Widget extends ProtectedNode {
   get scaleY() {
     return this._flippedY ? -super.scaleY : super.scaleY;
   }
-  getScale() {
+
+  get scale() {
     if (this.scaleX !== this.scaleY)
       log("Widget#scale. ScaleX != ScaleY. Don't know which one to return");
     return this.scaleX;

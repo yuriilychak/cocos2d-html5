@@ -31,7 +31,8 @@ export class MyLayer extends Layer {
 
     // add "Helloworld" splash screen"
     this.sprite = new Sprite(s_HelloWorld);
-    this.sprite.setAnchorPoint(0.5, 0.5);
+    this.sprite.anchorX = 0.5;
+    this.sprite.anchorY = 0.5;
     this.sprite.setPosition(size.width / 2, size.height / 2);
     this.sprite.scale = size.height / this.sprite.contentSize.height;
     this.addChild(this.sprite, 0);

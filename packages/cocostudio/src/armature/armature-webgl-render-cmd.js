@@ -49,22 +49,17 @@ export class ArmatureWebGLRenderCmd extends Node.WebGLRenderCmd {
   }
 
   _updateAnchorPointInPoint() {
-    var node = this._node;
-    var contentSize = node.contentSize,
-      anchorPoint = node._anchorPoint,
-      offsetPoint = node._offsetPoint;
-    this._anchorPointInPoints.x =
-      contentSize.width * anchorPoint.x - offsetPoint.x;
-    this._anchorPointInPoints.y =
-      contentSize.height * anchorPoint.y - offsetPoint.y;
+    const size = this._node.contentSize.toPoint();
+    const anchor = this._node.anchor;
+    const offset = this._node._offsetPoint;
 
-    this._realAnchorPointInPoints.x = contentSize.width * anchorPoint.x;
-    this._realAnchorPointInPoints.y = contentSize.height * anchorPoint.y;
+    this._anchorPointInPoints.set(Point.subIn(Point.compMult(size, anchor), offset));
+    this._realAnchorPointInPoints.set(Point.compMult(size, anchor));
     this.setDirtyFlag(Node._dirtyFlags.transformDirty);
   }
 
-  getAnchorPointInPoints() {
-    return new Point(this._realAnchorPointInPoints);
+  get anchorPointInPoints() {
+    return this._realAnchorPointInPoints.clone();
   }
 
   uploadData(f32buffer, ui32buffer, vertexDataOffset) {

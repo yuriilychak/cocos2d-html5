@@ -443,9 +443,9 @@ document.head.appendChild(style);
         c = t.c,
         d = t.d * scaleY,
         tx =
-          offsetX + t.tx * scaleX - cw / 2 + ((cw * node._scaleX) / 2) * scaleX,
+          offsetX + t.tx * scaleX - cw / 2 + ((cw * node.scaleX) / 2) * scaleX,
         ty =
-          offsetY + t.ty * scaleY - ch / 2 + ((ch * node._scaleY) / 2) * scaleY;
+          offsetY + t.ty * scaleY - ch / 2 + ((ch * node.scaleY) / 2) * scaleY;
       var matrix =
         "matrix(" +
         a +

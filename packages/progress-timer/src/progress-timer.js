@@ -294,7 +294,8 @@ export class ProgressTimer extends Node {
    */
   initWithSprite(sprite) {
     this.percentage = 0;
-    this.setAnchorPoint(0.5, 0.5);
+    this.anchorX = 0.5;
+    this.anchorY = 0.5;
 
     this._type = TYPE_RADIAL;
     this._reverseDirection = false;

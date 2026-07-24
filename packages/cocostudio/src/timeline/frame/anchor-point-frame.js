@@ -30,9 +30,30 @@ import { Frame } from "./frame.js";
  * @extend Frame
  */
 export class AnchorPointFrame extends Frame {
-  constructor() {
+  #anchor = new Point();
+
+  constructor(anchor = null) {
     super();
-    this._anchorPoint = new Point();
+
+    if (anchor) {
+      this.#anchor.set(anchor);
+    }
+  }
+
+  /**
+   * Gets the anchor point
+   * @returns {p}
+   */
+  get anchor() {
+    return this.#anchor.clone();
+  }
+
+  /**
+   * Set the anchor point
+   * @param {p} point
+   */
+  set anchor(value) {
+    this.#anchor.set(value);
   }
 
   /**
@@ -40,7 +61,9 @@ export class AnchorPointFrame extends Frame {
    * @param {Frame} nextFrame
    */
   onEnter(nextFrame) {
-    if (this._node) this._node.setAnchorPoint(this._anchorPoint);
+    if (this._node) {
+      this._node.anchor = this.#anchor;
+    }
   }
 
   /**
@@ -49,27 +72,9 @@ export class AnchorPointFrame extends Frame {
    * @return {AnchorPointFrame}
    */
   clone() {
-    var frame = new AnchorPointFrame();
-    frame.setAnchorPoint(this._anchorPoint);
-
+    var frame = new AnchorPointFrame(this.#anchor);
     frame._cloneProperty(this);
 
     return frame;
-  }
-
-  /**
-   * Set the anchor point
-   * @param {p} point
-   */
-  setAnchorPoint(point) {
-    this._anchorPoint = point;
-  }
-
-  /**
-   * Gets the anchor point
-   * @returns {p}
-   */
-  getAnchorPoint() {
-    return this._anchorPoint;
   }
 }

@@ -91,8 +91,8 @@ export class RenderCmd {
     return this._needDraw;
   }
 
-  getAnchorPointInPoints() {
-    return new Point(this._anchorPointInPoints);
+  get anchorPointInPoints() {
+    return this._anchorPointInPoints.clone();
   }
 
   getDisplayedColor() {
@@ -129,7 +129,7 @@ export class RenderCmd {
   _updateAnchorPointInPoint() {
     const locAPP = this._anchorPointInPoints,
       locSize = this._node.contentSize,
-      locAnchorPoint = this._node._anchorPoint;
+      locAnchorPoint = this._node.anchor;
     locAPP.x = locSize.width * locAnchorPoint.x;
     locAPP.y = locSize.height * locAnchorPoint.y;
     this.setDirtyFlag(dirtyFlags.transformDirty);
@@ -167,8 +167,8 @@ export class RenderCmd {
 
     const hasRotation = node.rotationX || node.rotationY;
     const hasSkew = node._skewX || node._skewY;
-    const sx = node._scaleX,
-      sy = node._scaleY;
+    const sx = node.scaleX,
+      sy = node.scaleY;
     const appX = this._anchorPointInPoints.x,
       appY = this._anchorPointInPoints.y;
     let a = 1,

@@ -59,7 +59,7 @@ export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
       var pageView = new PageView();
       pageView.width = 240.0;
       pageView.height = 130.0;
-      pageView.setAnchorPoint(new Point(0.5, 0.5));
+      pageView.anchor = new Point(0.5, 0.5);
       pageView.setPosition(
         new Point(widgetSize.width / 2.0, widgetSize.height / 2.0)
       );
@@ -98,7 +98,8 @@ export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
 
       //add buttons
       var button = new Button();
-      button.setAnchorPoint(0, 0.5);
+      button.anchorX = 0;
+      button.anchorY = 0.5;
       button.setTitleFontSize(12);
       button.setPosition(20, 220);
       button.setTitleText("Add A Page");
@@ -135,7 +136,8 @@ export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
       this._mainNode.addChild(button);
 
       var button2 = new Button();
-      button2.setAnchorPoint(0, 0.5);
+      button2.anchorX = 0;
+      button2.anchorY = 0.5;
       button2.setTitleFontSize(12);
       button2.setPosition(20, 180);
       button2.setTitleText("Remove A Page");
@@ -154,7 +156,8 @@ export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
       this._mainNode.addChild(button2);
 
       var button3 = new Button();
-      button3.setAnchorPoint(0, 0.5);
+      button3.anchorX = 0;
+      button3.anchorY = 0.5;
       button3.setTitleFontSize(12);
       button3.setPosition(new Point(20, 140));
       button3.setTitleText("Remove All Pages");

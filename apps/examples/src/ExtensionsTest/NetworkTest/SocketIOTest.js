@@ -73,7 +73,8 @@ export class SocketIOTestLayer extends BaseTestLayer {
     ));
 
     this._sioClientStatus = new TextBMFont("Not connected...", s_simpleFont_fnt);
-    this._sioClientStatus.setAnchorPoint(0, 0);
+    this._sioClientStatus.anchorX = 0;
+    this._sioClientStatus.anchorY = 0;
     this._sioClientStatus.setPosition(10, 10);
     this.addChild(this._sioClientStatus);
 

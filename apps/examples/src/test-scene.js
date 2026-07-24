@@ -71,7 +71,8 @@ export class TestScene extends Scene {
     this.addChild(header, 10);
 
     const testInfoLabel = new TextBMFont(title, s_simpleFont_fnt);
-    testInfoLabel.setAnchorPoint(0, 0.5);
+    testInfoLabel.anchorX = 0;
+    testInfoLabel.anchorY = 0.5;
     testInfoLabel.x = PADDING;
     testInfoLabel.y = centerY;
     testInfoLabel.fontSize = 14;

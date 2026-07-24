@@ -107,7 +107,8 @@ export default class LayerCanvasRenderer extends NodeCanvasRenderCmd {
 
       if (!this._bakeSprite) {
         this._bakeSprite = new BakeSprite();
-        this._bakeSprite.setAnchorPoint(0, 0);
+        this._bakeSprite.anchorX = 0;
+        this._bakeSprite.anchorY = 0;
       }
     }
   }

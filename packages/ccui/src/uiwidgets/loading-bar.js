@@ -64,7 +64,8 @@ export class LoadingBar extends Widget {
   _initRenderer() {
     this._barRenderer = new Sprite();
     this.addProtectedChild(this._barRenderer, LoadingBar.RENDERER_ZORDER, -1);
-    this._barRenderer.setAnchorPoint(0.0, 0.5);
+    this._barRenderer.anchorX = 0.0;
+    this._barRenderer.anchorY = 0.5;
   }
 
   setDirection(dir) {
@@ -72,13 +73,15 @@ export class LoadingBar extends Widget {
     this._direction = dir;
     switch (this._direction) {
       case LoadingBar.TYPE_LEFT:
-        this._barRenderer.setAnchorPoint(0, 0.5);
+        this._barRenderer.anchorX = 0;
+        this._barRenderer.anchorY = 0.5;
         this._barRenderer.setPosition(0, this.height * 0.5);
         if (!this._scale9Enabled) this._barRenderer.setFlippedX(false);
 
         break;
       case LoadingBar.TYPE_RIGHT:
-        this._barRenderer.setAnchorPoint(1, 0.5);
+        this._barRenderer.anchorX = 1;
+        this._barRenderer.anchorY = 0.5;
         this._barRenderer.setPosition(this._totalLength, this.height * 0.5);
         if (!this._scale9Enabled) this._barRenderer.setFlippedX(true);
 
@@ -122,11 +125,13 @@ export class LoadingBar extends Widget {
 
     switch (this._direction) {
       case LoadingBar.TYPE_LEFT:
-        barRenderer.setAnchorPoint(0, 0.5);
+        barRenderer.anchorX = 0;
+        barRenderer.anchorY = 0.5;
         if (!this._scale9Enabled) barRenderer.setFlippedX(false);
         break;
       case LoadingBar.TYPE_RIGHT:
-        barRenderer.setAnchorPoint(1, 0.5);
+        barRenderer.anchorX = 1;
+        barRenderer.anchorY = 0.5;
         if (!this._scale9Enabled) barRenderer.setFlippedX(true);
         break;
     }

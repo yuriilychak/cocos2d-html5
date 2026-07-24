@@ -60,7 +60,7 @@ export class UIListViewTest_Magnetic extends UIMainLayer {
       this._listView.height = widgetSize.height / 2;
       this._listView.setScrollBarPositionFromCorner(new Point(7, 7));
       this._listView.setItemsMargin(2.0);
-      this._listView.setAnchorPoint(new Point(0.5, 0.5));
+      this._listView.anchor = new Point(0.5, 0.5);
 
       this._listView.x = widgetSize.width / 2;
       this._listView.y = widgetSize.height / 2;
@@ -103,7 +103,7 @@ export class UIListViewTest_Magnetic extends UIMainLayer {
         "ccs-res/cocosui/backtotoppressed.png",
         "ccs-res/cocosui/backtotopnormal.png"
       );
-      pButton.setAnchorPoint(new Point(0.5, 0.5));
+      pButton.anchor = new Point(0.5, 0.5);
       pButton.scale = 0.8;
       pButton.setPosition(
         Point.add(

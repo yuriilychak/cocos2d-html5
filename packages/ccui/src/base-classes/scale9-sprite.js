@@ -371,7 +371,8 @@ export class Scale9Sprite extends EventHelper(Node) {
 
     this._renderCmd.setState(this._brightState);
     this._blendFunc = BlendFunc.ALPHA_PREMULTIPLIED;
-    this.setAnchorPoint(new Point(0.5, 0.5));
+    this.anchorX = 0.5;
+    this.anchorY = 0.5;
     this._rawVerts = null;
     this._rawUvs = null;
     this._vertices = dataPool.get(8) || new Float32Array(8);

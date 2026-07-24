@@ -313,10 +313,8 @@ export class Armature extends Node {
     locOffsetPoint.x = -rect.x;
     locOffsetPoint.y = -rect.y;
     if (rect.width !== 0 && rect.height !== 0)
-      this.setAnchorPoint(
-        locOffsetPoint.x / rect.width,
-        locOffsetPoint.y / rect.height
-      );
+      this.anchorX = locOffsetPoint.x / rect.width;
+      this.anchorY = locOffsetPoint.y / rect.height;
   }
 
   getOffsetPoints() {

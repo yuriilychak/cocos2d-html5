@@ -332,7 +332,8 @@ export class TMXLayer extends SpriteBatchNode {
       tile.setPosition(this.getPositionAt(x, y));
       var vertexZ = this._vertexZForPos(x, y);
       tile.setVertexZ(vertexZ);
-      tile.setAnchorPoint(0, 0);
+      tile.anchorX = 0;
+      tile.anchorY = 0;
       tile.opacity = this._opacity;
 
       this.addChild(tile, vertexZ, z);
@@ -599,14 +600,16 @@ export class TMXLayer extends SpriteBatchNode {
     var posInPixel = this.getPositionAt(pos);
     sprite.setPosition(posInPixel);
     sprite.setVertexZ(this._vertexZForPos(pos));
-    sprite.setAnchorPoint(0, 0);
+    sprite.anchorX = 0;
+    sprite.anchorY = 0;
     sprite.opacity = this._opacity;
     sprite.setFlippedX(false);
     sprite.setFlippedY(false);
     sprite.rotation = 0;
 
     if ((gid & TMX_TILE_DIAGONAL_FLAG) >>> 0) {
-      sprite.setAnchorPoint(0.5, 0.5);
+      sprite.anchorX = 0.5;
+      sprite.anchorY = 0.5;
       sprite.setPosition(
         posInPixel.x + sprite.width / 2,
         posInPixel.y + sprite.height / 2

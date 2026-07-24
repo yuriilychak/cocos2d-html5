@@ -25,7 +25,7 @@ const BOUNCE_BACK_FACTOR = 0.35;
 
 export function convertDistanceFromPointToInch(pointDis) {
   var eglViewer = ServiceLocator.eglView;
-  var factor = (eglViewer.getScaleX() + eglViewer.getScaleY()) / 2;
+  var factor = (eglViewer.scaleX + eglViewer.scaleY) / 2;
   return (pointDis * factor) / 160;
 }
 
@@ -226,7 +226,7 @@ export class GScrollView extends Layer {
     }
 
     var locContainer = this._container;
-    if (locContainer.getScale() !== scale) {
+    if (locContainer.scale !== scale) {
       var oldCenter, newCenter;
       var center;
 
@@ -237,8 +237,9 @@ export class GScrollView extends Layer {
       } else center = this._touchPoint;
 
       oldCenter = locContainer.convertToNodeSpace(center);
-      locContainer.setScale(
-        Math.max(this._minScale, Math.min(this._maxScale, scale))
+      locContainer.scale = Math.max(
+        this._minScale,
+        Math.min(this._maxScale, scale)
       );
       newCenter = locContainer.convertToWorldSpace(oldCenter);
 
@@ -250,12 +251,12 @@ export class GScrollView extends Layer {
   }
 
   getZoomScale() {
-    return this._container.getScale();
+    return this._container.scale;
   }
 
   setZoomScaleInDuration(s, dt) {
     if (dt > 0) {
-      var locScale = this._container.getScale();
+      var locScale = this._container.scale;
       if (locScale !== s) {
         var scaleAction = new ActionTween(dt, "zoomScale", locScale, s);
         this.runAction(scaleAction);
@@ -268,9 +269,9 @@ export class GScrollView extends Layer {
   minContainerOffset() {
     return new Point(
       this._viewSize.width -
-        this._container.width * this._container.getScaleX(),
+        this._container.width * this._container.scaleX,
       this._viewSize.height -
-        this._container.height * this._container.getScaleY()
+        this._container.height * this._container.scaleY
     );
   }
 
@@ -344,7 +345,8 @@ export class GScrollView extends Layer {
 
     this._container = container;
     container.ignoreAnchorPointForPosition(false);
-    container.setAnchorPoint(0, 0);
+    container.anchorX = 0;
+    container.anchorY = 0;
 
     this.addChild(container);
     this.setViewSize(this._viewSize);

@@ -2,17 +2,18 @@ import { ScaleTo } from "@aspect/actions";
 
 import { ActionFrame } from "./action-frame.js";
 import { FRAME_TYPE_SCALE } from "./constants.js";
+import { Point } from "@aspect/core";
 /**
  * The Cocostudio's scale action frame
  */
 export class ActionScaleFrame extends ActionFrame {
+  #scale = new Point(1, 1);
   /**
    * Construction of ActionScaleFrame
    */
   constructor() {
     super();
-    this._scaleX = 1;
-    this._scaleY = 1;
+
     this.frameType = FRAME_TYPE_SCALE;
   }
 
@@ -21,7 +22,7 @@ export class ActionScaleFrame extends ActionFrame {
    * @param {number} scaleX
    */
   set scaleX(scaleX) {
-    this._scaleX = scaleX;
+    this.#scale.x = scaleX;
   }
 
   /**
@@ -29,7 +30,7 @@ export class ActionScaleFrame extends ActionFrame {
    * @returns {number}
    */
   get scaleX() {
-    return this._scaleX;
+    return this.#scale.x;
   }
 
   /**
@@ -37,7 +38,7 @@ export class ActionScaleFrame extends ActionFrame {
    * @param {number} scaleY
    */
   set scaleY(scaleY) {
-    this._scaleY = scaleY;
+    this.#scale.y = scaleY;
   }
 
   /**
@@ -45,7 +46,7 @@ export class ActionScaleFrame extends ActionFrame {
    * @returns {number}
    */
   get scaleY() {
-    return this._scaleY;
+    return this.#scale.y;
   }
 
   /**
@@ -55,7 +56,7 @@ export class ActionScaleFrame extends ActionFrame {
    */
   getAction(duration) {
     return this._getEasingAction(
-      new ScaleTo(duration, this._scaleX, this._scaleY)
+      new ScaleTo(duration, this.#scale.x, this.#scale.y)
     );
   }
 };
