@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Color } from "@aspect/core";
+import { Color, Point } from "@aspect/core";
 
 import { DOUBLE_PI, M_PI } from "../../animation/tween-function/constants.js";
 /**
@@ -49,6 +49,8 @@ import { DOUBLE_PI, M_PI } from "../../animation/tween-function/constants.js";
  * @property {Number}         a                - a of color
  */
 export class BaseData extends Color {
+  #skew = new Point();
+  #scale = new Point();
   /**
    * Construction of BaseData
    */
@@ -57,14 +59,63 @@ export class BaseData extends Color {
     this.x = 0;
     this.y = 0;
     this.zOrder = 0;
-    this.skewX = 0;
-    this.skewY = 0;
     this.scaleX = 1;
     this.scaleY = 1;
     this.tweenRotate = 0;
     this.isUseColorInfo = false;
   }
 
+  get scale() {
+    return this.#scale.x;
+  }
+
+  set scale(value) {
+    if (this.#scale.x === value && this.#scale.y === value) {
+      return;
+    }
+
+    this.#scale.set(value, value);
+  }
+
+  get scaleX() {
+    return this.#scale.x;
+  }
+
+  set scaleX(value) {
+    this.#scale.x = value;
+  }
+
+  get scaleY() {
+    return this.#scale.y;
+  }
+
+  set scaleY(value) {
+    this.#scale.y = value;
+  }
+
+  get skew() {
+    return this.#skew.clone();
+  }
+
+  set skew(value) {
+    this.#skew.set(value);
+  }
+
+  get skewX() {
+    return this.#skew.x;
+  }
+
+  set skewX(value) {
+    this.#skew.x = value;
+  }
+
+  get skewY() {
+    return this.#skew.y;
+  }
+
+  set skewY(value) {
+    this.#skew.y = value;
+  }
   /**
    * Copy data from node
    * @function
@@ -75,10 +126,8 @@ export class BaseData extends Color {
     this.y = node.y;
     this.zOrder = node.zOrder;
 
-    this.scaleX = node.scaleX;
-    this.scaleY = node.scaleY;
-    this.skewX = node.skewX;
-    this.skewY = node.skewY;
+    this.#scale.set(node.scaleX, node.scaleY);
+    this.#skew.set(node.skew);
 
     this.tweenRotate = node.tweenRotate;
 

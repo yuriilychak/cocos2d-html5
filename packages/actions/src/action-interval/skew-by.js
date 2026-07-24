@@ -29,8 +29,8 @@ export default class SkewBy extends SkewTo {
   initWithDuration(t, deltaSkewX, deltaSkewY) {
     var ret = false;
     if (super.initWithDuration(t, deltaSkewX, deltaSkewY)) {
-      this._skewX = deltaSkewX;
-      this._skewY = deltaSkewY;
+      this.skewX = deltaSkewX;
+      this.skewY = deltaSkewY;
       ret = true;
     }
     return ret;
@@ -43,7 +43,7 @@ export default class SkewBy extends SkewTo {
   clone() {
     var action = new SkewBy();
     this._cloneDecoration(action);
-    action.initWithDuration(this._duration, this._skewX, this._skewY);
+    action.initWithDuration(this._duration, this.skewX, this.skewY);
     return action;
   }
 
@@ -53,8 +53,8 @@ export default class SkewBy extends SkewTo {
    */
   startWithTarget(target) {
     super.startWithTarget(target);
-    this._deltaX = this._skewX;
-    this._deltaY = this._skewY;
+    this._deltaX = this.skewX;
+    this._deltaY = this.skewY;
     this._endSkewX = this._startSkewX + this._deltaX;
     this._endSkewY = this._startSkewY + this._deltaY;
   }
@@ -64,7 +64,7 @@ export default class SkewBy extends SkewTo {
    * @return {SkewBy}
    */
   reverse() {
-    var action = new SkewBy(this._duration, -this._skewX, -this._skewY);
+    var action = new SkewBy(this._duration, -this.skewX, -this.skewY);
     this._cloneDecoration(action);
     this._reverseEaseList(action);
     return action;

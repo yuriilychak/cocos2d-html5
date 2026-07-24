@@ -1,3 +1,4 @@
+import { Point } from "@aspect/core";
 import ActionInterval from "./action-interval";
 
 /**
@@ -9,8 +10,7 @@ import ActionInterval from "./action-interval";
  * var actionTo = new SkewTo(2, 37.2, -37.2);
  */
 export default class SkewTo extends ActionInterval {
-  _skewX = 0;
-  _skewY = 0;
+  #skew = new Point();
   _startSkewX = 0;
   _startSkewY = 0;
   _endSkewX = 0;
@@ -28,6 +28,22 @@ export default class SkewTo extends ActionInterval {
     super();
 
     sy !== undefined && this.initWithDuration(t, sx, sy);
+  }
+
+  get skewX() {
+    return this.#skew.x;
+  }
+
+  set skewX(value) {
+    this.#skew.x = value;
+  }
+
+  get skewY() {
+    return this.#skew.y;
+  }
+
+  set skewY(value) {
+    this.#skew.y = value;
   }
 
   /**

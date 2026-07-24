@@ -219,9 +219,9 @@ export class Bone extends Node {
       locWorldInfo.scaleX = locTweenData.scaleX * this.scaleX;
       locWorldInfo.scaleY = locTweenData.scaleY * this.scaleY;
       locWorldInfo.skewX =
-        locTweenData.skewX + this._skewX + degreesToRadians(this.rotationX);
+        locTweenData.skewX + this.skewX + degreesToRadians(this.rotationX);
       locWorldInfo.skewY =
-        locTweenData.skewY + this._skewY - degreesToRadians(this.rotationY);
+        locTweenData.skewY + this.skewY - degreesToRadians(this.rotationY);
 
       if (this._parentBone) this._applyParentTransform(this._parentBone);
       else {

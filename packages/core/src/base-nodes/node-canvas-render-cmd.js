@@ -166,7 +166,7 @@ export class RenderCmd {
     }
 
     const hasRotation = node.rotationX || node.rotationY;
-    const hasSkew = node._skewX || node._skewY;
+    const hasSkew = node.skewX || node.skewY;
     const sx = node.scaleX,
       sy = node.scaleY;
     const appX = this._anchorPointInPoints.x,
@@ -203,8 +203,8 @@ export class RenderCmd {
 
       // skew
       if (hasSkew) {
-        let skx = Math.tan(node._skewX * ONE_DEGREE);
-        let sky = Math.tan(node._skewY * ONE_DEGREE);
+        let skx = Math.tan(node.skewX * ONE_DEGREE);
+        let sky = Math.tan(node.skewY * ONE_DEGREE);
         if (skx === Infinity) skx = 99999999;
         if (sky === Infinity) sky = 99999999;
         t.a = a + c * sky;

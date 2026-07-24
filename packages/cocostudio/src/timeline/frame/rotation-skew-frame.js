@@ -30,18 +30,22 @@ import { SkewFrame } from "./skew-frame.js";
  * @extend SkewFrame
  */
 export class RotationSkewFrame extends SkewFrame {
+
+  constructor(skew = null) {
+    super(skew);
+  }
   /**
    * the execution of the callback
    * @param {Frame} nextFrame
    */
   onEnter(nextFrame) {
     if (!this._node) return;
-    this._node.rotationX = this._skewX;
-    this._node.rotationY = this._skewY;
+    this._node.rotationX = this.skewX;
+    this._node.rotationY = this.skewY;
 
     if (this._tween) {
-      this._betweenSkewX = nextFrame._skewX - this._skewX;
-      this._betweenSkewY = nextFrame._skewY - this._skewY;
+      this._betweenSkewX = nextFrame.skewX - this.skewX;
+      this._betweenSkewY = nextFrame.skewY - this.skewY;
     }
   }
 
@@ -51,8 +55,8 @@ export class RotationSkewFrame extends SkewFrame {
    */
   _onApply(percent) {
     if (this._node && (this._betweenSkewX !== 0 || this._betweenSkewY !== 0)) {
-      this._node.rotationX = this._skewX + percent * this._betweenSkewX;
-      this._node.rotationY = this._skewY + percent * this._betweenSkewY;
+      this._node.rotationX = this.skewX + percent * this._betweenSkewX;
+      this._node.rotationY = this.skewY + percent * this._betweenSkewY;
     }
   }
 
@@ -62,9 +66,7 @@ export class RotationSkewFrame extends SkewFrame {
    * @return {RotationSkewFrame}
    */
   clone() {
-    var frame = new RotationSkewFrame();
-    frame.skewX = this._skewX;
-    frame.skewY = this._skewY;
+    var frame = new RotationSkewFrame(this.skew);
 
     frame._cloneProperty(this);
 

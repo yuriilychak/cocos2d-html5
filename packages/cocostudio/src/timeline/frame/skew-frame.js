@@ -22,6 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+import { Point } from "@aspect/core";
 import { Frame } from "./frame.js";
 
 
@@ -30,10 +31,14 @@ import { Frame } from "./frame.js";
  * @extend Frame
  */
 export class SkewFrame extends Frame {
-  constructor() {
+  #skew = new Point();
+
+  constructor(skew = null) {
     super();
-    this._skewX = 0;
-    this._skewY = 0;
+
+    if(skew !== null) {
+      this.#skew.set(skew);
+    }
   }
 
   /**
@@ -42,12 +47,12 @@ export class SkewFrame extends Frame {
    */
   onEnter(nextFrame) {
     if (!this._node) return;
-    this._node.skewX = this._skewX;
-    this._node.skewY = this._skewY;
+    this._node.skewX = this.#skew.x;
+    this._node.skewY = this.#skew.y;
 
     if (this._tween) {
-      this._betweenSkewX = nextFrame._skewX - this._skewX;
-      this._betweenSkewY = nextFrame._skewY - this._skewY;
+      this._betweenSkewX = nextFrame.skewX - this.#skew.x;
+      this._betweenSkewY = nextFrame.skewY - this.#skew.y;
     }
   }
 
@@ -57,8 +62,8 @@ export class SkewFrame extends Frame {
    */
   _onApply(percent) {
     if (this._betweenSkewX !== 0 || this._betweenSkewY !== 0) {
-      this._node.skewX = this._skewX + percent * this._betweenSkewX;
-      this._node.skewY = this._skewY + percent * this._betweenSkewY;
+      this._node.skewX = this.#skew.x + percent * this._betweenSkewX;
+      this._node.skewY = this.#skew.y + percent * this._betweenSkewY;
     }
   }
 
@@ -68,9 +73,7 @@ export class SkewFrame extends Frame {
    * @return {SkewFrame}
    */
   clone() {
-    var frame = new SkewFrame();
-    frame.skewX = this._skewX;
-    frame.skewY = this._skewY;
+    var frame = new SkewFrame(this.#skew);
 
     frame._cloneProperty(this);
 
@@ -82,7 +85,7 @@ export class SkewFrame extends Frame {
    * @param {Number} skewx
    */
   set skewX(skewx) {
-    this._skewX = skewx;
+    this.#skew.x = skewx;
   }
 
   /**
@@ -90,7 +93,7 @@ export class SkewFrame extends Frame {
    * @returns {Number}
    */
   get skewX() {
-    return this._skewX;
+    return this.#skew.x;
   }
 
   /**
@@ -98,7 +101,7 @@ export class SkewFrame extends Frame {
    * @param {Number} skewy
    */
   set skewY(skewy) {
-    this._skewY = skewy;
+    this.#skew.y = skewy;
   }
 
   /**
@@ -106,7 +109,15 @@ export class SkewFrame extends Frame {
    * @returns {Number}
    */
   get skewY() {
-    return this._skewY;
+    return this.#skew.y;
+  }
+
+  get skew() {
+    return this.#skew.clone();
+  }
+
+  set skew(value) {
+    this.#skew.set(value);
   }
 };
 

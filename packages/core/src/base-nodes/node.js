@@ -155,6 +155,7 @@ export class Node extends BaseClass {
   #contentSize = new Size();
   #scale = new Point(1, 1);
   #anchor = new Point();
+  #skew = new Point();
 
   _localZOrder = 0;
   _globalZOrder = 0;
@@ -163,8 +164,6 @@ export class Node extends BaseClass {
   _normalizedPosition = null;
   _usingNormalizedPosition = false;
   _normalizedPositionDirty = false;
-  _skewX = 0.0;
-  _skewY = 0.0;
   _visible = true;
   _running = false;
   _parent = null;
@@ -406,6 +405,19 @@ export class Node extends BaseClass {
     }
   }
 
+  get skew() {
+    return this.#skew.clone();
+  }
+
+  set skew(value) {
+    if(Point.equalTo(this.#skew, value)) {
+      return;
+    }
+    
+    this.#skew.set(value);
+    this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
+  }
+
   /**
    * <p>Returns the skew degrees in X </br>
    * The X skew angle of the node in degrees.  <br/>
@@ -417,7 +429,7 @@ export class Node extends BaseClass {
    * @return {Number} The X skew angle of the node in degrees.
    */
   get skewX() {
-    return this._skewX;
+    return this.#skew.x;
   }
 
   /**
@@ -432,7 +444,7 @@ export class Node extends BaseClass {
    * @param {Number} newSkewX The X skew angle of the node in degrees.
    */
   set skewX(newSkewX) {
-    this._skewX = newSkewX;
+    this.#skew.x = newSkewX;
     this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
   }
 
@@ -447,7 +459,7 @@ export class Node extends BaseClass {
    * @return {Number} The Y skew angle of the node in degrees.
    */
   get skewY() {
-    return this._skewY;
+    return this.#skew.y;
   }
 
   /**
@@ -462,7 +474,7 @@ export class Node extends BaseClass {
    * @param {Number} newSkewY  The Y skew angle of the node in degrees.
    */
   set skewY(newSkewY) {
-    this._skewY = newSkewY;
+    this.#skew.y = newSkewY;
     this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
   }
 
