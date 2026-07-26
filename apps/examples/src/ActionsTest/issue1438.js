@@ -55,8 +55,8 @@ export class Issue1438 extends ActionsDemo {
       }
     }
     // And display 60 frames per second
-    animation.setDelayPerUnit(1 / 60);
-    animation.setRestoreOriginalFrame(true);
+    animation.delayPerUnit = 1 / 60;
+    animation.restoreOriginalFrame = true;
 
     var action = new Animate(animation);
     this._kathia.runAction(action);
@@ -66,8 +66,8 @@ export class Issue1438 extends ActionsDemo {
     //
     var animCache = ServiceLocator.animationCache;
     animCache.addAnimations(s_animations2Plist);
-    var animation2 = animCache.getAnimation("dance_1");
-    animation2.setDelayPerUnit(1 / 60);
+    var animation2 = animCache.get("dance_1");
+    animation2.delayPerUnit = 1 / 60;
 
     var action2 = new Animate(animation2);
     this._tamara.runAction(new Sequence(action2, action2.reverse()));

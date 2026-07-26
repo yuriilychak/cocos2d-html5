@@ -81,7 +81,7 @@ export class AnimationCacheTest extends SpriteTestDemo {
     var animation = new Animation(animFrames, 0.2);
 
     // Add an animation to the Cache
-    ServiceLocator.animationCache.addAnimation(animation, "dance");
+    ServiceLocator.animationCache.set("dance", animation);
 
     //
     // create animation "dance gray"
@@ -96,7 +96,7 @@ export class AnimationCacheTest extends SpriteTestDemo {
     animation = new Animation(animFrames, 0.2);
 
     // Add an animation to the Cache
-    ServiceLocator.animationCache.addAnimation(animation, "dance_gray");
+    ServiceLocator.animationCache.set("dance_gray", animation);
 
     //
     // create animation "dance blue"
@@ -111,16 +111,16 @@ export class AnimationCacheTest extends SpriteTestDemo {
     animation = new Animation(animFrames, 0.2);
 
     // Add an animation to the Cache
-    ServiceLocator.animationCache.addAnimation(animation, "dance_blue");
+    ServiceLocator.animationCache.set("dance_blue", animation);
 
     var animCache = ServiceLocator.animationCache;
 
-    var normal = animCache.getAnimation("dance");
-    normal.setRestoreOriginalFrame(true);
-    var dance_grey = animCache.getAnimation("dance_gray");
-    dance_grey.setRestoreOriginalFrame(true);
-    var dance_blue = animCache.getAnimation("dance_blue");
-    dance_blue.setRestoreOriginalFrame(true);
+    var normal = animCache.get("dance");
+    normal.restoreOriginalFrame = true;
+    var dance_grey = animCache.get("dance_gray");
+    dance_grey.restoreOriginalFrame = true;
+    var dance_blue = animCache.get("dance_blue");
+    dance_blue.restoreOriginalFrame = true;
 
     var animN = new Animate(normal);
     var animG = new Animate(dance_grey);

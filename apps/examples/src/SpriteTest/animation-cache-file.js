@@ -63,8 +63,7 @@ export class AnimationCacheFile extends SpriteTestDemo {
     frameCache.addSpriteFrames(s_grossini_bluePlist);
 
     // Purge previously loaded animation
-    if (ServiceLocator.animationCache._clear)
-      ServiceLocator.animationCache._clear();
+    ServiceLocator.animationCache.clear();
     var animCache = ServiceLocator.animationCache;
 
     // Add an animation to the Cache
@@ -72,12 +71,12 @@ export class AnimationCacheFile extends SpriteTestDemo {
     // renamed from addAnimationsWithFile to addAnimations
     animCache.addAnimations(s_animationsPlist);
 
-    var normal = animCache.getAnimation("dance_1");
-    normal.setRestoreOriginalFrame(true);
-    var dance_grey = animCache.getAnimation("dance_2");
-    dance_grey.setRestoreOriginalFrame(true);
-    var dance_blue = animCache.getAnimation("dance_3");
-    dance_blue.setRestoreOriginalFrame(true);
+    var normal = animCache.get("dance_1");
+    normal.restoreOriginalFrame = true;
+    var dance_grey = animCache.get("dance_2");
+    dance_grey.restoreOriginalFrame = true;
+    var dance_blue = animCache.get("dance_3");
+    dance_blue.restoreOriginalFrame = true;
 
     var animN = new Animate(normal);
     var animG = new Animate(dance_grey);

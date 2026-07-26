@@ -52,7 +52,7 @@ export class DictionaryToFromTest extends UnitTestBase {
     var animCache = ServiceLocator.animationCache;
     animCache.addAnimations(s_animations2Plist);
 
-    var normal = animCache.getAnimation("dance_1");
+    var normal = animCache.get("dance_1");
     var frame = normal.getFrames()[0];
     var dict = frame.getUserInfo();
     this.log(JSON.stringify(dict));

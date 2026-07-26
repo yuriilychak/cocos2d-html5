@@ -312,8 +312,8 @@ export class ActionCustomTest extends ActionsDemo {
         "Images/grossini_dance_" + (i < 10 ? "0" + i : i) + ".png";
       animation.addSpriteFrameWithFile(frameName);
     }
-    animation.setDelayPerUnit(5 / 14);
-    animation.setRestoreOriginalFrame(true);
+    animation.delayPerUnit = 5 / 14;
+    animation.restoreOriginalFrame = true;
     var animate = new (createCustomAction(Animate))(animation);
     spriteTemp.runAction(animate);
   }

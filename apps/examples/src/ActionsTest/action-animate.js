@@ -50,8 +50,8 @@ export class ActionAnimate extends ActionsDemo {
         "Images/grossini_dance_" + (i < 10 ? "0" + i : i) + ".png";
       animation.addSpriteFrameWithFile(frameName);
     }
-    animation.setDelayPerUnit(2.8 / 14);
-    animation.setRestoreOriginalFrame(true);
+    animation.delayPerUnit = 2.8 / 14;
+    animation.restoreOriginalFrame = true;
 
     var action = new Animate(animation);
     this._grossini.runAction(new Sequence(action, action.reverse()));
@@ -63,7 +63,7 @@ export class ActionAnimate extends ActionsDemo {
     var animCache = ServiceLocator.animationCache;
 
     animCache.addAnimations(s_animations2Plist);
-    var animation2 = animCache.getAnimation("dance_1");
+    var animation2 = animCache.get("dance_1");
 
     var action2 = new Animate(animation2);
     this._tamara.runAction(new Sequence(action2, action2.reverse()));
@@ -73,7 +73,7 @@ export class ActionAnimate extends ActionsDemo {
     //
     // with 4 loops
     var animation3 = animation2.clone();
-    animation3.setLoops(4);
+    animation3.loops = 4;
 
     var action3 = new Animate(animation3);
     this._kathia.runAction(action3);
