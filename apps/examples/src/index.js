@@ -27,6 +27,7 @@
 
 import { TestController } from "./test-controller";
 import { TestScene } from "./test-scene";
+import "@aspect/audio";
 import { _initGlobals } from "./constants";
 import { g_resources, s_simpleTheme_plist } from "./resources";
 import {

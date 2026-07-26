@@ -2,11 +2,11 @@ import Path from "../../path";
 import { isString } from "../../utils";
 import LoaderStrategy from "./loader-strategy";
 import { LoaderStrategyKey } from "../../../enums";
-import type { LoaderCallback, LoaderInterface } from "../types";
+import type { LoaderCallback } from "../types";
 
 export default class FontLoaderStrategy extends LoaderStrategy<boolean> {
-  constructor(loader: LoaderInterface) {
-    super(loader, LoaderStrategyKey.FONT, ["font", "eot", "ttf", "woff", "svg", "ttc"]);
+  constructor() {
+    super(LoaderStrategyKey.FONT, ["font", "eot", "ttf", "woff", "svg", "ttc"]);
   }
 
   #type: Record<string, string> = {
@@ -32,7 +32,7 @@ export default class FontLoaderStrategy extends LoaderStrategy<boolean> {
     if (srcsOrRes instanceof Array) {
       for (let i = 0, li = srcsOrRes.length; i < li; i++) {
         const src = srcsOrRes[i];
-        const fontType = Path.extname(src).toLowerCase();
+        const fontType = Path.extname(src)!.toLowerCase();
         fontStr += `url('${srcsOrRes[i]}') format('${this.#type[fontType]}')`;
         fontStr += i === li - 1 ? ";" : ",";
       }
@@ -58,8 +58,8 @@ export default class FontLoaderStrategy extends LoaderStrategy<boolean> {
     let srcs: string[];
 
     if (isString(res)) {
-      type = Path.extname(res);
-      name = Path.basename(res, type);
+      type = Path.extname(res)!;
+      name = Path.basename(res, type)!;
       this.#loadFont(name, res, type);
     } else {
       type = res.type;

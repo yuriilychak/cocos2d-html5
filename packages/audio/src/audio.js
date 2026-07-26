@@ -3,7 +3,7 @@ import { BaseClass, ServiceLocator } from "@aspect/core";
 /**
  * Encapsulate DOM and webAudio
  */
-export class Audio extends BaseClass {
+export default class Audio extends BaseClass {
   static touchPlayList = [
     //{ offset: 0, audio: audio }
   ];

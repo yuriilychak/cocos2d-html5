@@ -31,6 +31,7 @@ export interface LoaderStrategyInterface<T = unknown> {
   readonly supportedTypes: string[];
   readonly tileMapTypes?: string[];
 
+  setLoader(loader: LoaderInterface): void;
   getBasePath(): string;
   load(
     realUrl: string,

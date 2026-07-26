@@ -1,11 +1,9 @@
 import { LoaderStrategyKey } from "../../../enums";
 import FileLoaderStrategy from "./file-loader-strategy";
 
-import type { LoaderInterface } from '../types';
-
 export default class TextLoaderStrategy extends FileLoaderStrategy<string> {
-  constructor(loader: LoaderInterface) {
-    super(loader, LoaderStrategyKey.TEXT , ["txt", "xml", "vsh", "fsh", "atlas"]);
+  constructor() {
+    super(LoaderStrategyKey.TEXT , ["txt", "xml", "vsh", "fsh", "atlas"]);
   }
 
   protected resultMiddleware(request: XMLHttpRequest): string {

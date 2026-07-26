@@ -43,6 +43,7 @@ export class AssetsManagerTestLayer extends BaseTestLayer {
 
     this._spritePath = "";
     this._spritePath = spritePath;
+    this._previousResPath = ServiceLocator.loader.resPath;
     ServiceLocator.loader.resPath = "res/";
   }
 
@@ -59,7 +60,7 @@ export class AssetsManagerTestLayer extends BaseTestLayer {
   }
 
   onExit() {
-    ServiceLocator.loader.resPath = "";
+    ServiceLocator.loader.resPath = this._previousResPath;
     super.onExit();
   }
 

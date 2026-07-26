@@ -1,78 +1,47 @@
-import { Path, log, ServiceLocator } from "@aspect/core";
-import { Audio } from "./audio.js";
-import { audioSupport } from "./audio-support.js";
+import {
+  Path,
+  log,
+  LoaderStrategy,
+  LoaderStrategyKey
+} from "@aspect/core";
+import Audio from "./audio";
+export default class AudioLoader extends LoaderStrategy {
+  #useWebAudio = true;
+  #audioSupport;
 
-// Detect which audio formats the browser supports
-const supportedFormats = [];
-(function () {
-  const audio = document.createElement("audio");
-  if (audio.canPlayType) {
-    const ogg = audio.canPlayType('audio/ogg; codecs="vorbis"');
-    if (ogg && ogg !== "") supportedFormats.push(".ogg");
-    const mp3 = audio.canPlayType("audio/mpeg");
-    if (mp3 && mp3 !== "") supportedFormats.push(".mp3");
-    const wav = audio.canPlayType('audio/wav; codecs="1"');
-    if (wav && wav !== "") supportedFormats.push(".wav");
-    const mp4 = audio.canPlayType("audio/mp4");
-    if (mp4 && mp4 !== "") supportedFormats.push(".mp4");
-    const m4a = audio.canPlayType("audio/x-m4a");
-    if (m4a && m4a !== "") supportedFormats.push(".m4a");
+  constructor(audioSupport) {
+    super(LoaderStrategyKey.AUDIO, ["mp3", "ogg", "wav", "mp4", "m4a"]);
+    this.#audioSupport = audioSupport;
+
   }
-})();
 
-// Create Web Audio context and attach to Audio
-try {
-  if (audioSupport.WEB_AUDIO) {
-    let context = new (
-      window.AudioContext ||
-      window.webkitAudioContext ||
-      window.mozAudioContext
-    )();
-    Audio._context = context;
-    // check context integrity
-    if (
-      !context["createBufferSource"] ||
-      !context["createGain"] ||
-      !context["destination"] ||
-      !context["decodeAudioData"]
-    ) {
-      throw "context is incomplete";
-    }
-    if (audioSupport.DELAY_CREATE_CTX) {
-      setTimeout(function () {
-        context = new (
-          window.AudioContext ||
-          window.webkitAudioContext ||
-          window.mozAudioContext
-        )();
-        Audio._context = context;
-      }, 0);
-    }
+  get useWebAudio() {
+    return this.#useWebAudio;
   }
-} catch (error) {
-  audioSupport.WEB_AUDIO = false;
-  log("browser don't support web audio");
-}
 
-class AudioLoader {
-  constructor() {
-    this.cache = {};
-    this.useWebAudio = true;
+  set useWebAudio(value) {
+    this.#useWebAudio = value;
+  }
+
+  getBasePath() {
+    return this.loader.audioPath || this.loader.resPath;
   }
 
   loadBuffer(url, cb) {
-    if (!audioSupport.WEB_AUDIO) return; // WebAudio Buffer
+    if (!this.#audioSupport.webAudio) {
+      return; // WebAudio Buffer
+    }
 
-    const request = ServiceLocator.loader.XMLHttpRequest;
+    const request = this.loader.XMLHttpRequest;
     request.open("GET", url, true);
     request.responseType = "arraybuffer";
 
     // Our asynchronous callback
-    request.onload = function () {
+    request.onload =  () => {
       if (request._timeoutId >= 0) {
         clearTimeout(request._timeoutId);
       }
-      Audio._context["decodeAudioData"](
+      this.#audioSupport.audioContext["decodeAudioData"](
         request.response,
         //success
         (buffer) => cb(null, buffer),
@@ -81,57 +50,59 @@ class AudioLoader {
       );
     };
 
-    request.onerror = function () {
-      cb("request error - " + url);
-    };
+    request.onerror = () => cb("request error - " + url);
+    request.ontimeout = () => cb("request timeout - " + url);
+
     if (request.ontimeout === undefined) {
-      request._timeoutId = setTimeout(function () {
-        request.ontimeout();
-      }, request.timeout);
+      request._timeoutId = setTimeout( () => request.ontimeout(), request.timeout);
     }
-    request.ontimeout = function () {
-      cb("request timeout - " + url);
-    };
 
     request.send();
   }
 
   load(realUrl, url, res, cb) {
-    if (supportedFormats.length === 0) return cb("can not support audio!");
+    if (!this.#audioSupport.supportAudio) {
+      return cb("can not support audio!");
+    }
 
-    let audio = ServiceLocator.loader.get(url);
-    if (audio) return cb(null, audio);
+    let audio = this.loader.get(url);
 
-    if (ServiceLocator.loader.audioPath)
-      realUrl = Path.join(ServiceLocator.loader.audioPath, realUrl);
+    if (audio) {
+      return cb(null, audio);
+    }
 
     const extname = Path.extname(realUrl);
 
-    const typeList = [extname];
-    for (let i = 0; i < supportedFormats.length; i++) {
-      if (extname !== supportedFormats[i]) {
-        typeList.push(supportedFormats[i]);
+    const typeList = this.#audioSupport.supportedFormats.slice();
+    const index = typeList.indexOf(extname);
+
+    if (index !== 0) {
+      if(index !== -1) {
+        typeList.splice(index, 1);
       }
+
+      typeList.unshift(extname);
     }
 
     audio = new Audio(realUrl);
-    ServiceLocator.loader.set(url, audio);
+    this.loader.set(url, audio);
     this.loadAudioFromExtList(realUrl, typeList, audio, cb);
     return audio;
   }
 
   loadAudioFromExtList(realUrl, typeList, audio, cb) {
     if (typeList.length === 0) {
-      let ERRSTR = "can not found the resource of audio! Last match url is : ";
-      ERRSTR += realUrl.replace(/\.(.*)?$/, "(");
-      supportedFormats.forEach(function (ext) {
-        ERRSTR += ext + "|";
-      });
-      ERRSTR = ERRSTR.replace(/\|$/, ")");
-      return cb({ status: 520, errorMessage: ERRSTR }, null);
+      const errorMessage = [
+        "can not found the resource of audio! Last match url is : ",
+        realUrl.replace(/\.(.*)?$/, "("),
+        this.#audioSupport.supportedFormats.join("|"),
+        ")"
+      ].join("");
+
+      return cb({ status: 520, errorMessage }, null);
     }
 
-    if (audioSupport.WEB_AUDIO && this.useWebAudio) {
+    if (this.#audioSupport.webAudio && this.useWebAudio) {
       this.loadBuffer(realUrl, function (error, buffer) {
         if (error) log(error);
 
@@ -142,9 +113,8 @@ class AudioLoader {
       return;
     }
 
-    const num = audioSupport.ONE_SOURCE ? 1 : typeList.length;
+    const num = this.#audioSupport.oneSource ? 1 : typeList.length;
 
-    // 加载统一使用dom
     const dom = document.createElement("audio");
     for (let i = 0; i < num; i++) {
       const source = document.createElement("source");
@@ -162,12 +132,12 @@ class AudioLoader {
       }
     }, 8000);
 
-    const success = function () {
+    const success = () => {
       dom.removeEventListener("canplaythrough", success, false);
       dom.removeEventListener("error", failure, false);
       dom.removeEventListener("emptied", success, false);
-      if (audioSupport.USE_LOADER_EVENT)
-        dom.removeEventListener(audioSupport.USE_LOADER_EVENT, success, false);
+      if (this.#audioSupport.useLoaderEvent)
+        dom.removeEventListener(this.#audioSupport.useLoaderEvent, success, false);
       clearTimeout(timer);
       cb(null, audio);
     };
@@ -177,10 +147,7 @@ class AudioLoader {
     };
     dom.addEventListener("canplaythrough", success, false);
     dom.addEventListener("error", failure, false);
-    if (audioSupport.USE_LOADER_EVENT)
-      dom.addEventListener(audioSupport.USE_LOADER_EVENT, success, false);
+    if (this.#audioSupport.useLoaderEvent)
+      dom.addEventListener(this.#audioSupport.useLoaderEvent, success, false);
   }
 }
-
-export const loader = new AudioLoader();
-ServiceLocator.loader.register(["mp3", "ogg", "wav", "mp4", "m4a"], loader);

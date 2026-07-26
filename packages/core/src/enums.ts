@@ -25,7 +25,8 @@ export enum LoaderStrategyKey {
   PLIST = "plist",
   FONT = "font",
   CSB = "csb",
-  BINARY = "binary"
+  BINARY = "binary",
+  AUDIO = "audio"
 }
 
 export enum OperatingSystem {

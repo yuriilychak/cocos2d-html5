@@ -1,11 +1,8 @@
 import { LoaderStrategyKey } from "../../../enums";
 import FileLoaderStrategy from "./file-loader-strategy";
-
-import type { LoaderInterface } from "../types";
-
 export default class JsonLoaderStrategy extends FileLoaderStrategy<object> {
-  constructor(loader: LoaderInterface) {
-    super(loader, LoaderStrategyKey.JSON, ["json", "ExportJson"]);
+  constructor() {
+    super(LoaderStrategyKey.JSON, ["json", "ExportJson"]);
   }
 
   protected resultMiddleware(request: XMLHttpRequest): object {

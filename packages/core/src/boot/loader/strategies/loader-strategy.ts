@@ -5,18 +5,21 @@ import type {
 } from "../types";
 
 export default abstract class LoaderStrategy<T = unknown> implements LoaderStrategyInterface<T> {
-  #loader: LoaderInterface;
+  #loader: LoaderInterface | null = null;
   #key: string;
   #supportedTypes: string[];
 
-  constructor(loader: LoaderInterface, key: string, supportedTypes: string[] = []) {
-    this.#loader = loader;
+  constructor(key: string, supportedTypes: string[] = []) {
     this.#key = key;
     this.#supportedTypes = supportedTypes;
   }
 
+  public setLoader(loader: LoaderInterface) {
+    this.#loader = loader;
+  }
+
   public getBasePath(): string {
-    return this.#loader.resPath;
+    return this.#loader!.resPath;
   }
 
   public abstract load(
@@ -27,7 +30,7 @@ export default abstract class LoaderStrategy<T = unknown> implements LoaderStrat
   ): void;
 
   protected get loader(): LoaderInterface {
-    return this.#loader;
+    return this.#loader!;
   }
 
   public get supportedTypes(): string[] {

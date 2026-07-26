@@ -2,11 +2,9 @@ import { log } from "../../debugger";
 import { LoaderStrategyKey } from "../../../enums";
 import FileLoaderStrategy from "./file-loader-strategy";
 
-import type { LoaderInterface } from "../types";
-
 export default class BinaryLoaderStrategy extends FileLoaderStrategy<Uint8Array> {
-  constructor(loader: LoaderInterface) {
-    super(loader, LoaderStrategyKey.BINARY);
+  constructor() {
+    super(LoaderStrategyKey.BINARY);
   }
 
   protected resultMiddleware(request: XMLHttpRequest): Uint8Array {

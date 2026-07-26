@@ -15,7 +15,6 @@ export default class ImageLoaderStrategy extends LoaderStrategy<Texture2D> {
 
   constructor(
     sys: Sys,
-    loader: LoaderInterface,
     key: string = LoaderStrategyKey.IMAGE,
     supportedTypes: string[] = [
       "png",
@@ -28,7 +27,7 @@ export default class ImageLoaderStrategy extends LoaderStrategy<Texture2D> {
       "webp"
     ]
   ) {
-    super(loader, key, supportedTypes);
+    super(key, supportedTypes);
     this.#sys = sys;
   }
 

@@ -1,15 +1,14 @@
 import LoaderStrategy from "./loader-strategy";
 import LoadError from "../load-error";
 
-import type { LoaderInterface, LoaderCallback } from "../types";
+import type { LoaderCallback } from "../types";
 
 export default abstract class FileLoaderStrategy<T> extends LoaderStrategy<T> {
   constructor(
-    loader: LoaderInterface,
     key: string,
     supportedTypes: string[] = []
   ) {
-    super(loader, key, supportedTypes);
+    super(key, supportedTypes);
   }
 
   protected abstract resultMiddleware(request: XMLHttpRequest): T;

@@ -1,6 +1,6 @@
-import { Audio } from "./audio.js";
+import Audio from "./audio";
 
-export class WebAudio {
+export default class WebAudio {
   constructor(buffer) {
     this.buffer = buffer;
     this.context = Audio._context;

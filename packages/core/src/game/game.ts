@@ -2,12 +2,13 @@ import { BaseClass, ENGINE_VERSION } from "../platform";
 import { EventHelper, EventCustom } from "../event-manager";
 import { ServiceLocator } from "../service-locator";
 import { initDebugSetting, Loader } from "../boot";
-import { Sys } from "../sys";
+import type { Sys } from "../sys";
 import { CONFIG_KEY, GameEvent, UserRenderMode } from "../enums";
 import type { EGLView, InputManager } from "../platform";
 import type Director from "../director";
 import type EventManager from "../event-manager/event-manager";
 import type TextureCache from "../textures/texture-cache";
+import { LoaderStrategyInterface } from "../boot/loader";
 
 type GameConfig = Record<string, any>;
 type GameCallback = () => void;
@@ -15,6 +16,8 @@ type AnimationCallback = () => void;
 
 interface AudioEngine {
   end(): void;
+  init(sys: Sys): void;
+  loader: LoaderStrategyInterface;
   _pausePlaying(): void;
   _resumePlaying(): void;
 }
@@ -46,7 +49,7 @@ export default class Game extends EventHelper(BaseClass) {
    */
   #onStart: GameCallback | null = null;
 
-  audioEngine: AudioEngine | null = null;
+  #audioEngine: AudioEngine | null = null;
   rendererInitialized = false;
 
   /**
@@ -92,7 +95,7 @@ export default class Game extends EventHelper(BaseClass) {
    */
   restart(): void {
     this.#director.popToSceneStackLevel(0);
-    this.audioEngine && this.audioEngine.end();
+    this.#audioEngine && this.#audioEngine.end();
     this.#handleStart();
   }
 
@@ -132,6 +135,16 @@ export default class Game extends EventHelper(BaseClass) {
     if (onStop) this.#onStop = onStop;
 
     this.#handleStart();
+  }
+
+  get audioEngine(): AudioEngine | null {
+    return this.#audioEngine;
+  }
+
+  set audioEngine(audioEngine: AudioEngine) {
+    this.#audioEngine = audioEngine;
+    this.#audioEngine.init(this.#sys);
+    this.#loader.addStrategy(audioEngine.loader as LoaderStrategyInterface);
   }
 
   /**

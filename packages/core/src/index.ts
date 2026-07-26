@@ -137,7 +137,8 @@ export {
   MouseButton,
   TouchEvent,
   UserRenderMode,
-  UniformValueType
+  UniformValueType,
+  LoaderStrategyKey
 } from "./enums";
 export {
   ACTION_TAG_INVALID,
@@ -258,7 +259,7 @@ export { Layer } from "./layers/layer";
 export { isFunction, isString } from "./boot/utils";
 export { Animation, AnimationFrame, PolygonInfo, Triangles, SpriteFrame, type TriangleLike, type TriangleVertex } from "./sprites";
 export { Component, ComponentContainer } from "./components";
-export { assert, error, Path, Loader, isObject, isUndefined } from "./boot";
+export { assert, error, Path, Loader, isObject, isUndefined, LoaderStrategy } from "./boot";
 export {
   NODE_TAG_INVALID,
   s_globalOrderOfArrival,

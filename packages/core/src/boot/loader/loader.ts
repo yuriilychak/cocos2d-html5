@@ -39,14 +39,14 @@ export default class Loader implements LoaderInterface {
   constructor(sys: Sys) {
     this.#sys = sys;
     const strategies = [
-      new ImageLoaderStrategy(sys, this),
-      new TextLoaderStrategy(this),
-      new JsonLoaderStrategy(this),
-      new CsbLoaderStrategy(this),
-      new PlistLoaderStrategy(this),
-      new FontLoaderStrategy(this),
-      new BinaryLoaderStrategy(this),
-      new ServerImageLoaderStrategy(sys, this)
+      new ImageLoaderStrategy(sys),
+      new TextLoaderStrategy(),
+      new JsonLoaderStrategy(),
+      new CsbLoaderStrategy(),
+      new PlistLoaderStrategy(),
+      new FontLoaderStrategy(),
+      new BinaryLoaderStrategy(),
+      new ServerImageLoaderStrategy(sys)
     ];
     for (const strategy of strategies) {
       this.addStrategy(strategy);
@@ -71,6 +71,7 @@ export default class Loader implements LoaderInterface {
 
   public addStrategy(strategy: LoaderStrategyInterface): void  {
     this.#strategies.set(strategy.strategyKey, strategy);
+    strategy.setLoader(this);
     if (strategy.supportedTypes.length > 0)
       this.register(strategy.supportedTypes, strategy);
   }
@@ -337,6 +338,7 @@ export default class Loader implements LoaderInterface {
       ? {
         strategyKey: "",
         supportedTypes: [],
+        setLoader:() => {},
         getBasePath: () => this.resPath,
         load: (realUrl, url, resource, callback) => loader(realUrl, url, resource, callback)
       }

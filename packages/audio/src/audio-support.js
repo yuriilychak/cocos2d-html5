@@ -12,38 +12,113 @@
  * May be modifications for a few browser version
  */
 
-import { BrowserType, OperatingSystem, ServiceLocator } from "@aspect/core";
+import { BrowserType, OperatingSystem } from "@aspect/core";
+import { AUDIO_FORMATS } from "./constants.ts";
 
-const audioSupportSys = ServiceLocator.sys;
+export default class AudioSupport {
+  #onlyOne = false;
+  #webAudio = !!(
+    window.AudioContext ||
+    window.webkitAudioContext ||
+    window.mozAudioContext
+  );
+  #delayCreateContext = false;
+  #oneSource = false;
+  #useLoaderEvent = "";
+  #supportedFormats = [];
+  #audioContext = null;
 
-// check if browser supports Web Audio
-const supportWebAudio = !!(
-  window.AudioContext ||
-  window.webkitAudioContext ||
-  window.mozAudioContext
-);
+  constructor() {
+    const audio = document.createElement("audio");
+    if (audio.canPlayType) {
+      for (const { mimeType, extension } of AUDIO_FORMATS) {
+        if (audio.canPlayType(mimeType)) {
+          this.#supportedFormats.push(extension);
+        }
+      }
+    }
+  }
 
-export const audioSupport = {
-  ONLY_ONE: false,
-  WEB_AUDIO: supportWebAudio,
-  DELAY_CREATE_CTX: false,
-  ONE_SOURCE: false
-};
+  init(sys) {
+    if (sys.specification.browserType === BrowserType.FIREFOX) {
+      this.#delayCreateContext = true;
+      this.#useLoaderEvent = "canplay";
+    }
 
-if (audioSupportSys.specification.browserType === BrowserType.FIREFOX) {
-  audioSupport.DELAY_CREATE_CTX = true;
-  audioSupport.USE_LOADER_EVENT = "canplay";
-}
+    if (sys.specification.os === OperatingSystem.IOS) {
+      this.#useLoaderEvent = "loadedmetadata";
+    }
 
-if (audioSupportSys.specification.os === OperatingSystem.IOS) {
-  audioSupport.USE_LOADER_EVENT = "loadedmetadata";
-}
+    if (
+      sys.specification.os === OperatingSystem.ANDROID &&
+      sys.specification.browserType === BrowserType.UC
+    ) {
+      this.#oneSource = true;
+    }
 
-if (audioSupportSys.specification.os === OperatingSystem.ANDROID) {
-  if (audioSupportSys.specification.browserType === BrowserType.UC) {
-    audioSupport.ONE_SOURCE = true;
+    try {
+      if (audioSupport.WEB_AUDIO) {
+        let context = new (
+          window.AudioContext ||
+          window.webkitAudioContext ||
+          window.mozAudioContext
+        )();
+        this.#audioContext = context;
+        // check context integrity
+        if (
+          !context["createBufferSource"] ||
+          !context["createGain"] ||
+          !context["destination"] ||
+          !context["decodeAudioData"]
+        ) {
+          throw new Error("context is incomplete");
+        }
+        if (audioSupport.DELAY_CREATE_CTX) {
+          setTimeout( () => {
+            context = new (
+              window.AudioContext ||
+              window.webkitAudioContext ||
+              window.mozAudioContext
+            )();
+            this.#audioContext = context;
+          }, 0);
+        }
+      }
+    } catch (error) {
+      this.#webAudio = false;
+      log("browser don't support web audio");
+    }
+  }
+
+  get supportAudio() {
+    return this.#supportedFormats.length !== 0;
+  }
+
+  get supportedFormats() {
+    return this.#supportedFormats;
+  }
+
+  get onlyOne() {
+    return this.#onlyOne;
+  }
+
+  get webAudio() {
+    return this.#webAudio;
+  }
+
+  get delayCreateContext() {
+    return this.#delayCreateContext;
+  }
+
+  get oneSouce() {
+    return this.#oneSource;
+  }
+
+  get useLoaderEvent() {
+    return this.#useLoaderEvent;
+  }
+
+  get audioContext() {
+    return this.#audioContext;
   }
 }
-
-// keep legacy global for any external code that reads it
-window.__audioSupport = audioSupport;

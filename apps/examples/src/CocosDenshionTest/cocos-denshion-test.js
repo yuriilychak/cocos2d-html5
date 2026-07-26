@@ -27,20 +27,21 @@
 
 import { DenshionTests } from "./cocos-denshion-test-constants";
 import { MenuTestLayer } from "../menu-test-layer";
+import { ServiceLocator } from "@aspect/core";
 
 export class CocosDenshionTest extends MenuTestLayer {
   constructor() {
     const menuItems = DenshionTests.map(test => ({ title: test.title }));
     super(menuItems);
 
-    audioEngine.setEffectsVolume(0.5);
-    audioEngine.setMusicVolume(0.5);
+    ServiceLocator.game.audioEngine.setEffectsVolume(0.5);
+    ServiceLocator.game.audioEngine.setMusicVolume(0.5);
   }
 
   onExit() {
     super.onExit();
-    audioEngine.stopMusic();
-    audioEngine.stopAllEffects();
+    ServiceLocator.game.audioEngine.stopMusic();
+    ServiceLocator.game.audioEngine.stopAllEffects();
   }
 
   onItemCallback(idx) {

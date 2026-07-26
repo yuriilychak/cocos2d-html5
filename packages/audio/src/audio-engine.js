@@ -1,21 +1,32 @@
 import { log, ServiceLocator } from "@aspect/core";
-import { Audio } from "./audio.js";
-import { audioSupport } from "./audio-support.js";
-import { loader } from "./audio-loader.js";
+import Audio from "./audio";
+import AudioSupport from "./audio-support";
+import AudioLoader from "./audio-loader";
 
 /**
  * audioEngine is the singleton object, it provide simple audio APIs.
  * @namespace
  */
-export class AudioEngine {
+export default class AudioEngine {
+  #loader;
+  #audioPool = new Map();
+  #audioSupport = new AudioSupport();
+
   constructor() {
+    this.#loader = new AudioLoader(this.#audioSupport);
     this._currMusic = null;
     this._musicVolume = 1;
-    this.features = audioSupport;
-    this._audioPool = {};
     this._maxAudioInstance = 10;
     this._effectVolume = 1;
     this._pauseCache = [];
+  }
+
+  init(sys) {
+    this.#audioSupport.init(sys);
+  }
+
+  get loader() {
+    return this.#loader;
   }
 
   /**
@@ -171,7 +182,7 @@ export class AudioEngine {
    */
   playEffect(url, loop) {
     if (
-      audioSupport.ONLY_ONE &&
+      this.#audioSupport.onlyOne &&
       this._currMusic &&
       this._currMusic.getPlaying()
     ) {
@@ -179,9 +190,10 @@ export class AudioEngine {
       return null;
     }
 
-    let effectList = this._audioPool[url];
+    let effectList = this.#audioPool.get(url);
     if (!effectList) {
-      effectList = this._audioPool[url] = [];
+      effectList = [];
+      this.#audioPool.set(url, effectList);
     }
 
     for (var i = 0; i < effectList.length; i++) {
@@ -190,7 +202,7 @@ export class AudioEngine {
       }
     }
 
-    if (!audioSupport.WEB_AUDIO && i > this._maxAudioInstance) {
+    if (!this.#audioSupport.webAudio && i > this._maxAudioInstance) {
       const first = effectList.shift();
       first.stop();
       effectList.push(first);
@@ -207,14 +219,14 @@ export class AudioEngine {
 
     audio = ServiceLocator.loader.get(url);
 
-    if (audio && audioSupport.WEB_AUDIO && audio._AUDIO_TYPE === "AUDIO") {
+    if (audio && this.#audioSupport.webAudio && audio._AUDIO_TYPE === "AUDIO") {
       ServiceLocator.loader.release(url);
       audio = null;
     }
 
     if (audio) {
-      if (audioSupport.WEB_AUDIO && audio._AUDIO_TYPE === "AUDIO") {
-        loader.loadBuffer(url, function (error, buffer) {
+      if (this.#audioSupport.webAudio && audio._AUDIO_TYPE === "AUDIO") {
+        this.#loader.loadBuffer(url, function (error, buffer) {
           audio.setBuffer(buffer);
           audio.setVolume(this._effectVolume);
           if (!audio.getPlaying()) audio.play(0, loop || false);
@@ -228,8 +240,8 @@ export class AudioEngine {
       }
     }
 
-    const cache = loader.useWebAudio;
-    loader.useWebAudio = true;
+    const cache = this.#loader.useWebAudio;
+    this.#loader.useWebAudio = true;
     ServiceLocator.loader.load(url, (audio) => {
       audio = ServiceLocator.loader.get(url);
       audio = audio.cloneNode();
@@ -237,7 +249,7 @@ export class AudioEngine {
       audio.play(0, loop || false);
       effectList.push(audio);
     });
-    loader.useWebAudio = cache;
+    this.#loader.useWebAudio = cache;
 
     return audio;
   }
@@ -255,13 +267,10 @@ export class AudioEngine {
     if (volume < 0) volume = 0;
 
     this._effectVolume = volume;
-    const audioPool = this._audioPool;
-    for (const p in audioPool) {
-      const audioList = audioPool[p];
-      if (Array.isArray(audioList))
-        for (let i = 0; i < audioList.length; i++) {
-          audioList[i].setVolume(volume);
-        }
+    for (const audioList of this.#audioPool.values()) {
+      for (let i = 0; i < audioList.length; i++) {
+        audioList[i].setVolume(volume);
+      }
     }
   }
 
@@ -293,10 +302,8 @@ export class AudioEngine {
    * audioEngine.pauseAllEffects();
    */
   pauseAllEffects() {
-    const ap = this._audioPool;
-    for (const p in ap) {
-      const list = ap[p];
-      for (let i = 0; i < ap[p].length; i++) {
+    for (const list of this.#audioPool.values()) {
+      for (let i = 0; i < list.length; i++) {
         if (list[i].getPlaying()) {
           list[i].pause();
         }
@@ -320,10 +327,8 @@ export class AudioEngine {
    * audioEngine.resumeAllEffects();
    */
   resumeAllEffects() {
-    const ap = this._audioPool;
-    for (const p in ap) {
-      const list = ap[p];
-      for (let i = 0; i < ap[p].length; i++) {
+    for (const list of this.#audioPool.values()) {
+      for (let i = 0; i < list.length; i++) {
         list[i].resume();
       }
     }
@@ -347,14 +352,12 @@ export class AudioEngine {
    * audioEngine.stopAllEffects();
    */
   stopAllEffects() {
-    const ap = this._audioPool;
-    for (const p in ap) {
-      const list = ap[p];
+    for (const list of this.#audioPool.values()) {
       for (let i = 0; i < list.length; i++) {
         list[i].stop();
       }
     }
-    this._audioPool = {};
+    this.#audioPool.clear();
   }
 
   /**
@@ -369,14 +372,14 @@ export class AudioEngine {
     }
 
     ServiceLocator.loader.release(url);
-    const pool = this._audioPool[url];
+    const pool = this.#audioPool.get(url);
     if (pool) {
       for (let i = 0; i < pool.length; i++) {
         pool[i].stop();
       }
       pool.length = 0;
     }
-    delete this._audioPool[url];
+    this.#audioPool.delete(url);
   }
 
   /**
@@ -393,10 +396,8 @@ export class AudioEngine {
       bgMusic.pause();
       this._pauseCache.push(bgMusic);
     }
-    const ap = this._audioPool;
-    for (const p in ap) {
-      const list = ap[p];
-      for (let i = 0; i < ap[p].length; i++) {
+    for (const list of this.#audioPool.values()) {
+      for (let i = 0; i < list.length; i++) {
         if (list[i].getPlaying()) {
           list[i].pause();
           this._pauseCache.push(list[i]);

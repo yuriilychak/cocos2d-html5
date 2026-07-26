@@ -27,7 +27,6 @@
  * The audio component for Cocostudio.
  */
 import { Component, ServiceLocator } from "@aspect/core";
-import { audioEngine } from "@aspect/audio";
 
 export class ComAudio extends Component {
   static componentName = "Audio";
@@ -63,7 +62,7 @@ export class ComAudio extends Component {
    * Stops all audios.
    */
   end() {
-    audioEngine.end();
+    ServiceLocator.game.audioEngine.end();
   }
 
   /**
@@ -81,9 +80,9 @@ export class ComAudio extends Component {
    */
   playBackgroundMusic(pszFilePath, loop) {
     if (pszFilePath) {
-      audioEngine.playMusic(pszFilePath, loop);
+      ServiceLocator.game.audioEngine.playMusic(pszFilePath, loop);
     } else {
-      audioEngine.playMusic(this._filePath, this._loop);
+      ServiceLocator.game.audioEngine.playMusic(this._filePath, this._loop);
     }
   }
 
@@ -92,28 +91,28 @@ export class ComAudio extends Component {
    * @param {String} releaseData
    */
   stopBackgroundMusic(releaseData) {
-    audioEngine.stopMusic(releaseData);
+    ServiceLocator.game.audioEngine.stopMusic(releaseData);
   }
 
   /**
    * Pause background music
    */
   pauseBackgroundMusic() {
-    audioEngine.pauseMusic();
+    ServiceLocator.game.audioEngine.pauseMusic();
   }
 
   /**
    * Resume background music
    */
   resumeBackgroundMusic() {
-    audioEngine.resumeMusic();
+    ServiceLocator.game.audioEngine.resumeMusic();
   }
 
   /**
    * Rewind background music
    */
   rewindBackgroundMusic() {
-    audioEngine.rewindMusic();
+    ServiceLocator.game.audioEngine.rewindMusic();
   }
 
   /**
@@ -121,7 +120,7 @@ export class ComAudio extends Component {
    * @returns {boolean}
    */
   willPlayBackgroundMusic() {
-    return audioEngine.willPlayMusic();
+    return ServiceLocator.game.audioEngine.willPlayMusic();
   }
 
   /**
@@ -129,7 +128,7 @@ export class ComAudio extends Component {
    * @returns {Boolean}
    */
   isBackgroundMusicPlaying() {
-    return audioEngine.isMusicPlaying();
+    return ServiceLocator.game.audioEngine.isMusicPlaying();
   }
 
   /**
@@ -137,7 +136,7 @@ export class ComAudio extends Component {
    * @returns {Number}
    */
   getBackgroundMusicVolume() {
-    return audioEngine.getMusicVolume();
+    return ServiceLocator.game.audioEngine.getMusicVolume();
   }
 
   /**
@@ -145,7 +144,7 @@ export class ComAudio extends Component {
    * @param {Number} volume   must be in 0.0~1.0 .
    */
   setBackgroundMusicVolume(volume) {
-    audioEngine.setMusicVolume(volume);
+    ServiceLocator.game.audioEngine.setMusicVolume(volume);
   }
 
   /**
@@ -153,7 +152,7 @@ export class ComAudio extends Component {
    * @returns {Number}
    */
   getEffectsVolume() {
-    return audioEngine.getEffectsVolume();
+    return ServiceLocator.game.audioEngine.getEffectsVolume();
   }
 
   /**
@@ -161,7 +160,7 @@ export class ComAudio extends Component {
    * @param {Number} volume
    */
   setEffectsVolume(volume) {
-    audioEngine.setEffectsVolume(volume);
+    ServiceLocator.game.audioEngine.setEffectsVolume(volume);
   }
 
   /**
@@ -171,8 +170,11 @@ export class ComAudio extends Component {
    * @returns {Boolean}
    */
   playEffect(pszFilePath, loop) {
-    if (pszFilePath) return audioEngine.playEffect(pszFilePath, loop);
-    else return audioEngine.playEffect(this._filePath, this._loop);
+    if (pszFilePath) return ServiceLocator.game.audioEngine.playEffect(pszFilePath, loop);
+    else return ServiceLocator.game.audioEngine.playEffect(
+      this._filePath,
+      this._loop
+    );
   }
 
   /**
@@ -180,14 +182,14 @@ export class ComAudio extends Component {
    * @param {Number} soundId
    */
   pauseEffect(soundId) {
-    audioEngine.pauseEffect(soundId);
+    ServiceLocator.game.audioEngine.pauseEffect(soundId);
   }
 
   /**
    * Pause all effects
    */
   pauseAllEffects() {
-    audioEngine.pauseAllEffects();
+    ServiceLocator.game.audioEngine.pauseAllEffects();
   }
 
   /**
@@ -195,14 +197,14 @@ export class ComAudio extends Component {
    * @param {Number} soundId
    */
   resumeEffect(soundId) {
-    audioEngine.resumeEffect(soundId);
+    ServiceLocator.game.audioEngine.resumeEffect(soundId);
   }
 
   /**
    * Resume all effects
    */
   resumeAllEffects() {
-    audioEngine.resumeAllEffects();
+    ServiceLocator.game.audioEngine.resumeAllEffects();
   }
 
   /**
@@ -210,14 +212,14 @@ export class ComAudio extends Component {
    * @param {Number} soundId
    */
   stopEffect(soundId) {
-    audioEngine.stopEffect(soundId);
+    ServiceLocator.game.audioEngine.stopEffect(soundId);
   }
 
   /**
    * stop all effects
    */
   stopAllEffects() {
-    audioEngine.stopAllEffects();
+    ServiceLocator.game.audioEngine.stopAllEffects();
   }
 
   /**
@@ -225,7 +227,7 @@ export class ComAudio extends Component {
    * @param {String} pszFilePath
    */
   preloadEffect(pszFilePath) {
-    ServiceLocator.loader.get(pszFilePath);
+    ServiceLocator.game.audioEngine.loader.get(pszFilePath);
     this.setFile(pszFilePath);
     this.setLoop(false);
   }
@@ -235,7 +237,7 @@ export class ComAudio extends Component {
    * @param {String} pszFilePath
    */
   unloadEffect(pszFilePath) {
-    audioEngine.unloadEffect(pszFilePath);
+    ServiceLocator.game.audioEngine.unloadEffect(pszFilePath);
   }
 
   /**
