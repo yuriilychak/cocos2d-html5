@@ -1,7 +1,7 @@
 import type { ActionLike, ActionTarget } from "./types";
 
 export default class HashElement {
-  #action: ActionLike | null = null;
+  #actions: ActionLike[] = [];
   #target: ActionTarget | null = null;
   #lock: boolean = false;
   #paused: boolean = false;
@@ -24,47 +24,60 @@ export default class HashElement {
   }
 
   addAction(action: ActionLike): void {
-    this.#action = action;
+    this.#actions.push(action);
     action.startWithTarget(this.#target!);
   }
 
   removeAction(action: ActionLike | null = null): void {
-    if (action === null || this.#action === action) {
-      this.#action = null;
+    if (action === null) {
+      this.#actions.length = 0;
+      return;
+    }
+
+    const index = this.#actions.indexOf(action);
+    if (index !== -1) {
+      this.#actions.splice(index, 1);
     }
   }
 
   getActionByTag(tag: number): ActionLike | null {
-    return this.#action?.tag === tag ? this.#action : null;
+    return this.#actions.find((action) => action.tag === tag) || null;
   }
 
   removeActionByTag(tag: number, target: ActionTarget): void {
-    if (
-      this.#action &&
-      this.#action.tag === tag &&
-      this.#action.getOriginalTarget() === target
-    ) {
-      this.#action = null;
+    const action = this.#actions.find(
+      (candidate) =>
+        candidate.tag === tag && candidate.getOriginalTarget() === target
+    );
+    if (action) {
+      this.removeAction(action);
     }
   }
 
   update(dt: number): void {
-    if (this.#paused || !this.#action) {
+    if (this.#paused || !this.#actions.length) {
       return;
     }
 
     this.#lock = true;
-    const action = this.#action;
-    action.step(
-      dt *
-      (action._speedMethod
-        ? action._speed ?? 1
-        : 1)
-    );
+    for (let i = 0; i < this.#actions.length; ++i) {
+      const action = this.#actions[i];
+      action.step(dt * (action._speedMethod ? action._speed ?? 1 : 1));
 
-    if (action.isDone()) {
-      action.stop();
-      this.removeAction(action);
+      if (action.isDone()) {
+        action.stop();
+        // An action may remove itself or another action from inside step().
+        // Only remove the action we just updated if it is still at this slot.
+        if (this.#actions[i] === action) {
+          this.#actions.splice(i, 1);
+        }
+      }
+
+      if (this.#actions[i] !== action) {
+        // The current action was removed during step(). Keep the loop index
+        // aligned with the item that shifted into this position.
+        --i;
+      }
     }
     this.#lock = false;
   }
@@ -90,10 +103,10 @@ export default class HashElement {
   }
 
   get numberOfRunningActions(): number {
-    return this.#action ? 1 : 0;
+    return this.#actions.length;
   }
 
   get hasActions(): boolean {
-    return this.#action !== null;
+    return this.#actions.length > 0;
   }
 }
