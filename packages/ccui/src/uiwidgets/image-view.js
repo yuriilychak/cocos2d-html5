@@ -184,6 +184,26 @@ export class ImageView extends Widget {
     this._imageRendererAdaptDirty = true;
   }
 
+  get width() {
+    return super.width;
+  }
+
+  set width(value) {
+    super.width = value;
+    this._imageRenderer.contentSize = this.contentSize;
+    this._imageRenderer.setPosition(this.width / 2.0, this.height / 2.0);
+  }
+
+  get height() {
+    return super.height;
+  }
+
+  set height(value) {
+    super.height = value;
+    this._imageRenderer.contentSize = this.contentSize;
+    this._imageRenderer.setPosition(this.width / 2.0, this.height / 2.0);
+  }
+
   _adaptRenderers() {
     if (this._imageRendererAdaptDirty) {
       this._imageTextureScaleChangedWithSize();
