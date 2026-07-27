@@ -37,7 +37,7 @@ export class ControlHuePicker extends Control {
         var angle = degreesToRadians(angleDeg);
         var x = centerX + limit * Math.cos(angle);
         var y = centerY + limit * Math.sin(angle);
-        this._slider.setPosition(x, y);
+        this._slider.position = { x: x, y: y };
     }
 
     set enabled(enabled) {
@@ -60,10 +60,7 @@ export class ControlHuePicker extends Control {
         if (super.init()) {
             this._background = Control.addSpriteToTargetWithPosAndAnchor(new Sprite("#default_theme/color_picker/color.png"), target, pos, new Point(0.0, 0.0));
             this._slider = Control.addSpriteToTargetWithPosAndAnchor(new Sprite("#default_theme/color_picker/picker.png"), target, pos, new Point(0.5, 0.5));
-            this._slider.setPosition(
-              pos.x,
-              pos.y + this._background.boundingBox.height * 0.5
-            );
+            this._slider.position = { x: pos.x, y: pos.y + this._background.boundingBox.height * 0.5 };
             this._startPos = pos;
             this._hue = 0.0;
             this._huePercentage = 0.0;

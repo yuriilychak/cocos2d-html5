@@ -608,10 +608,7 @@ export class CheckBox extends Widget {
       locRenderer.scaleX = scaleX;
       locRenderer.scaleY = scaleY;
     }
-    locRenderer.setPosition(
-      locContentSize.width * 0.5,
-      locContentSize.height * 0.5
-    );
+    locRenderer.position = { x: locContentSize.width * 0.5, y: locContentSize.height * 0.5 };
   }
 
   _backGroundSelectedTextureScaleChangedWithSize() {
@@ -629,10 +626,7 @@ export class CheckBox extends Widget {
       locRenderer.scaleX = scaleX;
       locRenderer.scaleY = scaleY;
     }
-    locRenderer.setPosition(
-      locContentSize.width * 0.5,
-      locContentSize.height * 0.5
-    );
+    locRenderer.position = { x: locContentSize.width * 0.5, y: locContentSize.height * 0.5 };
   }
 
   _frontCrossTextureScaleChangedWithSize() {
@@ -650,10 +644,7 @@ export class CheckBox extends Widget {
       locRenderer.scaleX = scaleX;
       locRenderer.scaleY = scaleY;
     }
-    locRenderer.setPosition(
-      locContentSize.width * 0.5,
-      locContentSize.height * 0.5
-    );
+    locRenderer.position = { x: locContentSize.width * 0.5, y: locContentSize.height * 0.5 };
   }
 
   _backGroundDisabledTextureScaleChangedWithSize() {
@@ -671,10 +662,7 @@ export class CheckBox extends Widget {
       locRenderer.scaleX = scaleX;
       locRenderer.scaleY = scaleY;
     }
-    locRenderer.setPosition(
-      locContentSize.width * 0.5,
-      locContentSize.height * 0.5
-    );
+    locRenderer.position = { x: locContentSize.width * 0.5, y: locContentSize.height * 0.5 };
   }
 
   _frontCrossDisabledTextureScaleChangedWithSize() {
@@ -693,10 +681,7 @@ export class CheckBox extends Widget {
       locRenderer.scaleX = scaleX;
       locRenderer.scaleY = scaleY;
     }
-    locRenderer.setPosition(
-      locContentSize.width * 0.5,
-      locContentSize.height * 0.5
-    );
+    locRenderer.position = { x: locContentSize.width * 0.5, y: locContentSize.height * 0.5 };
   }
 
   /**

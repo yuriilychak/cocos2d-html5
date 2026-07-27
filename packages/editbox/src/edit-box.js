@@ -295,7 +295,7 @@ export class EditBox extends Node {
   _updateBackgroundSpriteSize(width, height) {
     if (this._backgroundSprite) {
       var padding = this._backgroundPadding;
-      this._backgroundSprite.setPosition(-padding.x, -padding.y);
+      this._backgroundSprite.position = { x: -padding.x, y: -padding.y };
       this._backgroundSprite.width = width + padding.x + padding.width;
       this._backgroundSprite.height = height + padding.y + padding.height;
     }

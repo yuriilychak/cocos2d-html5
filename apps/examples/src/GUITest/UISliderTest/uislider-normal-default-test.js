@@ -43,21 +43,17 @@ export class UISliderNormalDefaultTest extends UIMainLayer {
         20
       );
       alert.color = new Color(159, 168, 176);
-      alert.setPosition(
-        new Point(
+      alert.position = new Point(
           widgetSize.width / 2,
           widgetSize.height / 2 - alert.height * 3.75
-        )
-      );
+        );
       this._mainNode.addChild(alert);
 
       // Create the slider
       var slider = new Slider();
       slider.loadBarTexture("ccs-res/cocosui/sliderTrack.png");
       slider.loadSlidBallTextures("ccs-res/cocosui/sliderThumb.png");
-      slider.setPosition(
-        new Point(widgetSize.width / 2, widgetSize.height / 2 + 50)
-      );
+      slider.position = new Point(widgetSize.width / 2, widgetSize.height / 2 + 50);
       this._mainNode.addChild(slider);
 
       var sliderScale9 = new Slider(
@@ -69,9 +65,7 @@ export class UISliderNormalDefaultTest extends UIMainLayer {
       sliderScale9.setZoomScale(1);
       sliderScale9.width = 250;
       sliderScale9.height = 19;
-      sliderScale9.setPosition(
-        new Point(widgetSize.width / 2, widgetSize.height / 2 - 20)
-      );
+      sliderScale9.position = new Point(widgetSize.width / 2, widgetSize.height / 2 - 20);
       this._mainNode.addChild(sliderScale9);
 
       return true;

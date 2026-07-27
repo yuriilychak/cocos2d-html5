@@ -59,14 +59,14 @@ export class BakeLayerColorTest extends BakeLayerBaseTest {
     this.addChild(buttons, 10);
 
     var rootLayer = new Layer();
-    rootLayer.setPosition(20, 20);
+    rootLayer.position = { x: 20, y: 20 };
     this.addChild(rootLayer);
 
     var bakeLayer = new LayerGradient(
       new Color(128, 0, 128, 255),
       new Color(0, 0, 128, 255)
     );
-    bakeLayer.setPosition(60, 80);
+    bakeLayer.position = { x: 60, y: 80 };
     bakeLayer.width = 700;
     bakeLayer.height = 300;
     bakeLayer.rotation = 30;
@@ -76,9 +76,9 @@ export class BakeLayerColorTest extends BakeLayerBaseTest {
     for (var i = 0; i < 9; i++) {
       var sprite1 = new Sprite(s_pathGrossini);
       if (i % 2 === 0) {
-        sprite1.setPosition(20 + i * 80, 100);
+        sprite1.position = { x: 20 + i * 80, y: 100 };
       } else {
-        sprite1.setPosition(20 + i * 80, 200);
+        sprite1.position = { x: 20 + i * 80, y: 200 };
       }
       if (i === 4) this._actionSprite = sprite1;
       sprite1.rotation = 180 * Math.random();

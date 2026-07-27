@@ -281,10 +281,7 @@ export class ScrollView extends Layout {
     var innerSize = this._innerContainer.contentSize;
     this._innerContainer.width = Math.max(innerSize.width, this.width);
     this._innerContainer.height = Math.max(innerSize.height, this.height);
-    this._innerContainer.setPosition(
-      0,
-      this.height - this._innerContainer.height
-    );
+    this._innerContainer.position = { x: 0, y: this.height - this._innerContainer.height };
 
     if (this._verticalScrollBar)
       this._verticalScrollBar.onScrolled(this._getHowMuchOutOfBoundary());
@@ -315,7 +312,7 @@ export class ScrollView extends Layout {
     innerContainer.width = innerSizeWidth;
     innerContainer.height = innerSizeHeight;
 
-    var pos = this._innerContainer.getPosition();
+    var pos = this._innerContainer.position;
     var contAP = this._innerContainer.anchor;
 
     if (this._innerContainer.getLeftBoundary() != 0.0) {
@@ -391,7 +388,7 @@ export class ScrollView extends Layout {
     ) {
       return;
     }
-    this._innerContainer.setPosition(position);
+    this._innerContainer.position = position;
     this._outOfBoundaryAmountDirty = true;
 
     // Process bouncing events
@@ -416,7 +413,7 @@ export class ScrollView extends Layout {
    * @return The inner container position.
    */
   getInnerContainerPosition() {
-    return this._innerContainer.getPosition();
+    return this._innerContainer.position;
   }
 
   /**
@@ -710,7 +707,7 @@ export class ScrollView extends Layout {
 
   _startAutoScrollToDestination(destination, timeInSec, attenuated) {
     this._startAutoScroll(
-      Point.sub(destination, this._innerContainer.getPosition()),
+      Point.sub(destination, this._innerContainer.position),
       timeInSec,
       attenuated
     );
@@ -734,7 +731,7 @@ export class ScrollView extends Layout {
     this._autoScrolling = true;
     this._autoScrollTargetDelta = adjustedDeltaMove;
     this._autoScrollAttenuate = attenuated;
-    this._autoScrollStartPosition = this._innerContainer.getPosition();
+    this._autoScrollStartPosition = this._innerContainer.position;
     this._autoScrollTotalTime = timeInSec;
     this._autoScrollAccumulatedTime = 0;
     this._autoScrollBraking = false;

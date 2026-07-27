@@ -8,6 +8,6 @@ export class TransitionMoveInB extends TransitionMoveInL {
   }
 
   initScenes() {
-    this._inScene.setPosition(0, -ServiceLocator.eglView.winSizeInPoints.height);
+    this._inScene.position = { x: 0, y: -ServiceLocator.eglView.winSizeInPoints.height };
   }
 }

@@ -42,21 +42,16 @@ export class UITextFieldTest_LineWrap extends UIMainLayer {
 
       // Add a label in which the textfield events will be displayed
       this._topDisplayLabel.string = "No Event";
-      this._topDisplayLabel.setPosition(
-        widgetSize.width / 2,
-        widgetSize.height / 2 + this._topDisplayLabel.height * 1.5
-      );
+      this._topDisplayLabel.position = { x: widgetSize.width / 2, y: widgetSize.height / 2 + this._topDisplayLabel.height * 1.5 };
       this._bottomDisplayLabel.string = "";
 
       // Add the alert
       var alert = new Text("TextField line wrap", "Marker Felt", 30);
       alert.color = new Color(159, 168, 176);
-      alert.setPosition(
-        new Point(
+      alert.position = new Point(
           widgetSize.width / 2,
           widgetSize.height / 2 - alert.height * 3.075
-        )
-      );
+        );
       this._mainNode.addChild(alert);
 
       // Create the textfield
@@ -68,7 +63,7 @@ export class UITextFieldTest_LineWrap extends UIMainLayer {
       textField.string = "input words here";
       textField.setTextHorizontalAlignment(TextAlignment.CENTER);
       textField.setTextVerticalAlignment(VerticalTextAlignment.CENTER);
-      textField.setPosition(widgetSize.width / 2, widgetSize.height / 2);
+      textField.position = { x: widgetSize.width / 2, y: widgetSize.height / 2 };
       textField.addEventListener(this.textFieldEvent, this);
       this._mainNode.addChild(textField);
       return true;

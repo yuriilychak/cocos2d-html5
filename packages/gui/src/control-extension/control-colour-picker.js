@@ -63,7 +63,7 @@ export class ControlColourPicker extends Control {
       );
 
       var backgroundPointZero = Point.sub(
-        this._background.getPosition(),
+        this._background.position,
         new Point(
           this._background.width / 2 + 2,
           this._background.height / 2 + 2

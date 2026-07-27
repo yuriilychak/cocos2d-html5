@@ -144,7 +144,7 @@ export class GScrollView extends Layer {
       this._clippingToBounds = true;
 
       this._direction = SCROLLVIEW_DIRECTION_BOTH;
-      this._container.setPosition(pZero);
+      this._container.position = pZero;
       this._touchLength = 0.0;
 
       this._minScale = this._maxScale = 1.0;
@@ -200,7 +200,7 @@ export class GScrollView extends Layer {
       offset.y = Math.max(minOffset.y, Math.min(maxOffset.y, offset.y));
     }
 
-    this._container.setPosition(offset);
+    this._container.position = offset;
     var locDelegate = this._delegate;
     if (locDelegate != null && locDelegate.scrollViewDidScroll) {
       locDelegate.scrollViewDidScroll(this);
@@ -208,7 +208,7 @@ export class GScrollView extends Layer {
   }
 
   getContentOffset() {
-    var locPos = this._container.getPosition();
+    var locPos = this._container.position;
     return new Point(locPos.x, locPos.y);
   }
 
@@ -246,7 +246,7 @@ export class GScrollView extends Layer {
       var offset = Point.sub(center, newCenter);
       if (this._delegate && this._delegate.scrollViewDidZoom)
         this._delegate.scrollViewDidZoom(this);
-      this.setContentOffset(Point.add(locContainer.getPosition(), offset));
+      this.setContentOffset(Point.add(locContainer.position, offset));
     }
   }
 
@@ -486,7 +486,7 @@ export class GScrollView extends Layer {
             break;
         }
 
-        var locPosition = this._container.getPosition();
+        var locPosition = this._container.position;
         var newX = locPosition.x + moveDistance.x;
         var newY = locPosition.y + moveDistance.y;
 
@@ -628,7 +628,7 @@ export class GScrollView extends Layer {
     var max = this.maxContainerOffset();
     var locDirection = this._direction;
 
-    var oldPoint = this._container.getPosition();
+    var oldPoint = this._container.position;
     var newX = oldPoint.x;
     var newY = oldPoint.y;
     if (
@@ -659,12 +659,9 @@ export class GScrollView extends Layer {
     }
 
     var maxInset, minInset;
-    var oldPosition = this._container.getPosition();
+    var oldPosition = this._container.position;
     var locScrollDistance = this._scrollDistance;
-    this._container.setPosition(
-      oldPosition.x + locScrollDistance.x,
-      oldPosition.y + locScrollDistance.y
-    );
+    this._container.position = { x: oldPosition.x + locScrollDistance.x, y: oldPosition.y + locScrollDistance.y };
     if (this._bounceable) {
       maxInset = this._maxInset;
       minInset = this._minInset;

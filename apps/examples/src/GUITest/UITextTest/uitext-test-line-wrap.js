@@ -58,10 +58,7 @@ export class UITextTest_LineWrap extends UIMainLayer {
           }
         }
       });
-      text.setPosition(
-        widgetSize.width / 2,
-        widgetSize.height / 2 - text.height / 8
-      );
+      text.position = { x: widgetSize.width / 2, y: widgetSize.height / 2 - text.height / 8 };
       this._mainNode.addChild(text);
 
       return true;

@@ -41,7 +41,7 @@ export class UIButtonTestSwitchScale9 extends UIMainLayer {
         "ccs-res/cocosui/animationbuttonnormal.png",
         "ccs-res/cocosui/animationbuttonpressed.png"
       );
-      button.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0);
+      button.position = { x: widgetSize.width / 2.0, y: widgetSize.height / 2.0 };
       button.addTouchEventListener(this.touchEvent, this);
       button.setTitleText("Button Title");
       button.ignoreContentAdaptWithSize(false);

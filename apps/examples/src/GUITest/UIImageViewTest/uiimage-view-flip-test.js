@@ -45,19 +45,14 @@ export class UIImageViewFlipTest extends UIMainLayer {
       imageView.setFlippedX(true);
       imageView.scale = 0.5;
       imageView.ignoreContentAdaptWithSize(false);
-      imageView.setPosition(
-        new Point(widgetSize.width / 2, widgetSize.height / 2)
-      );
+      imageView.position = new Point(widgetSize.width / 2, widgetSize.height / 2);
 
       this._mainNode.addChild(imageView);
 
       var toggleButton = new Button();
       toggleButton.setTitleText("Toggle FlipX");
-      var ip = imageView.getPosition();
-      toggleButton.setPosition(
-        ip.x - 50,
-        ip.y - imageView.contentSize.height / 2 - 20
-      );
+      var ip = imageView.position;
+      toggleButton.position = { x: ip.x - 50, y: ip.y - imageView.contentSize.height / 2 - 20 };
       this.addChild(toggleButton);
       toggleButton.addClickEventListener(function () {
         imageView.setFlippedX(!imageView.isFlippedX());
@@ -65,11 +60,8 @@ export class UIImageViewFlipTest extends UIMainLayer {
 
       var toggleScale9 = new Button();
       toggleScale9.setTitleText("Toggle Scale9");
-      var ip9 = imageView.getPosition();
-      toggleScale9.setPosition(
-        ip9.x + 50,
-        ip9.y - imageView.contentSize.height / 2 - 20
-      );
+      var ip9 = imageView.position;
+      toggleScale9.position = { x: ip9.x + 50, y: ip9.y - imageView.contentSize.height / 2 - 20 };
       this.addChild(toggleScale9);
       toggleScale9.addClickEventListener(function () {
         imageView.setScale9Enabled(!imageView.isScale9Enabled());

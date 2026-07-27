@@ -49,7 +49,7 @@ export class SpriteWithRepeatingTexture extends SpriteTestDemo {
         var y = (winSize.height / 2);
 
         block.setTextureRect(new Rect(0,0, 320,240));
-        block.setPosition(x, y);
+        block.position = { x: x, y: y };
         block.getTexture().renderer.setTexParameters(GLState.LINEAR, GLState.LINEAR, GLState.REPEAT, GLState.REPEAT);
         this.addChild(block);
         //----end58----

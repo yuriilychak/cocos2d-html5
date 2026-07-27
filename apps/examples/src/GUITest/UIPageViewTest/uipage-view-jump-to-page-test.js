@@ -63,14 +63,12 @@ export class UIPageViewJumpToPageTest extends UIMainLayer {
         imageView.setScale9Enabled(true);
         imageView.width = 240;
         imageView.height = 130;
-        imageView.setPosition(
-          new Point(layout.width / 2.0, layout.height / 2.0)
-        );
+        imageView.position = new Point(layout.width / 2.0, layout.height / 2.0);
         layout.addChild(imageView);
 
         var label = new Text("page " + (i + 1), "Arial", 30);
         label.color = new Color(192, 192, 192);
-        label.setPosition(new Point(layout.width / 2.0, layout.height / 2.0));
+        label.position = new Point(layout.width / 2.0, layout.height / 2.0);
         layout.addChild(label);
 
         pageView.insertCustomItem(layout, i);
@@ -79,9 +77,7 @@ export class UIPageViewJumpToPageTest extends UIMainLayer {
       pageView.setCurrentPageIndex(1);
       //add buttons to jump to specific page
       var button1 = new Button();
-      button1.setPosition(
-        new Point(pageView.x - 50, pageView.y + pageView.height)
-      );
+      button1.position = new Point(pageView.x - 50, pageView.y + pageView.height);
       button1.setTitleText("Jump to Page1");
 
       button1.addClickEventListener(function () {
@@ -91,9 +87,7 @@ export class UIPageViewJumpToPageTest extends UIMainLayer {
 
       var button2 = button1.clone();
       button2.setTitleText("Jump to Page2");
-      button2.setPosition(
-        new Point(pageView.x - 50, pageView.y + pageView.height - 50)
-      );
+      button2.position = new Point(pageView.x - 50, pageView.y + pageView.height - 50);
       button2.addClickEventListener(function () {
         pageView.setCurrentPageIndex(1);
       });
@@ -101,12 +95,10 @@ export class UIPageViewJumpToPageTest extends UIMainLayer {
 
       var button3 = button2.clone();
       button3.setTitleText("Jump to Page3");
-      button3.setPosition(
-        new Point(
+      button3.position = new Point(
           pageView.x + pageView.width + 50,
           pageView.y + pageView.height
-        )
-      );
+        );
       button3.addClickEventListener(function () {
         pageView.setCurrentPageIndex(2);
       });
@@ -114,12 +106,10 @@ export class UIPageViewJumpToPageTest extends UIMainLayer {
 
       var button4 = button3.clone();
       button4.setTitleText("Jump to Page4");
-      button4.setPosition(
-        new Point(
+      button4.position = new Point(
           pageView.x + pageView.width + 50,
           pageView.y + pageView.height - 50
-        )
-      );
+        );
       button4.addClickEventListener(function () {
         pageView.setCurrentPageIndex(3);
       });

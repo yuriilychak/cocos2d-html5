@@ -50,19 +50,14 @@ export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
 
       // Add the black background
       this._bottomDisplayLabel.string = "PageView Dynamic Modification";
-      this._bottomDisplayLabel.setPosition(
-        widgetSize.width / 2.0,
-        widgetSize.height / 2.0 - this._bottomDisplayLabel.height * 3.075
-      );
+      this._bottomDisplayLabel.position = { x: widgetSize.width / 2.0, y: widgetSize.height / 2.0 - this._bottomDisplayLabel.height * 3.075 };
 
       // Create the page view
       var pageView = new PageView();
       pageView.width = 240.0;
       pageView.height = 130.0;
       pageView.anchor = new Point(0.5, 0.5);
-      pageView.setPosition(
-        new Point(widgetSize.width / 2.0, widgetSize.height / 2.0)
-      );
+      pageView.position = new Point(widgetSize.width / 2.0, widgetSize.height / 2.0);
       pageView.setBackGroundColor(Color.GREEN);
       pageView.setBackGroundColorType(Layout.BG_COLOR_SOLID);
 
@@ -101,7 +96,7 @@ export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
       button.anchorX = 0;
       button.anchorY = 0.5;
       button.setTitleFontSize(12);
-      button.setPosition(20, 220);
+      button.position = { x: 20, y: 220 };
       button.setTitleText("Add A Page");
       button.setZoomScale(0.3);
       button.setPressedActionEnabled(true);
@@ -139,7 +134,7 @@ export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
       button2.anchorX = 0;
       button2.anchorY = 0.5;
       button2.setTitleFontSize(12);
-      button2.setPosition(20, 180);
+      button2.position = { x: 20, y: 180 };
       button2.setTitleText("Remove A Page");
       button2.setZoomScale(0.3);
       button2.setPressedActionEnabled(true);
@@ -159,7 +154,7 @@ export class UIPageViewDynamicAddAndRemoveTest extends UIMainLayer {
       button3.anchorX = 0;
       button3.anchorY = 0.5;
       button3.setTitleFontSize(12);
-      button3.setPosition(new Point(20, 140));
+      button3.position = new Point(20, 140);
       button3.setTitleText("Remove All Pages");
       button3.setZoomScale(0.3);
       button3.setPressedActionEnabled(true);

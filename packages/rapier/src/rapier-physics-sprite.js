@@ -24,7 +24,7 @@ export class RapierPhysicsSprite extends Sprite {
     if (this._rapierBody) {
       const t = this._rapierBody.translation();
       const r = this._rapierBody.rotation();
-      this.setPosition(t.x, t.y);
+      this.position = { x: t.x, y: t.y };
       this.rotation = -r * 180 / Math.PI;
     }
     super.visit(parentCmd);

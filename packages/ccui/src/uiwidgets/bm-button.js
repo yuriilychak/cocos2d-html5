@@ -778,7 +778,7 @@ export class BMButton extends Widget {
 
   _normalTextureScaleChangedWithSize() {
     this._buttonScale9Renderer.contentSize = this.contentSize;
-    this._buttonScale9Renderer.setPosition(this.width / 2, this.height / 2);
+    this._buttonScale9Renderer.position = { x: this.width / 2, y: this.height / 2 };
   }
 
   _adaptRenderers() {
@@ -789,7 +789,7 @@ export class BMButton extends Widget {
   }
 
   _updateTitleLocation() {
-    this._titleRenderer.setPosition(this.width * 0.5, this.height * 0.5);
+    this._titleRenderer.position = { x: this.width * 0.5, y: this.height * 0.5 };
   }
 
   /**

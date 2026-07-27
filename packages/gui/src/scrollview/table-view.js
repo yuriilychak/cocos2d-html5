@@ -252,7 +252,7 @@ export class TableView extends GScrollView {
   _setIndexForCell(index, cell) {
     cell.anchorX = 0;
     cell.anchorY = 0;
-    cell.setPosition(this._offsetFromIndex(index));
+    cell.position = this._offsetFromIndex(index);
     cell.setIdx(index);
   }
 

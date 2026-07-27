@@ -54,7 +54,7 @@ export class LabelAtlasCanvasRenderCmd extends AtlasNode.CanvasRenderCmd {
                     fontChar.visible = true;
                 }
             }
-            fontChar.setPosition(cr * locItemWidth + locItemWidth / 2, locItemHeight / 2);
+            fontChar.position = { x: cr * locItemWidth + locItemWidth / 2, y: locItemHeight / 2 };
         }
         this.updateContentSize(i, cr+1);
     }

@@ -55,7 +55,7 @@ export class PositionFrame extends Frame {
   onEnter(nextFrame) {
     if (!this._node) return;
 
-    this._node.setPosition(this.#position);
+    this._node.position = this.#position;
 
     if (this._tween) {
       this._betweenX = nextFrame.x - this.#position.x;
@@ -73,7 +73,7 @@ export class PositionFrame extends Frame {
       p.x = this.#position.x + this._betweenX * percent;
       p.y = this.#position.y + this._betweenY * percent;
 
-      this._node.setPosition(p);
+      this._node.position = p;
     }
   }
 

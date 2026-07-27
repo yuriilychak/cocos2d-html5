@@ -128,10 +128,7 @@ export class ParallaxNode extends Node {
       for (var i = 0, len = locParallaxArray.length; i < len; i++) {
         var point = locParallaxArray[i];
         var child = point.getChild();
-        child.setPosition(
-          -pos.x + pos.x * point.getRatio().x + point.getOffset().x,
-          -pos.y + pos.y * point.getRatio().y + point.getOffset().y
-        );
+        child.position = { x: -pos.x + pos.x * point.getRatio().x + point.getOffset().x, y: -pos.y + pos.y * point.getRatio().y + point.getOffset().y };
       }
       this._lastPosition = pos;
     }
@@ -142,7 +139,7 @@ export class ParallaxNode extends Node {
     var cn = this;
     while (cn.parent !== null) {
       cn = cn.parent;
-      ret = Point.add(ret, cn.getPosition());
+      ret = Point.add(ret, cn.position);
     }
     return ret;
   }

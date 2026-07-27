@@ -25,7 +25,7 @@ export class MyLayer extends Layer {
     // create and initialize a label
     this.helloLabel = new LabelTTF("Hello World", "Impact", 38);
     // position the label on the center of the screen
-    this.helloLabel.setPosition(size.width / 2, size.height - 40);
+    this.helloLabel.position = { x: size.width / 2, y: size.height - 40 };
     // add the label as a child to this layer
     this.addChild(this.helloLabel, 5);
 
@@ -33,7 +33,7 @@ export class MyLayer extends Layer {
     this.sprite = new Sprite(s_HelloWorld);
     this.sprite.anchorX = 0.5;
     this.sprite.anchorY = 0.5;
-    this.sprite.setPosition(size.width / 2, size.height / 2);
+    this.sprite.position = { x: size.width / 2, y: size.height / 2 };
     this.sprite.scale = size.height / this.sprite.contentSize.height;
     this.addChild(this.sprite, 0);
   }

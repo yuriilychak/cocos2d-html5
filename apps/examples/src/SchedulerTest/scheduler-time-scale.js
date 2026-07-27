@@ -70,9 +70,9 @@ export class SchedulerTimeScale extends SchedulerTestLayer {
     grossini.setActionManager(this._newActionManager);
     grossini.setScheduler(this._newScheduler);
 
-    grossini.setPosition(new Point(40, 80));
-    tamara.setPosition(new Point(40, 80));
-    kathia.setPosition(new Point(40, 80));
+    grossini.position = new Point(40, 80);
+    tamara.position = new Point(40, 80);
+    kathia.position = new Point(40, 80);
 
     this.addChild(grossini);
     this.addChild(tamara);

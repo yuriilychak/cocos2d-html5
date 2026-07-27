@@ -4,10 +4,8 @@ import {
   BlendFunc,
   isString,
   vertexLineToPolygon,
-  Color,
   log,
-  ServiceLocator,
-  GLState
+  ServiceLocator
 } from "@aspect/core";
 
 /**
@@ -20,81 +18,96 @@ import {
  */
 export class MotionStreak extends Node {
   #positionR = new Point();
-  texture = null;
-  fastMode = false;
-  startingPositionInitialized = false;
+  #texture = null;
+  #fastMode = true;
+  #startingPositionInitialized = false;
 
-  _blendFunc = null;
-  _stroke = 0;
-  _fadeDelta = 0;
-  _minSeg = 0;
-  _maxPoints = 0;
-  _nuPoints = 0;
-  _previousNuPoints = 0;
+  #blendFunc = BlendFunc.ALPHA_NON_PREMULTIPLIED;
+  #stroke = 0;
+  #fadeDelta = 0;
+  #minSeg = 0;
+  #maxPoints = 0;
+  #nuPoints = 0;
+  #previousNuPoints = 0;
 
   /* Pointers */
-  _pointVertexes = null;
-  _pointState = null;
+  #pointVertexes = null;
+  #pointState = null;
 
   // webgl
-  _vertices = null;
-  _colorPointer = null;
-  _texCoords = null;
+  #vertices = null;
+  #colorPointer = null;
+  #texCoords = null;
 
-  _verticesBuffer = null;
-  _colorPointerBuffer = null;
-  _texCoordsBuffer = null;
+  #verticesBuffer = null;
+  #colorPointerBuffer = null;
+  #texCoordsBuffer = null;
   _className = "MotionStreak";
 
   constructor(fade, minSeg, stroke, color, texture) {
     super();
-    
-    this._blendFunc = new BlendFunc(
-      GLState.SRC_ALPHA,
-      GLState.ONE_MINUS_SRC_ALPHA
-    );
+    if (isString(texture))
+      texture = ServiceLocator.textureCache.addImage(texture);
 
-    this.fastMode = false;
-    this.startingPositionInitialized = false;
-    this.texture = null;
-    this._stroke = 0;
-    this._fadeDelta = 0;
-    this._minSeg = 0;
-    this._maxPoints = 0;
-    this._nuPoints = 0;
-    this._previousNuPoints = 0;
-    this._pointVertexes = null;
-    this._pointState = null;
-    this._vertices = null;
-    this._colorPointer = null;
-    this._texCoords = null;
-    this._verticesBuffer = null;
-    this._colorPointerBuffer = null;
-    this._texCoordsBuffer = null;
+    this.position = new Point();
+    this.anchorX = 0;
+    this.anchorY = 0;
+    this.ignoreAnchor = true;
+    this.#minSeg = minSeg === -1.0 ? stroke / 5.0 : minSeg;
+    this.#minSeg *= this.#minSeg;
 
-    if (texture !== undefined)
-      this.initWithFade(fade, minSeg, stroke, color, texture);
+    this.#stroke = stroke;
+    this.#fadeDelta = 1.0 / fade;
+
+    var locMaxPoints = (0 | (fade * 60)) + 2;
+    this.#maxPoints = locMaxPoints;
+    this.#pointState = new Float32Array(locMaxPoints);
+    this.#pointVertexes = new Float32Array(locMaxPoints * 2);
+
+    this.#vertices = new Float32Array(locMaxPoints * 4);
+    this.#texCoords = new Float32Array(locMaxPoints * 4);
+    this.#colorPointer = new Uint8Array(locMaxPoints * 8);
+
+    this.#verticesBuffer = gl.createBuffer();
+    this.#texCoordsBuffer = gl.createBuffer();
+    this.#colorPointerBuffer = gl.createBuffer();
+    this.#texture = texture;
+    this.color = color;
+    this.scheduleUpdate();
+
+    // bind buffer
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.#verticesBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, this.#vertices, gl.DYNAMIC_DRAW);
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.#texCoordsBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, this.#texCoords, gl.DYNAMIC_DRAW);
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.#colorPointerBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, this.#colorPointer, gl.DYNAMIC_DRAW);
   }
 
-  getTexture() {
-    return this.texture;
+  get texture() {
+    return this.#texture;
   }
 
-  setTexture(texture) {
-    if (this.texture !== texture) this.texture = texture;
-  }
-
-  getBlendFunc() {
-    return this._blendFunc;
-  }
-
-  setBlendFunc(src, dst) {
-    if (dst === undefined) {
-      this._blendFunc = src;
-    } else {
-      this._blendFunc.src = src;
-      this._blendFunc.dst = dst;
+  set texture(texture) {
+    if (this.#texture !== texture) {
+      this.#texture = texture;
     }
+  }
+
+  get src() {
+    return this.#blendFunc.src;
+  }
+
+  set src(value) {
+    this.#blendFunc.src = value;
+  }
+
+  get dst() {
+    return this.#blendFunc.dst;
+  }
+
+  set dst(value) {
+    this.#blendFunc.dst = value;
   }
 
   get opacity() {
@@ -112,84 +125,49 @@ export class MotionStreak extends Node {
     return false;
   }
 
-  isFastMode() {
-    return this.fastMode;
-  }
-  setFastMode(fastMode) {
-    this.fastMode = fastMode;
-  }
-  isStartingPositionInitialized() {
-    return this.startingPositionInitialized;
-  }
-  setStartingPositionInitialized(v) {
-    this.startingPositionInitialized = v;
-  }
-  getStroke() {
-    return this._stroke;
-  }
-  setStroke(stroke) {
-    this._stroke = stroke;
+  get fastMode() {
+    return this.#fastMode;
   }
 
-  initWithFade(fade, minSeg, stroke, color, texture) {
-    if (!texture)
-      throw new Error(
-        "MotionStreak.initWithFade(): Invalid filename or texture"
-      );
+  set fastMode(fastMode) {
+    this.#fastMode = fastMode;
+  }
 
-    if (isString(texture))
-      texture = ServiceLocator.textureCache.addImage(texture);
+  get startingPositionInitialized() {
+    return this.#startingPositionInitialized;
+  }
 
-    super.setPosition(new Point(0, 0));
-    this.anchorX = 0;
-    this.anchorY = 0;
-    this.ignoreAnchor = true;
-    this.startingPositionInitialized = false;
+  set startingPositionInitialized(v) {
+    this.#startingPositionInitialized = v;
+  }
 
-    this.fastMode = true;
-    this._minSeg = minSeg === -1.0 ? stroke / 5.0 : minSeg;
-    this._minSeg *= this._minSeg;
+  get stroke() {
+    return this.#stroke;
+  }
 
-    this._stroke = stroke;
-    this._fadeDelta = 1.0 / fade;
+  set stroke(stroke) {
+    this.#stroke = stroke;
+  }
 
-    var locMaxPoints = (0 | (fade * 60)) + 2;
-    this._maxPoints = locMaxPoints;
-    this._nuPoints = 0;
-    this._pointState = new Float32Array(locMaxPoints);
-    this._pointVertexes = new Float32Array(locMaxPoints * 2);
+  get pointCount() {
+    return this.#nuPoints;
+  }
 
-    this._vertices = new Float32Array(locMaxPoints * 4);
-    this._texCoords = new Float32Array(locMaxPoints * 4);
-    this._colorPointer = new Uint8Array(locMaxPoints * 8);
-
-    this._verticesBuffer = gl.createBuffer();
-    this._texCoordsBuffer = gl.createBuffer();
-    this._colorPointerBuffer = gl.createBuffer();
-
-    // Set blend mode
-    this._blendFunc.src = gl.SRC_ALPHA;
-    this._blendFunc.dst = gl.ONE_MINUS_SRC_ALPHA;
-
-    this.texture = texture;
-    this.color = color;
-    this.scheduleUpdate();
-
-    // bind buffer
-    gl.bindBuffer(gl.ARRAY_BUFFER, this._verticesBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, this._vertices, gl.DYNAMIC_DRAW);
-    gl.bindBuffer(gl.ARRAY_BUFFER, this._texCoordsBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, this._texCoords, gl.DYNAMIC_DRAW);
-    gl.bindBuffer(gl.ARRAY_BUFFER, this._colorPointerBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, this._colorPointer, gl.DYNAMIC_DRAW);
-
-    return true;
+  get renderData() {
+    return {
+      vertices: this.#vertices,
+      texCoords: this.#texCoords,
+      colorPointer: this.#colorPointer,
+      verticesBuffer: this.#verticesBuffer,
+      texCoordsBuffer: this.#texCoordsBuffer,
+      colorPointerBuffer: this.#colorPointerBuffer
+    };
   }
 
   tintWithColor(color) {
     this.color = color;
-    var locColorPointer = this._colorPointer;
-    for (var i = 0, len = this._nuPoints * 2; i < len; i++) {
+    var locColorPointer = this.#colorPointer;
+    for (var i = 0, len = this.#nuPoints * 2; i < len; i++) {
       locColorPointer[i * 4] = color.r;
       locColorPointer[i * 4 + 1] = color.g;
       locColorPointer[i * 4 + 2] = color.b;
@@ -197,16 +175,16 @@ export class MotionStreak extends Node {
   }
 
   reset() {
-    this._nuPoints = 0;
+    this.#nuPoints = 0;
   }
 
-  setPosition(position, yValue) {
+  get position() {
+    return this.#positionR.clone();
+  }
+
+  set position(position) {
     this.startingPositionInitialized = true;
-    if (yValue === undefined) {
-      this.#positionR.set(position);
-    } else {
-      this.#positionR.set(position, yValue);
-    }
+    this.#positionR.set(position);
   }
 
   get x() {
@@ -215,8 +193,8 @@ export class MotionStreak extends Node {
 
   set x(x) {
     this.#positionR.x = x;
-    if (!this.startingPositionInitialized)
-      this.startingPositionInitialized = true;
+    if (!this.#startingPositionInitialized)
+      this.#startingPositionInitialized = true;
   }
 
   get y() {
@@ -225,25 +203,25 @@ export class MotionStreak extends Node {
 
   set y(y) {
     this.#positionR.y = y;
-    if (!this.startingPositionInitialized)
-      this.startingPositionInitialized = true;
+    if (!this.#startingPositionInitialized)
+      this.#startingPositionInitialized = true;
   }
 
   update(delta) {
-    if (!this.startingPositionInitialized) return;
+    if (!this.#startingPositionInitialized) return;
 
     this._renderCmd._updateDisplayColor();
 
-    delta *= this._fadeDelta;
+    delta *= this.#fadeDelta;
 
     var i, newIdx, newIdx2, i2;
     var mov = 0;
 
-    var locNuPoints = this._nuPoints;
-    var locPointState = this._pointState,
-      locPointVertexes = this._pointVertexes,
-      locVertices = this._vertices;
-    var locColorPointer = this._colorPointer;
+    var locNuPoints = this.#nuPoints;
+    var locPointState = this.#pointState,
+      locPointVertexes = this.#pointVertexes,
+      locVertices = this.#vertices;
+    var locColorPointer = this.#colorPointer;
 
     for (i = 0; i < locNuPoints; i++) {
       locPointState[i] -= delta;
@@ -284,7 +262,7 @@ export class MotionStreak extends Node {
     locNuPoints -= mov;
 
     var appendNewPoint = true;
-    if (locNuPoints >= this._maxPoints) {
+    if (locNuPoints >= this.#maxPoints) {
       appendNewPoint = false;
     } else if (locNuPoints > 0) {
       var a1 =
@@ -294,7 +272,7 @@ export class MotionStreak extends Node {
             locPointVertexes[(locNuPoints - 1) * 2 + 1]
           ),
           this.#positionR
-        ) < this._minSeg;
+        ) < this.#minSeg;
       var a2 =
         locNuPoints === 1
           ? false
@@ -305,7 +283,7 @@ export class MotionStreak extends Node {
               ),
               this.#positionR
             ) <
-            this._minSeg * 2.0;
+            this.#minSeg * 2.0;
       if (a1 || a2) appendNewPoint = false;
     }
 
@@ -325,20 +303,20 @@ export class MotionStreak extends Node {
       locColorPointer[offset + 3] = 255;
       locColorPointer[offset + 7] = 255;
 
-      if (locNuPoints > 0 && this.fastMode) {
+      if (locNuPoints > 0 && this.#fastMode) {
         if (locNuPoints > 1)
           vertexLineToPolygon(
             locPointVertexes,
-            this._stroke,
-            this._vertices,
+            this.#stroke,
+            this.#vertices,
             locNuPoints,
             1
           );
         else
           vertexLineToPolygon(
             locPointVertexes,
-            this._stroke,
-            this._vertices,
+            this.#stroke,
+            this.#vertices,
             0,
             2
           );
@@ -346,33 +324,33 @@ export class MotionStreak extends Node {
       locNuPoints++;
     }
 
-    if (!this.fastMode)
+    if (!this.#fastMode)
       vertexLineToPolygon(
         locPointVertexes,
-        this._stroke,
-        this._vertices,
+        this.#stroke,
+        this.#vertices,
         0,
         locNuPoints
       );
 
-    if (locNuPoints && this._previousNuPoints !== locNuPoints) {
+    if (locNuPoints && this.#previousNuPoints !== locNuPoints) {
       var texDelta = 1.0 / locNuPoints;
-      var locTexCoords = this._texCoords;
+      var locTexCoords = this.#texCoords;
       for (i = 0; i < locNuPoints; i++) {
         locTexCoords[i * 4] = 0;
         locTexCoords[i * 4 + 1] = texDelta * i;
         locTexCoords[(i * 2 + 1) * 2] = 1;
         locTexCoords[(i * 2 + 1) * 2 + 1] = texDelta * i;
       }
-      this._previousNuPoints = locNuPoints;
+      this.#previousNuPoints = locNuPoints;
     }
 
-    this._nuPoints = locNuPoints;
+    this.#nuPoints = locNuPoints;
   }
 
   _createRenderCmd() {
-    if (ServiceLocator.sys.rendererConfig.isWebGL)
-      return new MotionStreak.WebGLRenderCmd(this);
-    else return null; // MotionStreak doesn't support Canvas mode
+    return ServiceLocator.sys.rendererConfig.isWebGL
+      ? new MotionStreak.WebGLRenderCmd(this)
+      : null; // MotionStreak doesn't support Canvas mode
   }
 }

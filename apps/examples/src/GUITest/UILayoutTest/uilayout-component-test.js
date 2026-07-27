@@ -51,7 +51,7 @@ export class UILayoutComponentTest extends UIMainLayer {
         button.width,
         button.height
       );
-      button.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0);
+      button.position = { x: widgetSize.width / 2.0, y: widgetSize.height / 2.0 };
       button.addTouchEventListener(this.touchEvent, this);
       button.setZoomScale(0.4);
       button.setPressedActionEnabled(true);

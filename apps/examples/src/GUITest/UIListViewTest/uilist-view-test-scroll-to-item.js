@@ -96,12 +96,10 @@ export class UIListViewTest_ScrollToItem extends UIMainLayer {
       );
       pButton.anchor = new Point(0, 0.5);
       pButton.scale = 0.8;
-      pButton.setPosition(
-        Point.add(
+      pButton.position = Point.add(
           new Point(widgetSize.width / 2, widgetSize.height / 2),
           new Point(120, -60)
-        )
-      );
+        );
       pButton.setTitleText("Go to '" + this._nextIndex + "'");
       pButton.addClickEventListener(
         function (pButton) {

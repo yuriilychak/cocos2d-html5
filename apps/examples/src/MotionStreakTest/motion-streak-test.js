@@ -37,9 +37,14 @@ import { Color, Layer, Rect, ServiceLocator } from "@aspect/core";
 import { BMButton, Widget } from "@aspect/ccui";
 
 export class MotionStreakTest extends Layer {
-  constructor() {
-    super();
-    this._streak = null;
+  #streak = null;
+
+  get streak() {
+    return this.#streak;
+  }
+
+  set streak(value) {
+    this.#streak = value;
   }
 
   title() {
@@ -88,9 +93,11 @@ export class MotionStreakTest extends Layer {
     modeBtn.y = winSize.height / 4;
     modeBtn.addClickEventListener(() => {
       isFastMode = !isFastMode;
-      modeBtn.setTitleText(isFastMode ? "Use Fast Mode" : "Use High Quality Mode");
-      if (this._streak) {
-        this._streak.fastMode = isFastMode;
+      modeBtn.setTitleText(
+        isFastMode ? "Use Fast Mode" : "Use High Quality Mode"
+      );
+      if (this.#streak) {
+        this.#streak.fastMode = isFastMode;
       }
     });
     this.addChild(modeBtn, 1);
@@ -115,7 +122,7 @@ export class MotionStreakTest extends Layer {
   }
 
   modeCallback(sender) {
-    var fastMode = this._streak.fastMode;
-    this._streak.fastMode = !fastMode;
+    var fastMode = this.#streak.fastMode;
+    this.#streak.fastMode = !fastMode;
   }
 }

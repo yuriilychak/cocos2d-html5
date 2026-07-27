@@ -48,7 +48,7 @@ export class UIS9NinePatchTest extends UIMainLayer {
 
       //9-patch sprite with filename
       var playerSprite = new Scale9Sprite("ccs-res/cocosui/player.9.png");
-      playerSprite.setPosition(x, y);
+      playerSprite.position = { x: x, y: y };
       playerSprite.contentSize = preferedSize;
       var capInsets = playerSprite.getCapInsets();
       log(
@@ -66,7 +66,7 @@ export class UIS9NinePatchTest extends UIMainLayer {
       var animationBtnSprite = new Scale9Sprite(
         "animationbuttonpressed.png"
       );
-      animationBtnSprite.setPosition(x - 100, y - 100);
+      animationBtnSprite.position = { x: x - 100, y: y - 100 };
       capInsets = animationBtnSprite.getCapInsets();
       log(
         "animationBtnSprite capInset = " +
@@ -81,7 +81,7 @@ export class UIS9NinePatchTest extends UIMainLayer {
       this.addChild(animationBtnSprite);
 
       var monsterSprite = new Scale9Sprite("monster.9.png");
-      monsterSprite.setPosition(x + 100, y - 100);
+      monsterSprite.position = { x: x + 100, y: y - 100 };
       capInsets = monsterSprite.getCapInsets();
       monsterSprite.contentSize = preferedSize;
       log(
@@ -101,7 +101,7 @@ export class UIS9NinePatchTest extends UIMainLayer {
       var buttonScale9Sprite = new Scale9Sprite(spriteFrame);
       buttonScale9Sprite.width = 150;
       buttonScale9Sprite.height = 80;
-      buttonScale9Sprite.setPosition(new Point(100, 200));
+      buttonScale9Sprite.position = new Point(100, 200);
       this.addChild(buttonScale9Sprite);
 
       return true;

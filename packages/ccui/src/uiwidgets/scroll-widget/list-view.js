@@ -675,7 +675,7 @@ export class ListView extends ScrollView {
   getClosestItemToPositionInCurrentView(positionRatioInView, itemAnchorPoint) {
     // Calculate the target position
     var contentSize = this.contentSize;
-    var targetPosition = Point.mult(this._innerContainer.getPosition(), -1);
+    var targetPosition = Point.mult(this._innerContainer.position, -1);
     targetPosition.x += contentSize.width * positionRatioInView.x;
     targetPosition.y += contentSize.height * positionRatioInView.y;
 
@@ -841,7 +841,7 @@ export class ListView extends ScrollView {
     );
 
     if (!this.bounceEnabled) {
-      var delta = Point.sub(destination, this._innerContainer.getPosition());
+      var delta = Point.sub(destination, this._innerContainer.position);
       var outOfBoundary = this._getHowMuchOutOfBoundary(delta);
       destination.x += outOfBoundary.x;
       destination.y += outOfBoundary.y;
@@ -1052,7 +1052,7 @@ export class ListView extends ScrollView {
         // Adjust the delta move amount according to the magnetic type
         var magneticAnchorPoint = this._getAnchorPointByMagneticType(magType);
         var magneticPosition = Point.mult(
-          this._innerContainer.getPosition(),
+          this._innerContainer.position,
           -1
         );
         magneticPosition.x += this.width * magneticAnchorPoint.x;
@@ -1105,7 +1105,7 @@ export class ListView extends ScrollView {
     var magneticAnchorPoint = this._getAnchorPointByMagneticType(
       this._magneticType
     );
-    var magneticPosition = Point.mult(this._innerContainer.getPosition(), -1);
+    var magneticPosition = Point.mult(this._innerContainer.position, -1);
     magneticPosition.x += this.width * magneticAnchorPoint.x;
     magneticPosition.y += this.height * magneticAnchorPoint.y;
 

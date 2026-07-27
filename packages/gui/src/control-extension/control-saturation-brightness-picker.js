@@ -111,7 +111,7 @@ export class ControlSaturationBrightnessPicker extends Control {
       sliderPosition.x = centerX + limit * Math.cos(angle);
       sliderPosition.y = centerY + limit * Math.sin(angle);
     }
-    this._slider.setPosition(sliderPosition);
+    this._slider.position = sliderPosition;
     if (sliderPosition.x < this._startPos.x + this._boxPos)
       sliderPosition.x = this._startPos.x + this._boxPos;
     else if (

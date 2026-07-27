@@ -203,10 +203,7 @@ export class SkeletonCanvasRenderCmd extends Node.CanvasRenderCmd {
           ax = (attachment.offset[0] + attachment.offset[4]) * 0.5;
           ay = (attachment.offset[1] + attachment.offset[5]) * 0.5;
         }
-        slotNode.setPosition(
-          bone.worldX + ax * bone.a + ay * bone.b,
-          bone.worldY + ax * bone.c + ay * bone.d
-        );
+        slotNode.position = { x: bone.worldX + ax * bone.a + ay * bone.b, y: bone.worldY + ax * bone.c + ay * bone.d };
         slotNode.scaleX = bone.getWorldScaleX();
         slotNode.scaleY = bone.getWorldScaleY();
 

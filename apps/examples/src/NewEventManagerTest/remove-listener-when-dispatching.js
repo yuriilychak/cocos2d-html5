@@ -48,7 +48,7 @@ export class RemoveListenerWhenDispatching extends EventDispatcherTestDemo {
     var size = ServiceLocator.eglView.rendererDelegate.visibleSize;
 
     var sprite1 = createColoredView(new Color(0, 255, 255));
-    sprite1.setPosition(origin.x + size.width / 2, origin.y + size.height / 2);
+    sprite1.position = { x: origin.x + size.width / 2, y: origin.y + size.height / 2 };
     this.addChild(sprite1, 10);
 
     // Make sprite1 touchable
@@ -78,10 +78,7 @@ export class RemoveListenerWhenDispatching extends EventDispatcherTestDemo {
       "The sprite could be touched!",
       s_simpleFont_fnt
     );
-    statusLabel.setPosition(
-      origin.x + size.width / 2,
-      origin.y + size.height - 90
-    );
+    statusLabel.position = { x: origin.x + size.width / 2, y: origin.y + size.height - 90 };
     this.addChild(statusLabel);
 
     var enable = true;

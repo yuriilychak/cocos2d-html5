@@ -110,7 +110,7 @@ export class PageViewIndicator extends ProtectedNode {
     if (index < 0 || index >= this._indexNodes.length) {
       return;
     }
-    this._currentIndexNode.setPosition(this._indexNodes[index].getPosition());
+    this._currentIndexNode.position = this._indexNodes[index].position;
   }
 
   _rearrange() {
@@ -137,7 +137,7 @@ export class PageViewIndicator extends ProtectedNode {
       } else {
         position = new Point(indexNodeSize.width / 2.0, -posValue);
       }
-      this._indexNodes[i].setPosition(position);
+      this._indexNodes[i].position = position;
       posValue += sizeValue + this._spaceBetweenIndexNodes;
     }
   }

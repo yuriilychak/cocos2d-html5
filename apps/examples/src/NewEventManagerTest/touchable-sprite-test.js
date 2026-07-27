@@ -49,19 +49,16 @@ export class TouchableSpriteTest extends EventDispatcherTestDemo {
 
     var containerForSprite1 = new Node();
     var sprite1 = createColoredView(new Color(0, 255, 255));
-    sprite1.setPosition(
-      origin.x + size.width / 2 - 80,
-      origin.y + size.height / 2 + 80
-    );
+    sprite1.position = { x: origin.x + size.width / 2 - 80, y: origin.y + size.height / 2 + 80 };
     containerForSprite1.addChild(sprite1);
     this.addChild(containerForSprite1, 10);
 
     var sprite2 = createColoredView(new Color(255, 0, 255));
-    sprite2.setPosition(origin.x + size.width / 2, origin.y + size.height / 2);
+    sprite2.position = { x: origin.x + size.width / 2, y: origin.y + size.height / 2 };
     this.addChild(sprite2, 20);
 
     var sprite3 = createColoredView(new Color(255, 255, 0));
-    sprite3.setPosition(0, 0);
+    sprite3.position = { x: 0, y: 0 };
     sprite2.addChild(sprite3, 1);
 
     // Make sprite1 touchable

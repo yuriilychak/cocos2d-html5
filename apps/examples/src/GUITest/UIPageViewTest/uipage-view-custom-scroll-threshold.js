@@ -42,23 +42,19 @@ export class UIPageViewCustomScrollThreshold extends UIMainLayer {
 
       // Add the black background
       this._bottomDisplayLabel.string = "PageView";
-      this._bottomDisplayLabel.setPosition(
-        new Point(
+      this._bottomDisplayLabel.position = new Point(
           widgetSize.width / 2.0,
           widgetSize.height / 2.0 - this._bottomDisplayLabel.height * 3.075
-        )
-      );
+        );
 
       // Create the page view
       var pageView = new PageView();
       pageView.width = 240.0;
       pageView.height = 100.0;
-      pageView.setPosition(
-        new Point(
+      pageView.position = new Point(
           (widgetSize.width - pageView.width) / 2.0,
           (widgetSize.height - pageView.contentSize.height) / 2.0 + 20
-        )
-      );
+        );
 
       var pageCount = 4;
       for (var i = 0; i < pageCount; ++i) {
@@ -70,16 +66,12 @@ export class UIPageViewCustomScrollThreshold extends UIMainLayer {
         imageView.setScale9Enabled(true);
         imageView.width = 240;
         imageView.height = 130;
-        imageView.setPosition(
-          new Point(layout.width / 2.0, layout.contentSize.height / 2.0)
-        );
+        imageView.position = new Point(layout.width / 2.0, layout.contentSize.height / 2.0);
         layout.addChild(imageView);
 
         var label = new Text("page " + (i + 1), "Marker Felt", 30);
         label.color = new Color(192, 192, 192);
-        label.setPosition(
-          new Point(layout.width / 2.0, layout.contentSize.height / 2.0)
-        );
+        label.position = new Point(layout.width / 2.0, layout.contentSize.height / 2.0);
         layout.addChild(label);
 
         pageView.insertPage(layout, i);
@@ -96,9 +88,7 @@ export class UIPageViewCustomScrollThreshold extends UIMainLayer {
         ""
       );
       slider.loadProgressBarTexture("ccs-res/cocosui/sliderProgress.png");
-      slider.setPosition(
-        new Point(widgetSize.width / 2.0, widgetSize.height / 2.0 - 40)
-      );
+      slider.position = new Point(widgetSize.width / 2.0, widgetSize.height / 2.0 - 40);
       slider.addEventListener(this.sliderEvent, this);
       slider.setPercent(50);
       this._mainNode.addChild(slider);

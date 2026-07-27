@@ -103,7 +103,7 @@ export class LayoutComponent extends Component {
   }
 
   getPosition() {
-    return this.owner.getPosition();
+    return this.owner.position;
   }
 
   setPosition(position, y) {
@@ -129,10 +129,13 @@ export class LayoutComponent extends Component {
         if (this._usingPositionPercentY) y = 0;
       }
 
-      this.owner.setPosition(x, y);
+      this.owner.position = { x: x, y: y };
       this._refreshHorizontalMargin();
       this._refreshVerticalMargin();
-    } else this.owner.setPosition(position, y);
+    } else {
+      this.owner.position =
+        y === undefined ? position : { x: position, y: y };
+    }
   }
 
   isPositionPercentXEnabled() {
@@ -194,14 +197,14 @@ export class LayoutComponent extends Component {
 
     var parent = this._getOwnerParent();
     if (parent !== null) {
-      var ownerPoint = this.owner.getPosition();
+      var ownerPoint = this.owner.position;
       var parentSize = parent.contentSize;
       if (parentSize.width !== 0)
         this._positionPercentX = ownerPoint.x / parentSize.width;
       else {
         this._positionPercentX = 0;
         ownerPoint.x = 0;
-        if (this._usingPositionPercentX) this.owner.setPosition(ownerPoint);
+        if (this._usingPositionPercentX) this.owner.position = ownerPoint;
       }
       this._refreshHorizontalMargin();
     }
@@ -218,14 +221,14 @@ export class LayoutComponent extends Component {
 
     var parent = this._getOwnerParent();
     if (parent !== null) {
-      var ownerPoint = this.owner.getPosition();
+      var ownerPoint = this.owner.position;
       var parentSize = parent.contentSize;
       if (parentSize.height !== 0)
         this._positionPercentY = ownerPoint.y / parentSize.height;
       else {
         this._positionPercentY = 0;
         ownerPoint.y = 0;
-        if (this._usingPositionPercentY) this.owner.setPosition(ownerPoint);
+        if (this._usingPositionPercentY) this.owner.position = ownerPoint;
       }
       this._refreshVerticalMargin();
     }
@@ -424,7 +427,7 @@ export class LayoutComponent extends Component {
       locOwner = this.owner;
     var ownerAnchor = locOwner.anchor,
       ownerSize = locOwner.contentSize;
-    var ownerPosition = locOwner.getPosition();
+    var ownerPosition = locOwner.position;
 
     switch (this._horizontalEdge) {
       case LayoutComponent.horizontalEdge.NONE:
@@ -514,7 +517,7 @@ export class LayoutComponent extends Component {
         break;
     }
 
-    locOwner.setPosition(ownerPosition);
+    locOwner.position = ownerPosition;
     locOwner.contentSize = ownerSize;
 
     if (locOwner instanceof LayoutComponent.PageViewClass) {
@@ -551,7 +554,7 @@ export class LayoutComponent extends Component {
     var parent = this._getOwnerParent();
     if (parent === null) return;
 
-    var ownerPoint = this.owner.getPosition(),
+    var ownerPoint = this.owner.position,
       ownerAnchor = this.owner.anchor;
     var ownerSize = this.owner.contentSize,
       parentSize = parent.contentSize;

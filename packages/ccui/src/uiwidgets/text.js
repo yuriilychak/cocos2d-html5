@@ -390,10 +390,7 @@ export class Text extends Widget {
       this._normalScaleValueX = scaleX;
       this._normalScaleValueY = scaleY;
     }
-    this._labelRenderer.setPosition(
-      locContentSize.width / 2.0,
-      locContentSize.height / 2.0
-    );
+    this._labelRenderer.position = { x: locContentSize.width / 2.0, y: locContentSize.height / 2.0 };
   }
 
   /**

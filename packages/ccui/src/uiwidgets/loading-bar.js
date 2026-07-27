@@ -75,14 +75,14 @@ export class LoadingBar extends Widget {
       case LoadingBar.TYPE_LEFT:
         this._barRenderer.anchorX = 0;
         this._barRenderer.anchorY = 0.5;
-        this._barRenderer.setPosition(0, this.height * 0.5);
+        this._barRenderer.position = { x: 0, y: this.height * 0.5 };
         if (!this._scale9Enabled) this._barRenderer.setFlippedX(false);
 
         break;
       case LoadingBar.TYPE_RIGHT:
         this._barRenderer.anchorX = 1;
         this._barRenderer.anchorY = 0.5;
-        this._barRenderer.setPosition(this._totalLength, this.height * 0.5);
+        this._barRenderer.position = { x: this._totalLength, y: this.height * 0.5 };
         if (!this._scale9Enabled) this._barRenderer.setFlippedX(true);
 
         break;
@@ -284,13 +284,10 @@ export class LoadingBar extends Widget {
     }
     switch (this._direction) {
       case LoadingBar.TYPE_LEFT:
-        locBarRender.setPosition(0, locContentSize.height * 0.5);
+        locBarRender.position = { x: 0, y: locContentSize.height * 0.5 };
         break;
       case LoadingBar.TYPE_RIGHT:
-        locBarRender.setPosition(
-          this._totalLength,
-          locContentSize.height * 0.5
-        );
+        locBarRender.position = { x: this._totalLength, y: locContentSize.height * 0.5 };
         break;
       default:
         break;

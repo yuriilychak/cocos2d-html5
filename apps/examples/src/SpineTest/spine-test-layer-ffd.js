@@ -43,7 +43,7 @@ export class SpineTestLayerFFD extends SpineTestLayer {
 
     skeletonNode.scale = 0.5;
     var winSize = ServiceLocator.eglView.winSizeInPoints;
-    skeletonNode.setPosition(winSize.width / 2, 20);
+    skeletonNode.position = { x: winSize.width / 2, y: 20 };
     this.addChild(skeletonNode);
 
     var listener = EventListener.create({

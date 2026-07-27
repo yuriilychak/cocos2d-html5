@@ -50,7 +50,7 @@ export default class Place extends ActionInstant {
    * @param {Number}  dt
    */
   update(dt) {
-    this.target.setPosition(this._x, this._y);
+    this.target.position = { x: this._x, y: this._y };
   }
 
   /**

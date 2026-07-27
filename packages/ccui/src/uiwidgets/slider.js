@@ -477,7 +477,7 @@ export class Slider extends Widget {
     this._percent = percent;
     var res = percent / 100.0;
     var dis = this._barLength * res;
-    this._slidBallRenderer.setPosition(dis, this.height / 2);
+    this._slidBallRenderer.position = { x: dis, y: this.height / 2 };
     if (this._scale9Enabled)
       this._progressBarRenderer.setPreferredSize(new Size(dis, this.height));
     else {
@@ -640,7 +640,7 @@ export class Slider extends Widget {
         }
       }
     }
-    this._barRenderer.setPosition(this.width / 2.0, this.height / 2.0);
+    this._barRenderer.position = { x: this.width / 2.0, y: this.height / 2.0 };
     this.setPercent(this._percent);
   }
 
@@ -671,7 +671,7 @@ export class Slider extends Widget {
         this._progressBarRenderer.scaleY = pscaleY;
       }
     }
-    this._progressBarRenderer.setPosition(0.0, this.height / 2.0);
+    this._progressBarRenderer.position = { x: 0.0, y: this.height / 2.0 };
     this.setPercent(this._percent);
   }
 

@@ -57,12 +57,10 @@ export class UIRichTextTest extends UIMainLayer {
         ""
       );
       button.setTitleText("switch");
-      button.setPosition(
-        new Point(
+      button.position = new Point(
           widgetSize.width / 2,
           widgetSize.height / 2 + button.contentSize.height * 2.5
-        )
-      );
+        );
       button.addTouchEventListener(this.touchEvent, this);
       this._mainNode.addChild(button);
 

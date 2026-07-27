@@ -89,7 +89,7 @@ export class SceneTestLayer1 extends MenuTestLayer {
   _onSetNotificationNode() {
     const layerTemp = new LayerColor(new Color(0, 255, 255, 120));
     const sprite = new Sprite(s_pathGrossini);
-    sprite.setPosition(new Point(winSize.width / 2, winSize.height / 2));
+    sprite.position = new Point(winSize.width / 2, winSize.height / 2);
     layerTemp.addChild(sprite);
     ServiceLocator.director.notificationNode = layerTemp;
     sprite.runAction(new RotateBy(2, 360).repeatForever());

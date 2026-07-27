@@ -761,7 +761,7 @@ export class TextField extends Widget {
   _textfieldRendererScaleChangedWithSize() {
     if (!this._ignoreSize)
       this._textFieldRenderer.setDimensions(this.contentSize);
-    this._textFieldRenderer.setPosition(this.width / 2, this.height / 2);
+    this._textFieldRenderer.position = { x: this.width / 2, y: this.height / 2 };
   }
 
   //@since v3.3

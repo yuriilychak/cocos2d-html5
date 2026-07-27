@@ -103,7 +103,7 @@ parser.generalAttributes = function (node, json) {
 
   var position = json["Position"];
   if (position != null && (position["X"] != null || position["Y"] != null))
-    node.setPosition(new Point(position["X"] || 0, position["Y"] || 0));
+    node.position = new Point(position["X"] || 0, position["Y"] || 0);
 
   var scale = json["Scale"];
   if (scale != null) {
@@ -324,7 +324,7 @@ parser.widgetAttributes = function (widget, json, enableContent) {
 
   var position = json["Position"];
   if (position != null)
-    widget.setPosition(position["X"] || 0, position["Y"] || 0);
+    widget.position = { x: position["X"] || 0, y: position["Y"] || 0 };
 
   var scale = json["Scale"];
   if (scale != null) {

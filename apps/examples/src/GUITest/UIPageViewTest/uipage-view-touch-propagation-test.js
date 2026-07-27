@@ -52,19 +52,14 @@ export class UIPageViewTouchPropagationTest extends UIMainLayer {
 
       // Add the black background
       this._bottomDisplayLabel.string = "PageView Touch Propagation";
-      this._bottomDisplayLabel.setPosition(
-        widgetSize.width / 2.0,
-        widgetSize.height / 2.0 - this._bottomDisplayLabel.height * 3.075
-      );
+      this._bottomDisplayLabel.position = { x: widgetSize.width / 2.0, y: widgetSize.height / 2.0 - this._bottomDisplayLabel.height * 3.075 };
 
       // Create the page view
       var pageView = new PageView();
       pageView.width = 240.0;
       pageView.height = 130.0;
       pageView.anchor = new Point(0.5, 0.5);
-      pageView.setPosition(
-        new Point(widgetSize.width / 2.0, widgetSize.height / 2.0)
-      );
+      pageView.position = new Point(widgetSize.width / 2.0, widgetSize.height / 2.0);
       pageView.setBackGroundColor(Color.GREEN);
       pageView.setBackGroundColorType(Layout.BG_COLOR_SOLID);
 
@@ -114,13 +109,13 @@ export class UIPageViewTouchPropagationTest extends UIMainLayer {
       var propagationText = new Text("Allow Propagation", "Arial", 10);
       propagationText.anchor = new Point(0, 0.5);
       propagationText.setTextColor(Color.RED);
-      propagationText.setPosition(new Point(20, pageView.getPosition().y + 50));
+      propagationText.position = new Point(20, pageView.position.y + 50);
       this._mainNode.addChild(propagationText);
 
       var swallowTouchText = new Text("Swallow Touches", "Arial", 10);
       swallowTouchText.anchor = new Point(0, 0.5);
       swallowTouchText.setTextColor(Color.RED);
-      swallowTouchText.setPosition(new Point(20, pageView.getPosition().y));
+      swallowTouchText.position = new Point(20, pageView.position.y);
       this._mainNode.addChild(swallowTouchText);
 
       // Create the checkbox
@@ -131,11 +126,8 @@ export class UIPageViewTouchPropagationTest extends UIMainLayer {
         "ccs-res/cocosui/check_box_normal_disable.png",
         "ccs-res/cocosui/check_box_active_disable.png"
       );
-      var propagationPosition = propagationText.getPosition();
-      checkBox1.setPosition(
-        propagationPosition.x + propagationText.width / 2,
-        propagationPosition.y - 20
-      );
+      var propagationPosition = propagationText.position;
+      checkBox1.position = { x: propagationPosition.x + propagationText.width / 2, y: propagationPosition.y - 20 };
 
       checkBox1.name = "propagation";
       this._mainNode.addChild(checkBox1);
@@ -148,11 +140,8 @@ export class UIPageViewTouchPropagationTest extends UIMainLayer {
         "ccs-res/cocosui/check_box_normal_disable.png",
         "ccs-res/cocosui/check_box_active_disable.png"
       );
-      var swallowPosition = swallowTouchText.getPosition();
-      checkBox2.setPosition(
-        swallowPosition.x + swallowTouchText.width / 2,
-        swallowPosition.y - 20
-      );
+      var swallowPosition = swallowTouchText.position;
+      checkBox2.position = { x: swallowPosition.x + swallowTouchText.width / 2, y: swallowPosition.y - 20 };
 
       checkBox2.name = "swallow";
       this._mainNode.addChild(checkBox2);

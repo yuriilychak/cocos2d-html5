@@ -40,18 +40,12 @@ export class UIButtonNormalDefaultTest extends UIMainLayer {
       // Add the alert
       var alert = new Text("Button should scale when clicked", "Arial", 20);
       alert.color = new Color(159, 168, 176);
-      alert.setPosition(
-        widgetSize.width / 2.0,
-        widgetSize.height / 2.0 - alert.height * 1.75
-      );
+      alert.position = { x: widgetSize.width / 2.0, y: widgetSize.height / 2.0 - alert.height * 1.75 };
       this._mainNode.addChild(alert);
 
       // Create the button
       var button = new Button("ccs-res/cocosui/animationbuttonnormal.png");
-      button.setPosition(
-        widgetSize.width / 2.0 - 80,
-        widgetSize.height / 2.0 + 40
-      );
+      button.position = { x: widgetSize.width / 2.0 - 80, y: widgetSize.height / 2.0 + 40 };
       button.setZoomScale(0.4);
       button.setPressedActionEnabled(true);
       this._mainNode.addChild(button);
@@ -60,10 +54,7 @@ export class UIButtonNormalDefaultTest extends UIMainLayer {
       var buttonScale9 = new Button("ccs-res/cocosui/button.png");
       // open scale9 render
       buttonScale9.setScale9Enabled(true);
-      buttonScale9.setPosition(
-        widgetSize.width / 2.0 + 50,
-        widgetSize.height / 2.0 + 40
-      );
+      buttonScale9.position = { x: widgetSize.width / 2.0 + 50, y: widgetSize.height / 2.0 + 40 };
       buttonScale9.width = 150;
       buttonScale9.height = 70;
       buttonScale9.setPressedActionEnabled(true);

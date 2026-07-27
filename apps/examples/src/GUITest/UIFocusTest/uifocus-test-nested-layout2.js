@@ -39,10 +39,7 @@ export class UIFocusTestNestedLayout2 extends UIFocusTestBase {
       var winSize = ServiceLocator.eglView.rendererDelegate.visibleSize;
 
       this._horizontalLayout = new HBox();
-      this._horizontalLayout.setPosition(
-        winSize.width / 2 - 160,
-        winSize.height - 120
-      );
+      this._horizontalLayout.position = { x: winSize.width / 2 - 160, y: winSize.height - 120 };
       this.addChild(this._horizontalLayout);
       //this._horizontalLayout.scale = 0.6;
 
@@ -102,7 +99,7 @@ export class UIFocusTestNestedLayout2 extends UIFocusTestBase {
       }
 
       this._loopText = new Text("loop enabled", "Arial", 20);
-      this._loopText.setPosition(winSize.width / 2, winSize.height - 50);
+      this._loopText.position = { x: winSize.width / 2, y: winSize.height - 50 };
       this._loopText.color = Color.GREEN;
       this.addChild(this._loopText);
 

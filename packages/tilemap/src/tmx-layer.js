@@ -185,7 +185,7 @@ export class TMXLayer extends SpriteBatchNode {
     }
 
     var offset = this._calculateLayerOffset(layerInfo.offset);
-    this.setPosition(pointPixelsToPoints(offset));
+    this.position = pointPixelsToPoints(offset);
 
     this._parseInternalProperties();
 
@@ -329,7 +329,7 @@ export class TMXLayer extends SpriteBatchNode {
       rect = rectPixelsToPoints(rect);
 
       tile = new Sprite(tex, rect);
-      tile.setPosition(this.getPositionAt(x, y));
+      tile.position = this.getPositionAt(x, y);
       var vertexZ = this._vertexZForPos(x, y);
       tile.setVertexZ(vertexZ);
       tile.anchorX = 0;
@@ -598,7 +598,7 @@ export class TMXLayer extends SpriteBatchNode {
 
   _setupTileSprite(sprite, pos, gid) {
     var posInPixel = this.getPositionAt(pos);
-    sprite.setPosition(posInPixel);
+    sprite.position = posInPixel;
     sprite.setVertexZ(this._vertexZForPos(pos));
     sprite.anchorX = 0;
     sprite.anchorY = 0;
@@ -610,10 +610,7 @@ export class TMXLayer extends SpriteBatchNode {
     if ((gid & TMX_TILE_DIAGONAL_FLAG) >>> 0) {
       sprite.anchorX = 0.5;
       sprite.anchorY = 0.5;
-      sprite.setPosition(
-        posInPixel.x + sprite.width / 2,
-        posInPixel.y + sprite.height / 2
-      );
+      sprite.position = { x: posInPixel.x + sprite.width / 2, y: posInPixel.y + sprite.height / 2 };
 
       var flag =
         (gid & ((TMX_TILE_HORIZONTAL_FLAG | TMX_TILE_VERTICAL_FLAG) >>> 0)) >>>

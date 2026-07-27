@@ -36,9 +36,7 @@ export class UITextTest_IgnoreContentSize extends UIMainLayer {
       this._bottomDisplayLabel.string = "";
 
       var leftText = new Text("ignore content", "Marker Felt", 10);
-      leftText.setPosition(
-        new Point(widgetSize.width / 2 - 50, widgetSize.height / 2)
-      );
+      leftText.position = new Point(widgetSize.width / 2 - 50, widgetSize.height / 2);
       leftText.ignoreContentAdaptWithSize(false);
       leftText.setTextAreaSize(new Size(60, 60));
       leftText.string =
@@ -48,9 +46,7 @@ export class UITextTest_IgnoreContentSize extends UIMainLayer {
       this._mainNode.addChild(leftText);
 
       var rightText = new Text("ignore content", "Marker Felt", 10);
-      rightText.setPosition(
-        new Point(widgetSize.width / 2 + 50, widgetSize.height / 2)
-      );
+      rightText.position = new Point(widgetSize.width / 2 + 50, widgetSize.height / 2);
       rightText.string =
         "Text line with break\nText line with break\nText line with break\nText line with break\n";
       //note: setTextAreaSize must be used with ignoreContentAdaptWithSize(false)
@@ -64,9 +60,7 @@ export class UITextTest_IgnoreContentSize extends UIMainLayer {
         leftText.setTextHorizontalAlignment(TextAlignment.RIGHT);
         rightText.setTextHorizontalAlignment(TextAlignment.RIGHT);
       });
-      halighButton.setPosition(
-        new Point(widgetSize.width / 2 - 50, widgetSize.height / 2 - 50)
-      );
+      halighButton.position = new Point(widgetSize.width / 2 - 50, widgetSize.height / 2 - 50);
       this._mainNode.addChild(halighButton);
 
       return true;

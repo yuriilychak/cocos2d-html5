@@ -58,7 +58,7 @@ export class BakeLayerTest1 extends BakeLayerBaseTest {
     this.addChild(buttons, 10);
 
     var rootLayer = new Layer();
-    rootLayer.setPosition(20, 20);
+    rootLayer.position = { x: 20, y: 20 };
     this.addChild(rootLayer);
 
     var bakeLayer = new Layer();
@@ -69,9 +69,9 @@ export class BakeLayerTest1 extends BakeLayerBaseTest {
     for (var i = 0; i < 9; i++) {
       var sprite1 = new Sprite(s_pathGrossini);
       if (i % 2 === 0) {
-        sprite1.setPosition(90 + i * 80, winSize.height / 2 - 50);
+        sprite1.position = { x: 90 + i * 80, y: winSize.height / 2 - 50 };
       } else {
-        sprite1.setPosition(90 + i * 80, winSize.height / 2 + 50);
+        sprite1.position = { x: 90 + i * 80, y: winSize.height / 2 + 50 };
       }
       if (i === 4) this._actionSprite = sprite1;
       sprite1.rotation = 360 * Math.random();

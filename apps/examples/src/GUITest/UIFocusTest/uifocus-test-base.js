@@ -62,7 +62,7 @@ export class UIFocusTestBase extends UIMainLayer {
 
       this._btn = new Button("ccs-res/cocosui/switch-mask.png");
       this._btn.setTitleText("Toggle Loop");
-      this._btn.setPosition(60, winSize.height - 50);
+      this._btn.position = { x: 60, y: winSize.height - 50 };
       this._btn.setTitleColor(Color.RED);
       this._btn.addTouchEventListener(this.toggleFocusLoop, this);
       this._btn.setFocusEnabled(false);

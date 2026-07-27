@@ -121,11 +121,12 @@ export function vertexLineToPolygon(
       v3.x,
       v3.y
     );
-    if (!fixVertexResult.isSuccess)
-      if (fixVertexResult.value < 0.0 || fixVertexResult.value > 1.0)
-        fixVertexResult.isSuccess = true;
+    const fixVertex =
+      !fixVertexResult.isSuccess ||
+      fixVertexResult.value < 0.0 ||
+      fixVertexResult.value > 1.0;
 
-    if (fixVertexResult.isSuccess) {
+    if (fixVertex) {
       vertices[idx1 * 2] = v4.x;
       vertices[idx1 * 2 + 1] = v4.y;
       vertices[(idx1 + 1) * 2] = v3.x;

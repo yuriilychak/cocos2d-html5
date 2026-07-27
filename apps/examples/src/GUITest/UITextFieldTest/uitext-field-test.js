@@ -36,22 +36,18 @@ export class UITextFieldTest extends UIMainLayer {
       //init text
       this._topDisplayLabel.string = "No Event";
       this._topDisplayLabel.anchor = new Point(0.5, -1);
-      this._topDisplayLabel.setPosition(
-        new Point(
+      this._topDisplayLabel.position = new Point(
           widgetSize.width / 2.0,
           widgetSize.height / 2.0 +
             this._topDisplayLabel.contentSize.height * 1.5
-        )
-      );
+        );
 
       this._bottomDisplayLabel.string = "TextField";
-      this._bottomDisplayLabel.setPosition(
-        new Point(
+      this._bottomDisplayLabel.position = new Point(
           widgetSize.width / 2.0,
           widgetSize.height / 2.0 -
             this._bottomDisplayLabel.contentSize.height * 3.4
-        )
-      );
+        );
       this._bottomDisplayLabel.color = new Color(255, 255, 255, 255);
 
       // Create the textfield

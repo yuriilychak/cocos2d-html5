@@ -372,7 +372,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
           yOffset -
           rect.height * locScale * 0.5 * contentScaleFactor()
       );
-      fontChar.setPosition(pointPixelsToPoints(fontPos));
+      fontChar.position = pointPixelsToPoints(fontPos);
 
       // update kerning
       nextFontPositionX += fontDef.xAdvance * locScale + kerningAmount;

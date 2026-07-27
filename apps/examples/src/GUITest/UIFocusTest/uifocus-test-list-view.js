@@ -46,7 +46,7 @@ export class UIFocusTestListView extends UIFocusTestBase {
       this._listView.width = 240;
       this._listView.height = 130;
 
-      this._listView.setPosition(40, 70);
+      this._listView.position = { x: 40, y: 70 };
       this.addChild(this._listView);
       this._listView.scale = 0.8;
 
@@ -76,7 +76,7 @@ export class UIFocusTestListView extends UIFocusTestBase {
         this._listView.insertDefaultItem(0);
       }
       this._loopText = new Text("loop enabled", "Arial", 20);
-      this._loopText.setPosition(winSize.width / 2, winSize.height - 50);
+      this._loopText.position = { x: winSize.width / 2, y: winSize.height - 50 };
       this._loopText.color = Color.GREEN;
       this.addChild(this._loopText);
 

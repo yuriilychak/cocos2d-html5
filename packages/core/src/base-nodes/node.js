@@ -410,10 +410,10 @@ export class Node extends BaseClass {
   }
 
   set skew(value) {
-    if(Point.equalTo(this.#skew, value)) {
+    if (Point.equalTo(this.#skew, value)) {
       return;
     }
-    
+
     this.#skew.set(value);
     this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
   }
@@ -643,39 +643,6 @@ export class Node extends BaseClass {
 
   /**
    * <p>
-   *     Changes the position (x,y) of the node in cocos2d coordinates.<br/>
-   *     The original point (0,0) is at the left-bottom corner of screen.<br/>
-   *     Usually we use p(x,y) to compose Point object.<br/>
-   *     and Passing two numbers (x,y) is more efficient than passing Point object.
-   * </p>
-   * @function
-   * @param {Point|Number} newPosOrxValue The position (x,y) of the node in coordinates or the X coordinate for position
-   * @param {Number} [yValue] Y coordinate for position
-   * @example
-   *    var size = winSize;
-   *    node.setPosition(size.width/2, size.height/2);
-   */
-  setPosition(newPosOrxValue, yValue) {
-    var locPosition = this.#position;
-    if (yValue === undefined) {
-      if (
-        locPosition.x === newPosOrxValue.x &&
-        locPosition.y === newPosOrxValue.y
-      )
-        return;
-      locPosition.x = newPosOrxValue.x;
-      locPosition.y = newPosOrxValue.y;
-    } else {
-      if (locPosition.x === newPosOrxValue && locPosition.y === yValue) return;
-      locPosition.x = newPosOrxValue;
-      locPosition.y = yValue;
-    }
-    this._usingNormalizedPosition = false;
-    this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
-  }
-
-  /**
-   * <p>
    * Sets the position (x,y) using values between 0 and 1.                                                <br/>
    * The positions in pixels is calculated like the following:                                            <br/>
    *   #position = _normalizedPosition * parent.contentSize
@@ -697,15 +664,6 @@ export class Node extends BaseClass {
   }
 
   /**
-   * <p>Returns a copy of the position (x,y) of the node in cocos2d coordinates. (0,0) is the left-bottom corner.</p>
-   * @function
-   * @return {Point} The position (x,y) of the node in OpenGL coordinates
-   */
-  getPosition() {
-    return this.#position.clone();
-  }
-
-  /**
    * returns the normalized position
    * @returns {Point}
    */
@@ -718,7 +676,12 @@ export class Node extends BaseClass {
   }
 
   set position(value) {
+    if (Point.equalTo(this.#position, value)) {
+      return;
+    }
+
     this.#position.set(value);
+    this._usingNormalizedPosition = false;
     this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
   }
 
@@ -778,7 +741,7 @@ export class Node extends BaseClass {
    *  //This sample code traverses all children nodes, and set their position to (0,0)
    *  var allChildren = parent.getChildren();
    *  for(var i = 0; i< allChildren.length; i++) {
-   *      allChildren[i].setPosition(0,0);
+   *      allChildren[i].position = { x: 0, y: 0 };
    *  }
    */
   getChildren() {
@@ -1790,7 +1753,7 @@ export class Node extends BaseClass {
    * this.addChild(spriteB);
    *
    * //position
-   * spriteA.setPosition(ccp(200, 200));
+   * spriteA.position = new Point(200, 200);
    *
    * // Gets the spriteA's transform.
    * var t = spriteA.getNodeToParentTransform();
@@ -1874,8 +1837,7 @@ export class Node extends BaseClass {
    * @param {Point} nodePoint
    * @return {Point}
    */
-  convertToWorldSpace(nodePoint) {
-    nodePoint = nodePoint || new Point();
+  convertToWorldSpace(nodePoint = new Point()) {
     return AffineTransform.applyToPoint(
       nodePoint,
       this.getNodeToWorldTransform()

@@ -45,7 +45,7 @@ export class UIButtonTestRemoveSelf extends UIMainLayer {
       layout.setBackGroundColor(Color.GREEN);
       layout.setBackGroundColorType(Layout.BG_COLOR_SOLID);
       layout.setBackGroundColorOpacity(100);
-      layout.setPosition(widgetSize.width / 2, widgetSize.height / 2);
+      layout.position = { x: widgetSize.width / 2, y: widgetSize.height / 2 };
       layout.anchorX = 0.5;
       layout.anchorY = 0.5;
       layout.tag = 12;
@@ -56,7 +56,7 @@ export class UIButtonTestRemoveSelf extends UIMainLayer {
         "ccs-res/cocosui/animationbuttonnormal.png",
         "ccs-res/cocosui/animationbuttonpressed.png"
       );
-      button.setPosition(layout.width / 2.0, layout.height / 2.0);
+      button.position = { x: layout.width / 2.0, y: layout.height / 2.0 };
       button.addTouchEventListener(this.touchEvent, this);
       layout.addChild(button);
       return true;

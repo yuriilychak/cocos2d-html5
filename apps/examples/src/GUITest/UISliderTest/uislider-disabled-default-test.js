@@ -39,12 +39,10 @@ export class UISliderDisabledDefaultTest extends UIMainLayer {
       // Add the alert
       var alert = new Text("slider ball should be gray.", "Marker Felt", 20);
       alert.color = new Color(159, 168, 176);
-      alert.setPosition(
-        new Point(
+      alert.position = new Point(
           widgetSize.width / 2,
           widgetSize.height / 2 - alert.height * 3.75
-        )
-      );
+        );
       this._mainNode.addChild(alert);
 
       // Create the slider
@@ -53,9 +51,7 @@ export class UISliderDisabledDefaultTest extends UIMainLayer {
       slider.loadSlidBallTextureNormal("ccs-res/cocosui/sliderballnormal.png");
       slider.enabled = false;
       slider.setBright(false);
-      slider.setPosition(
-        new Point(widgetSize.width / 2, widgetSize.height / 2 + 50)
-      );
+      slider.position = new Point(widgetSize.width / 2, widgetSize.height / 2 + 50);
       this._mainNode.addChild(slider);
 
       var sliderScale9 = new Slider(
@@ -68,9 +64,7 @@ export class UISliderDisabledDefaultTest extends UIMainLayer {
       sliderScale9.setCapInsets(new Rect(0, 0, 0, 0));
       sliderScale9.width = 250;
       sliderScale9.height = 10;
-      sliderScale9.setPosition(
-        new Point(widgetSize.width / 2, widgetSize.height / 2 - 20)
-      );
+      sliderScale9.position = new Point(widgetSize.width / 2, widgetSize.height / 2 - 20);
       this._mainNode.addChild(sliderScale9);
 
       return true;

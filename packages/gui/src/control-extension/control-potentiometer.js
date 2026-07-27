@@ -36,7 +36,7 @@ export class ControlPotentiometer extends Control {
     if (this.init()) {
       this.progressTimer = progressTimer;
       this.thumb = thumbSprite;
-      this.thumb.setPosition(progressTimer.getPosition());
+      this.thumb.position = progressTimer.position;
       this.background = trackSprite;
       this.addChild(thumbSprite, 2);
       this.addChild(progressTimer, 1);
@@ -53,7 +53,7 @@ export class ControlPotentiometer extends Control {
   isTouchInside(touch) {
     var touchLocation = this.getTouchLocation(touch);
     var distance = this.distanceBetweenPointAndPoint(
-      this._progressTimer.getPosition(),
+      this._progressTimer.position,
       touchLocation
     );
     return (
@@ -111,9 +111,9 @@ export class ControlPotentiometer extends Control {
   potentiometerMoved(location) {
     var angle =
       this.angleInDegreesBetweenLineFromPoint_toPoint_toLineFromPoint_toPoint(
-        this._progressTimer.getPosition(),
+        this._progressTimer.position,
         location,
-        this._progressTimer.getPosition(),
+        this._progressTimer.position,
         this._previousLocation
       );
     if (angle > 180) angle -= 360;

@@ -35,7 +35,7 @@ export class UIWebViewTest extends UIMainLayer {
     var webView = new WebView("http://www.baidu.com");
     webView.width = 320;
     webView.height = 240;
-    webView.setPosition(800 / 2, 450 / 2);
+    webView.position = { x: 800 / 2, y: 450 / 2 };
     webView.scale = 0.5;
     webView.setScalesPageToFit(true);
     window.webView = webView;
@@ -115,7 +115,7 @@ export class UIWebViewTest extends UIMainLayer {
     list.forEach(function (item, i) {
       var button = new Button();
       button.scale = i + 1 !== list.length ? 1.3 : 1;
-      button.setPosition(140 + ((i / 4) | 0) * 530, 320 - (i % 4) * 50);
+      button.position = { x: 140 + ((i / 4) | 0) * 530, y: 320 - (i % 4) * 50 };
       button.setTitleText(item.name);
       button.setTitleColor(Color.YELLOW);
       button.setZoomScale(0.3);

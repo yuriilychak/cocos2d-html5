@@ -67,7 +67,7 @@ export class PhysicsSprite extends Sprite {
     return this._body;
   }
 
-  getPosition() {
+  get position() {
     var locBody = this._body;
     return { x: locBody.p.x, y: locBody.p.y };
   }
@@ -80,14 +80,9 @@ export class PhysicsSprite extends Sprite {
     return this._body.p.y;
   }
 
-  setPosition(newPosOrxValue, yValue) {
-    if (yValue === undefined) {
-      this._body.p.x = newPosOrxValue.x;
-      this._body.p.y = newPosOrxValue.y;
-    } else {
-      this._body.p.x = newPosOrxValue;
-      this._body.p.y = yValue;
-    }
+  set position(position) {
+    this._body.p.x = position.x;
+    this._body.p.y = position.y;
   }
 
   set x(xValue) {

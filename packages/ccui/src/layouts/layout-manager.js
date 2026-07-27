@@ -50,7 +50,7 @@ export const linearVerticalLayoutManager = {
           var mg = layoutParameter.getMargin();
           finalPosX += mg.left;
           finalPosY -= mg.top;
-          child.setPosition(finalPosX, finalPosY);
+          child.position = { x: finalPosX, y: finalPosY };
           topBoundary = child.y - ap.y * cs.height - mg.bottom;
         }
       }
@@ -89,7 +89,7 @@ export const linearHorizontalLayoutManager = {
           var mg = layoutParameter.getMargin();
           finalPosX += mg.left;
           finalPosY -= mg.top;
-          child.setPosition(finalPosX, finalPosY);
+          child.position = { x: finalPosX, y: finalPosY };
           leftBoundary = child.getRightBoundary() + mg.right;
         }
       }
@@ -122,7 +122,7 @@ export const relativeLayoutManager = {
 
           this._calculateFinalPositionWithRelativeAlign();
 
-          this._widget.setPosition(this._finalPositionX, this._finalPositionY);
+          this._widget.position = { x: this._finalPositionX, y: this._finalPositionY };
           layoutParameter._put = true;
         }
       }

@@ -75,7 +75,7 @@ export class MenuPassive extends Layer {
             this.anchorX = 0.5;
             this.anchorY = 0.5;
             this.contentSize = winSize;
-            this.setPosition(winSize.width / 2, winSize.height / 2);
+            this.position = { x: winSize.width / 2, y: winSize.height / 2 };
             var z = 0;
             if (item) {
                 this.addChild(item, z);
@@ -111,7 +111,7 @@ export class MenuPassive extends Layer {
             for (i = 0; i < this._children.length; i++) {
                 if (this._children[i]) {
                     width = Math.max(width, this._children[i].width);
-                    this._children[i].setPosition(0, y - this._children[i].height * this._children[i].scaleY / 2.0);
+                    this._children[i].position = { x: 0, y: y - this._children[i].height * this._children[i].scaleY / 2.0 };
                     y -= this._children[i].height * this._children[i].scaleY + padding;
                 }
             }
@@ -140,7 +140,7 @@ export class MenuPassive extends Layer {
             for (i = 0; i < this._children.length; i++) {
                 if (this._children[i]) {
                     height = Math.max(height, this._children[i].height);
-                    this._children[i].setPosition(x + this._children[i].width * this._children[i].scaleX / 2.0, 0);
+                    this._children[i].position = { x: x + this._children[i].width * this._children[i].scaleX / 2.0, y: 0 };
                     x += this._children[i].width * this._children[i].scaleX + padding;
                 }
             }
@@ -198,7 +198,7 @@ export class MenuPassive extends Layer {
                     }
                     tmp = this._children[i].height;
                     rowHeight = 0 | ((rowHeight >= tmp || (tmp == null)) ? rowHeight : tmp);
-                    this._children[i].setPosition(x - winSize.width / 2, y - this._children[i].height / 2);
+                    this._children[i].position = { x: x - winSize.width / 2, y: y - this._children[i].height / 2 };
                     x += w;
                     ++columnsOccupied;
                     if (columnsOccupied >= rowColumns) {
@@ -262,7 +262,7 @@ export class MenuPassive extends Layer {
                     }
                     tmp = this._children[i].width;
                     columnWidth = 0 | ((columnWidth >= tmp || (tmp == null)) ? columnWidth : tmp);
-                    this._children[i].setPosition(x + columnWidths[column] / 2, y - winSize.height / 2);
+                    this._children[i].position = { x: x + columnWidths[column] / 2, y: y - winSize.height / 2 };
                     y -= this._children[i].height + 10;
                     ++rowsOccupied;
                     if (rowsOccupied >= columnRows) {

@@ -191,7 +191,7 @@ export class ImageView extends Widget {
   set width(value) {
     super.width = value;
     this._imageRenderer.contentSize = this.contentSize;
-    this._imageRenderer.setPosition(this.width / 2.0, this.height / 2.0);
+    this._imageRenderer.position = { x: this.width / 2.0, y: this.height / 2.0 };
   }
 
   get height() {
@@ -201,7 +201,7 @@ export class ImageView extends Widget {
   set height(value) {
     super.height = value;
     this._imageRenderer.contentSize = this.contentSize;
-    this._imageRenderer.setPosition(this.width / 2.0, this.height / 2.0);
+    this._imageRenderer.position = { x: this.width / 2.0, y: this.height / 2.0 };
   }
 
   _adaptRenderers() {
@@ -221,7 +221,7 @@ export class ImageView extends Widget {
 
   _imageTextureScaleChangedWithSize() {
     this._imageRenderer.contentSize = this.contentSize;
-    this._imageRenderer.setPosition(this.width / 2.0, this.height / 2.0);
+    this._imageRenderer.position = { x: this.width / 2.0, y: this.height / 2.0 };
   }
 
   getDescription() {

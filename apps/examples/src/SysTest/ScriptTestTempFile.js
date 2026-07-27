@@ -38,7 +38,7 @@ export class ScriptTestTempLayer extends Layer {
       s_simpleFont_fnt
     );
     var size = winSize;
-    labelTest.setPosition(size.width / 2, size.height / 4);
+    labelTest.position = { x: size.width / 2, y: size.height / 4 };
     this.addChild(labelTest);
   }
 }

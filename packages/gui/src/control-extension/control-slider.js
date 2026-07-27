@@ -114,7 +114,7 @@ export class ControlSlider extends Control {
 
   onTouchEnded(touch, event) {
     if (this.isSelected() && this._thumb !== null) {
-      this.value = this.valueForLocation(this._thumb.getPosition());
+      this.value = this.valueForLocation(this._thumb.position);
     }
 
     this.setSelected(false);

@@ -95,7 +95,7 @@ export default class LayerColorCanvasRenderer extends LayerCanvasRenderer {
       const bakeContext = locBakeSprite.getCacheContext();
       const ctx = bakeContext.context;
 
-      locBakeSprite.setPosition(boundingBox.x, boundingBox.y);
+      locBakeSprite.position = { x: boundingBox.x, y: boundingBox.y };
 
       if (this._updateCache > 0) {
       ctx.fillStyle = bakeContext.fillStyle;

@@ -63,13 +63,9 @@ export class CCPoolTest extends BaseTestLayer {
     ), 100);
     this.directLabel = new TextBMFont("create directly cost:", s_simpleFont_fnt);
     this.poolLabel = new TextBMFont("use pool cost:", s_simpleFont_fnt);
-    this.directLabel.setPosition(
-      Point.add(ServiceLocator.eglView.visibleRect.center, new Point(-190, -65))
-    );
+    this.directLabel.position = Point.add(ServiceLocator.eglView.visibleRect.center, new Point(-190, -65));
     this.directLabel.anchorY = 0;
-    this.poolLabel.setPosition(
-      Point.add(ServiceLocator.eglView.visibleRect.center, new Point(200, -65))
-    );
+    this.poolLabel.position = Point.add(ServiceLocator.eglView.visibleRect.center, new Point(200, -65));
     this.poolLabel.anchorY = 0;
     this.addChild(this.directLabel);
     this.addChild(this.poolLabel);

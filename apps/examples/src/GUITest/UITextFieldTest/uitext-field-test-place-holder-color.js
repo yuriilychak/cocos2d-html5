@@ -37,28 +37,21 @@ export class UITextFieldTest_PlaceHolderColor extends UIMainLayer {
 
       // Add a label in which the textfield events will be displayed
       this._topDisplayLabel.string = "Set place hold color";
-      this._topDisplayLabel.setPosition(
-        widgetSize.width / 2,
-        widgetSize.height / 2 + this._topDisplayLabel.height * 1.5
-      );
+      this._topDisplayLabel.position = { x: widgetSize.width / 2, y: widgetSize.height / 2 + this._topDisplayLabel.height * 1.5 };
 
       // Add the alert
       this._bottomDisplayLabel.string = "TextField";
-      this._bottomDisplayLabel.setPosition(
-        new Point(
+      this._bottomDisplayLabel.position = new Point(
           widgetSize.width / 2,
           widgetSize.height / 2 - this._bottomDisplayLabel.height * 3.075
-        )
-      );
+        );
 
       // Create the textfield
       var textField = new TextField("input words here", "Arial", 30);
       textField.setPlaceHolder("input text here");
       textField.setPlaceHolderColor(Color.GREEN);
       textField.setTextColor(Color.RED);
-      textField.setPosition(
-        new Point(widgetSize.width / 2, widgetSize.height / 2)
-      );
+      textField.position = new Point(widgetSize.width / 2, widgetSize.height / 2);
       textField.addEventListener(this.textFieldEvent, this);
       this._mainNode.addChild(textField);
       return true;

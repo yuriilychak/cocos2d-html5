@@ -49,10 +49,7 @@ export class CustomEventTest extends EventDispatcherTestDemo {
       size = ServiceLocator.eglView.rendererDelegate.visibleSize;
 
     var statusLabel = new TextBMFont("No custom event 1 received!", s_simpleFont_fnt);
-    statusLabel.setPosition(
-      origin.x + size.width / 2,
-      origin.y + size.height - 90
-    );
+    statusLabel.position = { x: origin.x + size.width / 2, y: origin.y + size.height - 90 };
     this.addChild(statusLabel);
 
     this._listener1 = EventListener.create({
@@ -65,10 +62,7 @@ export class CustomEventTest extends EventDispatcherTestDemo {
     ServiceLocator.eventManager.addListener(this._listener1, 1);
 
     var statusLabel2 = new TextBMFont("No custom event 2 received!", s_simpleFont_fnt);
-    statusLabel2.setPosition(
-      origin.x + size.width / 2,
-      origin.y + size.height - 120
-    );
+    statusLabel2.position = { x: origin.x + size.width / 2, y: origin.y + size.height - 120 };
     this.addChild(statusLabel2);
 
     this._listener2 = EventListener.create({

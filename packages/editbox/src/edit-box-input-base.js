@@ -238,15 +238,15 @@ export class EditBoxInputBase {
       this._textLabel.anchorY = 1;
       this._placeholderLabel.anchorX = 0;
       this._placeholderLabel.anchorY = 1;
-      this._textLabel.setPosition(LEFT_PADDING, editBoxSize.height);
-      this._placeholderLabel.setPosition(LEFT_PADDING, editBoxSize.height);
+      this._textLabel.position = { x: LEFT_PADDING, y: editBoxSize.height };
+      this._placeholderLabel.position = { x: LEFT_PADDING, y: editBoxSize.height };
     } else {
       this._textLabel.anchorX = 0;
       this._textLabel.anchorY = 0.5;
       this._placeholderLabel.anchorX = 0;
       this._placeholderLabel.anchorY = 0.5;
-      this._textLabel.setPosition(LEFT_PADDING, editBoxSize.height / 2);
-      this._placeholderLabel.setPosition(LEFT_PADDING, editBoxSize.height / 2);
+      this._textLabel.position = { x: LEFT_PADDING, y: editBoxSize.height / 2 };
+      this._placeholderLabel.position = { x: LEFT_PADDING, y: editBoxSize.height / 2 };
     }
   }
 

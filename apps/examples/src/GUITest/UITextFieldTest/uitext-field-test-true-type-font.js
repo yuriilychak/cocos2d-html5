@@ -37,23 +37,18 @@ export class UITextFieldTest_TrueTypeFont extends UIMainLayer {
 
       // Add a label in which the textfield events will be displayed
       this._topDisplayLabel.string = "True Type Font Test - No Event";
-      this._topDisplayLabel.setPosition(
-        new Point(
+      this._topDisplayLabel.position = new Point(
           widgetSize.width / 2,
           widgetSize.height / 2 + this._topDisplayLabel.height * 1.5
-        )
-      );
+        );
 
       // Add the alert
       this._bottomDisplayLabel.string = "TextField";
-      this._bottomDisplayLabel.setPosition(
-        widgetSize.width / 2,
-        widgetSize.height / 2 - this._bottomDisplayLabel.height * 3.075
-      );
+      this._bottomDisplayLabel.position = { x: widgetSize.width / 2, y: widgetSize.height / 2 - this._bottomDisplayLabel.height * 3.075 };
 
       // Create the textfield
       var textField = new TextField("input words here", "Marker Felt", 30);
-      textField.setPosition(widgetSize.width / 2, widgetSize.height / 2);
+      textField.position = { x: widgetSize.width / 2, y: widgetSize.height / 2 };
       textField.addEventListener(this.textFieldEvent, this);
       this._mainNode.addChild(textField);
       return true;

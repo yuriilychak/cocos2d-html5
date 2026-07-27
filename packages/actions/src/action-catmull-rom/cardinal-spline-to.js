@@ -157,7 +157,7 @@ export default class CardinalSplineTo extends ActionInterval {
    * @param {Point} newPos
    */
   updatePosition(newPos) {
-    this.target.setPosition(newPos);
+    this.target.position = newPos;
     this._previousPosition = newPos;
   }
 

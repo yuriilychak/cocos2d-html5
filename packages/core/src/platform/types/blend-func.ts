@@ -54,6 +54,18 @@ export class BlendFunc {
         this.#dst = value;
     }
 
+    set(blendFunc: BlendFunc): void
+    set(src: GLState, dst: GLState): void
+    set(blendFuncOrSrc: BlendFunc | GLState, dst: GLState = GLState.ONE_MINUS_SRC_ALPHA): void {
+        if(blendFuncOrSrc instanceof BlendFunc) {
+            this.#src = blendFuncOrSrc.src;
+            this.#dst = blendFuncOrSrc.dst;
+        } else {
+            this.#src = blendFuncOrSrc;
+            this.#dst = dst;
+        }
+    }
+
     static get DISABLE(): BlendFunc {
         return new BlendFunc(GLState.ONE, GLState.ZERO);
     }

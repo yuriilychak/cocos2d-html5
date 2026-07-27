@@ -80,8 +80,8 @@ export class SpriteBlendFuncTest extends SpriteTestDemo {
     var destSprite = new Sprite(destImg);
     sourceSprite.scale = 0.8;
     destSprite.scale = 0.8;
-    sourceSprite.setPosition(60, 400);
-    destSprite.setPosition(120, 400);
+    sourceSprite.position = { x: 60, y: 400 };
+    destSprite.position = { x: 120, y: 400 };
     this.addChild(sourceSprite);
     this.addChild(destSprite);
 
@@ -100,7 +100,7 @@ export class SpriteBlendFuncTest extends SpriteTestDemo {
       titleLabel = new TextBMFont(title, s_simpleFont_fnt);
       titleLabel.anchorX = 0;
       titleLabel.anchorY = 0.5;
-      titleLabel.setPosition(0, 355 - 60 * i);
+      titleLabel.position = { x: 0, y: 355 - 60 * i };
       this.addChild(titleLabel);
     }
 
@@ -110,7 +110,7 @@ export class SpriteBlendFuncTest extends SpriteTestDemo {
       titleLabel = new TextBMFont(title, s_simpleFont_fnt);
       titleLabel.anchorX = 0;
       titleLabel.anchorY = 0.5;
-      titleLabel.setPosition(220 + i * 60, 390);
+      titleLabel.position = { x: 220 + i * 60, y: 390 };
       titleLabel.rotation = -20;
       this.addChild(titleLabel);
     }
@@ -119,12 +119,12 @@ export class SpriteBlendFuncTest extends SpriteTestDemo {
       for (j = 0; j < destFactors.length; j++) {
         sourceSprite = new Sprite(sourceImg);
         //sourceSprite.scale = 0.8;
-        sourceSprite.setPosition(220 + i * 60, 355 - j * 60);
+        sourceSprite.position = { x: 220 + i * 60, y: 355 - j * 60 };
         sourceSprite.setBlendFunc(srcFactors[i], destFactors[j]);
 
         destSprite = new Sprite(destImg);
         //destSprite.scale = 0.8;
-        destSprite.setPosition(220 + i * 60, 355 - j * 60);
+        destSprite.position = { x: 220 + i * 60, y: 355 - j * 60 };
         //                destSprite.setBlendFunc(srcFactors[j], destFactors[i]);
 
         this.addChild(destSprite, 1);

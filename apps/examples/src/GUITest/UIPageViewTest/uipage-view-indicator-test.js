@@ -75,9 +75,7 @@ export class UIPageViewIndicatorTest extends UIMainLayer {
         var pageNumber = i + 1;
         var label = new Text("page" + pageNumber, "Marker Felt", 30);
         label.color = new Color(192, 192, 192);
-        label.setPosition(
-          new Point(layout.width / 2, layout.contentSize.height / 2)
-        );
+        label.position = new Point(layout.width / 2, layout.contentSize.height / 2);
         layout.addChild(label);
 
         pageView.insertPage(layout, i);

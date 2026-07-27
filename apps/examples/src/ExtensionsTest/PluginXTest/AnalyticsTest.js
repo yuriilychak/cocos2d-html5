@@ -170,7 +170,7 @@ export class AnalyticsTestLayer extends PluginXTest {
     var strVer = g_pAnalytics.getPluginVersion();
     var ret = "Plugin : " + strName + ", Ver : " + strVer;
     var pLabel = new TextBMFont(ret, s_simpleFont_fnt);
-    pLabel.setPosition(new Point(size.width / 2, 80));
+    pLabel.position = new Point(size.width / 2, 80);
     this.addChild(pLabel);
   }
 

@@ -392,7 +392,7 @@ export class Layout extends Widget {
     this._doLayoutDirty = true;
     this._clippingRectDirty = true;
     if (this._backGroundImage) {
-      this._backGroundImage.setPosition(this.width * 0.5, this.height * 0.5);
+      this._backGroundImage.position = { x: this.width * 0.5, y: this.height * 0.5 };
       if (
         this._backGroundScale9Enabled &&
         this._backGroundImage instanceof Scale9Sprite
@@ -445,7 +445,7 @@ export class Layout extends Widget {
       locBackgroundImage.setPreferredSize(this.contentSize);
 
     this._backGroundImageTextureSize = locBackgroundImage.contentSize;
-    locBackgroundImage.setPosition(this.width * 0.5, this.height * 0.5);
+    locBackgroundImage.position = { x: this.width * 0.5, y: this.height * 0.5 };
     this._updateBackGroundImageColor();
   }
 
@@ -501,7 +501,7 @@ export class Layout extends Widget {
       Layout.BACKGROUND_IMAGE_ZORDER,
       -1
     );
-    this._backGroundImage.setPosition(this.width * 0.5, this.height * 0.5);
+    this._backGroundImage.position = { x: this.width * 0.5, y: this.height * 0.5 };
   }
 
   removeBackGroundImage() {

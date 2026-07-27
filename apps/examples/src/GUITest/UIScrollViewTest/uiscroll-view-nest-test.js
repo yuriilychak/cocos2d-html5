@@ -39,22 +39,17 @@ export class UIScrollViewNestTest extends UIMainLayer {
 
       // Add the alert
       this._bottomDisplayLabel.string = "ScrollView vertical";
-      this._bottomDisplayLabel.setPosition(
-        widgetSize.width / 2.0,
-        widgetSize.height / 2.0 - this._bottomDisplayLabel.height * 3.075
-      );
+      this._bottomDisplayLabel.position = { x: widgetSize.width / 2.0, y: widgetSize.height / 2.0 - this._bottomDisplayLabel.height * 3.075 };
 
       // Create the scrollview by vertical
       var scrollView = new ScrollView();
       scrollView.width = 280.0;
       scrollView.height = 150.0;
       scrollView.setDirection(ScrollView.DIR_BOTH);
-      scrollView.setPosition(
-        new Point(
+      scrollView.position = new Point(
           (widgetSize.width - scrollView.width) / 2.0,
           (widgetSize.height - scrollView.contentSize.height) / 2.0
-        )
-      );
+        );
       this._mainNode.addChild(scrollView);
 
       var imageView = new ImageView("ccs-res/cocosui/ccicon.png");
@@ -69,13 +64,11 @@ export class UIScrollViewNestTest extends UIMainLayer {
         "ccs-res/cocosui/animationbuttonnormal.png",
         "ccs-res/cocosui/animationbuttonpressed.png"
       );
-      button.setPosition(
-        new Point(
+      button.position = new Point(
           innerWidth / 2.0,
           scrollView.getInnerContainerSize().height -
             button.contentSize.height / 2.0
-        )
-      );
+        );
       scrollView.addChild(button);
 
       var titleButton = new Button(
@@ -83,12 +76,10 @@ export class UIScrollViewNestTest extends UIMainLayer {
         "ccs-res/cocosui/backtotoppressed.png"
       );
       titleButton.setTitleText("Title Button");
-      titleButton.setPosition(
-        new Point(
+      titleButton.position = new Point(
           innerWidth / 2.0,
           button.getBottomBoundary() - button.contentSize.height
-        )
-      );
+        );
       scrollView.addChild(titleButton);
 
       var button_scale9 = new Button(
@@ -98,17 +89,13 @@ export class UIScrollViewNestTest extends UIMainLayer {
       button_scale9.setScale9Enabled(true);
       button_scale9.width = 100.0;
       button_scale9.height = button_scale9.getVirtualRendererSize().height;
-      button_scale9.setPosition(
-        new Point(
+      button_scale9.position = new Point(
           innerWidth / 2.0,
           titleButton.getBottomBoundary() - titleButton.contentSize.height
-        )
-      );
+        );
       scrollView.addChild(button_scale9);
 
-      imageView.setPosition(
-        new Point(innerWidth / 2.0, imageView.contentSize.height / 2.0)
-      );
+      imageView.position = new Point(innerWidth / 2.0, imageView.contentSize.height / 2.0);
       scrollView.addChild(imageView);
 
       // Create the scrollview by horizontal
@@ -121,10 +108,10 @@ export class UIScrollViewNestTest extends UIMainLayer {
       sc.width = 100;
       sc.height = 100;
       sc.setPropagateTouchEvents(false);
-      sc.setPosition(new Point(180, 100));
+      sc.position = new Point(180, 100);
       sc.scrollToPercentBothDirection(new Point(50, 50), 1, true);
       var iv = new ImageView("ccs-res/cocosui/Hello.png");
-      iv.setPosition(new Point(240, 160));
+      iv.position = new Point(240, 160);
       sc.addChild(iv);
       scrollView.addChild(sc);
 

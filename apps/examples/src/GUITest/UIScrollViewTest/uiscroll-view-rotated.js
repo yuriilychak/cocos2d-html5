@@ -39,22 +39,17 @@ export class UIScrollViewRotated extends UIMainLayer {
 
       // Add the alert
       this._bottomDisplayLabel.string = "ScrollView vertical";
-      this._bottomDisplayLabel.setPosition(
-        widgetSize.width / 2.0,
-        widgetSize.height / 2.0 - this._bottomDisplayLabel.height * 3.075
-      );
+      this._bottomDisplayLabel.position = { x: widgetSize.width / 2.0, y: widgetSize.height / 2.0 - this._bottomDisplayLabel.height * 3.075 };
 
       // Create the scrollview by vertical
       var scrollView = new ScrollView();
       scrollView.width = 280.0;
       scrollView.height = 150.0;
       scrollView.setDirection(ScrollView.DIR_BOTH);
-      scrollView.setPosition(
-        new Point(
+      scrollView.position = new Point(
           (widgetSize.width - scrollView.width) / 2.0,
           (widgetSize.height - scrollView.height) / 2.0 + 100
-        )
-      );
+        );
       scrollView.rotation = 45;
       this._mainNode.addChild(scrollView);
 
@@ -68,12 +63,10 @@ export class UIScrollViewRotated extends UIMainLayer {
         "ccs-res/cocosui/animationbuttonnormal.png",
         "ccs-res/cocosui/animationbuttonpressed.png"
       );
-      button.setPosition(
-        new Point(
+      button.position = new Point(
           innerWidth / 2.0,
           scrollView.getInnerContainerSize().height - button.height / 2.0
-        )
-      );
+        );
       scrollView.addChild(button);
 
       var titleButton = new Button(
@@ -81,9 +74,7 @@ export class UIScrollViewRotated extends UIMainLayer {
         "ccs-res/cocosui/backtotoppressed.png"
       );
       titleButton.setTitleText("Title Button");
-      titleButton.setPosition(
-        new Point(innerWidth / 2.0, button.getBottomBoundary() - button.height)
-      );
+      titleButton.position = new Point(innerWidth / 2.0, button.getBottomBoundary() - button.height);
       scrollView.addChild(titleButton);
 
       var button_scale9 = new Button(
@@ -93,17 +84,13 @@ export class UIScrollViewRotated extends UIMainLayer {
       button_scale9.setScale9Enabled(true);
       button_scale9.width = 100.0;
       button_scale9.height = button_scale9.getVirtualRendererSize().height;
-      button_scale9.setPosition(
-        new Point(
+      button_scale9.position = new Point(
           innerWidth / 2.0,
           titleButton.getBottomBoundary() - titleButton.height
-        )
-      );
+        );
       scrollView.addChild(button_scale9);
 
-      imageView.setPosition(
-        new Point(innerWidth / 2.0, imageView.height / 2.0)
-      );
+      imageView.position = new Point(innerWidth / 2.0, imageView.height / 2.0);
       scrollView.addChild(imageView);
 
       return true;

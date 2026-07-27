@@ -37,21 +37,17 @@ export class UICheckBoxDefaultBehaviorTest extends UIMainLayer {
       // Add a label in which the checkbox events will be displayed
       this._displayValueLabel = new Text("No Event", "Marker Felt", 32);
       this._displayValueLabel.anchor = new Point(0.5, -1);
-      this._displayValueLabel.setPosition(
-        new Point(widgetSize.width / 2, widgetSize.height / 2)
-      );
+      this._displayValueLabel.position = new Point(widgetSize.width / 2, widgetSize.height / 2);
       this._mainNode.addChild(this._displayValueLabel);
       this._bottomDisplayLabel.string = "";
 
       // Add the alert
       var alert = new Text("Only left two can be clicked!", "Marker Felt", 20);
       alert.color = new Color(159, 168, 176);
-      alert.setPosition(
-        new Point(
+      alert.position = new Point(
           widgetSize.width / 2,
           widgetSize.height / 2 - alert.contentSize.height * 1.75
-        )
-      );
+        );
       this._mainNode.addChild(alert);
 
       // Create the checkbox
@@ -59,9 +55,7 @@ export class UICheckBoxDefaultBehaviorTest extends UIMainLayer {
         "ccs-res/cocosui/check_box_normal.png",
         "ccs-res/cocosui/check_box_active.png"
       );
-      checkBox.setPosition(
-        new Point(widgetSize.width / 2 - 50, widgetSize.height / 2)
-      );
+      checkBox.position = new Point(widgetSize.width / 2 - 50, widgetSize.height / 2);
 
       this._mainNode.addChild(checkBox);
 
@@ -70,9 +64,7 @@ export class UICheckBoxDefaultBehaviorTest extends UIMainLayer {
         "ccs-res/cocosui/check_box_normal.png",
         "ccs-res/cocosui/check_box_active.png"
       );
-      checkBox2.setPosition(
-        new Point(widgetSize.width / 2 - 150, widgetSize.height / 2)
-      );
+      checkBox2.position = new Point(widgetSize.width / 2 - 150, widgetSize.height / 2);
       checkBox2.ignoreContentAdaptWithSize(false);
       checkBox2.setZoomScale(0.5);
       checkBox2.width = 80;
@@ -85,9 +77,7 @@ export class UICheckBoxDefaultBehaviorTest extends UIMainLayer {
         "ccs-res/cocosui/check_box_normal.png",
         "ccs-res/cocosui/check_box_active.png"
       );
-      checkBoxDisabled.setPosition(
-        new Point(widgetSize.width / 2 + 20, widgetSize.height / 2)
-      );
+      checkBoxDisabled.position = new Point(widgetSize.width / 2 + 20, widgetSize.height / 2);
       checkBoxDisabled.enabled = false;
       checkBoxDisabled.setBright(false);
       this._mainNode.addChild(checkBoxDisabled);
@@ -96,9 +86,7 @@ export class UICheckBoxDefaultBehaviorTest extends UIMainLayer {
         "ccs-res/cocosui/check_box_normal.png",
         "ccs-res/cocosui/check_box_active.png"
       );
-      checkBoxDisabled2.setPosition(
-        new Point(widgetSize.width / 2 + 70, widgetSize.height / 2)
-      );
+      checkBoxDisabled2.position = new Point(widgetSize.width / 2 + 70, widgetSize.height / 2);
       checkBoxDisabled2.enabled = false;
       checkBoxDisabled2.setBright(false);
       checkBoxDisabled2.setSelected(true);

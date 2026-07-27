@@ -94,7 +94,7 @@ export default class CardinalSplineBy extends CardinalSplineTo {
     const posY = newPos.y + pos.y;
     this._previousPosition.x = posX;
     this._previousPosition.y = posY;
-    this.target.setPosition(posX, posY);
+    this.target.position = { x: posX, y: posY };
   }
 
   /**

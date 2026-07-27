@@ -105,12 +105,10 @@ export class UIListViewTest_Magnetic extends UIMainLayer {
       );
       pButton.anchor = new Point(0.5, 0.5);
       pButton.scale = 0.8;
-      pButton.setPosition(
-        Point.add(
+      pButton.position = Point.add(
           new Point(widgetSize.width / 2, widgetSize.height / 2),
           new Point(130, -60)
-        )
-      );
+        );
       pButton.setTitleText("Next Magnetic");
       pButton.addClickEventListener(
         function () {

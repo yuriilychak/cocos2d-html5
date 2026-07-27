@@ -37,12 +37,10 @@ export class UIImageViewTest_ContentSize extends UIMainLayer {
       this._bottomDisplayLabel.string = "";
       var alert = new Text("ImageView ContentSize Change", "Marker Felt", 26);
       alert.color = new Color(159, 168, 176);
-      alert.setPosition(
-        new Point(
+      alert.position = new Point(
           widgetSize.width / 2,
           widgetSize.height / 2 - alert.contentSize.height * 2.125
-        )
-      );
+        );
 
       this._mainNode.addChild(alert);
 
@@ -52,9 +50,7 @@ export class UIImageViewTest_ContentSize extends UIMainLayer {
         16
       );
       status.color = Color.RED;
-      status.setPosition(
-        new Point(widgetSize.width / 2, widgetSize.height / 2 + 80)
-      );
+      status.position = new Point(widgetSize.width / 2, widgetSize.height / 2 + 80);
       this._mainNode.addChild(status, 20);
 
       // Create the imageview
@@ -62,9 +58,7 @@ export class UIImageViewTest_ContentSize extends UIMainLayer {
       imageView.setScale9Enabled(true);
       imageView.width = 200;
       imageView.height = 80;
-      imageView.setPosition(
-        new Point(widgetSize.width / 2, widgetSize.height / 2)
-      );
+      imageView.position = new Point(widgetSize.width / 2, widgetSize.height / 2);
 
       var imageViewChild = new ImageView(
         "ccs-res/cocosui/buttonHighlighted.png"
@@ -74,7 +68,10 @@ export class UIImageViewTest_ContentSize extends UIMainLayer {
       imageViewChild.setPositionType(Widget.POSITION_PERCENT);
       imageViewChild.setSizePercent(new Point(0.5, 0.5));
       imageViewChild.setPositionPercent(new Point(0.5, 0.5));
-      //imageViewChild.setPosition(new Point(widgetSize.width / 2, widgetSize.height / 2));
+      // imageViewChild.position = new Point(
+      //   widgetSize.width / 2,
+      //   widgetSize.height / 2
+      // );
 
       var imageViewChild2 = new ImageView(
         "ccs-res/cocosui/buttonHighlighted.png"

@@ -37,10 +37,7 @@ export class UITextTest_TTF extends UIMainLayer {
 
       // Create the text, and set font with .ttf
       var text = new Text("Text", "fonts/A Damn Mess.ttf", 30);
-      text.setPosition(
-        widgetSize.width / 2,
-        widgetSize.height / 2 + text.height / 4
-      );
+      text.position = { x: widgetSize.width / 2, y: widgetSize.height / 2 + text.height / 4 };
       this._mainNode.addChild(text);
 
       return true;

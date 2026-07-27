@@ -42,7 +42,7 @@ export class UIButtonTestZoomScale extends UIMainLayer {
         "ccs-res/cocosui/animationbuttonnormal.png",
         "ccs-res/cocosui/animationbuttonpressed.png"
       );
-      button.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0);
+      button.position = { x: widgetSize.width / 2.0, y: widgetSize.height / 2.0 };
       button.setPressedActionEnabled(true);
       button.addClickEventListener(function () {
         log("Button clicked, position = (" + button.x + ", " + button.y + ")");
@@ -59,7 +59,7 @@ export class UIButtonTestZoomScale extends UIMainLayer {
         ""
       );
       slider.loadProgressBarTexture("ccs-res/cocosui/sliderProgress.png");
-      slider.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0 - 50);
+      slider.position = { x: widgetSize.width / 2.0, y: widgetSize.height / 2.0 - 50 };
       slider.addEventListener(this.sliderEvent, this);
       slider.setPercent(button.getZoomScale() * 100);
       this._mainNode.addChild(slider);

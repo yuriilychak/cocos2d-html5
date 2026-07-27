@@ -142,7 +142,7 @@ export class ActionCustomTest extends ActionsDemo {
     // skip
 
     spriteTemp = this.addandCreateSpriteTemp("Place");
-    var place = new (createCustomAction(Place))(spriteTemp.getPosition());
+    var place = new (createCustomAction(Place))(spriteTemp.position);
     spriteTemp.runAction(place);
 
     spriteTemp = this.addandCreateSpriteTemp("CallFunc");
@@ -164,7 +164,7 @@ export class ActionCustomTest extends ActionsDemo {
     spriteTemp = this.addandCreateSpriteTemp("MoveTo");
     var customMoveTo = new (createCustomAction(MoveTo))(
       5,
-      new Point(spriteTemp.getPosition().x + 50, spriteTemp.getPosition().y)
+      new Point(spriteTemp.position.x + 50, spriteTemp.position.y)
     );
     spriteTemp.runAction(customMoveTo);
 
@@ -227,7 +227,7 @@ export class ActionCustomTest extends ActionsDemo {
     spriteTemp = this.addandCreateSpriteTemp("JumpBy");
     var jumpBy = new (createCustomAction(JumpBy))(
       5,
-      spriteTemp.getPosition(),
+      spriteTemp.position,
       50,
       4
     );
@@ -236,7 +236,7 @@ export class ActionCustomTest extends ActionsDemo {
     spriteTemp = this.addandCreateSpriteTemp("JumpTo");
     var jumpTo = new (createCustomAction(JumpTo))(
       5,
-      spriteTemp.getPosition(),
+      spriteTemp.position,
       50,
       4
     );
@@ -247,10 +247,10 @@ export class ActionCustomTest extends ActionsDemo {
      */
     spriteTemp = this.addandCreateSpriteTemp("BezierBy");
     var bezierBy = new (createCustomAction(BezierBy))(5, [
-      spriteTemp.getPosition(),
-      new Point(0, spriteTemp.getPosition().y),
-      new Point(winSize.x, spriteTemp.getPosition().y),
-      spriteTemp.getPosition()
+      spriteTemp.position,
+      new Point(0, spriteTemp.position.y),
+      new Point(winSize.x, spriteTemp.position.y),
+      spriteTemp.position
     ]);
     spriteTemp.runAction(bezierBy);
 
@@ -320,7 +320,7 @@ export class ActionCustomTest extends ActionsDemo {
   addandCreateSpriteTemp(actionTypeName, addLabelInLayerFlag) {
     var spriteTemp = new Sprite(s_pathGrossini);
     this._layer.addChild(spriteTemp);
-    spriteTemp.setPosition(this._spritePos);
+    spriteTemp.position = this._spritePos;
     var spriteContentSize = spriteTemp.contentSize;
     this._spritePos.y += spriteContentSize.height;
     if (this._spritePos.y > winSize.height - spriteContentSize.height) {
@@ -331,13 +331,10 @@ export class ActionCustomTest extends ActionsDemo {
     if (actionTypeName) {
       var label = new TextBMFont(actionTypeName, s_simpleFont_fnt);
       if (addLabelInLayerFlag) {
-        label.setPosition(spriteTemp.getPosition());
+        label.position = spriteTemp.position;
         this._layer.addChild(label);
       } else {
-        label.setPosition(
-          spriteContentSize.width / 2,
-          spriteContentSize.height / 2
-        );
+        label.position = { x: spriteContentSize.width / 2, y: spriteContentSize.height / 2 };
         spriteTemp.addChild(label);
       }
     }

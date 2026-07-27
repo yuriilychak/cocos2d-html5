@@ -168,7 +168,7 @@ export class Skeleton extends Node {
         vertices[3] * scaleY
       );
     }
-    const position = this.getPosition();
+    const position = this.position;
     return new Rect(
       position.x + minX,
       position.y + minY,

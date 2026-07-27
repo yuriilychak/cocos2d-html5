@@ -109,7 +109,7 @@ export class ScrollViewDemo extends BaseClippingNodeTest {
           var point = clipper.convertToNodeSpace(touch);
           var diff = Point.sub(point, target._lastPoint);
           var content = clipper.getChildByTag(TAG_CONTENTNODE);
-          content.setPosition(Point.add(content.getPosition(), diff));
+          content.position = Point.add(content.position, diff);
           target._lastPoint = point;
         },
 

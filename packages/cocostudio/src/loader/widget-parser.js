@@ -25,7 +25,7 @@ function applyCommonAttributes(widget, opts) {
         widget.width = opts.width;
         widget.height = opts.height;
     if (opts.x != null && opts.y != null)
-        widget.setPosition(opts.x, opts.y);
+        widget.position = { x: opts.x, y: opts.y };
     if (opts.anchorPointX != null && opts.anchorPointY != null)
         widget.anchorX = opts.anchorPointX;
         widget.anchorY = opts.anchorPointY;

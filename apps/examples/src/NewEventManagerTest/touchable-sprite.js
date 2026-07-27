@@ -90,7 +90,7 @@ export class TouchableSprite extends ImageView {
         return false;
       },
       onTouchMoved: function (touch, event) {
-        //this.setPosition(this.getPosition() + touch.delta);
+        // this.position = Point.add(this.position, touch.delta);
       },
       onTouchEnded: function (touch, event) {
         selfPointer.opacity = 255;

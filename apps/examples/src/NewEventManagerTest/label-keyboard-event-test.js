@@ -39,10 +39,7 @@ export class LabelKeyboardEventTest extends EventDispatcherTestDemo {
     var size = ServiceLocator.eglView.rendererDelegate.visibleSize;
 
     var statusLabel = new TextBMFont("No keyboard event received!", s_simpleFont_fnt);
-    statusLabel.setPosition(
-      origin.x + size.width / 2,
-      origin.x + size.height / 2
-    );
+    statusLabel.position = { x: origin.x + size.width / 2, y: origin.x + size.height / 2 };
     this.addChild(statusLabel);
 
     var that = this;

@@ -139,7 +139,6 @@ getChildrenCount()   -> childrenCount
 Do not blindly convert multi-argument commands:
 
 ```js
-node.setPosition(x, y);
 node.setContentSize(width, height);
 node.setAnchorPoint(x, y);
 node.setColor(r, g, b);
@@ -147,6 +146,10 @@ node.setColor(r, g, b);
 
 These should either stay as methods or be migrated only after object-valued
 accessors are clearly defined and tested:
+
+```js
+node.position = { x, y };
+```
 
 ```js
 node.position = new Point(x, y);

@@ -225,7 +225,7 @@ export class PageView extends ListView {
       var contentSize = this.contentSize;
       var posX = contentSize.width * this._indicatorPositionAsAnchorPoint.x;
       var posY = contentSize.height * this._indicatorPositionAsAnchorPoint.y;
-      this._indicator.setPosition(new Point(posX, posY));
+      this._indicator.position = new Point(posX, posY);
     }
   }
 
@@ -448,7 +448,7 @@ export class PageView extends ListView {
       var contentSize = this.contentSize;
       this._indicatorPositionAsAnchorPoint.x = position.x / contentSize.width;
       this._indicatorPositionAsAnchorPoint.y = position.y / contentSize.height;
-      this._indicator.setPosition(position);
+      this._indicator.position = position;
     }
   }
 
@@ -458,7 +458,7 @@ export class PageView extends ListView {
    */
   getIndicatorPosition() {
     assert(this._indicator !== null, "");
-    return this._indicator.getPosition();
+    return this._indicator.position;
   }
 
   /**

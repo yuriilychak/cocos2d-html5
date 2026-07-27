@@ -406,7 +406,7 @@ export class RichText extends Widget {
       for (j = 0; j < row.length; j++) {
         l = row[j];
         l.anchor = new Point(0, 0);
-        l.setPosition(nextPosX, 0);
+        l.position = { x: nextPosX, y: 0 };
         locRenderersContainer.addChild(l, 1, j);
 
         lineHeight = l.getLineHeight ? l.getLineHeight() : newContentSizeHeight;
@@ -457,7 +457,7 @@ export class RichText extends Widget {
         for (j = 0; j < row.length; j++) {
           l = row[j];
           l.anchor = new Point(0, 0);
-          l.setPosition(new Point(nextPosX, nextPosY));
+          l.position = new Point(nextPosX, nextPosY);
           locRenderersContainer.addChild(l, 1);
           nextPosX += l.width;
         }
@@ -500,7 +500,7 @@ export class RichText extends Widget {
       : this._customSize;
     this._updateContentSizeWithTextureSize(this.contentSize);
 
-    locRenderersContainer.setPosition(this.width * 0.5, this.height * 0.5);
+    locRenderersContainer.position = { x: this.width * 0.5, y: this.height * 0.5 };
   }
 
   _pushToContainer(renderer) {

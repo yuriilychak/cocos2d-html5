@@ -108,9 +108,9 @@ export default class BezierBy extends ActionInterval {
         y = y + locStartPosition.y;
         locPreviousPosition.x = x;
         locPreviousPosition.y = y;
-        this.target.setPosition(x, y);
+        this.target.position = { x: x, y: y };
       } else {
-        this.target.setPosition(locStartPosition.x + x, locStartPosition.y + y);
+        this.target.position = { x: locStartPosition.x + x, y: locStartPosition.y + y };
       }
     }
   }

@@ -45,7 +45,7 @@ export class SpriteAccelerationEventTest extends EventDispatcherTestDemo {
     ServiceLocator.inputManager.accelerometerEnabled = true;
 
     var sprite = new Sprite("Images/ball.png");
-    sprite.setPosition(origin.x + size.width / 2, origin.y + size.height / 2);
+    sprite.position = { x: origin.x + size.width / 2, y: origin.y + size.height / 2 };
     this.addChild(sprite);
 
     ServiceLocator.eventManager.addListener(
@@ -54,7 +54,7 @@ export class SpriteAccelerationEventTest extends EventDispatcherTestDemo {
         callback: function (accumulator, event) {
           var target = event.currentTarget;
           var ballSize = target.contentSize;
-          var ptNow = target.getPosition();
+          var ptNow = target.position;
 
           target.x = SpriteAccelerationEventTest._fix_pos(
             ptNow.x + accumulator.x * 9.81,

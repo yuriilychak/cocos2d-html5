@@ -53,10 +53,7 @@ export class RemoveAndRetainNodeTest extends EventDispatcherTestDemo {
     var size = ServiceLocator.eglView.rendererDelegate.visibleSize;
 
     this._sprite = createColoredView(new Color(0, 255, 255));
-    this._sprite.setPosition(
-      origin.x + size.width / 2,
-      origin.y + size.height / 2
-    );
+    this._sprite.position = { x: origin.x + size.width / 2, y: origin.y + size.height / 2 };
     this.addChild(this._sprite, 10);
 
     // Make sprite1 touchable

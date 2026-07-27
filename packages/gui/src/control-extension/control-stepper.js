@@ -47,18 +47,12 @@ export class ControlStepper extends Control {
       this.ignoreAnchorPointForPosition(false);
 
       this._minusButton = minusButton;
-      this._minusButton.setPosition(
-        minusButton.width / 2,
-        minusButton.height / 2
-      );
+      this._minusButton.position = { x: minusButton.width / 2, y: minusButton.height / 2 };
       this.addChild(this._minusButton);
 
       this._plusButton = plusButton;
-      this._plusButton.setPosition(
-        minusButton.width +
-          plusButton.width / 2,
-        minusButton.height / 2
-      );
+      this._plusButton.position = { x: minusButton.width +
+          plusButton.width / 2, y: minusButton.height / 2 };
       this.addChild(this._plusButton);
 
       this._minusButton.addTouchEventListener((btn, eventType) => {

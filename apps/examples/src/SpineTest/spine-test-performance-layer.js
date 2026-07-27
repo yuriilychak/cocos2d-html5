@@ -47,7 +47,7 @@ export class SpineTestPerformanceLayer extends SpineTestLayer {
         skeletonNode.setSkin("goblin");
 
         skeletonNode.scale = 0.2;
-        skeletonNode.setPosition(pos);
+        skeletonNode.position = pos;
         self.addChild(skeletonNode);
         return true;
       }

@@ -519,7 +519,7 @@ export class Widget extends ProtectedNode {
         break;
     }
     this._onSizeChanged();
-    var absPos = this.getPosition();
+    var absPos = this.position;
     switch (this._positionType) {
       case Widget.POSITION_ABSOLUTE:
         if (parentSize.width <= 0 || parentSize.height <= 0) {
@@ -542,7 +542,7 @@ export class Widget extends ProtectedNode {
       var renderer = this._parent._imageRenderer;
       if (renderer && !renderer._textureLoaded) return;
     }
-    this.setPosition(absPos);
+    this.position = absPos;
   }
 
   setSizeType(type) {
@@ -925,7 +925,11 @@ export class Widget extends ProtectedNode {
       widgetParent.checkChildInfo(handleState, sender, touchPoint);
   }
 
-  setPosition(pos, posY) {
+  get position() {
+    return super.position;
+  }
+
+  set position(pos) {
     if (!this._usingLayoutComponent && this._running) {
       var widgetParent = this.widgetParent;
       if (widgetParent) {
@@ -934,18 +938,13 @@ export class Widget extends ProtectedNode {
           this._positionPercent.x = 0;
           this._positionPercent.y = 0;
         } else {
-          if (posY === undefined) {
-            this._positionPercent.x = pos.x / pSize.width;
-            this._positionPercent.y = pos.y / pSize.height;
-          } else {
-            this._positionPercent.x = pos / pSize.width;
-            this._positionPercent.y = posY / pSize.height;
-          }
+          this._positionPercent.x = pos.x / pSize.width;
+          this._positionPercent.y = pos.y / pSize.height;
         }
       }
     }
 
-    Node.prototype.setPosition.call(this, pos, posY);
+    super.position = pos;
   }
 
   set x(x) {

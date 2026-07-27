@@ -28,7 +28,11 @@
 
 import { MotionStreakTest } from "./motion-streak-test";
 import { s_streak } from "../resources";
-import { Color, EventListener, EventListenerType, ServiceLocator } from "@aspect/core";
+import {
+  Color,
+  EventListenerType,
+  ServiceLocator
+} from "@aspect/core";
 
 import { MotionStreak } from "@aspect/motion-streak";
 export class MotionStreakTest2 extends MotionStreakTest {
@@ -48,7 +52,7 @@ export class MotionStreakTest2 extends MotionStreakTest {
           if (touches.length == 0) return;
 
           var touch = touches[0];
-          var streak = event.currentTarget._streak;
+          var streak = event.currentTarget.streak;
           streak.x = touch.x;
           streak.y = touch.y;
         }
@@ -57,10 +61,10 @@ export class MotionStreakTest2 extends MotionStreakTest {
     );
     var winSize = ServiceLocator.eglView.winSizeInPoints;
     // create the streak object and add it to the scene
-    this._streak = new MotionStreak(3, 3, 64, Color.WHITE, s_streak);
-    this.addChild(this._streak);
-    this._streak.x = winSize.width / 2;
-    this._streak.y = winSize.height / 2;
+    this.streak = new MotionStreak(3, 3, 64, Color.WHITE, s_streak);
+    this.addChild(this.streak);
+    this.streak.x = winSize.width / 2;
+    this.streak.y = winSize.height / 2;
   }
 
   title() {

@@ -97,9 +97,7 @@ export class UIScrollViewDisableTest extends UIMainLayer {
       button_scale9.y = textButton.getBottomBoundary() - textButton.height;
       scrollView.addChild(button_scale9);
 
-      imageView.setPosition(
-        new Point(innerWidth / 2, imageView.contentSize.height / 2)
-      );
+      imageView.position = new Point(innerWidth / 2, imageView.contentSize.height / 2);
       scrollView.addChild(imageView);
 
       return true;

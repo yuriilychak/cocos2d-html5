@@ -36,10 +36,7 @@ export class UILayoutTest_Layout_Scaled_Widget extends UIMainLayer {
       // Add the alert
       var alert = new Text("Layout Scaled Widget", "Marker Felt", 20);
       alert.color = new Color(159, 168, 176);
-      alert.setPosition(
-        widgetSize.width / 2.0,
-        widgetSize.height / 2.0 - alert.height * 4.5
-      );
+      alert.position = { x: widgetSize.width / 2.0, y: widgetSize.height / 2.0 - alert.height * 4.5 };
       this._mainNode.addChild(alert);
 
       // Create the layout
@@ -47,10 +44,7 @@ export class UILayoutTest_Layout_Scaled_Widget extends UIMainLayer {
       layout.setLayoutType(Layout.LINEAR_HORIZONTAL);
       layout.width = 280;
       layout.height = 150;
-      layout.setPosition(
-        (widgetSize.width - layout.width) / 2.0,
-        (widgetSize.height - layout.height) / 2.0
-      );
+      layout.position = { x: (widgetSize.width - layout.width) / 2.0, y: (widgetSize.height - layout.height) / 2.0 };
       this._mainNode.addChild(layout);
 
       // center

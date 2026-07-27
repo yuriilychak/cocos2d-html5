@@ -98,15 +98,12 @@ export class ControlButton extends Control {
 
     var locContentSize = this.contentSize;
     if (label)
-      label.setPosition(locContentSize.width / 2, locContentSize.height / 2);
+      label.position = { x: locContentSize.width / 2, y: locContentSize.height / 2 };
 
     this._backgroundSprite = this.getBackgroundSpriteForState(locState);
     var locBackgroundSprite = this._backgroundSprite;
     if (locBackgroundSprite)
-      locBackgroundSprite.setPosition(
-        locContentSize.width / 2,
-        locContentSize.height / 2
-      );
+      locBackgroundSprite.position = { x: locContentSize.width / 2, y: locContentSize.height / 2 };
 
     var titleLabelSize = new Size();
     if (label) {
@@ -141,14 +138,11 @@ export class ControlButton extends Control {
     this.height = maxRect.height;
     locContentSize = this.contentSize;
     if (label) {
-      label.setPosition(locContentSize.width / 2, locContentSize.height / 2);
+      label.position = { x: locContentSize.width / 2, y: locContentSize.height / 2 };
       label.visible = true;
     }
     if (locBackgroundSprite) {
-      locBackgroundSprite.setPosition(
-        locContentSize.width / 2,
-        locContentSize.height / 2
-      );
+      locBackgroundSprite.position = { x: locContentSize.width / 2, y: locContentSize.height / 2 };
       locBackgroundSprite.visible = true;
     }
   }

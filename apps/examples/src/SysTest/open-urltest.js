@@ -43,7 +43,7 @@ export class OpenURLTest extends SysTestBase {
       s_simpleFont_fnt
     );
     this.addChild(label);
-    label.setPosition(winSize.width / 2, winSize.height / 2);
+    label.position = { x: winSize.width / 2, y: winSize.height / 2 };
 
     ServiceLocator.eventManager.addListener(
       {

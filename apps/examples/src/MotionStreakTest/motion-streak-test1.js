@@ -33,31 +33,29 @@ import { MoveBy, RotateBy, TintTo, Sequence } from "@aspect/actions";
 
 import { MotionStreak } from "@aspect/motion-streak";
 export class MotionStreakTest1 extends MotionStreakTest {
-  constructor() {
-    super();
-    this._root = null;
-    this._target = null;
-  }
+  #pos = new Point();
+  #root = null;
+  #target = null;
 
   onEnter() {
     super.onEnter();
 
     var winSize = ServiceLocator.eglView.winSizeInPoints;
     // the root object just rotates around
-    this._root = new Sprite(s_pathR1);
-    this.addChild(this._root, 1);
-    this._root.x = winSize.width / 2;
-    this._root.y = winSize.height / 2;
+    this.#root = new Sprite(s_pathR1);
+    this.addChild(this.#root, 1);
+    this.#root.x = winSize.width / 2;
+    this.#root.y = winSize.height / 2;
 
     // the target object is offset from root, and the streak is moved to follow it
-    this._target = new Sprite(s_pathR1);
-    this._root.addChild(this._target);
-    this._target.x = winSize.width / 4;
-    this._target.y = 0;
+    this.#target = new Sprite(s_pathR1);
+    this.#root.addChild(this.#target);
+    this.#target.x = winSize.width / 4;
+    this.#target.y = 0;
 
     // create the streak object and add it to the scene
-    this._streak = new MotionStreak(2, 3, 32, Color.GREEN, s_streak);
-    this.addChild(this._streak);
+    this.streak = new MotionStreak(2, 3, 32, Color.GREEN, s_streak);
+    this.addChild(this.streak);
     // schedule an update on each frame so we can synchronize the streak with the target
     this.schedule(this.onUpdate);
 
@@ -65,29 +63,29 @@ export class MotionStreakTest1 extends MotionStreakTest {
 
     var action1 = a1.repeatForever();
     var motion = new MoveBy(2, new Point(100, 0));
-    this._root.runAction(new Sequence(motion, motion.reverse()).repeatForever());
-    this._root.runAction(action1);
+    this.#root.runAction(
+      new Sequence(motion, motion.reverse()).repeatForever()
+    );
+    this.#root.runAction(action1);
 
     var colorAction = new Sequence(
-        new TintTo(0.2, 255, 0, 0),
-        new TintTo(0.2, 0, 255, 0),
-        new TintTo(0.2, 0, 0, 255),
-        new TintTo(0.2, 0, 255, 255),
-        new TintTo(0.2, 255, 255, 0),
-        new TintTo(0.2, 255, 0, 255),
-        new TintTo(0.2, 255, 255, 255)
-      )
-      .repeatForever();
+      new TintTo(0.2, 255, 0, 0),
+      new TintTo(0.2, 0, 255, 0),
+      new TintTo(0.2, 0, 0, 255),
+      new TintTo(0.2, 0, 255, 255),
+      new TintTo(0.2, 255, 255, 0),
+      new TintTo(0.2, 255, 0, 255),
+      new TintTo(0.2, 255, 255, 255)
+    ).repeatForever();
 
-    this._streak.runAction(colorAction);
+    this.streak.runAction(colorAction);
+
+    this.#pos.set(this.#target.width / 2, 0);
   }
 
   onUpdate(delta) {
-    var pos = this._target.convertToWorldSpace(
-      new Point(this._target.width / 2, 0)
-    );
-    this._streak.x = pos.x;
-    this._streak.y = pos.y;
+    this.#pos.set(this.#target.width / 2, 0);
+    this.streak.position = this.#target.convertToWorldSpace(this.#pos);
   }
 
   title() {

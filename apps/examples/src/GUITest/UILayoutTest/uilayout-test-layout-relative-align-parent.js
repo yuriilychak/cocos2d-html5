@@ -36,10 +36,7 @@ export class UILayoutTest_Layout_Relative_Align_Parent extends UIMainLayer {
       // Add the alert
       var alert = new Text("Layout Relative Align Parent", "Arial", 20);
       alert.color = new Color(159, 168, 176);
-      alert.setPosition(
-        widgetSize.width / 2.0,
-        widgetSize.height / 2.0 - alert.contentSize.height * 4.5
-      );
+      alert.position = { x: widgetSize.width / 2.0, y: widgetSize.height / 2.0 - alert.contentSize.height * 4.5 };
       this._mainNode.addChild(alert);
 
       // Create the layout
@@ -49,10 +46,7 @@ export class UILayoutTest_Layout_Relative_Align_Parent extends UIMainLayer {
       layout.height = 150;
       layout.setBackGroundColorType(Layout.BG_COLOR_SOLID);
       layout.setBackGroundColor(Color.GREEN);
-      layout.setPosition(
-        (widgetSize.width - layout.width) / 2.0,
-        (widgetSize.height - layout.height) / 2.0
-      );
+      layout.position = { x: (widgetSize.width - layout.width) / 2.0, y: (widgetSize.height - layout.height) / 2.0 };
       this._mainNode.addChild(layout);
 
       // top left

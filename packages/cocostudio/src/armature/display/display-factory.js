@@ -226,7 +226,7 @@ export const displayFactory = {
     updateParticleDisplay: function (bone, particleSystem, dt) {
         var node = new BaseData();
         TransformHelp.matrixToNode(bone.nodeToArmatureTransform(), node);
-        particleSystem.setPosition(node.x, node.y);
+        particleSystem.position = { x: node.x, y: node.y };
         particleSystem.scaleX = node.scaleX;
         particleSystem.scaleY = node.scaleY;
         particleSystem.update(dt);

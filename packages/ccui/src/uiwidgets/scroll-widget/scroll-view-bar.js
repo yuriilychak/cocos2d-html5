@@ -365,7 +365,7 @@ export class ScrollViewBar extends ProtectedNode {
         var length = this._calculateLength(innerContainerMeasure, scrollViewMeasure, outOfBoundaryValue);
         var position = this._calculatePosition(innerContainerMeasure, scrollViewMeasure, innerContainerPosition, outOfBoundaryValue, length);
         this._updateLength(length);
-        this.setPosition(position);
+        this.position = position;
     }
 
     _calculateLength(innerContainerMeasure, scrollViewMeasure, outOfBoundaryValue) {

@@ -182,7 +182,7 @@ export class TextBMFont extends Widget {
       locRenderer.scaleX = this.width / textureSize.width;
       locRenderer.scaleY = this.height / textureSize.height;
     }
-    locRenderer.setPosition(this.width / 2.0, this.height / 2.0);
+    locRenderer.position = { x: this.width / 2.0, y: this.height / 2.0 };
   }
 
   /**

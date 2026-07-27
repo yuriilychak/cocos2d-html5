@@ -173,12 +173,9 @@ export default class Follow extends Action {
       // whole map fits inside a single screen, no need to modify the position - unless map boundaries are increased
       if (this._boundaryFullyCovered) return;
 
-      this.target.setPosition(
-        Point.clampf(tempPosX, this.leftBoundary, this.rightBoundary),
-        Point.clampf(tempPosY, this.bottomBoundary, this.topBoundary)
-      );
+      this.target.position = { x: Point.clampf(tempPosX, this.leftBoundary, this.rightBoundary), y: Point.clampf(tempPosY, this.bottomBoundary, this.topBoundary) };
     } else {
-      this.target.setPosition(tempPosX, tempPosY);
+      this.target.position = { x: tempPosX, y: tempPosY };
     }
   }
 

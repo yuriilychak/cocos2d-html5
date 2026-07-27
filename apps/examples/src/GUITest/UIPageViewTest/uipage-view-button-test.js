@@ -48,21 +48,16 @@ export class UIPageViewButtonTest extends UIMainLayer {
 
       // Add the black background
       this._bottomDisplayLabel.string = "PageView with Buttons";
-      this._bottomDisplayLabel.setPosition(
-        widgetSize.width / 2.0,
-        widgetSize.height / 2.0 - this._bottomDisplayLabel.height * 3.075
-      );
+      this._bottomDisplayLabel.position = { x: widgetSize.width / 2.0, y: widgetSize.height / 2.0 - this._bottomDisplayLabel.height * 3.075 };
 
       // Create the page view
       var pageView = new PageView();
       pageView.width = 240.0;
       pageView.height = 130.0;
-      pageView.setPosition(
-        new Point(
+      pageView.position = new Point(
           (widgetSize.width - pageView.width) / 2.0,
           (widgetSize.height - pageView.contentSize.height) / 2.0
-        )
-      );
+        );
 
       pageView.removeAllPages();
 

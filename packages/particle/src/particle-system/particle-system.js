@@ -1571,10 +1571,7 @@ export class ParticleSystem extends Node {
       );
 
       // position
-      this.setPosition(
-        parseFloat(locValueForKey("sourcePositionx", dictionary)),
-        parseFloat(locValueForKey("sourcePositiony", dictionary))
-      );
+      this.position = { x: parseFloat(locValueForKey("sourcePositionx", dictionary)), y: parseFloat(locValueForKey("sourcePositiony", dictionary)) };
       this._posVar.x = parseFloat(
         locValueForKey("sourcePositionVariancex", dictionary)
       );
@@ -2258,7 +2255,7 @@ export class ParticleSystem extends Node {
       retParticle.setEndSizeVar(this.getEndSizeVar());
 
       // position
-      retParticle.setPosition(new Point(this.x, this.y));
+      retParticle.position = new Point(this.x, this.y);
       retParticle.posVar = new Point(this.posVar.x, this.posVar.y);
 
       retParticle.setPositionType(this.getPositionType());

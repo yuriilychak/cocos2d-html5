@@ -19,7 +19,7 @@ export class Control extends Layer {
   _dispatchTable = null;
 
   static addSpriteToTargetWithPosAndAnchor(sprite, target, pos, anchor) {
-    sprite.setPosition(pos.x, pos.y);
+    sprite.position = { x: pos.x, y: pos.y };
     sprite.anchorX = anchor.x;
     sprite.anchorY = anchor.y;
     target.addChild(sprite);

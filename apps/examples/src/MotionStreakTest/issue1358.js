@@ -52,14 +52,14 @@ export class Issue1358 extends MotionStreakTest {
 
     // ask director the the window size
     var size = ServiceLocator.eglView.winSizeInPoints;
-    this._streak = new MotionStreak(
+    this.streak = new MotionStreak(
       2.0,
       1.0,
       50.0,
       new Color(255, 255, 0),
       s_image_icon
     );
-    this.addChild(this._streak);
+    this.addChild(this.streak);
 
     this._center = new Point(size.width / 2, size.height / 2);
     this._radius = size.width / 3;
@@ -69,9 +69,9 @@ export class Issue1358 extends MotionStreakTest {
 
   update(dt) {
     this._angle += 1.0;
-    this._streak.x =
-      this._center.x + Math.cos((this._angle / 180) * Math.PI) * this._radius;
-    this._streak.y =
-      this._center.y + Math.sin((this._angle / 180) * Math.PI) * this._radius;
+    this.streak.position = new Point(
+      this._center.x + Math.cos((this._angle / 180) * Math.PI) * this._radius,
+      this._center.y + Math.sin((this._angle / 180) * Math.PI) * this._radius
+    );
   }
 }

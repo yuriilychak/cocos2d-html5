@@ -128,7 +128,7 @@ export class UIListViewTest_Vertical extends UIMainLayer {
   }
 
   getItemPositionYInView(item) {
-    var worldPos = item.parent.convertToWorldSpaceAR(item.getPosition());
+    var worldPos = item.parent.convertToWorldSpaceAR(item.position);
     var viewPos = this.listView.convertToNodeSpaceAR(worldPos);
     return viewPos.y;
   }
@@ -153,7 +153,7 @@ export class UIListViewTest_Vertical extends UIMainLayer {
     var listViewHeight = this.listView.contentSize.height;
     var items = this.listView.getItems();
     var isDown =
-      this.listView.getInnerContainer().getPosition().y < this._lastContentPosY;
+      this.listView.getInnerContainer().position.y < this._lastContentPosY;
 
     for (var i = 0; i < this._spawnCount && i < this._totalCount; ++i) {
       var item = items[i];
@@ -161,7 +161,7 @@ export class UIListViewTest_Vertical extends UIMainLayer {
       if (isDown) {
         if (
           itemPos < -this._bufferZone &&
-          item.getPosition().y + this._reuseItemOffset < totalHeight
+          item.position.y + this._reuseItemOffset < totalHeight
         ) {
           var itemID = item.tag - items.length;
           item.y = item.y + this._reuseItemOffset;
@@ -179,7 +179,7 @@ export class UIListViewTest_Vertical extends UIMainLayer {
       }
     }
 
-    this._lastContentPosY = this.listView.getInnerContainer().getPosition().y;
+    this._lastContentPosY = this.listView.getInnerContainer().position.y;
   }
 
   selectedItemEvent(sender, type) {
