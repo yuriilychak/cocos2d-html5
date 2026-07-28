@@ -57,7 +57,7 @@ export class Layer extends Node {
     return this._renderCmd._isBaked;
   }
 
-  visit(parent) {
+  visit(parent, renderer = ServiceLocator.sys.rendererConfig.renderer) {
     var cmd = this._renderCmd,
       parentCmd = parent ? parent._renderCmd : null;
 
@@ -66,12 +66,11 @@ export class Layer extends Node {
       return;
     }
 
-    var renderer = ServiceLocator.sys.rendererConfig.renderer;
-    cmd.visit(parentCmd);
+    cmd.visit(parentCmd, renderer);
 
     if (cmd._isBaked) {
       renderer.pushRenderCommand(cmd);
-      cmd._bakeSprite.visit(this);
+      cmd._bakeSprite.visit(this, renderer);
     } else {
       var i,
         children = this._children,
@@ -84,7 +83,7 @@ export class Layer extends Node {
         for (i = 0; i < len; i++) {
           child = children[i];
           if (child._localZOrder < 0) {
-            child.visit(this);
+            child.visit(this, renderer);
           } else {
             break;
           }
@@ -92,7 +91,7 @@ export class Layer extends Node {
 
         renderer.pushRenderCommand(cmd);
         for (; i < len; i++) {
-          children[i].visit(this);
+          children[i].visit(this, renderer);
         }
       } else {
         renderer.pushRenderCommand(cmd);

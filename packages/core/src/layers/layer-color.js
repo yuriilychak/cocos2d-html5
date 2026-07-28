@@ -75,7 +75,7 @@ export class LayerColor extends Layer {
     return true;
   }
 
-  visit(parent) {
+  visit(parent, renderer = ServiceLocator.sys.rendererConfig.renderer) {
     var cmd = this._renderCmd,
       parentCmd = parent ? parent._renderCmd : null;
 
@@ -84,13 +84,12 @@ export class LayerColor extends Layer {
       return;
     }
 
-    var renderer = ServiceLocator.sys.rendererConfig.renderer;
-    cmd.visit(parentCmd);
+    cmd.visit(parentCmd, renderer);
 
     if (cmd._isBaked) {
       renderer.pushRenderCommand(cmd._bakeRenderCmd);
       cmd._bakeSprite._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
-      cmd._bakeSprite.visit(this);
+      cmd._bakeSprite.visit(this, renderer);
     } else {
       var i,
         child,
@@ -103,7 +102,7 @@ export class LayerColor extends Layer {
         for (i = 0; i < len; i++) {
           child = children[i];
           if (child._localZOrder < 0) {
-            child.visit(this);
+            child.visit(this, renderer);
           } else {
             break;
           }
@@ -111,7 +110,7 @@ export class LayerColor extends Layer {
 
         renderer.pushRenderCommand(cmd);
         for (; i < len; i++) {
-          children[i].visit(this);
+          children[i].visit(this, renderer);
         }
       } else {
         renderer.pushRenderCommand(cmd);

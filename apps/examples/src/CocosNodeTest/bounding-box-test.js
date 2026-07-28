@@ -45,7 +45,7 @@ export class BoundingBoxTest extends TestNodeDemo {
     this.addChild(sprite);
     sprite.x = winSize.width / 2;
     sprite.y = winSize.height / 2;
-    var bb = sprite.getBoundingBox();
+    var bb = sprite.boundingBox;
     log("BoundingBox:");
     //for( var i in bb )
     //    log( i + " = " + bb[i] );
@@ -59,7 +59,7 @@ export class BoundingBoxTest extends TestNodeDemo {
     return "Bounding Box Test";
   }
   subtitle() {
-    return "Testing getBoundingBox(). See console";
+    return "Testing boundingBox. See console";
   }
   //
   // Automation

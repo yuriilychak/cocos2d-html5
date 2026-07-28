@@ -1089,12 +1089,7 @@ export class ParticleSystem extends Node {
    * @return {Color}
    */
   getStartColor() {
-    return color(
-      this._startColor.r,
-      this._startColor.g,
-      this._startColor.b,
-      this._startColor.a
-    );
+    return new Color(this._startColor);
   }
 
   /**
@@ -1113,12 +1108,7 @@ export class ParticleSystem extends Node {
    * @return {Color}
    */
   getStartColorVar() {
-    return color(
-      this._startColorVar.r,
-      this._startColorVar.g,
-      this._startColorVar.b,
-      this._startColorVar.a
-    );
+    return new Color(this._startColorVar);
   }
 
   /**
@@ -1137,12 +1127,7 @@ export class ParticleSystem extends Node {
    * @return {Color}
    */
   getEndColor() {
-    return color(
-      this._endColor.r,
-      this._endColor.g,
-      this._endColor.b,
-      this._endColor.a
-    );
+    return new Color(this._endColor);
   }
 
   /**
@@ -1161,12 +1146,7 @@ export class ParticleSystem extends Node {
    * @return {Color}
    */
   getEndColorVar() {
-    return color(
-      this._endColorVar.r,
-      this._endColorVar.g,
-      this._endColorVar.b,
-      this._endColorVar.a
-    );
+    return new Color(this._endColorVar);
   }
 
   /**

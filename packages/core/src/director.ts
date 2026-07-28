@@ -167,7 +167,7 @@ export default class Director extends BaseClass {
         renderer.clearRenderCommands();
         renderer.assignedZ = 0;
         this.#runningScene._renderCmd._curLevel = 0;
-        this.#runningScene.visit();
+        this.#runningScene.visit(null, renderer);
         renderer.resetFlag();
       } else if (renderer.transformDirty()) {
         renderer.transform();
@@ -177,7 +177,7 @@ export default class Director extends BaseClass {
     renderer.clear();
 
     if (this.notificationNode) {
-      this.notificationNode.visit();
+      this.notificationNode.visit(null, renderer);
     }
 
     this.#eventManager!.dispatchEvent(this.#eventAfterVisit);

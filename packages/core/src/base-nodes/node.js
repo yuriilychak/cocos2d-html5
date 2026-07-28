@@ -1972,7 +1972,7 @@ export class Node extends BaseClass {
    * @function
    * @param {Node} parent
    */
-  visit(parent = null) {
+  visit(parent = null, renderer = ServiceLocator.sys.rendererConfig.renderer) {
     var cmd = this._renderCmd,
       parentCmd = parent ? parent._renderCmd : null;
 
@@ -1982,8 +1982,7 @@ export class Node extends BaseClass {
       return;
     }
 
-    var renderer = ServiceLocator.sys.rendererConfig.renderer;
-    cmd.visit(parentCmd);
+    cmd.visit(parentCmd, renderer);
 
     var i,
       children = this._children,
@@ -1997,7 +1996,7 @@ export class Node extends BaseClass {
       for (i = 0; i < len; i++) {
         child = children[i];
         if (child._localZOrder < 0) {
-          child.visit(this);
+          child.visit(this, renderer);
         } else {
           break;
         }
@@ -2005,7 +2004,7 @@ export class Node extends BaseClass {
 
       renderer.pushRenderCommand(cmd);
       for (; i < len; i++) {
-        children[i].visit(this);
+        children[i].visit(this, renderer);
       }
     } else {
       renderer.pushRenderCommand(cmd);

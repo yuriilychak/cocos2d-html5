@@ -116,12 +116,12 @@ export class RectUnitTest extends UnitTestBase {
     if (rectA.height != 4) throw "Fail rect property height";
     ret.push(rectA.height);
 
-    this.log("Test 11: getBoundingBox()");
+    this.log("Test 11: boundingBox");
     var node = new Node();
     node.width = 99;
     node.height = 101;
-    var bb = node.getBoundingBox();
-    if (bb.height != 101 || bb.width != 99) throw "Fail getBoundingBox()";
+    var bb = node.boundingBox;
+    if (bb.height != 101 || bb.width != 99) throw "Fail boundingBox";
     ret.push(bb.height);
     ret.push(bb.width);
     return ret;

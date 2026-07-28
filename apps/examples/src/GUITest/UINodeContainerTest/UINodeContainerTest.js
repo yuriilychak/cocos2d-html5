@@ -44,7 +44,7 @@ export class UIWidgetAddNodeTest extends UIMainLayer {
 
       var sprite = new Sprite("ccs-res/cocosui/ccicon.png");
       sprite.x = 0;
-      sprite.y = sprite.getBoundingBox().height / 4;
+      sprite.y = sprite.boundingBox.height / 4;
       nodeContainer.addNode(sprite);
 
       return true;

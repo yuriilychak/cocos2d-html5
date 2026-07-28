@@ -166,11 +166,11 @@ export class MotionStreak extends Node {
 
   tintWithColor(color) {
     this.color = color;
-    var locColorPointer = this.#colorPointer;
-    for (var i = 0, len = this.#nuPoints * 2; i < len; i++) {
-      locColorPointer[i * 4] = color.r;
-      locColorPointer[i * 4 + 1] = color.g;
-      locColorPointer[i * 4 + 2] = color.b;
+    const len = this.#nuPoints * 2;
+    for (var i = 0; i < len; ++i) {
+      this.#colorPointer[i * 4] = color.r;
+      this.#colorPointer[i * 4 + 1] = color.g;
+      this.#colorPointer[i * 4 + 2] = color.b;
     }
   }
 
@@ -208,7 +208,9 @@ export class MotionStreak extends Node {
   }
 
   update(delta) {
-    if (!this.#startingPositionInitialized) return;
+    if (!this.#startingPositionInitialized) {
+      return;
+    }
 
     this._renderCmd._updateDisplayColor();
 
@@ -217,69 +219,63 @@ export class MotionStreak extends Node {
     var i, newIdx, newIdx2, i2;
     var mov = 0;
 
-    var locNuPoints = this.#nuPoints;
-    var locPointState = this.#pointState,
-      locPointVertexes = this.#pointVertexes,
-      locVertices = this.#vertices;
-    var locColorPointer = this.#colorPointer;
+    for (i = 0; i < this.#nuPoints; i++) {
+      this.#pointState[i] -= delta;
 
-    for (i = 0; i < locNuPoints; i++) {
-      locPointState[i] -= delta;
-
-      if (locPointState[i] <= 0) {
+      if (this.#pointState[i] <= 0) {
         mov++;
       } else {
         newIdx = i - mov;
         if (mov > 0) {
-          locPointState[newIdx] = locPointState[i];
-          locPointVertexes[newIdx * 2] = locPointVertexes[i * 2];
-          locPointVertexes[newIdx * 2 + 1] = locPointVertexes[i * 2 + 1];
+          this.#pointState[newIdx] = this.#pointState[i];
+          this.#pointVertexes[newIdx * 2] = this.#pointVertexes[i * 2];
+          this.#pointVertexes[newIdx * 2 + 1] = this.#pointVertexes[i * 2 + 1];
 
           i2 = i * 2;
           newIdx2 = newIdx * 2;
-          locVertices[newIdx2 * 2] = locVertices[i2 * 2];
-          locVertices[newIdx2 * 2 + 1] = locVertices[i2 * 2 + 1];
-          locVertices[(newIdx2 + 1) * 2] = locVertices[(i2 + 1) * 2];
-          locVertices[(newIdx2 + 1) * 2 + 1] = locVertices[(i2 + 1) * 2 + 1];
+          this.#vertices[newIdx2 * 2] = this.#vertices[i2 * 2];
+          this.#vertices[newIdx2 * 2 + 1] = this.#vertices[i2 * 2 + 1];
+          this.#vertices[(newIdx2 + 1) * 2] = this.#vertices[(i2 + 1) * 2];
+          this.#vertices[(newIdx2 + 1) * 2 + 1] = this.#vertices[(i2 + 1) * 2 + 1];
 
           i2 *= 4;
           newIdx2 *= 4;
-          locColorPointer[newIdx2 + 0] = locColorPointer[i2 + 0];
-          locColorPointer[newIdx2 + 1] = locColorPointer[i2 + 1];
-          locColorPointer[newIdx2 + 2] = locColorPointer[i2 + 2];
-          locColorPointer[newIdx2 + 4] = locColorPointer[i2 + 4];
-          locColorPointer[newIdx2 + 5] = locColorPointer[i2 + 5];
-          locColorPointer[newIdx2 + 6] = locColorPointer[i2 + 6];
+          this.#colorPointer[newIdx2 + 0] = this.#colorPointer[i2 + 0];
+          this.#colorPointer[newIdx2 + 1] = this.#colorPointer[i2 + 1];
+          this.#colorPointer[newIdx2 + 2] = this.#colorPointer[i2 + 2];
+          this.#colorPointer[newIdx2 + 4] = this.#colorPointer[i2 + 4];
+          this.#colorPointer[newIdx2 + 5] = this.#colorPointer[i2 + 5];
+          this.#colorPointer[newIdx2 + 6] = this.#colorPointer[i2 + 6];
         } else {
           newIdx2 = newIdx * 8;
         }
 
-        var op = locPointState[newIdx] * 255.0;
-        locColorPointer[newIdx2 + 3] = op;
-        locColorPointer[newIdx2 + 7] = op;
+        var op = this.#pointState[newIdx] * 255.0;
+        this.#colorPointer[newIdx2 + 3] = op;
+        this.#colorPointer[newIdx2 + 7] = op;
       }
     }
-    locNuPoints -= mov;
+    this.#nuPoints -= mov;
 
     var appendNewPoint = true;
-    if (locNuPoints >= this.#maxPoints) {
+    if (this.#nuPoints >= this.#maxPoints) {
       appendNewPoint = false;
-    } else if (locNuPoints > 0) {
+    } else if (this.#nuPoints > 0) {
       var a1 =
         Point.distanceSQ(
           new Point(
-            locPointVertexes[(locNuPoints - 1) * 2],
-            locPointVertexes[(locNuPoints - 1) * 2 + 1]
+            this.#pointVertexes[(this.#nuPoints - 1) * 2],
+            this.#pointVertexes[(this.#nuPoints - 1) * 2 + 1]
           ),
           this.#positionR
         ) < this.#minSeg;
       var a2 =
-        locNuPoints === 1
+        this.#nuPoints === 1
           ? false
           : Point.distanceSQ(
               new Point(
-                locPointVertexes[(locNuPoints - 2) * 2],
-                locPointVertexes[(locNuPoints - 2) * 2 + 1]
+                this.#pointVertexes[(this.#nuPoints - 2) * 2],
+                this.#pointVertexes[(this.#nuPoints - 2) * 2 + 1]
               ),
               this.#positionR
             ) <
@@ -288,64 +284,64 @@ export class MotionStreak extends Node {
     }
 
     if (appendNewPoint) {
-      locPointVertexes[locNuPoints * 2] = this.#positionR.x;
-      locPointVertexes[locNuPoints * 2 + 1] = this.#positionR.y;
-      locPointState[locNuPoints] = 1.0;
+      this.#pointVertexes[this.#nuPoints * 2] = this.#positionR.x;
+      this.#pointVertexes[this.#nuPoints * 2 + 1] = this.#positionR.y;
+      this.#pointState[this.#nuPoints] = 1.0;
 
-      var offset = locNuPoints * 8;
+      var offset = this.#nuPoints * 8;
       var locDisplayedColor = this.getDisplayedColor();
-      locColorPointer[offset] = locDisplayedColor.r;
-      locColorPointer[offset + 1] = locDisplayedColor.g;
-      locColorPointer[offset + 2] = locDisplayedColor.b;
-      locColorPointer[offset + 4] = locDisplayedColor.r;
-      locColorPointer[offset + 5] = locDisplayedColor.g;
-      locColorPointer[offset + 6] = locDisplayedColor.b;
-      locColorPointer[offset + 3] = 255;
-      locColorPointer[offset + 7] = 255;
+      this.#colorPointer[offset] = locDisplayedColor.r;
+      this.#colorPointer[offset + 1] = locDisplayedColor.g;
+      this.#colorPointer[offset + 2] = locDisplayedColor.b;
+      this.#colorPointer[offset + 4] = locDisplayedColor.r;
+      this.#colorPointer[offset + 5] = locDisplayedColor.g;
+      this.#colorPointer[offset + 6] = locDisplayedColor.b;
+      this.#colorPointer[offset + 3] = 255;
+      this.#colorPointer[offset + 7] = 255;
 
-      if (locNuPoints > 0 && this.#fastMode) {
-        if (locNuPoints > 1)
+      if (this.#nuPoints > 0 && this.#fastMode) {
+        if (this.#nuPoints > 1)
           vertexLineToPolygon(
-            locPointVertexes,
+            this.#pointVertexes,
             this.#stroke,
             this.#vertices,
-            locNuPoints,
+            this.#nuPoints,
             1
           );
         else
           vertexLineToPolygon(
-            locPointVertexes,
+            this.#pointVertexes,
             this.#stroke,
             this.#vertices,
             0,
             2
           );
       }
-      locNuPoints++;
+      this.#nuPoints++;
     }
 
     if (!this.#fastMode)
       vertexLineToPolygon(
-        locPointVertexes,
+        this.#pointVertexes,
         this.#stroke,
         this.#vertices,
         0,
-        locNuPoints
+        this.#nuPoints
       );
 
-    if (locNuPoints && this.#previousNuPoints !== locNuPoints) {
-      var texDelta = 1.0 / locNuPoints;
+    if (this.#nuPoints && this.#previousNuPoints !== this.#nuPoints) {
+      var texDelta = 1.0 / this.#nuPoints;
       var locTexCoords = this.#texCoords;
-      for (i = 0; i < locNuPoints; i++) {
+      for (i = 0; i < this.#nuPoints; i++) {
         locTexCoords[i * 4] = 0;
         locTexCoords[i * 4 + 1] = texDelta * i;
         locTexCoords[(i * 2 + 1) * 2] = 1;
         locTexCoords[(i * 2 + 1) * 2 + 1] = texDelta * i;
       }
-      this.#previousNuPoints = locNuPoints;
+      this.#previousNuPoints = this.#nuPoints;
     }
 
-    this.#nuPoints = locNuPoints;
+    this.#nuPoints = this.#nuPoints;
   }
 
   _createRenderCmd() {

@@ -302,9 +302,8 @@ export class RenderCmd {
     return this._transform;
   }
 
-  visit(parentCmd) {
-    const node = this._node,
-      renderer = ServiceLocator.sys.rendererConfig.renderer;
+  visit(parentCmd, renderer = ServiceLocator.sys.rendererConfig.renderer) {
+    const node = this._node;
 
     parentCmd = parentCmd || this.getParentRenderCmd();
     if (parentCmd) this._curLevel = parentCmd._curLevel + 1;

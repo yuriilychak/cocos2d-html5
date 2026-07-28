@@ -73,8 +73,8 @@ export class TileDemo extends BaseTestLayer {
           onMouseMove: function (event) {
             if (event.button == MouseButton.LEFT) {
               var node = event.currentTarget.getChildByTag(TAG_TILE_MAP);
-              node.x += event.getDeltaX();
-              node.y += event.getDeltaY();
+              node.x += event.deltaX;
+              node.y += event.deltaY;
             }
           }
         },

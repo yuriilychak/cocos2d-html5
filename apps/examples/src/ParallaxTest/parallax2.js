@@ -70,8 +70,8 @@ export class Parallax2 extends ParallaxDemo {
           onMouseMove: function (event) {
             if (event.button == MouseButton.LEFT) {
               var node = event.currentTarget.getChildByTag(TAG_NODE);
-              node.x += event.getDeltaX();
-              node.y += event.getDeltaY();
+              node.x += event.deltaX;
+              node.y += event.deltaY;
             }
           }
         },
