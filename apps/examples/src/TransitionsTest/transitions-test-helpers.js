@@ -94,12 +94,12 @@ export function CCTransitionRadialCW(t, s) {
 }
 
 export function PageTransitionForward(t, s) {
-  ServiceLocator.eglView.rendererDelegate.setDepthTest(true);
+  ServiceLocator.eglView.rendererDelegate.depthTest = true;
   return new TransitionPageTurn(t, s, false);
 }
 
 export function PageTransitionBackward(t, s) {
-  ServiceLocator.eglView.rendererDelegate.setDepthTest(true);
+  ServiceLocator.eglView.rendererDelegate.depthTest = true;
   return new TransitionPageTurn(t, s, true);
 }
 

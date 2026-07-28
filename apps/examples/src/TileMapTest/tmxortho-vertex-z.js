@@ -96,11 +96,11 @@ export class TMXOrthoVertexZ extends TMXFixBugLayer {
   onEnter() {
     super.onEnter();
     ServiceLocator.eglView.rendererDelegate.projection = DirectorProjection.TWO_D;
-    ServiceLocator.eglView.rendererDelegate.setDepthTest(true);
+    ServiceLocator.eglView.rendererDelegate.depthTest = true;
   }
   onExit() {
     ServiceLocator.eglView.rendererDelegate.projection = DirectorProjection.DEFAULT;
-    ServiceLocator.eglView.rendererDelegate.setDepthTest(false);
+    ServiceLocator.eglView.rendererDelegate.depthTest = false;
     super.onExit();
   }
   repositionSprite(dt) {

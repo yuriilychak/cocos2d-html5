@@ -40,7 +40,7 @@ export class TransitionsTestScene extends TestScene {
 
   onEnter() {
     super.onEnter();
-    ServiceLocator.eglView.rendererDelegate.setDepthTest(false);
+    ServiceLocator.eglView.rendererDelegate.depthTest = false;
   }
   runThisTest() {
     var layer = new TestLayer1();

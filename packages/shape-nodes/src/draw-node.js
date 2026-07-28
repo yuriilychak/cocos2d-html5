@@ -96,7 +96,7 @@ export class DrawNode extends Node {
    * @returns {Color}
    */
   getDrawColor() {
-    return color(
+    return new Color(
       this._drawColor.r,
       this._drawColor.g,
       this._drawColor.b,
