@@ -190,7 +190,7 @@ export class ScrollView extends Layout {
     }
 
     var i,
-      children = this.children,
+      children = super.children,
       len = children.length,
       child;
     var j,

@@ -482,6 +482,10 @@ export class Text extends Widget {
     this._labelRenderer.color = color;
   }
 
+  get color() {
+    return super.color;
+  }
+
   setTextColor(color) {
     this._labelRenderer.setFontFillColor(color);
   }
