@@ -231,4 +231,10 @@ export default class RendererWebGL extends RendererBase<RenderCommand> {
 
     return RendererWebGL.#batchedInfo.rendering(context, locCmds);
   }
+
+  get clearFillStyle(): string {
+    return '';
+  }
+
+  set clearFillStyle(_value: string) {}
 }

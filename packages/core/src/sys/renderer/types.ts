@@ -44,4 +44,5 @@ export interface RendererInterface {
   assignedZStep: number;
   allNeedDraw: boolean;
   clearColor: Color;
+  clearFillStyle: string;
 }

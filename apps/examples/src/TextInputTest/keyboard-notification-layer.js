@@ -147,7 +147,7 @@ export class KeyboardNotificationLayer extends TextInputTest {
     if (!target._trackNode) return;
 
     // decide the trackNode is clicked.
-    log("KeyboardNotificationLayer:clickedAt(" + touch.x + "," + touch.y + ")");
+    log("KeyboardNotificationLayer:clickedAt(" + event.x + "," + event.y + ")");
 
     var rect = textInputGetRect(target._trackNode);
     log(
@@ -162,7 +162,7 @@ export class KeyboardNotificationLayer extends TextInputTest {
         ")"
     );
 
-    target.onClickTrackNode(Rect.containsPoint(rect, touch));
+    target.onClickTrackNode(Rect.containsPoint(rect, event));
     log("----------------------------------");
   }
 }

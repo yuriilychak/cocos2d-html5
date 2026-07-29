@@ -53,19 +53,19 @@ export class DictionaryToFromTest extends UnitTestBase {
     animCache.addAnimations(s_animations2Plist);
 
     var normal = animCache.get("dance_1");
-    var frame = normal.getFrames()[0];
-    var dict = frame.getUserInfo();
+    var frame = normal.frames[0];
+    var dict = frame.userInfo;
     this.log(JSON.stringify(dict));
-    frame.setUserInfo({
+    frame.userInfo = {
       array: [1, 2, 3, "hello world"],
       bool0: 0, // false  XXX
       bool1: 1, // true   XXX
       dict: { key1: "value1", key2: 2 },
       number: 42,
       string: "hello!"
-    });
+    };
 
-    dict = frame.getUserInfo();
+    dict = frame.userInfo;
     this.log(JSON.stringify(dict));
     return dict;
   }

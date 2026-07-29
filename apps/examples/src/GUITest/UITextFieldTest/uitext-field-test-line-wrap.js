@@ -104,6 +104,6 @@ export class UITextFieldTest_LineWrap extends UIMainLayer {
       default:
         break;
     }
-    this._bottomDisplayLabel.string = textField.getString();
+    this._bottomDisplayLabel.string = textField.string;
   }
 }

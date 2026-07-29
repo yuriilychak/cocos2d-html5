@@ -114,15 +114,25 @@ export class SocketIOTestLayer extends BaseTestLayer {
   }
   // Menu Callbacks
   onMenuSIOClientClicked(sender) {
-    // Check if SocketIO is available
-    if (!SocketIO) {
-      log(
-        "Socket.IO not available. Please include socket.io-client library."
-      );
-      this._sioClientStatus.string = "Socket.IO not available!";
+    // SocketIO is always available as a wrapper, but its browser client may
+    // still need to be loaded from the CDN.
+    if (!window.io) {
+      this._sioClientStatus.string = "Loading Socket.IO from CDN...";
+      SocketIO.loadAsync()
+        .then(() => {
+          this._doSocketIOClientConnection();
+        })
+        .catch((error) => {
+          log("Failed to load Socket.IO: " + error.message);
+          this._sioClientStatus.string = "Failed to load Socket.IO!";
+        });
       return;
     }
 
+    this._doSocketIOClientConnection();
+  }
+
+  _doSocketIOClientConnection() {
     //create a client by using this static method, url does not need to contain the protocol
     var sioclient = SocketIO.connect("ws://tools.itharbors.com:4000", {
       "force new connection": true

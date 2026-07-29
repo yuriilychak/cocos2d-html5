@@ -92,6 +92,6 @@ export class UITextFieldTest_TrueTypeFont extends UIMainLayer {
       default:
         break;
     }
-    this._bottomDisplayLabel.string = textField.getString();
+    this._bottomDisplayLabel.string = textField.string;
   }
 }

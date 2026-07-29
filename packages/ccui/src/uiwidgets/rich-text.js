@@ -167,7 +167,11 @@ export class RichText extends Widget {
    */
   constructor() {
     super();
+  }
+
+  _initRenderer() {
     this._formatTextDirty = false;
+    this._formatting = false;
     this._richElements = [];
     this._elementRenders = [];
     this._leftSpaceWidth = 0;
@@ -175,9 +179,6 @@ export class RichText extends Widget {
     this._lineBreakOnSpace = false;
     this._textHorizontalAlignment = TextAlignment.LEFT;
     this._textVerticalAlignment = VerticalTextAlignment.TOP;
-  }
-
-  _initRenderer() {
     this._elementRenderersContainer = new Node();
     this._elementRenderersContainer.anchorX = 0.5;
     this._elementRenderersContainer.anchorY = 0.5;
@@ -217,7 +218,8 @@ export class RichText extends Widget {
    * Formats the richText's content.
    */
   formatText() {
-    if (this._formatTextDirty) {
+    if (this._formatTextDirty && !this._formatting) {
+      this._formatting = true;
       this._elementRenderersContainer.removeAllChildren();
       this._elementRenders.length = 0;
       var i,
@@ -294,6 +296,7 @@ export class RichText extends Widget {
       }
       this.formatRenderers();
       this._formatTextDirty = false;
+      this._formatting = false;
     }
   }
 

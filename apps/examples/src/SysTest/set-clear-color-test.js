@@ -49,11 +49,11 @@ export class setClearColorTest extends SysTestBase {
     {
         super.onEnter();
         var clearColor = new Color(255, 0, 0, 0);
-        ServiceLocator.eglView.rendererDelegate.setClearColor(clearColor);
+        ServiceLocator.eglView.rendererDelegate.clearColor = clearColor;
     }
     onExit()
     {
-        ServiceLocator.eglView.rendererDelegate.setClearColor(new Color(0, 0, 0, 255));
+        ServiceLocator.eglView.rendererDelegate.clearColor = new Color(0, 0, 0, 255);
         super.onExit();
     }
 

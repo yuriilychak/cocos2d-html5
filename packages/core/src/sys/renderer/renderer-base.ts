@@ -92,6 +92,10 @@ export abstract class RendererBase<Command> implements RendererInterface {
     this.#clearColor.set(value);
   }
 
+  abstract get clearFillStyle(): string;
+
+  abstract set clearFillStyle(value: string);
+
   protected shouldUpdateDirtyNode(node: DirtyNode): boolean {
     return node._dirtyFlag !== 0;
   }

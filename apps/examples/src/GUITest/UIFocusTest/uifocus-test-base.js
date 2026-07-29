@@ -107,8 +107,8 @@ export class UIFocusTestBase extends UIMainLayer {
     if (widgetLostFocus && widgetGetFocus)
       log(
         "on focus change, %d widget get focus, %d widget lose focus",
-        widgetGetFocus.getTag(),
-        widgetLostFocus.getTag()
+        widgetGetFocus.tag,
+        widgetLostFocus.tag
       );
   }
 
