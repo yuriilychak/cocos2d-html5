@@ -35,7 +35,6 @@ import { ServiceLocator } from "../service-locator";
 export class Scene extends Node {
     constructor() {
         super();
-        this._className = "Scene";
         this.ignoreAnchorPointForPosition = true;
         this.anchorX = 0.5;
         this.anchorY = 0.5;

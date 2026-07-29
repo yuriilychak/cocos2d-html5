@@ -25,8 +25,8 @@ export abstract class RendererBase<Command> implements RendererInterface {
 
   abstract setDepthTest(on: boolean): void;
 
-  getRenderCmd(renderableObject: { _createRenderCmd(): unknown }): unknown {
-    return renderableObject._createRenderCmd();
+  getRenderCmd(renderableObject: { createRenderCmd(): unknown }): unknown {
+    return renderableObject.createRenderCmd();
   }
 
   resetFlag(): void {

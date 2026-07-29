@@ -63,7 +63,6 @@ export class ListView extends ScrollView {
   _ccListViewEventCallback = null;
   _magneticAllowedOutOfBoundary = true;
   _magneticType = 0;
-  _className = "ListView";
 
   /**
    * allocates and initializes a UIListView.

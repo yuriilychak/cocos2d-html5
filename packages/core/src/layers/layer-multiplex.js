@@ -35,7 +35,6 @@ export class LayerMultiplex extends Layer {
         super();
         this._enabledLayer = 0;
         this._layers = null;
-        this._className = "LayerMultiplex";
 
         if (layers instanceof Array)
             LayerMultiplex.prototype.initWithLayers.call(this, layers);

@@ -298,7 +298,7 @@ export class Bone extends Node {
   updateColor() {
     var display = this._displayManager.getDisplayRenderNode();
     if (display !== null) {
-      var cmd = this._renderCmd;
+      var cmd = this.renderCmd;
       display.color = new Color(
         (cmd._displayedColor.r * this._tweenData.r) / 255,
         (cmd._displayedColor.g * this._tweenData.g) / 255,
@@ -687,7 +687,7 @@ export class Bone extends Node {
     return this.isIgnoreMovementBoneData();
   }
 
-  _createRenderCmd() {
+  createRenderCmd() {
     if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new Bone.CanvasRenderCmd(this);
     else return new Bone.WebGLRenderCmd(this);
@@ -704,7 +704,7 @@ class BoneCanvasRenderCmd extends Node.CanvasRenderCmd {
     var node = this._node;
     var display = node._displayManager.getDisplayRenderNode();
     if (display !== null) {
-      var displayCmd = display._renderCmd;
+      var displayCmd = display.renderCmd;
       display.color = this._displayedColor;
       display.opacity = this._displayedOpacity;
       displayCmd._syncDisplayColor(node._tweenData);
@@ -757,7 +757,7 @@ class BoneWebGLRenderCmd extends Node.WebGLRenderCmd {
     var node = this._node;
     var display = node._displayManager.getDisplayRenderNode();
     if (display !== null) {
-      var displayCmd = display._renderCmd;
+      var displayCmd = display.renderCmd;
       display.color = this._displayedColor;
       display.opacity = this._displayedOpacity;
       displayCmd._syncDisplayColor(node._tweenData);

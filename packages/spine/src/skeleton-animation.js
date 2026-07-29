@@ -121,11 +121,11 @@ export class SkeletonAnimation extends Skeleton {
     update(dt) {
         super.update(dt);
         dt *= this._timeScale;
-        this._renderCmd.setDirtyFlag(Node._dirtyFlags.contentDirty);
+        this.renderCmd.setDirtyFlag(Node._dirtyFlags.contentDirty);
         this._state.update(dt);
         this._state.apply(this._skeleton);
         this._skeleton.updateWorldTransform(Physics.update);
-        this._renderCmd._updateChild();
+        this.renderCmd._updateChild();
     }
 
     setStartListener(listener) { this._listener.startListener = listener; }

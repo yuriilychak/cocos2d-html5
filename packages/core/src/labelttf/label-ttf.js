@@ -98,7 +98,6 @@ export class LabelTTF extends Sprite {
     this._strokeShadowOffsetY = 0;
     this._needUpdateTexture = false;
     this._lineWidths = null;
-    this._className = "LabelTTF";
     this._fontStyle = "normal";
     this._fontWeight = "normal";
     this._lineHeight = "normal";
@@ -124,7 +123,7 @@ export class LabelTTF extends Sprite {
     this._needUpdateTexture = false;
 
     this._lineWidths = [];
-    this._renderCmd._setColorsString();
+    this.renderCmd._setColorsString();
     this._textureLoaded = true;
 
     if (fontName && fontName instanceof FontDefinition) {
@@ -176,15 +175,15 @@ export class LabelTTF extends Sprite {
     this._vAlignment = vAlignment;
 
     this._fontSize = fontSize;
-    this._renderCmd._setFontStyle(
+    this.renderCmd._setFontStyle(
       this._fontName,
       fontSize,
       this._fontStyle,
       this._fontWeight
     );
     this.string = strInfo;
-    this._renderCmd._setColorsString();
-    this._renderCmd._updateTexture();
+    this.renderCmd._setColorsString();
+    this.renderCmd._updateTexture();
     this._setUpdateTextureDirty();
 
     // Needed for high dpi text.
@@ -196,7 +195,7 @@ export class LabelTTF extends Sprite {
   }
   _setUpdateTextureDirty() {
     this._needUpdateTexture = true;
-    this._renderCmd.setDirtyFlag(Node._dirtyFlags.textDirty);
+    this.renderCmd.setDirtyFlag(Node._dirtyFlags.textDirty);
   }
 
   init() {
@@ -213,8 +212,8 @@ export class LabelTTF extends Sprite {
   }
   getLineHeight() {
     return !this._lineHeight || this._lineHeight.charAt
-      ? this._renderCmd._getFontClientHeight()
-      : this._lineHeight || this._renderCmd._getFontClientHeight();
+      ? this.renderCmd._getFontClientHeight()
+      : this._lineHeight || this.renderCmd._getFontClientHeight();
   }
   setLineHeight(lineHeight) {
     this._lineHeight = lineHeight;
@@ -329,7 +328,7 @@ export class LabelTTF extends Sprite {
     if (this._shadowOpacity !== shadowOpacity) {
       this._shadowOpacity = shadowOpacity;
     }
-    this._renderCmd._setColorsString();
+    this.renderCmd._setColorsString();
 
     if (this._shadowBlur !== shadowBlur) this._shadowBlur = shadowBlur;
     this._setUpdateTextureDirty();
@@ -395,7 +394,7 @@ export class LabelTTF extends Sprite {
 
     if (this._shadowOpacity !== shadowOpacity) {
       this._shadowOpacity = shadowOpacity;
-      this._renderCmd._setColorsString();
+      this.renderCmd._setColorsString();
       this._setUpdateTextureDirty();
     }
   }
@@ -436,7 +435,7 @@ export class LabelTTF extends Sprite {
       locStrokeColor.r = strokeColor.r;
       locStrokeColor.g = strokeColor.g;
       locStrokeColor.b = strokeColor.b;
-      this._renderCmd._setColorsString();
+      this.renderCmd._setColorsString();
     }
 
     if (this._strokeSize !== strokeSize) this._strokeSize = strokeSize || 0;
@@ -457,7 +456,7 @@ export class LabelTTF extends Sprite {
       locStrokeColor.r = strokeStyle.r;
       locStrokeColor.g = strokeStyle.g;
       locStrokeColor.b = strokeStyle.b;
-      this._renderCmd._setColorsString();
+      this.renderCmd._setColorsString();
       this._setUpdateTextureDirty();
     }
   }
@@ -495,7 +494,7 @@ export class LabelTTF extends Sprite {
       locTextFillColor.r = fillColor.r;
       locTextFillColor.g = fillColor.g;
       locTextFillColor.b = fillColor.b;
-      this._renderCmd._setColorsString();
+      this.renderCmd._setColorsString();
       this._needUpdateTexture = true;
     }
   }
@@ -521,7 +520,7 @@ export class LabelTTF extends Sprite {
     if (textDefinition.lineHeight) this._lineHeight = textDefinition.lineHeight;
     else this._lineHeight = this._fontSize;
 
-    this._renderCmd._setFontStyle(textDefinition);
+    this.renderCmd._setFontStyle(textDefinition);
 
     // shadow
     if (textDefinition.shadowEnabled)
@@ -539,9 +538,9 @@ export class LabelTTF extends Sprite {
     // fill color
     this.setFontFillColor(textDefinition.fillStyle);
 
-    if (mustUpdateTexture) this._renderCmd._updateTexture();
+    if (mustUpdateTexture) this.renderCmd._updateTexture();
     var flags = Node._dirtyFlags;
-    this._renderCmd.setDirtyFlag(
+    this.renderCmd.setDirtyFlag(
       flags.colorDirty | flags.opacityDirty | flags.textDirty
     );
   }
@@ -623,7 +622,7 @@ export class LabelTTF extends Sprite {
     var ratio = ServiceLocator.eglView.devicePixelRatio;
     super.scaleX = scale / ratio;
     super.scaleY = scale / ratio;
-    this._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
+    this.renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
   }
   /**
    * Returns the scale factor on X axis of this node
@@ -643,7 +642,7 @@ export class LabelTTF extends Sprite {
    */
   set scaleX(newScaleX) {
     super.scaleX = newScaleX / ServiceLocator.eglView.devicePixelRatio;
-    this._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
+    this.renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
   }
   /**
    * Returns the scale factor on Y axis of this node
@@ -663,7 +662,7 @@ export class LabelTTF extends Sprite {
    */
   set scaleY(newScaleY) {
     super.scaleY = newScaleY / ServiceLocator.eglView.devicePixelRatio;
-    this._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
+    this.renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
   }
   /*
    * END SCALE METHODS
@@ -683,7 +682,7 @@ export class LabelTTF extends Sprite {
 
       // Force update
       this._setUpdateTextureDirty();
-      this._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
+      this.renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
     }
   }
   _updateString() {
@@ -769,7 +768,7 @@ export class LabelTTF extends Sprite {
   setFontSize(fontSize) {
     if (this._fontSize !== fontSize) {
       this._fontSize = fontSize;
-      this._renderCmd._setFontStyle(
+      this.renderCmd._setFontStyle(
         this._fontName,
         this._fontSize,
         this._fontStyle,
@@ -786,7 +785,7 @@ export class LabelTTF extends Sprite {
   setFontName(fontName) {
     if (this._fontName && this._fontName !== fontName) {
       this._fontName = fontName;
-      this._renderCmd._setFontStyle(
+      this.renderCmd._setFontStyle(
         this._fontName,
         this._fontSize,
         this._fontStyle,
@@ -797,14 +796,14 @@ export class LabelTTF extends Sprite {
     }
   }
   _getFont() {
-    return this._renderCmd._getFontStyle();
+    return this.renderCmd._getFontStyle();
   }
   _setFont(fontStyle) {
     var res = LabelTTF._fontStyleRE.exec(fontStyle);
     if (res) {
       this._fontSize = parseInt(res[1]);
       this._fontName = res[2];
-      this._renderCmd._setFontStyle(
+      this.renderCmd._setFontStyle(
         this._fontName,
         this._fontSize,
         this._fontStyle,
@@ -820,7 +819,7 @@ export class LabelTTF extends Sprite {
    * @returns {Size} The content size
    */
   get contentSize() {
-    if (this._needUpdateTexture) this._renderCmd._updateTTF();
+    if (this._needUpdateTexture) this.renderCmd._updateTTF();
     var ratio = ServiceLocator.eglView.devicePixelRatio;
     return new Size(
       super.width / ratio,
@@ -833,14 +832,14 @@ export class LabelTTF extends Sprite {
   }
 
   get width() {
-    if (this._needUpdateTexture) this._renderCmd._updateTTF();
+    if (this._needUpdateTexture) this.renderCmd._updateTTF();
     return (
       super.width / ServiceLocator.eglView.devicePixelRatio
     );
   }
 
   get height() {
-    if (this._needUpdateTexture) this._renderCmd._updateTTF();
+    if (this._needUpdateTexture) this.renderCmd._updateTTF();
     return (
       super.height / ServiceLocator.eglView.devicePixelRatio
     );
@@ -855,7 +854,7 @@ export class LabelTTF extends Sprite {
     locRect.y = rect.y;
     locRect.width = rect.width;
     locRect.height = rect.height;
-    _t._renderCmd._setTextureCoords(rect, false);
+    _t.renderCmd._setTextureCoords(rect, false);
 
     var relativeOffsetX = _t._unflippedOffsetPositionFromCenter.x,
       relativeOffsetY = _t._unflippedOffsetPositionFromCenter.y;
@@ -871,7 +870,7 @@ export class LabelTTF extends Sprite {
   setDrawMode(onCacheMode) {
     this._onCacheCanvasMode = onCacheMode;
   }
-  _createRenderCmd() {
+  createRenderCmd() {
     if (ServiceLocator.sys.rendererConfig.isWebGL)
       return new LabelTTF.WebGLRenderCmd(this);
     else if (this._onCacheCanvasMode)
@@ -882,7 +881,7 @@ export class LabelTTF extends Sprite {
   _setFontStyle(fontStyle) {
     if (this._fontStyle !== fontStyle) {
       this._fontStyle = fontStyle;
-      this._renderCmd._setFontStyle(
+      this.renderCmd._setFontStyle(
         this._fontName,
         this._fontSize,
         this._fontStyle,
@@ -897,7 +896,7 @@ export class LabelTTF extends Sprite {
   _setFontWeight(fontWeight) {
     if (this._fontWeight !== fontWeight) {
       this._fontWeight = fontWeight;
-      this._renderCmd._setFontStyle(
+      this.renderCmd._setFontStyle(
         this._fontName,
         this._fontSize,
         this._fontStyle,

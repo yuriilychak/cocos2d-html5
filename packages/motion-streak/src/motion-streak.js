@@ -42,7 +42,6 @@ export class MotionStreak extends Node {
   #verticesBuffer = null;
   #colorPointerBuffer = null;
   #texCoordsBuffer = null;
-  _className = "MotionStreak";
 
   constructor(fade, minSeg, stroke, color, texture) {
     super();
@@ -212,7 +211,7 @@ export class MotionStreak extends Node {
       return;
     }
 
-    this._renderCmd._updateDisplayColor();
+    this.renderCmd._updateDisplayColor();
 
     delta *= this.#fadeDelta;
 
@@ -344,7 +343,7 @@ export class MotionStreak extends Node {
     this.#nuPoints = this.#nuPoints;
   }
 
-  _createRenderCmd() {
+  createRenderCmd() {
     return ServiceLocator.sys.rendererConfig.isWebGL
       ? new MotionStreak.WebGLRenderCmd(this)
       : null; // MotionStreak doesn't support Canvas mode

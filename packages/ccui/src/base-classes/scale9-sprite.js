@@ -57,7 +57,7 @@ var simpleQuadGenerator = {
     isTrimmedContentSize
   ) {
     var vertices = sprite._vertices,
-      wt = sprite._renderCmd._worldTransform,
+      wt = sprite.renderCmd._worldTransform,
       l,
       b,
       r,
@@ -181,7 +181,7 @@ var scale9QuadGenerator = {
     insetBottom
   ) {
     var vertices = sprite._vertices;
-    var wt = sprite._renderCmd._worldTransform;
+    var wt = sprite.renderCmd._worldTransform;
     var leftWidth, centerWidth, rightWidth;
     var topHeight, centerHeight, bottomHeight;
     var rect = spriteFrame.rect;
@@ -365,11 +365,10 @@ export class Scale9Sprite extends EventHelper(Node) {
 
     this._flippedX = false;
     this._flippedY = false;
-    this._className = "Scale9Sprite";
 
     this._loader = new Sprite.LoadManager();
 
-    this._renderCmd.setState(this._brightState);
+    this.renderCmd.setState(this._brightState);
     this._blendFunc = BlendFunc.ALPHA_PREMULTIPLIED;
     this.anchorX = 0.5;
     this.anchorY = 0.5;
@@ -633,7 +632,7 @@ export class Scale9Sprite extends EventHelper(Node) {
   set opacityModifyRGB(value) {
     if (this.#opacityModifyRGB !== value) {
       this.#opacityModifyRGB = value;
-      this._renderCmd._setColorDirty();
+      this.renderCmd._setColorDirty();
     }
   }
 
@@ -652,7 +651,7 @@ export class Scale9Sprite extends EventHelper(Node) {
           self.contentSize = self._spriteFrame.rect;
         }
         self._textureLoaded = true;
-        self._renderCmd.setDirtyFlag(Node._dirtyFlags.contentDirty);
+        self.renderCmd.setDirtyFlag(Node._dirtyFlags.contentDirty);
         ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty = true;
       };
       self._textureLoaded = spriteFrame.textureLoaded;
@@ -680,7 +679,7 @@ export class Scale9Sprite extends EventHelper(Node) {
       this._blendFunc.src = blendFunc || GLState.BLEND_SRC;
       this._blendFunc.dst = dst || GLState.BLEND_DST;
     }
-    this._renderCmd.setDirtyFlag(Node._dirtyFlags.contentDirty);
+    this.renderCmd.setDirtyFlag(Node._dirtyFlags.contentDirty);
   }
 
   getBlendFunc() {
@@ -732,8 +731,8 @@ export class Scale9Sprite extends EventHelper(Node) {
 
   setState(state) {
     this._brightState = state;
-    this._renderCmd.setState(state);
-    this._renderCmd.setDirtyFlag(Node._dirtyFlags.contentDirty);
+    this.renderCmd.setState(state);
+    this.renderCmd.setDirtyFlag(Node._dirtyFlags.contentDirty);
   }
 
   getState() {
@@ -746,7 +745,7 @@ export class Scale9Sprite extends EventHelper(Node) {
     this._renderingType = type;
     this._quadsDirty = true;
     this._uvsDirty = true;
-    this._renderCmd.setDirtyFlag(Node._dirtyFlags.contentDirty);
+    this.renderCmd.setDirtyFlag(Node._dirtyFlags.contentDirty);
   }
 
   getRenderingType() {
@@ -757,7 +756,7 @@ export class Scale9Sprite extends EventHelper(Node) {
     this._insetLeft = insetLeft;
     this._quadsDirty = true;
     this._uvsDirty = true;
-    this._renderCmd.setDirtyFlag(Node._dirtyFlags.contentDirty);
+    this.renderCmd.setDirtyFlag(Node._dirtyFlags.contentDirty);
   }
 
   getInsetLeft() {
@@ -768,7 +767,7 @@ export class Scale9Sprite extends EventHelper(Node) {
     this._insetTop = insetTop;
     this._quadsDirty = true;
     this._uvsDirty = true;
-    this._renderCmd.setDirtyFlag(Node._dirtyFlags.contentDirty);
+    this.renderCmd.setDirtyFlag(Node._dirtyFlags.contentDirty);
   }
 
   getInsetTop() {
@@ -779,7 +778,7 @@ export class Scale9Sprite extends EventHelper(Node) {
     this._insetRight = insetRight;
     this._quadsDirty = true;
     this._uvsDirty = true;
-    this._renderCmd.setDirtyFlag(Node._dirtyFlags.contentDirty);
+    this.renderCmd.setDirtyFlag(Node._dirtyFlags.contentDirty);
   }
 
   getInsetRight() {
@@ -790,7 +789,7 @@ export class Scale9Sprite extends EventHelper(Node) {
     this._insetBottom = insetBottom;
     this._quadsDirty = true;
     this._uvsDirty = true;
-    this._renderCmd.setDirtyFlag(Node._dirtyFlags.contentDirty);
+    this.renderCmd.setDirtyFlag(Node._dirtyFlags.contentDirty);
   }
 
   getInsetBottom() {
@@ -836,7 +835,7 @@ export class Scale9Sprite extends EventHelper(Node) {
     this._uvsDirty = false;
   }
 
-  _createRenderCmd() {
+  createRenderCmd() {
     if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new this.constructor.CanvasRenderCmd(this);
     else return new this.constructor.WebGLRenderCmd(this);

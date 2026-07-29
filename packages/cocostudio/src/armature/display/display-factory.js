@@ -83,7 +83,7 @@ export const displayFactory = {
         switch (bone.getDisplayRenderNodeType()) {
             case DISPLAY_TYPE_SPRITE:
                 if (dirty) {
-                    display._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
+                    display.renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
                     display.updateArmatureTransform();
                 }
                 break;

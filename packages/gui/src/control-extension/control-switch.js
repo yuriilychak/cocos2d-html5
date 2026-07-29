@@ -14,7 +14,6 @@ export class ControlSwitch extends Control {
   _offProgress = null;
   _thumb = null;
   _background = null;
-  _className = "SwitchComponent";
 
   constructor(width, height, maskSprite, onSprite, offSprite, thumbSprite) {
     super();

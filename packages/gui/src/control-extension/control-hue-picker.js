@@ -8,7 +8,6 @@ export class ControlHuePicker extends Control {
     _background = null;
     _slider = null;
     _startPos = null;
-    _className = "ControlHuePicker";
 
     constructor(target, pos) {
         super();

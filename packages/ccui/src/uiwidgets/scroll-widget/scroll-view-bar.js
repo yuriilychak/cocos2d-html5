@@ -55,7 +55,6 @@ export class ScrollViewBar extends ProtectedNode {
     _autoHideEnabled = true;
     autoHideTime = 0;
     _autoHideRemainingTime = 0;
-    _className = "ScrollViewBar";
 
     _thumbSprite = null;
     _thumbTextureFile = null;

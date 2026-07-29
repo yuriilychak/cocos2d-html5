@@ -66,7 +66,6 @@ export class SpriteBatchNode extends Node {
     this._blendFunc = null;
     // all descendants: chlidren, gran children, etc...
     this._texture = null;
-    this._className = "SpriteBatchNode";
     this._blendFunc = new BlendFunc(GLState.BLEND_SRC, GLState.BLEND_DST);
 
     var texture2D;
@@ -119,7 +118,7 @@ export class SpriteBatchNode extends Node {
    * @param {Boolean} doCleanup
    */
   removeChildAtIndex(index, doCleanup) {
-    this.removeChild(this._children[index], doCleanup);
+    this.removeChild(this.children[index], doCleanup);
   }
 
   /**
@@ -162,7 +161,7 @@ export class SpriteBatchNode extends Node {
     //
     sprite.dirty = true;
     // UpdateTransform updates the textureAtlas quad
-    sprite._renderCmd.transform(this._renderCmd, true);
+    sprite.renderCmd.transform(this.renderCmd, true);
   }
 
   /**
@@ -173,7 +172,7 @@ export class SpriteBatchNode extends Node {
   appendChild(sprite) {
     this.sortAllChildren();
     var lastLocalZOrder =
-      this._children[this._children.length - 1].localZOrder;
+      this.children[this.children.length - 1].localZOrder;
     this.addChild(sprite.lastLocalZOrder + 1);
   }
 
@@ -208,7 +207,7 @@ export class SpriteBatchNode extends Node {
 
     if (texture.loaded) {
       var i,
-        children = this._children,
+        children = this.children,
         len = children.length;
       for (i = 0; i < len; ++i) {
         children[i].setTexture(texture);
@@ -218,7 +217,7 @@ export class SpriteBatchNode extends Node {
         "load",
         function () {
           var i,
-            children = this._children,
+            children = this.children,
             len = children.length;
           for (i = 0; i < len; ++i) {
             children[i].setTexture(texture);
@@ -230,9 +229,9 @@ export class SpriteBatchNode extends Node {
   }
 
   set shaderProgram(newShaderProgram) {
-    this._renderCmd.setShaderProgram(newShaderProgram);
+    this.renderCmd.setShaderProgram(newShaderProgram);
     var i,
-      children = this._children,
+      children = this.children,
       len = children.length;
     for (i = 0; i < len; ++i) {
       children[i].shaderProgram = newShaderProgram;
@@ -257,8 +256,8 @@ export class SpriteBatchNode extends Node {
     super.addChild(child, zOrder, tag);
 
     // Apply shader
-    if (this._renderCmd._shaderProgram) {
-      child.shaderProgram = this._renderCmd._shaderProgram;
+    if (this.renderCmd._shaderProgram) {
+      child.shaderProgram = this.renderCmd._shaderProgram;
     }
   }
 
@@ -283,6 +282,6 @@ export class SpriteBatchNode extends Node {
   }
 
   get shaderProgram() {
-    return this._renderCmd.getShaderProgram();
+    return this.renderCmd.getShaderProgram();
   }
 }

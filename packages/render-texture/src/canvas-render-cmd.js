@@ -105,7 +105,7 @@ export class RenderTextureCanvasRenderCmd extends Node.CanvasRenderCmd {
       scale,
       scale
     );
-    const spriteRenderCmd = node.sprite._renderCmd;
+    const spriteRenderCmd = node.sprite.renderCmd;
     spriteRenderCmd._notifyRegionStatus &&
       spriteRenderCmd._notifyRegionStatus(
         RenderTextureCanvasRenderCmd.RegionStatus.Dirty

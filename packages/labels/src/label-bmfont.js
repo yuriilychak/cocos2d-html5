@@ -48,9 +48,8 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
   _fontSize = 0;
 
   _textureLoaded = false;
-  _className = "LabelBMFont";
 
-  _createRenderCmd() {
+  createRenderCmd() {
     if (RendererConfig.isWebGL) return new LabelBMFont.WebGLRenderCmd(this);
     else return new LabelBMFont.CanvasRenderCmd(this);
   }
@@ -81,7 +80,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
       this._initialString = newString;
     }
 
-    var locChildren = this._children;
+    var locChildren = this.children;
     if (locChildren) {
       for (var i = 0; i < locChildren.length; i++) {
         var selNode = locChildren[i];
@@ -144,7 +143,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
    */
   set opacityModifyRGB(opacityModifyRGB) {
     this.#opacityModifyRGB = opacityModifyRGB;
-    var locChildren = this._children;
+    var locChildren = this.children;
     if (locChildren) {
       for (var i = 0; i < locChildren.length; i++) {
         var node = locChildren[i];
@@ -154,7 +153,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
   }
 
   _changeTextureColor() {
-    this._renderCmd._changeTextureColor();
+    this.renderCmd._changeTextureColor();
   }
 
   /**
@@ -258,7 +257,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
     var stringLen = locStr ? locStr.length : 0;
 
     var self = this;
-    var cmd = this._renderCmd;
+    var cmd = this.renderCmd;
     var locTexture = cmd._texture || this._texture;
 
     var nextFontPositionX = 0;
@@ -400,7 +399,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
    */
   updateString(fromUpdate) {
     var self = this;
-    var locChildren = self._children;
+    var locChildren = self.children;
     if (locChildren) {
       var length = locChildren.length;
       for (var i = 0, li = length; i < li; i++) {
@@ -803,7 +802,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
 
   setTexture(texture) {
     this._texture = texture;
-    this._renderCmd.setTexture(texture);
+    this.renderCmd.setTexture(texture);
   }
 
   get anchor() {

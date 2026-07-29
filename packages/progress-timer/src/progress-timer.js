@@ -28,7 +28,6 @@ export class ProgressTimer extends Node {
   _midPoint = null;
   _barChangeRate = null;
   _reverseDirection = false;
-  _className = "ProgressTimer";
 
   /**
    * Constructor of ProgressTimer
@@ -87,14 +86,14 @@ export class ProgressTimer extends Node {
   onEnter() {
     super.onEnter();
     if (ServiceLocator.sys.rendererConfig.isWebGL) {
-      this._renderCmd.initCmd();
-      this._renderCmd._updateProgress();
+      this.renderCmd.initCmd();
+      this.renderCmd._updateProgress();
     }
   }
 
   cleanup() {
     if (ServiceLocator.sys.rendererConfig.isWebGL) {
-      this._renderCmd.releaseData();
+      this.renderCmd.releaseData();
     }
     super.cleanup();
   }
@@ -175,7 +174,7 @@ export class ProgressTimer extends Node {
   setPercentage(percentage) {
     if (this._percentage !== percentage) {
       this._percentage = Point.clampf(percentage, 0, 100);
-      this._renderCmd._updateProgress();
+      this.renderCmd._updateProgress();
     }
   }
 
@@ -207,7 +206,7 @@ export class ProgressTimer extends Node {
    */
   set color(color) {
     this._sprite.color = color;
-    this._renderCmd.setDirtyFlag(Node._dirtyFlags.colorDirty);
+    this.renderCmd.setDirtyFlag(Node._dirtyFlags.colorDirty);
   }
 
   /**
@@ -232,7 +231,7 @@ export class ProgressTimer extends Node {
    */
   set opacity(opacity) {
     this._sprite.opacity = opacity;
-    this._renderCmd.setDirtyFlag(Node._dirtyFlags.opacityDirty);
+    this.renderCmd.setDirtyFlag(Node._dirtyFlags.opacityDirty);
   }
 
   /**
@@ -242,7 +241,7 @@ export class ProgressTimer extends Node {
   setReverseProgress(reverse) {
     if (this._reverseDirection !== reverse) {
       this._reverseDirection = reverse;
-      this._renderCmd.resetVertexData();
+      this.renderCmd.resetVertexData();
     }
   }
 
@@ -261,7 +260,7 @@ export class ProgressTimer extends Node {
         this.width = 0;
         this.height = 0;
       }
-      this._renderCmd.resetVertexData();
+      this.renderCmd.resetVertexData();
     }
   }
 
@@ -272,7 +271,7 @@ export class ProgressTimer extends Node {
   setType(type) {
     if (type !== this._type) {
       this._type = type;
-      this._renderCmd.resetVertexData();
+      this.renderCmd.resetVertexData();
     }
   }
 
@@ -283,7 +282,7 @@ export class ProgressTimer extends Node {
   setReverseDirection(reverse) {
     if (this._reverseDirection !== reverse) {
       this._reverseDirection = reverse;
-      this._renderCmd.resetVertexData();
+      this.renderCmd.resetVertexData();
     }
   }
 
@@ -302,11 +301,11 @@ export class ProgressTimer extends Node {
     this.midPoint = new Point(0.5, 0.5);
     this.barChangeRate = new Point(1, 1);
     this.sprite = sprite;
-    this._renderCmd.resetVertexData();
+    this.renderCmd.resetVertexData();
     return true;
   }
 
-  _createRenderCmd() {
+  createRenderCmd() {
     if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new this.constructor.CanvasRenderCmd(this);
     else return new this.constructor.WebGLRenderCmd(this);

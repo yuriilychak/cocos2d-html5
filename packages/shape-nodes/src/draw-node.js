@@ -31,10 +31,10 @@ export class DrawNode extends Node {
     Object.getOwnPropertyNames(proto).forEach((name) => {
       if (name !== "constructor") DrawNode.prototype[name] = proto[name];
     });
-    // The Node constructor already called _createRenderCmd() before this mixin
+    // The Node constructor already called createRenderCmd() before this mixin
     // was installed, so the first instance got a wrong render cmd. Recreate it
-    // now that _createRenderCmd is properly set from the mixin.
-    this._renderCmd = this._createRenderCmd();
+    // now that createRenderCmd is properly set from the mixin.
+    this.renderCmd = this.createRenderCmd();
     // DrawNode.prototype._initDrawNode is now the renderer's version;
     // call it explicitly so this first instance is also fully initialized.
     Renderer.prototype._initDrawNode.apply(this, arguments);

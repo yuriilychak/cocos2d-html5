@@ -80,7 +80,6 @@ export class AtlasNode extends EventHelper(Node) {
 
     // This variable is only used for LabelAtlas FPS display. So plz don't modify its value.
     this._ignoreContentScaleFactor = false;
-    this._className = "AtlasNode";
 
     this._texture = null;
     this._textureForCanvas = null;
@@ -91,10 +90,10 @@ export class AtlasNode extends EventHelper(Node) {
       this.initWithTileFile(tile, tileWidth, tileHeight, itemsToRender);
   }
 
-  _createRenderCmd() {
+  createRenderCmd() {
     if (ServiceLocator.sys.rendererConfig.isCanvas)
-      this._renderCmd = new AtlasNode.CanvasRenderCmd(this);
-    else this._renderCmd = new AtlasNode.WebGLRenderCmd(this);
+      return new AtlasNode.CanvasRenderCmd(this);
+    return new AtlasNode.WebGLRenderCmd(this);
   }
 
   /**
@@ -113,7 +112,7 @@ export class AtlasNode extends EventHelper(Node) {
    */
   get color() {
     return this.#opacityModifyRGB
-      ? this._renderCmd._colorUnmodified
+      ? this.renderCmd._colorUnmodified
       : super.color;
   }
 
@@ -221,7 +220,7 @@ export class AtlasNode extends EventHelper(Node) {
    * @return {Boolean}
    */
   initWithTexture(texture, tileWidth, tileHeight, itemsToRender) {
-    return this._renderCmd.initWithTexture(
+    return this.renderCmd.initWithTexture(
       texture,
       tileWidth,
       tileHeight,
@@ -235,7 +234,7 @@ export class AtlasNode extends EventHelper(Node) {
    * @param {Color} color Color object created with color(r, g, b).
    */
   set color(color) {
-    this._renderCmd.color = color;
+    this.renderCmd.color = color;
   }
 
   /**
@@ -244,7 +243,7 @@ export class AtlasNode extends EventHelper(Node) {
    * @param {Number} opacity The opacity value
    */
   set opacity(opacity) {
-    this._renderCmd.opacity = opacity;
+    this.renderCmd.opacity = opacity;
   }
 
   /**

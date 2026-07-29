@@ -77,7 +77,7 @@ class BoneNode extends Node {
     this._noMVPVertices = null;
     // null
     // length
-    // _isRackShow -> _renderCmd._debug
+    // _isRackShow -> renderCmd._debug
     if (this._squareVertices === null)
       this._squareVertices = [
         { x: 0, y: 0 },
@@ -99,7 +99,7 @@ class BoneNode extends Node {
   }
 
   visit(parent) {
-    this._visit && this._visit(parent && parent._renderCmd);
+    this._visit && this._visit(parent && parent.renderCmd);
   }
 
   addSkin(skin, display, hideOthers /*false*/) {
@@ -204,7 +204,7 @@ class BoneNode extends Node {
   }
 
   removeChild(child, cleanup) {
-    if (this._children.indexOf(child) !== -1) {
+    if (this.children.indexOf(child) !== -1) {
       super.removeChild(child, cleanup);
       this._removeFromChildrenListHelper(child);
     }
@@ -245,7 +245,7 @@ class BoneNode extends Node {
   }
 
   setDebugDrawEnabled(isDebugDraw) {
-    var renderCmd = this._renderCmd;
+    var renderCmd = this.renderCmd;
     if (renderCmd._debug === isDebugDraw) return;
 
     renderCmd._debug = isDebugDraw;
@@ -258,7 +258,7 @@ class BoneNode extends Node {
   }
 
   isDebugDrawEnabled() {
-    return this._renderCmd._debug;
+    return this.renderCmd._debug;
   }
 
   setDebugDrawColor(color) {
@@ -279,9 +279,9 @@ class BoneNode extends Node {
 
     var displayRect = type.rect(0, 0, 0, 0);
     if (
-      this._renderCmd._debug &&
+      this.renderCmd._debug &&
       this._rootSkeleton != null &&
-      this._rootSkeleton._renderCmd._debug
+      this._rootSkeleton.renderCmd._debug
     ) {
       maxx = this._rackWidth;
       maxy = this._rackLength;
@@ -487,7 +487,7 @@ class BoneNode extends Node {
   }
 
   _visitSkins() {
-    var cmd = this._renderCmd;
+    var cmd = this.renderCmd;
     // quick return if not visible
     if (!this.visible) return;
 
@@ -498,7 +498,7 @@ class BoneNode extends Node {
     var i,
       children = this._boneSkins,
       child;
-    //var i, children = this._children, child;
+    //var i, children = this.children, child;
     cmd._syncStatus(parentCmd);
     var len = children.length;
     if (len > 0) {
@@ -564,7 +564,7 @@ class BoneNode extends Node {
 
   _updateVertices() {
     var squareVertices = this._squareVertices,
-      anchorPointInPoints = this._renderCmd._anchorPointInPoints;
+      anchorPointInPoints = this.renderCmd._anchorPointInPoints;
     if (
       this._rackLength != squareVertices[2].x - anchorPointInPoints.x ||
       squareVertices[3].y != this._rackWidth / 2 - anchorPointInPoints.y
@@ -580,11 +580,11 @@ class BoneNode extends Node {
         squareVertices[i].y += anchorPointInPoints.y;
       }
 
-      this._renderCmd.updateDebugPoint(squareVertices);
+      this.renderCmd.updateDebugPoint(squareVertices);
     }
   }
 
-  _createRenderCmd() {
+  createRenderCmd() {
     if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new BoneNodeCanvasCmd(this);
     else return new BoneNodeWebGLCmd(this);
@@ -607,8 +607,8 @@ class BoneNodeCanvasCmd extends Node.CanvasRenderCmd {
   transform(parentCmd, recursive) {
     var rootSkeleton = this._node._rootSkeleton;
     this.originTransform(parentCmd, recursive);
-    if (rootSkeleton && rootSkeleton._renderCmd._debug) {
-      this._drawNode._renderCmd.transform(this);
+    if (rootSkeleton && rootSkeleton.renderCmd._debug) {
+      this._drawNode.renderCmd.transform(this);
     }
   }
 }
@@ -629,8 +629,8 @@ class BoneNodeWebGLCmd extends Node.WebGLRenderCmd {
   transform(parentCmd, recursive) {
     var rootSkeleton = this._node._rootSkeleton;
     this.originTransform(parentCmd, recursive);
-    if (rootSkeleton && rootSkeleton._renderCmd._debug) {
-      this._drawNode._renderCmd.transform(this);
+    if (rootSkeleton && rootSkeleton.renderCmd._debug) {
+      this._drawNode.renderCmd.transform(this);
     }
   }
 }

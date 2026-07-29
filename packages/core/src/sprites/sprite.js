@@ -140,7 +140,6 @@ export class Sprite extends EventHelper(Node) {
     this._flippedY = false; //Whether the sprite is flipped vertically or not.
 
     this._textureLoaded = false;
-    this._className = "Sprite";
     this._polygonInfo = null;
 
     // default transform anchor: center
@@ -295,14 +294,14 @@ export class Sprite extends EventHelper(Node) {
     var locRect = this._rect;
     if (!locRect) {
       this._rect = new Rect(rect.x, rect.y, rect.width, rect.height);
-      this._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
+      this.renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
       return;
     }
     locRect.x = rect.x;
     locRect.y = rect.y;
     locRect.width = rect.width;
     locRect.height = rect.height;
-    this._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
+    this.renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
   }
 
   //
@@ -372,7 +371,7 @@ export class Sprite extends EventHelper(Node) {
   set opacityModifyRGB(modify) {
     if (this._opacityModifyRGB !== modify) {
       this._opacityModifyRGB = modify;
-      this._renderCmd._setColorDirty();
+      this.renderCmd._setColorDirty();
     }
   }
 
@@ -443,8 +442,8 @@ export class Sprite extends EventHelper(Node) {
    */
   setPolygonInfo(polygonInfo) {
     this._polygonInfo = polygonInfo || null;
-    if (this._renderCmd && this._renderCmd._onPolygonInfoChanged) {
-      this._renderCmd._onPolygonInfoChanged();
+    if (this.renderCmd && this.renderCmd._onPolygonInfoChanged) {
+      this.renderCmd._onPolygonInfoChanged();
     }
     this.setNodeDirty(true);
   }
@@ -562,7 +561,7 @@ export class Sprite extends EventHelper(Node) {
       locBlendFunc.src = src;
       locBlendFunc.dst = dst;
     }
-    this._renderCmd.updateBlendFunc(locBlendFunc);
+    this.renderCmd.updateBlendFunc(locBlendFunc);
   }
 
   /**
@@ -669,7 +668,7 @@ export class Sprite extends EventHelper(Node) {
     }
 
     rotated = rotated || false;
-    texture = this._renderCmd._handleTextureForRotatedTexture(
+    texture = this.renderCmd._handleTextureForRotatedTexture(
       texture,
       rect,
       rotated,
@@ -703,7 +702,7 @@ export class Sprite extends EventHelper(Node) {
 
     if (!rect) rect = texture.rect;
 
-    this._renderCmd._checkTextureBoundary(texture, rect, rotated);
+    this.renderCmd._checkTextureBoundary(texture, rect, rotated);
 
     this.setTexture(texture);
     this.setTextureRect(rect, rotated);
@@ -728,7 +727,7 @@ export class Sprite extends EventHelper(Node) {
     _t.contentSize = untrimmedSize || rect;
 
     _t.setVertexRect(rect);
-    _t._renderCmd._setTextureCoords(rect, needConvert);
+    _t.renderCmd._setTextureCoords(rect, needConvert);
 
     var relativeOffsetX = _t._unflippedOffsetPositionFromCenter.x,
       relativeOffsetY = _t._unflippedOffsetPositionFromCenter.y;
@@ -757,7 +756,7 @@ export class Sprite extends EventHelper(Node) {
     if (localZOrder == null) localZOrder = child.localZOrder;
     if (tag == null) tag = child.tag;
 
-    if (this._renderCmd._setBatchNodeForAddChild(child)) {
+    if (this.renderCmd._setBatchNodeForAddChild(child)) {
       //Node already sets isReorderChildDirty_ so this needs to be after batchNode check
       super.addChild(child, localZOrder, tag);
       this._hasChildren = true;
@@ -801,7 +800,7 @@ export class Sprite extends EventHelper(Node) {
     _t._unflippedOffsetPositionFromCenter.y = frameOffset.y;
 
     if (pNewTexture !== _t._texture) {
-      this._renderCmd._setTexture(pNewTexture);
+      this.renderCmd._setTexture(pNewTexture);
       _t.color = _t.color;
     }
     _t.setTextureRect(
@@ -827,7 +826,7 @@ export class Sprite extends EventHelper(Node) {
    * @return {Boolean}
    */
   isFrameDisplayed(frame) {
-    return this._renderCmd.isFrameDisplayed(frame);
+    return this.renderCmd.isFrameDisplayed(frame);
   }
 
   /**
@@ -863,7 +862,7 @@ export class Sprite extends EventHelper(Node) {
    * @param {Texture2D|String} texture
    */
   setTexture(texture) {
-    if (!texture) return this._renderCmd._setTexture(null);
+    if (!texture) return this.renderCmd._setTexture(null);
 
     //Sprite.cpp 327 and 338
     var isFileName = typeof texture === "string";
@@ -884,7 +883,7 @@ export class Sprite extends EventHelper(Node) {
       return false;
     }
 
-    this._renderCmd._setTexture(texture);
+    this.renderCmd._setTexture(texture);
     if (isFileName) this._changeRectWithTexture(texture);
     this.color = this.color;
     this._textureLoaded = true;
@@ -944,7 +943,7 @@ export class Sprite extends EventHelper(Node) {
     return this.getQuad();
   }
 
-  _createRenderCmd() {
+  createRenderCmd() {
     if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new Sprite.CanvasRenderCmd(this);
     else return new Sprite.WebGLRenderCmd(this);

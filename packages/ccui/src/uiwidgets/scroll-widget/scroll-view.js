@@ -84,7 +84,6 @@ export class ScrollView extends Layout {
 
   _scrollViewEventListener = null;
   _scrollViewEventSelector = null;
-  _className = "ScrollView";
 
   /**
    * Allocates and initializes a UIScrollView.
@@ -158,8 +157,8 @@ export class ScrollView extends Layout {
   }
 
   visit(parent) {
-    var cmd = this._renderCmd,
-      parentCmd = parent ? parent._renderCmd : null;
+    var cmd = this.renderCmd,
+      parentCmd = parent ? parent.renderCmd : null;
 
     // quick return if not visible
     if (!this.visible) {
@@ -191,7 +190,7 @@ export class ScrollView extends Layout {
     }
 
     var i,
-      children = this._children,
+      children = this.children,
       len = children.length,
       child;
     var j,
@@ -268,7 +267,7 @@ export class ScrollView extends Layout {
     this.setClippingEnabled(true);
   }
 
-  _createRenderCmd() {
+  createRenderCmd() {
     if (ServiceLocator.sys.rendererConfig.isWebGL)
       return new ScrollViewWebGLRenderCmd(this);
     else return new ScrollViewCanvasRenderCmd(this);
@@ -459,7 +458,7 @@ export class ScrollView extends Layout {
 
   updateChildren() {
     var child, i, l;
-    var childrenArray = this._innerContainer._children;
+    var childrenArray = this._innerContainer.children;
     for (i = 0, l = childrenArray.length; i < l; i++) {
       child = childrenArray[i];
       if (child._inViewRect === true && this._isInContainer(child) === false)
@@ -517,7 +516,7 @@ export class ScrollView extends Layout {
    * Returns inner container's children
    * @returns {Array}
    */
-  getChildren() {
+  get children() {
     return this._innerContainer.children;
   }
 
@@ -525,8 +524,8 @@ export class ScrollView extends Layout {
    * Gets the count of inner container's children
    * @returns {Number}
    */
-  getChildrenCount() {
-    return this._innerContainer.getChildrenCount();
+  get childrenCount() {
+    return this._innerContainer.childrenCount;
   }
 
   /**

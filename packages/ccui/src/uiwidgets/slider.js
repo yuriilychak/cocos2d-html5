@@ -64,7 +64,6 @@ export class Slider extends Widget {
     this._ballPTexType = Widget.LOCAL_TEXTURE;
     this._ballDTexType = Widget.LOCAL_TEXTURE;
     this._isTextureLoaded = false;
-    this._className = "Slider";
     this._barRendererAdaptDirty = true;
     this._progressBarRendererDirty = true;
     this._unifySize = false;
@@ -683,7 +682,7 @@ export class Slider extends Widget {
     this._slidBallNormalRenderer.scaleX = this._sliderBallNormalTextureScaleX;
     this._slidBallNormalRenderer.scaleY = this._sliderBallNormalTextureScaleY;
     if (ServiceLocator.sys.rendererConfig.isWebGL) {
-      this._slidBallNormalRenderer._renderCmd._shaderProgram =
+      this._slidBallNormalRenderer.renderCmd._shaderProgram =
         this._getNormalGLProgram();
     } else {
       // TODO: add canvas support
@@ -702,7 +701,7 @@ export class Slider extends Widget {
       this._slidBallDisabledRenderer.visible = false;
     }
     if (ServiceLocator.sys.rendererConfig.isWebGL) {
-      this._slidBallNormalRenderer._renderCmd._shaderProgram =
+      this._slidBallNormalRenderer.renderCmd._shaderProgram =
         this._getNormalGLProgram();
     } else {
       // TODO: add canvas support
@@ -716,7 +715,7 @@ export class Slider extends Widget {
     } else {
       this._slidBallNormalRenderer.visible = true;
       if (ServiceLocator.sys.rendererConfig.isWebGL) {
-        this._slidBallNormalRenderer._renderCmd._shaderProgram =
+        this._slidBallNormalRenderer.renderCmd._shaderProgram =
           this._getGrayGLProgram();
       } else {
         // TODO: add canvas support

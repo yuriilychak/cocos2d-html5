@@ -7,7 +7,6 @@ export class ClippingNode extends Node {
   _alphaThreshold = 0;
 
   _stencil = null;
-  _className = "ClippingNode";
 
   _originStencilProgram = null;
 
@@ -20,7 +19,7 @@ export class ClippingNode extends Node {
     }
     this.alphaThreshold = 1;
     this.inverted = false;
-    this._renderCmd.initStencilBits();
+    this.renderCmd.initStencilBits();
   }
 
   get stencil() {
@@ -63,7 +62,7 @@ export class ClippingNode extends Node {
   }
 
   visit(parent) {
-    this._renderCmd.clippingVisit(parent && parent._renderCmd);
+    this.renderCmd.clippingVisit(parent && parent.renderCmd);
   }
 
   _visitChildren() {
@@ -71,14 +70,14 @@ export class ClippingNode extends Node {
     if (this.reorderChildDirty) {
       this.sortAllChildren();
     }
-    const children = this._children;
+    const children = this.children;
     for (let i = 0, len = children.length; i < len; i++) {
       const child = children[i];
       if (child && child.visible) {
         child.visit(this);
       }
     }
-    this._renderCmd._dirtyFlag = 0;
+    this.renderCmd._dirtyFlag = 0;
   }
 
   getAlphaThreshold() {
@@ -87,7 +86,7 @@ export class ClippingNode extends Node {
 
   setAlphaThreshold(alphaThreshold) {
     if (alphaThreshold === 1 && alphaThreshold !== this._alphaThreshold) {
-      this._renderCmd.resetProgramByStencil();
+      this.renderCmd.resetProgramByStencil();
     }
     this._alphaThreshold = alphaThreshold;
   }
@@ -107,10 +106,10 @@ export class ClippingNode extends Node {
   setStencil(stencil) {
     if (this._stencil === stencil) return;
     if (stencil) this._originStencilProgram = stencil.shaderProgram;
-    this._renderCmd.setStencil(stencil);
+    this.renderCmd.setStencil(stencil);
   }
 
-  _createRenderCmd() {
+  createRenderCmd() {
     if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new this.constructor.CanvasRenderCmd(this);
     else return new this.constructor.WebGLRenderCmd(this);

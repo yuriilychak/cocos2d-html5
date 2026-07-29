@@ -34,11 +34,11 @@ export class ClippingNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
         }
       }
 
-      stencil._renderCmd.rendering = function (ctx, scaleX, scaleY) {
+      stencil.renderCmd.rendering = function (ctx, scaleX, scaleY) {
         return;
       };
 
-      stencil._renderCmd._canUseDirtyRegion = true;
+      stencil.renderCmd._canUseDirtyRegion = true;
       this._rendererSaveCmd._canUseDirtyRegion = true;
       this._rendererClipCmd._canUseDirtyRegion = true;
       this._rendererRestoreCmd._canUseDirtyRegion = true;
@@ -73,13 +73,13 @@ export class ClippingNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
   _setStencilCompositionOperation(stencil) {
     if (!stencil) return;
     const node = this._node;
-    if (stencil._renderCmd && stencil._renderCmd._blendFuncStr)
-      stencil._renderCmd._blendFuncStr = node.inverted
+    if (stencil.renderCmd && stencil.renderCmd._blendFuncStr)
+      stencil.renderCmd._blendFuncStr = node.inverted
         ? "destination-out"
         : "destination-in";
 
-    if (!stencil._children) return;
-    const children = stencil._children;
+    if (stencil.children.length === 0) return;
+    const children = stencil.children;
     for (let i = 0, len = children.length; i < len; i++) {
       this._setStencilCompositionOperation(children[i]);
     }
@@ -96,7 +96,7 @@ export class ClippingNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
       const stencil = this._node._stencil;
       if (stencil instanceof DrawNode) {
         context.beginPath();
-        const t = stencil._renderCmd._transform;
+        const t = stencil.renderCmd._transform;
         context.transform(t.a, t.b, t.c, t.d, t.tx, -t.ty);
         for (let i = 0; i < stencil._buffer.length; i++) {
           const vertices = stencil._buffer[i].verts;
@@ -129,8 +129,8 @@ export class ClippingNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
   transform(parentCmd, recursive) {
     this.originTransform(parentCmd, recursive);
     const node = this._node;
-    if (node._stencil && node._stencil._renderCmd) {
-      node._stencil._renderCmd.transform(this, true);
+    if (node._stencil && node._stencil.renderCmd) {
+      node._stencil.renderCmd.transform(this, true);
       node._stencil._dirtyFlag &= ~Node._dirtyFlags.transformDirty;
     }
   }
@@ -170,7 +170,7 @@ export class ClippingNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
       node._stencil.visit(node);
     } else {
       this._cangodhelpme(true);
-      const children = node._children;
+      const children = node.children;
       let i;
       const len = children.length;
       if (len > 0) {

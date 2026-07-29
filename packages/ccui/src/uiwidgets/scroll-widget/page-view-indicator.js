@@ -45,7 +45,6 @@ export class PageViewIndicator extends ProtectedNode {
   _indexNodesTextureFile = "";
   _indexNodesTexType = Widget.LOCAL_TEXTURE;
 
-  _className = "PageViewIndicator";
 
   /**
    * Allocates and initializes a PageViewIndicator.

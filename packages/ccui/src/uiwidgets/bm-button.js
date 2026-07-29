@@ -81,7 +81,6 @@ export class BMButton extends Widget {
     this._normalTextureLoaded = false;
     this._pressedTextureLoaded = false;
     this._disabledTextureLoaded = false;
-    this._className = "BMButton";
     this._normalTextureAdaptDirty = true;
     this._fntFile = "";
     this._fontSize = 0;

@@ -283,7 +283,7 @@ export class SpriteCanvasRenderCmd extends NodeCanvasRenderCmd {
 
     node._textureLoaded = true;
     let locRect = node._rect;
-    const locRenderCmd = this._renderCmd;
+    const locRenderCmd = this.renderCmd;
     if (!locRect) {
       locRect = new Rect(0, 0, sender.width, sender.height);
     } else if (Rect.equalToZero(locRect)) {

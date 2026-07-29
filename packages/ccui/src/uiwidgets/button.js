@@ -84,7 +84,6 @@ export class Button extends Widget {
     this._normalTextureLoaded = false;
     this._pressedTextureLoaded = false;
     this._disabledTextureLoaded = false;
-    this._className = "Button";
     this._normalTextureAdaptDirty = true;
     this._fontName = "Thonburi";
     this._fontSize = 12;
@@ -681,7 +680,7 @@ export class Button extends Widget {
       var s = this.getVirtualRendererSize();
       this.contentSize = s;
     } else {
-      this._titleRenderer._renderCmd._updateTTF();
+      this._titleRenderer.renderCmd._updateTTF();
     }
   }
 

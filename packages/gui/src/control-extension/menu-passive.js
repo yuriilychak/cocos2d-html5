@@ -23,7 +23,6 @@ Spacer.horizontalSpacer = function (space) {
 export class MenuPassive extends Layer {
     _color = null;
     _opacity = 0;
-    _className = "MenuPassive";
 
     constructor() {
         super();
@@ -39,10 +38,10 @@ export class MenuPassive extends Layer {
         locColor.g = color.g;
         locColor.b = color.b;
 
-        if (this._children && this._children.length > 0) {
-            for (var i = 0; i < this._children.length; i++) {
-                if (this._children[i]) {
-                    this._children[i].color = color;
+        if (this.children.length > 0) {
+            for (var i = 0; i < this.children.length; i++) {
+                if (this.children[i]) {
+                    this.children[i].color = color;
                 }
             }
         }
@@ -58,10 +57,10 @@ export class MenuPassive extends Layer {
 
     set opacity(opacity) {
         this._opacity = opacity;
-        if (this._children && this._children.length > 0) {
-            for (var i = 0; i < this._children.length; i++) {
-                if (this._children[i]) {
-                    this._children[i].opacity = opacity;
+        if (this.children.length > 0) {
+            for (var i = 0; i < this.children.length; i++) {
+                if (this.children[i]) {
+                    this.children[i].opacity = opacity;
                 }
             }
         }
@@ -98,21 +97,21 @@ export class MenuPassive extends Layer {
     alignItemsVerticallyWithPadding(padding) {
         var height = -padding;
         var i;
-        if (this._children && this._children.length > 0) {
-            for (i = 0; i < this._children.length; i++) {
-                if (this._children[i]) {
-                    height += this._children[i].height * this._children[i].scaleY + padding;
+        if (this.children.length > 0) {
+            for (i = 0; i < this.children.length; i++) {
+                if (this.children[i]) {
+                    height += this.children[i].height * this.children[i].scaleY + padding;
                 }
             }
         }
         var width = 0;
         var y = height / 2.0;
-        if (this._children && this._children.length > 0) {
-            for (i = 0; i < this._children.length; i++) {
-                if (this._children[i]) {
-                    width = Math.max(width, this._children[i].width);
-                    this._children[i].position = { x: 0, y: y - this._children[i].height * this._children[i].scaleY / 2.0 };
-                    y -= this._children[i].height * this._children[i].scaleY + padding;
+        if (this.children.length > 0) {
+            for (i = 0; i < this.children.length; i++) {
+                if (this.children[i]) {
+                    width = Math.max(width, this.children[i].width);
+                    this.children[i].position = { x: 0, y: y - this.children[i].height * this.children[i].scaleY / 2.0 };
+                    y -= this.children[i].height * this.children[i].scaleY + padding;
                 }
             }
         }
@@ -127,21 +126,21 @@ export class MenuPassive extends Layer {
     alignItemsHorizontallyWithPadding(padding) {
         var width = -padding;
         var i;
-        if (this._children && this._children.length > 0) {
-            for (i = 0; i < this._children.length; i++) {
-                if (this._children[i]) {
-                    width += this._children[i].width * this._children[i].scaleX + padding;
+        if (this.children.length > 0) {
+            for (i = 0; i < this.children.length; i++) {
+                if (this.children[i]) {
+                    width += this.children[i].width * this.children[i].scaleX + padding;
                 }
             }
         }
         var height = 0;
         var x = -width / 2.0;
-        if (this._children && this._children.length > 0) {
-            for (i = 0; i < this._children.length; i++) {
-                if (this._children[i]) {
-                    height = Math.max(height, this._children[i].height);
-                    this._children[i].position = { x: x + this._children[i].width * this._children[i].scaleX / 2.0, y: 0 };
-                    x += this._children[i].width * this._children[i].scaleX + padding;
+        if (this.children.length > 0) {
+            for (i = 0; i < this.children.length; i++) {
+                if (this.children[i]) {
+                    height = Math.max(height, this.children[i].height);
+                    this.children[i].position = { x: x + this.children[i].width * this.children[i].scaleX / 2.0, y: 0 };
+                    x += this.children[i].width * this.children[i].scaleX + padding;
                 }
             }
         }
@@ -161,9 +160,9 @@ export class MenuPassive extends Layer {
         var columnsOccupied = 0;
         var rowColumns;
         var tmp;
-        if (this._children && this._children.length > 0) {
-            for (i = 0; i < this._children.length; i++) {
-                if (this._children[i]) {
+        if (this.children.length > 0) {
+            for (i = 0; i < this.children.length; i++) {
+                if (this.children[i]) {
                     if (row >= rows.length) {
                         log("MenuPassive.alignItemsInColumns(): invalid row index");
                         continue;
@@ -173,7 +172,7 @@ export class MenuPassive extends Layer {
                         log("MenuPassive.alignItemsInColumns(): can not have zero columns on a row");
                         continue;
                     }
-                    tmp = this._children[i].height;
+                    tmp = this.children[i].height;
                     rowHeight = 0 | ((rowHeight >= tmp || (tmp == null)) ? rowHeight : tmp);
                     ++columnsOccupied;
                     if (columnsOccupied >= rowColumns) {
@@ -188,17 +187,17 @@ export class MenuPassive extends Layer {
         var winSize = ServiceLocator.eglView.winSizeInPoints;
         row = 0; rowHeight = 0; rowColumns = 0;
         var w = 0.0, x = 0.0, y = (height / 2);
-        if (this._children && this._children.length > 0) {
-            for (i = 0; i < this._children.length; i++) {
-                if (this._children[i]) {
+        if (this.children.length > 0) {
+            for (i = 0; i < this.children.length; i++) {
+                if (this.children[i]) {
                     if (rowColumns === 0) {
                         rowColumns = rows[row];
                         w = winSize.width / (1 + rowColumns);
                         x = w;
                     }
-                    tmp = this._children[i].height;
+                    tmp = this.children[i].height;
                     rowHeight = 0 | ((rowHeight >= tmp || (tmp == null)) ? rowHeight : tmp);
-                    this._children[i].position = { x: x - winSize.width / 2, y: y - this._children[i].height / 2 };
+                    this.children[i].position = { x: x - winSize.width / 2, y: y - this.children[i].height / 2 };
                     x += w;
                     ++columnsOccupied;
                     if (columnsOccupied >= rowColumns) {
@@ -222,9 +221,9 @@ export class MenuPassive extends Layer {
         var columnWidths = [], columnHeights = [];
         var width = -10, columnHeight = -5, column = 0, columnWidth = 0, rowsOccupied = 0, columnRows;
         var tmp;
-        if (this._children && this._children.length > 0) {
-            for (i = 0; i < this._children.length; i++) {
-                if (this._children[i]) {
+        if (this.children.length > 0) {
+            for (i = 0; i < this.children.length; i++) {
+                if (this.children[i]) {
                     if (column >= columns.length) {
                         log("MenuPassive.alignItemsInRows(): invalid row index");
                         continue;
@@ -234,9 +233,9 @@ export class MenuPassive extends Layer {
                         log("MenuPassive.alignItemsInColumns(): can't have zero rows on a column");
                         continue;
                     }
-                    tmp = this._children[i].width;
+                    tmp = this.children[i].width;
                     columnWidth = 0 | ((columnWidth >= tmp || (tmp == null)) ? columnWidth : tmp);
-                    columnHeight += 0 | (this._children[i].height + 5);
+                    columnHeight += 0 | (this.children[i].height + 5);
                     ++rowsOccupied;
                     if (rowsOccupied >= columnRows) {
                         columnWidths.push(columnWidth);
@@ -253,17 +252,17 @@ export class MenuPassive extends Layer {
         var winSize = ServiceLocator.eglView.winSizeInPoints;
         column = 0; columnWidth = 0; columnRows = null;
         var x = (-width / 2), y = 0.0;
-        if (this._children && this._children.length > 0) {
-            for (i = 0; i < this._children.length; i++) {
-                if (this._children[i]) {
+        if (this.children.length > 0) {
+            for (i = 0; i < this.children.length; i++) {
+                if (this.children[i]) {
                     if (columnRows == null) {
                         columnRows = columns[column];
                         y = columnHeights[column];
                     }
-                    tmp = this._children[i].width;
+                    tmp = this.children[i].width;
                     columnWidth = 0 | ((columnWidth >= tmp || (tmp == null)) ? columnWidth : tmp);
-                    this._children[i].position = { x: x + columnWidths[column] / 2, y: y - winSize.height / 2 };
-                    y -= this._children[i].height + 10;
+                    this.children[i].position = { x: x + columnWidths[column] / 2, y: y - winSize.height / 2 };
+                    y -= this.children[i].height + 10;
                     ++rowsOccupied;
                     if (rowsOccupied >= columnRows) {
                         x += columnWidth + 5;

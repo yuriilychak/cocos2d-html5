@@ -18,7 +18,7 @@ export class LayoutCanvasRenderCmd extends ProtectedNodeCanvasRenderCmd {
     wrapper.save();
     wrapper.save();
     wrapper.setTransform(this._worldTransform, { x: scaleX, y: scaleY });
-    var buffer = this._node._clippingStencil._renderCmd._buffer;
+    var buffer = this._node._clippingStencil.renderCmd._buffer;
 
     for (var i = 0, bufLen = buffer.length; i < bufLen; i++) {
       var element = buffer[i],
@@ -45,8 +45,8 @@ export class LayoutCanvasRenderCmd extends ProtectedNodeCanvasRenderCmd {
   }
 
   rebindStencilRendering(stencil) {
-    stencil._renderCmd.rendering = this.__stencilDraw;
-    stencil._renderCmd._canUseDirtyRegion = true;
+    stencil.renderCmd.rendering = this.__stencilDraw;
+    stencil.renderCmd._canUseDirtyRegion = true;
   }
 
   __stencilDraw(ctx, scaleX, scaleY) {

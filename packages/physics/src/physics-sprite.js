@@ -35,7 +35,7 @@ export class PhysicsSprite extends Sprite {
     }
 
     ServiceLocator.sys.rendererConfig.renderer.pushRenderCommand(
-      this._renderCmd
+      this.renderCmd
     );
   }
 
@@ -54,7 +54,7 @@ export class PhysicsSprite extends Sprite {
 
   visit() {
     ServiceLocator.sys.rendererConfig.renderer.pushRenderCommand(
-      this._renderCmd
+      this.renderCmd
     );
     super.visit();
   }
@@ -121,7 +121,7 @@ export class PhysicsSprite extends Sprite {
   }
 
   getNodeToParentTransform() {
-    return this._renderCmd.getNodeToParentTransform();
+    return this.renderCmd.getNodeToParentTransform();
   }
 
   isDirty() {
@@ -134,11 +134,9 @@ export class PhysicsSprite extends Sprite {
     this._ignoreBodyRotation = b;
   }
 
-  _createRenderCmd() {
+  createRenderCmd() {
     if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new PhysicsSprite.CanvasRenderCmd(this);
     else return new PhysicsSprite.WebGLRenderCmd(this);
   }
 }
-
-PhysicsSprite._className = "PhysicsSprite";

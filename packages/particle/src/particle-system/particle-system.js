@@ -139,7 +139,6 @@ import { tiffReader } from "../tiff-reader";
  *  emitter.startSpin = 0;
  */
 export class ParticleSystem extends Node {
-  _className = "ParticleSystem";
   //***********variables*************
   _plistFile = "";
   //! time elapsed since the start of the system (in seconds)
@@ -430,7 +429,7 @@ export class ParticleSystem extends Node {
     this.setTexture(v);
   }
 
-  _createRenderCmd() {
+  createRenderCmd() {
     if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new ParticleSystem.CanvasRenderCmd(this);
     else return new ParticleSystem.WebGLRenderCmd(this);
@@ -452,7 +451,7 @@ export class ParticleSystem extends Node {
    * @param {Rect} pointRect
    */
   initTexCoordsWithRect(pointRect) {
-    this._renderCmd.initTexCoordsWithRect(pointRect);
+    this.renderCmd.initTexCoordsWithRect(pointRect);
   }
 
   /**
@@ -468,7 +467,7 @@ export class ParticleSystem extends Node {
    * @param {ParticleBatchNode} batchNode
    */
   setBatchNode(batchNode) {
-    this._renderCmd.setBatchNode(batchNode);
+    this.renderCmd.setBatchNode(batchNode);
   }
 
   /**
@@ -492,7 +491,7 @@ export class ParticleSystem extends Node {
    * @return {Number}
    */
   getDrawMode() {
-    return this._renderCmd.getDrawMode();
+    return this.renderCmd.getDrawMode();
   }
 
   /**
@@ -500,7 +499,7 @@ export class ParticleSystem extends Node {
    * @param {Number} drawMode
    */
   setDrawMode(drawMode) {
-    this._renderCmd.setDrawMode(drawMode);
+    this.renderCmd.setDrawMode(drawMode);
   }
 
   /**
@@ -508,7 +507,7 @@ export class ParticleSystem extends Node {
    * @return {Number}
    */
   getShapeType() {
-    return this._renderCmd.getShapeType();
+    return this.renderCmd.getShapeType();
   }
 
   /**
@@ -516,7 +515,7 @@ export class ParticleSystem extends Node {
    * @param {Number} shapeType
    */
   setShapeType(shapeType) {
-    this._renderCmd.setShapeType(shapeType);
+    this.renderCmd.setShapeType(shapeType);
   }
 
   /**
@@ -1247,7 +1246,7 @@ export class ParticleSystem extends Node {
    * @param {Number} tp totalParticles
    */
   setTotalParticles(tp) {
-    this._renderCmd.setTotalParticles(tp);
+    this.renderCmd.setTotalParticles(tp);
   }
 
   /**
@@ -1357,7 +1356,7 @@ export class ParticleSystem extends Node {
       locBlendFunc.src = GLState.SRC_ALPHA;
       locBlendFunc.dst = GLState.ONE;
     } else {
-      this._renderCmd._setBlendAdditive();
+      this.renderCmd._setBlendAdditive();
     }
   }
 
@@ -1748,7 +1747,7 @@ export class ParticleSystem extends Node {
 
     // udpate after action in run!
     this.scheduleUpdateWithPriority(1);
-    this._renderCmd._initWithTotalParticles(numberOfParticles);
+    this.renderCmd._initWithTotalParticles(numberOfParticles);
     return true;
   }
 
@@ -1768,7 +1767,7 @@ export class ParticleSystem extends Node {
   addParticle() {
     if (this.isFull()) return false;
 
-    var particle = this._renderCmd.addParticle();
+    var particle = this.renderCmd.addParticle();
     this.initParticle(particle);
     ++this.particleCount;
     return true;
@@ -1968,14 +1967,14 @@ export class ParticleSystem extends Node {
    * @param {Point} newPosition
    */
   updateQuadWithParticle(particle, newPosition) {
-    this._renderCmd.updateQuadWithParticle(particle, newPosition);
+    this.renderCmd.updateQuadWithParticle(particle, newPosition);
   }
 
   /**
    * should be overridden by subclasses
    */
   postStep() {
-    this._renderCmd.postStep();
+    this.renderCmd.postStep();
   }
 
   /**
@@ -2078,7 +2077,7 @@ export class ParticleSystem extends Node {
           }
 
           // color
-          this._renderCmd._updateDeltaColor(selParticle, dt);
+          this.renderCmd._updateDeltaColor(selParticle, dt);
 
           // size
           selParticle.size += selParticle.deltaSize * dt;
@@ -2111,7 +2110,7 @@ export class ParticleSystem extends Node {
             newPos.x += this.x;
             newPos.y += this.y;
           }
-          this._renderCmd.updateParticlePosition(selParticle, newPos);
+          this.renderCmd.updateParticlePosition(selParticle, newPos);
 
           // update particle counter
           ++this._particleIdx;

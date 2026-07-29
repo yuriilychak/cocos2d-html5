@@ -33,7 +33,7 @@ export class TMXLayerCanvasRenderCmd extends Node.CanvasRenderCmd {
 
     this._syncStatus(parentCmd);
 
-    const children = node._children,
+    const children = node.children,
       spTiles = node._spriteTiles,
       len = children.length;
     let child, i;
@@ -42,7 +42,7 @@ export class TMXLayerCanvasRenderCmd extends Node.CanvasRenderCmd {
       for (i = 0; i < len; i++) {
         child = children[i];
         if (child.localZOrder < 0) {
-          child._renderCmd.visit(this);
+          child.renderCmd.visit(this);
         } else {
           break;
         }
@@ -56,10 +56,10 @@ export class TMXLayerCanvasRenderCmd extends Node.CanvasRenderCmd {
             child.assignedVertexZ = renderer.assignedZ;
             renderer.assignedZ += renderer.assignedZStep;
           }
-          child._renderCmd.updateStatus();
+          child.renderCmd.updateStatus();
           continue;
         }
-        child._renderCmd.visit(this);
+        child.renderCmd.visit(this);
       }
     } else {
       renderer.pushRenderCommand(this);
@@ -150,7 +150,7 @@ export class TMXLayerCanvasRenderCmd extends Node.CanvasRenderCmd {
     z = colOffset + startCol;
     for (i in spTiles) {
       if (i < z && spTiles[i]) {
-        cmd = spTiles[i]._renderCmd;
+        cmd = spTiles[i].renderCmd;
         if (spTiles[i].localZOrder === 0 && !!cmd.rendering) {
           cmd.rendering(ctx, scaleX, scaleY);
         }
@@ -166,7 +166,7 @@ export class TMXLayerCanvasRenderCmd extends Node.CanvasRenderCmd {
       for (col = startCol; col < maxCol; ++col) {
         z = colOffset + col;
         if (spTiles[z]) {
-          cmd = spTiles[z]._renderCmd;
+          cmd = spTiles[z].renderCmd;
           if (spTiles[z].localZOrder === 0 && !!cmd.rendering) {
             cmd.rendering(ctx, scaleX, scaleY);
             wrapper.setTransform(wt, { x: scaleX, y: scaleY });
@@ -259,7 +259,7 @@ export class TMXLayerCanvasRenderCmd extends Node.CanvasRenderCmd {
 
     for (i in spTiles) {
       if (i > z && spTiles[i]) {
-        cmd = spTiles[i]._renderCmd;
+        cmd = spTiles[i].renderCmd;
         if (spTiles[i].localZOrder === 0 && !!cmd.rendering) {
           cmd.rendering(ctx, scaleX, scaleY);
         }

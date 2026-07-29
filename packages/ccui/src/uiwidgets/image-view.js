@@ -42,7 +42,6 @@ export class ImageView extends Widget {
     this._prevIgnoreSize = true;
     this._textureFile = "";
     this._imageTexType = Widget.LOCAL_TEXTURE;
-    this._className = "ImageView";
     this._imageRendererAdaptDirty = true;
     texType = texType === undefined ? 0 : texType;
 

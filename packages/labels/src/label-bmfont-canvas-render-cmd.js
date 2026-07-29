@@ -19,18 +19,18 @@ export class LabelBMFontCanvasRenderCmd extends Node.CanvasRenderCmd {
     _updateCharColorAndOpacity(fontChar) {
         // Color MUST be set before opacity, since opacity might change color if OpacityModifyRGB is on
         fontChar._displayedColor = this._displayedColor;
-        fontChar._renderCmd.setDirtyFlag(Node._dirtyFlags.colorDirty);
+        fontChar.renderCmd.setDirtyFlag(Node._dirtyFlags.colorDirty);
         fontChar._displayedOpacity = this._displayedOpacity;
-        fontChar._renderCmd.setDirtyFlag(Node._dirtyFlags.opacityDirty);
+        fontChar.renderCmd.setDirtyFlag(Node._dirtyFlags.opacityDirty);
     }
 
     setTexture(texture) {
         const node = this._node;
-        const locChildren = node._children;
+        const locChildren = node.children;
         const locDisplayedColor = this._displayedColor;
         for (let i = 0; i < locChildren.length; i++) {
             const selChild = locChildren[i];
-            const cm = selChild._renderCmd;
+            const cm = selChild.renderCmd;
             const childDColor = cm._displayedColor;
             if (node._texture !== cm._texture && (childDColor.r !== locDisplayedColor.r ||
                 childDColor.g !== locDisplayedColor.g || childDColor.b !== locDisplayedColor.b))

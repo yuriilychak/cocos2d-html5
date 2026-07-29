@@ -15,7 +15,6 @@ import {
 } from "@aspect/core";
 
 export class LabelAtlas extends LabelBMFont {
-  _className = "LabelAtlas";
 
   constructor(strText, charMapFile, itemWidth, itemHeight, startCharMap) {
     super();
@@ -34,7 +33,7 @@ export class LabelAtlas extends LabelBMFont {
       );
   }
 
-  _createRenderCmd() {
+  createRenderCmd() {
     if (RendererConfig.isWebGL) return new LabelBMFontWebGLRenderCmd(this);
     else return new LabelBMFontCanvasRenderCmd(this);
   }

@@ -6,13 +6,12 @@ export class TInfo extends BaseClass {
     constructor (c, f) {
         super();
         if (f) {
-            this._className = c;
+            this.typeName = c;
             this._fun = f;
         } else {
-            this._className = c._className;
+            this.typeName = c.name;
             this._fun = c._fun;
         }
         objectFactory.registerType(this);
     }
 };
-

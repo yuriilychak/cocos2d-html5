@@ -10,7 +10,6 @@ export class TextFieldTTF extends LabelTTF {
   _inputText = "";
   _placeHolder = "";
   _charCount = 0;
-  _className = "TextFieldTTF";
 
   /**
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function. <br />
@@ -163,7 +162,7 @@ export class TextFieldTTF extends LabelTTF {
       if (this._colorText) this.color = this._colorText;
     }
     if (ServiceLocator.sys.rendererConfig.isCanvas)
-      this._renderCmd._updateTexture();
+      this.renderCmd._updateTexture();
     this._charCount = this._inputText.length;
   }
 

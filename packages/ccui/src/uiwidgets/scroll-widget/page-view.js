@@ -41,7 +41,6 @@ export class PageView extends ListView {
   _childFocusCancelOffset = 0;
   _pageViewEventListener = null;
   _pageViewEventSelector = null;
-  _className = "PageView";
 
   _indicator = null;
   _indicatorPositionAsAnchorPoint = null;

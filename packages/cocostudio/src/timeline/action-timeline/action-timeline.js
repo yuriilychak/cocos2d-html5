@@ -343,7 +343,7 @@ export class ActionTimeline extends Action {
   _foreachNodeDescendant(parent, callback) {
     callback(parent);
 
-    var children = parent.getChildren();
+    var children = parent.children;
     for (var i = 0; i < children.length; i++) {
       var child = children[i];
       this._foreachNodeDescendant(child, callback);
@@ -427,4 +427,3 @@ export class ActionTimeline extends Action {
     this._lastFrameListener = null;
   }
 }
-

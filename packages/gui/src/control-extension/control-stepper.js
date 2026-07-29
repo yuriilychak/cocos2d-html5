@@ -18,7 +18,6 @@ export class ControlStepper extends Control {
   _stepValue = 0;
   _touchedPart = STEPPER_PARTNONE;
   _autorepeatCount = 0;
-  _className = "Stepper";
 
   constructor(minusButton, plusButton) {
     super();

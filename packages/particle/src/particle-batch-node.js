@@ -84,7 +84,6 @@ export class ParticleBatchNode extends Node {
   textureAtlas = null;
   //the blend function used for drawing the quads
   _blendFunc = null;
-  _className = "ParticleBatchNode";
 
   /**
    * initializes the particle system with the name of a file on disk (for a list of supported formats look at the Texture2D class), a capacity of particles
@@ -118,7 +117,7 @@ export class ParticleBatchNode extends Node {
     this.setTexture(v);
   }
 
-  _createRenderCmd() {
+  createRenderCmd() {
     if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new ParticleBatchNode.CanvasRenderCmd(this);
     else return new ParticleBatchNode.WebGLRenderCmd(this);
@@ -135,9 +134,9 @@ export class ParticleBatchNode extends Node {
     this.textureAtlas.initWithTexture(texture, capacity);
 
     // no lazy alloc in this node
-    this._children.length = 0;
+    this.children.length = 0;
 
-    this._renderCmd._initWithTexture();
+    this.renderCmd._initWithTexture();
     return true;
   }
 
@@ -164,8 +163,8 @@ export class ParticleBatchNode extends Node {
   }
 
   visit(parent) {
-    var cmd = this._renderCmd,
-      parentCmd = parent ? parent._renderCmd : null;
+    var cmd = this.renderCmd,
+      parentCmd = parent ? parent.renderCmd : null;
 
     // quick return if not visible
     if (!this.visible) {
@@ -203,7 +202,7 @@ export class ParticleBatchNode extends Node {
 
     // If this is the 1st children, then copy blending function
     var childBlendFunc = child.getBlendFunc();
-    if (this._children.length === 0) this.setBlendFunc(childBlendFunc);
+    if (this.children.length === 0) this.setBlendFunc(childBlendFunc);
     else {
       if (
         childBlendFunc.src !== this._blendFunc.src ||
@@ -223,7 +222,7 @@ export class ParticleBatchNode extends Node {
     var atlasIndex = 0;
 
     if (pos !== 0) {
-      var p = this._children[pos - 1];
+      var p = this.children[pos - 1];
       atlasIndex = p.getAtlasIndex() + p.totalParticles;
     } else atlasIndex = 0;
 
@@ -273,7 +272,7 @@ export class ParticleBatchNode extends Node {
       throw new Error(
         "ParticleBatchNode.removeChild(): only supports ParticleSystem as children"
       );
-    if (this._children.indexOf(child) === -1) {
+    if (this.children.indexOf(child) === -1) {
       log(
         "ParticleBatchNode.removeChild(): doesn't contain the sprite. Can't remove it"
       );
@@ -315,19 +314,19 @@ export class ParticleBatchNode extends Node {
       throw new Error(
         "ParticleBatchNode.reorderChild(): only supports QuadParticleSystems as children"
       );
-    if (this._children.indexOf(child) === -1) {
+    if (this.children.indexOf(child) === -1) {
       log("ParticleBatchNode.reorderChild(): Child doesn't belong to batch");
       return;
     }
 
     // no reordering if only 1 child
-    if (this._children.length > 1) {
+    if (this.children.length > 1) {
       var getIndexes = this._getCurrentIndex(child, zOrder);
 
       if (getIndexes.oldIndex !== getIndexes.newIndex) {
         // reorder m_pChildren.array
-        this._children.splice(getIndexes.oldIndex, 1);
-        this._children.splice(getIndexes.newIndex, 0, child);
+        this.children.splice(getIndexes.oldIndex, 1);
+        this.children.splice(getIndexes.newIndex, 0, child);
 
         // save old altasIndex
         var oldAtlasIndex = child.getAtlasIndex();
@@ -337,7 +336,7 @@ export class ParticleBatchNode extends Node {
 
         // Find new AtlasIndex
         var newAtlasIndex = 0;
-        var locChildren = this._children;
+        var locChildren = this.children;
         for (var i = 0; i < locChildren.length; i++) {
           var pNode = locChildren[i];
           if (pNode === child) {
@@ -364,14 +363,14 @@ export class ParticleBatchNode extends Node {
    * @param {Boolean} doCleanup
    */
   removeChildAtIndex(index, doCleanup) {
-    this.removeChild(this._children[i], doCleanup);
+    this.removeChild(this.children[i], doCleanup);
   }
 
   /**
    * @param {Boolean} [doCleanup=true]
    */
   removeAllChildren(doCleanup) {
-    var locChildren = this._children;
+    var locChildren = this.children;
     for (var i = 0; i < locChildren.length; i++) {
       locChildren[i].batchNode = null;
     }
@@ -450,7 +449,7 @@ export class ParticleBatchNode extends Node {
 
   _updateAllAtlasIndexes() {
     var index = 0;
-    var locChildren = this._children;
+    var locChildren = this.children;
     for (var i = 0; i < locChildren.length; i++) {
       var child = locChildren[i];
       child.setAtlasIndex(index);
@@ -477,7 +476,7 @@ export class ParticleBatchNode extends Node {
   }
 
   _searchNewPositionInChildrenForZ(z) {
-    var locChildren = this._children;
+    var locChildren = this.children;
     var count = locChildren.length;
     for (var i = 0; i < count; i++) {
       if (locChildren[i].zIndex > z) return i;
@@ -493,7 +492,7 @@ export class ParticleBatchNode extends Node {
     var oldIndex = 0;
 
     var minusOne = 0,
-      locChildren = this._children;
+      locChildren = this.children;
     var count = locChildren.length;
     for (var i = 0; i < count; i++) {
       var pNode = locChildren[i];
@@ -542,12 +541,10 @@ export class ParticleBatchNode extends Node {
       return null;
     }
 
-    if (!this._children) this._children = [];
-
     //don't use a lazy insert
     var pos = this._searchNewPositionInChildrenForZ(z);
 
-    this._children.splice(pos, 0, child);
+    this.children.splice(pos, 0, child);
     child.tag = aTag;
     child.localZOrder = z;
     child.parent = this;

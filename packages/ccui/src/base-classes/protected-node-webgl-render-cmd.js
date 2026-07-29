@@ -14,11 +14,11 @@ export class ProtectedNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
             locDispColor.g = locRealColor.g;
             locDispColor.b = locRealColor.b;
             var whiteColor = new Color(255, 255, 255, 255);
-            selChildren = node._children;
+            selChildren = node.children;
             for (i = 0, len = selChildren.length; i < len; i++) {
                 item = selChildren[i];
-                if (item && item._renderCmd)
-                    item._renderCmd._updateDisplayColor(whiteColor);
+                if (item && item.renderCmd)
+                    item.renderCmd._updateDisplayColor(whiteColor);
             }
             this._cascadeColorEnabledDirty = false;
         } else {
@@ -33,21 +33,21 @@ export class ProtectedNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
             locDispColor.g = 0 | (locRealColor.g * parentColor.g / 255.0);
             locDispColor.b = 0 | (locRealColor.b * parentColor.b / 255.0);
             if (node.cascadeColor) {
-                selChildren = node._children;
+                selChildren = node.children;
                 for (i = 0, len = selChildren.length; i < len; i++) {
                     item = selChildren[i];
-                    if (item && item._renderCmd) {
-                        item._renderCmd._updateDisplayColor(locDispColor);
-                        item._renderCmd._updateColor();
+                    if (item && item.renderCmd) {
+                        item.renderCmd._updateDisplayColor(locDispColor);
+                        item.renderCmd._updateColor();
                     }
                 }
             }
             selChildren = node._protectedChildren;
             for (i = 0, len = selChildren.length; i < len; i++) {
                 item = selChildren[i];
-                if (item && item._renderCmd) {
-                    item._renderCmd._updateDisplayColor(locDispColor);
-                    item._renderCmd._updateColor();
+                if (item && item.renderCmd) {
+                    item.renderCmd._updateDisplayColor(locDispColor);
+                    item.renderCmd._updateColor();
                 }
             }
         }
@@ -59,11 +59,11 @@ export class ProtectedNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
         var i, len, selChildren, item;
         if (this._cascadeOpacityEnabledDirty && !node.cascadeOpacity) {
             this._displayedOpacity = node.opacity;
-            selChildren = node._children;
+            selChildren = node.children;
             for (i = 0, len = selChildren.length; i < len; i++) {
                 item = selChildren[i];
-                if (item && item._renderCmd)
-                    item._renderCmd._updateDisplayOpacity(255);
+                if (item && item.renderCmd)
+                    item.renderCmd._updateDisplayOpacity(255);
             }
             this._cascadeOpacityEnabledDirty = false;
         } else {
@@ -75,21 +75,21 @@ export class ProtectedNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
             }
             this._displayedOpacity = node.opacity * parentOpacity / 255.0;
             if (node.cascadeOpacity) {
-                selChildren = node._children;
+                selChildren = node.children;
                 for (i = 0, len = selChildren.length; i < len; i++) {
                     item = selChildren[i];
-                    if (item && item._renderCmd) {
-                        item._renderCmd._updateDisplayOpacity(this._displayedOpacity);
-                        item._renderCmd._updateColor();
+                    if (item && item.renderCmd) {
+                        item.renderCmd._updateDisplayOpacity(this._displayedOpacity);
+                        item.renderCmd._updateColor();
                     }
                 }
             }
             selChildren = node._protectedChildren;
             for (i = 0, len = selChildren.length; i < len; i++) {
                 item = selChildren[i];
-                if (item && item._renderCmd) {
-                    item._renderCmd._updateDisplayOpacity(this._displayedOpacity);
-                    item._renderCmd._updateColor();
+                if (item && item.renderCmd) {
+                    item.renderCmd._updateDisplayOpacity(this._displayedOpacity);
+                    item.renderCmd._updateColor();
                 }
             }
         }
@@ -97,7 +97,7 @@ export class ProtectedNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
     }
 
     _changeProtectedChild(child) {
-        var cmd = child._renderCmd,
+        var cmd = child.renderCmd,
             dirty = cmd._dirtyFlag,
             flags = Node._dirtyFlags;
 
@@ -125,7 +125,7 @@ export class ProtectedNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
             locChildren = this._node._protectedChildren;
         if (recursive && locChildren && locChildren.length !== 0) {
             for (i = 0, len = locChildren.length; i < len; i++) {
-                locChildren[i]._renderCmd.transform(this, recursive);
+                locChildren[i].renderCmd.transform(this, recursive);
             }
         }
     }

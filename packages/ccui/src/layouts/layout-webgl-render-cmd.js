@@ -124,7 +124,7 @@ export class LayoutWebGLRenderCmd extends ProtectedNodeWebGLRenderCmd {
     var node = this._node;
     super.transform(parentCmd, recursive);
     if (node._clippingStencil)
-      node._clippingStencil._renderCmd.transform(this, recursive);
+      node._clippingStencil.renderCmd.transform(this, recursive);
   }
 
   stencilClippingVisit(parentCmd) {

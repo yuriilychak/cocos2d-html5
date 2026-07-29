@@ -13,7 +13,6 @@ export class TMXTiledMap extends Node {
     this._mapSize = null;
     this._tileSize = null;
     this._tileProperties = null;
-    this._className = "TMXTiledMap";
 
     this._mapSize = new Size();
     this._tileSize = new Size();
@@ -178,7 +177,7 @@ export class TMXTiledMap extends Node {
 
   allLayers() {
     var retArr = [],
-      locChildren = this._children;
+      locChildren = this.children;
     for (var i = 0, len = locChildren.length; i < len; i++) {
       var layer = locChildren[i];
       if (layer && layer instanceof TMXLayer) retArr.push(layer);
@@ -191,7 +190,7 @@ export class TMXTiledMap extends Node {
       throw new Error(
         "TMXTiledMap.getLayer(): layerName should be non-null or non-empty string."
       );
-    var locChildren = this._children;
+    var locChildren = this.children;
     for (var i = 0; i < locChildren.length; i++) {
       var layer = locChildren[i];
       if (layer && layer.layerName === layerName) return layer;

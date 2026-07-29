@@ -35,7 +35,6 @@ import { ServiceLocator } from "../service-locator";
 export class Layer extends Node {
   constructor() {
     super();
-    this._className = "Layer";
 
     this.ignoreAnchorPointForPosition = true;
     this.anchorX = 0.5;
@@ -46,20 +45,20 @@ export class Layer extends Node {
   }
 
   bake() {
-    this._renderCmd.bake();
+    this.renderCmd.bake();
   }
 
   unbake() {
-    this._renderCmd.unbake();
+    this.renderCmd.unbake();
   }
 
   isBaked() {
-    return this._renderCmd._isBaked;
+    return this.renderCmd._isBaked;
   }
 
   visit(parent, renderer = ServiceLocator.sys.rendererConfig.renderer) {
-    var cmd = this._renderCmd,
-      parentCmd = parent ? parent._renderCmd : null;
+    var cmd = this.renderCmd,
+      parentCmd = parent ? parent.renderCmd : null;
 
     if (!this.visible) {
       cmd._propagateFlagsDown(parentCmd);
@@ -73,7 +72,7 @@ export class Layer extends Node {
       cmd._bakeSprite.visit(this, renderer);
     } else {
       var i,
-        children = this._children,
+        children = this.children,
         len = children.length,
         child;
       if (len > 0) {
@@ -102,10 +101,10 @@ export class Layer extends Node {
 
   addChild(child, localZOrder, tag) {
     super.addChild(child, localZOrder, tag);
-    this._renderCmd._bakeForAddChild(child);
+    this.renderCmd._bakeForAddChild(child);
   }
 
-  _createRenderCmd() {
+  createRenderCmd() {
     if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new LayerCanvasRenderer(this);
     else return new LayerWebGLRenderer(this);

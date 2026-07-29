@@ -60,7 +60,6 @@ export class Text extends Widget {
     this._onSelectedScaleOffset = 0.5;
     this._textVerticalAlignment = 0;
     this._textHorizontalAlignment = 0;
-    this._className = "Text";
     this._labelRendererAdaptDirty = true;
     if (fontSize !== undefined) {
       this.setFontName(fontName);

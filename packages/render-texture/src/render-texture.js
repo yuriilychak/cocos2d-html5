@@ -73,7 +73,6 @@ export class RenderTexture extends Node {
   clearStencilVal = 0;
   _clearColor = null;
 
-  _className = "RenderTexture";
 
   /**
    * creates a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid
@@ -106,15 +105,15 @@ export class RenderTexture extends Node {
     this.setClearColor(v);
   }
 
-  _createRenderCmd() {
+  createRenderCmd() {
     if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new RenderTexture.CanvasRenderCmd(this);
     else return new RenderTexture.WebGLRenderCmd(this);
   }
 
   visit(parent) {
-    var cmd = this._renderCmd,
-      parentCmd = parent ? parent._renderCmd : null;
+    var cmd = this.renderCmd,
+      parentCmd = parent ? parent.renderCmd : null;
 
     // quick return if not visible
     if (!this.visible) {
@@ -135,7 +134,7 @@ export class RenderTexture extends Node {
    */
   cleanup() {
     super.onExit();
-    this._renderCmd.cleanup();
+    this.renderCmd.cleanup();
   }
 
   /**
@@ -161,7 +160,7 @@ export class RenderTexture extends Node {
    * @param {Rect} fullViewport
    */
   setVirtualViewport(rtBegin, fullRect, fullViewport) {
-    this._renderCmd.setVirtualViewport(rtBegin, fullRect, fullViewport);
+    this.renderCmd.setVirtualViewport(rtBegin, fullRect, fullViewport);
   }
 
   /**
@@ -173,7 +172,7 @@ export class RenderTexture extends Node {
    * @return {Boolean}
    */
   initWithWidthAndHeight(width, height, format, depthStencilFormat) {
-    return this._renderCmd.initWithWidthAndHeight(
+    return this.renderCmd.initWithWidthAndHeight(
       width,
       height,
       format,
@@ -188,7 +187,7 @@ export class RenderTexture extends Node {
     ServiceLocator.sys.rendererConfig.renderer.turnToCacheMode(
       this.__instanceId
     );
-    this._renderCmd.begin();
+    this.renderCmd.begin();
   }
 
   /**
@@ -219,7 +218,7 @@ export class RenderTexture extends Node {
 
   _beginWithClear(r, g, b, a, depthValue, stencilValue, flags) {
     this.begin();
-    this._renderCmd._beginWithClear(
+    this.renderCmd._beginWithClear(
       r,
       g,
       b,
@@ -234,7 +233,7 @@ export class RenderTexture extends Node {
    * ends grabbing
    */
   end() {
-    this._renderCmd.end();
+    this.renderCmd.end();
   }
 
   /**
@@ -257,7 +256,7 @@ export class RenderTexture extends Node {
    * @param {number} height
    */
   clearRect(x, y, width, height) {
-    this._renderCmd.clearRect(x, y, width, height);
+    this.renderCmd.clearRect(x, y, width, height);
   }
 
   /**
@@ -265,7 +264,7 @@ export class RenderTexture extends Node {
    * @param {Number} depthValue
    */
   clearDepth(depthValue) {
-    this._renderCmd.clearDepth(depthValue);
+    this.renderCmd.clearDepth(depthValue);
   }
 
   /**
@@ -273,7 +272,7 @@ export class RenderTexture extends Node {
    * @param {Number} stencilValue
    */
   clearStencil(stencilValue) {
-    this._renderCmd.clearStencil(stencilValue);
+    this.renderCmd.clearStencil(stencilValue);
   }
 
   /**
@@ -310,7 +309,7 @@ export class RenderTexture extends Node {
     locClearColor.g = clearColor.g;
     locClearColor.b = clearColor.b;
     locClearColor.a = clearColor.a;
-    this._renderCmd.updateClearColor(clearColor);
+    this.renderCmd.updateClearColor(clearColor);
   }
 
   /**

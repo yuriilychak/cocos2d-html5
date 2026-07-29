@@ -142,8 +142,8 @@ export class RenderCmd {
   }
 
   getParentRenderCmd() {
-    if (this._node && this._node.parent && this._node.parent._renderCmd)
-      return this._node.parent._renderCmd;
+    if (this._node && this._node.parent && this._node.parent.renderCmd)
+      return this._node.parent.renderCmd;
     return null;
   }
 
@@ -329,11 +329,11 @@ export class RenderCmd {
       locDispColor.g = locRealColor.g;
       locDispColor.b = locRealColor.b;
       const whiteColor = new Color(BYTE, BYTE, BYTE, BYTE);
-      selChildren = node._children;
+      selChildren = node.children;
       for (i = 0, len = selChildren.length; i < len; i++) {
         item = selChildren[i];
-        if (item && item._renderCmd)
-          item._renderCmd._updateDisplayColor(whiteColor);
+        if (item && item.renderCmd)
+          item.renderCmd._updateDisplayColor(whiteColor);
       }
       this._cascadeColorEnabledDirty = false;
     } else {
@@ -347,12 +347,12 @@ export class RenderCmd {
       locDispColor.g = 0 | ((locRealColor.g * parentColor.g) / BYTE);
       locDispColor.b = 0 | ((locRealColor.b * parentColor.b) / BYTE);
       if (node.cascadeColor) {
-        selChildren = node._children;
+        selChildren = node.children;
         for (i = 0, len = selChildren.length; i < len; i++) {
           item = selChildren[i];
-          if (item && item._renderCmd) {
-            item._renderCmd._updateDisplayColor(locDispColor);
-            item._renderCmd._updateColor();
+          if (item && item.renderCmd) {
+            item.renderCmd._updateDisplayColor(locDispColor);
+            item.renderCmd._updateColor();
           }
         }
       }
@@ -367,10 +367,10 @@ export class RenderCmd {
       this._notifyRegionStatus(CanvasRenderCmd.RegionStatus.Dirty);
     if (this._cascadeOpacityEnabledDirty && !node.cascadeOpacity) {
       this._displayedOpacity = node.opacity;
-      selChildren = node._children;
+      selChildren = node.children;
       for (i = 0, len = selChildren.length; i < len; i++) {
         item = selChildren[i];
-        if (item && item._renderCmd) item._renderCmd._updateDisplayOpacity(BYTE);
+        if (item && item.renderCmd) item.renderCmd._updateDisplayOpacity(BYTE);
       }
       this._cascadeOpacityEnabledDirty = false;
     } else {
@@ -382,12 +382,12 @@ export class RenderCmd {
       }
       this._displayedOpacity = (node.opacity * parentOpacity) / BYTE;
       if (node.cascadeOpacity) {
-        selChildren = node._children;
+        selChildren = node.children;
         for (i = 0, len = selChildren.length; i < len; i++) {
           item = selChildren[i];
-          if (item && item._renderCmd) {
-            item._renderCmd._updateDisplayOpacity(this._displayedOpacity);
-            item._renderCmd._updateColor();
+          if (item && item.renderCmd) {
+            item.renderCmd._updateDisplayOpacity(this._displayedOpacity);
+            item.renderCmd._updateColor();
           }
         }
       }
@@ -612,18 +612,18 @@ export class CanvasRenderCmd extends RenderCmd {
     if (this._cachedParent === cachedParent) return;
 
     this._cachedParent = cachedParent;
-    const children = this._node._children;
+    const children = this._node.children;
     for (let i = 0, len = children.length; i < len; i++)
-      children[i]._renderCmd._setCachedParent(cachedParent);
+      children[i].renderCmd._setCachedParent(cachedParent);
   }
 
   detachFromParent() {
     this._cachedParent = null;
-    const selChildren = this._node._children;
+    const selChildren = this._node.children;
     let item;
     for (let i = 0, len = selChildren.length; i < len; i++) {
       item = selChildren[i];
-      if (item && item._renderCmd) item._renderCmd.detachFromParent();
+      if (item && item.renderCmd) item.renderCmd.detachFromParent();
     }
   }
 }

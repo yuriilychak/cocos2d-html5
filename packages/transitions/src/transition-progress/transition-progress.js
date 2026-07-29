@@ -9,7 +9,6 @@ export class TransitionProgress extends TransitionScene {
   _to = 0;
   _from = 0;
   _sceneToBeModified = null;
-  _className = "TransitionProgress";
 
   constructor(t, scene) {
     super();

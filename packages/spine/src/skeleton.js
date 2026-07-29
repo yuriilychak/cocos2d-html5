@@ -40,10 +40,10 @@ export class Skeleton extends Node {
     return this.getBlendFunc();
   }
   get _texture() {
-    return this._renderCmd._currTexture;
+    return this.renderCmd._currTexture;
   }
 
-  _createRenderCmd() {
+  createRenderCmd() {
     if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new this.constructor.CanvasRenderCmd(this);
     else return new this.constructor.WebGLRenderCmd(this);
@@ -228,7 +228,7 @@ export class Skeleton extends Node {
     this._rootBone = this._skeleton.getRootBone();
     this._ownsSkeletonData = ownsSkeletonData;
 
-    this._renderCmd._createChildFormSkeletonData();
+    this.renderCmd._createChildFormSkeletonData();
   }
 
   getTextureAtlas(regionAttachment) {
@@ -238,7 +238,7 @@ export class Skeleton extends Node {
   getBlendFunc() {
     const slot = this._skeleton.drawOrder[0];
     if (slot) {
-      return this._renderCmd._getBlendFunc(
+      return this.renderCmd._getBlendFunc(
         slot.data.blendMode,
         this._premultipliedAlpha
       );

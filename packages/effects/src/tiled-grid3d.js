@@ -158,7 +158,7 @@ export class TiledGrid3D extends GridBase {
   blit(target) {
     const n = this._gridSize.width * this._gridSize.height;
 
-    var wt = target._renderCmd._worldTransform;
+    var wt = target.renderCmd._worldTransform;
     this._matrix.mat[0] = wt.a;
     this._matrix.mat[4] = wt.c;
     this._matrix.mat[12] = wt.tx;

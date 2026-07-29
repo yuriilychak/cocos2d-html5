@@ -51,7 +51,6 @@ export class LoaderScene extends Scene {
     this._interval = null;
     this._label = null;
     this._logo = null;
-    this._className = "LoaderScene";
     this.cb = null;
     this.target = null;
   }
@@ -153,11 +152,11 @@ export class LoaderScene extends Scene {
   }
 
   _updateTransform() {
-    this._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
-    this._bgLayer._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
-    this._label._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
+    this.renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
+    this._bgLayer.renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
+    this._label.renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
     this._logo &&
-      this._logo._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
+      this._logo.renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
   }
 
   preload(resources, cb, target) {

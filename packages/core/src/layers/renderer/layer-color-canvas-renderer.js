@@ -83,7 +83,7 @@ export default class LayerColorCanvasRenderer extends LayerCanvasRenderer {
     if (this._cacheDirty) {
       const node = this._node;
       const locBakeSprite = this._bakeSprite,
-        children = node._children;
+        children = node.children;
       let i;
       const len = children.length;
 
@@ -139,9 +139,9 @@ export default class LayerColorCanvasRenderer extends LayerCanvasRenderer {
     const trans = node.getNodeToWorldTransform();
     rect = AffineTransform.applyToRect(rect, node.getNodeToWorldTransform());
 
-    if (!node._children || node._children.length === 0) return rect;
+    if (node.children.length === 0) return rect;
 
-    const locChildren = node._children;
+    const locChildren = node.children;
     for (let i = 0; i < locChildren.length; i++) {
       const child = locChildren[i];
       if (child && child.visible) {

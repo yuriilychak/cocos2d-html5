@@ -10,7 +10,6 @@ export class Control extends Layer {
   #opacityModifyRGB = false;
   _hasVisibleParents = false;
   _touchListener = null;
-  _className = "Control";
 
   _state = CONTROL_STATE_NORMAL;
   _enabled = false;
@@ -150,7 +149,7 @@ export class Control extends Layer {
 
   set opacityModifyRGB(value) {
     this.#opacityModifyRGB = value;
-    var children = this.getChildren();
+    var children = this.children;
     for (var i = 0, len = children.length; i < len; i++) {
       var selNode = children[i];
       if (selNode && Object.hasOwnProperty(selNode, "opacityModifyRGB")) {

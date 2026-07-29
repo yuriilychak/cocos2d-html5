@@ -658,7 +658,7 @@ export default class GLProgram extends BaseClass {
 
 
   #setUniformsForBuiltinsForRenderer(node: any): void {
-    if (!node || !node._renderCmd) return;
+    if (!node || !node.renderCmd) return;
 
     const matrixP = new Matrix4();
     const matrixMVP = new Matrix4();
@@ -666,7 +666,7 @@ export default class GLProgram extends BaseClass {
     ServiceLocator.kmglMatrix.getMatrix(KMGLMatrixMode.PROJECTION, matrixP);
     //ServiceLocator.kmglMatrix.getMatrix(KMGLMatrixMode.MODELVIEW, node._stackMatrix);
 
-    Matrix4.multiply(matrixMVP, matrixP, node._renderCmd._stackMatrix);
+    Matrix4.multiply(matrixMVP, matrixP, node.renderCmd._stackMatrix);
 
     this.setUniformLocationWithMatrix4fv(
       this.#uniform(UniformName.PMATRIX),
@@ -674,7 +674,7 @@ export default class GLProgram extends BaseClass {
     );
     this.setUniformLocationWithMatrix4fv(
       this.#uniform(UniformName.MVMATRIX),
-      node._renderCmd._stackMatrix.mat
+      node.renderCmd._stackMatrix.mat
     );
     this.setUniformLocationWithMatrix4fv(
       this.#uniform(UniformName.MVPMATRIX),

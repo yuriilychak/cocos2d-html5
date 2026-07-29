@@ -48,7 +48,7 @@ export class ClippingNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
     const node = this._node;
     this.originTransform(parentCmd, recursive);
     if (node._stencil) {
-      node._stencil._renderCmd.transform(this, true);
+      node._stencil.renderCmd.transform(this, true);
       node._stencil._dirtyFlag &= ~Node._dirtyFlags.transformDirty;
     }
   }
@@ -90,7 +90,7 @@ export class ClippingNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
       this._afterDrawStencilCmd
     );
 
-    const locChildren = node._children;
+    const locChildren = node.children;
     if (locChildren && locChildren.length > 0) {
       const childLen = locChildren.length;
       node.sortAllChildren();

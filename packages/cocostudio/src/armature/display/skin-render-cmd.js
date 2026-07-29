@@ -83,7 +83,7 @@ import { AffineTransform, Node, Sprite } from "@aspect/core";
             var rwtm = this._realWorldTM;
             if (rwtm) {
                 rwtm.a = t.a; rwtm.b = t.b; rwtm.c = t.c; rwtm.d = t.d; rwtm.tx = t.tx; rwtm.ty = t.ty;
-                AffineTransform.concatIn(rwtm, this._node.bone.armature._renderCmd._worldTransform);
+                AffineTransform.concatIn(rwtm, this._node.bone.armature.renderCmd._worldTransform);
             }
         }
 

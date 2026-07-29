@@ -84,7 +84,6 @@ export class PhysicsDebugNode extends DrawNode {
   constructor(space) {
     super();
     this._space = null;
-    this._className = "PhysicsDebugNode";
     this._space = space;
   }
 
@@ -104,7 +103,7 @@ export class PhysicsDebugNode extends DrawNode {
     this.clear();
   }
 
-  _createRenderCmd() {
+  createRenderCmd() {
     if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new PhysicsDebugNode.CanvasRenderCmd(this);
     else return new PhysicsDebugNode.WebGLRenderCmd(this);

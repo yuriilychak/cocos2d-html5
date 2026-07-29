@@ -67,16 +67,16 @@ export class ArmatureWebGLRenderCmd extends Node.WebGLRenderCmd {
       cmd;
     var parentCmd = this._parentCmd || this;
 
-    var locChildren = node._children;
+    var locChildren = node.children;
     var alphaPremultiplied = BlendFunc.ALPHA_PREMULTIPLIED,
       alphaNonPremultipled = BlendFunc.ALPHA_NON_PREMULTIPLIED;
     for (var i = 0, len = locChildren.length; i < len; i++) {
       var selBone = locChildren[i];
-      var boneCmd = selBone._renderCmd;
+      var boneCmd = selBone.renderCmd;
       if (selBone && selBone.getDisplayRenderNode) {
         var selNode = selBone.getDisplayRenderNode();
         if (null === selNode) continue;
-        cmd = selNode._renderCmd;
+        cmd = selNode.renderCmd;
         switch (selBone.getDisplayRenderNodeType()) {
           case DISPLAY_TYPE_SPRITE:
             if (selNode instanceof Skin) {
@@ -149,8 +149,8 @@ export class ArmatureWebGLRenderCmd extends Node.WebGLRenderCmd {
   }
 
   _updateColorAndOpacity(skinRenderCmd, bone) {
-    var parentColor = bone._renderCmd._displayedColor,
-      parentOpacity = bone._renderCmd._displayedOpacity;
+    var parentColor = bone.renderCmd._displayedColor,
+      parentOpacity = bone.renderCmd._displayedOpacity;
 
     var flags = Node._dirtyFlags,
       locFlag = skinRenderCmd._dirtyFlag;
@@ -172,7 +172,7 @@ export class ArmatureWebGLRenderCmd extends Node.WebGLRenderCmd {
 
     node.sortAllChildren();
     var renderer = ServiceLocator.sys.rendererConfig.renderer,
-      children = node._children,
+      children = node.children,
       child,
       i,
       len = children.length;

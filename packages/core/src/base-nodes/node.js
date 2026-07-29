@@ -158,16 +158,15 @@ export class Node extends BaseClass {
   #scheduler = null;
   #reorderChildDirty = false;
 
-  #transform;
-  #color;
-  #order;
   #componentContainer = new ComponentContainer(this);
   #name = "";
 
-  _isTransitionFinished = false;
-  _className = "Node";
-  _renderCmd = null;
-  _children = [];
+  #transitionFinished = false;
+  #renderCmd;
+  #transform;
+  #color;
+  #order;
+  #children = [];
 
   /**
    * Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
@@ -175,201 +174,7 @@ export class Node extends BaseClass {
    */
   constructor() {
     super();
-    this._renderCmd = this._createRenderCmd();
-    this.#transform = new NodeTransform(this._renderCmd);
-    this.#color = new NodeColor(this._renderCmd);
-    this.#order = new NodeOrder(this._renderCmd);
-  }
-
-  get transform() {
-    return this.#transform;
-  }
-
-  get reorderChildDirty() {
-    return this.#reorderChildDirty;
-  }
-
-  get width() {
-    return this.#transform.width;
-  }
-  set width(value) {
-    this.#transform.width = value;
-  }
-
-  get height() {
-    return this.#transform.height;
-  }
-  set height(value) {
-    this.#transform.height = value;
-  }
-
-  /**
-   *  <p>Returns a copy of the anchor point.<br/>
-   *  Anchor point is the point around which all transformations and positioning manipulations take place.<br/>
-   *  It's like a pin in the node where it is "attached" to its parent. <br/>
-   *  The anchorPoint is normalized, like a percentage. (0,0) means the bottom-left corner and (1,1) means the top-right corner. <br/>
-   *  But you can use values higher than (1,1) and lower than (0,0) too.  <br/>
-   *  The default anchor point is (0.5,0.5), so it starts at the center of the node. <br/></p>
-   * @return {Point}  The anchor point of node.
-   */
-  get anchor() {
-    return this.#transform.anchor;
-  }
-
-  /**
-   * <p>
-   *     Sets the anchor point in percent.                                                                                              <br/>
-   *                                                                                                                                    <br/>
-   *     anchor point is the point around which all transformations and positioning manipulations take place.                            <br/>
-   *     It's like a pin in the node where it is "attached" to its parent.                                                              <br/>
-   *     The anchorPoint is normalized, like a percentage. (0,0) means the bottom-left corner and (1,1) means the top-right corner.     <br/>
-   *     But you can use values higher than (1,1) and lower than (0,0) too.                                                             <br/>
-   *     The default anchor point is (0.5,0.5), so it starts at the center of the node.
-   * </p>
-   * @function
-   * @param {Point} point The anchor point of node or The x axis anchor of node.
-   */
-  set anchor(value) {
-    this.#transform.anchor = value;
-  }
-
-  get anchorX() {
-    return this.#transform.anchorX;
-  }
-  set anchorX(value) {
-    this.#transform.anchorX = value;
-  }
-
-  get anchorY() {
-    return this.#transform.anchorY;
-  }
-  set anchorY(value) {
-    this.#transform.anchorY = value;
-  }
-
-  get vertexZ() {
-    return this.#order.vertexZ;
-  }
-  set vertexZ(v) {
-    this.#order.vertexZ = v;
-  }
-
-  /**
-   * Returns the X axis rotation (angle) which represent a horizontal rotational skew of the node in degrees. <br/>
-   * 0 is the default rotation angle. Positive values rotate node clockwise<br/>
-   * (support only in WebGL rendering mode)
-   */
-
-  get rotationX() {
-    return this.#transform.rotationX;
-  }
-  set rotationX(value) {
-    this.#transform.rotationX = value;
-  }
-
-  /**
-   * Returns the Y axis rotation (angle) which represent a vertical rotational skew of the node in degrees. <br/>
-   * 0 is the default rotation angle. Positive values rotate node clockwise<br/>
-   * (support only in WebGL rendering mode)
-   */
-
-  get rotationY() {
-    return this.#transform.rotationY;
-  }
-
-  set rotationY(value) {
-    this.#transform.rotationY = value;
-  }
-
-  /**
-   * Returns the scale factor of the node.
-   * @warning: Assertion will fail when #scale.x != #scale.y.
-   * @return {Number} The scale factor
-   */
-  get scale() {
-    return this.#transform.scale;
-  }
-
-  /**
-   * Sets the scale factor of the node. 1.0 is the default scale factor. This function can modify the X and Y scale at the same time.
-   * @param {Number} scale or scaleX value
-   */
-  set scale(value) {
-    this.#transform.scale = value;
-  }
-
-  get children() {
-    return this.getChildren();
-  }
-
-  get childrenCount() {
-    return this.getChildrenCount();
-  }
-
-  get running() {
-    return this.#running;
-  }
-  set running(value) {
-    this.#running = value;
-  }
-
-  get isSprite() {
-    return false;
-  }
-
-  get ignoreAnchor() {
-    return this.ignoreAnchorPointForPosition;
-  }
-  set ignoreAnchor(v) {
-    this.ignoreAnchorPointForPosition = v;
-  }
-
-  get actionManager() {
-    return this.#actionManager || ServiceLocator.actionManager;
-  }
-  set actionManager(value) {
-    if (this.#actionManager !== value) {
-      this.stopAllActions();
-      this.#actionManager = value;
-    }
-  }
-
-  get scheduler() {
-    return this.#scheduler || ServiceLocator.scheduler;
-  }
-  set scheduler(value) {
-    if (this.#scheduler !== value) {
-      this.unscheduleAllCallbacks();
-      this.#scheduler = value;
-    }
-  }
-
-  get shaderProgram() {
-    return this._renderCmd.getShaderProgram();
-  }
-  set shaderProgram(v) {
-    this._renderCmd.setShaderProgram(v);
-  }
-
-  get glProgramState() {
-    return this._renderCmd.getGLProgramState();
-  }
-  set glProgramState(value) {
-    this._renderCmd.setGLProgramState(value);
-  }
-
-  get cascadeOpacity() {
-    return this.#color.cascadeOpacity;
-  }
-  set cascadeOpacity(v) {
-    this.#color.cascadeOpacity = v;
-  }
-
-  get cascadeColor() {
-    return this.#color.cascadeColor;
-  }
-  set cascadeColor(v) {
-    this.#color.cascadeColor = v;
+    this.renderCmd = this.createRenderCmd();
   }
 
   /**
@@ -396,507 +201,6 @@ export class Node extends BaseClass {
     }
   }
 
-  get skew() {
-    return this.#transform.skew;
-  }
-
-  set skew(value) {
-    this.#transform.skew = value;
-  }
-
-  /**
-   * <p>Returns the skew degrees in X </br>
-   * The X skew angle of the node in degrees.  <br/>
-   * This angle describes the shear distortion in the X direction.<br/>
-   * Thus, it is the angle between the Y axis and the left edge of the shape </br>
-   * The default skewX angle is 0. Positive values distort the node in a CW direction.</br>
-   * </p>
-   * @function
-   * @return {Number} The X skew angle of the node in degrees.
-   */
-  get skewX() {
-    return this.#transform.skewX;
-  }
-
-  /**
-   * <p>
-   * Changes the X skew angle of the node in degrees.                                                    <br/>
-   * <br/>
-   * This angle describes the shear distortion in the X direction.                                       <br/>
-   * Thus, it is the angle between the Y axis and the left edge of the shape                             <br/>
-   * The default skewX angle is 0. Positive values distort the node in a CW direction.
-   * </p>
-   * @function
-   * @param {Number} newSkewX The X skew angle of the node in degrees.
-   */
-  set skewX(newSkewX) {
-    this.#transform.skewX = newSkewX;
-  }
-
-  /**
-   * <p>Returns the skew degrees in Y               <br/>
-   * The Y skew angle of the node in degrees.                            <br/>
-   * This angle describes the shear distortion in the Y direction.       <br/>
-   * Thus, it is the angle between the X axis and the bottom edge of the shape       <br/>
-   * The default skewY angle is 0. Positive values distort the node in a W direction.    <br/>
-   * </p>
-   * @function
-   * @return {Number} The Y skew angle of the node in degrees.
-   */
-  get skewY() {
-    return this.#transform.skewY;
-  }
-
-  /**
-   * <p>
-   * Changes the Y skew angle of the node in degrees.                                                        <br/>
-   *                                                                                                         <br/>
-   * This angle describes the shear distortion in the Y direction.                                           <br/>
-   * Thus, it is the angle between the X axis and the bottom edge of the shape                               <br/>
-   * The default skewY angle is 0. Positive values distort the node in a W direction.                      <br/>
-   * </p>
-   * @function
-   * @param {Number} newSkewY  The Y skew angle of the node in degrees.
-   */
-  set skewY(newSkewY) {
-    this.#transform.skewY = newSkewY;
-  }
-
-  /**
-   * <p> LocalZOrder is the 'key' used to sort the node relative to its siblings.                                    <br/>
-   *                                                                                                                 <br/>
-   * The Node's parent will sort all its children based ont the LocalZOrder value.                                   <br/>
-   * If two nodes have the same LocalZOrder, then the node that was added first to the children's array              <br/>
-   * will be in front of the other node in the array.                                                                <br/>
-   * <br/>
-   * Also, the Scene Graph is traversed using the "In-Order" tree traversal algorithm ( http://en.wikipedia.org/wiki/Tree_traversal#In-order )
-   * <br/>
-   * And Nodes that have LocalZOder values < 0 are the "left" subtree                                                 <br/>
-   * While Nodes with LocalZOder >=0 are the "right" subtree.    </p>
-   * @function
-   * @param {Number} localZOrder
-   */
-  set zIndex(localZOrder) {
-    if (localZOrder === this.#order.localZOrder) return;
-    if (this.#parent) this.#parent.reorderChild(this, localZOrder);
-    else this.localZOrder = localZOrder;
-    ServiceLocator.eventManager._setDirtyForNode(this);
-  }
-
-  get localZOrder() {
-    return this.#order.localZOrder;
-  }
-
-  set localZOrder(value) {
-    this.#order.localZOrder = value;
-  }
-
-  /**
-   * Returns the local Z order of this node.
-   * @function
-   * @returns {Number} The local (relative to its siblings) Z order.
-   */
-  get zIndex() {
-    return this.#order.localZOrder;
-  }
-
-  /**
-   * <p>Defines the oder in which the nodes are renderer.                                                                               <br/>
-   * Nodes that have a Global Z Order lower, are renderer first.                                                                        <br/>
-   *                                                                                                                                    <br/>
-   * In case two or more nodes have the same Global Z Order, the oder is not guaranteed.                                                <br/>
-   * The only exception if the Nodes have a Global Z Order == 0. In that case, the Scene Graph order is used.                           <br/>
-   *                                                                                                                                    <br/>
-   * By default, all nodes have a Global Z Order = 0. That means that by default, the Scene Graph order is used to render the nodes.    <br/>
-   *                                                                                                                                    <br/>
-   * Global Z Order is useful when you need to render nodes in an order different than the Scene Graph order.                           <br/>
-   *                                                                                                                                    <br/>
-   * Limitations: Global Z Order can't be used used by Nodes that have SpriteBatchNode as one of their ancestors.                       <br/>
-   * And if ClippingNode is one of the ancestors, then "global Z order" will be relative to the ClippingNode.   </p>
-   * @function
-   * @param {Number} globalZOrder
-   */
-  set globalZOrder(value) {
-    this.#order.globalZOrder = value;
-  }
-
-  /**
-   * Return the Node's Global Z Order.
-   * @function
-   * @returns {number} The node's global Z order
-   */
-  get globalZOrder() {
-    return this.#order.globalZOrder;
-  }
-
-  set assignedVertexZ(value) {
-    this.#order.assignedVertexZ = value;
-  }
-
-  get hasCustomVertexZ() {
-    return this.#order.hasCustomVertexZ;
-  }
-
-  /**
-   * Returns the rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node clockwise.
-   * @function
-   * @return {Number} The rotation of the node in degrees.
-   */
-  get rotation() {
-    return this.#transform.rotation;
-  }
-
-  /**
-   * <p>
-   *     Sets the rotation (angle) of the node in degrees.                                             <br/>
-   *                                                                                                   <br/>
-   *      0 is the default rotation angle.                                                             <br/>
-   *      Positive values rotate node clockwise, and negative values for anti-clockwise.
-   * </p>
-   * @function
-   * @param {Number} newRotation The rotation of the node in degrees.
-   */
-  set rotation(newRotation) {
-    this.#transform.rotation = newRotation;
-  }
-
-  /**
-   * Returns the scale factor on X axis of this node
-   * @function
-   * @return {Number} The scale factor on X axis.
-   */
-  get scaleX() {
-    return this.#transform.scaleX;
-  }
-
-  /**
-   * <p>
-   *     Changes the scale factor on X axis of this node                                   <br/>
-   *     The default value is 1.0 if you haven't changed it before
-   * </p>
-   * @function
-   * @param {Number} newScaleX The scale factor on X axis.
-   */
-  set scaleX(newScaleX) {
-    this.#transform.scaleX = newScaleX;
-  }
-
-  /**
-   * Returns the scale factor on Y axis of this node
-   * @function
-   * @return {Number} The scale factor on Y axis.
-   */
-  get scaleY() {
-    return this.#transform.scaleY;
-  }
-
-  /**
-   * <p>
-   *     Changes the scale factor on Y axis of this node                                            <br/>
-   *     The Default value is 1.0 if you haven't changed it before.
-   * </p>
-   * @function
-   * @param {Number} newScaleY The scale factor on Y axis.
-   */
-  set scaleY(newScaleY) {
-    this.#transform.scaleY = newScaleY;
-  }
-
-  /**
-   * <p>
-   * Sets the position (x,y) using values between 0 and 1.                                                <br/>
-   * The positions in pixels is calculated like the following:                                            <br/>
-   *   #position = normalizedPosition * parent.contentSize
-   * </p>
-   * @param {Point} value
-   */
-  set normalizedPosition(value) {
-    this.#transform.normalizedPosition = value;
-  }
-
-  /**
-   * Returns the normalized position.
-   * @returns {Point}
-   */
-  get normalizedPosition() {
-    return this.#transform.normalizedPosition;
-  }
-
-  get normalizedPositionDirty() {
-    return this.#transform.normalizedPositionDirty;
-  }
-
-  set normalizedPositionDirty(value) {
-    this.#transform.normalizedPositionDirty = value;
-  }
-
-  get usingNormalizedPosition() {
-    return this.#transform.usingNormalizedPosition;
-  }
-
-  get position() {
-    return this.#transform.position;
-  }
-
-  set position(value) {
-    this.#transform.position = value;
-  }
-
-  /**
-   * <p>Returns the x axis position of the node in cocos2d coordinates.</p>
-   * @function
-   * @return {Number}
-   */
-  get x() {
-    return this.#transform.x;
-  }
-
-  /**
-   * <p>Sets the x axis position of the node in cocos2d coordinates.</p>
-   * @function
-   * @param {Number} x The new position in x axis
-   */
-  set x(x) {
-    this.#transform.x = x;
-  }
-
-  /**
-   * <p>Returns the y axis position of the node in cocos2d coordinates.</p>
-   * @function
-   * @return {Number}
-   */
-  get y() {
-    return this.#transform.y;
-  }
-
-  /**
-   * <p>Sets the y axis position of the node in cocos2d coordinates.</p>
-   * @function
-   * @param {Number} y The new position in y axis
-   */
-  set y(y) {
-    this.#transform.y = y;
-  }
-
-  /**
-   * Returns the amount of children.
-   * @function
-   * @return {Number} The amount of children.
-   */
-  getChildrenCount() {
-    return this._children.length;
-  }
-
-  /**
-   * Returns an array of all children  <br/>
-   * Composing a "tree" structure is a very important feature of Node
-   * @function
-   * @return {Array} An array of children
-   * @example
-   *  //This sample code traverses all children nodes, and set their position to (0,0)
-   *  var allChildren = parent.getChildren();
-   *  for(var i = 0; i< allChildren.length; i++) {
-   *      allChildren[i].position = { x: 0, y: 0 };
-   *  }
-   */
-  getChildren() {
-    return this._children;
-  }
-
-  /**
-   * Returns if the node is visible
-   * @function
-   * @see Node#setVisible
-   * @return {Boolean} true if the node is visible, false if the node is hidden.
-   */
-  get visible() {
-    return this.#visible;
-  }
-
-  /**
-   * Sets whether the node is visible <br/>
-   * The default value is true
-   * @function
-   * @param {Boolean} visible Pass true to make the node visible, false to hide the node.
-   */
-  set visible(visible) {
-    if (this.#visible !== visible) {
-      this.#visible = visible;
-      //if(visible)
-      this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
-      ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty = true;
-    }
-  }
-
-  /**
-   * Returns a copy of the anchor point in absolute pixels.  <br/>
-   * you can only read it. If you wish to modify it, use anchor
-   * @see Node#anchor
-   * @function
-   * @return {Point} The anchor point in absolute pixels.
-   */
-  get anchorPointInPoints() {
-    return this._renderCmd.anchorPointInPoints;
-  }
-
-  /**
-   * <p>Returns a copy the untransformed size of the node. <br/>
-   * The contentSize remains the same no matter the node is scaled or rotated.<br/>
-   * All nodes has a size. Layer and Scene has the same size of the screen by default. <br/></p>
-   * @function
-   * @return {Size} The untransformed size of the node.
-   */
-  get contentSize() {
-    return this.#transform.contentSize;
-  }
-
-  set contentSize(value) {
-    this.#transform.contentSize = value;
-  }
-
-  /**
-   * Returns a reference to the parent node
-   * @function
-   * @return {Node} A reference to the parent node
-   */
-  get parent() {
-    return this.#parent;
-  }
-
-  /**
-   * Sets the parent node
-   * @param {Node} parent A reference to the parent node
-   */
-  set parent(parent) {
-    if (this.#parent === parent) return;
-    this.#parent = parent;
-    this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
-  }
-
-  /**
-   * Returns whether the anchor point will be ignored when you position this node.<br/>
-   * When anchor point ignored, position will be calculated based on the origin point (0, 0) in parent's coordinates.
-   * @return {Boolean} true if the anchor point will be ignored when you position this node.
-   */
-  get ignoreAnchorPointForPosition() {
-    return this.#transform.ignoreAnchorPointForPosition;
-  }
-
-  /**
-   * <p>
-   *     Sets whether the anchor point will be ignored when you position this node.                              <br/>
-   *     When anchor point ignored, position will be calculated based on the origin point (0, 0) in parent's coordinates.  <br/>
-   *     This is an internal method, only used by Layer and Scene. Don't call it outside framework.        <br/>
-   *     The default value is false, while in Layer and Scene are true
-   * </p>
-   * @param {Boolean} newValue true if anchor point will be ignored when you position this node
-   */
-  set ignoreAnchorPointForPosition(newValue) {
-    this.#transform.ignoreAnchorPointForPosition = newValue;
-  }
-
-  /**
-   * Returns a tag that is used to identify the node easily.
-   * @function
-   * @return {Number} An integer that identifies the node.
-   * @example
-   *  //You can set tags to node then identify them easily.
-   * // set tags
-   * node1.tag = TAG_PLAYER;
-   * node2.tag = TAG_MONSTER;
-   * node3.tag = TAG_BOSS;
-   * parent.addChild(node1);
-   * parent.addChild(node2);
-   * parent.addChild(node3);
-   * // identify by tags
-   * var allChildren = parent.getChildren();
-   * for(var i = 0; i < allChildren.length; i++){
-   *     switch(node.tag) {
-   *         case TAG_PLAYER:
-   *             break;
-   *         case TAG_MONSTER:
-   *             break;
-   *         case TAG_BOSS:
-   *             break;
-   *     }
-   * }
-   */
-  get tag() {
-    return this.#tag;
-  }
-
-  /**
-   * Changes the tag that is used to identify the node easily. <br/>
-   * Please refer to getTag for the sample code.
-   * @function
-   * @see Node#getTag
-   * @param {Number} tag A integer that identifies the node.
-   */
-  set tag(value) {
-    this.#tag = value;
-  }
-
-  /**
-   * Changes the name that is used to identify the node easily.
-   * @function
-   * @param {String} name
-   */
-  set name(name) {
-    this.#name = name;
-  }
-
-  /**
-   * Returns a string that is used to identify the node.
-   * @function
-   * @returns {string} A string that identifies the node.
-   */
-  get name() {
-    return this.#name;
-  }
-
-  /**
-   * <p>
-   *     Returns a custom user data pointer                                                               <br/>
-   *     You can set everything in UserData pointer, a data block, a structure or an object.
-   * </p>
-   * @function
-   * @return {object}  A custom user data pointer
-   */
-  get userData() {
-    return this.#userData;
-  }
-
-  /**
-   * <p>
-   *    Sets a custom user data reference                                                                   <br/>
-   *    You can set everything in UserData reference, a data block, a structure or an object, etc.
-   * </p>
-   * @function
-   * @warning Don't forget to release the memory manually in JSB, especially before you change this data pointer, and before this node is autoreleased.
-   * @param {object} Var A custom user data
-   */
-  set userData(Var) {
-    this.#userData = Var;
-  }
-
-  get arrivalOrder() {
-    return this.#order.arrivalOrder;
-  }
-
-  set arrivalOrder(value) {
-    this.#order.arrivalOrder = value;
-  }
-
-  /**
-   * Returns a "local" axis aligned bounding box of the node. <br/>
-   * The returned box is relative only to its parent.
-   * @function
-   * @return {Rect} The calculated bounding box of the node
-   */
-  get boundingBox() {
-    return this.#transform.boundingBox;
-  }
-
   /**
    * Stops all running actions and schedulers
    * @function
@@ -918,11 +222,12 @@ export class Node extends BaseClass {
    * @return {Node} a Node object whose tag equals to the input parameter
    */
   getChildByTag(aTag) {
-    var __children = this._children;
-    if (__children !== null) {
-      for (var i = 0; i < __children.length; i++) {
-        var node = __children[i];
-        if (node && node.tag === aTag) return node;
+    if (this.#children !== null) {
+      for (var i = 0; i < this.#children.length; ++i) {
+        var node = this.#children[i];
+        if (node && node.tag === aTag) {
+          return node;
+        }
       }
     }
     return null;
@@ -940,7 +245,7 @@ export class Node extends BaseClass {
       return null;
     }
 
-    var locChildren = this._children;
+    var locChildren = this.#children;
     for (var i = 0, len = locChildren.length; i < len; i++) {
       if (locChildren[i].name === name) return locChildren[i];
     }
@@ -981,8 +286,6 @@ export class Node extends BaseClass {
   }
 
   _addChildHelper(child, localZOrder, tag, name, setTag) {
-    if (!this._children) this._children = [];
-
     this._insertChild(child, localZOrder);
     if (setTag) child.tag = tag;
     else child.name = name;
@@ -994,15 +297,15 @@ export class Node extends BaseClass {
     if (this.#running) {
       child._performRecursive(Node._stateCallbackType.onEnter);
       // prevent onEnterTransitionDidFinish to be called twice when a node is added in onEnter
-      if (this._isTransitionFinished)
+      if (this.#transitionFinished)
         child._performRecursive(
           Node._stateCallbackType.onEnterTransitionDidFinish
         );
     }
-    child._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
-    if (this.cascadeColor) child._renderCmd.setDirtyFlag(dirtyFlags.colorDirty);
+    child.renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
+    if (this.cascadeColor) child.renderCmd.setDirtyFlag(dirtyFlags.colorDirty);
     if (this.cascadeOpacity)
-      child._renderCmd.setDirtyFlag(dirtyFlags.opacityDirty);
+      child.renderCmd.setDirtyFlag(dirtyFlags.opacityDirty);
   }
 
   // composition: REMOVE
@@ -1032,12 +335,12 @@ export class Node extends BaseClass {
    */
   removeChild(child, cleanup) {
     // explicit nil handling
-    if (this._children.length === 0) return;
+    if (this.#children.length === 0) return;
 
     if (cleanup === undefined) cleanup = true;
-    if (this._children.indexOf(child) > -1) this._detachChild(child, cleanup);
+    if (this.#children.indexOf(child) > -1) this._detachChild(child, cleanup);
 
-    //this._renderCmd.setDirtyFlag(dirtyFlags.visibleDirty);
+    //this.renderCmd.setDirtyFlag(dirtyFlags.visibleDirty);
     ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty = true;
   }
 
@@ -1073,7 +376,7 @@ export class Node extends BaseClass {
    */
   removeAllChildren(cleanup) {
     // not using detachChild improves speed here
-    var __children = this._children;
+    var __children = this.#children;
     if (__children !== null) {
       if (cleanup === undefined) cleanup = true;
       for (var i = 0; i < __children.length; i++) {
@@ -1091,10 +394,10 @@ export class Node extends BaseClass {
 
           // set parent nil at the end
           node.parent = null;
-          node._renderCmd.detachFromParent();
+          node.renderCmd.detachFromParent();
         }
       }
-      this._children.length = 0;
+      this.#children.length = 0;
       ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty = true;
     }
   }
@@ -1113,19 +416,19 @@ export class Node extends BaseClass {
 
     // set parent nil at the end
     child.parent = null;
-    child._renderCmd.detachFromParent();
-    arrayRemoveObject(this._children, child);
+    child.renderCmd.detachFromParent();
+    arrayRemoveObject(this.#children, child);
   }
 
   _insertChild(child, z) {
     ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty =
       this.#reorderChildDirty = true;
-    this._children.push(child);
+    this.#children.push(child);
     child.localZOrder = z;
   }
 
   setNodeDirty() {
-    this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
+    this.#renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
   }
 
   /** Reorders a child according to a new z value. <br/>
@@ -1136,7 +439,7 @@ export class Node extends BaseClass {
    */
   reorderChild(child, zOrder) {
     assert(child, _LogInfos.Node_reorderChild);
-    if (this._children.indexOf(child) === -1) {
+    if (this.#children.indexOf(child) === -1) {
       log(_LogInfos.Node_reorderChild_2);
       return;
     }
@@ -1145,7 +448,7 @@ export class Node extends BaseClass {
     child.arrivalOrder = s_globalOrderOfArrival;
     setGlobalOrderOfArrival(s_globalOrderOfArrival + 1);
     child.localZOrder = zOrder;
-    this._renderCmd.setDirtyFlag(dirtyFlags.orderDirty);
+    this.#renderCmd.setDirtyFlag(dirtyFlags.orderDirty);
   }
 
   /**
@@ -1158,7 +461,7 @@ export class Node extends BaseClass {
    */
   sortAllChildren() {
     if (this.#reorderChildDirty) {
-      var _children = this._children;
+      var _children = this.#children;
 
       // insertion sort
       var len = _children.length,
@@ -1221,7 +524,7 @@ export class Node extends BaseClass {
    * @function
    */
   onEnter() {
-    this._isTransitionFinished = false;
+    this.#transitionFinished = false;
     this.#running = true; //should be running before resumeSchedule
     this.resume();
   }
@@ -1244,7 +547,7 @@ export class Node extends BaseClass {
     curr = stack[0] = this;
     while (curr) {
       // Walk through children
-      children = curr._children;
+      children = curr.children;
       if (children && children.length > 0) {
         for (i = 0, len = children.length; i < len; ++i) {
           child = children[i];
@@ -1298,7 +601,7 @@ export class Node extends BaseClass {
    * @function
    */
   onEnterTransitionDidFinish() {
-    this._isTransitionFinished = true;
+    this.#transitionFinished = true;
   }
 
   /**
@@ -1618,17 +921,6 @@ export class Node extends BaseClass {
    * // Sets the additional transform to spriteB, spriteB's rotation will based on its pseudo parent i.e. spriteA.
    * spriteB.additionalTransform = t;
    */
-  get additionalTransform() {
-    return this.#transform.additionalTransform;
-  }
-
-  get additionalTransformDirty() {
-    return this.#transform.additionalTransformDirty;
-  }
-
-  set additionalTransform(additionalTransform) {
-    this.#transform.additionalTransform = additionalTransform;
-  }
 
   /**
    * Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.<br/>
@@ -1637,7 +929,7 @@ export class Node extends BaseClass {
    * @return {AffineTransform}
    */
   getParentToNodeTransform() {
-    return this._renderCmd.getParentToNodeTransform();
+    return this.#renderCmd.getParentToNodeTransform();
   }
 
   /**
@@ -1697,7 +989,7 @@ export class Node extends BaseClass {
   convertToNodeSpaceAR(worldPoint) {
     return Point.sub(
       this.convertToNodeSpace(worldPoint),
-      this._renderCmd.anchorPointInPoints
+      this.#renderCmd.anchorPointInPoints
     );
   }
 
@@ -1710,7 +1002,7 @@ export class Node extends BaseClass {
    */
   convertToWorldSpaceAR(nodePoint) {
     nodePoint = nodePoint || new Point();
-    var pt = Point.add(nodePoint, this._renderCmd.anchorPointInPoints);
+    var pt = Point.add(nodePoint, this.#renderCmd.anchorPointInPoints);
     return this.convertToWorldSpace(pt);
   }
 
@@ -1762,7 +1054,7 @@ export class Node extends BaseClass {
    * @function
    */
   updateTransform() {
-    var children = this._children,
+    var children = this.#children,
       node;
     for (var i = 0; i < children.length; i++) {
       node = children[i];
@@ -1816,8 +1108,8 @@ export class Node extends BaseClass {
    * @param {Node} parent
    */
   visit(parent = null, renderer = ServiceLocator.sys.rendererConfig.renderer) {
-    var cmd = this._renderCmd,
-      parentCmd = parent ? parent._renderCmd : null;
+    var cmd = this.#renderCmd,
+      parentCmd = parent ? parent.renderCmd : null;
 
     // quick return if not visible
     if (!this.visible) {
@@ -1828,7 +1120,7 @@ export class Node extends BaseClass {
     cmd.visit(parentCmd, renderer);
 
     var i,
-      children = this._children,
+      children = this.#children,
       len = children.length,
       child;
     if (len > 0) {
@@ -1862,7 +1154,7 @@ export class Node extends BaseClass {
    * @param {boolean} recursive whether call its children's transform
    */
   transform(parentCmd, recursive) {
-    this._renderCmd.transform(parentCmd, recursive);
+    this.#renderCmd.transform(parentCmd, recursive);
   }
 
   /**
@@ -1872,7 +1164,7 @@ export class Node extends BaseClass {
    * @return {AffineTransform} The affine transform object
    */
   getNodeToParentTransform(ancestor) {
-    var t = this._renderCmd.getNodeToParentTransform();
+    var t = this.#renderCmd.getNodeToParentTransform();
     if (ancestor) {
       var T = { a: t.a, b: t.b, c: t.c, d: t.d, tx: t.tx, ty: t.ty };
       for (var p = this.#parent; p != null && p != ancestor; p = p.parent) {
@@ -1899,9 +1191,7 @@ export class Node extends BaseClass {
     rect = AffineTransform.applyToRect(rect, trans);
 
     //query child's BoundingBox
-    if (!this._children) return rect;
-
-    var locChildren = this._children;
+    var locChildren = this.#children;
     for (var i = 0; i < locChildren.length; i++) {
       var child = locChildren[i];
       if (child && child.visible) {
@@ -1924,9 +1214,7 @@ export class Node extends BaseClass {
     rect = AffineTransform.applyToRect(rect, trans);
 
     //query child's BoundingBox
-    if (!this._children) return rect;
-
-    var locChildren = this._children;
+    var locChildren = this.#children;
     for (var i = 0; i < locChildren.length; i++) {
       var child = locChildren[i];
       if (child && child.visible) {
@@ -1938,102 +1226,13 @@ export class Node extends BaseClass {
   }
 
   /**
-   * Returns the opacity of Node
-   * @function
-   * @returns {number} opacity
+   * @protected
    */
-  get opacity() {
-    return this.#color.opacity;
-  }
 
-  /**
-   * Sets the opacity of Node
-   * @function
-   * @param {Number} opacity
-   */
-  set opacity(opacity) {
-    this.#color.opacity = opacity;
-  }
-
-  /**
-   * Returns the displayed opacity of Node,
-   * the difference between displayed opacity and opacity is that displayed opacity is calculated based on opacity and parent node's opacity when cascade opacity enabled.
-   * @function
-   * @returns {number} displayed opacity
-   */
-  get displayedOpacity() {
-    return this.#color.displayedOpacity;
-  }
-
-  /**
-   * Update displayed opacity
-   * @function
-   * @param {Number} parentOpacity
-   */
-  set displayedOpacity(parentOpacity) {
-    this.#color.displayedOpacity = parentOpacity;
-  }
-
-  /**
-   * Returns the color of Node
-   * @function
-   * @returns {Color}
-   */
-  get color() {
-    return this.#color.color;
-  }
-
-  /**
-   * Returns the displayed color of Node,
-   * the difference between displayed color and color is that displayed color is calculated based on color and parent node's color when cascade color enabled.
-   * @function
-   * @returns {Color}
-   */
-  get displayedColor() {
-    return this.#color.displayedColor;
-  }
-
-  /**
-   * Update the displayed color of Node
-   * @function
-   * @param {Color} parentColor
-   */
-  set displayedColor(parentColor) {
-    this.#color.displayedColor = parentColor;
-  }
-
-  /**
-   * <p>Sets the color of Node.<br/>
-   * When color doesn't include opacity value like color(128,128,128), this function only change the color. <br/>
-   * When color include opacity like color(128,128,128,100), then this function will change the color and the opacity.</p>
-   * @function
-   * @param {Color} color The new color given
-   */
-  set color(color) {
-    this.#color.color = color;
-  }
-
-  /**
-   * Set whether color should be changed with the opacity value,
-   * useless in Node, but this function is override in some class to have such behavior.
-   * @function
-   * @param {Boolean} opacityValue
-   */
-  set opacityModifyRGB(opacityValue) {}
-
-  /**
-   * Get whether color should be changed with the opacity value
-   * @function
-   * @return {Boolean}
-   */
-  get opacityModifyRGB() {
-    return false;
-  }
-
-  _createRenderCmd() {
-    if (ServiceLocator.sys.rendererConfig.isCanvas)
-      return new NodeCanvasRenderCmd(this);
-    else return new NodeWebGLRenderCmd(this);
+  createRenderCmd() {
+    return ServiceLocator.sys.rendererConfig.isCanvas
+      ? new NodeCanvasRenderCmd(this)
+      : new NodeWebGLRenderCmd(this);
   }
 
   /** Search the children of the receiving node to perform processing for nodes which share a name.
@@ -2130,7 +1329,7 @@ export class Node extends BaseClass {
 
     var ret = false;
     var child,
-      children = this._children,
+      children = this.#children,
       length = children.length;
     for (var i = 0; i < length; i++) {
       child = children[i];
@@ -2179,27 +1378,469 @@ export class Node extends BaseClass {
       curr = stack[index];
       stack[index] = null;
       if (!curr) continue;
-      children = curr._children;
+      children = curr.children;
       if (children && children.length > 0) {
-        parentCmd = curr._renderCmd;
+        parentCmd = curr.renderCmd;
         for (i = 0, len = children.length; i < len; ++i) {
           child = children[i];
           stack[index] = child;
           index++;
-          child._renderCmd.transform(parentCmd);
+          child.renderCmd.transform(parentCmd);
         }
       }
       const pChildren = curr._protectedChildren;
       if (pChildren && pChildren.length > 0) {
-        parentCmd = curr._renderCmd;
+        parentCmd = curr.renderCmd;
         for (i = 0, len = pChildren.length; i < len; ++i) {
           child = pChildren[i];
           stack[index] = child;
           index++;
-          child._renderCmd.transform(parentCmd);
+          child.renderCmd.transform(parentCmd);
         }
       }
     }
     Node._performing--;
+  }
+  // properties
+
+  get renderCmd() {
+    return this.#renderCmd;
+  }
+
+  get className() {
+    return Object.getPrototypeOf(this).constructor.name;
+  }
+
+  get transitionFinished() {
+    return this.#transitionFinished;
+  }
+
+  set transitionFinished(value) {
+    this.#transitionFinished = value;
+  }
+
+  set renderCmd(renderCmd) {
+    this.#renderCmd = renderCmd;
+    this.#transform = new NodeTransform(renderCmd);
+    this.#color = new NodeColor(renderCmd);
+    this.#order = new NodeOrder(renderCmd);
+  }
+
+  get transform() {
+    return this.#transform;
+  }
+
+  get reorderChildDirty() {
+    return this.#reorderChildDirty;
+  }
+
+  get width() {
+    return this.#transform.width;
+  }
+
+  set width(value) {
+    this.#transform.width = value;
+  }
+
+  get height() {
+    return this.#transform.height;
+  }
+
+  set height(value) {
+    this.#transform.height = value;
+  }
+
+  get anchor() {
+    return this.#transform.anchor;
+  }
+
+  set anchor(value) {
+    this.#transform.anchor = value;
+  }
+
+  get anchorX() {
+    return this.#transform.anchorX;
+  }
+
+  set anchorX(value) {
+    this.#transform.anchorX = value;
+  }
+
+  get anchorY() {
+    return this.#transform.anchorY;
+  }
+
+  set anchorY(value) {
+    this.#transform.anchorY = value;
+  }
+
+  get vertexZ() {
+    return this.#order.vertexZ;
+  }
+
+  set vertexZ(v) {
+    this.#order.vertexZ = v;
+  }
+
+  get rotationX() {
+    return this.#transform.rotationX;
+  }
+
+  set rotationX(value) {
+    this.#transform.rotationX = value;
+  }
+
+  get rotationY() {
+    return this.#transform.rotationY;
+  }
+
+  set rotationY(value) {
+    this.#transform.rotationY = value;
+  }
+
+  get scale() {
+    return this.#transform.scale;
+  }
+
+  set scale(value) {
+    this.#transform.scale = value;
+  }
+
+  get children() {
+    return this.#children;
+  }
+
+  get childrenCount() {
+    return this.#children.length;
+  }
+
+  get running() {
+    return this.#running;
+  }
+
+  set running(value) {
+    this.#running = value;
+  }
+
+  get isSprite() {
+    return false;
+  }
+
+  get ignoreAnchor() {
+    return this.ignoreAnchorPointForPosition;
+  }
+
+  set ignoreAnchor(v) {
+    this.ignoreAnchorPointForPosition = v;
+  }
+
+  get actionManager() {
+    return this.#actionManager || ServiceLocator.actionManager;
+  }
+
+  set actionManager(value) {
+    if (this.#actionManager !== value) {
+      this.stopAllActions();
+      this.#actionManager = value;
+    }
+  }
+
+  get scheduler() {
+    return this.#scheduler || ServiceLocator.scheduler;
+  }
+
+  set scheduler(value) {
+    if (this.#scheduler !== value) {
+      this.unscheduleAllCallbacks();
+      this.#scheduler = value;
+    }
+  }
+
+  get shaderProgram() {
+    return this.#renderCmd.getShaderProgram();
+  }
+
+  set shaderProgram(v) {
+    this.#renderCmd.setShaderProgram(v);
+  }
+
+  get glProgramState() {
+    return this.#renderCmd.getGLProgramState();
+  }
+
+  set glProgramState(value) {
+    this.#renderCmd.setGLProgramState(value);
+  }
+
+  get cascadeOpacity() {
+    return this.#color.cascadeOpacity;
+  }
+
+  set cascadeOpacity(v) {
+    this.#color.cascadeOpacity = v;
+  }
+
+  get cascadeColor() {
+    return this.#color.cascadeColor;
+  }
+
+  set cascadeColor(v) {
+    this.#color.cascadeColor = v;
+  }
+
+  get skew() {
+    return this.#transform.skew;
+  }
+
+  set skew(value) {
+    this.#transform.skew = value;
+  }
+
+  get skewX() {
+    return this.#transform.skewX;
+  }
+
+  set skewX(newSkewX) {
+    this.#transform.skewX = newSkewX;
+  }
+
+  get skewY() {
+    return this.#transform.skewY;
+  }
+
+  set skewY(newSkewY) {
+    this.#transform.skewY = newSkewY;
+  }
+
+  set zIndex(localZOrder) {
+    if (localZOrder === this.#order.localZOrder) return;
+    if (this.#parent) this.#parent.reorderChild(this, localZOrder);
+    else this.localZOrder = localZOrder;
+    ServiceLocator.eventManager._setDirtyForNode(this);
+  }
+
+  get localZOrder() {
+    return this.#order.localZOrder;
+  }
+
+  set localZOrder(value) {
+    this.#order.localZOrder = value;
+  }
+
+  get zIndex() {
+    return this.#order.localZOrder;
+  }
+
+  set globalZOrder(value) {
+    this.#order.globalZOrder = value;
+  }
+
+  get globalZOrder() {
+    return this.#order.globalZOrder;
+  }
+
+  set assignedVertexZ(value) {
+    this.#order.assignedVertexZ = value;
+  }
+
+  get hasCustomVertexZ() {
+    return this.#order.hasCustomVertexZ;
+  }
+
+  get rotation() {
+    return this.#transform.rotation;
+  }
+
+  set rotation(newRotation) {
+    this.#transform.rotation = newRotation;
+  }
+
+  get scaleX() {
+    return this.#transform.scaleX;
+  }
+
+  set scaleX(newScaleX) {
+    this.#transform.scaleX = newScaleX;
+  }
+
+  get scaleY() {
+    return this.#transform.scaleY;
+  }
+
+  set scaleY(newScaleY) {
+    this.#transform.scaleY = newScaleY;
+  }
+
+  set normalizedPosition(value) {
+    this.#transform.normalizedPosition = value;
+  }
+
+  get normalizedPosition() {
+    return this.#transform.normalizedPosition;
+  }
+
+  get normalizedPositionDirty() {
+    return this.#transform.normalizedPositionDirty;
+  }
+
+  set normalizedPositionDirty(value) {
+    this.#transform.normalizedPositionDirty = value;
+  }
+
+  get usingNormalizedPosition() {
+    return this.#transform.usingNormalizedPosition;
+  }
+
+  get position() {
+    return this.#transform.position;
+  }
+
+  set position(value) {
+    this.#transform.position = value;
+  }
+
+  get x() {
+    return this.#transform.x;
+  }
+
+  set x(x) {
+    this.#transform.x = x;
+  }
+
+  get y() {
+    return this.#transform.y;
+  }
+
+  set y(y) {
+    this.#transform.y = y;
+  }
+
+  get visible() {
+    return this.#visible;
+  }
+
+  set visible(visible) {
+    if (this.#visible !== visible) {
+      this.#visible = visible;
+      //if(visible)
+      this.#renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
+      ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty = true;
+    }
+  }
+
+  get anchorPointInPoints() {
+    return this.#renderCmd.anchorPointInPoints;
+  }
+
+  get contentSize() {
+    return this.#transform.contentSize;
+  }
+
+  set contentSize(value) {
+    this.#transform.contentSize = value;
+  }
+
+  get parent() {
+    return this.#parent;
+  }
+
+  set parent(parent) {
+    if (this.#parent === parent) return;
+    this.#parent = parent;
+    this.#renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
+  }
+
+  get ignoreAnchorPointForPosition() {
+    return this.#transform.ignoreAnchorPointForPosition;
+  }
+
+  set ignoreAnchorPointForPosition(newValue) {
+    this.#transform.ignoreAnchorPointForPosition = newValue;
+  }
+
+  get tag() {
+    return this.#tag;
+  }
+
+  set tag(value) {
+    this.#tag = value;
+  }
+
+  set name(name) {
+    this.#name = name;
+  }
+
+  get name() {
+    return this.#name;
+  }
+
+  get userData() {
+    return this.#userData;
+  }
+
+  set userData(Var) {
+    this.#userData = Var;
+  }
+
+  get arrivalOrder() {
+    return this.#order.arrivalOrder;
+  }
+
+  set arrivalOrder(value) {
+    this.#order.arrivalOrder = value;
+  }
+
+  get boundingBox() {
+    return this.#transform.boundingBox;
+  }
+
+  get additionalTransform() {
+    return this.#transform.additionalTransform;
+  }
+
+  get additionalTransformDirty() {
+    return this.#transform.additionalTransformDirty;
+  }
+
+  set additionalTransform(additionalTransform) {
+    this.#transform.additionalTransform = additionalTransform;
+  }
+
+  get opacity() {
+    return this.#color.opacity;
+  }
+
+  set opacity(opacity) {
+    this.#color.opacity = opacity;
+  }
+
+  get displayedOpacity() {
+    return this.#color.displayedOpacity;
+  }
+
+  set displayedOpacity(parentOpacity) {
+    this.#color.displayedOpacity = parentOpacity;
+  }
+
+  get color() {
+    return this.#color.color;
+  }
+
+  get displayedColor() {
+    return this.#color.displayedColor;
+  }
+
+  set displayedColor(parentColor) {
+    this.#color.displayedColor = parentColor;
+  }
+
+  set color(color) {
+    this.#color.color = color;
+  }
+
+  set opacityModifyRGB(opacityValue) {}
+
+  get opacityModifyRGB() {
+    return false;
   }
 }

@@ -164,7 +164,7 @@ class SkeletonNode extends BoneNode {
   }
 
   _visit(parentCmd) {
-    var cmd = this._renderCmd;
+    var cmd = this.renderCmd;
     parentCmd = parentCmd || cmd.getParentRenderCmd();
 
     // quick return if not visible
@@ -175,9 +175,9 @@ class SkeletonNode extends BoneNode {
     cmd._syncStatus(parentCmd);
 
     var i, node;
-    if (this._children.length !== 0) {
-      for (i = 0; i < this._children.length; i++) {
-        node = this._children[i];
+    if (this.children.length !== 0) {
+      for (i = 0; i < this.children.length; i++) {
+        node = this.children[i];
         node.visit(this);
       }
     }
@@ -193,9 +193,9 @@ class SkeletonNode extends BoneNode {
 
     if (cmd._debug)
       for (i = 0; i < subOrderedAllBones.length; i++) {
-        subOrderedBoneCmd = subOrderedAllBones[i]._renderCmd;
+        subOrderedBoneCmd = subOrderedAllBones[i].renderCmd;
         ServiceLocator.sys.rendererConfig.renderer.pushRenderCommand(
-          subOrderedBoneCmd._drawNode._renderCmd
+          subOrderedBoneCmd._drawNode.renderCmd
         );
       }
     cmd._dirtyFlag = 0;
@@ -224,7 +224,7 @@ class SkeletonNode extends BoneNode {
     }
     while (boneStack.length > 0) {
       var top = boneStack.pop();
-      var topCmd = top._renderCmd;
+      var topCmd = top.renderCmd;
       topCmd._syncStatus(topCmd.getParentRenderCmd());
       this._subOrderedAllBones.push(top);
 
@@ -244,7 +244,7 @@ class SkeletonNode extends BoneNode {
   // protected
   _updateVertices() {
     var squareVertices = this._squareVertices,
-      anchorPointInPoints = this._renderCmd._anchorPointInPoints;
+      anchorPointInPoints = this.renderCmd._anchorPointInPoints;
     if (
       this._rackLength != squareVertices[6].x - anchorPointInPoints.x ||
       this._rackWidth != squareVertices[3].y - anchorPointInPoints.y

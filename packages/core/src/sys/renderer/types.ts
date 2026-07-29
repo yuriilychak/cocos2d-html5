@@ -33,7 +33,7 @@ export interface RendererInterface {
   clear(): void;
   rendering(...args: any[]): void;
   setDepthTest(on: boolean): void;
-  getRenderCmd(renderableObject: { _createRenderCmd(): unknown }): unknown;
+  getRenderCmd(renderableObject: { createRenderCmd(): unknown }): unknown;
   resetFlag(): void;
   transform(): void;
   transformDirty(): boolean;

@@ -46,7 +46,6 @@ export class LayerGradient extends LayerColor {
     this._endOpacity = BYTE;
     this._alongVector = null;
     this._compressedInterpolation = false;
-    this._className = "LayerGradient";
     this._colorStops = [];
 
     this._endColor = new Color(0, 0, 0, BYTE);
@@ -85,7 +84,7 @@ export class LayerGradient extends LayerColor {
     _t._compressedInterpolation = true;
 
     super.init(new Color(start.r, start.g, start.b, BYTE));
-    this._renderCmd.setDirtyFlag(
+    this.renderCmd.setDirtyFlag(
       Node._dirtyFlags.colorDirty |
         Node._dirtyFlags.opacityDirty |
         Node._dirtyFlags.gradientDirty
@@ -99,7 +98,7 @@ export class LayerGradient extends LayerColor {
 
   set contentSize(size) {
     super.contentSize = size;
-    this._renderCmd.setDirtyFlag(Node._dirtyFlags.gradientDirty);
+    this.renderCmd.setDirtyFlag(Node._dirtyFlags.gradientDirty);
   }
 
   get width() {
@@ -108,7 +107,7 @@ export class LayerGradient extends LayerColor {
 
   set width(width) {
     super.width = width;
-    this._renderCmd.setDirtyFlag(Node._dirtyFlags.gradientDirty);
+    this.renderCmd.setDirtyFlag(Node._dirtyFlags.gradientDirty);
   }
 
   get height() {
@@ -117,7 +116,7 @@ export class LayerGradient extends LayerColor {
 
   set height(height) {
     super.height = height;
-    this._renderCmd.setDirtyFlag(Node._dirtyFlags.gradientDirty);
+    this.renderCmd.setDirtyFlag(Node._dirtyFlags.gradientDirty);
   }
 
   getStartColor() {
@@ -147,7 +146,7 @@ export class LayerGradient extends LayerColor {
       selColor.g = color.g;
       selColor.b = color.b;
     }
-    this._renderCmd.setDirtyFlag(Node._dirtyFlags.colorDirty);
+    this.renderCmd.setDirtyFlag(Node._dirtyFlags.colorDirty);
   }
 
   getEndColor() {
@@ -158,7 +157,7 @@ export class LayerGradient extends LayerColor {
     this._startOpacity = o;
     var stops = this._colorStops;
     if (stops && stops.length > 0) stops[0].color.a = o;
-    this._renderCmd.setDirtyFlag(Node._dirtyFlags.opacityDirty);
+    this.renderCmd.setDirtyFlag(Node._dirtyFlags.opacityDirty);
   }
 
   getStartOpacity() {
@@ -169,7 +168,7 @@ export class LayerGradient extends LayerColor {
     this._endOpacity = o;
     var stops = this._colorStops;
     if (stops && stops.length > 0) stops[stops.length - 1].color.a = o;
-    this._renderCmd.setDirtyFlag(Node._dirtyFlags.opacityDirty);
+    this.renderCmd.setDirtyFlag(Node._dirtyFlags.opacityDirty);
   }
 
   getEndOpacity() {
@@ -179,7 +178,7 @@ export class LayerGradient extends LayerColor {
   setVector(Var) {
     this._alongVector.x = Var.x;
     this._alongVector.y = Var.y;
-    this._renderCmd.setDirtyFlag(Node._dirtyFlags.gradientDirty);
+    this.renderCmd.setDirtyFlag(Node._dirtyFlags.gradientDirty);
   }
 
   getVector() {
@@ -192,7 +191,7 @@ export class LayerGradient extends LayerColor {
 
   setCompressedInterpolation(compress) {
     this._compressedInterpolation = compress;
-    this._renderCmd.setDirtyFlag(Node._dirtyFlags.gradientDirty);
+    this.renderCmd.setDirtyFlag(Node._dirtyFlags.gradientDirty);
   }
 
   getColorStops() {
@@ -201,7 +200,7 @@ export class LayerGradient extends LayerColor {
 
   setColorStops(colorStops) {
     this._colorStops = colorStops;
-    this._renderCmd.setDirtyFlag(
+    this.renderCmd.setDirtyFlag(
       Node._dirtyFlags.colorDirty |
         Node._dirtyFlags.opacityDirty |
         Node._dirtyFlags.gradientDirty
@@ -256,7 +255,7 @@ export class LayerGradient extends LayerColor {
     this.setColorStops(value);
   }
 
-  _createRenderCmd() {
+  createRenderCmd() {
     if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new LayerGradientCanvasRenderer(this);
     else return new LayerGradientWebGLRenderer(this);

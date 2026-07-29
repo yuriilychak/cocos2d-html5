@@ -36,7 +36,7 @@ export class ProgressTimerWebGLRenderCmd extends Node.WebGLRenderCmd {
   transform(parentCmd, recursive) {
     this.originTransform(parentCmd, recursive);
     const sp = this._node._sprite;
-    sp._renderCmd.transform(this, recursive);
+    sp.renderCmd.transform(this, recursive);
 
     const lx = sp._offsetPosition.x,
       rx = lx + sp._rect.width,
@@ -146,7 +146,7 @@ export class ProgressTimerWebGLRenderCmd extends Node.WebGLRenderCmd {
       locFlag |= flags.transformDirty;
     this._dirtyFlag = locFlag;
 
-    const spriteCmd = node._sprite._renderCmd;
+    const spriteCmd = node._sprite.renderCmd;
     const spriteFlag = spriteCmd._dirtyFlag;
 
     const colorDirty = (locFlag | spriteFlag) & flags.colorDirty,
@@ -185,7 +185,7 @@ export class ProgressTimerWebGLRenderCmd extends Node.WebGLRenderCmd {
     if (!node._sprite) return;
     const flags = Node._dirtyFlags,
       locFlag = this._dirtyFlag;
-    const spriteCmd = node._sprite._renderCmd;
+    const spriteCmd = node._sprite.renderCmd;
     const spriteFlag = spriteCmd._dirtyFlag;
 
     const colorDirty = (locFlag | spriteFlag) & flags.colorDirty,
@@ -611,7 +611,7 @@ export class ProgressTimerWebGLRenderCmd extends Node.WebGLRenderCmd {
       coords.v = 0;
       return;
     }
-    const uvs = locSprite._renderCmd._vertices,
+    const uvs = locSprite.renderCmd._vertices,
       bl = uvs[1],
       tr = uvs[2];
     const min = new Point(bl.u, bl.v);
@@ -638,11 +638,11 @@ export class ProgressTimerWebGLRenderCmd extends Node.WebGLRenderCmd {
     if (!this._vertexDataCount || !sp) return;
 
     const color = this._displayedColor;
-    const spColor = sp._renderCmd._displayedColor;
+    const spColor = sp.renderCmd._displayedColor;
     let r = spColor.r;
     let g = spColor.g;
     let b = spColor.b;
-    const a = sp._renderCmd._displayedOpacity / 255;
+    const a = sp.renderCmd._displayedOpacity / 255;
     if (sp.opacityModifyRGB) {
       r *= a;
       g *= a;
@@ -651,7 +651,7 @@ export class ProgressTimerWebGLRenderCmd extends Node.WebGLRenderCmd {
     color.r = r;
     color.g = g;
     color.b = b;
-    color.a = sp._renderCmd._displayedOpacity;
+    color.a = sp.renderCmd._displayedOpacity;
     const locVertexData = this._vertexData;
     for (let i = 0, len = this._vertexDataCount; i < len; ++i) {
       locVertexData[i].colors = color;

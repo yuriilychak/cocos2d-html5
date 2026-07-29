@@ -22,8 +22,8 @@ export class ProtectedNode extends Node {
   }
 
   visit(parent) {
-    var cmd = this._renderCmd,
-      parentCmd = parent ? parent._renderCmd : null;
+    var cmd = this.renderCmd,
+      parentCmd = parent ? parent.renderCmd : null;
 
     if (!this.visible) {
       cmd._propagateFlagsDown(parentCmd);
@@ -32,7 +32,7 @@ export class ProtectedNode extends Node {
 
     var renderer = ServiceLocator.sys.rendererConfig.renderer;
     var i,
-      children = this._children,
+      children = this.children,
       len = children.length,
       child;
     var j,
@@ -94,15 +94,15 @@ export class ProtectedNode extends Node {
 
     if (this.running) {
       child._performRecursive(Node._stateCallbackType.onEnter);
-      if (this._isTransitionFinished)
+      if (this.transitionFinished)
         child._performRecursive(
           Node._stateCallbackType.onEnterTransitionDidFinish
         );
     }
     if (this.cascadeColor)
-      this._renderCmd.setCascadeColorEnabledDirty();
+      this.renderCmd.setCascadeColorEnabledDirty();
     if (this.cascadeOpacity)
-      this._renderCmd.setCascadeOpacityEnabledDirty();
+      this.renderCmd.setCascadeOpacityEnabledDirty();
   }
 
   getProtectedChildByTag(tag) {
@@ -203,7 +203,7 @@ export class ProtectedNode extends Node {
 
   _changePosition() {}
 
-  _createRenderCmd() {
+  createRenderCmd() {
     if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new this.constructor.CanvasRenderCmd(this);
     else return new this.constructor.WebGLRenderCmd(this);

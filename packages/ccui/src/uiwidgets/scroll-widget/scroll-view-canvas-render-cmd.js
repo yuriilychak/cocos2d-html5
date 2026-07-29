@@ -24,7 +24,7 @@ export class ScrollViewCanvasRenderCmd extends LayoutCanvasRenderCmd {
     for (i = 0, len = locCmds.length; i < len; i++) {
       var checkNode = locCmds[i]._node;
       // Skip the ScrollView node itself to avoid recursive rendering
-      if (checkNode && checkNode._className === "ScrollView") continue;
+      if (checkNode && checkNode.className === "ScrollView") continue;
       if (
         checkNode &&
         checkNode.parent &&

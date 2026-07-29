@@ -101,9 +101,9 @@ export default class LayerCanvasRenderer extends NodeCanvasRenderCmd {
       this._isBaked = this._cacheDirty = true;
       if (this._updateCache === 0) this._updateCache = 2;
 
-      const children = this._node._children;
+      const children = this._node.children;
       for (let i = 0, len = children.length; i < len; i++)
-        children[i]._renderCmd._setCachedParent(this);
+        children[i].renderCmd._setCachedParent(this);
 
       if (!this._bakeSprite) {
         this._bakeSprite = new BakeSprite();
@@ -121,9 +121,9 @@ export default class LayerCanvasRenderer extends NodeCanvasRenderCmd {
       this._cacheDirty = true;
       if (this._updateCache === 0) this._updateCache = 2;
 
-      const children = this._node._children;
+      const children = this._node.children;
       for (let i = 0, len = children.length; i < len; i++)
-        children[i]._renderCmd._setCachedParent(null);
+        children[i].renderCmd._setCachedParent(null);
     }
   }
 
@@ -134,7 +134,7 @@ export default class LayerCanvasRenderer extends NodeCanvasRenderCmd {
   rendering() {
     if (this._cacheDirty) {
       const node = this._node;
-      const children = node._children,
+      const children = node.children,
         locBakeSprite = this._bakeSprite;
 
       this.transform(this.getParentRenderCmd(), true);
@@ -171,18 +171,18 @@ export default class LayerCanvasRenderer extends NodeCanvasRenderCmd {
 
   _bakeForAddChild(child) {
     if (child.parent === this._node && this._isBaked)
-      child._renderCmd._setCachedParent(this);
+      child.renderCmd._setCachedParent(this);
   }
 
   _getBoundingBoxForBake() {
     let rect = null;
     const node = this._node;
 
-    if (!node._children || node._children.length === 0)
+    if (node.children.length === 0)
       return new Rect(0, 0, 10, 10);
     const trans = node.getNodeToWorldTransform();
 
-    const locChildren = node._children;
+    const locChildren = node.children;
     for (let i = 0, len = locChildren.length; i < len; i++) {
       const child = locChildren[i];
       if (child && child.visible) {

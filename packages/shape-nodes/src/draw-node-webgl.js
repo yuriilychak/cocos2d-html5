@@ -54,7 +54,6 @@ function pMultOut(pin, floatVar, pout) {
 export class DrawNodeWebGL {
   _initDrawNode(capacity, manualRelease) {
     initScratch();
-    this._className = "DrawNodeWebGL";
     this._bufferCapacity = 0;
     this._vertexCount = 0;
     this._offset = 0;
@@ -71,7 +70,7 @@ export class DrawNodeWebGL {
       );
     }
 
-    this._renderCmd._shaderProgram = ServiceLocator.shaderCache.get(
+    this.renderCmd._shaderProgram = ServiceLocator.shaderCache.get(
       ShaderName.POSITION_LENGTHTEXTURECOLOR
     );
     this._blendFunc = new BlendFunc(
@@ -714,7 +713,7 @@ export class DrawNodeWebGL {
     this._dirty = true;
   }
 
-  _createRenderCmd() {
+  createRenderCmd() {
     return new this.constructor.WebGLRenderCmd(this);
   }
 }

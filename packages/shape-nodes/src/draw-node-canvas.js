@@ -4,8 +4,7 @@ import { DrawNodeElement } from "./draw-node-element";
 
 export class DrawNodeCanvas {
   _initDrawNode() {
-    this._className = "DrawNodeCanvas";
-    var locCmd = this._renderCmd;
+    var locCmd = this.renderCmd;
     locCmd._buffer = this._buffer = [];
     locCmd._drawColor = this._drawColor = new Color(255, 255, 255, 255);
     locCmd._blendFunc = this._blendFunc = new BlendFunc(
@@ -361,7 +360,7 @@ export class DrawNodeCanvas {
     this._buffer.length = 0;
   }
 
-  _createRenderCmd() {
+  createRenderCmd() {
     return new this.constructor.CanvasRenderCmd(this);
   }
 }

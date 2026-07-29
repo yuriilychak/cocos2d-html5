@@ -12,7 +12,6 @@ export class ControlSaturationBrightnessPicker extends Control {
   _startPos = null;
   _boxPos = 0;
   _boxSize = 0;
-  _className = "ControlSaturationBrightnessPicker";
 
   constructor(target, pos) {
     super();

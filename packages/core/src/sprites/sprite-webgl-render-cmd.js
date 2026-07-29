@@ -99,12 +99,12 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
     this._recursiveDirty = value;
     this._dirty = value;
     // recursively set dirty
-    const locChildren = this._node._children;
+    const locChildren = this._node.children;
     let child;
     const l = locChildren ? locChildren.length : 0;
     for (let i = 0; i < l; i++) {
       child = locChildren[i];
-      child.isSprite && child._renderCmd.setDirtyRecursively(value);
+      child.isSprite && child.renderCmd.setDirtyRecursively(value);
     }
   }
 

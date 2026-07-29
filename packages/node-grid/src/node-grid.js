@@ -34,8 +34,8 @@ export class NodeGrid extends Node {
   }
 
   visit(parent) {
-    var cmd = this._renderCmd;
-    var parentCmd = parent ? parent._renderCmd : null;
+    var cmd = this.renderCmd;
+    var parentCmd = parent ? parent.renderCmd : null;
     if (!this.visible) {
       cmd._propagateFlagsDown(parentCmd);
       return;
@@ -44,7 +44,7 @@ export class NodeGrid extends Node {
     cmd._dirtyFlag = 0;
   }
 
-  _createRenderCmd() {
+  createRenderCmd() {
     if (ServiceLocator.sys.rendererConfig.isWebGL)
       return new this.constructor.WebGLRenderCmd(this);
     else

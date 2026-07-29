@@ -121,7 +121,7 @@ export class Skin extends Sprite {
     this.rotationY = radiansToDegrees(-skinData.skewY);
     this.position = { x: skinData.x, y: skinData.y };
 
-    this._renderCmd.transform();
+    this.renderCmd.transform();
   }
 
   /**
@@ -136,7 +136,7 @@ export class Skin extends Sprite {
    * Updates armature skin's transform with skin transform and bone's transform.
    */
   updateArmatureTransform() {
-    this._renderCmd.transform();
+    this.renderCmd.transform();
   }
 
   /**
@@ -144,11 +144,11 @@ export class Skin extends Sprite {
    * @returns {AffineTransform}
    */
   getNodeToWorldTransform() {
-    return this._renderCmd.getNodeToWorldTransform();
+    return this.renderCmd.getNodeToWorldTransform();
   }
 
   getNodeToWorldTransformAR() {
-    return this._renderCmd.getNodeToWorldTransformAR();
+    return this.renderCmd.getNodeToWorldTransformAR();
   }
 
   /**
@@ -177,7 +177,7 @@ export class Skin extends Sprite {
     return this._displayName;
   }
 
-  _createRenderCmd() {
+  createRenderCmd() {
     if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new this.constructor.CanvasRenderCmd(this);
     else return new this.constructor.WebGLRenderCmd(this);

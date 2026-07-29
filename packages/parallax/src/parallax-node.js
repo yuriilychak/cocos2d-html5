@@ -37,7 +37,6 @@ export class ParallaxNode extends Node {
   parallaxArray = null;
 
   _lastPosition = null;
-  _className = "ParallaxNode";
 
   /**
    * Gets the parallax array.
@@ -144,7 +143,7 @@ export class ParallaxNode extends Node {
     return ret;
   }
 
-  _createRenderCmd() {
+  createRenderCmd() {
     if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new this.constructor.CanvasRenderCmd(this);
     else return new this.constructor.WebGLRenderCmd(this);

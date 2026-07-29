@@ -41,7 +41,6 @@ export class LoadingBar extends Widget {
     this._prevIgnoreSize = true;
     this._textureFile = "";
     this._isTextureLoaded = false;
-    this._className = "LoadingBar";
     this._barRendererAdaptDirty = true;
     if (textureName !== undefined) this.loadTexture(textureName);
     if (percentage !== undefined) this.setPercent(percentage);

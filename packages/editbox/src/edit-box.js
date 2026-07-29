@@ -43,7 +43,6 @@ export class EditBox extends Node {
     this._placeholderFontName = "";
     this._placeholderFontSize = 14;
     this._fntFile = fntFile || null;
-    this._className = "EditBox";
     this._touchListener = null;
     this._touchEnabled = true;
 
@@ -186,7 +185,7 @@ export class EditBox extends Node {
     this._editBoxInputMode = inputMode;
 
     this._input.setInputMode(inputMode);
-    this._renderCmd.transform();
+    this.renderCmd.transform();
 
     this.string = oldText;
     this._input._updateLabelPosition(this.contentSize);
@@ -212,7 +211,7 @@ export class EditBox extends Node {
 
   visit(parent) {
     super.visit(parent);
-    if (this._input) this._input.updateMatrix(this._renderCmd._worldTransform);
+    if (this._input) this._input.updateMatrix(this.renderCmd._worldTransform);
   }
 
   get contentSize() {

@@ -6,7 +6,6 @@ export class TransitionScene extends Scene {
   _duration = null;
   _isInSceneOnTop = false;
   _isSendCleanupToScene = false;
-  _className = "TransitionScene";
 
   constructor(t, scene) {
     super();

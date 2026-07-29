@@ -20,11 +20,11 @@ export class SkeletonCanvasRenderCmd extends Node.CanvasRenderCmd {
     for (let i = 0, n = drawOrder.length; i < n; i++) {
       const slot = drawOrder[i];
       const slotNode = slot._slotNode;
-      if (slotNode.visible && slotNode._renderCmd && slot.currentSprite) {
-        slotNode._renderCmd.transform(this, true);
-        slot.currentSprite._renderCmd.rendering(wrapper, scaleX, scaleY);
-        slotNode._renderCmd._dirtyFlag =
-          slot.currentSprite._renderCmd._dirtyFlag = 0;
+      if (slotNode.visible && slotNode.renderCmd && slot.currentSprite) {
+        slotNode.renderCmd.transform(this, true);
+        slot.currentSprite.renderCmd.rendering(wrapper, scaleX, scaleY);
+        slotNode.renderCmd._dirtyFlag =
+          slot.currentSprite.renderCmd._dirtyFlag = 0;
       }
     }
 
@@ -218,12 +218,12 @@ export class SkeletonCanvasRenderCmd extends Node.CanvasRenderCmd {
           selSprite.rotation = -attachment.rotation;
         }
 
-        selSprite._renderCmd._displayedOpacity = 0 | (opacity * slot.color.a);
+        selSprite.renderCmd._displayedOpacity = 0 | (opacity * slot.color.a);
         const r = 0 | (color.r * slot.color.r);
         const g = 0 | (color.g * slot.color.g);
         const b = 0 | (color.b * slot.color.b);
         selSprite.color = new Color(r, g, b);
-        selSprite._renderCmd._updateColor();
+        selSprite.renderCmd._updateColor();
       } else if (attachment instanceof MeshAttachment) {
         // mesh not supported in canvas mode
       } else {

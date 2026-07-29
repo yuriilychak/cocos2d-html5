@@ -167,7 +167,7 @@ export default class Follow extends Action {
     const tempPosY = this._halfScreenSize.y - this._followedNode.y;
 
     //TODO Temporary treatment - The dirtyFlag symbol error
-    this.target._renderCmd._dirtyFlag = 0;
+    this.target.renderCmd._dirtyFlag = 0;
 
     if (this._boundarySet) {
       // whole map fits inside a single screen, no need to modify the position - unless map boundaries are increased

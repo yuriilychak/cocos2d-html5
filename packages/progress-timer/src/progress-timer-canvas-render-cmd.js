@@ -31,8 +31,8 @@ export class ProgressTimerCanvasRenderCmd extends Node.CanvasRenderCmd {
     const context = wrapper.context;
     const node = this._node;
     const locSprite = node._sprite;
-    const locTextureCoord = locSprite._renderCmd._textureCoord;
-    const alpha = locSprite._renderCmd._displayedOpacity / 255;
+    const locTextureCoord = locSprite.renderCmd._textureCoord;
+    const alpha = locSprite.renderCmd._displayedOpacity / 255;
 
     if (locTextureCoord.width === 0 || locTextureCoord.height === 0) return;
     if (!locSprite._texture || !locTextureCoord.validRect || alpha === 0)
@@ -89,9 +89,9 @@ export class ProgressTimerCanvasRenderCmd extends Node.CanvasRenderCmd {
     }
 
     //draw sprite
-    const texture = locSprite._renderCmd._textureToRender || locSprite._texture;
+    const texture = locSprite.renderCmd._textureToRender || locSprite._texture;
     const image = texture.htmlElement;
-    if (locSprite._renderCmd._colorized) {
+    if (locSprite.renderCmd._colorized) {
       context.drawImage(
         image,
         0,
@@ -250,7 +250,7 @@ export class ProgressTimerCanvasRenderCmd extends Node.CanvasRenderCmd {
 
     this._dirtyFlag = locFlag;
 
-    const spriteCmd = node._sprite._renderCmd;
+    const spriteCmd = node._sprite.renderCmd;
     const spriteFlag = spriteCmd._dirtyFlag;
 
     const colorDirty = spriteFlag & flags.colorDirty,
@@ -286,7 +286,7 @@ export class ProgressTimerCanvasRenderCmd extends Node.CanvasRenderCmd {
     if (!node._sprite) return;
     const flags = Node._dirtyFlags,
       locFlag = this._dirtyFlag;
-    const spriteCmd = node._sprite._renderCmd;
+    const spriteCmd = node._sprite.renderCmd;
     const spriteFlag = spriteCmd._dirtyFlag;
 
     const colorDirty = spriteFlag & flags.colorDirty,

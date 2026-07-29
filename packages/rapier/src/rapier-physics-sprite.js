@@ -30,5 +30,3 @@ export class RapierPhysicsSprite extends Sprite {
     super.visit(parentCmd);
   }
 }
-
-RapierPhysicsSprite._className = "RapierPhysicsSprite";

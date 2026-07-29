@@ -35,7 +35,6 @@ export class ControlButton extends Control {
   _parentInited = false;
   _marginV = 0;
   _marginH = 0;
-  _className = "ControlButton";
 
   get adjustBackground() {
     return this.getAdjustBackgroundImage();

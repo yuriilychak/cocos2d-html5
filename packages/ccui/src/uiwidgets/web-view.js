@@ -48,7 +48,7 @@ export class WebView extends Widget {
   }
 
   visit() {
-    var cmd = this._renderCmd,
+    var cmd = this.renderCmd,
       div = cmd._div,
       container = ServiceLocator.eglView.container,
       eventManager = ServiceLocator.eventManager;
@@ -85,7 +85,7 @@ export class WebView extends Widget {
    * @param {String} url
    */
   loadURL(url) {
-    this._renderCmd.updateURL(url);
+    this.renderCmd.updateURL(url);
     this._dispatchEvent(WebView.EventType.LOADING);
   }
 
@@ -100,7 +100,7 @@ export class WebView extends Widget {
    * Reload the WebView
    */
   reload() {
-    var iframe = this._renderCmd._iframe;
+    var iframe = this.renderCmd._iframe;
     if (iframe) {
       var win = iframe.contentWindow;
       if (win && win.location) win.location.reload();
@@ -130,7 +130,7 @@ export class WebView extends Widget {
     try {
       if (WebView._polyfill.closeHistory)
         return log("The current browser does not support the GoBack");
-      var iframe = this._renderCmd._iframe;
+      var iframe = this.renderCmd._iframe;
       if (iframe) {
         var win = iframe.contentWindow;
         if (win && win.location)
@@ -152,7 +152,7 @@ export class WebView extends Widget {
     try {
       if (WebView._polyfill.closeHistory)
         return log("The current browser does not support the GoForward");
-      var iframe = this._renderCmd._iframe;
+      var iframe = this.renderCmd._iframe;
       if (iframe) {
         var win = iframe.contentWindow;
         if (win && win.location)
@@ -172,7 +172,7 @@ export class WebView extends Widget {
    * @param {String} str
    */
   evaluateJS(str) {
-    var iframe = this._renderCmd._iframe;
+    var iframe = this.renderCmd._iframe;
     if (iframe) {
       var win = iframe.contentWindow;
       try {
@@ -210,10 +210,10 @@ export class WebView extends Widget {
 
   _dispatchEvent(event) {
     var callback = this._EventList[event];
-    if (callback) callback.call(this, this, this._renderCmd._iframe.src);
+    if (callback) callback.call(this, this, this.renderCmd._iframe.src);
   }
 
-  _createRenderCmd() {
+  createRenderCmd() {
     return new WebView.RenderCmd(this);
   }
 
@@ -224,14 +224,14 @@ export class WebView extends Widget {
 
   set contentSize(value) {
     super.contentSize = value;
-    this._renderCmd.changeSize(value.width, value.height);
+    this.renderCmd.changeSize(value.width, value.height);
   }
 
   /**
    * remove node
    */
   cleanup() {
-    this._renderCmd.removeDom();
+    this.renderCmd.removeDom();
     this.stopAllActions();
     this.unscheduleAllCallbacks();
   }

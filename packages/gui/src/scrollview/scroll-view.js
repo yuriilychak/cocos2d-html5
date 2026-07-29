@@ -61,7 +61,6 @@ export class GScrollView extends Layer {
 
   _tmpViewRect = null;
   _touchListener = null;
-  _className = "ScrollView";
 
   get minOffset() {
     return this.minContainerOffset();
@@ -154,8 +153,8 @@ export class GScrollView extends Layer {
   }
 
   visit(parent) {
-    var cmd = this._renderCmd,
-      parentCmd = parent ? parent._renderCmd : null;
+    var cmd = this.renderCmd,
+      parentCmd = parent ? parent.renderCmd : null;
 
     if (!this.visible) {
       cmd._propagateFlagsDown(parentCmd);
@@ -170,7 +169,7 @@ export class GScrollView extends Layer {
     }
 
     var i,
-      children = this._children,
+      children = this.children,
       len = children.length;
     if (len > 0) {
       if (this.reorderChildDirty) {
@@ -296,7 +295,7 @@ export class GScrollView extends Layer {
 
   pause(sender) {
     this._container.pause();
-    var selChildren = this._container.getChildren();
+    var selChildren = this._container.children;
     for (var i = 0; i < selChildren.length; i++) {
       selChildren[i].pause();
     }
@@ -304,7 +303,7 @@ export class GScrollView extends Layer {
   }
 
   resume(sender) {
-    var selChildren = this._container.getChildren();
+    var selChildren = this._container.children;
     for (var i = 0, len = selChildren.length; i < len; i++) {
       selChildren[i].resume();
     }
@@ -743,7 +742,7 @@ export class GScrollView extends Layer {
     return locViewRect;
   }
 
-  _createRenderCmd() {
+  createRenderCmd() {
     if (ServiceLocator.sys.rendererConfig.isCanvas) {
       return new this.constructor.CanvasRenderCmd(this);
     } else {

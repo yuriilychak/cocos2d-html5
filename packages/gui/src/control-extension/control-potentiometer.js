@@ -11,7 +11,6 @@ export class ControlPotentiometer extends Control {
   _value = 0;
   _minimumValue = 0;
   _maximumValue = 1;
-  _className = "PotentiometerComponent";
 
   constructor(backgroundFile, progressFile, thumbFile) {
     super();

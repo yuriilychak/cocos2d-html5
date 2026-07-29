@@ -67,7 +67,6 @@ export class CheckBox extends Widget {
     this._frontCrossFileName = "";
     this._backGroundDisabledFileName = "";
     this._frontCrossDisabledFileName = "";
-    this._className = "CheckBox";
     this._zoomScale = 0.1;
     this._backgroundTextureScaleX = 0.1;
     this._backgroundTextureScaleY = 0.1;

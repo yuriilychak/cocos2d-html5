@@ -45,7 +45,6 @@ export class Layout extends Widget {
     }
     this._scissorRectDirty = false;
     this._clippingParent = null;
-    this._className = "Layout";
     this._finalPositionX = 0;
     this._finalPositionY = 0;
     this._backGroundImageOpacity = 0;
@@ -111,8 +110,8 @@ export class Layout extends Widget {
   }
 
   visit(parent) {
-    var cmd = this._renderCmd,
-      parentCmd = parent ? parent._renderCmd : null;
+    var cmd = this.renderCmd,
+      parentCmd = parent ? parent.renderCmd : null;
 
     if (!this.visible) {
       cmd._propagateFlagsDown(parentCmd);
@@ -137,7 +136,7 @@ export class Layout extends Widget {
     }
 
     var i,
-      children = this._children,
+      children = this.children,
       len = children.length,
       child;
     var j,
@@ -292,7 +291,7 @@ export class Layout extends Widget {
       case Layout.CLIPPING_STENCIL:
         if (able) {
           this._clippingStencil = new DrawNode();
-          this._renderCmd.rebindStencilRendering(this._clippingStencil);
+          this.renderCmd.rebindStencilRendering(this._clippingStencil);
           if (this.running)
             this._clippingStencil._performRecursive(
               Node._stateCallbackType.onEnter
@@ -680,7 +679,7 @@ export class Layout extends Widget {
 
   setLayoutType(type) {
     this._layoutType = type;
-    var layoutChildrenArray = this._children;
+    var layoutChildrenArray = this.children;
     var locChild = null;
     for (var i = 0; i < layoutChildrenArray.length; i++) {
       locChild = layoutChildrenArray[i];
@@ -844,7 +843,7 @@ export class Layout extends Widget {
   _calculateNearestDistance(baseWidget) {
     var distance = FLT_MAX;
     var widgetPosition = this._getWorldCenterPoint(baseWidget);
-    var locChildren = this._children;
+    var locChildren = this.children;
 
     for (var i = 0, len = locChildren.length; i < len; i++) {
       var widget = locChildren[i],
@@ -866,7 +865,7 @@ export class Layout extends Widget {
   _calculateFarthestDistance(baseWidget) {
     var distance = -FLT_MAX;
     var widgetPosition = this._getWorldCenterPoint(baseWidget);
-    var locChildren = this._children;
+    var locChildren = this.children;
 
     for (var i = 0, len = locChildren.length; i < len; i++) {
       var layout = locChildren[i];
@@ -916,7 +915,7 @@ export class Layout extends Widget {
   }
 
   _findFirstNonLayoutWidget() {
-    var locChildren = this._children;
+    var locChildren = this.children;
     for (var i = 0, len = locChildren.length; i < len; i++) {
       var child = locChildren[i];
       if (child instanceof Layout) {
@@ -963,7 +962,7 @@ export class Layout extends Widget {
 
   _getNextFocusedWidget(direction, current) {
     var nextWidget = null,
-      locChildren = this._children;
+      locChildren = this.children;
     var previousWidgetPos = locChildren.indexOf(current);
     previousWidgetPos = previousWidgetPos + 1;
     if (previousWidgetPos < locChildren.length) {
@@ -1007,7 +1006,7 @@ export class Layout extends Widget {
 
   _getPreviousFocusedWidget(direction, current) {
     var nextWidget = null,
-      locChildren = this._children;
+      locChildren = this.children;
     var previousWidgetPos = locChildren.indexOf(current);
     previousWidgetPos = previousWidgetPos - 1;
     if (previousWidgetPos >= 0) {
@@ -1047,7 +1046,7 @@ export class Layout extends Widget {
   }
 
   _getChildWidgetByIndex(index) {
-    var locChildren = this._children;
+    var locChildren = this.children;
     var size = locChildren.length,
       count = 0,
       oldIndex = index;
@@ -1150,7 +1149,7 @@ export class Layout extends Widget {
   }
 
   _checkFocusEnabledChild() {
-    var locChildren = this._children;
+    var locChildren = this.children;
     for (var i = 0, len = locChildren.length; i < len; i++) {
       var widget = locChildren[i];
       if (widget && widget instanceof Widget && widget.isFocusEnabled())
@@ -1197,7 +1196,7 @@ export class Layout extends Widget {
     this._doLayout();
   }
 
-  _createRenderCmd() {
+  createRenderCmd() {
     if (ServiceLocator.sys.rendererConfig.isWebGL)
       return new LayoutWebGLRenderCmd(this);
     else return new LayoutCanvasRenderCmd(this);

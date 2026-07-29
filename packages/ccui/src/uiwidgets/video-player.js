@@ -51,12 +51,12 @@ export class VideoPlayer extends Widget {
     if (path) this.setURL(path);
   }
 
-  _createRenderCmd() {
+  createRenderCmd() {
     return new VideoPlayer.RenderCmd(this);
   }
 
   visit() {
-    var cmd = this._renderCmd,
+    var cmd = this.renderCmd,
       div = cmd._div,
       container = ServiceLocator.eglView.container,
       eventManager = ServiceLocator.eventManager;
@@ -91,7 +91,7 @@ export class VideoPlayer extends Widget {
    * @param {String} address
    */
   setURL(address) {
-    this._renderCmd.updateURL(address);
+    this.renderCmd.updateURL(address);
   }
 
   /**
@@ -99,7 +99,7 @@ export class VideoPlayer extends Widget {
    * @returns {String}
    */
   getURL() {
-    return this._renderCmd._url;
+    return this.renderCmd._url;
   }
 
   /**
@@ -107,7 +107,7 @@ export class VideoPlayer extends Widget {
    */
   play() {
     var self = this,
-      video = this._renderCmd._video;
+      video = this.renderCmd._video;
     if (video) {
       this._played = true;
       video.pause();
@@ -135,7 +135,7 @@ export class VideoPlayer extends Widget {
    * Pause the video
    */
   pause() {
-    var video = this._renderCmd._video;
+    var video = this.renderCmd._video;
     if (video && this._playing === true && this._stopped === false) {
       video.pause();
       this._playing = false;
@@ -160,7 +160,7 @@ export class VideoPlayer extends Widget {
    */
   stop() {
     var self = this,
-      video = this._renderCmd._video;
+      video = this.renderCmd._video;
     if (video) {
       video.pause();
       video.currentTime = 0;
@@ -177,7 +177,7 @@ export class VideoPlayer extends Widget {
    * @param {Number} sec
    */
   seekTo(sec) {
-    var video = this._renderCmd._video;
+    var video = this.renderCmd._video;
     if (video) {
       video.currentTime = sec;
       if (VideoPlayer._polyfill.autoplayAfterOperation && this.isPlaying()) {
@@ -217,7 +217,7 @@ export class VideoPlayer extends Widget {
    * @param {boolean} enable
    */
   setFullScreenEnabled(enable) {
-    var video = this._renderCmd._video;
+    var video = this.renderCmd._video;
     if (video) {
       if (enable) ServiceLocator.screen.requestFullScreen(video);
       else ServiceLocator.screen.exitFullScreen(video);
@@ -250,7 +250,7 @@ export class VideoPlayer extends Widget {
 
   _dispatchEvent(event) {
     var callback = this._EventList[event];
-    if (callback) callback.call(this, this, this._renderCmd._video.src);
+    if (callback) callback.call(this, this, this.renderCmd._video.src);
   }
 
   /**
@@ -260,7 +260,7 @@ export class VideoPlayer extends Widget {
     var list = this._EventList[VideoPlayer.EventType.PLAYING];
     if (list)
       for (var i = 0; i < list.length; i++)
-        list[i].call(this, this, this._renderCmd._video.src);
+        list[i].call(this, this, this.renderCmd._video.src);
   }
 
   get contentSize() {
@@ -269,11 +269,11 @@ export class VideoPlayer extends Widget {
 
   set contentSize(value) {
     super.contentSize = value;
-    this._renderCmd.changeSize(value.width, value.height);
+    this.renderCmd.changeSize(value.width, value.height);
   }
 
   cleanup() {
-    this._renderCmd.removeDom();
+    this.renderCmd.removeDom();
     this.stopAllActions();
     this.unscheduleAllCallbacks();
   }
@@ -531,7 +531,7 @@ document.head.appendChild(style);
       var node = this._node,
         video = this._video;
       video.addEventListener("ended", () => {
-        node._renderCmd.updateMatrix(
+        node.renderCmd.updateMatrix(
           this._worldTransform,
           ServiceLocator.eglView.scaleX,
           ServiceLocator.eglView.scaleY

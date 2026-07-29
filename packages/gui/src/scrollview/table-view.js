@@ -21,7 +21,6 @@ export const TABLEVIEW_FILL_BOTTOMUP = 1;
 
 export class TableViewCell extends Node {
   _idx = 0;
-  _className = "TableViewCell";
 
   getIdx() {
     return this._idx;

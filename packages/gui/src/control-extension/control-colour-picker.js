@@ -9,7 +9,6 @@ export class ControlColourPicker extends Control {
   _colourPicker = null;
   _huePicker = null;
   _background = null;
-  _className = "ControlColourPicker";
   _color = null;
 
   get background() {

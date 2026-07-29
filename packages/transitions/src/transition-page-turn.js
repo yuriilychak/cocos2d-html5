@@ -7,7 +7,6 @@ import { TransitionScene } from "./transition/transition-scene";
 export class TransitionPageTurn extends TransitionScene {
   _back = true;
   _gridProxy = null;
-  _className = "TransitionPageTurn";
 
   constructor(t, scene, backwards) {
     super();

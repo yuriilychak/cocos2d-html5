@@ -49,7 +49,6 @@ export class LayerColor extends Layer {
   constructor(color, width, height) {
     super();
     this._blendFunc = null;
-    this._className = "LayerColor";
 
     this._blendFunc = BlendFunc.ALPHA_NON_PREMULTIPLIED;
     LayerColor.prototype.init.call(this, color, width, height);
@@ -63,7 +62,7 @@ export class LayerColor extends Layer {
 
     this.color = color;
     this.opacity = color.a;
-    this._renderCmd.setDirtyFlag(
+    this.renderCmd.setDirtyFlag(
       Node._dirtyFlags.colorDirty | Node._dirtyFlags.opacityDirty
     );
 
@@ -73,8 +72,8 @@ export class LayerColor extends Layer {
   }
 
   visit(parent, renderer = ServiceLocator.sys.rendererConfig.renderer) {
-    var cmd = this._renderCmd,
-      parentCmd = parent ? parent._renderCmd : null;
+    var cmd = this.renderCmd,
+      parentCmd = parent ? parent.renderCmd : null;
 
     if (!this.visible) {
       cmd._propagateFlagsDown(parentCmd);
@@ -85,12 +84,12 @@ export class LayerColor extends Layer {
 
     if (cmd._isBaked) {
       renderer.pushRenderCommand(cmd._bakeRenderCmd);
-      cmd._bakeSprite._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
+      cmd._bakeSprite.renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
       cmd._bakeSprite.visit(this, renderer);
     } else {
       var i,
         child,
-        children = this._children,
+        children = this.children,
         len = children.length;
       if (len > 0) {
         if (this.reorderChildDirty) {
@@ -126,10 +125,10 @@ export class LayerColor extends Layer {
       locBlendFunc.src = src;
       locBlendFunc.dst = dst;
     }
-    this._renderCmd.updateBlendFunc(locBlendFunc);
+    this.renderCmd.updateBlendFunc(locBlendFunc);
   }
 
-  _createRenderCmd() {
+  createRenderCmd() {
     if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new LayerColorCanvasRenderer(this);
     else return new LayerColorWebGLRenderer(this);

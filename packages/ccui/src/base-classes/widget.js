@@ -125,7 +125,6 @@ export class Widget extends ProtectedNode {
     this._hit = false;
     this._nodes = null;
     this._touchListener = null;
-    this._className = "Widget";
     this._flippedX = false;
     this._flippedY = false;
     this._opacity = 255;
@@ -992,7 +991,7 @@ export class Widget extends ProtectedNode {
       this._setXPercent(percent.x);
       this._setYPercent(percent.y);
     }
-    this._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
+    this.renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
   }
   _setXPercent(percent) {
     if (this._usingLayoutComponent) {
@@ -1002,7 +1001,7 @@ export class Widget extends ProtectedNode {
       return;
     }
     this._positionPercent.x = percent;
-    this._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
+    this.renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
   }
   _setYPercent(percent) {
     if (this._usingLayoutComponent) {
@@ -1012,7 +1011,7 @@ export class Widget extends ProtectedNode {
       return;
     }
     this._positionPercent.y = percent;
-    this._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
+    this.renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
   }
 
   getPositionPercent() {
@@ -1052,7 +1051,7 @@ export class Widget extends ProtectedNode {
         component.setPositionPercentYEnabled(true);
       }
     }
-    this._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
+    this.renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
   }
 
   getPositionType() {
@@ -1389,7 +1388,7 @@ export class Widget extends ProtectedNode {
   isLayoutComponentEnabled() {
     return this._usingLayoutComponent;
   }
-  _createRenderCmd() {
+  createRenderCmd() {
     if (ServiceLocator.sys.rendererConfig.isWebGL)
       return new WidgetWebGLRenderCmd(this);
     else return new WidgetCanvasRenderCmd(this);

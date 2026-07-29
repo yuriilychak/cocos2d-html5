@@ -166,7 +166,7 @@ export default class Director extends BaseClass {
       if (renderer.childrenOrderDirty) {
         renderer.clearRenderCommands();
         renderer.assignedZ = 0;
-        this.#runningScene._renderCmd._curLevel = 0;
+        this.#runningScene.renderCmd._curLevel = 0;
         this.#runningScene.visit(null, renderer);
         renderer.resetFlag();
       } else if (renderer.transformDirty()) {
@@ -463,9 +463,9 @@ export default class Director extends BaseClass {
   }
 
   static recursiveChild(node: Scene): void {
-    if (node && node._renderCmd) {
-      node._renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
-      const children = node._children;
+    if (node && node.renderCmd) {
+      node.renderCmd.setDirtyFlag(Node._dirtyFlags.transformDirty);
+      const children = node.children;
       for (let i = 0; i < children.length; i++) {
         Director.recursiveChild(children[i]);
       }

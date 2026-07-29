@@ -42,7 +42,6 @@ class TextFieldRenderer extends TextFieldTTF {
     this._detachWithIME = false;
     this._insertText = false;
     this._deleteBackward = false;
-    this._className = "_TextFieldRenderer";
   }
 
   onEnter() {

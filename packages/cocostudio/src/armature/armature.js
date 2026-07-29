@@ -163,7 +163,7 @@ export class Armature extends Node {
       this.animation.setAnimationData(animationData);
     }
 
-    this._renderCmd.initShaderCache();
+    this.renderCmd.initShaderCache();
 
     this.cascadeOpacity = true;
     this.cascadeColor = true;
@@ -171,8 +171,8 @@ export class Armature extends Node {
   }
 
   visit(parent) {
-    var cmd = this._renderCmd,
-      parentCmd = parent ? parent._renderCmd : null;
+    var cmd = this.renderCmd,
+      parentCmd = parent ? parent.renderCmd : null;
 
     // quick return if not visible
     if (!this.visible) {
@@ -388,7 +388,7 @@ export class Armature extends Node {
     var first = true;
 
     var boundingBox = new Rect(0, 0, 0, 0),
-      locChildren = this._children;
+      locChildren = this.children;
 
     var len = locChildren.length;
     for (var i = 0; i < len; i++) {
@@ -435,7 +435,7 @@ export class Armature extends Node {
    * @returns {Bone}
    */
   getBoneAtPoint(x, y) {
-    var locChildren = this._children;
+    var locChildren = this.children;
     for (var i = locChildren.length - 1; i >= 0; i--) {
       var child = locChildren[i];
       if (child instanceof Bone && child.getDisplayManager().containPoint(x, y))
@@ -495,7 +495,7 @@ export class Armature extends Node {
     this._body.data = this;
     var child,
       displayObject,
-      locChildren = this._children;
+      locChildren = this.children;
     for (var i = 0; i < locChildren.length; i++) {
       child = locChildren[i];
       if (child instanceof Bone) {
@@ -590,7 +590,7 @@ export class Armature extends Node {
     this.version = version;
   }
 
-  _createRenderCmd() {
+  createRenderCmd() {
     if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new this.constructor.CanvasRenderCmd(this);
     else return new this.constructor.WebGLRenderCmd(this);

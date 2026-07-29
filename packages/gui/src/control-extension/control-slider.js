@@ -8,7 +8,6 @@ export class ControlSlider extends Control {
   _thumb = null;
   _progress = null;
   _background = null;
-  _className = "SliderComponent";
   _thumbOffset = null;
   _progressSize = null;
   _backgroundPadding = null;

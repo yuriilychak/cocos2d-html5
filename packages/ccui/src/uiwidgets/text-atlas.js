@@ -49,7 +49,6 @@ export class TextAtlas extends Widget {
     this._itemWidth = 0;
     this._itemHeight = 0;
     this._startCharMap = "";
-    this._className = "TextAtlas";
     this._labelAtlasRendererAdaptDirty = null;
     if (startCharMap !== undefined) {
       this.setProperty(

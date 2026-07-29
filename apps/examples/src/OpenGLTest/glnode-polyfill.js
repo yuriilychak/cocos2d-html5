@@ -6,10 +6,10 @@ export class GLNode extends Node {
         this.init();
     }
     init() {
-        this._renderCmd._needDraw = true;
-        this._renderCmd._matrix = new Matrix4();
-        this._renderCmd._matrix.identity();
-        this._renderCmd.rendering =  function(ctx){
+        this.renderCmd._needDraw = true;
+        this.renderCmd._matrix = new Matrix4();
+        this.renderCmd._matrix.identity();
+        this.renderCmd.rendering =  function(ctx){
             var wt = this._worldTransform;
             this._matrix.mat[0] = wt.a;
             this._matrix.mat[4] = wt.c;

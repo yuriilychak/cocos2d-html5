@@ -44,7 +44,6 @@ export class TextBMFont extends Widget {
     this._fntFileHasInit = false;
     this._fntFileName = "";
     this._stringValue = "";
-    this._className = "TextBMFont";
     this._labelBMFontRendererAdaptDirty = true;
     this._loader = new Sprite.LoadManager();
 

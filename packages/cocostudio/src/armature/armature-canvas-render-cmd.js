@@ -71,7 +71,7 @@ export class ArmatureCanvasRenderCmd extends Node.CanvasRenderCmd {
   _startCmdCallback(ctx, scaleX, scaleY) {
     var node = this._node,
       parent = node.parent;
-    this.transform(parent ? parent._renderCmd : null);
+    this.transform(parent ? parent.renderCmd : null);
 
     var wrapper = ctx || ServiceLocator.sys.rendererConfig.renderContext;
     wrapper.save();
@@ -81,15 +81,15 @@ export class ArmatureCanvasRenderCmd extends Node.CanvasRenderCmd {
   transform(parentCmd, recursive) {
     this.originTransform(parentCmd, recursive);
 
-    var locChildren = this._node._children;
+    var locChildren = this._node.children;
     for (var i = 0, len = locChildren.length; i < len; i++) {
       var selBone = locChildren[i];
-      var boneCmd = selBone._renderCmd;
+      var boneCmd = selBone.renderCmd;
       if (selBone && selBone.getDisplayRenderNode) {
         var boneType = selBone.getDisplayRenderNodeType();
         var selNode = selBone.getDisplayRenderNode();
-        if (selNode && selNode._renderCmd) {
-          var cmd = selNode._renderCmd;
+        if (selNode && selNode.renderCmd) {
+          var cmd = selNode.renderCmd;
           cmd.transform(null);
           if (
             boneType !== DISPLAY_TYPE_ARMATURE &&
@@ -111,8 +111,8 @@ export class ArmatureCanvasRenderCmd extends Node.CanvasRenderCmd {
             boneCmd._updateDisplayOpacity(this._displayedOpacity);
           if (colorDirty || opacityDirty) boneCmd._updateColor();
 
-          var parentColor = selBone._renderCmd._displayedColor,
-            parentOpacity = selBone._renderCmd._displayedOpacity;
+          var parentColor = selBone.renderCmd._displayedColor,
+            parentOpacity = selBone.renderCmd._displayedOpacity;
           colorDirty = locFlag & flags.colorDirty;
           opacityDirty = locFlag & flags.opacityDirty;
           if (colorDirty) cmd._updateDisplayColor(parentColor);
@@ -141,7 +141,7 @@ export class ArmatureCanvasRenderCmd extends Node.CanvasRenderCmd {
 
   rendering(ctx, scaleX, scaleY) {
     var node = this._node;
-    var locChildren = node._children;
+    var locChildren = node.children;
     var alphaPremultiplied = BlendFunc.ALPHA_PREMULTIPLIED,
       alphaNonPremultipled = BlendFunc.ALPHA_NON_PREMULTIPLIED;
     for (var i = 0, len = locChildren.length; i < len; i++) {
@@ -150,13 +150,13 @@ export class ArmatureCanvasRenderCmd extends Node.CanvasRenderCmd {
         var selNode = selBone.getDisplayRenderNode();
         if (null === selNode) continue;
 
-        selBone._renderCmd._syncStatus(this);
+        selBone.renderCmd._syncStatus(this);
         switch (selBone.getDisplayRenderNodeType()) {
           case DISPLAY_TYPE_SPRITE:
             selNode.visit(selBone);
             break;
           case DISPLAY_TYPE_ARMATURE:
-            selNode._renderCmd.rendering(ctx, scaleX, scaleY);
+            selNode.renderCmd.rendering(ctx, scaleX, scaleY);
             break;
           default:
             selNode.visit(selBone);
@@ -171,12 +171,12 @@ export class ArmatureCanvasRenderCmd extends Node.CanvasRenderCmd {
   _visitNormalChild(childNode) {
     if (!childNode) return;
 
-    var cmd = childNode._renderCmd;
+    var cmd = childNode.renderCmd;
     if (!childNode.visible) return;
     cmd._curLevel = this._curLevel + 1;
 
     var i,
-      children = childNode._children,
+      children = childNode.children,
       child;
     cmd._syncStatus(this);
     cmd.transform(null);

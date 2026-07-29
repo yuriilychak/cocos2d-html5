@@ -46,7 +46,6 @@ export class TMXLayer extends SpriteBatchNode {
     this._reusedTile = null;
     this._atlasIndexArray = null;
 
-    this._className = "TMXLayer";
 
     this._descendants = [];
 
@@ -83,7 +82,7 @@ export class TMXLayer extends SpriteBatchNode {
     this._setTileHeight(v);
   }
 
-  _createRenderCmd() {
+  createRenderCmd() {
     if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new TMXLayer.CanvasRenderCmd(this);
     else return new TMXLayer.WebGLRenderCmd(this);

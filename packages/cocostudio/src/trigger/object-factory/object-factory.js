@@ -52,7 +52,7 @@ export const objectFactory = {
    * @param {TInfo} t
    */
   registerType: function (t) {
-    this._typeMap[t._className] = t;
+    this._typeMap[t.typeName] = t;
   },
 
   /**
