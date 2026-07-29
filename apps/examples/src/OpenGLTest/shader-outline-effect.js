@@ -107,7 +107,7 @@ export class ShaderOutlineEffect extends OpenGLTestLayer {
           y: 255 / 255,
           z: 0 / 255
         });
-        this.sprite.setGLProgramState(glProgram_state);
+        this.sprite.glProgramState = glProgram_state;
       } else {
         this.sprite.shaderProgram = this.shader;
       }
@@ -121,7 +121,7 @@ export class ShaderOutlineEffect extends OpenGLTestLayer {
     if (ServiceLocator.sys.capabilities.opengl) {
       if (ServiceLocator.sys.isNative) {
         this.sprite
-          .getGLProgramState()
+          .glProgramState
           .setUniformFloat("u_radius", Math.abs(this.sprite.rotation / 500));
       } else {
         this.shader.use();

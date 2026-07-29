@@ -70,7 +70,7 @@ export class RemoveListenerWhenDispatching extends EventDispatcherTestDemo {
         sprite1.color = Color.WHITE;
       }
     });
-    this.setUserObject(listener1);
+    this.userData = listener1;
 
     ServiceLocator.eventManager.addListener(listener1, sprite1);
 

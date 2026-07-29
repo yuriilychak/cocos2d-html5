@@ -36,7 +36,7 @@ export class NodeGrid extends Node {
   visit(parent) {
     var cmd = this._renderCmd;
     var parentCmd = parent ? parent._renderCmd : null;
-    if (!this._visible) {
+    if (!this.visible) {
       cmd._propagateFlagsDown(parentCmd);
       return;
     }

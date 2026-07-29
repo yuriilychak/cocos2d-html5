@@ -88,7 +88,7 @@ import { tiffReader } from "../tiff-reader";
  *     It is possible to customize any of the above mentioned properties in runtime. Example:   <br/>
  * </p>
  *
- * @property {Boolean}              isOpacityModifyRGB    - Indicate whether the alpha value modify color.
+ * @property {Boolean}              opacityModifyRGB    - Indicate whether the alpha value modify color.
  * @property {SpriteBatchNode}   batchNode           - Weak reference to the sprite batch node.
  * @property {Boolean}              active              - <@readonly> Indicate whether the particle system is activated.
  * @property {Number}               shapeType           - ShapeType of ParticleSystem : ParticleSystem.BALL_SHAPE | ParticleSystem.STAR_SHAPE.
@@ -276,12 +276,6 @@ export class ParticleSystem extends Node {
     }
   }
 
-  get opacityModifyRGB() {
-    return this.isOpacityModifyRGB();
-  }
-  set opacityModifyRGB(v) {
-    this.setOpacityModifyRGB(v);
-  }
   get batchNode() {
     return this.getBatchNode();
   }
@@ -1321,7 +1315,7 @@ export class ParticleSystem extends Node {
    * does the alpha value modify color getter
    * @return {Boolean}
    */
-  get isOpacityModifyRGB() {
+  get opacityModifyRGB() {
     return this.#opacityModifyRGB;
   }
 
@@ -1329,7 +1323,7 @@ export class ParticleSystem extends Node {
    * does the alpha value modify color setter
    * @param newValue
    */
-  set isOpacityModifyRGB(newValue) {
+  set opacityModifyRGB(newValue) {
     this.#opacityModifyRGB = newValue;
   }
 
@@ -2020,7 +2014,7 @@ export class ParticleSystem extends Node {
       currentPosition.y = this.y;
     }
 
-    if (this._visible) {
+    if (this.visible) {
       // Used to reduce memory allocation / creation within the loop
       var tpa = Particle.TemporaryPoints[1],
         tpb = Particle.TemporaryPoints[2],
@@ -2140,7 +2134,7 @@ export class ParticleSystem extends Node {
           --this.particleCount;
           if (this.particleCount === 0 && this.autoRemoveOnFinish) {
             this.unscheduleUpdate();
-            this._parent.removeChild(this, true);
+            this.parent.removeChild(this, true);
             return;
           }
         }
@@ -2286,7 +2280,7 @@ export class ParticleSystem extends Node {
       //don't get the internal texture if a batchNode is used
       if (!this.batchNode) {
         // Set a compatible default for the alpha transfer
-        retParticle.isOpacityModifyRGB = this.isOpacityModifyRGB;
+        retParticle.opacityModifyRGB = this.opacityModifyRGB;
         // texture
         var texture = this.texture;
         if (texture) {

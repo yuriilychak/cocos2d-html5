@@ -331,7 +331,7 @@ export class TMXLayer extends SpriteBatchNode {
       tile = new Sprite(tex, rect);
       tile.position = this.getPositionAt(x, y);
       var vertexZ = this._vertexZForPos(x, y);
-      tile.setVertexZ(vertexZ);
+      tile.vertexZ = vertexZ;
       tile.anchorX = 0;
       tile.anchorY = 0;
       tile.opacity = this._opacity;
@@ -428,8 +428,8 @@ export class TMXLayer extends SpriteBatchNode {
     Node.prototype.addChild.call(this, child, localZOrder, tag);
     if (tag !== undefined) {
       this._spriteTiles[tag] = child;
-      child._vertexZ =
-        this._vertexZ +
+      child.assignedVertexZ =
+        this.vertexZ +
         (ServiceLocator.sys.rendererConfig.renderer.assignedZStep * tag) /
           this.tiles.length;
     }
@@ -599,7 +599,7 @@ export class TMXLayer extends SpriteBatchNode {
   _setupTileSprite(sprite, pos, gid) {
     var posInPixel = this.getPositionAt(pos);
     sprite.position = posInPixel;
-    sprite.setVertexZ(this._vertexZForPos(pos));
+    sprite.vertexZ = this._vertexZForPos(pos);
     sprite.anchorX = 0;
     sprite.anchorY = 0;
     sprite.opacity = this._opacity;

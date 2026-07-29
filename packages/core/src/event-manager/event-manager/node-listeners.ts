@@ -23,7 +23,7 @@ export default class NodeListeners {
     }
     listeners.push(listener);
 
-    if (node.isRunning()) {
+    if (node.running) {
       this.setTargetPaused(node, false, false);
     }
   }

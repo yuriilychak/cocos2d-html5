@@ -369,7 +369,7 @@ export class Sprite extends EventHelper(Node) {
    * @function
    * @param {Boolean} modify
    */
-  set isOpacityModifyRGB(modify) {
+  set opacityModifyRGB(modify) {
     if (this._opacityModifyRGB !== modify) {
       this._opacityModifyRGB = modify;
       this._renderCmd._setColorDirty();
@@ -380,7 +380,7 @@ export class Sprite extends EventHelper(Node) {
    * Returns whether opacity modify color or not.
    * @return {Boolean}
    */
-  get isOpacityModifyRGB() {
+  get opacityModifyRGB() {
     return this._opacityModifyRGB;
   }
 
@@ -681,7 +681,7 @@ export class Sprite extends EventHelper(Node) {
     this._batchNode = null;
     this._recursiveDirty = false;
     this.dirty = false;
-    this.isOpacityModifyRGB = true;
+    this.opacityModifyRGB = true;
 
     this._blendFunc.src = GLState.BLEND_SRC;
     this._blendFunc.dst = GLState.BLEND_DST;
@@ -754,7 +754,7 @@ export class Sprite extends EventHelper(Node) {
   addChild(child, localZOrder, tag) {
     assert(child, _LogInfos.CCSpriteBatchNode_addChild_2);
 
-    if (localZOrder == null) localZOrder = child._localZOrder;
+    if (localZOrder == null) localZOrder = child.localZOrder;
     if (tag == null) tag = child.tag;
 
     if (this._renderCmd._setBatchNodeForAddChild(child)) {
@@ -802,7 +802,7 @@ export class Sprite extends EventHelper(Node) {
 
     if (pNewTexture !== _t._texture) {
       this._renderCmd._setTexture(pNewTexture);
-      _t.color = _t._realColor;
+      _t.color = _t.color;
     }
     _t.setTextureRect(
       newFrame.rect,
@@ -886,7 +886,7 @@ export class Sprite extends EventHelper(Node) {
 
     this._renderCmd._setTexture(texture);
     if (isFileName) this._changeRectWithTexture(texture);
-    this.color = this._realColor;
+    this.color = this.color;
     this._textureLoaded = true;
   }
 

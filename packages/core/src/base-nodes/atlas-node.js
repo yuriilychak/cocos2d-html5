@@ -123,7 +123,7 @@ export class AtlasNode extends EventHelper(Node) {
    * @function
    * @param {Boolean} value
    */
-  set isOpacityModifyRGB(value) {
+  set opacityModifyRGB(value) {
     var oldColor = this.color;
     this.#opacityModifyRGB = value;
     this.color = oldColor;
@@ -134,7 +134,7 @@ export class AtlasNode extends EventHelper(Node) {
    * @function
    * @return {Boolean}
    */
-  get isOpacityModifyRGB() {
+  get opacityModifyRGB() {
     return this.#opacityModifyRGB;
   }
 

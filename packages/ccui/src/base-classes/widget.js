@@ -108,7 +108,7 @@ export class Widget extends ProtectedNode {
     this._touchEndPosition = null;
     this._touchEventListener = null;
     this._touchEventSelector = null;
-    this._name = "default";
+    this.name = "default";
     this._widgetType = null;
     this._actionTag = 0;
     this._customSize = null;
@@ -353,16 +353,16 @@ export class Widget extends ProtectedNode {
     } else if (this._ignoreSize) {
       super.contentSize = this.getVirtualRendererSize();
     }
-    if (!this._usingLayoutComponent && this._running) {
+    if (!this._usingLayoutComponent && this.running) {
       var widgetParent = this.widgetParent;
       var pSize = widgetParent
         ? widgetParent.contentSize
-        : this._parent.contentSize;
+        : this.parent.contentSize;
       this._sizePercent.x = pSize.width > 0.0 ? locWidth / pSize.width : 0.0;
       this._sizePercent.y = pSize.height > 0.0 ? locHeight / pSize.height : 0.0;
     }
 
-    if (this._running) {
+    if (this.running) {
       this._onSizeChanged();
     } else {
       this._sizeDirty = true;
@@ -385,14 +385,14 @@ export class Widget extends ProtectedNode {
       super.contentSize = this.getVirtualRendererSize();
     }
 
-    if (!this._usingLayoutComponent && this._running) {
+    if (!this._usingLayoutComponent && this.running) {
       var widgetParent = this.widgetParent;
-      var locWidth = widgetParent ? widgetParent.width : this._parent.width;
+      var locWidth = widgetParent ? widgetParent.width : this.parent.width;
       this._sizePercent.x =
         locWidth > 0 ? this._customSize.width / locWidth : 0;
     }
 
-    if (this._running) {
+    if (this.running) {
       this._onSizeChanged();
     } else {
       this._sizeDirty = true;
@@ -415,13 +415,13 @@ export class Widget extends ProtectedNode {
       super.contentSize = this.getVirtualRendererSize();
     }
 
-    if (!this._usingLayoutComponent && this._running) {
+    if (!this._usingLayoutComponent && this.running) {
       var widgetParent = this.widgetParent;
-      var locH = widgetParent ? widgetParent.height : this._parent.height;
+      var locH = widgetParent ? widgetParent.height : this.parent.height;
       this._sizePercent.y = locH > 0 ? this._customSize.height / locH : 0;
     }
 
-    if (this._running) {
+    if (this.running) {
       this._onSizeChanged();
     } else {
       this._sizeDirty = true;
@@ -441,14 +441,14 @@ export class Widget extends ProtectedNode {
     this._sizePercent.y = percent.y;
     var width = this._customSize.width,
       height = this._customSize.height;
-    if (this._running) {
+    if (this.running) {
       var widgetParent = this.widgetParent;
       if (widgetParent) {
         width = widgetParent.width * percent.x;
         height = widgetParent.height * percent.y;
       } else {
-        width = this._parent.width * percent.x;
-        height = this._parent.height * percent.y;
+        width = this.parent.width * percent.x;
+        height = this.parent.height * percent.y;
       }
     }
     if (this._ignoreSize) this.contentSize = this.getVirtualRendererSize();
@@ -463,10 +463,10 @@ export class Widget extends ProtectedNode {
   _setWidthPercent(percent) {
     this._sizePercent.x = percent;
     var width = this._customSize.width;
-    if (this._running) {
+    if (this.running) {
       var widgetParent = this.widgetParent;
       width =
-        (widgetParent ? widgetParent.width : this._parent.width) * percent;
+        (widgetParent ? widgetParent.width : this.parent.width) * percent;
     }
     this.width = this._ignoreSize ? this.getVirtualRendererSize().width : width;
     this._customSize.width = width;
@@ -474,10 +474,10 @@ export class Widget extends ProtectedNode {
   _setHeightPercent(percent) {
     this._sizePercent.y = percent;
     var height = this._customSize.height;
-    if (this._running) {
+    if (this.running) {
       var widgetParent = this.widgetParent;
       height =
-        (widgetParent ? widgetParent.height : this._parent.height) * percent;
+        (widgetParent ? widgetParent.height : this.parent.height) * percent;
     }
     this.height = this._ignoreSize
       ? this.getVirtualRendererSize().height
@@ -489,7 +489,7 @@ export class Widget extends ProtectedNode {
     if (!parentSize) {
       var widgetParent = this.widgetParent;
       if (widgetParent) parentSize = widgetParent.contentSize;
-      else parentSize = this._parent.contentSize;
+      else parentSize = this.parent.contentSize;
     }
 
     switch (this._sizeType) {
@@ -538,8 +538,8 @@ export class Widget extends ProtectedNode {
       default:
         break;
     }
-    if (this._parent instanceof Widget.ImageViewClass) {
-      var renderer = this._parent._imageRenderer;
+    if (this.parent instanceof Widget.ImageViewClass) {
+      var renderer = this.parent._imageRenderer;
       if (renderer && !renderer._textureLoaded) return;
     }
     this.position = absPos;
@@ -930,7 +930,7 @@ export class Widget extends ProtectedNode {
   }
 
   set position(pos) {
-    if (!this._usingLayoutComponent && this._running) {
+    if (!this._usingLayoutComponent && this.running) {
       var widgetParent = this.widgetParent;
       if (widgetParent) {
         var pSize = widgetParent.contentSize;
@@ -948,7 +948,7 @@ export class Widget extends ProtectedNode {
   }
 
   set x(x) {
-    if (this._running) {
+    if (this.running) {
       var widgetParent = this.widgetParent;
       if (widgetParent) {
         var pw = widgetParent.width;
@@ -965,7 +965,7 @@ export class Widget extends ProtectedNode {
   }
 
   set y(y) {
-    if (this._running) {
+    if (this.running) {
       var widgetParent = this.widgetParent;
       if (widgetParent) {
         var ph = widgetParent.height;
@@ -1321,12 +1321,12 @@ export class Widget extends ProtectedNode {
   }
   _findLayout() {
     ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty = true;
-    var layout = this._parent;
+    var layout = this.parent;
     while (layout) {
       if (layout._doLayout) {
         layout._doLayoutDirty = true;
         break;
-      } else layout = layout._parent;
+      } else layout = layout.parent;
     }
   }
 

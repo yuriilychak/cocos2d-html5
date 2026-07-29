@@ -113,12 +113,21 @@ export class Color {
     this.#val = (this.#val & 0xffffff00) | value;
   }
 
-  set(color: Color) {
-    this.r = color.r;
-    this.g = color.g;
-    this.b = color.b;
-    this.a = color.a;
-    
+  set(color: ColorLike): void;
+  set(r: number, g: number, b: number, a?: number): void;
+  set(colorOrR: ColorLike | number, g?: number, b?: number, a: number = -1): void {
+    if (Color.isLike(colorOrR)) {
+      this.r = colorOrR.r;
+      this.g = colorOrR.g;
+      this.b = colorOrR.b;
+      this.a = colorOrR.a;
+      return;
+    }
+
+    this.r = colorOrR;
+    this.g = g!;
+    this.b = b!;
+    if (a >= 0) this.a = a;
   }
 
   get hsv(): HSV {

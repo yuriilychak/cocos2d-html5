@@ -168,7 +168,7 @@ class SkeletonNode extends BoneNode {
     parentCmd = parentCmd || cmd.getParentRenderCmd();
 
     // quick return if not visible
-    if (!this._visible) {
+    if (!this.visible) {
       cmd._propagateFlagsDown(parentCmd);
       return;
     }

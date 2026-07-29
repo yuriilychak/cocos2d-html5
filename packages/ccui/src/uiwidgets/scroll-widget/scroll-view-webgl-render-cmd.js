@@ -30,8 +30,8 @@ export class ScrollViewWebGLRenderCmd extends LayoutWebGLRenderCmd {
       checkNode = cmd._node;
       if (
         checkNode &&
-        checkNode._parent &&
-        checkNode._parent._inViewRect === false
+        checkNode.parent &&
+        checkNode.parent._inViewRect === false
       )
         continue;
 

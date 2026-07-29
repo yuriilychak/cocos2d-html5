@@ -146,8 +146,8 @@ parser.generalAttributes = function (node, json) {
     node.removeComponent("ComExtensionData");
   node.addComponent(extensionData);
 
-  node.setCascadeColorEnabled(true);
-  node.setCascadeOpacityEnabled(true);
+  node.cascadeColor = true;
+  node.cascadeOpacity = true;
 
   setLayoutComponent(node, json);
 };
@@ -263,8 +263,8 @@ parser.initParticle = function (json, resourcePath) {
 ////////////
 
 parser.widgetAttributes = function (widget, json, enableContent) {
-  widget.setCascadeColorEnabled(true);
-  widget.setCascadeOpacityEnabled(true);
+  widget.cascadeColor = true;
+  widget.cascadeOpacity = true;
 
   widget.setUnifySizeEnabled(false);
   //widget.setLayoutComponentEnabled(true);

@@ -27,8 +27,8 @@ export class ScrollViewCanvasRenderCmd extends LayoutCanvasRenderCmd {
       if (checkNode && checkNode._className === "ScrollView") continue;
       if (
         checkNode &&
-        checkNode._parent &&
-        checkNode._parent._inViewRect === false
+        checkNode.parent &&
+        checkNode.parent._inViewRect === false
       )
         continue;
       locCmds[i].rendering(context, scaleX, scaleY);

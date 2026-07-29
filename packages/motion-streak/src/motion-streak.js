@@ -119,9 +119,9 @@ export class MotionStreak extends Node {
     log("MotionStreak.opacity has not been supported.");
   }
 
-  set isOpacityModifyRGB(value) {}
+  set opacityModifyRGB(value) {}
 
-  get isOpacityModifyRGB() {
+  get opacityModifyRGB() {
     return false;
   }
 
@@ -289,7 +289,7 @@ export class MotionStreak extends Node {
       this.#pointState[this.#nuPoints] = 1.0;
 
       var offset = this.#nuPoints * 8;
-      var locDisplayedColor = this.getDisplayedColor();
+      var locDisplayedColor = this.displayedColor;
       this.#colorPointer[offset] = locDisplayedColor.r;
       this.#colorPointer[offset + 1] = locDisplayedColor.g;
       this.#colorPointer[offset + 2] = locDisplayedColor.b;

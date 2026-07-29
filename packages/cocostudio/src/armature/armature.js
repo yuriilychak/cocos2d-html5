@@ -65,7 +65,7 @@ export class Armature extends Node {
    */
   constructor(name, parentBone) {
     super();
-    this._name = "";
+    this.name = "";
     this._topBoneList = [];
     this._armatureIndexDic = {};
     this._offsetPoint = new Point();
@@ -109,7 +109,7 @@ export class Armature extends Node {
     this._boneDic = {};
     this._topBoneList.length = 0;
 
-    //this._name = name || "";
+    //this.name = name || "";
     var animationData;
     if (name !== "") {
       //animationData
@@ -165,8 +165,8 @@ export class Armature extends Node {
 
     this._renderCmd.initShaderCache();
 
-    this.setCascadeOpacityEnabled(true);
-    this.setCascadeColorEnabled(true);
+    this.cascadeOpacity = true;
+    this.cascadeColor = true;
     return true;
   }
 
@@ -175,7 +175,7 @@ export class Armature extends Node {
       parentCmd = parent ? parent._renderCmd : null;
 
     // quick return if not visible
-    if (!this._visible) {
+    if (!this.visible) {
       cmd._propagateFlagsDown(parentCmd);
       return;
     }

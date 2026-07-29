@@ -27,7 +27,6 @@
 import { BaseClass } from "../platform/class";
 import { dirtyFlags } from "./node-canvas-render-cmd";
 import { Point, Rect, AffineTransform } from "../geometry";
-import { Color } from "../platform/types/color";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import {
   REPEAT_FOREVER,
@@ -40,8 +39,9 @@ import Touch from "../event-manager/touch";
 import { CanvasRenderCmd as NodeCanvasRenderCmd } from "./node-canvas-render-cmd";
 import { WebGLRenderCmd as NodeWebGLRenderCmd } from "./node-webgl-render-cmd";
 import { NodeTransform } from "./node-transform";
+import { NodeColor } from "./node-color";
+import { NodeOrder } from "./node-order";
 import { ServiceLocator } from "../service-locator";
-import { BYTE } from "../constants";
 
 /**
  * Default Node tag
@@ -140,7 +140,6 @@ export function setGlobalOrderOfArrival(val) {
  * @property {Boolean}              running             - <@readonly> Indicate whether node is running or not
  * @property {Number}               tag                 - Tag of node
  * @property {Object}               userData            - Custom user data
- * @property {Object}               userObject          - User assigned Object, similar to userData, but instead of holding a void* it holds an id
  * @property {Number}               arrivalOrder        - The arrival order, indicates which children is added previously
  * @property {ActionManager}     actionManager       - The ActionManager object that is used by all actions.
  * @property {Scheduler}         scheduler           - Scheduler used to schedule all "updates" and timers.
@@ -152,29 +151,21 @@ export class Node extends BaseClass {
   #tag = NODE_TAG_INVALID;
   #userData = null;
 
-  #transform;
+  #visible = true;
+  #parent = null;
+  #running = false;
+  #actionManager = null;
+  #scheduler = null;
+  #reorderChildDirty = false;
 
-  _localZOrder = 0;
-  _globalZOrder = 0;
-  _vertexZ = 0.0;
-  _customZ = NaN;
-  _visible = true;
-  _running = false;
-  _parent = null;
-  userObject = null;
-  _reorderChildDirty = false;
-  arrivalOrder = 0;
-  _actionManager = null;
-  _scheduler = null;
-  _componentContainer = new ComponentContainer(this);
+  #transform;
+  #color;
+  #order;
+  #componentContainer = new ComponentContainer(this);
+  #name = "";
+
   _isTransitionFinished = false;
   _className = "Node";
-  _showNode = false;
-  _name = "";
-  _realOpacity = BYTE;
-  _realColor = new Color(BYTE, BYTE, BYTE, BYTE);
-  _cascadeColorEnabled = false;
-  _cascadeOpacityEnabled = false;
   _renderCmd = null;
   _children = [];
 
@@ -186,6 +177,16 @@ export class Node extends BaseClass {
     super();
     this._renderCmd = this._createRenderCmd();
     this.#transform = new NodeTransform(this._renderCmd);
+    this.#color = new NodeColor(this._renderCmd);
+    this.#order = new NodeOrder(this._renderCmd);
+  }
+
+  get transform() {
+    return this.#transform;
+  }
+
+  get reorderChildDirty() {
+    return this.#reorderChildDirty;
   }
 
   get width() {
@@ -247,10 +248,10 @@ export class Node extends BaseClass {
   }
 
   get vertexZ() {
-    return this.getVertexZ();
+    return this.#order.vertexZ;
   }
   set vertexZ(v) {
-    this.setVertexZ(v);
+    this.#order.vertexZ = v;
   }
 
   /**
@@ -306,7 +307,10 @@ export class Node extends BaseClass {
   }
 
   get running() {
-    return this.isRunning();
+    return this.#running;
+  }
+  set running(value) {
+    this.#running = value;
   }
 
   get isSprite() {
@@ -321,38 +325,51 @@ export class Node extends BaseClass {
   }
 
   get actionManager() {
-    return this.getActionManager();
+    return this.#actionManager || ServiceLocator.actionManager;
   }
-  set actionManager(v) {
-    this.setActionManager(v);
+  set actionManager(value) {
+    if (this.#actionManager !== value) {
+      this.stopAllActions();
+      this.#actionManager = value;
+    }
   }
 
   get scheduler() {
-    return this.getScheduler();
+    return this.#scheduler || ServiceLocator.scheduler;
   }
-  set scheduler(v) {
-    this.setScheduler(v);
+  set scheduler(value) {
+    if (this.#scheduler !== value) {
+      this.unscheduleAllCallbacks();
+      this.#scheduler = value;
+    }
   }
 
   get shaderProgram() {
-    return this.getShaderProgram();
+    return this._renderCmd.getShaderProgram();
   }
   set shaderProgram(v) {
-    this.setShaderProgram(v);
+    this._renderCmd.setShaderProgram(v);
+  }
+
+  get glProgramState() {
+    return this._renderCmd.getGLProgramState();
+  }
+  set glProgramState(value) {
+    this._renderCmd.setGLProgramState(value);
   }
 
   get cascadeOpacity() {
-    return this.isCascadeOpacityEnabled();
+    return this.#color.cascadeOpacity;
   }
   set cascadeOpacity(v) {
-    this.setCascadeOpacityEnabled(v);
+    this.#color.cascadeOpacity = v;
   }
 
   get cascadeColor() {
-    return this.isCascadeColorEnabled();
+    return this.#color.cascadeColor;
   }
   set cascadeColor(v) {
-    this.setCascadeColorEnabled(v);
+    this.#color.cascadeColor = v;
   }
 
   /**
@@ -460,15 +477,18 @@ export class Node extends BaseClass {
    * @param {Number} localZOrder
    */
   set zIndex(localZOrder) {
-    if (localZOrder === this._localZOrder) return;
-    if (this._parent) this._parent.reorderChild(this, localZOrder);
-    else this._localZOrder = localZOrder;
+    if (localZOrder === this.#order.localZOrder) return;
+    if (this.#parent) this.#parent.reorderChild(this, localZOrder);
+    else this.localZOrder = localZOrder;
     ServiceLocator.eventManager._setDirtyForNode(this);
   }
 
-  //Helper function used by `setLocalZOrder`. Don't use it unless you know what you are doing.
-  _setLocalZOrder(localZOrder) {
-    this._localZOrder = localZOrder;
+  get localZOrder() {
+    return this.#order.localZOrder;
+  }
+
+  set localZOrder(value) {
+    this.#order.localZOrder = value;
   }
 
   /**
@@ -477,7 +497,7 @@ export class Node extends BaseClass {
    * @returns {Number} The local (relative to its siblings) Z order.
    */
   get zIndex() {
-    return this._localZOrder;
+    return this.#order.localZOrder;
   }
 
   /**
@@ -496,11 +516,8 @@ export class Node extends BaseClass {
    * @function
    * @param {Number} globalZOrder
    */
-  setGlobalZOrder(globalZOrder) {
-    if (this._globalZOrder !== globalZOrder) {
-      this._globalZOrder = globalZOrder;
-      ServiceLocator.eventManager._setDirtyForNode(this);
-    }
+  set globalZOrder(value) {
+    this.#order.globalZOrder = value;
   }
 
   /**
@@ -508,35 +525,16 @@ export class Node extends BaseClass {
    * @function
    * @returns {number} The node's global Z order
    */
-  getGlobalZOrder() {
-    return this._globalZOrder;
+  get globalZOrder() {
+    return this.#order.globalZOrder;
   }
 
-  /**
-   * Returns WebGL Z vertex of this node.
-   * @function
-   * @return {Number} WebGL Z vertex of this node
-   */
-  getVertexZ() {
-    return this._vertexZ;
+  set assignedVertexZ(value) {
+    this.#order.assignedVertexZ = value;
   }
 
-  /**
-   * <p>
-   *     Sets the real WebGL Z vertex.                                                                          <br/>
-   *                                                                                                            <br/>
-   *      Differences between openGL Z vertex and cocos2d Z order:                                              <br/>
-   *      - WebGL Z modifies the Z vertex, and not the Z order in the relation between parent-children         <br/>
-   *      - WebGL Z might require to set 2D projection                                                         <br/>
-   *      - cocos2d Z order works OK if all the nodes uses the same WebGL Z vertex. eg: vertexZ = 0            <br/>
-   *                                                                                                            <br/>
-   *      @warning Use it at your own risk since it might break the cocos2d parent-children z order
-   * </p>
-   * @function
-   * @param {Number} Var
-   */
-  setVertexZ(Var) {
-    this._customZ = this._vertexZ = Var;
+  get hasCustomVertexZ() {
+    return this.#order.hasCustomVertexZ;
   }
 
   /**
@@ -712,7 +710,7 @@ export class Node extends BaseClass {
    * @return {Boolean} true if the node is visible, false if the node is hidden.
    */
   get visible() {
-    return this._visible;
+    return this.#visible;
   }
 
   /**
@@ -722,8 +720,8 @@ export class Node extends BaseClass {
    * @param {Boolean} visible Pass true to make the node visible, false to hide the node.
    */
   set visible(visible) {
-    if (this._visible !== visible) {
-      this._visible = visible;
+    if (this.#visible !== visible) {
+      this.#visible = visible;
       //if(visible)
       this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
       ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty = true;
@@ -757,24 +755,12 @@ export class Node extends BaseClass {
   }
 
   /**
-   * <p>
-   *     Returns whether or not the node accepts event callbacks.                                     <br/>
-   *     Running means the node accept event callbacks like onEnter(), onExit(), update()
-   * </p>
-   * @function
-   * @return {Boolean} Whether or not the node is running.
-   */
-  isRunning() {
-    return this._running;
-  }
-
-  /**
    * Returns a reference to the parent node
    * @function
    * @return {Node} A reference to the parent node
    */
   get parent() {
-    return this._parent;
+    return this.#parent;
   }
 
   /**
@@ -782,7 +768,8 @@ export class Node extends BaseClass {
    * @param {Node} parent A reference to the parent node
    */
   set parent(parent) {
-    this._parent = parent;
+    if (this.#parent === parent) return;
+    this.#parent = parent;
     this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
   }
 
@@ -855,7 +842,7 @@ export class Node extends BaseClass {
    * @param {String} name
    */
   set name(name) {
-    this._name = name;
+    this.#name = name;
   }
 
   /**
@@ -864,7 +851,7 @@ export class Node extends BaseClass {
    * @returns {string} A string that identifies the node.
    */
   get name() {
-    return this._name;
+    return this.#name;
   }
 
   /**
@@ -892,102 +879,12 @@ export class Node extends BaseClass {
     this.#userData = Var;
   }
 
-  /**
-   * Returns a user assigned cocos2d object.                             <br/>
-   * Similar to userData, but instead of holding all kinds of data it can only hold a cocos2d object
-   * @function
-   * @return {object} A user assigned Object
-   */
-  getUserObject() {
-    return this.userObject;
+  get arrivalOrder() {
+    return this.#order.arrivalOrder;
   }
 
-  /**
-   * <p>
-   *      Sets a user assigned cocos2d object                                                                                       <br/>
-   *      Similar to UserData, but instead of holding all kinds of data it can only hold a cocos2d object                        <br/>
-   *      In JSB, the UserObject will be retained once in this method, and the previous UserObject (if existed) will be release. <br/>
-   *      The UserObject will be released in Node's destruction.
-   * </p>
-   * @param {object} newValue A user cocos2d object
-   */
-  setUserObject(newValue) {
-    if (this.userObject !== newValue) this.userObject = newValue;
-  }
-
-  /**
-   * Returns the arrival order, indicates which children should be added previously.
-   * @function
-   * @return {Number} The arrival order.
-   */
-  getOrderOfArrival() {
-    return this.arrivalOrder;
-  }
-
-  /**
-   * <p>
-   *     Sets the arrival order when this node has a same ZOrder with other children.                             <br/>
-   *                                                                                                              <br/>
-   *     A node which called addChild subsequently will take a larger arrival order,                              <br/>
-   *     If two children have the same Z order, the child with larger arrival order will be drawn later.
-   * </p>
-   * @function
-   * @warning This method is used internally for zOrder sorting, don't change this manually
-   * @param {Number} Var  The arrival order.
-   */
-  setOrderOfArrival(Var) {
-    this.arrivalOrder = Var;
-  }
-
-  /**
-   * <p>Returns the ActionManager object that is used by all actions.<br/>
-   * (IMPORTANT: If you set a new ActionManager, then previously created actions are going to be removed.)</p>
-   * @function
-   * @see Node#setActionManager
-   * @return {ActionManager} A ActionManager object.
-   */
-  getActionManager() {
-    return this._actionManager || ServiceLocator.actionManager;
-  }
-
-  /**
-   * <p>Sets the ActionManager object that is used by all actions. </p>
-   * @function
-   * @warning If you set a new ActionManager, then previously created actions will be removed.
-   * @param {ActionManager} actionManager A ActionManager object that is used by all actions.
-   */
-  setActionManager(actionManager) {
-    if (this._actionManager !== actionManager) {
-      this.stopAllActions();
-      this._actionManager = actionManager;
-    }
-  }
-
-  /**
-   * <p>
-   *   Returns the Scheduler object used to schedule all "updates" and timers.
-   * </p>
-   * @function
-   * @return {Scheduler} A Scheduler object.
-   */
-  getScheduler() {
-    return this._scheduler || ServiceLocator.scheduler;
-  }
-
-  /**
-   * <p>
-   *   Sets a Scheduler object that is used to schedule all "updates" and timers.           <br/>
-   *   IMPORTANT: If you set a new Scheduler, then previously created timers/update are going to be removed.
-   * </p>
-   * @function
-   * @warning If you set a new Scheduler, then previously created timers/update are going to be removed.
-   * @param scheduler A Scheduler object that is used to schedule all "update" and timers.
-   */
-  setScheduler(scheduler) {
-    if (this._scheduler !== scheduler) {
-      this.unscheduleAllCallbacks();
-      this._scheduler = scheduler;
-    }
+  set arrivalOrder(value) {
+    this.#order.arrivalOrder = value;
   }
 
   /**
@@ -997,11 +894,7 @@ export class Node extends BaseClass {
    * @return {Rect} The calculated bounding box of the node
    */
   get boundingBox() {
-    var rect = new Rect(0, 0, this.width, this.height);
-    return AffineTransform._applyToRectIn(
-      rect,
-      this.getNodeToParentTransform()
-    );
+    return this.#transform.boundingBox;
   }
 
   /**
@@ -1049,7 +942,7 @@ export class Node extends BaseClass {
 
     var locChildren = this._children;
     for (var i = 0, len = locChildren.length; i < len; i++) {
-      if (locChildren[i]._name === name) return locChildren[i];
+      if (locChildren[i].name === name) return locChildren[i];
     }
     return null;
   }
@@ -1065,11 +958,11 @@ export class Node extends BaseClass {
    * @param {Number|String} [tag=]  An integer or a name to identify the node easily. Please refer to tag = int and name = string
    */
   addChild(child, localZOrder, tag) {
-    localZOrder = localZOrder === undefined ? child._localZOrder : localZOrder;
+    localZOrder = localZOrder === undefined ? child.localZOrder : localZOrder;
     var name,
       setTag = false;
     if (tag === undefined) {
-      name = child._name;
+      name = child.name;
     } else if (typeof tag === "string") {
       name = tag;
       tag = undefined;
@@ -1080,7 +973,7 @@ export class Node extends BaseClass {
 
     assert(child, _LogInfos.Node_addChild_3);
     assert(
-      child._parent === null,
+      child.parent === null,
       "child already added. It can't be added again"
     );
 
@@ -1095,10 +988,10 @@ export class Node extends BaseClass {
     else child.name = name;
 
     child.parent = this;
-    child.setOrderOfArrival(s_globalOrderOfArrival);
+    child.arrivalOrder = s_globalOrderOfArrival;
     setGlobalOrderOfArrival(s_globalOrderOfArrival + 1);
 
-    if (this._running) {
+    if (this.#running) {
       child._performRecursive(Node._stateCallbackType.onEnter);
       // prevent onEnterTransitionDidFinish to be called twice when a node is added in onEnter
       if (this._isTransitionFinished)
@@ -1107,9 +1000,8 @@ export class Node extends BaseClass {
         );
     }
     child._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
-    if (this._cascadeColorEnabled)
-      child._renderCmd.setDirtyFlag(dirtyFlags.colorDirty);
-    if (this._cascadeOpacityEnabled)
+    if (this.cascadeColor) child._renderCmd.setDirtyFlag(dirtyFlags.colorDirty);
+    if (this.cascadeOpacity)
       child._renderCmd.setDirtyFlag(dirtyFlags.opacityDirty);
   }
 
@@ -1123,9 +1015,9 @@ export class Node extends BaseClass {
    * @see Node#removeFromParentAndCleanup
    */
   removeFromParent(cleanup) {
-    if (this._parent) {
+    if (this.#parent) {
       if (cleanup === undefined) cleanup = true;
-      this._parent.removeChild(this, cleanup);
+      this.#parent.removeChild(this, cleanup);
     }
   }
 
@@ -1187,7 +1079,7 @@ export class Node extends BaseClass {
       for (var i = 0; i < __children.length; i++) {
         var node = __children[i];
         if (node) {
-          if (this._running) {
+          if (this.#running) {
             node._performRecursive(
               Node._stateCallbackType.onExitTransitionDidStart
             );
@@ -1211,7 +1103,7 @@ export class Node extends BaseClass {
     // IMPORTANT:
     //  -1st do onExit
     //  -2nd cleanup
-    if (this._running) {
+    if (this.#running) {
       child._performRecursive(Node._stateCallbackType.onExitTransitionDidStart);
       child._performRecursive(Node._stateCallbackType.onExit);
     }
@@ -1227,9 +1119,9 @@ export class Node extends BaseClass {
 
   _insertChild(child, z) {
     ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty =
-      this._reorderChildDirty = true;
+      this.#reorderChildDirty = true;
     this._children.push(child);
-    child._setLocalZOrder(z);
+    child.localZOrder = z;
   }
 
   setNodeDirty() {
@@ -1249,10 +1141,10 @@ export class Node extends BaseClass {
       return;
     }
     ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty =
-      this._reorderChildDirty = true;
+      this.#reorderChildDirty = true;
     child.arrivalOrder = s_globalOrderOfArrival;
     setGlobalOrderOfArrival(s_globalOrderOfArrival + 1);
-    child._setLocalZOrder(zOrder);
+    child.localZOrder = zOrder;
     this._renderCmd.setDirtyFlag(dirtyFlags.orderDirty);
   }
 
@@ -1265,7 +1157,7 @@ export class Node extends BaseClass {
    * @note Don't call this manually unless a child added needs to be removed in the same frame
    */
   sortAllChildren() {
-    if (this._reorderChildDirty) {
+    if (this.#reorderChildDirty) {
       var _children = this._children;
 
       // insertion sort
@@ -1279,10 +1171,10 @@ export class Node extends BaseClass {
 
         //continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
         while (j >= 0) {
-          if (tmp._localZOrder < _children[j]._localZOrder) {
+          if (tmp.localZOrder < _children[j].localZOrder) {
             _children[j + 1] = _children[j];
           } else if (
-            tmp._localZOrder === _children[j]._localZOrder &&
+            tmp.localZOrder === _children[j].localZOrder &&
             tmp.arrivalOrder < _children[j].arrivalOrder
           ) {
             _children[j + 1] = _children[j];
@@ -1295,7 +1187,7 @@ export class Node extends BaseClass {
       }
 
       //don't need to check children recursively, that's done in visit of each child
-      this._reorderChildDirty = false;
+      this.#reorderChildDirty = false;
     }
   }
 
@@ -1312,9 +1204,9 @@ export class Node extends BaseClass {
 
   // Internal use only, do not call it by yourself,
   transformAncestors() {
-    if (this._parent !== null) {
-      this._parent.transformAncestors();
-      this._parent.transform();
+    if (this.#parent !== null) {
+      this.#parent.transformAncestors();
+      this.#parent.transform();
     }
   }
 
@@ -1330,7 +1222,7 @@ export class Node extends BaseClass {
    */
   onEnter() {
     this._isTransitionFinished = false;
-    this._running = true; //should be running before resumeSchedule
+    this.#running = true; //should be running before resumeSchedule
     this.resume();
   }
 
@@ -1427,7 +1319,7 @@ export class Node extends BaseClass {
    * @function
    */
   onExit() {
-    this._running = false;
+    this.#running = false;
     this.pause();
     this.removeAllComponents();
   }
@@ -1444,7 +1336,7 @@ export class Node extends BaseClass {
   runAction(action) {
     assert(action, _LogInfos.Node_runAction);
 
-    this.actionManager.addAction(action, this, !this._running);
+    this.actionManager.addAction(action, this, !this.#running);
     return action;
   }
 
@@ -1528,7 +1420,7 @@ export class Node extends BaseClass {
    * @param {Number} priority
    */
   scheduleUpdateWithPriority(priority) {
-    this.scheduler.scheduleUpdate(this, priority, !this._running);
+    this.scheduler.scheduleUpdate(this, priority, !this.#running);
   }
 
   /**
@@ -1613,7 +1505,7 @@ export class Node extends BaseClass {
       interval,
       repeat,
       delay,
-      !this._running,
+      !this.#running,
       key
     );
   }
@@ -1755,7 +1647,7 @@ export class Node extends BaseClass {
    */
   getNodeToWorldTransform() {
     var t = this.getNodeToParentTransform();
-    for (var p = this._parent; p !== null; p = p.parent)
+    for (var p = this.#parent; p !== null; p = p.parent)
       t = AffineTransform.concat(t, p.getNodeToParentTransform());
     return t;
   }
@@ -1855,8 +1747,8 @@ export class Node extends BaseClass {
    * @param {Number} dt Delta time since last update
    */
   update(dt) {
-    if (this._componentContainer && !this._componentContainer.isEmpty())
-      this._componentContainer.visit(dt);
+    if (this.#componentContainer && !this.#componentContainer.isEmpty())
+      this.#componentContainer.visit(dt);
   }
 
   /**
@@ -1885,8 +1777,8 @@ export class Node extends BaseClass {
    * @return {Component} The component found
    */
   getComponent(name) {
-    if (this._componentContainer)
-      return this._componentContainer.getComponent(name);
+    if (this.#componentContainer)
+      return this.#componentContainer.getComponent(name);
     return null;
   }
 
@@ -1896,7 +1788,7 @@ export class Node extends BaseClass {
    * @param {Component} component
    */
   addComponent(component) {
-    if (this._componentContainer) this._componentContainer.add(component);
+    if (this.#componentContainer) this.#componentContainer.add(component);
   }
 
   /**
@@ -1905,8 +1797,8 @@ export class Node extends BaseClass {
    * @param {String|Component} component
    */
   removeComponent(component) {
-    if (this._componentContainer)
-      return this._componentContainer.remove(component);
+    if (this.#componentContainer)
+      return this.#componentContainer.remove(component);
     return false;
   }
 
@@ -1915,7 +1807,7 @@ export class Node extends BaseClass {
    * @function
    */
   removeAllComponents() {
-    if (this._componentContainer) this._componentContainer.removeAll();
+    if (this.#componentContainer) this.#componentContainer.removeAll();
   }
 
   /**
@@ -1928,7 +1820,7 @@ export class Node extends BaseClass {
       parentCmd = parent ? parent._renderCmd : null;
 
     // quick return if not visible
-    if (!this._visible) {
+    if (!this.visible) {
       cmd._propagateFlagsDown(parentCmd);
       return;
     }
@@ -1940,13 +1832,13 @@ export class Node extends BaseClass {
       len = children.length,
       child;
     if (len > 0) {
-      if (this._reorderChildDirty) {
+      if (this.#reorderChildDirty) {
         this.sortAllChildren();
       }
       // draw children zOrder < 0
       for (i = 0; i < len; i++) {
         child = children[i];
-        if (child._localZOrder < 0) {
+        if (child.localZOrder < 0) {
           child.visit(this, renderer);
         } else {
           break;
@@ -1983,7 +1875,7 @@ export class Node extends BaseClass {
     var t = this._renderCmd.getNodeToParentTransform();
     if (ancestor) {
       var T = { a: t.a, b: t.b, c: t.c, d: t.d, tx: t.tx, ty: t.ty };
-      for (var p = this._parent; p != null && p != ancestor; p = p.parent) {
+      for (var p = this.#parent; p != null && p != ancestor; p = p.parent) {
         AffineTransform.concatIn(T, p.getNodeToParentTransform());
       }
       return T;
@@ -1994,39 +1886,6 @@ export class Node extends BaseClass {
 
   getNodeToParentAffineTransform(ancestor) {
     return this.getNodeToParentTransform(ancestor);
-  }
-
-  /**
-   * Return the shader program currently used for this node
-   * @function
-   * @return {GLProgram} The shader program currently used for this node
-   */
-  getShaderProgram() {
-    return this._renderCmd.getShaderProgram();
-  }
-
-  /**
-   * <p>
-   *     Sets the shader program for this node
-   *
-   *     Since v2.0, each rendering node must set its shader program.
-   *     It should be set in initialize phase.
-   * </p>
-   * @function
-   * @param {GLProgram} newShaderProgram The shader program which fetches from ShaderCache.
-   * @example
-   * node.setGLProgram(shaderCache.get(SHADER_POSITION_TEXTURECOLOR));
-   */
-  setShaderProgram(newShaderProgram) {
-    this._renderCmd.setShaderProgram(newShaderProgram);
-  }
-
-  setGLProgramState(glProgramState) {
-    this._renderCmd.setGLProgramState(glProgramState);
-  }
-
-  getGLProgramState() {
-    return this._renderCmd.getGLProgramState();
   }
 
   /**
@@ -2045,7 +1904,7 @@ export class Node extends BaseClass {
     var locChildren = this._children;
     for (var i = 0; i < locChildren.length; i++) {
       var child = locChildren[i];
-      if (child && child._visible) {
+      if (child && child.visible) {
         var childRect = child._getBoundingBoxToCurrentNode(trans);
         if (childRect) rect = Rect.union(rect, childRect);
       }
@@ -2070,7 +1929,7 @@ export class Node extends BaseClass {
     var locChildren = this._children;
     for (var i = 0; i < locChildren.length; i++) {
       var child = locChildren[i];
-      if (child && child._visible) {
+      if (child && child.visible) {
         var childRect = child._getBoundingBoxToCurrentNode(trans);
         if (childRect) rect = Rect.union(rect, childRect);
       }
@@ -2084,17 +1943,7 @@ export class Node extends BaseClass {
    * @returns {number} opacity
    */
   get opacity() {
-    return this._realOpacity;
-  }
-
-  /**
-   * Returns the displayed opacity of Node,
-   * the difference between displayed opacity and opacity is that displayed opacity is calculated based on opacity and parent node's opacity when cascade opacity enabled.
-   * @function
-   * @returns {number} displayed opacity
-   */
-  getDisplayedOpacity() {
-    return this._renderCmd.getDisplayedOpacity();
+    return this.#color.opacity;
   }
 
   /**
@@ -2103,8 +1952,17 @@ export class Node extends BaseClass {
    * @param {Number} opacity
    */
   set opacity(opacity) {
-    this._realOpacity = opacity;
-    this._renderCmd.setDirtyFlag(dirtyFlags.opacityDirty);
+    this.#color.opacity = opacity;
+  }
+
+  /**
+   * Returns the displayed opacity of Node,
+   * the difference between displayed opacity and opacity is that displayed opacity is calculated based on opacity and parent node's opacity when cascade opacity enabled.
+   * @function
+   * @returns {number} displayed opacity
+   */
+  get displayedOpacity() {
+    return this.#color.displayedOpacity;
   }
 
   /**
@@ -2112,29 +1970,8 @@ export class Node extends BaseClass {
    * @function
    * @param {Number} parentOpacity
    */
-  updateDisplayedOpacity(parentOpacity) {
-    //TODO  this API shouldn't be public.
-    this._renderCmd._updateDisplayOpacity(parentOpacity);
-  }
-
-  /**
-   * Returns whether node's opacity value affect its child nodes.
-   * @function
-   * @returns {boolean}
-   */
-  isCascadeOpacityEnabled() {
-    return this._cascadeOpacityEnabled;
-  }
-
-  /**
-   * Enable or disable cascade opacity, if cascade enabled, child nodes' opacity will be the multiplication of parent opacity and its own opacity.
-   * @function
-   * @param {boolean} cascadeOpacityEnabled
-   */
-  setCascadeOpacityEnabled(cascadeOpacityEnabled) {
-    if (this._cascadeOpacityEnabled === cascadeOpacityEnabled) return;
-    this._cascadeOpacityEnabled = cascadeOpacityEnabled;
-    this._renderCmd.setCascadeOpacityEnabledDirty();
+  set displayedOpacity(parentOpacity) {
+    this.#color.displayedOpacity = parentOpacity;
   }
 
   /**
@@ -2143,7 +1980,7 @@ export class Node extends BaseClass {
    * @returns {Color}
    */
   get color() {
-    return this._realColor.clone();
+    return this.#color.color;
   }
 
   /**
@@ -2152,8 +1989,17 @@ export class Node extends BaseClass {
    * @function
    * @returns {Color}
    */
-  getDisplayedColor() {
-    return this._renderCmd.getDisplayedColor();
+  get displayedColor() {
+    return this.#color.displayedColor;
+  }
+
+  /**
+   * Update the displayed color of Node
+   * @function
+   * @param {Color} parentColor
+   */
+  set displayedColor(parentColor) {
+    this.#color.displayedColor = parentColor;
   }
 
   /**
@@ -2164,40 +2010,7 @@ export class Node extends BaseClass {
    * @param {Color} color The new color given
    */
   set color(color) {
-    var locRealColor = this._realColor;
-    locRealColor.r = color.r;
-    locRealColor.g = color.g;
-    locRealColor.b = color.b;
-    this._renderCmd.setDirtyFlag(dirtyFlags.colorDirty);
-  }
-
-  /**
-   * Update the displayed color of Node
-   * @function
-   * @param {Color} parentColor
-   */
-  updateDisplayedColor(parentColor) {
-    //TODO  this API shouldn't be public.
-    this._renderCmd._updateDisplayColor(parentColor);
-  }
-
-  /**
-   * Returns whether node's color value affect its child nodes.
-   * @function
-   * @returns {boolean}
-   */
-  isCascadeColorEnabled() {
-    return this._cascadeColorEnabled;
-  }
-
-  /**
-   * Enable or disable cascade color, if cascade enabled, child nodes' opacity will be the cascade value of parent color and its own color.
-   * @param {boolean} cascadeColorEnabled
-   */
-  setCascadeColorEnabled(cascadeColorEnabled) {
-    if (this._cascadeColorEnabled === cascadeColorEnabled) return;
-    this._cascadeColorEnabled = cascadeColorEnabled;
-    this._renderCmd.setCascadeColorEnabledDirty();
+    this.#color.color = color;
   }
 
   /**
@@ -2206,14 +2019,14 @@ export class Node extends BaseClass {
    * @function
    * @param {Boolean} opacityValue
    */
-  set isOpacityModifyRGB(opacityValue) {}
+  set opacityModifyRGB(opacityValue) {}
 
   /**
    * Get whether color should be changed with the opacity value
    * @function
    * @return {Boolean}
    */
-  get isOpacityModifyRGB() {
+  get opacityModifyRGB() {
     return false;
   }
 
@@ -2321,7 +2134,7 @@ export class Node extends BaseClass {
       length = children.length;
     for (var i = 0; i < length; i++) {
       child = children[i];
-      if (child._name.indexOf(searchName) !== -1) {
+      if (child.name.indexOf(searchName) !== -1) {
         if (!needRecursive) {
           // terminate enumeration if callback return true
           if (callback(child)) {

@@ -168,7 +168,7 @@ export class ParticleBatchNode extends Node {
       parentCmd = parent ? parent._renderCmd : null;
 
     // quick return if not visible
-    if (!this._visible) {
+    if (!this.visible) {
       cmd._propagateFlagsDown(parentCmd);
       return;
     }
@@ -356,7 +356,7 @@ export class ParticleBatchNode extends Node {
         child.updateWithNoTime();
       }
     }
-    child._setLocalZOrder(zOrder);
+    child.localZOrder = zOrder;
   }
 
   /**
@@ -549,9 +549,9 @@ export class ParticleBatchNode extends Node {
 
     this._children.splice(pos, 0, child);
     child.tag = aTag;
-    child._setLocalZOrder(z);
+    child.localZOrder = z;
     child.parent = this;
-    if (this._running) {
+    if (this.running) {
       child._performRecursive(Node._stateCallbackType.onEnter);
       child._performRecursive(
         Node._stateCallbackType.onEnterTransitionDidFinish

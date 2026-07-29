@@ -142,8 +142,8 @@ export class RenderCmd {
   }
 
   getParentRenderCmd() {
-    if (this._node && this._node._parent && this._node._parent._renderCmd)
-      return this._node._parent._renderCmd;
+    if (this._node && this._node.parent && this._node.parent._renderCmd)
+      return this._node.parent._renderCmd;
     return null;
   }
 
@@ -158,8 +158,8 @@ export class RenderCmd {
       t = this._transform,
       wt = this._worldTransform; //get the world transform
 
-    if (node.usingNormalizedPosition && node._parent) {
-      const conSize = node._parent.contentSize;
+    if (node.usingNormalizedPosition && node.parent) {
+      const conSize = node.parent.contentSize;
       const normalizedPosition = node.normalizedPosition;
       node.x = normalizedPosition.x * conSize.width;
       node.y = normalizedPosition.y * conSize.height;
@@ -309,8 +309,8 @@ export class RenderCmd {
     parentCmd = parentCmd || this.getParentRenderCmd();
     if (parentCmd) this._curLevel = parentCmd._curLevel + 1;
 
-    if (isNaN(node._customZ)) {
-      node._vertexZ = renderer.assignedZ;
+    if (!node.hasCustomVertexZ) {
+      node.assignedVertexZ = renderer.assignedZ;
       renderer.assignedZ += renderer.assignedZStep;
     }
 
@@ -320,11 +320,11 @@ export class RenderCmd {
   _updateDisplayColor(parentColor) {
     const node = this._node;
     const locDispColor = this._displayedColor,
-      locRealColor = node._realColor;
+      locRealColor = node.color;
     let i, len, selChildren, item;
     this._notifyRegionStatus &&
       this._notifyRegionStatus(CanvasRenderCmd.RegionStatus.Dirty);
-    if (this._cascadeColorEnabledDirty && !node._cascadeColorEnabled) {
+    if (this._cascadeColorEnabledDirty && !node.cascadeColor) {
       locDispColor.r = locRealColor.r;
       locDispColor.g = locRealColor.g;
       locDispColor.b = locRealColor.b;
@@ -338,15 +338,15 @@ export class RenderCmd {
       this._cascadeColorEnabledDirty = false;
     } else {
       if (parentColor === undefined) {
-        const locParent = node._parent;
-        if (locParent && locParent._cascadeColorEnabled)
-          parentColor = locParent.getDisplayedColor();
+        const locParent = node.parent;
+        if (locParent && locParent.cascadeColor)
+          parentColor = locParent.displayedColor;
         else parentColor = Color.WHITE;
       }
       locDispColor.r = 0 | ((locRealColor.r * parentColor.r) / BYTE);
       locDispColor.g = 0 | ((locRealColor.g * parentColor.g) / BYTE);
       locDispColor.b = 0 | ((locRealColor.b * parentColor.b) / BYTE);
-      if (node._cascadeColorEnabled) {
+      if (node.cascadeColor) {
         selChildren = node._children;
         for (i = 0, len = selChildren.length; i < len; i++) {
           item = selChildren[i];
@@ -365,8 +365,8 @@ export class RenderCmd {
     let i, len, selChildren, item;
     this._notifyRegionStatus &&
       this._notifyRegionStatus(CanvasRenderCmd.RegionStatus.Dirty);
-    if (this._cascadeOpacityEnabledDirty && !node._cascadeOpacityEnabled) {
-      this._displayedOpacity = node._realOpacity;
+    if (this._cascadeOpacityEnabledDirty && !node.cascadeOpacity) {
+      this._displayedOpacity = node.opacity;
       selChildren = node._children;
       for (i = 0, len = selChildren.length; i < len; i++) {
         item = selChildren[i];
@@ -375,13 +375,13 @@ export class RenderCmd {
       this._cascadeOpacityEnabledDirty = false;
     } else {
       if (parentOpacity === undefined) {
-        const locParent = node._parent;
+        const locParent = node.parent;
         parentOpacity = BYTE;
-        if (locParent && locParent._cascadeOpacityEnabled)
-          parentOpacity = locParent.getDisplayedOpacity();
+        if (locParent && locParent.cascadeOpacity)
+          parentOpacity = locParent.displayedOpacity;
       }
-      this._displayedOpacity = (node._realOpacity * parentOpacity) / BYTE;
-      if (node._cascadeOpacityEnabled) {
+      this._displayedOpacity = (node.opacity * parentOpacity) / BYTE;
+      if (node.cascadeOpacity) {
         selChildren = node._children;
         for (i = 0, len = selChildren.length; i < len; i++) {
           item = selChildren[i];
@@ -398,11 +398,11 @@ export class RenderCmd {
   _syncDisplayColor(parentColor) {
     const node = this._node,
       locDispColor = this._displayedColor,
-      locRealColor = node._realColor;
+      locRealColor = node.color;
     if (parentColor === undefined) {
-      const locParent = node._parent;
-      if (locParent && locParent._cascadeColorEnabled)
-        parentColor = locParent.getDisplayedColor();
+      const locParent = node.parent;
+      if (locParent && locParent.cascadeColor)
+        parentColor = locParent.displayedColor;
       else parentColor = Color.WHITE;
     }
     locDispColor.r = 0 | ((locRealColor.r * parentColor.r) / BYTE);
@@ -413,12 +413,12 @@ export class RenderCmd {
   _syncDisplayOpacity(parentOpacity) {
     const node = this._node;
     if (parentOpacity === undefined) {
-      const locParent = node._parent;
+      const locParent = node.parent;
       parentOpacity = BYTE;
-      if (locParent && locParent._cascadeOpacityEnabled)
-        parentOpacity = locParent.getDisplayedOpacity();
+      if (locParent && locParent.cascadeOpacity)
+        parentOpacity = locParent.displayedOpacity;
     }
-    this._displayedOpacity = (node._realOpacity * parentOpacity) / BYTE;
+    this._displayedOpacity = (node.opacity * parentOpacity) / BYTE;
   }
 
   _updateColor() {}
@@ -429,14 +429,14 @@ export class RenderCmd {
 
     if (
       parentNode &&
-      parentNode._cascadeColorEnabled &&
+      parentNode.cascadeColor &&
       parentCmd._dirtyFlag & dirtyFlags.colorDirty
     )
       locFlag |= dirtyFlags.colorDirty;
 
     if (
       parentNode &&
-      parentNode._cascadeOpacityEnabled &&
+      parentNode.cascadeOpacity &&
       parentCmd._dirtyFlag & dirtyFlags.opacityDirty
     )
       locFlag |= dirtyFlags.opacityDirty;
@@ -488,14 +488,14 @@ export class RenderCmd {
     //    In order the child elements get the parent state
     if (
       parentNode &&
-      parentNode._cascadeColorEnabled &&
+      parentNode.cascadeColor &&
       parentCmd._dirtyFlag & dirtyFlags.colorDirty
     )
       locFlag |= dirtyFlags.colorDirty;
 
     if (
       parentNode &&
-      parentNode._cascadeOpacityEnabled &&
+      parentNode.cascadeOpacity &&
       parentCmd._dirtyFlag & dirtyFlags.opacityDirty
     )
       locFlag |= dirtyFlags.opacityDirty;

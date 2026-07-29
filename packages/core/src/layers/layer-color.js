@@ -40,9 +40,9 @@ export class LayerColor extends Layer {
     return this._blendFunc;
   }
 
-  set isOpacityModifyRGB(value) {}
+  set opacityModifyRGB(value) {}
 
-  get isOpacityModifyRGB() {
+  get opacityModifyRGB() {
     return false;
   }
 
@@ -61,11 +61,8 @@ export class LayerColor extends Layer {
     width = width === undefined ? winSize.width : width;
     height = height === undefined ? winSize.height : height;
 
-    var locRealColor = this._realColor;
-    locRealColor.r = color.r;
-    locRealColor.g = color.g;
-    locRealColor.b = color.b;
-    this._realOpacity = color.a;
+    this.color = color;
+    this.opacity = color.a;
     this._renderCmd.setDirtyFlag(
       Node._dirtyFlags.colorDirty | Node._dirtyFlags.opacityDirty
     );
@@ -79,7 +76,7 @@ export class LayerColor extends Layer {
     var cmd = this._renderCmd,
       parentCmd = parent ? parent._renderCmd : null;
 
-    if (!this._visible) {
+    if (!this.visible) {
       cmd._propagateFlagsDown(parentCmd);
       return;
     }
@@ -96,12 +93,12 @@ export class LayerColor extends Layer {
         children = this._children,
         len = children.length;
       if (len > 0) {
-        if (this._reorderChildDirty) {
+        if (this.reorderChildDirty) {
           this.sortAllChildren();
         }
         for (i = 0; i < len; i++) {
           child = children[i];
-          if (child._localZOrder < 0) {
+          if (child.localZOrder < 0) {
             child.visit(this, renderer);
           } else {
             break;

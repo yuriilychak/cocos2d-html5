@@ -24,10 +24,10 @@ export class TMXLayerCanvasRenderCmd extends Node.CanvasRenderCmd {
       this._curLevel = parentCmd._curLevel + 1;
     }
 
-    if (!node._visible) return;
+    if (!node.visible) return;
 
-    if (isNaN(node._customZ)) {
-      node._vertexZ = renderer.assignedZ;
+    if (!node.hasCustomVertexZ) {
+      node.assignedVertexZ = renderer.assignedZ;
       renderer.assignedZ += renderer.assignedZStep;
     }
 
@@ -41,7 +41,7 @@ export class TMXLayerCanvasRenderCmd extends Node.CanvasRenderCmd {
       node.sortAllChildren();
       for (i = 0; i < len; i++) {
         child = children[i];
-        if (child._localZOrder < 0) {
+        if (child.localZOrder < 0) {
           child._renderCmd.visit(this);
         } else {
           break;
@@ -51,9 +51,9 @@ export class TMXLayerCanvasRenderCmd extends Node.CanvasRenderCmd {
       renderer.pushRenderCommand(this);
       for (; i < len; i++) {
         child = children[i];
-        if (child._localZOrder === 0 && spTiles[child.tag]) {
-          if (isNaN(child._customZ)) {
-            child._vertexZ = renderer.assignedZ;
+        if (child.localZOrder === 0 && spTiles[child.tag]) {
+          if (!child.hasCustomVertexZ) {
+            child.assignedVertexZ = renderer.assignedZ;
             renderer.assignedZ += renderer.assignedZStep;
           }
           child._renderCmd.updateStatus();
@@ -151,7 +151,7 @@ export class TMXLayerCanvasRenderCmd extends Node.CanvasRenderCmd {
     for (i in spTiles) {
       if (i < z && spTiles[i]) {
         cmd = spTiles[i]._renderCmd;
-        if (spTiles[i]._localZOrder === 0 && !!cmd.rendering) {
+        if (spTiles[i].localZOrder === 0 && !!cmd.rendering) {
           cmd.rendering(ctx, scaleX, scaleY);
         }
       } else if (i >= z) {
@@ -167,7 +167,7 @@ export class TMXLayerCanvasRenderCmd extends Node.CanvasRenderCmd {
         z = colOffset + col;
         if (spTiles[z]) {
           cmd = spTiles[z]._renderCmd;
-          if (spTiles[z]._localZOrder === 0 && !!cmd.rendering) {
+          if (spTiles[z].localZOrder === 0 && !!cmd.rendering) {
             cmd.rendering(ctx, scaleX, scaleY);
             wrapper.setTransform(wt, { x: scaleX, y: scaleY });
             wrapper.globalAlpha = alpha;
@@ -260,7 +260,7 @@ export class TMXLayerCanvasRenderCmd extends Node.CanvasRenderCmd {
     for (i in spTiles) {
       if (i > z && spTiles[i]) {
         cmd = spTiles[i]._renderCmd;
-        if (spTiles[i]._localZOrder === 0 && !!cmd.rendering) {
+        if (spTiles[i].localZOrder === 0 && !!cmd.rendering) {
           cmd.rendering(ctx, scaleX, scaleY);
         }
       }

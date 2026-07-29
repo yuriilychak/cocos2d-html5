@@ -15,8 +15,8 @@ export class WidgetCanvasRenderCmd extends ProtectedNodeCanvasRenderCmd {
     parentCmd = parentCmd || this.getParentRenderCmd();
     if (parentCmd) this._curLevel = parentCmd._curLevel + 1;
 
-    if (isNaN(node._customZ)) {
-      node._vertexZ = renderer.assignedZ;
+    if (!node.hasCustomVertexZ) {
+      node.assignedVertexZ = renderer.assignedZ;
       renderer.assignedZ += renderer.assignedZStep;
     }
 
@@ -31,7 +31,7 @@ export class WidgetCanvasRenderCmd extends ProtectedNodeCanvasRenderCmd {
     }
 
     var node = this._node;
-    if (node._visible && node._running) {
+    if (node.visible && node.running) {
       node._adaptRenderers();
       if (!this._usingLayoutComponent) {
         var widgetParent = node.widgetParent;
@@ -64,8 +64,8 @@ export class WidgetWebGLRenderCmd extends ProtectedNodeWebGLRenderCmd {
     parentCmd = parentCmd || this.getParentRenderCmd();
     if (parentCmd) this._curLevel = parentCmd._curLevel + 1;
 
-    if (isNaN(node._customZ)) {
-      node._vertexZ = renderer.assignedZ;
+    if (!node.hasCustomVertexZ) {
+      node.assignedVertexZ = renderer.assignedZ;
       renderer.assignedZ += renderer.assignedZStep;
     }
 
@@ -80,7 +80,7 @@ export class WidgetWebGLRenderCmd extends ProtectedNodeWebGLRenderCmd {
     }
 
     var node = this._node;
-    if (node._visible && node._running) {
+    if (node.visible && node.running) {
       node._adaptRenderers();
 
       if (!this._usingLayoutComponent) {

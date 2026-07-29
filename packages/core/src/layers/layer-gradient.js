@@ -121,7 +121,7 @@ export class LayerGradient extends LayerColor {
   }
 
   getStartColor() {
-    return new Color(this._realColor);
+    return this.color;
   }
 
   setStartColor(color) {

@@ -77,7 +77,7 @@ export class TMXLayerWebGLRenderCmd extends Node.WebGLRenderCmd {
       cr = this._displayedColor.r,
       cg = this._displayedColor.g,
       cb = this._displayedColor.b;
-    if (node.isOpacityModifyRGB) {
+    if (node.opacityModifyRGB) {
       const ca = opacity / 255;
       cr *= ca;
       cg *= ca;
@@ -158,14 +158,14 @@ export class TMXLayerWebGLRenderCmd extends Node.WebGLRenderCmd {
             left = col * maptw;
             bottom = (rows - row - 1) * mapth;
             z =
-              node._vertexZ +
+              node.vertexZ +
               (rendererConfig.renderer.assignedZStep * z) / tiles.length;
             break;
           case TMX_ORIENTATION_ISO:
             left = (maptw / 2) * (cols + col - row - 1);
             bottom = (mapth / 2) * (rows * 2 - col - row - 2);
             z =
-              node._vertexZ +
+              node.vertexZ +
               (rendererConfig.renderer.assignedZStep * (node.height - bottom)) /
                 node.height;
             break;
@@ -174,7 +174,7 @@ export class TMXLayerWebGLRenderCmd extends Node.WebGLRenderCmd {
             bottom =
               (rows - row - 1) * mapth + (col % 2 === 1 ? -mapth / 2 : 0);
             z =
-              node._vertexZ +
+              node.vertexZ +
               (rendererConfig.renderer.assignedZStep * (node.height - bottom)) /
                 node.height;
             break;

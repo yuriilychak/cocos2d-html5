@@ -251,7 +251,7 @@ class BoneNode extends Node {
     renderCmd._debug = isDebugDraw;
     ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty = true;
 
-    if (this._visible && null != this._rootSkeleton) {
+    if (this.visible && null != this._rootSkeleton) {
       this._rootSkeleton._subBonesDirty = true;
       this._rootSkeleton._subBonesOrderDirty = true;
     }
@@ -394,8 +394,12 @@ class BoneNode extends Node {
     this._updateVertices();
   }
 
+  get visible() {
+    return super.visible;
+  }
+
   set visible(visible) {
-    if (this._visible == visible) return;
+    if (this.visible == visible) return;
     super.visible = visible;
     if (this._rootSkeleton != null) {
       this._rootSkeleton._subBonesDirty = true;
@@ -485,7 +489,7 @@ class BoneNode extends Node {
   _visitSkins() {
     var cmd = this._renderCmd;
     // quick return if not visible
-    if (!this._visible) return;
+    if (!this.visible) return;
 
     var parentCmd = cmd.getParentRenderCmd();
     if (parentCmd) cmd._curLevel = parentCmd._curLevel + 1;
@@ -502,7 +506,7 @@ class BoneNode extends Node {
       // draw children zOrder < 0
       for (i = 0; i < len; i++) {
         child = children[i];
-        if (child._localZOrder < 0) child.visit(this);
+        if (child.localZOrder < 0) child.visit(this);
         else break;
       }
       for (; i < len; i++) children[i].visit(this);
@@ -542,10 +546,10 @@ class BoneNode extends Node {
       tmp = array[i];
       j = i - 1;
       while (j >= 0) {
-        if (tmp._localZOrder < array[j]._localZOrder) {
+        if (tmp.localZOrder < array[j].localZOrder) {
           array[j + 1] = array[j];
         } else if (
-          tmp._localZOrder === array[j]._localZOrder &&
+          tmp.localZOrder === array[j].localZOrder &&
           tmp.arrivalOrder < array[j].arrivalOrder
         ) {
           array[j + 1] = array[j];

@@ -60,7 +60,7 @@ export class Pool {
   }
 
   _autoRelease(obj) {
-    const running = obj._running === undefined ? false : !obj._running;
+    const running = obj.running === undefined ? false : !obj.running;
     ServiceLocator.director
       .scheduler
       .schedule(this._releaseCB, obj, 0, 0, 0, running);

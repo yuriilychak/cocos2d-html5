@@ -173,7 +173,7 @@ export class SpriteBatchNode extends Node {
   appendChild(sprite) {
     this.sortAllChildren();
     var lastLocalZOrder =
-      this._children[this._children.length - 1]._localZOrder;
+      this._children[this._children.length - 1].localZOrder;
     this.addChild(sprite.lastLocalZOrder + 1);
   }
 
@@ -229,13 +229,13 @@ export class SpriteBatchNode extends Node {
     }
   }
 
-  setShaderProgram(newShaderProgram) {
+  set shaderProgram(newShaderProgram) {
     this._renderCmd.setShaderProgram(newShaderProgram);
     var i,
       children = this._children,
       len = children.length;
     for (i = 0; i < len; ++i) {
-      children[i].setShaderProgram(newShaderProgram);
+      children[i].shaderProgram = newShaderProgram;
     }
   }
 
@@ -283,10 +283,6 @@ export class SpriteBatchNode extends Node {
   }
 
   get shaderProgram() {
-    return this.getShaderProgram();
-  }
-
-  set shaderProgram(value) {
-    this.setShaderProgram(value);
+    return this._renderCmd.getShaderProgram();
   }
 }

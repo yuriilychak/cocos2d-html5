@@ -81,8 +81,8 @@ export class ScrollViewBar extends ProtectedNode {
 
         this.init();
 
-        this.setCascadeColorEnabled(true);
-        this.setCascadeOpacityEnabled(true);
+        this.cascadeColor = true;
+        this.cascadeOpacity = true;
     }
 
     get autoHideEnabled() { return this.isAutoHideEnabled(); }

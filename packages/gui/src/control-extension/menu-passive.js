@@ -277,8 +277,8 @@ export class MenuPassive extends Layer {
         }
     }
 
-    set isOpacityModifyRGB(bValue) {}
-    get isOpacityModifyRGB() { return false; }
+    set opacityModifyRGB(bValue) {}
+    get opacityModifyRGB() { return false; }
 
     static create(item) {
         if (!item) item = null;

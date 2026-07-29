@@ -132,13 +132,13 @@ export class ProgressTimerWebGLRenderCmd extends Node.WebGLRenderCmd {
 
     if (
       parentNode &&
-      parentNode._cascadeColorEnabled &&
+      parentNode.cascadeColor &&
       parentCmd._dirtyFlag & flags.colorDirty
     )
       locFlag |= flags.colorDirty;
     if (
       parentNode &&
-      parentNode._cascadeOpacityEnabled &&
+      parentNode.cascadeOpacity &&
       parentCmd._dirtyFlag & flags.opacityDirty
     )
       locFlag |= flags.opacityDirty;
@@ -630,7 +630,7 @@ export class ProgressTimerWebGLRenderCmd extends Node.WebGLRenderCmd {
   _vertexFromAlphaPoint(vertex, ax, ay) {
     vertex.x = this._bl.x * (1 - ax) + this._tr.x * ax;
     vertex.y = this._bl.y * (1 - ay) + this._tr.y * ay;
-    vertex.z = this._node._vertexZ;
+    vertex.z = this._node.vertexZ;
   }
 
   _updateColor() {
@@ -643,7 +643,7 @@ export class ProgressTimerWebGLRenderCmd extends Node.WebGLRenderCmd {
     let g = spColor.g;
     let b = spColor.b;
     const a = sp._renderCmd._displayedOpacity / 255;
-    if (sp.isOpacityModifyRGB) {
+    if (sp.opacityModifyRGB) {
       r *= a;
       g *= a;
       b *= a;

@@ -60,10 +60,10 @@ export class LabelBMFontCanvasRenderCmd extends Node.CanvasRenderCmd {
     }
 
     _updateChildrenDisplayedOpacity(locChild) {
-        Node.prototype.updateDisplayedOpacity.call(locChild, this._displayedOpacity);
+        locChild.displayedOpacity = this._displayedOpacity;
     }
 
     _updateChildrenDisplayedColor(locChild) {
-        Node.prototype.updateDisplayedColor.call(locChild, this._displayedColor);
+        locChild.displayedColor = this._displayedColor;
     }
 }

@@ -72,7 +72,7 @@ export default class LayerColorWebGLRenderer extends LayerWebGLRenderer {
       pos[FLOAT_PER_VERTEX_COLOR + 2] =
       pos[FLOAT_PER_VERTEX_COLOR * 2 + 2] =
       pos[FLOAT_PER_VERTEX_COLOR * 3 + 2] =
-        node._vertexZ;
+        node.vertexZ;
 
     this._dataDirty = true;
   }

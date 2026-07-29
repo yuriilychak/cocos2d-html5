@@ -170,7 +170,7 @@ export default class LayerCanvasRenderer extends NodeCanvasRenderCmd {
   }
 
   _bakeForAddChild(child) {
-    if (child._parent === this._node && this._isBaked)
+    if (child.parent === this._node && this._isBaked)
       child._renderCmd._setCachedParent(this);
   }
 
@@ -185,7 +185,7 @@ export default class LayerCanvasRenderer extends NodeCanvasRenderCmd {
     const locChildren = node._children;
     for (let i = 0, len = locChildren.length; i < len; i++) {
       const child = locChildren[i];
-      if (child && child._visible) {
+      if (child && child.visible) {
         if (rect) {
           const childRect = child._getBoundingBoxToCurrentNode(trans);
           if (childRect) rect = Rect.union(rect, childRect);

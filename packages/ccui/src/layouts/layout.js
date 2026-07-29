@@ -114,7 +114,7 @@ export class Layout extends Widget {
     var cmd = this._renderCmd,
       parentCmd = parent ? parent._renderCmd : null;
 
-    if (!this._visible) {
+    if (!this.visible) {
       cmd._propagateFlagsDown(parentCmd);
       return;
     }
@@ -145,17 +145,17 @@ export class Layout extends Widget {
       pLen = pChildren.length,
       pChild;
 
-    if (this._reorderChildDirty) this.sortAllChildren();
+    if (this.reorderChildDirty) this.sortAllChildren();
     if (this._reorderProtectedChildDirty) this.sortAllProtectedChildren();
     for (i = 0; i < len; i++) {
       child = children[i];
-      if (child._localZOrder < 0) {
+      if (child.localZOrder < 0) {
         child.visit(this);
       } else break;
     }
     for (j = 0; j < pLen; j++) {
       pChild = pChildren[j];
-      if (pChild._localZOrder < 0) {
+      if (pChild.localZOrder < 0) {
         cmd._changeProtectedChild(pChild);
         pChild.visit(this);
       } else break;
@@ -293,13 +293,13 @@ export class Layout extends Widget {
         if (able) {
           this._clippingStencil = new DrawNode();
           this._renderCmd.rebindStencilRendering(this._clippingStencil);
-          if (this._running)
+          if (this.running)
             this._clippingStencil._performRecursive(
               Node._stateCallbackType.onEnter
             );
           this._setStencilClippingSize(this.contentSize);
         } else {
-          if (this._running && this._clippingStencil)
+          if (this.running && this._clippingStencil)
             this._clippingStencil._performRecursive(
               Node._stateCallbackType.onExit
             );

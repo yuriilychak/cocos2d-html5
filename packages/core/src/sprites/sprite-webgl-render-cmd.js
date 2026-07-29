@@ -123,7 +123,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
 
       //put it in descendants array of batch node
       node._batchNode.appendChild(child);
-      if (!node._reorderChildDirty) node._setReorderChildDirtyRecursively();
+      if (!node.reorderChildDirty) node._setReorderChildDirtyRecursively();
     }
     return true;
   }
@@ -266,7 +266,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
       ) {
         blendFunc.src = GLState.SRC_ALPHA;
       }
-      node.isOpacityModifyRGB = false;
+      node.opacityModifyRGB = false;
     } else {
       if (
         blendFunc.src === GLState.SRC_ALPHA &&
@@ -274,7 +274,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
       ) {
         blendFunc.src = GLState.ONE;
       }
-      node.isOpacityModifyRGB = true;
+      node.opacityModifyRGB = true;
     }
   }
 
@@ -399,14 +399,14 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
     let r = this._displayedColor.r,
       g = this._displayedColor.g,
       b = this._displayedColor.b;
-    if (node.isOpacityModifyRGB) {
+    if (node.opacityModifyRGB) {
       const a = opacity / BYTE;
       r *= a;
       g *= a;
       b *= a;
     }
     this._color[0] = (opacity << 24) | (b << 16) | (g << 8) | r;
-    const z = node._vertexZ;
+    const z = node.vertexZ;
 
     if (node._polygonInfo && node.hasPolygonInfo && node.hasPolygonInfo()) {
       return this._uploadPolygonData(

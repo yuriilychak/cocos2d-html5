@@ -174,7 +174,7 @@ export class ControlButton extends Control {
       this._titleLabel = label;
       this._backgroundSprite = backgroundSprite;
       this.opacity = 255;
-      this.isOpacityModifyRGB = true;
+      this.opacityModifyRGB = true;
       var tempString = label.string;
       this.setTitleForState(tempString, CONTROL_STATE_NORMAL);
       this.setTitleColorForState(label.color, CONTROL_STATE_NORMAL);
@@ -258,13 +258,7 @@ export class ControlButton extends Control {
   }
 
   get color() {
-    var locRealColor = this._realColor;
-    return new Color(
-      locRealColor.r,
-      locRealColor.g,
-      locRealColor.b,
-      locRealColor.a
-    );
+    return super.color;
   }
 
   get isPushed() {

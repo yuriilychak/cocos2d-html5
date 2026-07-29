@@ -1,4 +1,4 @@
-import { Point, Size, AffineTransform } from "../geometry";
+import { Point, Rect, Size, AffineTransform } from "../geometry";
 import { log, _LogInfos } from "../boot/debugger";
 import { dirtyFlags } from "./node-canvas-render-cmd";
 
@@ -172,6 +172,14 @@ export class NodeTransform {
     if (Size.equalTo(value, this.#contentSize)) return;
     this.#contentSize.set(value);
     this.#renderCmd._updateAnchorPointInPoint();
+  }
+
+  get boundingBox() {
+    const rect = new Rect(0, 0, this.#contentSize.width, this.#contentSize.height);
+    return AffineTransform._applyToRectIn(
+      rect,
+      this.#renderCmd.getNodeToParentTransform()
+    );
   }
 
   get ignoreAnchorPointForPosition() { return this.#ignoreAnchorPointForPosition; }

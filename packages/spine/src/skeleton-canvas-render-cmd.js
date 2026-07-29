@@ -20,7 +20,7 @@ export class SkeletonCanvasRenderCmd extends Node.CanvasRenderCmd {
     for (let i = 0, n = drawOrder.length; i < n; i++) {
       const slot = drawOrder[i];
       const slotNode = slot._slotNode;
-      if (slotNode._visible && slotNode._renderCmd && slot.currentSprite) {
+      if (slotNode.visible && slotNode._renderCmd && slot.currentSprite) {
         slotNode._renderCmd.transform(this, true);
         slot.currentSprite._renderCmd.rendering(wrapper, scaleX, scaleY);
         slotNode._renderCmd._dirtyFlag =

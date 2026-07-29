@@ -20,8 +20,8 @@ export class LabelAtlas extends LabelBMFont {
   constructor(strText, charMapFile, itemWidth, itemHeight, startCharMap) {
     super();
     this._imageOffset = new Point();
-    this._cascadeColorEnabled = true;
-    this._cascadeOpacityEnabled = true;
+    this.cascadeColor = true;
+    this.cascadeOpacity = true;
 
     charMapFile &&
       LabelAtlas.prototype.initWithString.call(
@@ -155,8 +155,8 @@ export class LabelAtlas extends LabelBMFont {
       self._imageOffset = new Point();
       self._width = -1;
 
-      self._realOpacity = 255;
-      self._realColor = new Color(255, 255, 255, 255);
+      self.opacity = 255;
+      self.color = new Color(255, 255, 255, 255);
 
       self.width = 0;
       self.height = 0;

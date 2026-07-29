@@ -52,7 +52,7 @@ export class WebView extends Widget {
       div = cmd._div,
       container = ServiceLocator.eglView.container,
       eventManager = ServiceLocator.eventManager;
-    if (this._visible) {
+    if (this.visible) {
       container.appendChild(div);
       if (this._listener === null)
         this._listener = eventManager.addCustomListener(
@@ -342,7 +342,7 @@ if (webViewSys.specification.isMobile) {
       view = view || ServiceLocator.eglView;
       var node = this._node,
         eventManager = ServiceLocator.eventManager;
-      if (node._parent && node._visible)
+      if (node.parent && node.visible)
         this.updateMatrix(this._worldTransform, view.scaleX, view.scaleY);
       else {
         eventManager.removeListener(node._listener);

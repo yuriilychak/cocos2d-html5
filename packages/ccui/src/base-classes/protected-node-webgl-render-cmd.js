@@ -7,9 +7,9 @@ export class ProtectedNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
 
     _updateDisplayColor(parentColor) {
         var node = this._node;
-        var locDispColor = this._displayedColor, locRealColor = node._realColor;
+        var locDispColor = this._displayedColor, locRealColor = node.color;
         var i, len, selChildren, item;
-        if (this._cascadeColorEnabledDirty && !node._cascadeColorEnabled) {
+        if (this._cascadeColorEnabledDirty && !node.cascadeColor) {
             locDispColor.r = locRealColor.r;
             locDispColor.g = locRealColor.g;
             locDispColor.b = locRealColor.b;
@@ -23,16 +23,16 @@ export class ProtectedNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
             this._cascadeColorEnabledDirty = false;
         } else {
             if (parentColor === undefined) {
-                var locParent = node._parent;
-                if (locParent && locParent._cascadeColorEnabled)
-                    parentColor = locParent.getDisplayedColor();
+                var locParent = node.parent;
+                if (locParent && locParent.cascadeColor)
+                    parentColor = locParent.displayedColor;
                 else
                     parentColor = Color.WHITE;
             }
             locDispColor.r = 0 | (locRealColor.r * parentColor.r / 255.0);
             locDispColor.g = 0 | (locRealColor.g * parentColor.g / 255.0);
             locDispColor.b = 0 | (locRealColor.b * parentColor.b / 255.0);
-            if (node._cascadeColorEnabled) {
+            if (node.cascadeColor) {
                 selChildren = node._children;
                 for (i = 0, len = selChildren.length; i < len; i++) {
                     item = selChildren[i];
@@ -57,8 +57,8 @@ export class ProtectedNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
     _updateDisplayOpacity(parentOpacity) {
         var node = this._node;
         var i, len, selChildren, item;
-        if (this._cascadeOpacityEnabledDirty && !node._cascadeOpacityEnabled) {
-            this._displayedOpacity = node._realOpacity;
+        if (this._cascadeOpacityEnabledDirty && !node.cascadeOpacity) {
+            this._displayedOpacity = node.opacity;
             selChildren = node._children;
             for (i = 0, len = selChildren.length; i < len; i++) {
                 item = selChildren[i];
@@ -68,13 +68,13 @@ export class ProtectedNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
             this._cascadeOpacityEnabledDirty = false;
         } else {
             if (parentOpacity === undefined) {
-                var locParent = node._parent;
+                var locParent = node.parent;
                 parentOpacity = 255;
-                if (locParent && locParent._cascadeOpacityEnabled)
-                    parentOpacity = locParent.getDisplayedOpacity();
+                if (locParent && locParent.cascadeOpacity)
+                    parentOpacity = locParent.displayedOpacity;
             }
-            this._displayedOpacity = node._realOpacity * parentOpacity / 255.0;
-            if (node._cascadeOpacityEnabled) {
+            this._displayedOpacity = node.opacity * parentOpacity / 255.0;
+            if (node.cascadeOpacity) {
                 selChildren = node._children;
                 for (i = 0, len = selChildren.length; i < len; i++) {
                     item = selChildren[i];

@@ -620,9 +620,13 @@ export class RichText extends Widget {
    * Allow child renderer to be affected by RichText's opacity
    * @param {boolean} value
    */
-  setCascadeOpacityEnabled(value) {
-    super.setCascadeOpacityEnabled(value);
-    this._elementRenderersContainer.setCascadeOpacityEnabled(value);
+  get cascadeOpacity() {
+    return super.cascadeOpacity;
+  }
+
+  set cascadeOpacity(value) {
+    super.cascadeOpacity = value;
+    this._elementRenderersContainer.cascadeOpacity = value;
   }
 
   /**

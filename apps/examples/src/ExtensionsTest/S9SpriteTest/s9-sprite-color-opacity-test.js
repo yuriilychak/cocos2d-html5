@@ -38,8 +38,8 @@ export class S9SpriteColorOpacityTest extends S9SpriteTestDemo {
     this._title =
       "Test color/opacity cascade for Scale9Sprite (red with 128 opacity)";
 
-    this.setCascadeColorEnabled(true);
-    this.setCascadeOpacityEnabled(true);
+    this.cascadeColor = true;
+    this.cascadeOpacity = true;
     this.opacity = 128;
     this.color = new Color(255, 0, 0);
 

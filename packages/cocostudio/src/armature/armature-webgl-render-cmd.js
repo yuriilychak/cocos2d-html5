@@ -80,7 +80,7 @@ export class ArmatureWebGLRenderCmd extends Node.WebGLRenderCmd {
         switch (selBone.getDisplayRenderNodeType()) {
           case DISPLAY_TYPE_SPRITE:
             if (selNode instanceof Skin) {
-              selNode.setShaderProgram(this._shaderProgram);
+              selNode.shaderProgram = this._shaderProgram;
               this._updateColorAndOpacity(cmd, selBone);
               cmd.transform(parentCmd);
 
@@ -107,7 +107,7 @@ export class ArmatureWebGLRenderCmd extends Node.WebGLRenderCmd {
             }
             break;
           case DISPLAY_TYPE_ARMATURE:
-            selNode.setShaderProgram(this._shaderProgram);
+            selNode.shaderProgram = this._shaderProgram;
             this._updateColorAndOpacity(cmd, selBone);
             cmd._parentCmd = this;
           // Continue rendering in default
@@ -123,7 +123,7 @@ export class ArmatureWebGLRenderCmd extends Node.WebGLRenderCmd {
             break;
         }
       } else if (selBone instanceof Node) {
-        selBone.setShaderProgram(this._shaderProgram);
+        selBone.shaderProgram = this._shaderProgram;
         boneCmd._syncStatus(parentCmd);
         if (boneCmd.uploadData) {
           ServiceLocator.sys.rendererConfig.renderer.uploadBufferData(boneCmd);
@@ -163,7 +163,7 @@ export class ArmatureWebGLRenderCmd extends Node.WebGLRenderCmd {
 
   visit(parentCmd) {
     var node = this._node;
-    if (!node._visible) return;
+    if (!node.visible) return;
 
     parentCmd = parentCmd || this.getParentRenderCmd();
     if (parentCmd) this._curLevel = parentCmd._curLevel + 1;
@@ -177,16 +177,16 @@ export class ArmatureWebGLRenderCmd extends Node.WebGLRenderCmd {
       i,
       len = children.length;
 
-    if (isNaN(node._customZ)) {
-      node._vertexZ = renderer.assignedZ;
+    if (!node.hasCustomVertexZ) {
+      node.assignedVertexZ = renderer.assignedZ;
       renderer.assignedZ += renderer.assignedZStep;
     }
 
     for (i = 0; i < len; i++) {
       child = children[i];
-      if (child._localZOrder < 0) {
-        if (isNaN(child._customZ)) {
-          child._vertexZ = renderer.assignedZ;
+      if (child.localZOrder < 0) {
+        if (!child.hasCustomVertexZ) {
+          child.assignedVertexZ = renderer.assignedZ;
           renderer.assignedZ += renderer.assignedZStep;
         }
       } else {
@@ -197,8 +197,8 @@ export class ArmatureWebGLRenderCmd extends Node.WebGLRenderCmd {
     renderer.pushRenderCommand(this);
     for (; i < len; i++) {
       child = children[i];
-      if (isNaN(child._customZ)) {
-        child._vertexZ = renderer.assignedZ;
+      if (!child.hasCustomVertexZ) {
+        child.assignedVertexZ = renderer.assignedZ;
         renderer.assignedZ += renderer.assignedZStep;
       }
     }

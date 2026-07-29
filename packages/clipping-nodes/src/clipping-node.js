@@ -16,7 +16,7 @@ export class ClippingNode extends Node {
     super();
     this._stencil = stencil;
     if (stencil) {
-      this._originStencilProgram = stencil.getShaderProgram();
+      this._originStencilProgram = stencil.shaderProgram;
     }
     this.alphaThreshold = 1;
     this.inverted = false;
@@ -68,13 +68,13 @@ export class ClippingNode extends Node {
 
   _visitChildren() {
     const renderer = ServiceLocator.sys.rendererConfig.renderer;
-    if (this._reorderChildDirty) {
+    if (this.reorderChildDirty) {
       this.sortAllChildren();
     }
     const children = this._children;
     for (let i = 0, len = children.length; i < len; i++) {
       const child = children[i];
-      if (child && child._visible) {
+      if (child && child.visible) {
         child.visit(this);
       }
     }
@@ -106,7 +106,7 @@ export class ClippingNode extends Node {
 
   setStencil(stencil) {
     if (this._stencil === stencil) return;
-    if (stencil) this._originStencilProgram = stencil.getShaderProgram();
+    if (stencil) this._originStencilProgram = stencil.shaderProgram;
     this._renderCmd.setStencil(stencil);
   }
 

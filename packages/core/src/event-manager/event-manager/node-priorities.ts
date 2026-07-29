@@ -33,7 +33,7 @@ export default class NodePriorities {
       return;
     }
 
-    const globalZOrder = node.getGlobalZOrder();
+    const globalZOrder = node.globalZOrder;
     if (!this.#globalZOrderNodes.has(globalZOrder))
       this.#globalZOrderNodes.set(globalZOrder, []);
     this.#globalZOrderNodes.get(globalZOrder)!.push(node.__instanceId);

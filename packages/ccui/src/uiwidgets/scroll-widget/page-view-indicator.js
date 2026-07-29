@@ -67,8 +67,8 @@ export class PageViewIndicator extends ProtectedNode {
     this._currentIndexNode.visible = false;
     this.addProtectedChild(this._currentIndexNode, 1);
 
-    // this.setCascadeColorEnabled(true);
-    // this.setCascadeOpacityEnabled(true);
+    // this.cascadeColor = true;
+    // this.cascadeOpacity = true;
   }
 
   get spaceBetweenIndexNodes() {

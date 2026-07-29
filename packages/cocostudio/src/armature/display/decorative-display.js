@@ -51,9 +51,9 @@ export class DecorativeDisplay extends BaseClass {
    * @param {Node} display
    */
   setDisplay(display) {
-    if (display._parent) {
-      display._parent.removeChild(display);
-      delete display._parent;
+    if (display.parent) {
+      display.parent.removeChild(display);
+      display.parent = null;
     }
     this._display = display;
   }
@@ -104,4 +104,3 @@ export class DecorativeDisplay extends BaseClass {
     this._colliderDetector = null;
   }
 };
-

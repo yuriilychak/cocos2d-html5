@@ -10,7 +10,7 @@ export class LabelAtlasWebGLRenderCmd extends AtlasNode.WebGLRenderCmd {
     if (this._colorF32Array) {
       const locDisplayedColor = this._displayedColor;
       const a = this._displayedOpacity / 255;
-      if (this._node.isOpacityModifyRGB) {
+      if (this._node.opacityModifyRGB) {
         this._colorF32Array[0] = (locDisplayedColor.r * a) / 255;
         this._colorF32Array[1] = (locDisplayedColor.g * a) / 255;
         this._colorF32Array[2] = (locDisplayedColor.b * a) / 255;
@@ -26,8 +26,8 @@ export class LabelAtlasWebGLRenderCmd extends AtlasNode.WebGLRenderCmd {
 
   setCascade() {
     const node = this._node;
-    node._cascadeOpacityEnabled = true;
-    node._cascadeColorEnabled = true;
+    node.cascadeOpacity = true;
+    node.cascadeColor = true;
   }
 
   rendering(ctx) {

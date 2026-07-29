@@ -162,7 +162,7 @@ export class ScrollView extends Layout {
       parentCmd = parent ? parent._renderCmd : null;
 
     // quick return if not visible
-    if (!this._visible) {
+    if (!this.visible) {
       cmd._propagateFlagsDown(parentCmd);
       return;
     }
@@ -199,17 +199,17 @@ export class ScrollView extends Layout {
       pLen = pChildren.length,
       pChild;
 
-    if (this._reorderChildDirty) this.sortAllChildren();
+    if (this.reorderChildDirty) this.sortAllChildren();
     if (this._reorderProtectedChildDirty) this.sortAllProtectedChildren();
     for (i = 0; i < len; i++) {
       child = children[i];
-      if (child && child._visible) {
+      if (child && child.visible) {
         child.visit(this);
       }
     }
     for (j = 0; j < pLen; j++) {
       pChild = pChildren[j];
-      if (pChild && pChild._visible) {
+      if (pChild && pChild.visible) {
         cmd._changeProtectedChild(pChild);
         pChild.visit(this);
       }
@@ -259,8 +259,8 @@ export class ScrollView extends Layout {
     this._innerContainer = new Layout();
     this._innerContainer.color = new Color(255, 255, 255);
     this._innerContainer.opacity = 255;
-    this._innerContainer.setCascadeColorEnabled(true);
-    this._innerContainer.setCascadeOpacityEnabled(true);
+    this._innerContainer.cascadeColor = true;
+    this._innerContainer.cascadeOpacity = true;
     this._innerContainer.touchEnabled = false;
 
     this.addProtectedChild(this._innerContainer, 1, 1);

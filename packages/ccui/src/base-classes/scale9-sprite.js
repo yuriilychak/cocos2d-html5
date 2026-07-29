@@ -630,14 +630,14 @@ export class Scale9Sprite extends EventHelper(Node) {
     }
   }
 
-  setOpacityModifyRGB(value) {
+  set opacityModifyRGB(value) {
     if (this.#opacityModifyRGB !== value) {
       this.#opacityModifyRGB = value;
       this._renderCmd._setColorDirty();
     }
   }
 
-  isOpacityModifyRGB() {
+  get opacityModifyRGB() {
     return this.#opacityModifyRGB;
   }
 

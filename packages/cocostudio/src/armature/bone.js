@@ -136,7 +136,7 @@ export class Bone extends Node {
    */
   init(name) {
     //        super.init();
-    if (name) this._name = name;
+    if (name) this.name = name;
     this._tweenData = new FrameData();
 
     this._tween = new Tween(this);
@@ -159,7 +159,7 @@ export class Bone extends Node {
     if (this._boneData !== boneData) this._boneData = boneData;
 
     this.name = this._boneData.name;
-    this._localZOrder = this._boneData.zOrder;
+    this.localZOrder = this._boneData.zOrder;
     this._displayManager.initDisplayList(boneData);
   }
 
@@ -366,7 +366,7 @@ export class Bone extends Node {
 
   /**
    * Sets parent bone to Bone.
-   * If _parent is NUll, then also remove this bone from armature.
+   * If parent is null, then also remove this bone from armature.
    * It will not set the Armature, if you want to add the bone to a Armature, you should use Armature.addBone(bone, parentName).
    * @param {Bone}  parent  the parent bone.
    */
@@ -415,7 +415,7 @@ export class Bone extends Node {
    * @param {Number} zOrder
    */
   set zIndex(zOrder) {
-    if (this._localZOrder !== zOrder) super.zIndex = zOrder;
+    if (this.localZOrder !== zOrder) super.zIndex = zOrder;
   }
 
   /**

@@ -323,8 +323,8 @@ export class DisplayManager extends BaseClass {
           displayRenderNode.resetSystem();
       }
 
-      displayRenderNode.color = locBone.getDisplayedColor();
-      displayRenderNode.opacity = locBone.getDisplayedOpacity();
+      displayRenderNode.color = locBone.displayedColor;
+      displayRenderNode.opacity = locBone.displayedOpacity;
 
       this._displayRenderNode.visible = this._visible;
       this._displayType = this._currentDecoDisplay.getDisplayData().displayType;

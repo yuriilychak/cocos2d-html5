@@ -41,8 +41,8 @@ export class Layer extends Node {
     this.anchorX = 0.5;
     this.anchorY = 0.5;
     this.contentSize = ServiceLocator.eglView.winSizeInPoints;
-    this._cascadeColorEnabled = false;
-    this._cascadeOpacityEnabled = false;
+    this.cascadeColor = false;
+    this.cascadeOpacity = false;
   }
 
   bake() {
@@ -61,7 +61,7 @@ export class Layer extends Node {
     var cmd = this._renderCmd,
       parentCmd = parent ? parent._renderCmd : null;
 
-    if (!this._visible) {
+    if (!this.visible) {
       cmd._propagateFlagsDown(parentCmd);
       return;
     }
@@ -77,12 +77,12 @@ export class Layer extends Node {
         len = children.length,
         child;
       if (len > 0) {
-        if (this._reorderChildDirty) {
+        if (this.reorderChildDirty) {
           this.sortAllChildren();
         }
         for (i = 0; i < len; i++) {
           child = children[i];
-          if (child._localZOrder < 0) {
+          if (child.localZOrder < 0) {
             child.visit(this, renderer);
           } else {
             break;

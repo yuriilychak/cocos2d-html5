@@ -10,7 +10,7 @@ export class NodeGridWebGLRenderCmd extends Node.WebGLRenderCmd {
 
   visit(parentCmd) {
     const node = this._node;
-    if (!node._visible)
+    if (!node.visible)
       return;
 
     parentCmd = parentCmd || this.getParentRenderCmd();

@@ -8,8 +8,8 @@ export class LabelAtlasCanvasRenderCmd extends AtlasNode.CanvasRenderCmd {
 
     setCascade() {
         const node = this._node;
-        node._cascadeOpacityEnabled = true;
-        node._cascadeColorEnabled = false;
+        node.cascadeOpacity = true;
+        node.cascadeColor = false;
     }
 
     updateAtlasValues() {

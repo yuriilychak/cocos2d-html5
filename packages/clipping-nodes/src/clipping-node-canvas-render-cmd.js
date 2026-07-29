@@ -43,7 +43,7 @@ export class ClippingNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
       this._rendererClipCmd._canUseDirtyRegion = true;
       this._rendererRestoreCmd._canUseDirtyRegion = true;
     } else {
-      stencil._parent = this._node;
+      stencil.parent = this._node;
     }
   }
 

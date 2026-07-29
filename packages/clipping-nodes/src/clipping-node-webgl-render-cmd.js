@@ -107,9 +107,9 @@ export class ClippingNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
 
   setStencil(stencil) {
     const node = this._node;
-    if (node._stencil) node._stencil._parent = null;
+    if (node._stencil) node._stencil.parent = null;
     node._stencil = stencil;
-    if (node._stencil) node._stencil._parent = node;
+    if (node._stencil) node._stencil.parent = node;
   }
 
   resetProgramByStencil() {

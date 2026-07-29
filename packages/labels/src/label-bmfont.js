@@ -109,8 +109,8 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
   constructor(str, fntFile, width, alignment, imageOffset, fontSize) {
     super();
     this._imageOffset = new Point();
-    this._cascadeColorEnabled = true;
-    this._cascadeOpacityEnabled = true;
+    this.cascadeColor = true;
+    this.cascadeOpacity = true;
     if (str !== undefined && fntFile !== undefined)
       this.initWithString(
         str,
@@ -134,7 +134,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
    * Conforms to RGBAProtocol protocol.
    * @return {Boolean}
    */
-  get isOpacityModifyRGB() {
+  get opacityModifyRGB() {
     return this.#opacityModifyRGB;
   }
 
@@ -142,13 +142,13 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
    * Set whether to support RGBAProtocol protocol
    * @param {Boolean} opacityModifyRGB
    */
-  set isOpacityModifyRGB(opacityModifyRGB) {
+  set opacityModifyRGB(opacityModifyRGB) {
     this.#opacityModifyRGB = opacityModifyRGB;
     var locChildren = this._children;
     if (locChildren) {
       for (var i = 0; i < locChildren.length; i++) {
         var node = locChildren[i];
-        if (node) node.isOpacityModifyRGB = this.#opacityModifyRGB;
+        if (node) node.opacityModifyRGB = this.#opacityModifyRGB;
       }
     }
   }
@@ -234,8 +234,8 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
       this._width = width === undefined ? -1 : width;
       this._fontSize = fontSize > 0 ? fontSize : 0;
 
-      this._realOpacity = 255;
-      this._realColor = new Color(255, 255, 255, 255);
+      this.opacity = 255;
+      this.color = new Color(255, 255, 255, 255);
 
       this.width = 0;
       this.height = 0;
@@ -358,7 +358,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
       }
 
       // Apply label properties
-      fontChar.isOpacityModifyRGB = this.#opacityModifyRGB;
+      fontChar.opacityModifyRGB = this.#opacityModifyRGB;
       cmd._updateCharColorAndOpacity(fontChar);
       fontChar.scale = locScale;
 

@@ -12,7 +12,7 @@ export class ProtectedNode extends Node {
   _insertProtectedChild(child, z) {
     this._reorderProtectedChildDirty = true;
     this._protectedChildren.push(child);
-    child._setLocalZOrder(z);
+    child.localZOrder = z;
   }
 
   constructor() {
@@ -25,7 +25,7 @@ export class ProtectedNode extends Node {
     var cmd = this._renderCmd,
       parentCmd = parent ? parent._renderCmd : null;
 
-    if (!this._visible) {
+    if (!this.visible) {
       cmd._propagateFlagsDown(parentCmd);
       return;
     }
@@ -45,12 +45,12 @@ export class ProtectedNode extends Node {
     var locGrid = this.grid;
     if (locGrid && locGrid._active) locGrid.beforeDraw();
 
-    if (this._reorderChildDirty) this.sortAllChildren();
+    if (this.reorderChildDirty) this.sortAllChildren();
     if (this._reorderProtectedChildDirty) this.sortAllProtectedChildren();
 
     for (i = 0; i < len; i++) {
       child = children[i];
-      if (child._localZOrder < 0) {
+      if (child.localZOrder < 0) {
         child.visit(this);
       } else {
         break;
@@ -58,7 +58,7 @@ export class ProtectedNode extends Node {
     }
     for (j = 0; j < pLen; j++) {
       pChild = pChildren[j];
-      if (pChild && pChild._localZOrder < 0) {
+      if (pChild && pChild.localZOrder < 0) {
         cmd._changeProtectedChild(pChild);
         pChild.visit(this);
       } else break;
@@ -90,18 +90,18 @@ export class ProtectedNode extends Node {
 
     this._insertProtectedChild(child, localZOrder);
     child.parent = this;
-    child.setOrderOfArrival(s_globalOrderOfArrival);
+    child.arrivalOrder = s_globalOrderOfArrival;
 
-    if (this._running) {
+    if (this.running) {
       child._performRecursive(Node._stateCallbackType.onEnter);
       if (this._isTransitionFinished)
         child._performRecursive(
           Node._stateCallbackType.onEnterTransitionDidFinish
         );
     }
-    if (this._cascadeColorEnabled)
+    if (this.cascadeColor)
       this._renderCmd.setCascadeColorEnabledDirty();
-    if (this._cascadeOpacityEnabled)
+    if (this.cascadeOpacity)
       this._renderCmd.setCascadeOpacityEnabledDirty();
   }
 
@@ -118,7 +118,7 @@ export class ProtectedNode extends Node {
     if (locChildren.length === 0) return;
     var idx = locChildren.indexOf(child);
     if (idx > -1) {
-      if (this._running) {
+      if (this.running) {
         child._performRecursive(
           Node._stateCallbackType.onExitTransitionDidStart
         );
@@ -151,7 +151,7 @@ export class ProtectedNode extends Node {
     var locChildren = this._protectedChildren;
     for (var i = 0, len = locChildren.length; i < len; i++) {
       var child = locChildren[i];
-      if (this._running) {
+      if (this.running) {
         child._performRecursive(
           Node._stateCallbackType.onExitTransitionDidStart
         );
@@ -167,7 +167,7 @@ export class ProtectedNode extends Node {
   reorderProtectedChild(child, localZOrder) {
     assert(child != null, "Child must be non-nil");
     this._reorderProtectedChildDirty = true;
-    child.setOrderOfArrival(s_globalOrderOfArrival);
+    child.arrivalOrder = s_globalOrderOfArrival;
     setGlobalOrderOfArrival(s_globalOrderOfArrival + 1);
   }
 
@@ -184,10 +184,10 @@ export class ProtectedNode extends Node {
         j = i - 1;
 
         while (j >= 0) {
-          if (tmp._localZOrder < _children[j]._localZOrder) {
+          if (tmp.localZOrder < _children[j].localZOrder) {
             _children[j + 1] = _children[j];
           } else if (
-            tmp._localZOrder === _children[j]._localZOrder &&
+            tmp.localZOrder === _children[j].localZOrder &&
             tmp.arrivalOrder < _children[j].arrivalOrder
           ) {
             _children[j + 1] = _children[j];

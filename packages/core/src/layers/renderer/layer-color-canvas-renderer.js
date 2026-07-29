@@ -112,7 +112,7 @@ export default class LayerColorCanvasRenderer extends LayerCanvasRenderer {
           node.sortAllChildren();
           for (i = 0; i < len; i++) {
             child = children[i];
-            if (child._localZOrder < 0) child.visit(node);
+            if (child.localZOrder < 0) child.visit(node);
             else break;
           }
           _r.pushRenderCommand(this);
@@ -144,7 +144,7 @@ export default class LayerColorCanvasRenderer extends LayerCanvasRenderer {
     const locChildren = node._children;
     for (let i = 0; i < locChildren.length; i++) {
       const child = locChildren[i];
-      if (child && child._visible) {
+      if (child && child.visible) {
         const childRect = child._getBoundingBoxToCurrentNode(trans);
         rect = Rect.union(rect, childRect);
       }

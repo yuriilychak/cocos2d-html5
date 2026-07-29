@@ -85,8 +85,8 @@ export class RenderTexture extends Node {
    */
   constructor(width, height, format, depthStencilFormat) {
     super();
-    this._cascadeColorEnabled = true;
-    this._cascadeOpacityEnabled = true;
+    this.cascadeColor = true;
+    this.cascadeOpacity = true;
     this._pixelFormat = PIXEL_FORMAT.RGBA8888;
     this._clearColor = new Color(0, 0, 0, 255);
 
@@ -117,7 +117,7 @@ export class RenderTexture extends Node {
       parentCmd = parent ? parent._renderCmd : null;
 
     // quick return if not visible
-    if (!this._visible) {
+    if (!this.visible) {
       cmd._propagateFlagsDown(parentCmd);
       return;
     }

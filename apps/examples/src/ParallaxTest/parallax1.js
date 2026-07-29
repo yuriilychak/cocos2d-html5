@@ -104,8 +104,8 @@ export class Parallax1 extends ParallaxDemo {
       new Point(0, 0)
     );
 
-    // now create some actions that will move the '_parent' node
-    // and the children of the '_parent' node will move at different
+    // now create some actions that will move the parent node
+    // and the children of the parent node will move at different
     // speed, thus, simulation the 3D environment
     var goUp = new MoveBy(2, new Point(0, 100));
     var goRight = new MoveBy(2, new Point(200, 0));

@@ -157,7 +157,7 @@ export class GScrollView extends Layer {
     var cmd = this._renderCmd,
       parentCmd = parent ? parent._renderCmd : null;
 
-    if (!this._visible) {
+    if (!this.visible) {
       cmd._propagateFlagsDown(parentCmd);
       return;
     }
@@ -173,7 +173,7 @@ export class GScrollView extends Layer {
       children = this._children,
       len = children.length;
     if (len > 0) {
-      if (this._reorderChildDirty) {
+      if (this.reorderChildDirty) {
         this.sortAllChildren();
       }
       for (i = 0; i < len; i++) {
@@ -721,7 +721,7 @@ export class GScrollView extends Layer {
     var scaleX = this.scaleX;
     var scaleY = this.scaleY;
 
-    for (var p = this._parent; p != null; p = p.parent) {
+    for (var p = this.parent; p != null; p = p.parent) {
       scaleX *= p.scaleX;
       scaleY *= p.scaleY;
     }
