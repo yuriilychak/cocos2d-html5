@@ -344,7 +344,7 @@ export class GScrollView extends Layer {
     this.removeAllChildren(true);
 
     this._container = container;
-    container.ignoreAnchorPointForPosition(false);
+    container.ignoreAnchorPointForPosition = false;
     container.anchorX = 0;
     container.anchorY = 0;
 

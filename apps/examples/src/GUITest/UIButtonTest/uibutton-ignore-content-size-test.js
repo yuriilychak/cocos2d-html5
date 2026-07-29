@@ -46,7 +46,7 @@ export class UIButtonIgnoreContentSizeTest extends UIMainLayer {
       button.ignoreContentAdaptWithSize(false);
       button.width = 200;
       button.height = 100;
-      button.setNormalizedPosition(0.3, 0.5);
+      button.normalizedPosition = { x: 0.3, y: 0.5 };
       button.setTitleText("PLAY GAME");
       button.setZoomScale(0.3);
       button.setPressedActionEnabled(true);
@@ -64,7 +64,7 @@ export class UIButtonIgnoreContentSizeTest extends UIMainLayer {
       button2.ignoreContentAdaptWithSize(false);
       button2.width = 200;
       button2.height = 100;
-      button2.setNormalizedPosition(0.8, 0.5);
+      button2.normalizedPosition = { x: 0.8, y: 0.5 };
       button2.setTitleText("PLAY GAME");
       button2.setZoomScale(0.3);
       button2.setPressedActionEnabled(true);

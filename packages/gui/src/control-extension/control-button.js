@@ -168,7 +168,7 @@ export class ControlButton extends Control {
       this.setAdjustBackgroundImage(true);
       this.setPreferredSize(new Size(0, 0));
       this.zoomOnTouchDown = true;
-      this.ignoreAnchorPointForPosition(false);
+      this.ignoreAnchorPointForPosition = false;
       this.anchorX = 0.5;
       this.anchorY = 0.5;
       this._titleLabel = label;

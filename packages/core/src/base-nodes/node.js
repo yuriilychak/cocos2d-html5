@@ -26,7 +26,7 @@
 
 import { BaseClass } from "../platform/class";
 import { dirtyFlags } from "./node-canvas-render-cmd";
-import { Point, Rect, Size, AffineTransform } from "../geometry";
+import { Point, Rect, AffineTransform } from "../geometry";
 import { Color } from "../platform/types/color";
 import { log, assert, _LogInfos } from "../boot/debugger";
 import {
@@ -39,6 +39,7 @@ import { ComponentContainer } from "../components";
 import Touch from "../event-manager/touch";
 import { CanvasRenderCmd as NodeCanvasRenderCmd } from "./node-canvas-render-cmd";
 import { WebGLRenderCmd as NodeWebGLRenderCmd } from "./node-webgl-render-cmd";
+import { NodeTransform } from "./node-transform";
 import { ServiceLocator } from "../service-locator";
 import { BYTE } from "../constants";
 
@@ -150,31 +151,21 @@ export function setGlobalOrderOfArrival(val) {
 export class Node extends BaseClass {
   #tag = NODE_TAG_INVALID;
   #userData = null;
-  #rotation = new Point();
-  #position = new Point();
-  #contentSize = new Size();
-  #scale = new Point(1, 1);
-  #anchor = new Point();
-  #skew = new Point();
+
+  #transform;
 
   _localZOrder = 0;
   _globalZOrder = 0;
   _vertexZ = 0.0;
   _customZ = NaN;
-  _normalizedPosition = null;
-  _usingNormalizedPosition = false;
-  _normalizedPositionDirty = false;
   _visible = true;
   _running = false;
   _parent = null;
-  _ignoreAnchorPointForPosition = false;
   userObject = null;
   _reorderChildDirty = false;
   arrivalOrder = 0;
   _actionManager = null;
   _scheduler = null;
-  _additionalTransformDirty = false;
-  _additionalTransform = AffineTransform.makeIdentity();
   _componentContainer = new ComponentContainer(this);
   _isTransitionFinished = false;
   _className = "Node";
@@ -185,7 +176,6 @@ export class Node extends BaseClass {
   _cascadeColorEnabled = false;
   _cascadeOpacityEnabled = false;
   _renderCmd = null;
-  _normalizedPosition = new Point();
   _children = [];
 
   /**
@@ -195,22 +185,21 @@ export class Node extends BaseClass {
   constructor() {
     super();
     this._renderCmd = this._createRenderCmd();
+    this.#transform = new NodeTransform(this._renderCmd);
   }
 
   get width() {
-    return this.#contentSize.width;
+    return this.#transform.width;
   }
   set width(value) {
-    this.#contentSize.width = value;
-    this._renderCmd._updateAnchorPointInPoint();
+    this.#transform.width = value;
   }
 
   get height() {
-    return this.#contentSize.height;
+    return this.#transform.height;
   }
   set height(value) {
-    this.#contentSize.height = value;
-    this._renderCmd._updateAnchorPointInPoint();
+    this.#transform.height = value;
   }
 
   /**
@@ -223,7 +212,7 @@ export class Node extends BaseClass {
    * @return {Point}  The anchor point of node.
    */
   get anchor() {
-    return this.#anchor.clone();
+    return this.#transform.anchor;
   }
 
   /**
@@ -240,30 +229,21 @@ export class Node extends BaseClass {
    * @param {Point} point The anchor point of node or The x axis anchor of node.
    */
   set anchor(value) {
-    this.#anchor.set(value);
-    this._renderCmd._updateAnchorPointInPoint();
+    this.#transform.anchor = value;
   }
 
   get anchorX() {
-    return this.#anchor.x;
+    return this.#transform.anchorX;
   }
   set anchorX(value) {
-    if (this.#anchor.x === value) {
-      return;
-    }
-    this.#anchor.x = value;
-    this._renderCmd._updateAnchorPointInPoint();
+    this.#transform.anchorX = value;
   }
 
   get anchorY() {
-    return this.#anchor.y;
+    return this.#transform.anchorY;
   }
   set anchorY(value) {
-    if (this.#anchor.y === value) {
-      return;
-    }
-    this.#anchor.y = value;
-    this._renderCmd._updateAnchorPointInPoint();
+    this.#transform.anchorY = value;
   }
 
   get vertexZ() {
@@ -280,11 +260,10 @@ export class Node extends BaseClass {
    */
 
   get rotationX() {
-    return this.#rotation.x;
+    return this.#transform.rotationX;
   }
   set rotationX(value) {
-    this.#rotation.x = value;
-    this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
+    this.#transform.rotationX = value;
   }
 
   /**
@@ -294,12 +273,11 @@ export class Node extends BaseClass {
    */
 
   get rotationY() {
-    return this.#rotation.y;
+    return this.#transform.rotationY;
   }
 
   set rotationY(value) {
-    this.#rotation.y = value;
-    this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
+    this.#transform.rotationY = value;
   }
 
   /**
@@ -308,10 +286,7 @@ export class Node extends BaseClass {
    * @return {Number} The scale factor
    */
   get scale() {
-    if (this.#scale.x !== this.#scale.y) {
-      log(_LogInfos.Node_getScale);
-    }
-    return this.#scale.x;
+    return this.#transform.scale;
   }
 
   /**
@@ -319,8 +294,7 @@ export class Node extends BaseClass {
    * @param {Number} scale or scaleX value
    */
   set scale(value) {
-    this.#scale.set(value, value);
-    this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
+    this.#transform.scale = value;
   }
 
   get children() {
@@ -340,10 +314,10 @@ export class Node extends BaseClass {
   }
 
   get ignoreAnchor() {
-    return this.isIgnoreAnchorPointForPosition();
+    return this.ignoreAnchorPointForPosition;
   }
   set ignoreAnchor(v) {
-    this.ignoreAnchorPointForPosition(v);
+    this.ignoreAnchorPointForPosition = v;
   }
 
   get actionManager() {
@@ -406,16 +380,11 @@ export class Node extends BaseClass {
   }
 
   get skew() {
-    return this.#skew.clone();
+    return this.#transform.skew;
   }
 
   set skew(value) {
-    if (Point.equalTo(this.#skew, value)) {
-      return;
-    }
-
-    this.#skew.set(value);
-    this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
+    this.#transform.skew = value;
   }
 
   /**
@@ -429,7 +398,7 @@ export class Node extends BaseClass {
    * @return {Number} The X skew angle of the node in degrees.
    */
   get skewX() {
-    return this.#skew.x;
+    return this.#transform.skewX;
   }
 
   /**
@@ -444,8 +413,7 @@ export class Node extends BaseClass {
    * @param {Number} newSkewX The X skew angle of the node in degrees.
    */
   set skewX(newSkewX) {
-    this.#skew.x = newSkewX;
-    this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
+    this.#transform.skewX = newSkewX;
   }
 
   /**
@@ -459,7 +427,7 @@ export class Node extends BaseClass {
    * @return {Number} The Y skew angle of the node in degrees.
    */
   get skewY() {
-    return this.#skew.y;
+    return this.#transform.skewY;
   }
 
   /**
@@ -474,8 +442,7 @@ export class Node extends BaseClass {
    * @param {Number} newSkewY  The Y skew angle of the node in degrees.
    */
   set skewY(newSkewY) {
-    this.#skew.y = newSkewY;
-    this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
+    this.#transform.skewY = newSkewY;
   }
 
   /**
@@ -578,8 +545,7 @@ export class Node extends BaseClass {
    * @return {Number} The rotation of the node in degrees.
    */
   get rotation() {
-    if (this.#rotation.x !== this.#rotation.y) log(_LogInfos.Node_getRotation);
-    return this.#rotation.x;
+    return this.#transform.rotation;
   }
 
   /**
@@ -593,8 +559,7 @@ export class Node extends BaseClass {
    * @param {Number} newRotation The rotation of the node in degrees.
    */
   set rotation(newRotation) {
-    this.#rotation.set(newRotation, newRotation);
-    this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
+    this.#transform.rotation = newRotation;
   }
 
   /**
@@ -603,7 +568,7 @@ export class Node extends BaseClass {
    * @return {Number} The scale factor on X axis.
    */
   get scaleX() {
-    return this.#scale.x;
+    return this.#transform.scaleX;
   }
 
   /**
@@ -615,8 +580,7 @@ export class Node extends BaseClass {
    * @param {Number} newScaleX The scale factor on X axis.
    */
   set scaleX(newScaleX) {
-    this.#scale.x = newScaleX;
-    this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
+    this.#transform.scaleX = newScaleX;
   }
 
   /**
@@ -625,7 +589,7 @@ export class Node extends BaseClass {
    * @return {Number} The scale factor on Y axis.
    */
   get scaleY() {
-    return this.#scale.y;
+    return this.#transform.scaleY;
   }
 
   /**
@@ -637,52 +601,47 @@ export class Node extends BaseClass {
    * @param {Number} newScaleY The scale factor on Y axis.
    */
   set scaleY(newScaleY) {
-    this.#scale.y = newScaleY;
-    this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
+    this.#transform.scaleY = newScaleY;
   }
 
   /**
    * <p>
    * Sets the position (x,y) using values between 0 and 1.                                                <br/>
    * The positions in pixels is calculated like the following:                                            <br/>
-   *   #position = _normalizedPosition * parent.contentSize
+   *   #position = normalizedPosition * parent.contentSize
    * </p>
-   * @param {Point|Number} posOrX
-   * @param {Number} [y]
+   * @param {Point} value
    */
-  setNormalizedPosition(posOrX, y) {
-    var locPosition = this._normalizedPosition;
-    if (y === undefined) {
-      locPosition.x = posOrX.x;
-      locPosition.y = posOrX.y;
-    } else {
-      locPosition.x = posOrX;
-      locPosition.y = y;
-    }
-    this._normalizedPositionDirty = this._usingNormalizedPosition = true;
-    this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
+  set normalizedPosition(value) {
+    this.#transform.normalizedPosition = value;
   }
 
   /**
-   * returns the normalized position
+   * Returns the normalized position.
    * @returns {Point}
    */
-  getNormalizedPosition() {
-    return new Point(this._normalizedPosition);
+  get normalizedPosition() {
+    return this.#transform.normalizedPosition;
+  }
+
+  get normalizedPositionDirty() {
+    return this.#transform.normalizedPositionDirty;
+  }
+
+  set normalizedPositionDirty(value) {
+    this.#transform.normalizedPositionDirty = value;
+  }
+
+  get usingNormalizedPosition() {
+    return this.#transform.usingNormalizedPosition;
   }
 
   get position() {
-    return this.#position.clone();
+    return this.#transform.position;
   }
 
   set position(value) {
-    if (Point.equalTo(this.#position, value)) {
-      return;
-    }
-
-    this.#position.set(value);
-    this._usingNormalizedPosition = false;
-    this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
+    this.#transform.position = value;
   }
 
   /**
@@ -691,7 +650,7 @@ export class Node extends BaseClass {
    * @return {Number}
    */
   get x() {
-    return this.#position.x;
+    return this.#transform.x;
   }
 
   /**
@@ -700,8 +659,7 @@ export class Node extends BaseClass {
    * @param {Number} x The new position in x axis
    */
   set x(x) {
-    this.#position.x = x;
-    this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
+    this.#transform.x = x;
   }
 
   /**
@@ -710,7 +668,7 @@ export class Node extends BaseClass {
    * @return {Number}
    */
   get y() {
-    return this.#position.y;
+    return this.#transform.y;
   }
 
   /**
@@ -719,8 +677,7 @@ export class Node extends BaseClass {
    * @param {Number} y The new position in y axis
    */
   set y(y) {
-    this.#position.y = y;
-    this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
+    this.#transform.y = y;
   }
 
   /**
@@ -792,15 +749,11 @@ export class Node extends BaseClass {
    * @return {Size} The untransformed size of the node.
    */
   get contentSize() {
-    return this.#contentSize.clone();
+    return this.#transform.contentSize;
   }
 
   set contentSize(value) {
-    if (Size.equalTo(value, this.#contentSize)) {
-      return;
-    }
-    this.#contentSize.set(value);
-    this._renderCmd._updateAnchorPointInPoint();
+    this.#transform.contentSize = value;
   }
 
   /**
@@ -836,12 +789,10 @@ export class Node extends BaseClass {
   /**
    * Returns whether the anchor point will be ignored when you position this node.<br/>
    * When anchor point ignored, position will be calculated based on the origin point (0, 0) in parent's coordinates.
-   * @function
-   * @see Node#ignoreAnchorPointForPosition
    * @return {Boolean} true if the anchor point will be ignored when you position this node.
    */
-  isIgnoreAnchorPointForPosition() {
-    return this._ignoreAnchorPointForPosition;
+  get ignoreAnchorPointForPosition() {
+    return this.#transform.ignoreAnchorPointForPosition;
   }
 
   /**
@@ -851,14 +802,10 @@ export class Node extends BaseClass {
    *     This is an internal method, only used by Layer and Scene. Don't call it outside framework.        <br/>
    *     The default value is false, while in Layer and Scene are true
    * </p>
-   * @function
    * @param {Boolean} newValue true if anchor point will be ignored when you position this node
    */
-  ignoreAnchorPointForPosition(newValue) {
-    if (newValue !== this._ignoreAnchorPointForPosition) {
-      this._ignoreAnchorPointForPosition = newValue;
-      this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
-    }
+  set ignoreAnchorPointForPosition(newValue) {
+    this.#transform.ignoreAnchorPointForPosition = newValue;
   }
 
   /**
@@ -1759,7 +1706,7 @@ export class Node extends BaseClass {
    * var t = spriteA.getNodeToParentTransform();
    *
    * // Sets the additional transform to spriteB, spriteB's position will based on its pseudo parent i.e. spriteA.
-   * spriteB.setAdditionalTransform(t);
+   * spriteB.additionalTransform = t;
    *
    * //scale
    * spriteA.scale = 2;
@@ -1768,7 +1715,7 @@ export class Node extends BaseClass {
    * t = spriteA.getNodeToParentTransform();
    *
    * // Sets the additional transform to spriteB, spriteB's scale will based on its pseudo parent i.e. spriteA.
-   * spriteB.setAdditionalTransform(t);
+   * spriteB.additionalTransform = t;
    *
    * //rotation
    * spriteA.rotation = 20;
@@ -1777,14 +1724,18 @@ export class Node extends BaseClass {
    * t = spriteA.getNodeToParentTransform();
    *
    * // Sets the additional transform to spriteB, spriteB's rotation will based on its pseudo parent i.e. spriteA.
-   * spriteB.setAdditionalTransform(t);
+   * spriteB.additionalTransform = t;
    */
-  setAdditionalTransform(additionalTransform) {
-    if (additionalTransform === undefined)
-      return (this._additionalTransformDirty = false);
-    this._additionalTransform = additionalTransform;
-    this._renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
-    this._additionalTransformDirty = true;
+  get additionalTransform() {
+    return this.#transform.additionalTransform;
+  }
+
+  get additionalTransformDirty() {
+    return this.#transform.additionalTransformDirty;
+  }
+
+  set additionalTransform(additionalTransform) {
+    this.#transform.additionalTransform = additionalTransform;
   }
 
   /**

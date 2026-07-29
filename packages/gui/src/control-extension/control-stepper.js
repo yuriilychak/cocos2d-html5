@@ -44,7 +44,7 @@ export class ControlStepper extends Control {
       this._value = 0;
       this._stepValue = 1;
       this._wraps = false;
-      this.ignoreAnchorPointForPosition(false);
+      this.ignoreAnchorPointForPosition = false;
 
       this._minusButton = minusButton;
       this._minusButton.position = { x: minusButton.width / 2, y: minusButton.height / 2 };

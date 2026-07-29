@@ -54,13 +54,13 @@ export class LayerTest2 extends LayerTest {
     var layer1 = new LayerColor(new Color(255, 255, 0, 80), 100, 300);
     layer1.x = s.width / 3;
     layer1.y = s.height / 2;
-    layer1.ignoreAnchorPointForPosition(false);
+    layer1.ignoreAnchorPointForPosition = false;
     this.addChild(layer1, 1, LAYERTEST2_LAYER1_TAG);
 
     var layer2 = new LayerColor(new Color(0, 0, 255, 255), 100, 300);
     layer2.x = (s.width / 3) * 2;
     layer2.y = s.height / 2;
-    layer2.ignoreAnchorPointForPosition(false);
+    layer2.ignoreAnchorPointForPosition = false;
     this.addChild(layer2, 2, LAYERTEST2_LAYER2_TAG);
 
     var actionTint = new TintBy(2, -255, -127, 0);

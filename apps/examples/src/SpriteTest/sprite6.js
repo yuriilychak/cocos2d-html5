@@ -51,7 +51,7 @@ export class Sprite6 extends SpriteTestDemo {
     // Don't use capacity=1 in your real game. It is expensive to resize the capacity
     var batch = new SpriteBatchNode(s_grossini_dance_atlas, 1);
     this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
-    batch.ignoreAnchorPointForPosition(true);
+    batch.ignoreAnchorPointForPosition = true;
 
     batch.anchorX = 0.5;
 

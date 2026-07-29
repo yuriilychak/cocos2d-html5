@@ -37,7 +37,7 @@ export class UIButtonTextOnly extends UIMainLayer {
 
       // Create the button
       var button = new Button();
-      button.setNormalizedPosition(0.5, 0.5);
+      button.normalizedPosition = { x: 0.5, y: 0.5 };
 
       button.setTitleText("PLAY GAME");
       log(

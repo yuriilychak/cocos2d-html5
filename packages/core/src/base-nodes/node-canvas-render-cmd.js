@@ -158,11 +158,12 @@ export class RenderCmd {
       t = this._transform,
       wt = this._worldTransform; //get the world transform
 
-    if (node._usingNormalizedPosition && node._parent) {
+    if (node.usingNormalizedPosition && node._parent) {
       const conSize = node._parent.contentSize;
-      node.x = node._normalizedPosition.x * conSize.width;
-      node.y = node._normalizedPosition.y * conSize.height;
-      node._normalizedPositionDirty = false;
+      const normalizedPosition = node.normalizedPosition;
+      node.x = normalizedPosition.x * conSize.width;
+      node.y = normalizedPosition.y * conSize.height;
+      node.normalizedPositionDirty = false;
     }
 
     const hasRotation = node.rotationX || node.rotationY;
@@ -217,14 +218,14 @@ export class RenderCmd {
         t.tx -= t.a * appX + t.c * appY;
         t.ty -= t.b * appX + t.d * appY;
         // adjust anchorPoint
-        if (node._ignoreAnchorPointForPosition) {
+        if (node.ignoreAnchorPointForPosition) {
           t.tx += appX;
           t.ty += appY;
         }
       }
 
-      if (node._additionalTransformDirty) {
-        AffineTransform.concatIn(t, node._additionalTransform);
+      if (node.additionalTransformDirty) {
+        AffineTransform.concatIn(t, node.additionalTransform);
       }
 
       if (pt) {
@@ -255,14 +256,14 @@ export class RenderCmd {
         t.tx -= t.a * appX;
         t.ty -= t.d * appY;
         // adjust anchorPoint
-        if (node._ignoreAnchorPointForPosition) {
+        if (node.ignoreAnchorPointForPosition) {
           t.tx += appX;
           t.ty += appY;
         }
       }
 
-      if (node._additionalTransformDirty) {
-        AffineTransform.concatIn(t, node._additionalTransform);
+      if (node.additionalTransformDirty) {
+        AffineTransform.concatIn(t, node.additionalTransform);
       }
 
       if (pt) {

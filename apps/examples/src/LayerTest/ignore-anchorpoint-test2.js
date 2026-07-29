@@ -46,13 +46,13 @@ export class IgnoreAnchorpointTest2 extends LayerTest {
       ws.width / 2,
       ws.height / 2
     );
-    layer1.ignoreAnchorPointForPosition(true);
+    layer1.ignoreAnchorPointForPosition = true;
     var layer2 = new LayerColor(
       new Color(100, 255, 100, 128),
       ws.width / 4,
       ws.height / 4
     );
-    layer2.ignoreAnchorPointForPosition(false);
+    layer2.ignoreAnchorPointForPosition = false;
     layer1.addChild(layer2);
     layer1.x = ws.width / 2;
     layer1.y = ws.height / 2;

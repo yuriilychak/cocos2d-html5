@@ -39,7 +39,7 @@ export class UIButtonFlipTest extends UIMainLayer {
         "ccs-res/cocosui/animationbuttonnormal.png",
         "ccs-res/cocosui/animationbuttonpressed.png"
       );
-      button.setNormalizedPosition(0.3, 0.5);
+      button.normalizedPosition = { x: 0.3, y: 0.5 };
       button.setTitleText("PLAY GAME");
       //button.setTitleFontName("Marker Felt");
       button.setZoomScale(0.3);
@@ -49,7 +49,7 @@ export class UIButtonFlipTest extends UIMainLayer {
       this.addChild(button);
 
       var titleLabel = new Text("Button X flipped", "Arial", 20);
-      titleLabel.setNormalizedPosition(0.3, 0.7);
+      titleLabel.normalizedPosition = { x: 0.3, y: 0.7 };
       this.addChild(titleLabel);
 
       // Create the button
@@ -57,13 +57,13 @@ export class UIButtonFlipTest extends UIMainLayer {
         "ccs-res/cocosui/animationbuttonnormal.png",
         "ccs-res/cocosui/animationbuttonpressed.png"
       );
-      button2.setNormalizedPosition(0.8, 0.5);
+      button2.normalizedPosition = { x: 0.8, y: 0.5 };
       button2.setTitleText("PLAY GAME");
       button2.setFlippedY(true);
       this.addChild(button2);
 
       titleLabel = new Text("Button Y flipped", "Arial", 20);
-      titleLabel.setNormalizedPosition(0.8, 0.7);
+      titleLabel.normalizedPosition = { x: 0.8, y: 0.7 };
       this.addChild(titleLabel);
       return true;
     }

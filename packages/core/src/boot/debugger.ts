@@ -106,7 +106,7 @@ export const _LogInfos = {
     animationCache__parseVersion2_2: "cocos2d: AnimationCache: Animation '%s' refers to frame '%s' which is not currently in the SpriteFrameCache. This frame will not be added to the animation.",
     animationCache_addAnimations_2: "AnimationCache.addAnimations(): Invalid texture file name",
 
-    Sprite_ignoreAnchorPointForPosition: "Sprite.ignoreAnchorPointForPosition(): it is invalid in Sprite when using SpriteBatchNode",
+    Sprite_ignoreAnchorPointForPosition: "Sprite.ignoreAnchorPointForPosition is invalid in Sprite when using SpriteBatchNode",
     Sprite_setDisplayFrameWithAnimationName: "Sprite.setDisplayFrameWithAnimationName(): Frame not found",
     Sprite_setDisplayFrameWithAnimationName_2: "Sprite.setDisplayFrameWithAnimationName(): Invalid frame index",
     Sprite_setDisplayFrame: "setDisplayFrame is deprecated, please use setSpriteFrame instead.",

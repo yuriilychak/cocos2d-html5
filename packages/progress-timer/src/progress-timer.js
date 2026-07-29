@@ -256,7 +256,7 @@ export class ProgressTimer extends Node {
       if (sprite) {
         this.width = sprite.width;
         this.height = sprite.height;
-        sprite.ignoreAnchorPointForPosition(true);
+        sprite.ignoreAnchorPointForPosition = true;
       } else {
         this.width = 0;
         this.height = 0;

@@ -42,7 +42,7 @@ export class UIButtonTitleEffectTest extends UIMainLayer {
         "ccs-res/cocosui/animationbuttonnormal.png",
         "ccs-res/cocosui/animationbuttonpressed.png"
       );
-      button.setNormalizedPosition(0.3, 0.5);
+      button.normalizedPosition = { x: 0.3, y: 0.5 };
       button.setTitleText("PLAY GAME");
       //button.setTitleFontName("Marker Felt");
       button.setZoomScale(0.3);
@@ -58,7 +58,7 @@ export class UIButtonTitleEffectTest extends UIMainLayer {
         "ccs-res/cocosui/animationbuttonnormal.png",
         "ccs-res/cocosui/animationbuttonpressed.png"
       );
-      button2.setNormalizedPosition(0.8, 0.5);
+      button2.normalizedPosition = { x: 0.8, y: 0.5 };
       button2.setTitleText("PLAY GAME");
       var title2 = button2.getTitleRenderer();
       title2.enableStroke(Color.GREEN, 3);

@@ -37,7 +37,7 @@ export class Layer extends Node {
     super();
     this._className = "Layer";
 
-    this._ignoreAnchorPointForPosition = true;
+    this.ignoreAnchorPointForPosition = true;
     this.anchorX = 0.5;
     this.anchorY = 0.5;
     this.contentSize = ServiceLocator.eglView.winSizeInPoints;
