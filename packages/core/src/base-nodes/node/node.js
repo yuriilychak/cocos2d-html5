@@ -306,8 +306,8 @@ export class Node extends ComponentContainer {
         );
     }
     child.renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
-    if (this.cascadeColor) child.renderCmd.setDirtyFlag(dirtyFlags.colorDirty);
-    if (this.cascadeOpacity)
+    if (this.#color.cascadeColor) child.renderCmd.setDirtyFlag(dirtyFlags.colorDirty);
+    if (this.#color.cascadeOpacity)
       child.renderCmd.setDirtyFlag(dirtyFlags.opacityDirty);
   }
 
@@ -1210,20 +1210,8 @@ export class Node extends ComponentContainer {
     this.#renderCmd.setGLProgramState(value);
   }
 
-  get cascadeOpacity() {
-    return this.#color.cascadeOpacity;
-  }
-
-  set cascadeOpacity(v) {
-    this.#color.cascadeOpacity = v;
-  }
-
-  get cascadeColor() {
-    return this.#color.cascadeColor;
-  }
-
-  set cascadeColor(v) {
-    this.#color.cascadeColor = v;
+  get color() {
+    return this.#color;
   }
 
   get skew() {
@@ -1401,43 +1389,4 @@ export class Node extends ComponentContainer {
     this.#transform.additionalTransform = additionalTransform;
   }
 
-  get opacity() {
-    return this.#color.opacity;
-  }
-
-  set opacity(opacity) {
-    this.#color.opacity = opacity;
-  }
-
-  get displayedOpacity() {
-    return this.#color.displayedOpacity;
-  }
-
-  set displayedOpacity(parentOpacity) {
-    this.#color.displayedOpacity = parentOpacity;
-  }
-
-  get color() {
-    return this.#color.color;
-  }
-
-  get displayedColor() {
-    return this.#color.displayedColor;
-  }
-
-  set displayedColor(parentColor) {
-    this.#color.displayedColor = parentColor;
-  }
-
-  set color(color) {
-    this.#color.color = color;
-  }
-
-  set opacityModifyRGB(opacityValue) {
-    this.#color.opacityModifyRGB = opacityValue;
-  }
-
-  get opacityModifyRGB() {
-    return this.#color.opacityModifyRGB;
-  }
 }

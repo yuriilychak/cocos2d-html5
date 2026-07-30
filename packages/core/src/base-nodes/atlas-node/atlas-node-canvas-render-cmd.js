@@ -45,7 +45,7 @@ export class AtlasNodeCanvasRenderCmd extends NodeCanvasRenderCmd {
     node._itemWidth = tileWidth;
     node._itemHeight = tileHeight;
 
-    node.opacityModifyRGB = true;
+    node.color.opacityModifyRGB = true;
     node._texture = texture;
     if (!node._texture) {
       log(_LogInfos.AtlasNode__initWithTexture);
@@ -60,7 +60,7 @@ export class AtlasNodeCanvasRenderCmd extends NodeCanvasRenderCmd {
 
   set color(color3) {
     const node = this._node;
-    const locRealColor = node.color;
+    const locRealColor = node.color.color;
     if (
       locRealColor.r === color3.r &&
       locRealColor.g === color3.g &&

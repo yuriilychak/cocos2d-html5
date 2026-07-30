@@ -656,7 +656,7 @@ export class Sprite extends EventHelper(Node) {
     this._batchNode = null;
     this._recursiveDirty = false;
     this.dirty = false;
-    this.opacityModifyRGB = true;
+    this.color.opacityModifyRGB = true;
 
     this._blendFunc.src = GLState.BLEND_SRC;
     this._blendFunc.dst = GLState.BLEND_DST;
@@ -777,7 +777,7 @@ export class Sprite extends EventHelper(Node) {
 
     if (pNewTexture !== _t._texture) {
       this.renderCmd._setTexture(pNewTexture);
-      _t.color = _t.color;
+      _t.color.color = _t.color.color;
     }
     _t.setTextureRect(
       newFrame.rect,
@@ -861,7 +861,7 @@ export class Sprite extends EventHelper(Node) {
 
     this.renderCmd._setTexture(texture);
     if (isFileName) this._changeRectWithTexture(texture);
-    this.color = this.color;
+    this.color.color = this.color.color;
     this._textureLoaded = true;
   }
 

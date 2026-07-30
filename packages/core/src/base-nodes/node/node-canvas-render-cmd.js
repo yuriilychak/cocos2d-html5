@@ -320,11 +320,11 @@ export class RenderCmd {
   _updateDisplayColor(parentColor) {
     const node = this._node;
     const locDispColor = this._displayedColor,
-      locRealColor = node.color;
+      locRealColor = node.color.color;
     let i, len, selChildren, item;
     this._notifyRegionStatus &&
       this._notifyRegionStatus(CanvasRenderCmd.RegionStatus.Dirty);
-    if (this._cascadeColorEnabledDirty && !node.cascadeColor) {
+    if (this._cascadeColorEnabledDirty && !node.color.cascadeColor) {
       locDispColor.r = locRealColor.r;
       locDispColor.g = locRealColor.g;
       locDispColor.b = locRealColor.b;
@@ -339,14 +339,14 @@ export class RenderCmd {
     } else {
       if (parentColor === undefined) {
         const locParent = node.parent;
-        if (locParent && locParent.cascadeColor)
-          parentColor = locParent.displayedColor;
+        if (locParent && locParent.color.cascadeColor)
+          parentColor = locParent.color.displayedColor;
         else parentColor = Color.WHITE;
       }
       locDispColor.r = 0 | ((locRealColor.r * parentColor.r) / BYTE);
       locDispColor.g = 0 | ((locRealColor.g * parentColor.g) / BYTE);
       locDispColor.b = 0 | ((locRealColor.b * parentColor.b) / BYTE);
-      if (node.cascadeColor) {
+      if (node.color.cascadeColor) {
         selChildren = node.children;
         for (i = 0, len = selChildren.length; i < len; i++) {
           item = selChildren[i];
@@ -365,8 +365,8 @@ export class RenderCmd {
     let i, len, selChildren, item;
     this._notifyRegionStatus &&
       this._notifyRegionStatus(CanvasRenderCmd.RegionStatus.Dirty);
-    if (this._cascadeOpacityEnabledDirty && !node.cascadeOpacity) {
-      this._displayedOpacity = node.opacity;
+    if (this._cascadeOpacityEnabledDirty && !node.color.cascadeOpacity) {
+      this._displayedOpacity = node.color.opacity;
       selChildren = node.children;
       for (i = 0, len = selChildren.length; i < len; i++) {
         item = selChildren[i];
@@ -377,11 +377,11 @@ export class RenderCmd {
       if (parentOpacity === undefined) {
         const locParent = node.parent;
         parentOpacity = BYTE;
-        if (locParent && locParent.cascadeOpacity)
-          parentOpacity = locParent.displayedOpacity;
+        if (locParent && locParent.color.cascadeOpacity)
+          parentOpacity = locParent.color.displayedOpacity;
       }
-      this._displayedOpacity = (node.opacity * parentOpacity) / BYTE;
-      if (node.cascadeOpacity) {
+      this._displayedOpacity = (node.color.opacity * parentOpacity) / BYTE;
+      if (node.color.cascadeOpacity) {
         selChildren = node.children;
         for (i = 0, len = selChildren.length; i < len; i++) {
           item = selChildren[i];
@@ -398,11 +398,11 @@ export class RenderCmd {
   _syncDisplayColor(parentColor) {
     const node = this._node,
       locDispColor = this._displayedColor,
-      locRealColor = node.color;
+      locRealColor = node.color.color;
     if (parentColor === undefined) {
       const locParent = node.parent;
-      if (locParent && locParent.cascadeColor)
-        parentColor = locParent.displayedColor;
+      if (locParent && locParent.color.cascadeColor)
+        parentColor = locParent.color.displayedColor;
       else parentColor = Color.WHITE;
     }
     locDispColor.r = 0 | ((locRealColor.r * parentColor.r) / BYTE);
@@ -415,10 +415,10 @@ export class RenderCmd {
     if (parentOpacity === undefined) {
       const locParent = node.parent;
       parentOpacity = BYTE;
-      if (locParent && locParent.cascadeOpacity)
-        parentOpacity = locParent.displayedOpacity;
+      if (locParent && locParent.color.cascadeOpacity)
+        parentOpacity = locParent.color.displayedOpacity;
     }
-    this._displayedOpacity = (node.opacity * parentOpacity) / BYTE;
+    this._displayedOpacity = (node.color.opacity * parentOpacity) / BYTE;
   }
 
   _updateColor() {}
@@ -429,14 +429,14 @@ export class RenderCmd {
 
     if (
       parentNode &&
-      parentNode.cascadeColor &&
+      parentNode.color.cascadeColor &&
       parentCmd._dirtyFlag & dirtyFlags.colorDirty
     )
       locFlag |= dirtyFlags.colorDirty;
 
     if (
       parentNode &&
-      parentNode.cascadeOpacity &&
+      parentNode.color.cascadeOpacity &&
       parentCmd._dirtyFlag & dirtyFlags.opacityDirty
     )
       locFlag |= dirtyFlags.opacityDirty;
@@ -488,14 +488,14 @@ export class RenderCmd {
     //    In order the child elements get the parent state
     if (
       parentNode &&
-      parentNode.cascadeColor &&
+      parentNode.color.cascadeColor &&
       parentCmd._dirtyFlag & dirtyFlags.colorDirty
     )
       locFlag |= dirtyFlags.colorDirty;
 
     if (
       parentNode &&
-      parentNode.cascadeOpacity &&
+      parentNode.color.cascadeOpacity &&
       parentCmd._dirtyFlag & dirtyFlags.opacityDirty
     )
       locFlag |= dirtyFlags.opacityDirty;

@@ -68,7 +68,7 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
   }
 
   #updateOpacityModifyRGB() {
-    this._node.opacityModifyRGB =
+    this._node.color.opacityModifyRGB =
       this._textureAtlas.texture.renderer.hasPremultipliedAlpha;
   }
 
@@ -101,17 +101,17 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
     node._itemWidth = tileWidth;
     node._itemHeight = tileHeight;
     this._colorUnmodified = Color.WHITE;
-    node.opacityModifyRGB = true;
+    node.color.opacityModifyRGB = true;
 
     node._blendFunc.src = GLState.BLEND_SRC;
     node._blendFunc.dst = GLState.BLEND_DST;
 
-    const locRealColor = node.color;
+    const locRealColor = node.color.color;
     this._colorF32Array = new Float32Array([
       locRealColor.r / BYTE,
       locRealColor.g / BYTE,
       locRealColor.b / BYTE,
-      node.opacity / BYTE
+      node.color.opacity / BYTE
     ]);
     this._textureAtlas = new TextureAtlas();
     this._textureAtlas.initWithTexture(texture, itemsToRender);
@@ -134,7 +134,7 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
       node = this._node;
     this._colorUnmodified = color3;
     const locDisplayedOpacity = this._displayedOpacity;
-    if (node.opacityModifyRGB) {
+    if (node.color.opacityModifyRGB) {
       temp.r = (temp.r * locDisplayedOpacity) / BYTE;
       temp.g = (temp.g * locDisplayedOpacity) / BYTE;
       temp.b = (temp.b * locDisplayedOpacity) / BYTE;
@@ -145,8 +145,8 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
   set opacity(opacity) {
     this._node.getComponent(NodeComponentName.Color).opacityFromRenderer = opacity;
     // special opacity for premultiplied textures
-    if (this._node.opacityModifyRGB) {
-      this._node.color = this._colorUnmodified;
+    if (this._node.color.opacityModifyRGB) {
+      this._node.color.color = this._colorUnmodified;
     }
   }
 

@@ -266,7 +266,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
       ) {
         blendFunc.src = GLState.SRC_ALPHA;
       }
-      node.opacityModifyRGB = false;
+      node.color.opacityModifyRGB = false;
     } else {
       if (
         blendFunc.src === GLState.SRC_ALPHA &&
@@ -274,7 +274,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
       ) {
         blendFunc.src = GLState.ONE;
       }
-      node.opacityModifyRGB = true;
+      node.color.opacityModifyRGB = true;
     }
   }
 
@@ -399,7 +399,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
     let r = this._displayedColor.r,
       g = this._displayedColor.g,
       b = this._displayedColor.b;
-    if (node.opacityModifyRGB) {
+    if (node.color.opacityModifyRGB) {
       const a = opacity / BYTE;
       r *= a;
       g *= a;
