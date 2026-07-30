@@ -1,9 +1,9 @@
 import { Point, Rect, Size, AffineTransform } from "../geometry";
 import { log, _LogInfos } from "../boot/debugger";
+import { Component } from "../components";
 import { dirtyFlags } from "./node-canvas-render-cmd";
 
-export class NodeTransform {
-  #renderCmd;
+export class NodeTransform extends Component {
   #rotation = new Point();
   #position = new Point();
   #normalizedPosition = new Point();
@@ -17,8 +17,12 @@ export class NodeTransform {
   #additionalTransform = AffineTransform.makeIdentity();
   #additionalTransformDirty = false;
 
-  constructor(renderCmd) {
-    this.#renderCmd = renderCmd;
+  constructor() {
+    super("transform");
+  }
+
+  get #renderCmd() {
+    return this.owner.renderCmd;
   }
 
   #setTransformDirty() {

@@ -1,15 +1,19 @@
 import { Color } from "../platform/types/color";
 import { BYTE } from "../constants";
+import { Component } from "../components";
 import { dirtyFlags } from "./node-canvas-render-cmd";
 
-export class NodeColor {
-  #renderCmd;
+export class NodeColor extends Component {
   #realColor = new Color(BYTE, BYTE, BYTE, BYTE);
   #cascadeColorEnabled = false;
   #cascadeOpacityEnabled = false;
 
-  constructor(renderCmd) {
-    this.#renderCmd = renderCmd;
+  constructor() {
+    super("color");
+  }
+
+  get #renderCmd() {
+    return this.owner.renderCmd;
   }
 
   get opacity() { return this.#realColor.a; }

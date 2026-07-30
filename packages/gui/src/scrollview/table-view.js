@@ -520,7 +520,7 @@ export class TableView extends GScrollView {
     if (this._touches.length === 1) {
       var index, point;
 
-      point = this.getContainer().convertTouchToNodeSpace(touch);
+      point = this.getContainer().convertToNodeSpace(touch);
 
       index = this._indexFromOffset(point);
       if (index === INVALID_INDEX) this._touchedCell = null;

@@ -374,7 +374,7 @@ export class GScrollView extends Layer {
 
     var locContainer = this._container;
     var locPoint = locContainer.convertToWorldSpace(
-      locContainer.convertTouchToNodeSpace(touch)
+      locContainer.convertToNodeSpace(touch)
     );
     var locTouches = this._touches;
     if (
@@ -387,7 +387,7 @@ export class GScrollView extends Layer {
     locTouches.push(touch);
 
     if (locTouches.length === 1) {
-      this._touchPoint = this.convertTouchToNodeSpace(touch);
+      this._touchPoint = this.convertToNodeSpace(touch);
       this._touchMoved = false;
       this._dragging = true;
       this._scrollDistance.x = 0;
@@ -395,12 +395,12 @@ export class GScrollView extends Layer {
       this._touchLength = 0.0;
     } else if (locTouches.length === 2) {
       this._touchPoint = Point.midpoint(
-        this.convertTouchToNodeSpace(locTouches[0]),
-        this.convertTouchToNodeSpace(locTouches[1])
+        this.convertToNodeSpace(locTouches[0]),
+        this.convertToNodeSpace(locTouches[1])
       );
       this._touchLength = Point.distance(
-        locContainer.convertTouchToNodeSpace(locTouches[0]),
-        locContainer.convertTouchToNodeSpace(locTouches[1])
+        locContainer.convertToNodeSpace(locTouches[0]),
+        locContainer.convertToNodeSpace(locTouches[1])
       );
       this._dragging = false;
     }
@@ -416,7 +416,7 @@ export class GScrollView extends Layer {
       this._touchMoved = true;
       var frame = this._getViewRect();
 
-      var newPoint = this.convertTouchToNodeSpace(touch);
+      var newPoint = this.convertToNodeSpace(touch);
       var moveDistance = Point.sub(newPoint, this._touchPoint);
 
       var dis = 0.0,
@@ -494,8 +494,8 @@ export class GScrollView extends Layer {
       }
     } else if (this._touches.length === 2 && !this._dragging) {
       var len = Point.distance(
-        this._container.convertTouchToNodeSpace(this._touches[0]),
-        this._container.convertTouchToNodeSpace(this._touches[1])
+        this._container.convertToNodeSpace(this._touches[0]),
+        this._container.convertToNodeSpace(this._touches[1])
       );
       this.setZoomScale((this.getZoomScale() * len) / this._touchLength);
     }

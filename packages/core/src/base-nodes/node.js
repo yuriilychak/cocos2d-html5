@@ -161,7 +161,7 @@ export class Node extends ComponentContainer {
   #renderCmd;
   #transform;
   #color;
-  #order = new NodeOrder();
+  #order;
   #children = [];
 
   /**
@@ -170,8 +170,13 @@ export class Node extends ComponentContainer {
    */
   constructor() {
     super();
+    this.#transform = this.createTransform();
+    this.#color = this.createColor();
+    this.#order = this.createOrder();
     this.addComponent(this.#scheduler);
     this.addComponent(this.#actionManager);
+    this.addComponent(this.#transform);
+    this.addComponent(this.#color);
     this.addComponent(this.#order);
     this.renderCmd = this.createRenderCmd();
   }
@@ -623,7 +628,13 @@ export class Node extends ComponentContainer {
   onExit() {
     this.#running = false;
     this.pause();
-    this.removeAllComponents([this.#scheduler.name, this.#actionManager.name, this.#order.name]);
+    this.removeAllComponents([
+      this.#scheduler.name,
+      this.#actionManager.name,
+      this.#transform.name,
+      this.#color.name,
+      this.#order.name,
+    ]);
   }
 
   /**
@@ -791,10 +802,6 @@ export class Node extends ComponentContainer {
    * @param {Touch} touch The touch object
    * @return {Point}
    */
-  convertTouchToNodeSpace(touch) {
-    return this.convertToNodeSpace(touch);
-  }
-
   /**
    * converts a Touch (world coordinates) into a local coordinate. This method is AR (Anchor Relative).
    * @function
@@ -956,6 +963,18 @@ export class Node extends ComponentContainer {
     return ServiceLocator.sys.rendererConfig.isCanvas
       ? new NodeCanvasRenderCmd(this)
       : new NodeWebGLRenderCmd(this);
+  }
+
+  createOrder() {
+    return new NodeOrder();
+  }
+
+  createTransform() {
+    return new NodeTransform();
+  }
+
+  createColor() {
+    return new NodeColor();
   }
 
   /** Search the children of the receiving node to perform processing for nodes which share a name.
@@ -1140,8 +1159,6 @@ export class Node extends ComponentContainer {
 
   set renderCmd(renderCmd) {
     this.#renderCmd = renderCmd;
-    this.#transform = new NodeTransform(renderCmd);
-    this.#color = new NodeColor(renderCmd);
   }
 
   get transform() {
