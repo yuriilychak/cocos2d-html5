@@ -86,10 +86,8 @@ export class ShaderOutlineEffect extends OpenGLTestLayer {
       }
 
       this.sprite = new Sprite("Images/grossini.png");
-      this.sprite.attr({
-        x: winSize.width / 2,
-        y: winSize.height / 2
-      });
+      this.sprite.x = winSize.width / 2;
+      this.sprite.y = winSize.height / 2;;
       this.sprite.actionManager.runAction(
         new Sequence(
           new RotateTo(1.0, 10),

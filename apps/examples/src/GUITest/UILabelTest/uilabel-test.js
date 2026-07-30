@@ -36,12 +36,10 @@ export class UILabelTest extends UIMainLayer {
 
       // Create the label
       var text = new Text();
-      text.attr({
-        string: "Label",
-        font: "30px AmericanTypewriter",
-        x: this._widget.width / 2,
-        y: this._widget.height / 2 + text.height / 4
-      });
+      text.string = "Label";
+      text.font = "30px AmericanTypewriter";
+      text.x = this._widget.width / 2;
+      text.y = this._widget.height / 2 + text.height / 4;;
       this._mainNode.addChild(text);
 
       return true;

@@ -56,17 +56,13 @@ export class TextureLoadImgTest extends TextureCacheTestBase {
     }
 
     this._labelFirst = new TextBMFont("load first image", s_simpleFont_fnt);
-    this._labelFirst.attr({
-      x: winSize.width / 2,
-      y: winSize.height / 2 + 30
-    });
+    this._labelFirst.x = winSize.width / 2;
+    this._labelFirst.y = winSize.height / 2 + 30;;
     this.addChild(this._labelFirst, 1);
 
     this._labelSecond = new TextBMFont("load second image", s_simpleFont_fnt);
-    this._labelSecond.attr({
-      x: winSize.width / 2,
-      y: winSize.height / 2 - 30
-    });
+    this._labelSecond.x = winSize.width / 2;
+    this._labelSecond.y = winSize.height / 2 - 30;;
     this.addChild(this._labelSecond, 1);
 
     var url = "http://www.cocos2d-x.org/images/logo.png";

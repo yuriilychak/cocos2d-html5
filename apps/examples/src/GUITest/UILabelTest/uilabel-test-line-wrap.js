@@ -40,12 +40,10 @@ export class UILabelTest_LineWrap extends UIMainLayer {
       var text = new Text();
       text.boundingWidth = 280;
       text.boundingHeight = 150;
-      text.attr({
-        textAlign: TextAlignment.CENTER,
-        string: "Label can line wrap",
-        font: "32px AmericanTypewriter",
-        x: this._widget.width / 2
-      });
+      text.textAlign = TextAlignment.CENTER;
+      text.string = "Label can line wrap";
+      text.font = "32px AmericanTypewriter";
+      text.x = this._widget.width / 2;;
       text.y = this._widget.height / 2 - text.height / 8;
       this._mainNode.addChild(text);
 

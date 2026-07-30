@@ -179,14 +179,12 @@ export class RenderTextureSave extends RenderTextureBaseLayer {
         var diffY = locLastLocation.y - location.y;
         var delta = i / distance;
         var sprite = new Sprite(s_fire);
-        sprite.attr({
-          x: location.x + diffX * delta,
-          y: location.y + diffY * delta,
-          rotation: Math.random() * 360,
-          color: new Color(Math.random() * 255, 255, 255),
-          scale: Math.random() + 0.25,
-          opacity: 20
-        });
+        sprite.x = location.x + diffX * delta;
+        sprite.y = location.y + diffY * delta;
+        sprite.rotation = Math.random() * 360;
+        sprite.color.color = new Color(Math.random() * 255, 255, 255);
+        sprite.scale = Math.random() + 0.25;
+        sprite.color.opacity = 20;;
         sprite.parent = this;
         this._brushs.push(sprite);
       }

@@ -20,12 +20,10 @@ export class TransitionCrossFade extends TransitionScene {
     var inTexture = new RenderTexture(winSize.width, winSize.height);
     inTexture.sprite.anchorX = 0.5;
     inTexture.sprite.anchorY = 0.5;
-    inTexture.attr({
-      x: winSize.width / 2,
-      y: winSize.height / 2,
-      anchorX: 0.5,
-      anchorY: 0.5
-    });
+    inTexture.x = winSize.width / 2;
+    inTexture.y = winSize.height / 2;
+    inTexture.anchorX = 0.5;
+    inTexture.anchorY = 0.5;;
 
     inTexture.begin();
     this._inScene.visit();

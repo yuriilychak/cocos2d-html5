@@ -41,20 +41,16 @@ export class BasicPerformanceNowTest extends PerformanceNowBaseLayer {
         s_simpleFont_fnt
       );
       this.addChild(currentPerformanceNow);
-      currentPerformanceNow.attr({
-        x: winSize.width / 2,
-        y: winSize.height / 2
-      });
+      currentPerformanceNow.x = winSize.width / 2;
+      currentPerformanceNow.y = winSize.height / 2;;
     } else {
       var errLabel = new TextBMFont(
         "On browser that does not support performance.now",
         s_simpleFont_fnt
       );
       this.addChild(errLabel);
-      errLabel.attr({
-        x: winSize.width / 2,
-        y: winSize.height / 2
-      });
+      errLabel.x = winSize.width / 2;
+      errLabel.y = winSize.height / 2;;
     }
   }
 

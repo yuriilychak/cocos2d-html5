@@ -36,10 +36,8 @@ export class MonotonicIncreaseTest extends PerformanceNowBaseLayer {
         s_simpleFont_fnt
       );
       this.addChild(errLabel);
-      errLabel.attr({
-        x: winSize.width / 2,
-        y: winSize.height / 2
-      });
+      errLabel.x = winSize.width / 2;
+      errLabel.y = winSize.height / 2;;
       return;
     }
 
@@ -57,20 +55,16 @@ export class MonotonicIncreaseTest extends PerformanceNowBaseLayer {
       "Result that values are montonically increasing : " + monotonicIncrease,
       s_simpleFont_fnt
     );
-    label.attr({
-      x: winSize.width / 2,
-      y: winSize.height / 2 + 50
-    });
+    label.x = winSize.width / 2;
+    label.y = winSize.height / 2 + 50;;
     this.addChild(label);
 
     var values = new TextBMFont(
       "Result Values : " + JSON.stringify(performanceValues),
       s_simpleFont_fnt
     );
-    values.attr({
-      x: winSize.width / 2,
-      y: winSize.height / 2 - 50
-    });
+    values.x = winSize.width / 2;
+    values.y = winSize.height / 2 - 50;;
     this.addChild(values);
   }
 

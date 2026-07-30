@@ -131,22 +131,18 @@ export class HoleDemo extends BaseClippingNodeTest {
     var rotation = Math.random() * 360;
 
     var hole = new Sprite(s_hole_effect_png);
-    hole.attr({
-      x: point.x,
-      y: point.y,
-      rotation: rotation,
-      scale: scale
-    });
+    hole.x = point.x;
+    hole.y = point.y;
+    hole.rotation = rotation;
+    hole.scale = scale;;
 
     this._holes.addChild(hole);
 
     var holeStencil = new Sprite(s_hole_stencil_png);
-    holeStencil.attr({
-      x: point.x,
-      y: point.y,
-      rotation: rotation,
-      scale: scale
-    });
+    holeStencil.x = point.x;
+    holeStencil.y = point.y;
+    holeStencil.rotation = rotation;
+    holeStencil.scale = scale;;
 
     this._holesStencil.addChild(holeStencil);
     this._outerClipper.actionManager.runAction(

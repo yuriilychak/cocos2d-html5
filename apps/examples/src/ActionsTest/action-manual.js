@@ -48,20 +48,16 @@ export class ActionManual extends ActionsDemo {
     //----start0----onEnter
     super.onEnter();
 
-    this._tamara.attr({
-      x: 100,
-      y: 70,
-      opacity: 128,
-      scaleX: 2.5,
-      scaleY: -1.0
-    });
+    this._tamara.x = 100;
+    this._tamara.y = 70;
+    this._tamara.color.opacity = 128;
+    this._tamara.scaleX = 2.5;
+    this._tamara.scaleY = -1.0;;
 
-    this._grossini.attr({
-      x: winSize.width / 2,
-      y: winSize.height / 2,
-      rotation: 120,
-      color: new Color(255, 0, 0)
-    });
+    this._grossini.x = winSize.width / 2;
+    this._grossini.y = winSize.height / 2;
+    this._grossini.rotation = 120;
+    this._grossini.color.color = new Color(255, 0, 0);;
 
     this._kathia.x = winSize.width - 100;
     this._kathia.y = winSize.height / 2;

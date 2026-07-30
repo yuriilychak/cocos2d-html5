@@ -16,12 +16,10 @@ export class TransitionProgress extends TransitionScene {
   }
 
   _setAttrs(node, x, y) {
-    node.attr({
-      x: x,
-      y: y,
-      anchorX: 0.5,
-      anchorY: 0.5
-    });
+    node.x = x;
+    node.y = y;
+    node.anchorX = 0.5;
+    node.anchorY = 0.5;;
   }
 
   onEnter() {

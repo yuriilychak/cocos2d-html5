@@ -39,13 +39,11 @@ export class UILabelTest_TTF extends UIMainLayer {
       var text = new Text();
       text.boundingWidth = 280;
       text.boundingHeight = 150;
-      text.attr({
-        textAlign: TextAlignment.CENTER,
-        string: "Label TTF",
-        font: "32px mericanTypewriter",
-        x: this._widget.width / 2,
-        y: this._widget.height / 2 - text.height / 8
-      });
+      text.textAlign = TextAlignment.CENTER;
+      text.string = "Label TTF";
+      text.font = "32px mericanTypewriter";
+      text.x = this._widget.width / 2;
+      text.y = this._widget.height / 2 - text.height / 8;;
       this._mainNode.addChild(text);
 
       return true;

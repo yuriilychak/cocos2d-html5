@@ -49,14 +49,12 @@ export class NestedTest extends BaseClippingNodeTest {
       var size = 225 - i * (225 / (depth * 2));
 
       var clipper = new ClippingNode();
-      clipper.attr({
-        width: size,
-        height: size,
-        anchorX: 0.5,
-        anchorY: 0.5,
-        x: parent.width / 2,
-        y: parent.height / 2
-      });
+      clipper.width = size;
+      clipper.height = size;
+      clipper.anchorX = 0.5;
+      clipper.anchorY = 0.5;
+      clipper.x = parent.width / 2;
+      clipper.y = parent.height / 2;;
       clipper.alphaThreshold = 0.05;
       clipper.actionManager.runAction(
         new RotateBy(i % 3 ? 1.33 : 1.66, i % 2 ? 90 : -90).repeatForever()
@@ -64,14 +62,12 @@ export class NestedTest extends BaseClippingNodeTest {
       parent.addChild(clipper);
 
       var stencil = new Sprite(s_pathGrossini);
-      stencil.attr({
-        scale: 2.5 - i * (2.5 / depth),
-        anchorX: 0.5,
-        anchorY: 0.5,
-        x: clipper.width / 2,
-        y: clipper.height / 2,
-        visible: false
-      });
+      stencil.scale = 2.5 - i * (2.5 / depth);
+      stencil.anchorX = 0.5;
+      stencil.anchorY = 0.5;
+      stencil.x = clipper.width / 2;
+      stencil.y = clipper.height / 2;
+      stencil.visible = false;;
       stencil.actionManager.runAction(new Sequence(new DelayTime(i), new Show()));
       clipper.stencil = stencil;
 

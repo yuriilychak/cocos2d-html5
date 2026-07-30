@@ -68,12 +68,10 @@ export class TransitionScene extends Scene {
 
     if (this.init()) {
       this._duration = t;
-      this.attr({
-        x: 0,
-        y: 0,
-        anchorX: 0,
-        anchorY: 0
-      });
+      this.x = 0;
+      this.y = 0;
+      this.anchorX = 0;
+      this.anchorY = 0;;
       this._inScene = scene;
       this._outScene = ServiceLocator.director.runningScene;
       if (!this._outScene) {
@@ -94,21 +92,17 @@ export class TransitionScene extends Scene {
   }
 
   finish() {
-    this._inScene.attr({
-      visible: true,
-      x: 0,
-      y: 0,
-      scale: 1.0,
-      rotation: 0.0
-    });
+    this._inScene.visible = true;
+    this._inScene.x = 0;
+    this._inScene.y = 0;
+    this._inScene.scale = 1.0;
+    this._inScene.rotation = 0.0;;
 
-    this._outScene.attr({
-      visible: false,
-      x: 0,
-      y: 0,
-      scale: 1.0,
-      rotation: 0.0
-    });
+    this._outScene.visible = false;
+    this._outScene.x = 0;
+    this._outScene.y = 0;
+    this._outScene.scale = 1.0;
+    this._outScene.rotation = 0.0;;
 
     this.scheduler.schedule(this._setNewScene, 0);
   }
