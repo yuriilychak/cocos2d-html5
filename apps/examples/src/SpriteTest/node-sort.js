@@ -96,18 +96,18 @@ export class NodeSort extends SpriteTestDemo {
     var nodeChildren = this._node.children;
     for (i = 0; i < nodeChildren.length; i++) {
       child = nodeChildren[i];
-      log("tag:" + child.tag + "  z: " + child.zIndex);
+      log("tag:" + child.tag + "  z: " + child.order.zIndex);
     }
 
     //z-4
-    this._node.reorderChild(this._node.children[0], -6);
-    this._node.sortAllChildren();
+    this._node.order.reorderChild(this._node.children[0], -6);
+    this._node.order.sortAllChildren();
 
     log("After reorder--");
     nodeChildren = this._node.children;
     for (i = 0; i < nodeChildren.length; i++) {
       child = nodeChildren[i];
-      log("tag:" + child.tag + "  z: " + child.zIndex);
+      log("tag:" + child.tag + "  z: " + child.order.zIndex);
       this.testOrders.push(child.tag);
     }
     //----end49----

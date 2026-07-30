@@ -93,7 +93,7 @@ export class ClippingNodeWebGLRenderCmd extends Node.WebGLRenderCmd {
     const locChildren = node.children;
     if (locChildren && locChildren.length > 0) {
       const childLen = locChildren.length;
-      node.sortAllChildren();
+      node.order.sortAllChildren();
       for (let i = 0; i < childLen; i++) {
         locChildren[i].visit(node);
       }

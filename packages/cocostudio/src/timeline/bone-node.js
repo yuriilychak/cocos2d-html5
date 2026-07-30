@@ -45,6 +45,7 @@ import {
   ServiceLocator
 } from "@aspect/core";
 import { DrawNode } from "@aspect/shape-nodes";
+import { BoneNodeOrder } from "./bone-node-order.js";
 
 let _SkeletonNode = null;
 export function _setSkeletonNodeClass(SN) {
@@ -326,12 +327,6 @@ class BoneNode extends Node {
 
   batchBoneDrawToSkeleton(bone) {}
 
-  set zIndex(localZOrder) {
-    super.zIndex = localZOrder;
-    if (this._rootSkeleton != null)
-      this._rootSkeleton._subBonesOrderDirty = true;
-  }
-
   set name(name) {
     var rootSkeleton = this._rootSkeleton;
     var oldName = this.name;
@@ -502,11 +497,11 @@ class BoneNode extends Node {
     cmd._syncStatus(parentCmd);
     var len = children.length;
     if (len > 0) {
-      this.sortAllChildren();
+      this.order.sortAllChildren();
       // draw children zOrder < 0
       for (i = 0; i < len; i++) {
         child = children[i];
-        if (child.localZOrder < 0) child.visit(this);
+        if (child.order.localZOrder < 0) child.visit(this);
         else break;
       }
       for (; i < len; i++) children[i].visit(this);
@@ -528,38 +523,6 @@ class BoneNode extends Node {
 
   _removeFromSkinList(skin) {
     arrayRemoveObject(this._boneSkins, skin);
-  }
-
-  sortAllChildren() {
-    this._sortArray(this._childBones);
-    this._sortArray(this._boneSkins);
-    super.sortAllChildren();
-  }
-
-  _sortArray(array) {
-    if (!array) return;
-    var len = array.length,
-      i,
-      j,
-      tmp;
-    for (i = 1; i < len; i++) {
-      tmp = array[i];
-      j = i - 1;
-      while (j >= 0) {
-        if (tmp.localZOrder < array[j].localZOrder) {
-          array[j + 1] = array[j];
-        } else if (
-          tmp.localZOrder === array[j].localZOrder &&
-          tmp.arrivalOrder < array[j].arrivalOrder
-        ) {
-          array[j + 1] = array[j];
-        } else {
-          break;
-        }
-        j--;
-      }
-      array[j + 1] = tmp;
-    }
   }
 
   _updateVertices() {
@@ -588,6 +551,10 @@ class BoneNode extends Node {
     if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new BoneNodeCanvasCmd(this);
     else return new BoneNodeWebGLCmd(this);
+  }
+
+  createOrder() {
+    return new BoneNodeOrder();
   }
 }
 

@@ -65,6 +65,7 @@ import { CONST_VERSION_COMBINED } from "./utils/data-reader-helper/constants.js"
 import { BaseData } from "./utils/datas/base-data.js";
 import { FrameData } from "./utils/datas/frame-data.js";
 import { TransformHelp } from "./utils/transform-help.js";
+import { BoneOrder } from "./bone-order.js";
 export class Bone extends Node {
   constructor(name) {
     super();
@@ -159,7 +160,7 @@ export class Bone extends Node {
     if (this._boneData !== boneData) this._boneData = boneData;
 
     this.name = this._boneData.name;
-    this.localZOrder = this._boneData.zOrder;
+    this.order.localZOrder = this._boneData.zOrder;
     this._displayManager.initDisplayList(boneData);
   }
 
@@ -315,9 +316,9 @@ export class Bone extends Node {
     if (
       this._armature.getArmatureData().dataVersion >= CONST_VERSION_COMBINED
     ) {
-      this.zIndex = this._tweenData.zOrder + this._boneData.zOrder;
+      this.order.zIndex = this._tweenData.zOrder + this._boneData.zOrder;
     } else {
-      this.zIndex = this._tweenData.zOrder;
+      this.order.zIndex = this._tweenData.zOrder;
     }
   }
 
@@ -408,14 +409,6 @@ export class Bone extends Node {
    */
   getTween() {
     return this._tween;
-  }
-
-  /**
-   * Sets the local zOrder to Bone.
-   * @param {Number} zOrder
-   */
-  set zIndex(zOrder) {
-    if (this.localZOrder !== zOrder) super.zIndex = zOrder;
   }
 
   /**
@@ -691,6 +684,10 @@ export class Bone extends Node {
     if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new Bone.CanvasRenderCmd(this);
     else return new Bone.WebGLRenderCmd(this);
+  }
+
+  createOrder() {
+    return new BoneOrder();
   }
 }
 

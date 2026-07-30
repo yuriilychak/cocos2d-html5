@@ -92,7 +92,7 @@ export class LayerColorWebGLRenderCmd extends LayerWebGLRenderCmd {
       pos[FLOAT_PER_VERTEX_COLOR + 2] =
       pos[FLOAT_PER_VERTEX_COLOR * 2 + 2] =
       pos[FLOAT_PER_VERTEX_COLOR * 3 + 2] =
-        node.vertexZ;
+        node.order.vertexZ;
 
     this._dataDirty = true;
   }
@@ -258,7 +258,7 @@ export class LayerGradientWebGLRenderCmd extends LayerColorWebGLRenderCmd {
       let offset = i * 2 * FLOAT_PER_VERTEX_GRADIENT;
       pos[offset] = p0.x;
       pos[offset + 1] = p0.y;
-      pos[offset + 2] = node.vertexZ;
+      pos[offset + 2] = node.order.vertexZ;
       const p1 = AffineTransform.applyToPoint(
         contentSize.width - locAnchor.x,
         y - locAnchor.y,
@@ -267,7 +267,7 @@ export class LayerGradientWebGLRenderCmd extends LayerColorWebGLRenderCmd {
       offset += FLOAT_PER_VERTEX_GRADIENT;
       pos[offset] = p1.x;
       pos[offset + 1] = p1.y;
-      pos[offset + 2] = node.vertexZ;
+      pos[offset + 2] = node.order.vertexZ;
     }
 
     this._dataDirty = true;

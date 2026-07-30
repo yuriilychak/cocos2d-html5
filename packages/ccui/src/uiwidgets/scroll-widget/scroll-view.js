@@ -198,7 +198,7 @@ export class ScrollView extends Layout {
       pLen = pChildren.length,
       pChild;
 
-    if (this.reorderChildDirty) this.sortAllChildren();
+    if (this.order.reorderChildDirty) this.order.sortAllChildren();
     if (this._reorderProtectedChildDirty) this.sortAllProtectedChildren();
     for (i = 0; i < len; i++) {
       child = children[i];
@@ -481,7 +481,7 @@ export class ScrollView extends Layout {
   addChild(widget, zOrder, tag) {
     if (!widget) return false;
     if (this._isInContainer(widget) === false) widget._inViewRect = false;
-    zOrder = zOrder || widget.zIndex;
+    zOrder = zOrder || widget.order.zIndex;
     tag = tag || widget.tag;
     return this._innerContainer.addChild(widget, zOrder, tag);
   }

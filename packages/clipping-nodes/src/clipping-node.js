@@ -67,8 +67,8 @@ export class ClippingNode extends Node {
 
   _visitChildren() {
     const renderer = ServiceLocator.sys.rendererConfig.renderer;
-    if (this.reorderChildDirty) {
-      this.sortAllChildren();
+    if (this.order.reorderChildDirty) {
+      this.order.sortAllChildren();
     }
     const children = this.children;
     for (let i = 0, len = children.length; i < len; i++) {

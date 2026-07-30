@@ -123,8 +123,8 @@ export class SpriteBatchNodeReorderOneChild extends SpriteTestDemo {
   }
 
   reorderSprite(dt) {
-    this._reoderSprite.parent.reorderChild(this._reoderSprite, -1);
-    this._batchNode.sortAllChildren();
+    this._reoderSprite.parent.order.reorderChild(this._reoderSprite, -1);
+    this._batchNode.order.sortAllChildren();
     //Sprite* child;
     //CCARRAY_FOREACH(batchNode.descendants,child) NSLog(@"tag %i",child.tag);
   }

@@ -109,10 +109,10 @@ export default class LayerColorCanvasRenderer extends LayerCanvasRenderer {
         const _r = ServiceLocator.sys.rendererConfig.renderer;
         _r.turnToCacheMode(this.instanceId);
         if (len > 0) {
-          node.sortAllChildren();
+          node.order.sortAllChildren();
           for (i = 0; i < len; i++) {
             child = children[i];
-            if (child.localZOrder < 0) child.visit(node);
+            if (child.order.localZOrder < 0) child.visit(node);
             else break;
           }
           _r.pushRenderCommand(this);

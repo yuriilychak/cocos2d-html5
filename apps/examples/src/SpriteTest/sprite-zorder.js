@@ -79,13 +79,13 @@ export class SpriteZOrder extends SpriteTestDemo {
     reorderSprite(dt) {
         //----start13----reorderSprite
         var sprite = this.getChildByTag(TAG_SPRITE1);
-        var z = sprite.zIndex;
+        var z = sprite.order.zIndex;
         if (z < -1)
             this._dir = 1;
         if (z > 10)
             this._dir = -1;
         z += this._dir * 3;
-        this.reorderChild(sprite, z);
+        this.order.reorderChild(sprite, z);
         //----end13----
     }
     //

@@ -63,7 +63,7 @@ export class SpriteBatchNodeReorderIssue744 extends SpriteTestDemo {
         sprite.x = winSize.width / 2;
         sprite.y = winSize.height / 2;
         batch.addChild(sprite, 3);
-        batch.reorderChild(sprite, 1);
+        batch.order.reorderChild(sprite, 1);
         //----end16----
     }
     //

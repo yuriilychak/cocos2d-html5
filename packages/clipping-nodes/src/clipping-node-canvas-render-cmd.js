@@ -174,7 +174,7 @@ export class ClippingNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
       let i;
       const len = children.length;
       if (len > 0) {
-        node.sortAllChildren();
+        node.order.sortAllChildren();
         for (i = 0; i < len; i++) children[i].visit(node);
       }
       this._cangodhelpme(false);

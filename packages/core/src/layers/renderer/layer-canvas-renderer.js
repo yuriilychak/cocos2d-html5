@@ -154,7 +154,7 @@ export default class LayerCanvasRenderer extends NodeCanvasRenderCmd {
           x: 0 - boundingBox.x,
           y: ctx.canvas.height - boundingBox.height + boundingBox.y
         };
-        node.sortAllChildren();
+        node.order.sortAllChildren();
         const _r = ServiceLocator.sys.rendererConfig.renderer;
         _r.turnToCacheMode(this.instanceId);
         for (let i = 0, len = children.length; i < len; i++) {

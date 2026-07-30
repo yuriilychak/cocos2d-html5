@@ -103,11 +103,11 @@ export class TMXIsoVertexZ extends TMXFixBugLayer {
   }
   repositionSprite(dt) {
     if (ServiceLocator.sys.isNative) {
-      this.tamara.vertexZ = -(this.tamara.y + 32) / 16;
+      this.tamara.order.vertexZ = -(this.tamara.y + 32) / 16;
     } else {
       var layer = this.tamara.parent;
-      this.tamara.vertexZ =
-        layer.vertexZ +
+      this.tamara.order.vertexZ =
+        layer.order.vertexZ +
         (ServiceLocator.sys.rendererConfig.renderer.assignedZStep *
           Math.floor(30 - this.tamara.y / 32)) /
           30;

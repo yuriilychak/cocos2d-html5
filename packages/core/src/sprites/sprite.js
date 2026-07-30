@@ -753,7 +753,7 @@ export class Sprite extends EventHelper(Node) {
   addChild(child, localZOrder, tag) {
     assert(child, _LogInfos.CCSpriteBatchNode_addChild_2);
 
-    if (localZOrder == null) localZOrder = child.localZOrder;
+    if (localZOrder == null) localZOrder = child.order.localZOrder;
     if (tag == null) tag = child.tag;
 
     if (this.renderCmd._setBatchNodeForAddChild(child)) {

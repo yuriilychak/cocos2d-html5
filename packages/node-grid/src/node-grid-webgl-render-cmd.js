@@ -29,7 +29,7 @@ export class NodeGridWebGLRenderCmd extends Node.WebGLRenderCmd {
     const locChildren = node.children;
     if (locChildren && locChildren.length > 0) {
       const childLen = locChildren.length;
-      node.sortAllChildren();
+      node.order.sortAllChildren();
       for (let i = 0; i < childLen; i++) {
         const child = locChildren[i];
         child && child.visit();

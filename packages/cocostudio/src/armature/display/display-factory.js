@@ -197,7 +197,7 @@ export const displayFactory = {
 
     updateArmatureDisplay: function (bone, armature, dt) {
         if (armature) {
-            armature.sortAllChildren();
+            armature.order.sortAllChildren();
             armature.update(dt);
         }
     },

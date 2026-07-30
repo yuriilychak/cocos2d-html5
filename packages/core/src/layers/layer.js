@@ -76,12 +76,12 @@ export class Layer extends Node {
         len = children.length,
         child;
       if (len > 0) {
-        if (this.reorderChildDirty) {
-          this.sortAllChildren();
+        if (this.order.reorderChildDirty) {
+          this.order.sortAllChildren();
         }
         for (i = 0; i < len; i++) {
           child = children[i];
-          if (child.localZOrder < 0) {
+          if (child.order.localZOrder < 0) {
             child.visit(this, renderer);
           } else {
             break;

@@ -62,7 +62,7 @@ export class TMXOrthoVertexZ extends TMXFixBugLayer {
     // can use any Sprite and it will work OK.
     var layer = map.getLayer("trees");
     this.tamara = layer.getTileAt(new Point(0, 11));
-    this.log("vertexZ: " + this.tamara.vertexZ);
+    this.log("vertexZ: " + this.tamara.order.vertexZ);
 
     var move = new MoveBy(5, Point.mult(new Point(400, 450), 0.55));
     var back = move.reverse();
@@ -105,13 +105,13 @@ export class TMXOrthoVertexZ extends TMXFixBugLayer {
   }
   repositionSprite(dt) {
     if (ServiceLocator.sys.isNative) {
-      this.tamara.vertexZ = -(this.tamara.y + 81) / 81;
+      this.tamara.order.vertexZ = -(this.tamara.y + 81) / 81;
     } else {
       // tile height is 101x81
       // map size: 12x12
       var layer = this.tamara.parent;
-      this.tamara.vertexZ =
-        layer.vertexZ +
+      this.tamara.order.vertexZ =
+        layer.order.vertexZ +
         (ServiceLocator.sys.rendererConfig.renderer.assignedZStep *
           Math.floor(12 - this.tamara.y / 81)) /
           12;

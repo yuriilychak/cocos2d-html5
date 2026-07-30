@@ -80,9 +80,9 @@ export class RenderTextureZbuffer extends RenderTextureBaseLayer {
     label3.y = size.height * 0.75;
     this.addChild(label3);
 
-    label.vertexZ = 50;
-    label2.vertexZ = 0;
-    label3.vertexZ = -50;
+    label.order.vertexZ = 50;
+    label2.order.vertexZ = 0;
+    label3.order.vertexZ = -50;
 
     ServiceLocator.spriteFrameCache.addSpriteFrames(s_circle_plist);
     this.mgr = new SpriteBatchNode(s_circle_png, 9);
@@ -107,15 +107,15 @@ export class RenderTextureZbuffer extends RenderTextureBaseLayer {
     this.mgr.addChild(this.sp8, 2);
     this.mgr.addChild(this.sp9, 1);
 
-    this.sp1.vertexZ = 400;
-    this.sp2.vertexZ = 300;
-    this.sp3.vertexZ = 200;
-    this.sp4.vertexZ = 100;
-    this.sp5.vertexZ = 0;
-    this.sp6.vertexZ = -100;
-    this.sp7.vertexZ = -200;
-    this.sp8.vertexZ = -300;
-    this.sp9.vertexZ = -400;
+    this.sp1.order.vertexZ = 400;
+    this.sp2.order.vertexZ = 300;
+    this.sp3.order.vertexZ = 200;
+    this.sp4.order.vertexZ = 100;
+    this.sp5.order.vertexZ = 0;
+    this.sp6.order.vertexZ = -100;
+    this.sp7.order.vertexZ = -200;
+    this.sp8.order.vertexZ = -300;
+    this.sp9.order.vertexZ = -400;
 
     this.sp9.scale = 2;
     this.sp9.color = Color.YELLOW;

@@ -145,17 +145,17 @@ export class Layout extends Widget {
       pLen = pChildren.length,
       pChild;
 
-    if (this.reorderChildDirty) this.sortAllChildren();
+    if (this.order.reorderChildDirty) this.order.sortAllChildren();
     if (this._reorderProtectedChildDirty) this.sortAllProtectedChildren();
     for (i = 0; i < len; i++) {
       child = children[i];
-      if (child.localZOrder < 0) {
+      if (child.order.localZOrder < 0) {
         child.visit(this);
       } else break;
     }
     for (j = 0; j < pLen; j++) {
       pChild = pChildren[j];
-      if (pChild.localZOrder < 0) {
+      if (pChild.order.localZOrder < 0) {
         cmd._changeProtectedChild(pChild);
         pChild.visit(this);
       } else break;
@@ -701,7 +701,7 @@ export class Layout extends Widget {
   _doLayout() {
     if (!this._doLayoutDirty) return;
 
-    this.sortAllChildren();
+    this.order.sortAllChildren();
 
     var executant = getLayoutManager(this._layoutType);
     if (executant) executant._doLayout(this);

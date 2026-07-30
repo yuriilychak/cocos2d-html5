@@ -170,23 +170,23 @@ export class ArmatureWebGLRenderCmd extends Node.WebGLRenderCmd {
 
     this._syncStatus(parentCmd);
 
-    node.sortAllChildren();
+    node.order.sortAllChildren();
     var renderer = ServiceLocator.sys.rendererConfig.renderer,
       children = node.children,
       child,
       i,
       len = children.length;
 
-    if (!node.hasCustomVertexZ) {
-      node.assignedVertexZ = renderer.assignedZ;
+    if (!node.order.hasCustomVertexZ) {
+      node.order.assignedVertexZ = renderer.assignedZ;
       renderer.assignedZ += renderer.assignedZStep;
     }
 
     for (i = 0; i < len; i++) {
       child = children[i];
-      if (child.localZOrder < 0) {
-        if (!child.hasCustomVertexZ) {
-          child.assignedVertexZ = renderer.assignedZ;
+      if (child.order.localZOrder < 0) {
+        if (!child.order.hasCustomVertexZ) {
+          child.order.assignedVertexZ = renderer.assignedZ;
           renderer.assignedZ += renderer.assignedZStep;
         }
       } else {
@@ -197,8 +197,8 @@ export class ArmatureWebGLRenderCmd extends Node.WebGLRenderCmd {
     renderer.pushRenderCommand(this);
     for (; i < len; i++) {
       child = children[i];
-      if (!child.hasCustomVertexZ) {
-        child.assignedVertexZ = renderer.assignedZ;
+      if (!child.order.hasCustomVertexZ) {
+        child.order.assignedVertexZ = renderer.assignedZ;
         renderer.assignedZ += renderer.assignedZStep;
       }
     }

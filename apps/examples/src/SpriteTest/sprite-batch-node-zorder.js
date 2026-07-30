@@ -84,13 +84,13 @@ export class SpriteBatchNodeZOrder extends SpriteTestDemo {
         //----start14----reorderSprite
         var batch = this.getChildByTag(TAG_SPRITE_BATCH_NODE);
         var sprite = batch.getChildByTag(TAG_SPRITE1);
-        var z = sprite.zIndex;
+        var z = sprite.order.zIndex;
         if (z < -1)
             this._dir = 1;
         if (z > 10)
             this._dir = -1;
         z += this._dir * 3;
-        batch.reorderChild(sprite, z);
+        batch.order.reorderChild(sprite, z);
         //----end14----
     }
     //

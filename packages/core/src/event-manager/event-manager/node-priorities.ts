@@ -33,7 +33,7 @@ export default class NodePriorities {
       return;
     }
 
-    const globalZOrder = node.globalZOrder;
+    const globalZOrder = node.order.globalZOrder;
     if (!this.#globalZOrderNodes.has(globalZOrder))
       this.#globalZOrderNodes.set(globalZOrder, []);
     this.#globalZOrderNodes.get(globalZOrder)!.push(node.instanceId);
@@ -49,7 +49,7 @@ export default class NodePriorities {
       // visit children zOrder < 0
       for (; i < childrenCount; i++) {
         child = children[i];
-        if (child && child.zIndex < 0) {
+        if (child && child.order.zIndex < 0) {
           this.#visitTarget(child, false, listeners);
         } else break;
       }

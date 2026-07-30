@@ -246,7 +246,7 @@ export class ListView extends ScrollView {
    */
   addChild(widget, zOrder, tag) {
     if (widget) {
-      zOrder = zOrder || widget.zIndex;
+      zOrder = zOrder || widget.order.zIndex;
       tag = tag || widget.name;
       super.addChild(widget, zOrder, tag);
       if (widget instanceof Widget) {
@@ -904,7 +904,7 @@ export class ListView extends ScrollView {
       var locItems = this._items;
       for (var i = 0; i < locItems.length; i++) {
         var item = locItems[i];
-        item.zIndex = i;
+        item.order.zIndex = i;
         this._remedyLayoutParameter(item);
       }
       this._updateInnerContainerSize();

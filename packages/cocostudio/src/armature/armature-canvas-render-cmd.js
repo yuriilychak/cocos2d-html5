@@ -183,10 +183,10 @@ export class ArmatureCanvasRenderCmd extends Node.CanvasRenderCmd {
 
     var len = children.length;
     if (len > 0) {
-      childNode.sortAllChildren();
+      childNode.order.sortAllChildren();
       for (i = 0; i < len; i++) {
         child = children[i];
-        if (child.localZOrder < 0) child.visit(childNode);
+        if (child.order.localZOrder < 0) child.visit(childNode);
         else break;
       }
       ServiceLocator.sys.rendererConfig.renderer.pushRenderCommand(cmd);
@@ -202,7 +202,7 @@ export class ArmatureCanvasRenderCmd extends Node.CanvasRenderCmd {
     if (!node.visible) return;
 
     this._syncStatus(parentCmd);
-    node.sortAllChildren();
+    node.order.sortAllChildren();
 
     ServiceLocator.sys.rendererConfig.renderer.pushRenderCommand(
       this._startRenderCmd

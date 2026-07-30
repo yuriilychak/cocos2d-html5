@@ -39,6 +39,7 @@ import {
   GLState
 } from "@aspect/core";
 import { ParticleSystem } from "./particle-system/particle-system";
+import { ParticleBatchOrder } from "./particle-batch-order";
 
 /**
  * paticle default capacity
@@ -193,7 +194,7 @@ export class ParticleBatchNode extends Node {
       throw new Error(
         "ParticleBatchNode.addChild() : only supports ParticleSystem as children"
       );
-    zOrder = zOrder == null ? child.zIndex : zOrder;
+    zOrder = zOrder == null ? child.order.zIndex : zOrder;
     tag = tag == null ? child.tag : tag;
 
     if (child.texture !== this.textureAtlas.texture)
@@ -302,69 +303,15 @@ export class ParticleBatchNode extends Node {
   }
 
   /**
-   * Reorder will be done in this function, no "lazy" reorder to particles
-   * @param {ParticleSystem} child
-   * @param {Number} zOrder
-   */
-  reorderChild(child, zOrder) {
-    if (!child)
-      throw new Error(
-        "ParticleBatchNode.reorderChild(): child should be non-null"
-      );
-    if (!(child instanceof ParticleSystem))
-      throw new Error(
-        "ParticleBatchNode.reorderChild(): only supports QuadParticleSystems as children"
-      );
-    if (this.children.indexOf(child) === -1) {
-      log("ParticleBatchNode.reorderChild(): Child doesn't belong to batch");
-      return;
-    }
-
-    // no reordering if only 1 child
-    if (this.children.length > 1) {
-      var getIndexes = this._getCurrentIndex(child, zOrder);
-
-      if (getIndexes.oldIndex !== getIndexes.newIndex) {
-        // reorder m_pChildren.array
-        this.children.splice(getIndexes.oldIndex, 1);
-        this.children.splice(getIndexes.newIndex, 0, child);
-
-        // save old altasIndex
-        var oldAtlasIndex = child.getAtlasIndex();
-
-        // update atlas index
-        this._updateAllAtlasIndexes();
-
-        // Find new AtlasIndex
-        var newAtlasIndex = 0;
-        var locChildren = this.children;
-        for (var i = 0; i < locChildren.length; i++) {
-          var pNode = locChildren[i];
-          if (pNode === child) {
-            newAtlasIndex = child.getAtlasIndex();
-            break;
-          }
-        }
-
-        // reorder textureAtlas quads
-        this.textureAtlas.moveQuadsFromIndex(
-          oldAtlasIndex,
-          child.totalParticles,
-          newAtlasIndex
-        );
-
-        child.updateWithNoTime();
-      }
-    }
-    child.localZOrder = zOrder;
-  }
-
-  /**
    * @param {Number} index
    * @param {Boolean} doCleanup
    */
   removeChildAtIndex(index, doCleanup) {
     this.removeChild(this.children[i], doCleanup);
+  }
+
+  createOrder() {
+    return new ParticleBatchOrder();
   }
 
   /**
@@ -480,7 +427,7 @@ export class ParticleBatchNode extends Node {
     var locChildren = this.children;
     var count = locChildren.length;
     for (var i = 0; i < count; i++) {
-      if (locChildren[i].zIndex > z) return i;
+      if (locChildren[i].order.zIndex > z) return i;
     }
     return count;
   }
@@ -498,7 +445,7 @@ export class ParticleBatchNode extends Node {
     for (var i = 0; i < count; i++) {
       var pNode = locChildren[i];
       // new index
-      if (pNode.zIndex > z && !foundNewIdx) {
+      if (pNode.order.zIndex > z && !foundNewIdx) {
         newIndex = i;
         foundNewIdx = true;
 
@@ -547,7 +494,7 @@ export class ParticleBatchNode extends Node {
 
     this.children.splice(pos, 0, child);
     child.tag = aTag;
-    child.localZOrder = z;
+    child.order.localZOrder = z;
     child.parent = this;
     if (this.running) {
       child._performRecursive(NodeStateCallbackType.onEnter);

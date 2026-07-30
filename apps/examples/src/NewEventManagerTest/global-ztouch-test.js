@@ -83,7 +83,7 @@ export class GlobalZTouchTest extends EventDispatcherTestDemo {
       if (i == 4) {
         sprite = createColoredView(new Color(0, 255, 255));
         this._sprite = sprite;
-        this._sprite.globalZOrder = -1;
+        this._sprite.order.globalZOrder = -1;
       } else sprite = createColoredView(new Color(255, 255, 0));
 
       ServiceLocator.eventManager.addListener(listener.clone(), sprite);
@@ -102,8 +102,8 @@ export class GlobalZTouchTest extends EventDispatcherTestDemo {
   update(dt) {
     this._accum += dt;
     if (this._accum > 2.0) {
-      var z = this._sprite.globalZOrder;
-      this._sprite.globalZOrder = -z;
+      var z = this._sprite.order.globalZOrder;
+      this._sprite.order.globalZOrder = -z;
       this._accum = 0;
     }
   }

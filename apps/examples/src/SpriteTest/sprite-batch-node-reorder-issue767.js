@@ -133,11 +133,11 @@ export class SpriteBatchNodeReorderIssue767 extends SpriteTestDemo {
 
         var newZLeft = 1;
 
-        if (left.zIndex === 1)
+        if (left.order.zIndex === 1)
             newZLeft = -1;
 
-        father.reorderChild(left, newZLeft);
-        father.reorderChild(right, -newZLeft);
+        father.order.reorderChild(left, newZLeft);
+        father.order.reorderChild(right, -newZLeft);
         //----end18----
     }
     //

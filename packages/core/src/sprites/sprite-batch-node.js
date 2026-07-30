@@ -170,9 +170,9 @@ export class SpriteBatchNode extends Node {
    * @param {Sprite} sprite
    */
   appendChild(sprite) {
-    this.sortAllChildren();
+    this.order.sortAllChildren();
     var lastLocalZOrder =
-      this.children[this.children.length - 1].localZOrder;
+      this.children[this.children.length - 1].order.localZOrder;
     this.addChild(sprite.lastLocalZOrder + 1);
   }
 
@@ -251,7 +251,7 @@ export class SpriteBatchNode extends Node {
 
     if (!this._isValidChild(child)) return;
 
-    zOrder = zOrder === undefined ? child.zIndex : zOrder;
+    zOrder = zOrder === undefined ? child.order.zIndex : zOrder;
     tag = tag === undefined ? child.tag : tag;
     super.addChild(child, zOrder, tag);
 

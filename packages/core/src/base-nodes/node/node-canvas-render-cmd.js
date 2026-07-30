@@ -309,8 +309,8 @@ export class RenderCmd {
     parentCmd = parentCmd || this.getParentRenderCmd();
     if (parentCmd) this._curLevel = parentCmd._curLevel + 1;
 
-    if (!node.hasCustomVertexZ) {
-      node.assignedVertexZ = renderer.assignedZ;
+    if (!node.order.hasCustomVertexZ) {
+      node.order.assignedVertexZ = renderer.assignedZ;
       renderer.assignedZ += renderer.assignedZStep;
     }
 

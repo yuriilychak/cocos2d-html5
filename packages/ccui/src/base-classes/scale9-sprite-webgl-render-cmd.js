@@ -114,7 +114,7 @@ export class Scale9SpriteWebGLRenderCmd extends Node.WebGLRenderCmd {
       b *= a;
     }
     this._color[0] = (opacity << 24) | (b << 16) | (g << 8) | r;
-    var z = node.vertexZ;
+    var z = node.order.vertexZ;
 
     var vertices = node._vertices;
     var uvs = node._uvs;

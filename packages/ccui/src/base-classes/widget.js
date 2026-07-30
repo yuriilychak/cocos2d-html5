@@ -1156,7 +1156,7 @@ export class Widget extends ProtectedNode {
     this.visible = widget.visible;
     this.bright = widget.bright;
     this.touchEnabled = widget.touchEnabled;
-    this.zIndex = widget.zIndex;
+    this.order.zIndex = widget.order.zIndex;
     this.tag = widget.tag;
     this.name = widget.name;
     this.actionTag = widget.actionTag;

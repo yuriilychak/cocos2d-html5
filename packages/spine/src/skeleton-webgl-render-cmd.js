@@ -301,7 +301,7 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
       wd = wt.d,
       wx = wt.tx,
       wy = wt.ty;
-    const z = this._node.vertexZ;
+    const z = this._node.order.vertexZ;
 
     let offset = vertexDataOffset;
     const stride =
@@ -352,7 +352,7 @@ export class SkeletonWebGLRenderCmd extends Node.WebGLRenderCmd {
       wd = wt.d,
       wx = wt.tx,
       wy = wt.ty;
-    const z = this._node.vertexZ;
+    const z = this._node.order.vertexZ;
 
     const verticesLength = attachment.worldVerticesLength;
     const vertices = Utils.setArraySize(new Array(), verticesLength, 0);

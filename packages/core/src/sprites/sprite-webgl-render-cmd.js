@@ -123,7 +123,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
 
       //put it in descendants array of batch node
       node._batchNode.appendChild(child);
-      if (!node.reorderChildDirty) node._setReorderChildDirtyRecursively();
+      if (!node.order.reorderChildDirty) node._setReorderChildDirtyRecursively();
     }
     return true;
   }
@@ -406,7 +406,7 @@ export class SpriteWebGLRenderCmd extends NodeWebGLRenderCmd {
       b *= a;
     }
     this._color[0] = (opacity << 24) | (b << 16) | (g << 8) | r;
-    const z = node.vertexZ;
+    const z = node.order.vertexZ;
 
     if (node._polygonInfo && node.hasPolygonInfo && node.hasPolygonInfo()) {
       return this._uploadPolygonData(

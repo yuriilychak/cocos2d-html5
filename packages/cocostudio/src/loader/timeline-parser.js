@@ -125,7 +125,7 @@ parser.generalAttributes = function (node, json) {
       node.anchor = new Point(anchor["ScaleX"], anchor["ScaleY"]);
   }
 
-  if (json["ZOrder"] != null) node.zIndex = json["ZOrder"];
+  if (json["ZOrder"] != null) node.order.zIndex = json["ZOrder"];
 
   node.visible = getParam(json["VisibleForFrame"], true);
 
@@ -300,7 +300,7 @@ parser.widgetAttributes = function (widget, json, enableContent) {
   if (flipY) widget.setFlippedY(true);
 
   var zOrder = json["zOrder"];
-  if (zOrder != null) widget.zIndex = zOrder;
+  if (zOrder != null) widget.order.zIndex = zOrder;
 
   //var visible = json["Visible"];
 

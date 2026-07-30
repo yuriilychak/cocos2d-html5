@@ -630,7 +630,7 @@ export class ProgressTimerWebGLRenderCmd extends Node.WebGLRenderCmd {
   _vertexFromAlphaPoint(vertex, ax, ay) {
     vertex.x = this._bl.x * (1 - ax) + this._tr.x * ax;
     vertex.y = this._bl.y * (1 - ay) + this._tr.y * ay;
-    vertex.z = this._node.vertexZ;
+    vertex.z = this._node.order.vertexZ;
   }
 
   _updateColor() {

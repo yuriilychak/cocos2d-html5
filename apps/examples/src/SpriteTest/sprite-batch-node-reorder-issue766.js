@@ -78,7 +78,7 @@ export class SpriteBatchNodeReorderIssue766 extends SpriteTestDemo {
     //----start17----reorderSprite
     this.scheduler.unschedule(this.reorderSprite);
 
-    this._batchNode.reorderChild(this._sprite1, 4);
+    this._batchNode.order.reorderChild(this._sprite1, 4);
     //----end17----
   }
   makeSpriteZ(aZ) {

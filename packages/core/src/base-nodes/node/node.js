@@ -119,8 +119,6 @@ export function setGlobalOrderOfArrival(val) {
  * @property {Boolean}              ignoreAnchor        - Indicate whether ignore the anchor point property for positioning
  * @property {Number}               skewX               - Skew x
  * @property {Number}               skewY               - Skew y
- * @property {Number}               zIndex              - Z order in depth which stands for the drawing order
- * @property {Number}               vertexZ             - WebGL Z vertex of this node, z order works OK if all the nodes uses the same openGL Z vertex
  * @property {Number}               rotation            - Rotation of node
  * @property {Number}               rotationX           - Rotation on x axis
  * @property {Number}               rotationY           - Rotation on y axis
@@ -139,7 +137,6 @@ export function setGlobalOrderOfArrival(val) {
  * @property {Boolean}              running             - <@readonly> Indicate whether node is running or not
  * @property {Number}               tag                 - Tag of node
  * @property {Object}               userData            - Custom user data
- * @property {Number}               arrivalOrder        - The arrival order, indicates which children is added previously
  * @property {NodeActionManager} actionManager       - Component that manages this node's actions.
  * @property {NodeScheduler}     scheduler           - Component that schedules this node's updates and timers.
  * @property {NodeOrder}         order               - Component that manages this node's draw order.
@@ -155,7 +152,6 @@ export class Node extends ComponentContainer {
   #parent = null;
   #running = false;
   #actionManager = new NodeActionManager();
-  #reorderChildDirty = false;
 
   #scheduler = new NodeScheduler();
   #name = "";
@@ -270,7 +266,7 @@ export class Node extends ComponentContainer {
    * @param {Number|String} [tag=]  An integer or a name to identify the node easily. Please refer to tag = int and name = string
    */
   addChild(child, localZOrder, tag) {
-    localZOrder = localZOrder === undefined ? child.localZOrder : localZOrder;
+    localZOrder = localZOrder === undefined ? child.order.localZOrder : localZOrder;
     var name,
       setTag = false;
     if (tag === undefined) {
@@ -298,7 +294,7 @@ export class Node extends ComponentContainer {
     else child.name = name;
 
     child.parent = this;
-    child.arrivalOrder = s_globalOrderOfArrival;
+    child.order.arrivalOrder = s_globalOrderOfArrival;
     setGlobalOrderOfArrival(s_globalOrderOfArrival + 1);
 
     if (this.#running) {
@@ -427,78 +423,15 @@ export class Node extends ComponentContainer {
     arrayRemoveObject(this.#children, child);
   }
 
-  _insertChild(child, z) {
-    ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty =
-      this.#reorderChildDirty = true;
-    this.#children.push(child);
-    child.localZOrder = z;
-  }
-
   setNodeDirty() {
     this.#renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
   }
 
-  /** Reorders a child according to a new z value. <br/>
-   * The child MUST be already added.
-   * @function
-   * @param {Node} child An already added child node. It MUST be already added.
-   * @param {Number} zOrder Z order for drawing priority. Please refer to setZOrder(int)
-   */
-  reorderChild(child, zOrder) {
-    assert(child, _LogInfos.Node_reorderChild);
-    if (this.#children.indexOf(child) === -1) {
-      log(_LogInfos.Node_reorderChild_2);
-      return;
-    }
+  _insertChild(child, z) {
     ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty =
-      this.#reorderChildDirty = true;
-    child.arrivalOrder = s_globalOrderOfArrival;
-    setGlobalOrderOfArrival(s_globalOrderOfArrival + 1);
-    child.localZOrder = zOrder;
-    this.#renderCmd.setDirtyFlag(dirtyFlags.orderDirty);
-  }
-
-  /**
-   * <p>
-   *     Sorts the children array once before drawing, instead of every time when a child is added or reordered.    <br/>
-   *     This approach can improves the performance massively.
-   * </p>
-   * @function
-   * @note Don't call this manually unless a child added needs to be removed in the same frame
-   */
-  sortAllChildren() {
-    if (this.#reorderChildDirty) {
-      var _children = this.#children;
-
-      // insertion sort
-      var len = _children.length,
-        i,
-        j,
-        tmp;
-      for (i = 1; i < len; i++) {
-        tmp = _children[i];
-        j = i - 1;
-
-        //continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
-        while (j >= 0) {
-          if (tmp.localZOrder < _children[j].localZOrder) {
-            _children[j + 1] = _children[j];
-          } else if (
-            tmp.localZOrder === _children[j].localZOrder &&
-            tmp.arrivalOrder < _children[j].arrivalOrder
-          ) {
-            _children[j + 1] = _children[j];
-          } else {
-            break;
-          }
-          j--;
-        }
-        _children[j + 1] = tmp;
-      }
-
-      //don't need to check children recursively, that's done in visit of each child
-      this.#reorderChildDirty = false;
-    }
+      this.#order.reorderChildDirty = true;
+    this.#children.push(child);
+    child.order.localZOrder = z;
   }
 
   /**
@@ -856,13 +789,11 @@ export class Node extends ComponentContainer {
       len = children.length,
       child;
     if (len > 0) {
-      if (this.#reorderChildDirty) {
-        this.sortAllChildren();
-      }
+        this.#order.sortAllChildren();
       // draw children zOrder < 0
       for (i = 0; i < len; i++) {
         child = children[i];
-        if (child.localZOrder < 0) {
+        if (child.order.localZOrder < 0) {
           child.visit(this, renderer);
         } else {
           break;
@@ -1159,10 +1090,6 @@ export class Node extends ComponentContainer {
     return this.#transform;
   }
 
-  get reorderChildDirty() {
-    return this.#reorderChildDirty;
-  }
-
   get width() {
     return this.#transform.width;
   }
@@ -1201,14 +1128,6 @@ export class Node extends ComponentContainer {
 
   set anchorY(value) {
     this.#transform.anchorY = value;
-  }
-
-  get vertexZ() {
-    return this.#order.vertexZ;
-  }
-
-  set vertexZ(v) {
-    this.#order.vertexZ = v;
   }
 
   get rotationX() {
@@ -1329,41 +1248,6 @@ export class Node extends ComponentContainer {
 
   set skewY(newSkewY) {
     this.#transform.skewY = newSkewY;
-  }
-
-  set zIndex(localZOrder) {
-    if (localZOrder === this.#order.localZOrder) return;
-    if (this.#parent) this.#parent.reorderChild(this, localZOrder);
-    else this.localZOrder = localZOrder;
-    ServiceLocator.eventManager._setDirtyForNode(this);
-  }
-
-  get localZOrder() {
-    return this.#order.localZOrder;
-  }
-
-  set localZOrder(value) {
-    this.#order.localZOrder = value;
-  }
-
-  get zIndex() {
-    return this.#order.localZOrder;
-  }
-
-  set globalZOrder(value) {
-    this.#order.globalZOrder = value;
-  }
-
-  get globalZOrder() {
-    return this.#order.globalZOrder;
-  }
-
-  set assignedVertexZ(value) {
-    this.#order.assignedVertexZ = value;
-  }
-
-  get hasCustomVertexZ() {
-    return this.#order.hasCustomVertexZ;
   }
 
   get rotation() {
@@ -1499,14 +1383,6 @@ export class Node extends ComponentContainer {
 
   set userData(Var) {
     this.#userData = Var;
-  }
-
-  get arrivalOrder() {
-    return this.#order.arrivalOrder;
-  }
-
-  set arrivalOrder(value) {
-    this.#order.arrivalOrder = value;
   }
 
   get boundingBox() {

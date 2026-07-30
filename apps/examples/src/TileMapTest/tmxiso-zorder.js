@@ -88,7 +88,7 @@ export class TMXIsoZorder extends TileDemo {
 
     var newZ = 4 - Math.floor(this.tamara.y / 48);
     newZ = parseInt(Math.max(newZ, 0), 10);
-    map.reorderChild(this.tamara, newZ);
+    map.order.reorderChild(this.tamara, newZ);
   }
   //
   // Automation

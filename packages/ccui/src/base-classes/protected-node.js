@@ -13,7 +13,7 @@ export class ProtectedNode extends Node {
   _insertProtectedChild(child, z) {
     this._reorderProtectedChildDirty = true;
     this._protectedChildren.push(child);
-    child.localZOrder = z;
+    child.order.localZOrder = z;
   }
 
   constructor() {
@@ -46,12 +46,12 @@ export class ProtectedNode extends Node {
     var locGrid = this.grid;
     if (locGrid && locGrid._active) locGrid.beforeDraw();
 
-    if (this.reorderChildDirty) this.sortAllChildren();
+    if (this.order.reorderChildDirty) this.order.sortAllChildren();
     if (this._reorderProtectedChildDirty) this.sortAllProtectedChildren();
 
     for (i = 0; i < len; i++) {
       child = children[i];
-      if (child.localZOrder < 0) {
+      if (child.order.localZOrder < 0) {
         child.visit(this);
       } else {
         break;
@@ -59,7 +59,7 @@ export class ProtectedNode extends Node {
     }
     for (j = 0; j < pLen; j++) {
       pChild = pChildren[j];
-      if (pChild && pChild.localZOrder < 0) {
+      if (pChild && pChild.order.localZOrder < 0) {
         cmd._changeProtectedChild(pChild);
         pChild.visit(this);
       } else break;
@@ -86,12 +86,12 @@ export class ProtectedNode extends Node {
     assert(child != null, "child must be non-nil");
     assert(!child.parent, "child already added. It can't be added again");
 
-    localZOrder = localZOrder || child.zIndex;
+    localZOrder = localZOrder || child.order.zIndex;
     if (tag) child.tag = tag;
 
     this._insertProtectedChild(child, localZOrder);
     child.parent = this;
-    child.arrivalOrder = s_globalOrderOfArrival;
+    child.order.arrivalOrder = s_globalOrderOfArrival;
 
     if (this.running) {
       child._performRecursive(NodeStateCallbackType.onEnter);
@@ -168,7 +168,7 @@ export class ProtectedNode extends Node {
   reorderProtectedChild(child, localZOrder) {
     assert(child != null, "Child must be non-nil");
     this._reorderProtectedChildDirty = true;
-    child.arrivalOrder = s_globalOrderOfArrival;
+    child.order.arrivalOrder = s_globalOrderOfArrival;
     setGlobalOrderOfArrival(s_globalOrderOfArrival + 1);
   }
 
@@ -185,11 +185,11 @@ export class ProtectedNode extends Node {
         j = i - 1;
 
         while (j >= 0) {
-          if (tmp.localZOrder < _children[j].localZOrder) {
+          if (tmp.order.localZOrder < _children[j].order.localZOrder) {
             _children[j + 1] = _children[j];
           } else if (
-            tmp.localZOrder === _children[j].localZOrder &&
-            tmp.arrivalOrder < _children[j].arrivalOrder
+            tmp.order.localZOrder === _children[j].order.localZOrder &&
+            tmp.order.arrivalOrder < _children[j].order.arrivalOrder
           ) {
             _children[j + 1] = _children[j];
           } else break;

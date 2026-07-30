@@ -172,8 +172,8 @@ export class GScrollView extends Layer {
       children = this.children,
       len = children.length;
     if (len > 0) {
-      if (this.reorderChildDirty) {
-        this.sortAllChildren();
+      if (this.order.reorderChildDirty) {
+        this.order.sortAllChildren();
       }
       for (i = 0; i < len; i++) {
         children[i].visit(this);
@@ -579,7 +579,7 @@ export class GScrollView extends Layer {
   addChild(child, zOrder, tag) {
     if (!child) throw new Error("child must not nil!");
 
-    zOrder = zOrder || child.zIndex;
+    zOrder = zOrder || child.order.zIndex;
     tag = tag || child.tag;
 
     if (this._container !== child) {

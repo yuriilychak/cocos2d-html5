@@ -119,7 +119,7 @@ export class RenderTextureWebGLRenderCmd extends NodeWebGLRenderCmd {
       }
 
       //! make sure all children are drawn
-      node.sortAllChildren();
+      node.order.sortAllChildren();
       const locChildren = node.children;
       for (let i = 0; i < locChildren.length; i++) {
         const getChild = locChildren[i];

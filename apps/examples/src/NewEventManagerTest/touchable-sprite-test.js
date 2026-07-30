@@ -95,9 +95,9 @@ export class TouchableSpriteTest extends EventDispatcherTestDemo {
         log("sprite onTouchesEnded.. ");
         target.opacity = 255;
         if (target == sprite2) {
-          containerForSprite1.zIndex = 100;
+          containerForSprite1.order.zIndex = 100;
         } else if (target == sprite1) {
-          containerForSprite1.zIndex = 0;
+          containerForSprite1.order.zIndex = 0;
         }
       }
     });
