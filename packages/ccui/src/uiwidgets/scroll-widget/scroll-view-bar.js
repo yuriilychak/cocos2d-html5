@@ -23,10 +23,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Point, Color, Size } from '@aspect/core';
+import { Point, Color, Size, NodeComponentName } from '@aspect/core';
 import { ProtectedNode } from '../../base-classes/protected-node';
 import { Scale9Sprite } from '../../base-classes/scale9-sprite';
 import { helper } from '../../system/helper';
+import ScrollViewBarColor from './scroll-view-bar-color';
 
 // Local copies of ScrollView direction constants to avoid a circular import
 // (ScrollView imports ScrollViewBar; if ScrollViewBar imported ScrollView the cycle would break).
@@ -109,7 +110,7 @@ export class ScrollViewBar extends ProtectedNode {
 
         this.color = ScrollViewBar.DEFAULT_COLOR;
         this.onScrolled(new Point());
-        super.opacity = 0;
+        this.getComponent(NodeComponentName.Color).opacityFromRenderer = 0;
         this._autoHideRemainingTime = 0;
 
         if (this._direction === DIR_HORIZONTAL) {
@@ -183,7 +184,7 @@ export class ScrollViewBar extends ProtectedNode {
     setAutoHideEnabled(autoHideEnabled) {
         this._autoHideEnabled = autoHideEnabled;
 
-        super.opacity = !this._autoHideEnabled && !this._touching && this._autoHideRemainingTime <= 0 ?  this.opacity : 0;
+        this.getComponent(NodeComponentName.Color).opacityFromRenderer = !this._autoHideEnabled && !this._touching && this._autoHideRemainingTime <= 0 ? this.opacity : 0;
     }
 
     /**
@@ -194,20 +195,8 @@ export class ScrollViewBar extends ProtectedNode {
         return this._autoHideEnabled;
     }
 
-    /**
-     * Set scroll bar opacity
-     * @param {number} opacity scroll bar opacity
-     */
-    set opacity(opacity) {
-        this._opacity = opacity;
-    }
-
-    /**
-     * Get scroll bar opacity
-     * @returns {number}
-     */
-    get opacity() {
-        return this._opacity;
+    createColor() {
+        return new ScrollViewBarColor();
     }
 
     /**
@@ -296,7 +285,7 @@ export class ScrollViewBar extends ProtectedNode {
         this._autoHideRemainingTime -= dt;
         if (this._autoHideRemainingTime <= this.autoHideTime) {
             this._autoHideRemainingTime = Math.max(0, this._autoHideRemainingTime);
-            super.opacity = this._opacity * (this._autoHideRemainingTime / this.autoHideTime);
+            this.getComponent(NodeComponentName.Color).opacityFromRenderer = this._opacity * (this._autoHideRemainingTime / this.autoHideTime);
         }
     }
 

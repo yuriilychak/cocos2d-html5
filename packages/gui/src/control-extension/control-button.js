@@ -3,6 +3,7 @@ import { Scale9Sprite } from "@aspect/ccui";
 import { LabelBMFont } from "@aspect/labels";
 import { ScaleTo } from "@aspect/actions";
 import { Control } from "./control";
+import ControlButtonColor from "./control-button-color";
 import {
   CONTROL_STATE_NORMAL,
   CONTROL_STATE_HIGHLIGHTED,
@@ -240,24 +241,8 @@ export class ControlButton extends Control {
     return this._currentTitleColor;
   }
 
-  get opacity() {
-    return this._opacity;
-  }
-
-  set opacity(opacity) {
-    super.opacity = opacity;
-    var locTable = this._backgroundSpriteDispatchTable;
-    for (var itemKey in locTable) locTable[itemKey].opacity = opacity;
-  }
-
-  set color(color) {
-    super.color = color;
-    var locTable = this._backgroundSpriteDispatchTable;
-    for (var key in locTable) locTable[key].color = color;
-  }
-
-  get color() {
-    return super.color;
+  createColor() {
+    return new ControlButtonColor();
   }
 
   get isPushed() {

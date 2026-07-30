@@ -1,5 +1,6 @@
 import { Node, Point, ServiceLocator } from "@aspect/core";
 import { TYPE_RADIAL } from "./constants";
+import ProgressTimerColor from "./progress-timer-color";
 
 /**
  * ProgressTimer is a subclass of Node.
@@ -179,59 +180,11 @@ export class ProgressTimer extends Node {
   }
 
   /**
-   * only use for jsbinding
-   * @param bValue
-   */
-  set opacityModifyRGB(bValue) {}
-
-  /**
-   * only use for jsbinding
-   * @returns {boolean}
-   */
-  get opacityModifyRGB() {
-    return false;
-  }
-
-  /**
    * return if reverse direction
    * @returns {boolean}
    */
   isReverseDirection() {
     return this._reverseDirection;
-  }
-
-  /**
-   * set color of sprite
-   * @param {Color} color
-   */
-  set color(color) {
-    this._sprite.color = color;
-    this.renderCmd.setDirtyFlag(Node._dirtyFlags.colorDirty);
-  }
-
-  /**
-   * return color of sprite
-   * @return {Color}
-   */
-  get color() {
-    return this._sprite.color;
-  }
-
-  /**
-   * return Opacity of sprite
-   * @return {Number}
-   */
-  get opacity() {
-    return this._sprite.opacity;
-  }
-
-  /**
-   * set opacity of sprite
-   * @param {Number} opacity
-   */
-  set opacity(opacity) {
-    this._sprite.opacity = opacity;
-    this.renderCmd.setDirtyFlag(Node._dirtyFlags.opacityDirty);
   }
 
   /**
@@ -309,5 +262,9 @@ export class ProgressTimer extends Node {
     if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new this.constructor.CanvasRenderCmd(this);
     else return new this.constructor.WebGLRenderCmd(this);
+  }
+
+  createColor() {
+    return new ProgressTimerColor();
   }
 }

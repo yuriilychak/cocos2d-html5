@@ -38,6 +38,7 @@ import {
   VerticalTextAlignment
 } from "@aspect/core";
 import { Widget } from "../base-classes/widget";
+import RichTextColor from "./rich-text-color";
 
 /**
  * RichElement is the base class of RichElementText, RichElementImage etc. It has type, tag, color and opacity attributes.
@@ -616,17 +617,8 @@ export class RichText extends Widget {
     return "RichText";
   }
 
-  /**
-   * Allow child renderer to be affected by RichText's opacity
-   * @param {boolean} value
-   */
-  get cascadeOpacity() {
-    return super.cascadeOpacity;
-  }
-
-  set cascadeOpacity(value) {
-    super.cascadeOpacity = value;
-    this._elementRenderersContainer.cascadeOpacity = value;
+  createColor() {
+    return new RichTextColor();
   }
 
   /**

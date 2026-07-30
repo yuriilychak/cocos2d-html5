@@ -26,6 +26,7 @@
 import { LabelTTF, Size, log } from "@aspect/core";
 import { Widget } from "../base-classes/widget";
 import { ProtectedNode } from "../base-classes/protected-node";
+import TextColor from "./text-color";
 
 /**
  * The text control of Cocos UI.
@@ -477,13 +478,8 @@ export class Text extends Widget {
     this._adaptRenderers();
   }
 
-  set color(color) {
-    super.color = color;
-    this._labelRenderer.color = color;
-  }
-
-  get color() {
-    return super.color;
+  createColor() {
+    return new TextColor();
   }
 
   setTextColor(color) {

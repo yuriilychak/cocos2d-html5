@@ -1,4 +1,5 @@
 import { Layer, Color, log, ServiceLocator } from "@aspect/core";
+import MenuPassiveColor from "./menu-passive-color";
 
 const MENU_PASSIVE_DEFAULT_PADDING = 5;
 
@@ -21,50 +22,12 @@ Spacer.horizontalSpacer = function (space) {
 };
 
 export class MenuPassive extends Layer {
-    _color = null;
-    _opacity = 0;
-
     constructor() {
         super();
     }
 
-    get color() {
-        return this._color.clone();
-    }
-
-    set color(color) {
-        var locColor = this._color;
-        locColor.r = color.r;
-        locColor.g = color.g;
-        locColor.b = color.b;
-
-        if (this.children.length > 0) {
-            for (var i = 0; i < this.children.length; i++) {
-                if (this.children[i]) {
-                    this.children[i].color = color;
-                }
-            }
-        }
-
-        if (color.a !== undefined && !color.a_undefined) {
-            this.opacity = color.a;
-        }
-    }
-
-    get opacity() {
-        return this._opacity;
-    }
-
-    set opacity(opacity) {
-        this._opacity = opacity;
-        if (this.children.length > 0) {
-            for (var i = 0; i < this.children.length; i++) {
-                if (this.children[i]) {
-                    this.children[i].opacity = opacity;
-                }
-            }
-        }
-        this._color.a = opacity;
+    createColor() {
+        return new MenuPassiveColor();
     }
 
     initWithItems(item, args) {
@@ -275,9 +238,6 @@ export class MenuPassive extends Layer {
             }
         }
     }
-
-    set opacityModifyRGB(bValue) {}
-    get opacityModifyRGB() { return false; }
 
     static create(item) {
         if (!item) item = null;

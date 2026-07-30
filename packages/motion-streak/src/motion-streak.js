@@ -7,6 +7,7 @@ import {
   log,
   ServiceLocator
 } from "@aspect/core";
+import MotionStreakColor from "./motion-streak-color";
 
 /**
  * MotionStreak manages a Ribbon based on it's motion in absolute space.
@@ -107,21 +108,6 @@ export class MotionStreak extends Node {
 
   set dst(value) {
     this.#blendFunc.dst = value;
-  }
-
-  get opacity() {
-    log("MotionStreak.opacity has not been supported.");
-    return 0;
-  }
-
-  set opacity(value) {
-    log("MotionStreak.opacity has not been supported.");
-  }
-
-  set opacityModifyRGB(value) {}
-
-  get opacityModifyRGB() {
-    return false;
   }
 
   get fastMode() {
@@ -347,5 +333,9 @@ export class MotionStreak extends Node {
     return ServiceLocator.sys.rendererConfig.isWebGL
       ? new MotionStreak.WebGLRenderCmd(this)
       : null; // MotionStreak doesn't support Canvas mode
+  }
+
+  createColor() {
+    return new MotionStreakColor();
   }
 }

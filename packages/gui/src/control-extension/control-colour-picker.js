@@ -1,15 +1,14 @@
-import { Sprite, Point, Color } from "@aspect/core";
+import { Sprite, Point, Color, NodeComponentName } from "@aspect/core";
 import { Control } from "./control";
+import ControlColourPickerColor from "./control-colour-picker-color";
 import { ControlHuePicker } from "./control-hue-picker";
 import { ControlSaturationBrightnessPicker } from "./control-saturation-brightness-picker";
 import { CONTROL_EVENT_VALUE_CHANGED } from "./constants";
 
 export class ControlColourPicker extends Control {
-  _hsv = null;
   _colourPicker = null;
   _huePicker = null;
   _background = null;
-  _color = null;
 
   get background() {
     return this.getBackground();
@@ -17,33 +16,31 @@ export class ControlColourPicker extends Control {
 
   constructor() {
     super();
-    this._color = Color.WHITE;
     this.init();
   }
 
+  get #colorComponent() {
+    return this.getComponent(NodeComponentName.Color);
+  }
+
   hueSliderValueChanged(sender, controlEvent) {
-    this._hsv.h = sender.hue;
-    this._color = Color.fromHSV(this._hsv);
+    const hsv = this.#colorComponent.hsv;
+    hsv.h = sender.hue;
+    this.#colorComponent.colorFromPicker = Color.fromHSV(hsv);
     this.sendActionsForControlEvents(CONTROL_EVENT_VALUE_CHANGED);
     this._updateControlPicker();
   }
 
   colourSliderValueChanged(sender, controlEvent) {
-    this._hsv.s = sender.saturation;
-    this._hsv.v = sender.brightness;
-    this._color = Color.fromHSV(this._hsv);
+    const hsv = this.#colorComponent.hsv;
+    hsv.s = sender.saturation;
+    hsv.v = sender.brightness;
+    this.#colorComponent.colorFromPicker = Color.fromHSV(hsv);
     this.sendActionsForControlEvents(CONTROL_EVENT_VALUE_CHANGED);
   }
 
-  set color(color) {
-    this._color = color;
-
-    this._hsv = color.hsv;
-    this._updateHueAndControlPicker();
-  }
-
-  get color() {
-    return this._color;
+  createColor() {
+    return new ControlColourPickerColor();
   }
 
   get background() {
@@ -52,8 +49,6 @@ export class ControlColourPicker extends Control {
 
   init() {
     if (super.init()) {
-      this._hsv = { h: 0, s: 0, v: 0 };
-
       this._background = Control.addSpriteToTargetWithPosAndAnchor(
         new Sprite("#default_theme/color_picker/bacuground.png"),
         this,
@@ -109,14 +104,16 @@ export class ControlColourPicker extends Control {
   }
 
   _updateControlPicker() {
-    this._huePicker.hue = this._hsv.h;
-    this._colourPicker.updateWithHSV(this._hsv);
+    const hsv = this.#colorComponent.hsv;
+    this._huePicker.hue = hsv.h;
+    this._colourPicker.updateWithHSV(hsv);
   }
 
   _updateHueAndControlPicker() {
-    this._huePicker.hue = this._hsv.h;
-    this._colourPicker.updateWithHSV(this._hsv);
-    this._colourPicker.updateDraggerWithHSV(this._hsv);
+    const hsv = this.#colorComponent.hsv;
+    this._huePicker.hue = hsv.h;
+    this._colourPicker.updateWithHSV(hsv);
+    this._colourPicker.updateDraggerWithHSV(hsv);
   }
 
   set enabled(enabled) {
