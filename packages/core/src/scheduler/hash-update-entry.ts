@@ -3,7 +3,7 @@ import type { ListEntry } from './list-entry';
 import { log } from '../boot/debugger';
 
 interface UpdateTarget {
-    __instanceId: number;
+    instanceId: number;
 }
 
 type UpdateCallback = (dt: number) => void;

@@ -107,7 +107,7 @@ export default class LayerColorCanvasRenderer extends LayerCanvasRenderer {
 
         let child;
         const _r = ServiceLocator.sys.rendererConfig.renderer;
-        _r.turnToCacheMode(this.__instanceId);
+        _r.turnToCacheMode(this.instanceId);
         if (len > 0) {
           node.sortAllChildren();
           for (i = 0; i < len; i++) {
@@ -120,7 +120,7 @@ export default class LayerColorCanvasRenderer extends LayerCanvasRenderer {
             children[i].visit(node);
           }
         } else _r.pushRenderCommand(this);
-        _r.renderingToCacheCanvas(bakeContext, this.__instanceId);
+        _r.renderingToCacheCanvas(bakeContext, this.instanceId);
         locBakeSprite.transform();
         this._updateCache--;
       }

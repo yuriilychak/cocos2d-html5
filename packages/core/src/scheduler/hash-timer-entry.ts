@@ -3,7 +3,7 @@ import type { CallbackTimer } from './callback-timer';
 import { log, _LogInfos } from '../boot/debugger';
 
 interface TimerTarget {
-    __instanceId: number;
+    instanceId: number;
 }
 
 export class HashTimerEntry {

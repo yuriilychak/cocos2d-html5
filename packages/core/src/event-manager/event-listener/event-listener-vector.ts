@@ -47,14 +47,14 @@ export default class _EventListenerVector extends BaseClass {
     l2: EventListener | null | undefined,
     nodePriorities: Map<number, number>
   ): number {
-    const node1 = l1?.sceneGraphPriority as { __instanceId: number } | null,
-      node2 = l2?.sceneGraphPriority as { __instanceId: number } | null;
-    if (!l2 || !node2 || !nodePriorities.has(node2.__instanceId)) return -1;
-    else if (!l1 || !node1 || !nodePriorities.has(node1.__instanceId))
+    const node1 = l1?.sceneGraphPriority as { instanceId: number } | null,
+      node2 = l2?.sceneGraphPriority as { instanceId: number } | null;
+    if (!l2 || !node2 || !nodePriorities.has(node2.instanceId)) return -1;
+    else if (!l1 || !node1 || !nodePriorities.has(node1.instanceId))
       return 1;
     return (
-      nodePriorities.get(node2.__instanceId)! -
-      nodePriorities.get(node1.__instanceId)!
+      nodePriorities.get(node2.instanceId)! -
+      nodePriorities.get(node1.instanceId)!
     );
   }
 

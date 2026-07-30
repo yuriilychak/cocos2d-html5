@@ -7,7 +7,7 @@ import { log, assert, _LogInfos } from '../boot/debugger';
 import { REPEAT_FOREVER } from '../platform/macro/constants';
 
 interface SchedulerTarget {
-    __instanceId: number;
+    instanceId: number;
     update?: (dt: number) => void;
 }
 
@@ -35,7 +35,7 @@ export default class Scheduler extends BaseClass {
     }
 
     #schedulePerFrame(callback: Callback, target: SchedulerTarget, priority: number, paused: boolean): void {
-        const hashElement = this.#hashForUpdates.get(target.__instanceId);
+        const hashElement = this.#hashForUpdates.get(target.instanceId);
         if (hashElement && hashElement.entry) {
             if (hashElement.setPriority(priority, paused, this.#updateHashLocked)) {
                 this.unscheduleUpdate(target);
@@ -54,7 +54,7 @@ export default class Scheduler extends BaseClass {
     }
 
     #removeHashElement(element: HashTimerEntry): void {
-        this.#hashForTimers.delete(element.target!.__instanceId);
+        this.#hashForTimers.delete(element.target!.instanceId);
         const index = this.#arrayForTimers.indexOf(element);
         if (index !== -1) {
             this.#arrayForTimers.splice(index, 1);
@@ -63,7 +63,7 @@ export default class Scheduler extends BaseClass {
     }
 
     #removeUpdateFromHash(entry: ListEntry): void {
-        const targetId = entry.target!.__instanceId;
+        const targetId = entry.target!.instanceId;
         if (!this.#hashForUpdates.has(targetId)) {
             return;
         }
@@ -98,7 +98,7 @@ export default class Scheduler extends BaseClass {
         }
         list.splice(index, 0, listElement);
         this.#hashForUpdates.set(
-            target.__instanceId,
+            target.instanceId,
             HashUpdateEntry.get(list, listElement, target, null),
         );
         return list;
@@ -108,7 +108,7 @@ export default class Scheduler extends BaseClass {
         const listElement = ListEntry.get(null, null, callback, target, 0, paused, false);
         list.push(listElement);
         this.#hashForUpdates.set(
-            target.__instanceId,
+            target.instanceId,
             HashUpdateEntry.get(list, listElement, target, null),
         );
     }
@@ -188,17 +188,17 @@ export default class Scheduler extends BaseClass {
             delay = 0;
         }
         if (key === undefined) {
-            key = target.__instanceId + '';
+            key = target.instanceId + '';
         }
 
         assert(target, _LogInfos.Scheduler_scheduleCallbackForTarget_3);
         const timerTarget = target as SchedulerTarget;
-        let element = this.#hashForTimers.get(timerTarget.__instanceId);
+        let element = this.#hashForTimers.get(timerTarget.instanceId);
 
         if (!element) {
             element = HashTimerEntry.get(null, timerTarget, 0, null, null, paused as boolean);
             this.#arrayForTimers.push(element);
-            this.#hashForTimers.set(timerTarget.__instanceId, element);
+            this.#hashForTimers.set(timerTarget.instanceId, element);
         } else {
             assert(element.paused === paused, '');
         }
@@ -231,7 +231,7 @@ export default class Scheduler extends BaseClass {
             return;
         }
 
-        const element = this.#hashForTimers.get(target.__instanceId);
+        const element = this.#hashForTimers.get(target.instanceId);
         if (element) {
             const timers = element.timers!;
             for (let i = 0; i < timers.length; i++) {
@@ -264,7 +264,7 @@ export default class Scheduler extends BaseClass {
             return;
         }
 
-        const element = this.#hashForUpdates.get(target.__instanceId);
+        const element = this.#hashForUpdates.get(target.instanceId);
         if (element) {
             if (this.#updateHashLocked) {
                 element.entry!.markedForDeletion = true;
@@ -279,7 +279,7 @@ export default class Scheduler extends BaseClass {
             return;
         }
 
-        const element = this.#hashForTimers.get(target.__instanceId);
+        const element = this.#hashForTimers.get(target.instanceId);
         if (element) {
             const timers = element.timers!;
             if (timers.indexOf(element.currentTimer!) > -1 && !element.currentTimerSalvaged) {
@@ -334,7 +334,7 @@ export default class Scheduler extends BaseClass {
         assert(callback, 'Argument callback must not be empty');
         assert(target, 'Argument target must be non-nullptr');
 
-        const element = this.#hashForTimers.get(target.__instanceId);
+        const element = this.#hashForTimers.get(target.instanceId);
         if (!element || element.timers === null) {
             return false;
         }
@@ -386,11 +386,11 @@ export default class Scheduler extends BaseClass {
 
     pauseTarget(target: SchedulerTarget): void {
         assert(target, _LogInfos.Scheduler_pauseTarget);
-        const element = this.#hashForTimers.get(target.__instanceId);
+        const element = this.#hashForTimers.get(target.instanceId);
         if (element) {
             element.paused = true;
         }
-        const elementUpdate = this.#hashForUpdates.get(target.__instanceId);
+        const elementUpdate = this.#hashForUpdates.get(target.instanceId);
         if (elementUpdate) {
             elementUpdate.entry!.paused = true;
         }
@@ -398,11 +398,11 @@ export default class Scheduler extends BaseClass {
 
     resumeTarget(target: SchedulerTarget): void {
         assert(target, _LogInfos.Scheduler_resumeTarget);
-        const element = this.#hashForTimers.get(target.__instanceId);
+        const element = this.#hashForTimers.get(target.instanceId);
         if (element) {
             element.paused = false;
         }
-        const elementUpdate = this.#hashForUpdates.get(target.__instanceId);
+        const elementUpdate = this.#hashForUpdates.get(target.instanceId);
         if (elementUpdate) {
             elementUpdate.entry!.paused = false;
         }
@@ -410,11 +410,11 @@ export default class Scheduler extends BaseClass {
 
     isTargetPaused(target: SchedulerTarget): boolean {
         assert(target, _LogInfos.Scheduler_isTargetPaused);
-        const element = this.#hashForTimers.get(target.__instanceId);
+        const element = this.#hashForTimers.get(target.instanceId);
         if (element) {
             return element.paused;
         }
-        const elementUpdate = this.#hashForUpdates.get(target.__instanceId);
+        const elementUpdate = this.#hashForUpdates.get(target.instanceId);
         return elementUpdate ? elementUpdate.entry!.paused : false;
     }
 }

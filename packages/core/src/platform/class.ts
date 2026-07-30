@@ -56,14 +56,18 @@ type BaseClassConstructor = typeof BaseClass & {
  * This implementation does nothing and is used for inheritance only.
  */
 export class BaseClass {
-  public __instanceId: number;
+  #instanceId: number;
 
   public constructor() {
-    this.__instanceId = classManager.getNewInstanceId();
+    this.#instanceId = classManager.getNewInstanceId();
   }
 
   public get instanceId(): number {
-    return this.__instanceId;
+    return this.#instanceId;
+  }
+
+  public get className(): string {
+    return Object.getPrototypeOf(this).constructor.name;
   }
 
   public static get __pid(): number {

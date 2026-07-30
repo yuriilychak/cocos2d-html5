@@ -152,7 +152,7 @@ export class ScrollView extends Layout {
   }
 
   onExit() {
-    ServiceLocator.sys.rendererConfig.renderer.removeCache(this.__instanceId);
+    ServiceLocator.sys.rendererConfig.renderer.removeCache(this.instanceId);
     super.onExit();
   }
 
@@ -174,7 +174,7 @@ export class ScrollView extends Layout {
 
     renderer.pushRenderCommand(cmd);
     if (cmd instanceof ScrollViewWebGLRenderCmd) {
-      var currentID = this.__instanceId;
+      var currentID = this.instanceId;
       renderer.turnToCacheMode(currentID);
     }
 

@@ -99,7 +99,7 @@ export default class HashElement {
   }
 
   get targetId(): number | null {
-    return this.#target ? this.#target.__instanceId : null;
+    return this.#target ? this.#target.instanceId : null;
   }
 
   get numberOfRunningActions(): number {

@@ -1,7 +1,7 @@
 import { MAX_POOL_SIZE } from './constants';
 
 interface UpdateTarget {
-    __instanceId: number;
+    instanceId: number;
 }
 
 type UpdateCallback = (dt: number) => void;

@@ -61,11 +61,11 @@ export default class ActionManager extends BaseClass {
       throw new Error("ActionManager.addAction(): target must be non-null");
 
     let element: HashElement;
-    if (this.#hashTargets.has(target.__instanceId)) {
-      element = this.#hashTargets.get(target.__instanceId)!;
+    if (this.#hashTargets.has(target.instanceId)) {
+      element = this.#hashTargets.get(target.instanceId)!;
     } else {
       element = this.#elementPool.get(target, paused);
-      this.#hashTargets.set(target.__instanceId, element);
+      this.#hashTargets.set(target.instanceId, element);
       this.#targets.push(element);
     }
 
@@ -79,11 +79,11 @@ export default class ActionManager extends BaseClass {
   }
 
   removeAllActionsFromTarget(target: ActionTarget | null): void {
-    if (target == null || !this.#hashTargets.has(target.__instanceId)) {
+    if (target == null || !this.#hashTargets.has(target.instanceId)) {
       return;
     }
 
-    const element = this.#hashTargets.get(target.__instanceId)!;
+    const element = this.#hashTargets.get(target.instanceId)!;
     this.#deleteHashElement(element);
   }
 
@@ -94,12 +94,12 @@ export default class ActionManager extends BaseClass {
 
     const target = action.getOriginalTarget();
 
-    if (!this.#hashTargets.has(target.__instanceId)) {
+    if (!this.#hashTargets.has(target.instanceId)) {
       log(_LogInfos.ActionManager_removeAction);
       return;
     }
 
-    const element = this.#hashTargets.get(target.__instanceId)!;
+    const element = this.#hashTargets.get(target.instanceId)!;
     element.removeAction(action);
   }
 
@@ -110,11 +110,11 @@ export default class ActionManager extends BaseClass {
 
     assert(target, _LogInfos.ActionManager_addAction);
 
-    if (!this.#hashTargets.has(target.__instanceId)) {
+    if (!this.#hashTargets.has(target.instanceId)) {
       return;
     }
 
-    const element = this.#hashTargets.get(target.__instanceId)!;
+    const element = this.#hashTargets.get(target.instanceId)!;
     element.removeActionByTag(tag, target);
 
     if (!element.hasActions) {
@@ -127,11 +127,11 @@ export default class ActionManager extends BaseClass {
       log(_LogInfos.ActionManager_getActionByTag);
     }
 
-    if (!this.#hashTargets.has(target.__instanceId)) {
+    if (!this.#hashTargets.has(target.instanceId)) {
       return null;
     }
 
-    const element = this.#hashTargets.get(target.__instanceId)!;
+    const element = this.#hashTargets.get(target.instanceId)!;
     const action = element.getActionByTag(tag);
 
     if (action) {
@@ -142,27 +142,27 @@ export default class ActionManager extends BaseClass {
   }
 
   numberOfRunningActionsInTarget(target: ActionTarget): number {
-    if (!this.#hashTargets.has(target.__instanceId)) {
+    if (!this.#hashTargets.has(target.instanceId)) {
       return 0;
     }
-    const element = this.#hashTargets.get(target.__instanceId)!;
+    const element = this.#hashTargets.get(target.instanceId)!;
 
     return element.numberOfRunningActions;
   }
 
   pauseTarget(target: ActionTarget): void {
-    if (!this.#hashTargets.has(target.__instanceId)) {
+    if (!this.#hashTargets.has(target.instanceId)) {
       return;
     }
-    const element = this.#hashTargets.get(target.__instanceId)!;
+    const element = this.#hashTargets.get(target.instanceId)!;
     element.paused = true;
   }
 
   resumeTarget(target: ActionTarget): void {
-    if (!this.#hashTargets.has(target.__instanceId)) {
+    if (!this.#hashTargets.has(target.instanceId)) {
       return;
     }
-    const element = this.#hashTargets.get(target.__instanceId)!;
+    const element = this.#hashTargets.get(target.instanceId)!;
     element.paused = false;
   }
 

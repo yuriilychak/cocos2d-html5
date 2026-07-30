@@ -4,7 +4,7 @@ import { REPEAT_FOREVER } from '../platform/macro/constants';
 type Callback = (elapsed: number) => void;
 
 interface TimerTarget {
-    __instanceId: number;
+    instanceId: number;
 }
 
 interface SchedulerLike {

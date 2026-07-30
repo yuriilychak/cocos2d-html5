@@ -754,13 +754,13 @@ export class Node extends BaseClass {
         interval = 0;
         repeat = REPEAT_FOREVER;
         delay = 0;
-        key = this.__instanceId;
+        key = this.instanceId;
       } else if (len === 2) {
         if (typeof interval === "number") {
           //callback, interval
           repeat = REPEAT_FOREVER;
           delay = 0;
-          key = this.__instanceId;
+          key = this.instanceId;
         } else {
           //callback, key
           key = interval;
@@ -775,11 +775,11 @@ export class Node extends BaseClass {
           repeat = REPEAT_FOREVER;
         } else {
           //callback, interval, repeat
-          key = this.__instanceId;
+          key = this.instanceId;
         }
         delay = 0;
       } else if (len === 4) {
-        key = this.__instanceId;
+        key = this.instanceId;
       }
     } else {
       //selector
@@ -824,7 +824,7 @@ export class Node extends BaseClass {
   scheduleOnce(callback, delay, key) {
     //selector, delay
     //callback, delay, key
-    if (key === undefined) key = this.__instanceId;
+    if (key === undefined) key = this.instanceId;
     this.schedule(callback, 0, 0, delay, key);
   }
 
@@ -1405,10 +1405,6 @@ export class Node extends BaseClass {
 
   get renderCmd() {
     return this.#renderCmd;
-  }
-
-  get className() {
-    return Object.getPrototypeOf(this).constructor.name;
   }
 
   get transitionFinished() {

@@ -199,7 +199,7 @@ export class ActionObject extends BaseClass {
         REPEAT_FOREVER,
         0,
         false,
-        this.__instanceId + ""
+        this.instanceId + ""
       );
     if (fun !== undefined) this._callback = fun;
   }

@@ -11,7 +11,7 @@ export default class NodePriorities {
   }
 
   deletePriority(node: Node): void {
-    this.#nodePriorities.delete(node.__instanceId);
+    this.#nodePriorities.delete(node.instanceId);
   }
 
   sortSceneGraphListeners(
@@ -36,7 +36,7 @@ export default class NodePriorities {
     const globalZOrder = node.globalZOrder;
     if (!this.#globalZOrderNodes.has(globalZOrder))
       this.#globalZOrderNodes.set(globalZOrder, []);
-    this.#globalZOrderNodes.get(globalZOrder)!.push(node.__instanceId);
+    this.#globalZOrderNodes.get(globalZOrder)!.push(node.instanceId);
   }
 
   #visitTarget(node: Node, isRootNode: boolean, listeners: NodeListeners): void {

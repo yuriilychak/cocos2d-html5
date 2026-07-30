@@ -36,10 +36,10 @@ export class GLProgramState {
   static #cache: Map<number, GLProgramState> = new Map();
 
   static getOrCreateWithGLProgram(glprogram: GLProgram): GLProgramState {
-    let programState = GLProgramState.#cache.get(glprogram.__instanceId);
+    let programState = GLProgramState.#cache.get(glprogram.instanceId);
     if (!programState) {
       programState = new GLProgramState(glprogram);
-      GLProgramState.#cache.set(glprogram.__instanceId, programState);
+      GLProgramState.#cache.set(glprogram.instanceId, programState);
     }
     return programState;
   }

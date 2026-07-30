@@ -1,5 +1,5 @@
 export interface ActionTarget {
-  __instanceId: number;
+  instanceId: number;
 }
 
 export interface ActionLike {

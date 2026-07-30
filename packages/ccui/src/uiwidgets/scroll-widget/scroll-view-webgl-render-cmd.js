@@ -10,7 +10,7 @@ export class ScrollViewWebGLRenderCmd extends LayoutWebGLRenderCmd {
 
   rendering(ctx) {
     var renderer = ServiceLocator.sys.rendererConfig.renderer;
-    var currentID = this._node.__instanceId,
+    var currentID = this._node.instanceId,
       locCmds = renderer.getBufferCmd(currentID) || [],
       i,
       len,

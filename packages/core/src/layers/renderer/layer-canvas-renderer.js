@@ -156,11 +156,11 @@ export default class LayerCanvasRenderer extends NodeCanvasRenderCmd {
         };
         node.sortAllChildren();
         const _r = ServiceLocator.sys.rendererConfig.renderer;
-        _r.turnToCacheMode(this.__instanceId);
+        _r.turnToCacheMode(this.instanceId);
         for (let i = 0, len = children.length; i < len; i++) {
           children[i].visit(this);
         }
-        _r.renderingToCacheCanvas(bakeContext, this.__instanceId);
+        _r.renderingToCacheCanvas(bakeContext, this.instanceId);
         locBakeSprite.transform();
         this._updateCache--;
       }

@@ -16,10 +16,10 @@ export default class NodeListeners {
       return;
     }
 
-    let listeners = this.#nodeListeners.get(node.__instanceId);
+    let listeners = this.#nodeListeners.get(node.instanceId);
     if (!listeners) {
       listeners = [];
-      this.#nodeListeners.set(node.__instanceId, listeners);
+      this.#nodeListeners.set(node.instanceId, listeners);
     }
     listeners.push(listener);
 
@@ -29,7 +29,7 @@ export default class NodeListeners {
   }
 
   setTargetPaused(node: Node, recursive: boolean, paused: boolean): void {
-    const listeners = this.#nodeListeners.get(node.__instanceId);
+    const listeners = this.#nodeListeners.get(node.instanceId);
     if (listeners) {
       for (let i = 0, len = listeners.length; i < len; i++)
         listeners[i].paused = paused;
@@ -47,12 +47,12 @@ export default class NodeListeners {
   }
 
   hasNodeListener(node: Node): boolean {
-    return this.#nodeListeners.has(node.__instanceId);
+    return this.#nodeListeners.has(node.instanceId);
   }
 
   setDirtyForNode(node: Node): void {
     // Mark the node dirty only when there is an event listener associated with it.
-    if (this.#nodeListeners.has(node.__instanceId)) this.#dirtyNodes.push(node);
+    if (this.#nodeListeners.has(node.instanceId)) this.#dirtyNodes.push(node);
     const children = node.children;
     for (let i = 0, len = children.length; i < len; i++)
       this.setDirtyForNode(children[i]);
@@ -62,7 +62,7 @@ export default class NodeListeners {
     if (this.#dirtyNodes.length === 0) return;
     let selListeners, selListener;
     for (let i = 0, len = this.#dirtyNodes.length; i < len; i++) {
-      selListeners = this.#nodeListeners.get(this.#dirtyNodes[i].__instanceId);
+      selListeners = this.#nodeListeners.get(this.#dirtyNodes[i].instanceId);
       if (selListeners) {
         for (
           let j = 0, listenersLen = selListeners.length;
@@ -87,13 +87,13 @@ export default class NodeListeners {
       return;
     }
 
-    const listeners = this.#nodeListeners.get(node.__instanceId);
+    const listeners = this.#nodeListeners.get(node.instanceId);
 
     if (listeners) {
       arrayRemoveObject(listeners, listener);
 
       if (listeners.length === 0) {
-        this.#nodeListeners.delete(node.__instanceId);
+        this.#nodeListeners.delete(node.instanceId);
       }
     }
 
@@ -102,7 +102,7 @@ export default class NodeListeners {
 
   getNodeListenersCopy(node: Node): EventListener[] {
     arrayRemoveObject(this.#dirtyNodes, node);
-    const listeners = this.#nodeListeners.get(node.__instanceId);
+    const listeners = this.#nodeListeners.get(node.instanceId);
 
     return listeners ? copyArray(listeners) : [];
   }

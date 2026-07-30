@@ -389,7 +389,7 @@ export class RenderTextureWebGLRenderCmd extends NodeWebGLRenderCmd {
   end() {
     const node = this._node;
     ServiceLocator.sys.rendererConfig.renderer.renderingToBuffer(
-      node.__instanceId
+      node.instanceId
     );
 
     const gl = ServiceLocator.sys.rendererConfig.renderContext;

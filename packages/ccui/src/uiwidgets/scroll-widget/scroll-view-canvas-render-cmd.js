@@ -8,7 +8,7 @@ export class ScrollViewCanvasRenderCmd extends LayoutCanvasRenderCmd {
   }
 
   rendering(ctx) {
-    var currentID = this._node.__instanceId;
+    var currentID = this._node.instanceId;
     var i,
       locCmds = ServiceLocator.sys.rendererConfig.renderer.cacheToCanvasCmds.get(
         currentID
