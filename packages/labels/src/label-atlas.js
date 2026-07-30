@@ -153,8 +153,8 @@ export class LabelAtlas extends LabelBMFont {
       self._imageOffset = new Point();
       self._width = -1;
 
-      self.opacity = 255;
-      self.color = new Color(255, 255, 255, 255);
+      self.color.opacity = 255;
+      self.color.color = new Color(255, 255, 255, 255);
 
       self.width = 0;
       self.height = 0;

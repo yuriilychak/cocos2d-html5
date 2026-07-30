@@ -619,7 +619,7 @@ export class Node extends ComponentContainer {
    * spriteA.position = new Point(200, 200);
    *
    * // Gets the spriteA's transform.
-   * var t = spriteA.getNodeToParentTransform();
+   * var t = spriteA.nodeToParentTransform;
    *
    * // Sets the additional transform to spriteB, spriteB's position will based on its pseudo parent i.e. spriteA.
    * spriteB.additionalTransform = t;
@@ -628,7 +628,7 @@ export class Node extends ComponentContainer {
    * spriteA.scale = 2;
    *
    * // Gets the spriteA's transform.
-   * t = spriteA.getNodeToParentTransform();
+   * t = spriteA.nodeToParentTransform;
    *
    * // Sets the additional transform to spriteB, spriteB's scale will based on its pseudo parent i.e. spriteA.
    * spriteB.additionalTransform = t;
@@ -637,7 +637,7 @@ export class Node extends ComponentContainer {
    * spriteA.rotation = 20;
    *
    * // Gets the spriteA's transform.
-   * t = spriteA.getNodeToParentTransform();
+   * t = spriteA.nodeToParentTransform;
    *
    * // Sets the additional transform to spriteB, spriteB's rotation will based on its pseudo parent i.e. spriteA.
    * spriteB.additionalTransform = t;
@@ -649,8 +649,8 @@ export class Node extends ComponentContainer {
    * @function
    * @return {AffineTransform}
    */
-  getParentToNodeTransform() {
-    return this.#renderCmd.getParentToNodeTransform();
+  get parentToNodeTransform() {
+    return this.#renderCmd.parentToNodeTransform;
   }
 
   /**
@@ -658,10 +658,10 @@ export class Node extends ComponentContainer {
    * @function
    * @return {AffineTransform}
    */
-  getNodeToWorldTransform() {
-    var t = this.getNodeToParentTransform();
+  get nodeToWorldTransform() {
+    var t = this.nodeToParentTransform;
     for (var p = this.#parent; p !== null; p = p.parent)
-      t = AffineTransform.concat(t, p.getNodeToParentTransform());
+      t = AffineTransform.concat(t, p.nodeToParentTransform);
     return t;
   }
 
@@ -670,8 +670,8 @@ export class Node extends ComponentContainer {
    * @function
    * @return {AffineTransform}
    */
-  getWorldToNodeTransform() {
-    return AffineTransform.invert(this.getNodeToWorldTransform());
+  get worldToNodeTransform() {
+    return AffineTransform.invert(this.nodeToWorldTransform);
   }
 
   /**
@@ -683,7 +683,7 @@ export class Node extends ComponentContainer {
   convertToNodeSpace(worldPoint) {
     return AffineTransform.applyToPoint(
       worldPoint,
-      this.getWorldToNodeTransform()
+      this.worldToNodeTransform
     );
   }
 
@@ -696,7 +696,7 @@ export class Node extends ComponentContainer {
   convertToWorldSpace(nodePoint = new Point()) {
     return AffineTransform.applyToPoint(
       nodePoint,
-      this.getNodeToWorldTransform()
+      this.nodeToWorldTransform
     );
   }
 
@@ -826,12 +826,16 @@ export class Node extends ComponentContainer {
    * @function
    * @return {AffineTransform} The affine transform object
    */
+  get nodeToParentTransform() {
+    return this.#renderCmd.nodeToParentTransform;
+  }
+
   getNodeToParentTransform(ancestor) {
-    var t = this.#renderCmd.getNodeToParentTransform();
+    var t = this.nodeToParentTransform;
     if (ancestor) {
       var T = { a: t.a, b: t.b, c: t.c, d: t.d, tx: t.tx, ty: t.ty };
       for (var p = this.#parent; p != null && p != ancestor; p = p.parent) {
-        AffineTransform.concatIn(T, p.getNodeToParentTransform());
+        AffineTransform.concatIn(T, p.nodeToParentTransform);
       }
       return T;
     } else {
@@ -839,18 +843,14 @@ export class Node extends ComponentContainer {
     }
   }
 
-  getNodeToParentAffineTransform(ancestor) {
-    return this.getNodeToParentTransform(ancestor);
-  }
-
   /**
    * Returns a "world" axis aligned bounding box of the node.
    * @function
    * @return {Rect}
    */
-  getBoundingBoxToWorld() {
+  get boundingBoxToWorld() {
     var rect = new Rect(0, 0, this.width, this.height);
-    var trans = this.getNodeToWorldTransform();
+    var trans = this.nodeToWorldTransform;
     rect = AffineTransform.applyToRect(rect, trans);
 
     //query child's BoundingBox
@@ -869,9 +869,9 @@ export class Node extends ComponentContainer {
     var rect = new Rect(0, 0, this.width, this.height);
     var trans =
       parentTransform === undefined
-        ? this.getNodeToParentTransform()
+        ? this.nodeToParentTransform
         : AffineTransform.concat(
-            this.getNodeToParentTransform(),
+            this.nodeToParentTransform,
             parentTransform
           );
     rect = AffineTransform.applyToRect(rect, trans);

@@ -234,7 +234,7 @@ export class Bone extends Node {
       if (this._armatureParentBone)
         AffineTransform.concatIn(
           this._worldTransform,
-          this._armature.getNodeToParentTransform()
+          this._armature.nodeToParentTransform
         ); //TODO TransformConcat
     }
 
@@ -300,12 +300,12 @@ export class Bone extends Node {
     var display = this._displayManager.getDisplayRenderNode();
     if (display !== null) {
       var cmd = this.renderCmd;
-      display.color = new Color(
+      display.color.color = new Color(
         (cmd._displayedColor.r * this._tweenData.r) / 255,
         (cmd._displayedColor.g * this._tweenData.g) / 255,
         (cmd._displayedColor.b * this._tweenData.b) / 255
       );
-      display.opacity = (cmd._displayedOpacity * this._tweenData.a) / 255;
+      display.color.opacity = (cmd._displayedOpacity * this._tweenData.a) / 255;
     }
   }
 
@@ -427,7 +427,7 @@ export class Bone extends Node {
   getNodeToWorldTransform() {
     return AffineTransform.concat(
       this._worldTransform,
-      this._armature.getNodeToWorldTransform()
+      this._armature.nodeToWorldTransform
     );
   }
 
@@ -657,7 +657,7 @@ export class Bone extends Node {
    * @returns {AffineTransform}
    */
   nodeToWorldTransform() {
-    return this.getNodeToWorldTransform();
+    return this.nodeToWorldTransform;
   }
 
   /**
@@ -702,8 +702,8 @@ class BoneCanvasRenderCmd extends Node.CanvasRenderCmd {
     var display = node._displayManager.getDisplayRenderNode();
     if (display !== null) {
       var displayCmd = display.renderCmd;
-      display.color = this._displayedColor;
-      display.opacity = this._displayedOpacity;
+      display.color.color = this._displayedColor;
+      display.color.opacity = this._displayedOpacity;
       displayCmd._syncDisplayColor(node._tweenData);
       displayCmd._syncDisplayOpacity(node._tweenData.a);
       displayCmd._updateColor();
@@ -755,8 +755,8 @@ class BoneWebGLRenderCmd extends Node.WebGLRenderCmd {
     var display = node._displayManager.getDisplayRenderNode();
     if (display !== null) {
       var displayCmd = display.renderCmd;
-      display.color = this._displayedColor;
-      display.opacity = this._displayedOpacity;
+      display.color.color = this._displayedColor;
+      display.color.opacity = this._displayedOpacity;
       displayCmd._syncDisplayColor(node._tweenData);
       displayCmd._syncDisplayOpacity(node._tweenData.a);
       displayCmd._updateColor();

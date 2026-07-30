@@ -80,7 +80,7 @@ export class IAPTestLayer extends PluginXTest {
 
     for (var i = 0; i < s_IAPResultItem.length; i++) {
       var resultLabel = new TextBMFont(s_IAPResultItem[i].name, s_simpleFont_fnt);
-      resultLabel.color = new Color(125, 125, 125);
+      resultLabel.color.color = new Color(125, 125, 125);
       resultLabel.anchorX = 0;
       resultLabel.tag = s_IAPResultItem[i].tag;
       resultLabel.x = 300;
@@ -100,7 +100,7 @@ export class IAPTestLayer extends PluginXTest {
     this.toastLayer.tag = TAG_TOAST;
     label.x = winSize.width / 2;
     label.y = winSize.height / 2;
-    this.toastLayer.color = new Color(100, 100, 100, 100);
+    this.toastLayer.color.color = new Color(100, 100, 100, 100);
   }
   addTouch(bool) {
     if (bool) {

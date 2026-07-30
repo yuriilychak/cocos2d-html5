@@ -10,7 +10,7 @@ export class LabelAtlasWebGLRenderCmd extends AtlasNode.WebGLRenderCmd {
     if (this._colorF32Array) {
       const locDisplayedColor = this._displayedColor;
       const a = this._displayedOpacity / 255;
-      if (this._node.opacityModifyRGB) {
+      if (this._node.color.opacityModifyRGB) {
         this._colorF32Array[0] = (locDisplayedColor.r * a) / 255;
         this._colorF32Array[1] = (locDisplayedColor.g * a) / 255;
         this._colorF32Array[2] = (locDisplayedColor.b * a) / 255;
@@ -35,7 +35,7 @@ export class LabelAtlasWebGLRenderCmd extends AtlasNode.WebGLRenderCmd {
     if (LABELATLAS_DEBUG_DRAW) {
       const node = this._node;
       const s = node.contentSize;
-      const locRect = node.getBoundingBoxToWorld();
+      const locRect = node.boundingBoxToWorld;
       const posX = locRect.x,
         posY = locRect.y;
       s.width = locRect.width;

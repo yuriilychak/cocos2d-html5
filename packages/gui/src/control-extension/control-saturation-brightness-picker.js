@@ -86,7 +86,7 @@ export class ControlSaturationBrightnessPicker extends Control {
   }
 
   updateWithHSV(hsv) {
-    this._background.color = Color.fromHSV({ s: 1, h: hsv.h, v: 1 });
+    this._background.color.color = Color.fromHSV({ s: 1, h: hsv.h, v: 1 });
   }
 
   updateDraggerWithHSV(hsv) {

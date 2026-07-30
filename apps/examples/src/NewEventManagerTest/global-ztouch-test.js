@@ -60,7 +60,7 @@ export class GlobalZTouchTest extends EventDispatcherTestDemo {
             locationInNode.x,
             locationInNode.y
           );
-          target.opacity = 180;
+          target.color.opacity = 180;
           return true;
         }
         return false;
@@ -73,7 +73,7 @@ export class GlobalZTouchTest extends EventDispatcherTestDemo {
       },
       onTouchEnded: function (touch, event) {
         log("sprite onTouchesEnded.. ");
-        event.currentTarget.opacity = 255;
+        event.currentTarget.color.opacity = 255;
       }
     });
 

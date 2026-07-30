@@ -100,9 +100,9 @@ export class ProtectedNode extends Node {
           NodeStateCallbackType.onEnterTransitionDidFinish
         );
     }
-    if (this.cascadeColor)
+    if (this.color.cascadeColor)
       this.renderCmd.setCascadeColorEnabledDirty();
-    if (this.cascadeOpacity)
+    if (this.color.cascadeOpacity)
       this.renderCmd.setCascadeOpacityEnabledDirty();
   }
 

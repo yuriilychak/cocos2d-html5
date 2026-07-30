@@ -109,7 +109,7 @@ export class EditBoxTestLayer extends Layer {
       "archivo_black_regular_12.fnt",
       new Rect(8, 8, 8, 8)
     );
-    background.color = color;
+    background.color.color = color;
     editBox.string = "EditBoxs";
     editBox.x = x;
     editBox.y = y;

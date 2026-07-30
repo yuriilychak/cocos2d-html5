@@ -118,7 +118,7 @@ export class RenderTextureZbuffer extends RenderTextureBaseLayer {
     this.sp9.order.vertexZ = -400;
 
     this.sp9.scale = 2;
-    this.sp9.color = Color.YELLOW;
+    this.sp9.color.color = Color.YELLOW;
   }
 
   onTouchesBegan(touches, event) {
@@ -202,10 +202,10 @@ export class RenderTextureZbuffer extends RenderTextureBaseLayer {
 
     sprite.x = winSize.width / 2;
     sprite.y = winSize.width / 2;
-    sprite.opacity = 182;
+    sprite.color.opacity = 182;
     sprite.flippedY = 1;
     this.addChild(sprite, 999999);
-    sprite.color = Color.GREEN;
+    sprite.color.color = Color.GREEN;
 
     sprite.actionManager.runAction(new Sequence(new FadeTo(2, 0), new Hide()));
   }

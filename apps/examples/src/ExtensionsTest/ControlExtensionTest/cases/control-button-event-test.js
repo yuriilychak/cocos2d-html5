@@ -22,7 +22,7 @@ export default class ControlButtonEventTest extends Node {
       "default_theme/rounded_shadow_4.png",
       new Rect(8, 8, 8, 8)
     );
-    background.color = new Color(32, 32, 32);
+    background.color.color = new Color(32, 32, 32);
     background.width = 220;
     background.height = 140;
     background.x = 0;
@@ -30,7 +30,7 @@ export default class ControlButtonEventTest extends Node {
     this.addChild(background);
 
     this._displayValueLabel = new TextBMFont("No Event", s_simpleFont_fnt);
-    this._displayValueLabel.color = Color.WHITE;
+    this._displayValueLabel.color.color = Color.WHITE;
     this._displayValueLabel.anchorX = 0.5;
     this._displayValueLabel.anchorY = -1;
     this._displayValueLabel.x = 0;
@@ -41,16 +41,16 @@ export default class ControlButtonEventTest extends Node {
       "default_theme/rounded_shadow_4.png",
       new Rect(8, 8, 8, 8)
     );
-    backgroundButton.color = new Color(96, 96, 96);
+    backgroundButton.color.color = new Color(96, 96, 96);
 
     const backgroundHighlightedButton = new Scale9Sprite(
       "default_theme/rounded_shadow_4.png",
       new Rect(8, 8, 8, 8)
     );
-    backgroundHighlightedButton.color = new Color(128, 128, 128);
+    backgroundHighlightedButton.color.color = new Color(128, 128, 128);
 
     const titleButton = new TextBMFont("Touch Me!", s_simpleFont_fnt);
-    titleButton.color = Color.WHITE;
+    titleButton.color.color = Color.WHITE;
 
     const controlButton = new ControlButton(titleButton, backgroundButton);
     controlButton.setBackgroundSpriteForState(

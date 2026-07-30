@@ -1625,7 +1625,7 @@ export class ParticleSystem extends Node {
       //don't get the internal texture if a batchNode is used
       if (!this._batchNode) {
         // Set a compatible default for the alpha transfer
-        this.opacityModifyRGB = false;
+        this.color.opacityModifyRGB = false;
 
         // texture
         // Try to get the texture from the cache
@@ -2161,14 +2161,14 @@ export class ParticleSystem extends Node {
 
     var locTexture = this._texture;
     if (locTexture && locTexture instanceof Texture2D) {
-      this.opacityModifyRGB = false;
+      this.color.opacityModifyRGB = false;
       var locBlendFunc = this._blendFunc;
       if (
         locBlendFunc.src === GLState.BLEND_SRC &&
         locBlendFunc.dst === GLState.BLEND_DST
       ) {
         if (locTexture.renderer.hasPremultipliedAlpha) {
-          this.opacityModifyRGB = true;
+          this.color.opacityModifyRGB = true;
         } else {
           locBlendFunc.src = GLState.SRC_ALPHA;
           locBlendFunc.dst = GLState.ONE_MINUS_SRC_ALPHA;
@@ -2266,7 +2266,7 @@ export class ParticleSystem extends Node {
       //don't get the internal texture if a batchNode is used
       if (!this.batchNode) {
         // Set a compatible default for the alpha transfer
-        retParticle.opacityModifyRGB = this.opacityModifyRGB;
+        retParticle.color.opacityModifyRGB = this.color.opacityModifyRGB;
         // texture
         var texture = this.texture;
         if (texture) {

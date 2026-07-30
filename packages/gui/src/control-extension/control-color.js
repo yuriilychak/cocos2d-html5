@@ -13,7 +13,7 @@ export default class ControlColor extends NodeColor {
     const children = this.owner.children;
     for (let i = 0; i < children.length; i++) {
       const child = children[i];
-      if (child) child.opacityModifyRGB = value;
+      if (child) child.color.opacityModifyRGB = value;
     }
   }
 }

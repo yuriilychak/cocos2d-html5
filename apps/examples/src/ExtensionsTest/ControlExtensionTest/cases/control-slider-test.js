@@ -8,13 +8,13 @@ function createSlider(width = 256, height = 16) {
     "default_theme/rounded_shadow_4.png",
     new Rect(8, 8, 8, 8)
   );
-  backgroundSprite.color = new Color(64, 64, 64);
+  backgroundSprite.color.color = new Color(64, 64, 64);
 
   const progressSprite = new Scale9Sprite(
     "default_theme/rounded_shadow_0.png",
     new Rect(4, 4, 4, 4)
   );
-  progressSprite.color = new Color(50, 50, 255);
+  progressSprite.color.color = new Color(50, 50, 255);
 
   const thumbSprite = new Scale9Sprite(
     "default_theme/rounded_shadow_2.png",
@@ -47,7 +47,7 @@ export default class ControlSliderTest extends Node {
       s_simpleFont_fnt
     );
     this._displayValueLabel.lineHeight = 18;
-    this._displayValueLabel.color = Color.WHITE;
+    this._displayValueLabel.color.color = Color.WHITE;
     this._displayValueLabel.anchorX = 0.5;
     this._displayValueLabel.anchorY = 0.5;
     this._displayValueLabel.x = 128;

@@ -46,8 +46,8 @@ export class TransitionCrossFade extends TransitionScene {
     layer.addChild(inTexture);
     layer.addChild(outTexture);
 
-    inTexture.sprite.opacity = 255;
-    outTexture.sprite.opacity = 255;
+    inTexture.sprite.color.opacity = 255;
+    outTexture.sprite.color.opacity = 255;
 
     var layerAction = new Sequence(
       new FadeTo(this._duration, 0),

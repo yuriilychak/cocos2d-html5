@@ -132,13 +132,13 @@ export class ProgressTimerWebGLRenderCmd extends Node.WebGLRenderCmd {
 
     if (
       parentNode &&
-      parentNode.cascadeColor &&
+      parentNode.color.cascadeColor &&
       parentCmd._dirtyFlag & flags.colorDirty
     )
       locFlag |= flags.colorDirty;
     if (
       parentNode &&
-      parentNode.cascadeOpacity &&
+      parentNode.color.cascadeOpacity &&
       parentCmd._dirtyFlag & flags.opacityDirty
     )
       locFlag |= flags.opacityDirty;
@@ -643,7 +643,7 @@ export class ProgressTimerWebGLRenderCmd extends Node.WebGLRenderCmd {
     let g = spColor.g;
     let b = spColor.b;
     const a = sp.renderCmd._displayedOpacity / 255;
-    if (sp.opacityModifyRGB) {
+    if (sp.color.opacityModifyRGB) {
       r *= a;
       g *= a;
       b *= a;

@@ -79,7 +79,7 @@ export class TouchableSpriteTest extends EventDispatcherTestDemo {
               ", y = " +
               locationInNode.y
           );
-          target.opacity = 180;
+          target.color.opacity = 180;
           return true;
         }
         return false;
@@ -93,7 +93,7 @@ export class TouchableSpriteTest extends EventDispatcherTestDemo {
       onTouchEnded: function (touch, event) {
         var target = event.currentTarget;
         log("sprite onTouchesEnded.. ");
-        target.opacity = 255;
+        target.color.opacity = 255;
         if (target == sprite2) {
           containerForSprite1.order.zIndex = 100;
         } else if (target == sprite1) {

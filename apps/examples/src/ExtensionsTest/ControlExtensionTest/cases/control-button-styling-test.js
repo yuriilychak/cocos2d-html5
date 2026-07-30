@@ -8,18 +8,18 @@ function standardButtonWithTitle(title) {
     "default_theme/rounded_shadow_4.png",
     new Rect(8, 8, 8, 8)
   );
-  backgroundButton.color = new Color(96, 96, 96);
+  backgroundButton.color.color = new Color(96, 96, 96);
   backgroundButton.setPreferredSize(new Size(45, 45));
 
   const backgroundHighlightedButton = new Scale9Sprite(
     "default_theme/rounded_shadow_4.png",
     new Rect(8, 8, 8, 8)
   );
-  backgroundHighlightedButton.color = new Color(128, 128, 128);
+  backgroundHighlightedButton.color.color = new Color(128, 128, 128);
   backgroundHighlightedButton.setPreferredSize(new Size(45, 45));
 
   const titleButton = new TextBMFont(title, s_simpleFont_fnt);
-  titleButton.color = Color.WHITE;
+  titleButton.color.color = Color.WHITE;
 
   const button = new ControlButton(
     titleButton,
@@ -74,7 +74,7 @@ export default class ControlButtonStylingTest extends Node {
       "default_theme/rounded_shadow_4.png",
       new Rect(8, 8, 8, 8)
     );
-    backgroundButton.color = new Color(32, 32, 32);
+    backgroundButton.color.color = new Color(32, 32, 32);
     backgroundButton.width = max_w + 14;
     backgroundButton.height = max_h + 14;
     backgroundButton.x = 0;

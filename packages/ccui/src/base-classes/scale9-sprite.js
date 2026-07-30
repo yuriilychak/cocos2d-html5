@@ -616,7 +616,7 @@ export class Scale9Sprite extends EventHelper(Node) {
       ) {
         blendFunc.src = GLState.SRC_ALPHA;
       }
-      this.opacityModifyRGB = false;
+      this.color.opacityModifyRGB = false;
     } else {
       if (
         blendFunc.src === GLState.SRC_ALPHA &&
@@ -624,7 +624,7 @@ export class Scale9Sprite extends EventHelper(Node) {
       ) {
         blendFunc.src = GLState.ONE;
       }
-      this.opacityModifyRGB = true;
+      this.color.opacityModifyRGB = true;
     }
   }
 

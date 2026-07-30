@@ -344,7 +344,7 @@ export class Layout extends Widget {
   _getClippingRect() {
     if (this._clippingRectDirty) {
       var worldPos = this.convertToWorldSpace(new Point(0, 0));
-      var t = this.getNodeToWorldTransform();
+      var t = this.nodeToWorldTransform;
       var scissorWidth = this.width * t.a;
       var scissorHeight = this.height * t.d;
       var parentClippingRect;
@@ -548,8 +548,8 @@ export class Layout extends Widget {
       case Layout.BG_COLOR_SOLID:
         this._colorRender = new LayerColor();
         this._colorRender.contentSize = this.contentSize;
-        this._colorRender.opacity = this._opacity;
-        this._colorRender.color = this._color;
+        this._colorRender.color.opacity = this._opacity;
+        this._colorRender.color.color = this._color;
         this.addProtectedChild(
           this._colorRender,
           Layout.BACKGROUND_RENDERER_ZORDER,
@@ -562,7 +562,7 @@ export class Layout extends Widget {
           new Color(0, 255, 0, 255)
         );
         this._gradientRender.contentSize = this.contentSize;
-        this._gradientRender.opacity = this._opacity;
+        this._gradientRender.color.opacity = this._opacity;
         this._gradientRender.setStartColor(this._startColor);
         this._gradientRender.setEndColor(this._endColor);
         this._gradientRender.setVector(this._alongVector);
@@ -586,7 +586,7 @@ export class Layout extends Widget {
       this._color.r = color.r;
       this._color.g = color.g;
       this._color.b = color.b;
-      if (this._colorRender) this._colorRender.color = color;
+      if (this._colorRender) this._colorRender.color.color = color;
     } else {
       this._startColor.r = color.r;
       this._startColor.g = color.g;
@@ -621,10 +621,10 @@ export class Layout extends Widget {
       case Layout.BG_COLOR_NONE:
         break;
       case Layout.BG_COLOR_SOLID:
-        this._colorRender.opacity = opacity;
+        this._colorRender.color.opacity = opacity;
         break;
       case Layout.BG_COLOR_GRADIENT:
-        this._gradientRender.opacity = opacity;
+        this._gradientRender.color.opacity = opacity;
         break;
       default:
         break;
@@ -671,7 +671,7 @@ export class Layout extends Widget {
 
   _updateBackGroundImageColor() {
     if (this._backGroundImage)
-      this._backGroundImage.color = this._backGroundImageColor;
+      this._backGroundImage.color.color = this._backGroundImageColor;
   }
 
   getBackGroundImageTextureSize() {
@@ -718,13 +718,13 @@ export class Layout extends Widget {
 
   _updateBackGroundImageOpacity() {
     if (this._backGroundImage)
-      this._backGroundImage.opacity = this._backGroundImageOpacity;
+      this._backGroundImage.color.opacity = this._backGroundImageOpacity;
   }
 
   _updateBackGroundImageRGBA() {
     if (this._backGroundImage) {
-      this._backGroundImage.color = this._backGroundImageColor;
-      this._backGroundImage.opacity = this._backGroundImageOpacity;
+      this._backGroundImage.color.color = this._backGroundImageColor;
+      this._backGroundImage.color.opacity = this._backGroundImageOpacity;
     }
   }
 

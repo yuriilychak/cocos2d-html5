@@ -233,14 +233,14 @@ export class ProgressTimerCanvasRenderCmd extends Node.CanvasRenderCmd {
 
     if (
       parentNode &&
-      parentNode.cascadeColor &&
+      parentNode.color.cascadeColor &&
       parentCmd._dirtyFlag & flags.colorDirty
     )
       locFlag |= flags.colorDirty;
 
     if (
       parentNode &&
-      parentNode.cascadeOpacity &&
+      parentNode.color.cascadeOpacity &&
       parentCmd._dirtyFlag & flags.opacityDirty
     )
       locFlag |= flags.opacityDirty;

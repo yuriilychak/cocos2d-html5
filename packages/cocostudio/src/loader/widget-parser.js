@@ -29,13 +29,13 @@ function applyCommonAttributes(widget, opts) {
     if (opts.anchorPointX != null && opts.anchorPointY != null)
         widget.anchorX = opts.anchorPointX;
         widget.anchorY = opts.anchorPointY;
-    if (opts.opacity != null) widget.opacity = opts.opacity;
+    if (opts.opacity != null) widget.color.opacity = opts.opacity;
     if (opts.visible != null) widget.visible = opts.visible;
     if (opts.rotation != null) widget.rotation = opts.rotation;
     if (opts.scaleX != null) widget.scaleX = opts.scaleX;
     if (opts.scaleY != null) widget.scaleY = opts.scaleY;
     if (opts.colorR != null && opts.colorG != null && opts.colorB != null)
-        widget.color = new Color(opts.colorR, opts.colorG, opts.colorB);
+        widget.color.color = new Color(opts.colorR, opts.colorG, opts.colorB);
     if (opts.touchAble != null) widget.setTouchEnabled(opts.touchAble);
     if (opts.flipX != null) widget.setFlippedX(opts.flipX);
     if (opts.flipY != null) widget.setFlippedY(opts.flipY);

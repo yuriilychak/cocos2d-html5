@@ -36,7 +36,7 @@ export class CustomMoveBy extends MoveBy {
 
     if (this.getTarget()) {
       // rand color
-      this.getTarget().color = new Color(rand() % 255, rand() % 255, rand() % 255);
+      this.getTarget().color.color = new Color(rand() % 255, rand() % 255, rand() % 255);
     }
   }
 }

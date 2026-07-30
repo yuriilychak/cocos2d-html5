@@ -8,7 +8,7 @@ export default class ControlColourPickerTest extends Node {
     super();
 
     const colourPicker = new ControlColourPicker();
-    colourPicker.color = new Color(37, 46, 252);
+    colourPicker.color.color = new Color(37, 46, 252);
     colourPicker.anchorX = 0.5;
     colourPicker.anchorY = 0.5;
     colourPicker.x = 0;
@@ -19,7 +19,7 @@ export default class ControlColourPickerTest extends Node {
       "default_theme/rounded_shadow_4.png",
       new Rect(8, 8, 8, 8)
     );
-    background.color = new Color(32, 32, 32);
+    background.color.color = new Color(32, 32, 32);
     background.width = 150;
     background.height = 50;
     background.x = colourPicker.width + 10;
@@ -27,7 +27,7 @@ export default class ControlColourPickerTest extends Node {
     this.addChild(background);
 
     this._colorLabel = new TextBMFont("#color", s_simpleFont_fnt);
-    this._colorLabel.color = Color.WHITE;
+    this._colorLabel.color.color = Color.WHITE;
     this._colorLabel.x = background.x;
     this._colorLabel.y = background.y;
     this.addChild(this._colorLabel);

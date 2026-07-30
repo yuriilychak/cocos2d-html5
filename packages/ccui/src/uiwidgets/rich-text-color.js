@@ -8,6 +8,6 @@ export default class RichTextColor extends NodeColor {
 
   set cascadeOpacity(value) {
     super.cascadeOpacity = value;
-    this.owner._elementRenderersContainer.cascadeOpacity = value;
+    this.owner._elementRenderersContainer.color.cascadeOpacity = value;
   }
 }

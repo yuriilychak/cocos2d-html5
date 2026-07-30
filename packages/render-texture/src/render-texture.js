@@ -84,8 +84,8 @@ export class RenderTexture extends Node {
    */
   constructor(width, height, format, depthStencilFormat) {
     super();
-    this.cascadeColor = true;
-    this.cascadeOpacity = true;
+    this.color.cascadeColor = true;
+    this.color.cascadeOpacity = true;
     this._pixelFormat = PIXEL_FORMAT.RGBA8888;
     this._clearColor = new Color(0, 0, 0, 255);
 

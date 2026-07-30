@@ -94,7 +94,7 @@ export class SpriteBatchNodeReorderIssue766 extends SpriteTestDemo {
       this._batchNode.texture,
       new Rect(0, 0, 64, 64)
     );
-    spriteShadow.opacity = 128;
+    spriteShadow.color.opacity = 128;
     sprite.addChild(spriteShadow, aZ, 3);
 
     var spriteTop = new Sprite(

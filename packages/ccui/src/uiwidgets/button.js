@@ -549,7 +549,7 @@ export class Button extends Widget {
       this._buttonScale9Renderer.scale = 1.0;
 
       if (this._scale9Enabled) {
-        this._buttonScale9Renderer.color = Color.WHITE;
+        this._buttonScale9Renderer.color.color = Color.WHITE;
       }
 
       if (this._titleRenderer) {

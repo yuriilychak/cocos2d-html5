@@ -95,7 +95,7 @@ export class TextFieldTTF extends LabelTTF {
     this.colorSpaceHolder.g = value.g;
     this.colorSpaceHolder.b = value.b;
     this.colorSpaceHolder.a = isUndefined(value.a) ? 255 : value.a;
-    if (!this._inputText.length) this.color = this.colorSpaceHolder;
+    if (!this._inputText.length) this.color.color = this.colorSpaceHolder;
   }
 
   /**
@@ -107,7 +107,7 @@ export class TextFieldTTF extends LabelTTF {
     this._colorText.g = textColor.g;
     this._colorText.b = textColor.b;
     this._colorText.a = isUndefined(textColor.a) ? 255 : textColor.a;
-    if (this._inputText.length) this.color = this._colorText;
+    if (this._inputText.length) this.color.color = this._colorText;
   }
 
   /**
@@ -156,10 +156,10 @@ export class TextFieldTTF extends LabelTTF {
     // if there is no input text, display placeholder instead
     if (!this._inputText.length) {
       super.string = this._placeHolder;
-      if (this.colorSpaceHolder) this.color = this.colorSpaceHolder;
+      if (this.colorSpaceHolder) this.color.color = this.colorSpaceHolder;
     } else {
       super.string = this._inputText;
-      if (this._colorText) this.color = this._colorText;
+      if (this._colorText) this.color.color = this._colorText;
     }
     if (ServiceLocator.sys.rendererConfig.isCanvas)
       this.renderCmd._updateTexture();
@@ -183,7 +183,7 @@ export class TextFieldTTF extends LabelTTF {
     this._placeHolder = text || "";
     if (!this._inputText.length) {
       super.string = this._placeHolder;
-      this.color = this.colorSpaceHolder;
+      this.color.color = this.colorSpaceHolder;
     }
   }
 
@@ -279,7 +279,7 @@ export class TextFieldTTF extends LabelTTF {
       this._inputText = "";
       this._charCount = 0;
       super.string = this._placeHolder;
-      this.color = this.colorSpaceHolder;
+      this.color.color = this.colorSpaceHolder;
       return;
     }
 

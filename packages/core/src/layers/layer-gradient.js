@@ -120,11 +120,11 @@ export class LayerGradient extends LayerColor {
   }
 
   getStartColor() {
-    return this.color;
+    return this.color.color;
   }
 
   setStartColor(color) {
-    this.color = color;
+    this.color.color = color;
     var stops = this._colorStops;
     if (stops && stops.length > 0) {
       var selColor = stops[0].color;

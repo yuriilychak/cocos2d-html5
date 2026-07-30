@@ -99,10 +99,10 @@ export class UIFocusTestBase extends UIMainLayer {
   }
   onFocusChanged(widgetLostFocus, widgetGetFocus) {
     if (widgetGetFocus && widgetGetFocus.isFocusEnabled())
-      widgetGetFocus.color = Color.RED;
+      widgetGetFocus.color.color = Color.RED;
 
     if (widgetLostFocus && widgetLostFocus.isFocusEnabled())
-      widgetLostFocus.color = Color.WHITE;
+      widgetLostFocus.color.color = Color.WHITE;
 
     if (widgetLostFocus && widgetGetFocus)
       log(
@@ -116,10 +116,10 @@ export class UIFocusTestBase extends UIMainLayer {
     if (touchType == Widget.TOUCH_ENDED) {
       if (widget.isFocusEnabled()) {
         widget.setFocusEnabled(false);
-        widget.color = Color.YELLOW;
+        widget.color.color = Color.YELLOW;
       } else {
         widget.setFocusEnabled(true);
-        widget.color = Color.WHITE;
+        widget.color.color = Color.WHITE;
       }
     }
   }

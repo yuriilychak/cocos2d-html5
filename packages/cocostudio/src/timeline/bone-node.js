@@ -321,7 +321,7 @@ class BoneNode extends Node {
     var boundingBox = this.getVisibleSkinsRect();
     return AffineTransform.applyToRect(
       boundingBox,
-      this.getNodeToParentAffineTransform()
+      this.nodeToParentTransform
     );
   }
 

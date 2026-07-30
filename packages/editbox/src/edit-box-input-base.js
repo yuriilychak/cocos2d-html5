@@ -214,12 +214,12 @@ export class EditBoxInputBase {
     var editBoxSize = this._editBox.contentSize;
     if (!this._textLabel) {
       this._textLabel = new LabelBMFont("", fntFile);
-      this._textLabel.color = this._editBox._textColor;
+      this._textLabel.color.color = this._editBox._textColor;
       this._editBox.addChild(this._textLabel, 100);
     }
     if (!this._placeholderLabel) {
       this._placeholderLabel = new LabelBMFont("", fntFile);
-      this._placeholderLabel.color = this._editBox._placeholderColor;
+      this._placeholderLabel.color.color = this._editBox._placeholderColor;
       this._editBox.addChild(this._placeholderLabel, 100);
     }
     this._updateLabelPosition(editBoxSize);
@@ -393,7 +393,7 @@ export class EditBoxInputBase {
   }
 
   setFontColor(color) {
-    if (this._textLabel) this._textLabel.color = color;
+    if (this._textLabel) this._textLabel.color.color = color;
   }
 
   _updateLabelFontStyle() {
@@ -414,7 +414,7 @@ export class EditBoxInputBase {
   }
 
   setPlaceholderFontColor(color) {
-    if (this._placeholderLabel) this._placeholderLabel.color = color;
+    if (this._placeholderLabel) this._placeholderLabel.color.color = color;
   }
 
   // --- Input mode / flag / max length / string ---

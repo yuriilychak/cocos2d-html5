@@ -8,16 +8,16 @@ function standardButtonWithTitle(title) {
     "default_theme/rounded_shadow_4.png",
     new Rect(8, 8, 8, 8)
   );
-  backgroundButton.color = new Color(96, 96, 96);
+  backgroundButton.color.color = new Color(96, 96, 96);
 
   const backgroundHighlightedButton = new Scale9Sprite(
     "default_theme/rounded_shadow_4.png",
     new Rect(8, 8, 8, 8)
   );
-  backgroundHighlightedButton.color = new Color(128, 128, 128);
+  backgroundHighlightedButton.color.color = new Color(128, 128, 128);
 
   const titleButton = new TextBMFont(title, s_simpleFont_fnt);
-  titleButton.color = Color.WHITE;
+  titleButton.color.color = Color.WHITE;
 
   const button = new ControlButton(titleButton, backgroundButton);
   button.setBackgroundSpriteForState(
@@ -44,9 +44,9 @@ export default class ControlButtonHelloVariableSizeTest extends Node {
     for (let i = 0; i < stringArray.length; i++) {
       const button = standardButtonWithTitle(stringArray[i]);
 
-      if (i === 0) button.opacity = 50;
-      else if (i === 1) button.opacity = 200;
-      else if (i === 2) button.opacity = 100;
+      if (i === 0) button.color.opacity = 50;
+      else if (i === 1) button.color.opacity = 200;
+      else if (i === 2) button.color.opacity = 100;
 
       button.x = total_width + button.width / 2;
       button.y = button.height / 2;
@@ -67,7 +67,7 @@ export default class ControlButtonHelloVariableSizeTest extends Node {
       "default_theme/rounded_shadow_4.png",
       new Rect(8, 8, 8, 8)
     );
-    background.color = new Color(32, 32, 32);
+    background.color.color = new Color(32, 32, 32);
     background.width = total_width + 14;
     background.height = height + 14;
     background.x = 0;

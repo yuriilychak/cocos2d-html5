@@ -132,7 +132,7 @@ parser.generalAttributes = function (node, json) {
   var size = json["Size"];
   if (size) setContentSize(node, size);
 
-  if (json["Alpha"] != null) node.opacity = json["Alpha"];
+  if (json["Alpha"] != null) node.color.opacity = json["Alpha"];
 
   node.tag = json["Tag"] || 0;
 
@@ -146,8 +146,8 @@ parser.generalAttributes = function (node, json) {
     node.removeComponent("ComExtensionData");
   node.addComponent(extensionData);
 
-  node.cascadeColor = true;
-  node.cascadeOpacity = true;
+  node.color.cascadeColor = true;
+  node.color.cascadeOpacity = true;
 
   setLayoutComponent(node, json);
 };
@@ -189,7 +189,7 @@ parser.initSingleNode = function (json) {
 
   this.generalAttributes(node, json);
   var color = json["CColor"];
-  if (color != null) node.color = getColor(color);
+  if (color != null) node.color.color = getColor(color);
 
   return node;
 };
@@ -224,7 +224,7 @@ parser.initSprite = function (json, resourcePath) {
 
   this.generalAttributes(node, json);
   var color = json["CColor"];
-  if (color != null) node.color = getColor(color);
+  if (color != null) node.color.color = getColor(color);
 
   return node;
 };
@@ -263,8 +263,8 @@ parser.initParticle = function (json, resourcePath) {
 ////////////
 
 parser.widgetAttributes = function (widget, json, enableContent) {
-  widget.cascadeColor = true;
-  widget.cascadeOpacity = true;
+  widget.color.cascadeColor = true;
+  widget.color.cascadeOpacity = true;
 
   widget.setUnifySizeEnabled(false);
   //widget.setLayoutComponentEnabled(true);
@@ -307,7 +307,7 @@ parser.widgetAttributes = function (widget, json, enableContent) {
   widget.visible = getParam(json["VisibleForFrame"], true);
 
   var alpha = json["Alpha"];
-  if (alpha != null) widget.opacity = alpha;
+  if (alpha != null) widget.color.opacity = alpha;
 
   widget.tag = json["Tag"] || 0;
 
@@ -338,7 +338,7 @@ parser.widgetAttributes = function (widget, json, enableContent) {
     widget.anchorY = anchorPoint["ScaleY"] || 0;
 
   var color = json["CColor"];
-  if (color != null) widget.color = getColor(color);
+  if (color != null) widget.color.color = getColor(color);
 
   setLayoutComponent(widget, json);
   bindCallback(widget, json);
@@ -483,7 +483,7 @@ parser.initPanel = function (json, resourcePath) {
     widget.setBackGroundImageScale9Enabled(backGroundScale9Enabled);
 
   var opacity = getParam(json["Alpha"], 255);
-  widget.opacity = opacity;
+  widget.color.opacity = opacity;
 
   loadTexture(json["FileData"], resourcePath, function (path, type) {
     widget.setBackGroundImage(path, type);
@@ -1288,7 +1288,7 @@ parser.initArmature = function (json, resourcePath) {
   delete json["Size"];
   parser.generalAttributes(node, json);
 
-  node.color = getColor(json["CColor"]);
+  node.color.color = getColor(json["CColor"]);
   return node;
 };
 
@@ -1314,7 +1314,7 @@ parser.initBoneNode = function (json, resourcePath) {
       color["G"] !== undefined ||
       color["B"] !== undefined)
   )
-    node.color = getColor(color);
+    node.color.color = getColor(color);
   return node;
 };
 
@@ -1328,7 +1328,7 @@ parser.initSkeletonNode = function (json) {
       color["G"] !== undefined ||
       color["B"] !== undefined)
   )
-    node.color = getColor(color);
+    node.color.color = getColor(color);
   return node;
 };
 

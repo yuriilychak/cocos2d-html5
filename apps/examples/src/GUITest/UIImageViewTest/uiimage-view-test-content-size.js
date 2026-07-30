@@ -36,7 +36,7 @@ export class UIImageViewTest_ContentSize extends UIMainLayer {
 
       this._bottomDisplayLabel.string = "";
       var alert = new Text("ImageView ContentSize Change", "Marker Felt", 26);
-      alert.color = new Color(159, 168, 176);
+      alert.color.color = new Color(159, 168, 176);
       alert.position = new Point(
           widgetSize.width / 2,
           widgetSize.height / 2 - alert.contentSize.height * 2.125
@@ -49,7 +49,7 @@ export class UIImageViewTest_ContentSize extends UIMainLayer {
         "Marker Felt",
         16
       );
-      status.color = Color.RED;
+      status.color.color = Color.RED;
       status.position = new Point(widgetSize.width / 2, widgetSize.height / 2 + 80);
       this._mainNode.addChild(status, 20);
 

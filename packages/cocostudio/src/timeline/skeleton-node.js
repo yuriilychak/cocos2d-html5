@@ -159,7 +159,7 @@ class SkeletonNode extends BoneNode {
     boundingBox.height = maxy - miny;
     return AffineTransform.applyToRect(
       boundingBox,
-      this.getNodeToParentTransform()
+      this.nodeToParentTransform
     );
   }
 

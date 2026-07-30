@@ -333,7 +333,7 @@ export class TMXLayer extends SpriteBatchNode {
       tile.order.vertexZ = vertexZ;
       tile.anchorX = 0;
       tile.anchorY = 0;
-      tile.opacity = this._opacity;
+      tile.color.opacity = this._opacity;
 
       this.addChild(tile, vertexZ, z);
     }
@@ -601,7 +601,7 @@ export class TMXLayer extends SpriteBatchNode {
     sprite.order.vertexZ = this._vertexZForPos(pos);
     sprite.anchorX = 0;
     sprite.anchorY = 0;
-    sprite.opacity = this._opacity;
+    sprite.color.opacity = this.color.opacity;
     sprite.setFlippedX(false);
     sprite.setFlippedY(false);
     sprite.rotation = 0;

@@ -35,7 +35,7 @@ export class UILayoutTest_Layout_Relative_Location extends UIMainLayer {
 
       // Add the alert
       var alert = new Text("Layout Relative Location", "Marker Felt", 20);
-      alert.color = new Color(159, 168, 176);
+      alert.color.color = new Color(159, 168, 176);
       alert.position = { x: widgetSize.width / 2.0, y: widgetSize.height / 2.0 - alert.height * 4.5 };
       this._mainNode.addChild(alert);
 

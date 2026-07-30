@@ -68,7 +68,7 @@ export class TouchOneByOneTest extends EventTest {
       sprite.x = 0;
       sprite.y = 0;
       sprite.scale = 1;
-      sprite.color = new Color(
+      sprite.color.color = new Color(
         Math.random() * 200 + 55,
         Math.random() * 200 + 55,
         Math.random() * 200 + 55

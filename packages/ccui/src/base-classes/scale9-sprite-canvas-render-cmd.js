@@ -50,7 +50,7 @@ export class Scale9SpriteCanvasRenderCmd extends Node.CanvasRenderCmd {
       if (Scale9Sprite.state.GRAY === this._state) {
         this._textureToRender = this._textureToRender.renderer.generateGrayTexture();
       }
-      var color = node.displayedColor;
+      var color = node.color.displayedColor;
       if (locTexture && (color.r !== 255 || color.g !== 255 || color.b !== 255))
         this._textureToRender = this._textureToRender.renderer.generateColorTexture(
           color.r,

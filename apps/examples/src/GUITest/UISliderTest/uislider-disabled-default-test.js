@@ -38,7 +38,7 @@ export class UISliderDisabledDefaultTest extends UIMainLayer {
 
       // Add the alert
       var alert = new Text("slider ball should be gray.", "Marker Felt", 20);
-      alert.color = new Color(159, 168, 176);
+      alert.color.color = new Color(159, 168, 176);
       alert.position = new Point(
           widgetSize.width / 2,
           widgetSize.height / 2 - alert.height * 3.75

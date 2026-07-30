@@ -8,6 +8,6 @@ export default class TextColor extends NodeColor {
 
   set color(value) {
     super.color = value;
-    this.owner._labelRenderer.color = value;
+    this.owner._labelRenderer.color.color = value;
   }
 }

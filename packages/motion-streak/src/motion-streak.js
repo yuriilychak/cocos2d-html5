@@ -72,7 +72,7 @@ export class MotionStreak extends Node {
     this.#texCoordsBuffer = gl.createBuffer();
     this.#colorPointerBuffer = gl.createBuffer();
     this.#texture = texture;
-    this.color = color;
+    this.color.color = color;
     this.scheduler.scheduleUpdate();
 
     // bind buffer
@@ -150,7 +150,7 @@ export class MotionStreak extends Node {
   }
 
   tintWithColor(color) {
-    this.color = color;
+    this.color.color = color;
     const len = this.#nuPoints * 2;
     for (var i = 0; i < len; ++i) {
       this.#colorPointer[i * 4] = color.r;
@@ -274,7 +274,7 @@ export class MotionStreak extends Node {
       this.#pointState[this.#nuPoints] = 1.0;
 
       var offset = this.#nuPoints * 8;
-      var locDisplayedColor = this.displayedColor;
+      var locDisplayedColor = this.color.displayedColor;
       this.#colorPointer[offset] = locDisplayedColor.r;
       this.#colorPointer[offset + 1] = locDisplayedColor.g;
       this.#colorPointer[offset + 2] = locDisplayedColor.b;

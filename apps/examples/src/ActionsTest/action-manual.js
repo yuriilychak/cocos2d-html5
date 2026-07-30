@@ -65,7 +65,7 @@ export class ActionManual extends ActionsDemo {
 
     this._kathia.x = winSize.width - 100;
     this._kathia.y = winSize.height / 2;
-    this._kathia.color = new Color(0, 0, 255);
+    this._kathia.color.color = new Color(0, 0, 255);
     //----end0----
   }
 

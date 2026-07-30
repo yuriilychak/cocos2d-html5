@@ -165,8 +165,8 @@ export class Armature extends Node {
 
     this.renderCmd.initShaderCache();
 
-    this.cascadeOpacity = true;
-    this.cascadeColor = true;
+    this.color.cascadeOpacity = true;
+    this.color.cascadeColor = true;
     return true;
   }
 
@@ -424,7 +424,7 @@ export class Armature extends Node {
     }
     return AffineTransform.applyToRect(
       boundingBox,
-      this.getNodeToParentTransform()
+      this.nodeToParentTransform
     );
   }
 

@@ -112,8 +112,8 @@ export class Slider extends Widget {
     this._slidBallRenderer.addChild(this._slidBallNormalRenderer);
     this._slidBallRenderer.addChild(this._slidBallPressedRenderer);
     this._slidBallRenderer.addChild(this._slidBallDisabledRenderer);
-    this._slidBallRenderer.cascadeColor = true;
-    this._slidBallRenderer.cascadeOpacity = true;
+    this._slidBallRenderer.color.cascadeColor = true;
+    this._slidBallRenderer.color.cascadeOpacity = true;
 
     this.addProtectedChild(
       this._slidBallRenderer,

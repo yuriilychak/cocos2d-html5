@@ -9,7 +9,7 @@ export default class ControlButtonColor extends ControlColor {
   set opacity(value) {
     super.opacity = value;
     for (const key in this.owner._backgroundSpriteDispatchTable) {
-      this.owner._backgroundSpriteDispatchTable[key].opacity = value;
+      this.owner._backgroundSpriteDispatchTable[key].color.opacity = value;
     }
   }
 
@@ -20,7 +20,7 @@ export default class ControlButtonColor extends ControlColor {
   set color(value) {
     super.color = value;
     for (const key in this.owner._backgroundSpriteDispatchTable) {
-      this.owner._backgroundSpriteDispatchTable[key].color = value;
+      this.owner._backgroundSpriteDispatchTable[key].color.color = value;
     }
   }
 }

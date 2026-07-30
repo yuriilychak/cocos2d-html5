@@ -256,10 +256,10 @@ export class ScrollView extends Layout {
     super._initRenderer();
 
     this._innerContainer = new Layout();
-    this._innerContainer.color = new Color(255, 255, 255);
-    this._innerContainer.opacity = 255;
-    this._innerContainer.cascadeColor = true;
-    this._innerContainer.cascadeOpacity = true;
+    this._innerContainer.color.color = new Color(255, 255, 255);
+    this._innerContainer.color.opacity = 255;
+    this._innerContainer.color.cascadeColor = true;
+    this._innerContainer.color.cascadeOpacity = true;
     this._innerContainer.touchEnabled = false;
 
     this.addProtectedChild(this._innerContainer, 1, 1);
@@ -1636,10 +1636,10 @@ export class ScrollView extends Layout {
   setScrollBarColor(color) {
     assert(this._scrollBarEnabled, "Scroll bar should be enabled!");
     if (this._verticalScrollBar) {
-      this._verticalScrollBar.color = color;
+      this._verticalScrollBar.color.color = color;
     }
     if (this._horizontalScrollBar) {
-      this._horizontalScrollBar.color = color;
+      this._horizontalScrollBar.color.color = color;
     }
   }
 
@@ -1650,10 +1650,10 @@ export class ScrollView extends Layout {
   getScrollBarColor() {
     assert(this._scrollBarEnabled, "Scroll bar should be enabled!");
     if (this._verticalScrollBar) {
-      this._verticalScrollBar.color;
+      return this._verticalScrollBar.color.color;
     }
     if (this._horizontalScrollBar) {
-      this._horizontalScrollBar.color;
+      return this._horizontalScrollBar.color.color;
     }
     return Color.WHITE;
   }
@@ -1665,10 +1665,10 @@ export class ScrollView extends Layout {
   setScrollBarOpacity(opacity) {
     assert(this._scrollBarEnabled, "Scroll bar should be enabled!");
     if (this._verticalScrollBar) {
-      this._verticalScrollBar.opacity = opacity;
+      this._verticalScrollBar.color.opacity = opacity;
     }
     if (this._horizontalScrollBar) {
-      this._horizontalScrollBar.opacity = opacity;
+      this._horizontalScrollBar.color.opacity = opacity;
     }
   }
 
@@ -1679,10 +1679,10 @@ export class ScrollView extends Layout {
   getScrollBarOpacity() {
     assert(this._scrollBarEnabled, "Scroll bar should be enabled!");
     if (this._verticalScrollBar) {
-      return this._verticalScrollBar.opacity;
+      return this._verticalScrollBar.color.opacity;
     }
     if (this._horizontalScrollBar) {
-      return this._horizontalScrollBar.opacity;
+      return this._horizontalScrollBar.color.opacity;
     }
     return -1;
   }

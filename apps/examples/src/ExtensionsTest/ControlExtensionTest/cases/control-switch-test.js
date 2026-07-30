@@ -17,13 +17,13 @@ export default class ControlSwitchTest extends Node {
     background.height = 50;
     background.x = layer_width + background.width / 2.0;
     background.y = 0;
-    background.color = new Color(64, 64, 64);
+    background.color.color = new Color(64, 64, 64);
     this.addChild(background);
 
     layer_width += background.width;
 
     this._displayValueLabel = new TextBMFont("#color", s_simpleFont_fnt);
-    this._displayValueLabel.color = Color.WHITE;
+    this._displayValueLabel.color.color = Color.WHITE;
     this._displayValueLabel.x = background.x;
     this._displayValueLabel.y = background.y;
     this.addChild(this._displayValueLabel);
@@ -34,7 +34,7 @@ export default class ControlSwitchTest extends Node {
     );
     backgroundSprite.width = 64;
     backgroundSprite.height = 32;
-    backgroundSprite.color = new Color(32, 32, 32);
+    backgroundSprite.color.color = new Color(32, 32, 32);
 
     const thumbSprite = new Scale9Sprite(
       "default_theme/rounded_shadow_2.png",
@@ -49,7 +49,7 @@ export default class ControlSwitchTest extends Node {
     );
     onSprite.width = 64;
     onSprite.height = 32;
-    onSprite.color = Color.GREEN;
+    onSprite.color.color = Color.GREEN;
 
     const offSprite = new Scale9Sprite(
       "default_theme/rounded_shadow_4.png",
@@ -57,7 +57,7 @@ export default class ControlSwitchTest extends Node {
     );
     offSprite.width = 64;
     offSprite.height = 32;
-    offSprite.color = Color.RED;
+    offSprite.color.color = Color.RED;
 
     const switchControl = new ControlSwitch(
       64,

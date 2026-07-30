@@ -104,7 +104,7 @@ export class ControlPotentiometer extends Control {
 
   potentiometerBegan(location) {
     this.selected = true;
-    this.thumb.color = Color.GRAY;
+    this.thumb.color.color = Color.GRAY;
   }
 
   potentiometerMoved(location) {
@@ -123,7 +123,7 @@ export class ControlPotentiometer extends Control {
   }
 
   potentiometerEnded(location) {
-    this.thumb.color = Color.WHITE;
+    this.thumb.color.color = Color.WHITE;
     this.selected = false;
   }
 

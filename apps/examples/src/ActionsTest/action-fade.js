@@ -45,7 +45,7 @@ export class ActionFade extends ActionsDemo {
     super.onEnter();
     this.centerSprites(2);
     var delay = new DelayTime(0.25);
-    this._tamara.opacity = 0;
+    this._tamara.color.opacity = 0;
     var action1 = new FadeIn(1.0);
     var action1Back = action1.reverse();
 

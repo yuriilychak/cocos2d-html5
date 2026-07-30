@@ -88,7 +88,7 @@ import { AffineTransform, Node, Sprite } from "@aspect/core";
         }
 
         getNodeToWorldTransform() {
-            return AffineTransform.concat(this._transform, this._node.bone.armature.getNodeToWorldTransform());
+            return AffineTransform.concat(this._transform, this._node.bone.armature.nodeToWorldTransform);
         }
 
         getNodeToWorldTransformAR() {
@@ -96,7 +96,7 @@ import { AffineTransform, Node, Sprite } from "@aspect/core";
             this._anchorPointInPoints = AffineTransform.applyToPoint(this._anchorPointInPoints, displayTransform);
             displayTransform.tx = this._anchorPointInPoints.x;
             displayTransform.ty = this._anchorPointInPoints.y;
-            return AffineTransform.concat(displayTransform, node.bone.armature.getNodeToWorldTransform());
+            return AffineTransform.concat(displayTransform, node.bone.armature.nodeToWorldTransform);
         }
 
         _updateCurrentRegions() {
@@ -167,7 +167,7 @@ import { AffineTransform, Node, Sprite } from "@aspect/core";
         }
 
         getNodeToWorldTransform() {
-            return AffineTransform.concat(this._transform, this._node.bone.armature.getNodeToWorldTransform());
+            return AffineTransform.concat(this._transform, this._node.bone.armature.nodeToWorldTransform);
         }
 
         getNodeToWorldTransformAR() {
@@ -175,6 +175,6 @@ import { AffineTransform, Node, Sprite } from "@aspect/core";
             this._anchorPointInPoints = AffineTransform.applyToPoint(this._anchorPointInPoints, displayTransform);
             displayTransform.tx = this._anchorPointInPoints.x;
             displayTransform.ty = this._anchorPointInPoints.y;
-            return AffineTransform.concat(displayTransform, node.bone.armature.getNodeToWorldTransform());
+            return AffineTransform.concat(displayTransform, node.bone.armature.nodeToWorldTransform);
         }
     };

@@ -109,7 +109,7 @@ export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
   onTextFieldDetachWithIME(sender) {
     if (this._action) {
       this._textField.actionManager.stopAction(this._textFieldAction);
-      this._textField.opacity = 255;
+      this._textField.color.opacity = 255;
       this._action = false;
     }
     return false;
@@ -129,7 +129,7 @@ export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
     var label = new TextBMFont(text, s_simpleFont_fnt);
     this.addChild(label);
     var color = new Color(226, 121, 7);
-    label.color = color;
+    label.color.color = color;
 
     // move the sprite from top to position
     var endX = sender.x,

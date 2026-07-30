@@ -9,9 +9,9 @@ export class ProtectedNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
 
     _updateDisplayColor(parentColor) {
         var node = this._node;
-        var locDispColor = this._displayedColor, locRealColor = node.color;
+        var locDispColor = this._displayedColor, locRealColor = node.color.color;
         var i, len, selChildren, item;
-        if (this._cascadeColorEnabledDirty && !node.cascadeColor) {
+        if (this._cascadeColorEnabledDirty && !node.color.cascadeColor) {
             locDispColor.r = locRealColor.r;
             locDispColor.g = locRealColor.g;
             locDispColor.b = locRealColor.b;
@@ -26,15 +26,15 @@ export class ProtectedNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
         } else {
             if (parentColor === undefined) {
                 var locParent = node.parent;
-                if (locParent && locParent.cascadeColor)
-                    parentColor = locParent.displayedColor;
+                if (locParent && locParent.color.cascadeColor)
+                    parentColor = locParent.color.displayedColor;
                 else
                     parentColor = Color.WHITE;
             }
             locDispColor.r = 0 | (locRealColor.r * parentColor.r / 255.0);
             locDispColor.g = 0 | (locRealColor.g * parentColor.g / 255.0);
             locDispColor.b = 0 | (locRealColor.b * parentColor.b / 255.0);
-            if (node.cascadeColor) {
+            if (node.color.cascadeColor) {
                 selChildren = node.children;
                 for (i = 0, len = selChildren.length; i < len; i++) {
                     item = selChildren[i];
@@ -59,8 +59,8 @@ export class ProtectedNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
     _updateDisplayOpacity(parentOpacity) {
         var node = this._node;
         var i, len, selChildren, item;
-        if (this._cascadeOpacityEnabledDirty && !node.cascadeOpacity) {
-            this._displayedOpacity = node.opacity;
+        if (this._cascadeOpacityEnabledDirty && !node.color.cascadeOpacity) {
+            this._displayedOpacity = node.color.opacity;
             selChildren = node.children;
             for (i = 0, len = selChildren.length; i < len; i++) {
                 item = selChildren[i];
@@ -72,11 +72,11 @@ export class ProtectedNodeCanvasRenderCmd extends Node.CanvasRenderCmd {
             if (parentOpacity === undefined) {
                 var locParent = node.parent;
                 parentOpacity = 255;
-                if (locParent && locParent.cascadeOpacity)
-                    parentOpacity = locParent.displayedOpacity;
+                if (locParent && locParent.color.cascadeOpacity)
+                    parentOpacity = locParent.color.displayedOpacity;
             }
-            this._displayedOpacity = node.opacity * parentOpacity / 255.0;
-            if (node.cascadeOpacity) {
+            this._displayedOpacity = node.color.opacity * parentOpacity / 255.0;
+            if (node.color.cascadeOpacity) {
                 selChildren = node.children;
                 for (i = 0, len = selChildren.length; i < len; i++) {
                     item = selChildren[i];

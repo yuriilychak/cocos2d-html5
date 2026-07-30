@@ -45,7 +45,7 @@ export class S9SpriteOpacityWithFadeActionsTest extends S9SpriteTestDemo {
     colorLayer.x = winSize.width / 4;
     colorLayer.y = winSize.height / 4;
 
-    colorLayer.cascadeOpacity = true;
+    colorLayer.color.cascadeOpacity = true;
 
     var blocks = new Scale9Sprite("blocks9.png");
     blocks.x = winSize.width / 4;

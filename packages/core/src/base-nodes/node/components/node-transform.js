@@ -183,7 +183,7 @@ export default class NodeTransform extends Component {
     const rect = new Rect(0, 0, this.#contentSize.width, this.#contentSize.height);
     return AffineTransform._applyToRectIn(
       rect,
-      this.#renderCmd.getNodeToParentTransform()
+      this.#renderCmd.nodeToParentTransform
     );
   }
 

@@ -48,7 +48,7 @@ export class UITextFieldTest extends UIMainLayer {
           widgetSize.height / 2.0 -
             this._bottomDisplayLabel.contentSize.height * 3.4
         );
-      this._bottomDisplayLabel.color = new Color(255, 255, 255, 255);
+      this._bottomDisplayLabel.color.color = new Color(255, 255, 255, 255);
 
       // Create the textfield
       var textField = new TextField("PlaceHolder", "Marker Felt", 30);

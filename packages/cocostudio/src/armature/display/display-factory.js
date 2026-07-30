@@ -104,7 +104,7 @@ export const displayFactory = {
                 var detector = decoDisplay.getColliderDetector();
                 if (detector) {
                     var node = decoDisplay.getDisplay();
-                    var displayTransform = node.getNodeToParentTransform();
+                    var displayTransform = node.nodeToParentTransform;
                     var helpTransform = this._helpTransform;
                     helpTransform.a = displayTransform.a;
                     helpTransform.b = displayTransform.b;
@@ -115,7 +115,7 @@ export const displayFactory = {
                     var anchorPoint = AffineTransform.applyToPoint(node.anchorPointInPoints, helpTransform);
                     helpTransform.tx = anchorPoint.x;
                     helpTransform.ty = anchorPoint.y;
-                    var t = AffineTransform.concat(helpTransform, bone.armature.getNodeToParentTransform());
+                    var t = AffineTransform.concat(helpTransform, bone.armature.nodeToParentTransform);
                     detector.updateTransform(t);
                 }
             }

@@ -69,7 +69,7 @@ export class UIPageViewTest extends UIMainLayer {
         var text = new Text();
         text.string = "page" + (i + 1);
         text.font = "30px 'Marker Felt'";
-        text.color = new Color(192, 192, 192);
+        text.color.color = new Color(192, 192, 192);
         text.x = layoutRect.width / 2;
         text.y = layoutRect.height / 2;
         layout.addChild(text);

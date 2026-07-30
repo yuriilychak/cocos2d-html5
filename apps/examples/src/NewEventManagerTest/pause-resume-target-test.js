@@ -41,19 +41,19 @@ export class PauseResumeTargetTest extends EventDispatcherTestDemo {
     var size = ServiceLocator.eglView.rendererDelegate.visibleSize;
 
     var sprite1 = TouchableSprite.create();
-    sprite1.color = new Color(0, 255, 255);
+    sprite1.color.color = new Color(0, 255, 255);
     sprite1.x = origin.x + size.width / 2 - 180;
     sprite1.y = origin.y + size.height / 2 + 40;
     this.addChild(sprite1, 10);
 
     var sprite2 = TouchableSprite.create();
-    sprite2.color = new Color(255, 0, 255);
+    sprite2.color.color = new Color(255, 0, 255);
     sprite2.x = origin.x + size.width / 2 - 100;
     sprite2.y = origin.y + size.height / 2;
     this.addChild(sprite2, 1);
 
     var sprite3 = TouchableSprite.create(100); // Sprite3 uses fixed priority listener
-    sprite3.color = new Color(255, 255, 0);
+    sprite3.color.color = new Color(255, 255, 0);
     sprite3.x = 0;
     sprite3.y = 0;
     sprite2.addChild(sprite3, -1);
@@ -73,8 +73,8 @@ export class PauseResumeTargetTest extends EventDispatcherTestDemo {
         overlay.ignoreContentAdaptWithSize(false);
         overlay.loadTexture("default_theme/squere_shadow_0.png", Widget.PLIST_TEXTURE);
         overlay.contentSize = size;
-        overlay.color = new Color(0, 0, 0);
-        overlay.opacity = 128;
+        overlay.color.color = new Color(0, 0, 0);
+        overlay.color.opacity = 128;
         overlay.x = origin.x + size.width / 2;
         overlay.y = origin.y + size.height / 2;
         _this.addChild(overlay, 999);

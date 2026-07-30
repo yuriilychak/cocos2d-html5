@@ -58,7 +58,7 @@ export class UIFocusTestHorizontal extends UIFocusTestBase {
 
       this._loopText = new Text("loop enabled", "Arial", 20);
       this._loopText.position = { x: winSize.width / 2, y: winSize.height - 50 };
-      this._loopText.color = Color.GREEN;
+      this._loopText.color.color = Color.GREEN;
       this.addChild(this._loopText);
 
       this._btn.addTouchEventListener(this.toggleFocusLoop, this);

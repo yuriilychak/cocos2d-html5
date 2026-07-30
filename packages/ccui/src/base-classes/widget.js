@@ -765,8 +765,8 @@ export class Widget extends ProtectedNode {
   _onPressStateChangedToPressed() {}
   _onPressStateChangedToDisabled() {}
   _updateChildrenDisplayedRGBA() {
-    this.color = this.color;
-    this.opacity = this.opacity;
+    this.color.color = this.color.color;
+    this.color.opacity = this.color.opacity;
   }
 
   didNotSelectSelf() {}
@@ -1185,8 +1185,8 @@ export class Widget extends ProtectedNode {
     this.rotationY = widget.rotationY;
     this.setFlippedX(widget.isFlippedX());
     this.setFlippedY(widget.isFlippedY());
-    this.color = widget.color;
-    this.opacity = widget.opacity;
+    this.color.color = widget.color.color;
+    this.color.opacity = widget.color.opacity;
 
     this._touchEventCallback = widget._touchEventCallback;
     this._touchEventListener = widget._touchEventListener;

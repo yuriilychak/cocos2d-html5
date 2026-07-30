@@ -63,7 +63,7 @@ export class TestScene extends Scene {
       Widget.PLIST_TEXTURE
     );
     header.setCapInsets(new Rect(12, 12, 12, 12));
-    header.color = new Color(0x35, 0x39, 0x41);
+    header.color.color = new Color(0x35, 0x39, 0x41);
     header.width = winW;
     header.height = HEADER_HEIGHT;
     header.x = winW / 2;

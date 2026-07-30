@@ -42,7 +42,7 @@ export class ColorFrame extends Frame {
    */
   onEnter(nextFrame) {
     if (!this._node) return;
-    this._node.color = this._color;
+    this._node.color.color = this._color;
     if (this._tween) {
       var color = nextFrame._color;
       this._betweenRed = color.r - this._color.r;
@@ -69,10 +69,10 @@ export class ColorFrame extends Frame {
       color.g = this._color.g + this._betweenGreen * percent;
       color.b = this._color.b + this._betweenBlue * percent;
 
-      this._node.color = color;
+      this._node.color.color = color;
       if (this._alpha !== null) {
         var alpha = this._alpha + this._betweenAlpha * percent;
-        this._node.opacity = alpha;
+        this._node.color.opacity = alpha;
       }
     }
   }
@@ -105,4 +105,3 @@ export class ColorFrame extends Frame {
     return this._color;
   }
 };
-

@@ -75,14 +75,14 @@ export class ScrollViewBar extends ProtectedNode {
 
         this._marginFromBoundary = ScrollViewBar.DEFAULT_MARGIN;
         this._marginForLength = ScrollViewBar.DEFAULT_MARGIN;
-        this.opacity = 255 * ScrollViewBar.DEFAULT_SCROLLBAR_OPACITY;
+        this.color.opacity = 255 * ScrollViewBar.DEFAULT_SCROLLBAR_OPACITY;
         this.autoHideTime = ScrollViewBar.DEFAULT_AUTO_HIDE_TIME;
         this._autoHideEnabled = true;
 
         this.init();
 
-        this.cascadeColor = true;
-        this.cascadeOpacity = true;
+        this.color.cascadeColor = true;
+        this.color.cascadeOpacity = true;
     }
 
     get autoHideEnabled() { return this.isAutoHideEnabled(); }
@@ -108,7 +108,7 @@ export class ScrollViewBar extends ProtectedNode {
         this._body.anchor = new Point(0.5, 0);
         this.addProtectedChild(this._body);
 
-        this.color = ScrollViewBar.DEFAULT_COLOR;
+        this.color.color = ScrollViewBar.DEFAULT_COLOR;
         this.onScrolled(new Point());
         this.getComponent(NodeComponentName.Color).opacityFromRenderer = 0;
         this._autoHideRemainingTime = 0;
@@ -184,7 +184,7 @@ export class ScrollViewBar extends ProtectedNode {
     setAutoHideEnabled(autoHideEnabled) {
         this._autoHideEnabled = autoHideEnabled;
 
-        this.getComponent(NodeComponentName.Color).opacityFromRenderer = !this._autoHideEnabled && !this._touching && this._autoHideRemainingTime <= 0 ? this.opacity : 0;
+        this.color.opacityFromRenderer = !this._autoHideEnabled && !this._touching && this._autoHideRemainingTime <= 0 ? this.color.opacity : 0;
     }
 
     /**
@@ -225,7 +225,7 @@ export class ScrollViewBar extends ProtectedNode {
         // color and alpha are displayed as-is, without the bar's DEFAULT_COLOR
         // (52,65,87) multiplying into the cascade and darkening the thumb.
         this._opacity = 255;
-        this.color = new Color(255, 255, 255);
+        this.color.color = new Color(255, 255, 255);
 
         var initialWidth = this.getWidth();
         this._thumbSprite = new Scale9Sprite(file, capInsets);
@@ -233,9 +233,9 @@ export class ScrollViewBar extends ProtectedNode {
         this._thumbSprite.setPreferredSize(new Size(initialWidth, 0));
         var alpha = color && color.a != null ? color.a : 255;
         if (color) {
-            this._thumbSprite.color = color;
+            this._thumbSprite.color.color = color;
         }
-        this._thumbSprite.opacity = alpha;
+        this._thumbSprite.color.opacity = alpha;
         this.addProtectedChild(this._thumbSprite);
     }
 
@@ -327,7 +327,7 @@ export class ScrollViewBar extends ProtectedNode {
     onScrolled(outOfBoundary) {
         if (this._autoHideEnabled) {
             this._autoHideRemainingTime = this.autoHideTime;
-            super.opacity = this.opacity;
+            this.color.opacityFromRenderer = this.color.opacity;
         }
 
         var innerContainer = this._parentScroll.getInnerContainer();

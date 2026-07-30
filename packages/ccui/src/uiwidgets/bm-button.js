@@ -569,7 +569,7 @@ export class BMButton extends Widget {
         )
       );
     } else if (!this._pressedTextureLoaded && this._scale9Enabled) {
-      this._buttonScale9Renderer.color = Color.WHITE;
+      this._buttonScale9Renderer.color.color = Color.WHITE;
     }
   }
 
@@ -659,7 +659,7 @@ export class BMButton extends Widget {
       this._brightStyle === Widget.BRIGHT_STYLE_NORMAL &&
       this._buttonScale9Renderer
     ) {
-      this._buttonScale9Renderer.color = color;
+      this._buttonScale9Renderer.color.color = color;
     }
   }
 
@@ -681,7 +681,7 @@ export class BMButton extends Widget {
       this._brightStyle === Widget.BRIGHT_STYLE_HIGH_LIGHT &&
       this._buttonScale9Renderer
     ) {
-      this._buttonScale9Renderer.color = color;
+      this._buttonScale9Renderer.color.color = color;
     }
   }
 
@@ -700,7 +700,7 @@ export class BMButton extends Widget {
   setDisabledBgColor(color) {
     this._disabledBgColor = color;
     if (!this._bright && this._buttonScale9Renderer) {
-      this._buttonScale9Renderer.color = color;
+      this._buttonScale9Renderer.color.color = color;
     }
   }
 
@@ -833,7 +833,7 @@ export class BMButton extends Widget {
   setTitleColor(color) {
     this._createTitleRendererIfNeeded();
     this._titleColor = color;
-    this._titleRenderer.color = color;
+    this._titleRenderer.color.color = color;
   }
 
   /**
@@ -842,7 +842,7 @@ export class BMButton extends Widget {
    */
   getTitleColor() {
     if (this._titleRenderer) {
-      return this._titleRenderer.color;
+      return this._titleRenderer.color.color;
     }
     return Color.WHITE;
   }

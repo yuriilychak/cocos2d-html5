@@ -43,7 +43,7 @@ export class UICheckBoxDefaultBehaviorTest extends UIMainLayer {
 
       // Add the alert
       var alert = new Text("Only left two can be clicked!", "Marker Felt", 20);
-      alert.color = new Color(159, 168, 176);
+      alert.color.color = new Color(159, 168, 176);
       alert.position = new Point(
           widgetSize.width / 2,
           widgetSize.height / 2 - alert.contentSize.height * 1.75

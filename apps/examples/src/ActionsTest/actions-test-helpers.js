@@ -85,7 +85,7 @@ export function createCustomAction(ActionObject) {
       super.update(dt);
       if (this.getTarget()) {
         // rand color
-        this.getTarget().color = new Color(rand() % 255, rand() % 255, rand() % 255);
+        this.getTarget().color.color = new Color(rand() % 255, rand() % 255, rand() % 255);
       }
     }
   }

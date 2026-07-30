@@ -13,7 +13,7 @@ export default class ControlPotentiometerTest extends Node {
       "default_theme/rounded_shadow_4.png",
       new Rect(8, 8, 8, 8)
     );
-    background.color = new Color(32, 32, 32);
+    background.color.color = new Color(32, 32, 32);
     background.width = 80;
     background.height = 50;
     background.x = layer_width + background.width / 2.0;
@@ -32,8 +32,8 @@ export default class ControlPotentiometerTest extends Node {
       "#default_theme/potentiometr/progress.png",
       "#default_theme/potentiometr/button.png"
     );
-    potentiometer.background.color = new Color(32, 32, 32);
-    potentiometer.progressTimer.color = Color.GREEN;
+    potentiometer.background.color.color = new Color(32, 32, 32);
+    potentiometer.progressTimer.color.color = Color.GREEN;
     potentiometer.x = layer_width + 10 + potentiometer.width / 2;
     potentiometer.y = 0;
 

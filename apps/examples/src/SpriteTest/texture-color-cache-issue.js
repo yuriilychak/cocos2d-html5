@@ -67,8 +67,8 @@ export class TextureColorCacheIssue extends SpriteTestDemo {
         this.addChild(grossini);
         this.addChild(sister);
 
-        grossini.color = new Color(1, 255, 1);
-        sister.color = new Color(1, 1, 255);
+        grossini.color.color = new Color(1, 255, 1);
+        sister.color.color = new Color(1, 1, 255);
         //----end55----
     }
     onExit() {

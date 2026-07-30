@@ -63,7 +63,7 @@ export class Box2DTestLayer extends LayerColor {
 
     var winSize = ServiceLocator.eglView.winSizeInPoints;
     var label = new TextBMFont("Tap screen", s_simpleFont_fnt);
-    label.color = new Color(0, 0, 255);
+    label.color.color = new Color(0, 0, 255);
     label.x = winSize.width / 2;
     label.y = winSize.height - 80;
     this.addChild(label, 0);

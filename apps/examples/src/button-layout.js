@@ -66,8 +66,8 @@ export class ButtonLayout extends Layout {
     bg.ignoreContentAdaptWithSize(false);
     bg.loadTexture("default_theme/squere_shadow_0.png", Widget.PLIST_TEXTURE);
     bg.setCapInsets(new Rect(CAP_INSETS, CAP_INSETS, CAP_INSETS, CAP_INSETS));
-    bg.color = new Color(255, 255, 255);
-    bg.opacity = 64;
+    bg.color.color = new Color(255, 255, 255);
+    bg.color.opacity = 64;
     bg.width = totalWidth;
     bg.height = totalHeight;
     this.addChild(bg, -1);

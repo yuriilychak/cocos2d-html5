@@ -109,8 +109,8 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
   constructor(str, fntFile, width, alignment, imageOffset, fontSize) {
     super();
     this._imageOffset = new Point();
-    this.cascadeColor = true;
-    this.cascadeOpacity = true;
+    this.color.cascadeColor = true;
+    this.color.cascadeOpacity = true;
     if (str !== undefined && fntFile !== undefined)
       this.initWithString(
         str,
@@ -211,8 +211,8 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
       this._width = width === undefined ? -1 : width;
       this._fontSize = fontSize > 0 ? fontSize : 0;
 
-      this.opacity = 255;
-      this.color = new Color(255, 255, 255, 255);
+      this.color.opacity = 255;
+      this.color.color = new Color(255, 255, 255, 255);
 
       this.width = 0;
       this.height = 0;
@@ -335,7 +335,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
       }
 
       // Apply label properties
-      fontChar.opacityModifyRGB = this.opacityModifyRGB;
+      fontChar.color.opacityModifyRGB = this.color.opacityModifyRGB;
       cmd._updateCharColorAndOpacity(fontChar);
       fontChar.scale = locScale;
 

@@ -53,7 +53,7 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
           log("Yellow blocks shouldn't response event.");
 
         if (this._isPointInNode(touch, target)) {
-          target.opacity = 180;
+          target.color.opacity = 180;
           return true;
         }
 
@@ -62,7 +62,7 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
         return false;
       }.bind(this),
       onTouchEnded: function (touch, event) {
-        event.currentTarget.opacity = 255;
+        event.currentTarget.color.opacity = 255;
       }
     });
 
@@ -76,7 +76,7 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
         if (target.tag != StopPropagationTest._TAG_BLUE_SPRITE2)
           log("Yellow blocks shouldn't response event.");
 
-        if (this._isPointInNode(touches[0], target)) target.opacity = 180;
+        if (this._isPointInNode(touches[0], target)) target.color.opacity = 180;
         // Stop propagation, so yellow blocks will not be able to receive event.
         event.stopPropagation();
       }.bind(this),
@@ -88,7 +88,7 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
         if (target.tag != StopPropagationTest._TAG_BLUE_SPRITE2)
           log("Yellow blocks shouldn't response event.");
 
-        if (this._isPointInNode(touches[0], target)) target.opacity = 255;
+        if (this._isPointInNode(touches[0], target)) target.color.opacity = 255;
         // Stop propagation, so yellow blocks will not be able to receive event.
         event.stopPropagation();
       }.bind(this)

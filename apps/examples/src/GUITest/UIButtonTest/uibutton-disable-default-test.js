@@ -42,7 +42,7 @@ export class UIButtonDisableDefaultTest extends UIMainLayer {
         "Arial",
         20
       );
-      alert.color = new Color(159, 168, 176);
+      alert.color.color = new Color(159, 168, 176);
       alert.position = { x: widgetSize.width / 2.0, y: widgetSize.height / 2.0 - alert.height * 1.75 };
       this._mainNode.addChild(alert);
 

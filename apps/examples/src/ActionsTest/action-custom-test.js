@@ -285,12 +285,12 @@ export class ActionCustomTest extends ActionsDemo {
      * group 7
      */
     spriteTemp = this.addandCreateSpriteTemp("FadeIn");
-    spriteTemp.opacity = 128;
+    spriteTemp.color.opacity = 128;
     var fadeIn = new (createCustomAction(FadeIn))(5);
     spriteTemp.actionManager.runAction(fadeIn);
 
     spriteTemp = this.addandCreateSpriteTemp("FadeOut");
-    spriteTemp.opacity = 128;
+    spriteTemp.color.opacity = 128;
     var fadeOut = new (createCustomAction(FadeOut))(5);
     spriteTemp.actionManager.runAction(fadeOut);
 

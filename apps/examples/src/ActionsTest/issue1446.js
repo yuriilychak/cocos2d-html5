@@ -54,7 +54,7 @@ export class Issue1446 extends ActionsDemo {
 
     label.x = winSize.width / 2;
     label.y = winSize.height / 2;
-    label.opacity = 0;
+    label.color.opacity = 0;
 
     this.addChild(label);
 

@@ -114,12 +114,12 @@ export class RenderCmd {
     this.setDirtyFlag(dirtyFlags.opacityDirty);
   }
 
-  getParentToNodeTransform() {
+  get parentToNodeTransform() {
     if (!this._inverse) {
       this._inverse = { a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0 };
     }
     if (this._dirtyFlag & dirtyFlags.transformDirty) {
-      AffineTransform.invertOut(this.getNodeToParentTransform(), this._inverse);
+      AffineTransform.invertOut(this.nodeToParentTransform, this._inverse);
     }
     return this._inverse;
   }
@@ -296,7 +296,7 @@ export class RenderCmd {
     this._cacheDirty = true;
   }
 
-  getNodeToParentTransform() {
+  get nodeToParentTransform() {
     if (!this._transform || this._dirtyFlag & dirtyFlags.transformDirty) {
       this.transform();
     }

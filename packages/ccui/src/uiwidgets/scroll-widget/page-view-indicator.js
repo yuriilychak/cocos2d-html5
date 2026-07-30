@@ -166,7 +166,7 @@ export class PageViewIndicator extends ProtectedNode {
    * @param {Color} color
    */
   setSelectedIndexColor(color) {
-    this._currentIndexNode.color = color;
+    this._currentIndexNode.color.color = color;
   }
 
   /**
@@ -174,7 +174,7 @@ export class PageViewIndicator extends ProtectedNode {
    * @returns {Color}
    */
   getSelectedIndexColor() {
-    return this._currentIndexNode.color;
+    return this._currentIndexNode.color.color;
   }
 
   /**
@@ -185,7 +185,7 @@ export class PageViewIndicator extends ProtectedNode {
     this._indexNodesColor = indexNodesColor;
 
     for (var i = 0; i < this._indexNodes.length; ++i) {
-      this._indexNodes[i].color = indexNodesColor;
+      this._indexNodes[i].color.color = indexNodesColor;
     }
   }
 
@@ -284,7 +284,7 @@ export class PageViewIndicator extends ProtectedNode {
       }
     }
 
-    indexNode.color = this._indexNodesColor;
+    indexNode.color.color = this._indexNodesColor;
     indexNode.scale = this._indexNodesScale;
 
     this.addProtectedChild(indexNode);
