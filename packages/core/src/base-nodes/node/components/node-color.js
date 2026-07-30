@@ -2,6 +2,7 @@ import { Color } from "../../../platform/types/color";
 import { BYTE } from "../../../constants";
 import { Component } from "../../../components";
 import { dirtyFlags } from "../node-canvas-render-cmd";
+import { NodeComponentName } from "../../../enums";
 
 export default class NodeColor extends Component {
   #realColor = new Color(BYTE, BYTE, BYTE, BYTE);
@@ -9,7 +10,7 @@ export default class NodeColor extends Component {
   #cascadeOpacityEnabled = false;
 
   constructor() {
-    super("color");
+    super(NodeComponentName.Color);
   }
 
   get #renderCmd() {

@@ -2,12 +2,13 @@ import { assert, _LogInfos } from "../../../boot/debugger";
 import { Component } from "../../../components";
 import { REPEAT_FOREVER } from "../../../platform/macro/constants";
 import { ServiceLocator } from "../../../service-locator";
+import { NodeComponentName } from "../../../enums";
 
 export default class NodeScheduler extends Component {
   #scheduler = null;
 
   constructor() {
-    super("scheduler");
+    super(NodeComponentName.Scheduler);
   }
 
   onEnter() {

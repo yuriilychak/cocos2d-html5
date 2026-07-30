@@ -1,8 +1,6 @@
 import {
   EventHelper,
   SpriteBatchNode,
-  RendererConfig,
-  Node,
   Point,
   Rect,
   Size,
@@ -50,7 +48,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
   _textureLoaded = false;
 
   createRenderCmd() {
-    if (RendererConfig.isWebGL) return new LabelBMFont.WebGLRenderCmd(this);
+    if (ServiceLocator.sys.rendererConfig.isWebGL) return new LabelBMFont.WebGLRenderCmd(this);
     else return new LabelBMFont.CanvasRenderCmd(this);
   }
 
@@ -951,7 +949,7 @@ const _fntLoader = {
     //common
     var commonObj = self._parseStrToObj(fntStr.match(self.COMMON_EXP)[0]);
     fnt.commonHeight = commonObj["lineHeight"];
-    if (RendererConfig.isWebGL) {
+    if (ServiceLocator.sys.rendererConfig.isWebGL) {
       var texSize = ServiceLocator.sys.configuration.maxTextureSize;
       if (
         commonObj["scaleW"] > texSize.width ||

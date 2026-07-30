@@ -2,7 +2,6 @@ import { LabelBMFont } from "./label-bmfont";
 import { LabelBMFontCanvasRenderCmd } from "./label-bmfont-canvas-render-cmd";
 import { LabelBMFontWebGLRenderCmd } from "./label-bmfont-webgl-render-cmd";
 import {
-  RendererConfig,
   Point,
   Texture2D,
   Color,
@@ -34,7 +33,7 @@ export class LabelAtlas extends LabelBMFont {
   }
 
   createRenderCmd() {
-    if (RendererConfig.isWebGL) return new LabelBMFontWebGLRenderCmd(this);
+    if (ServiceLocator.sys.rendererConfig.isWebGL) return new LabelBMFontWebGLRenderCmd(this);
     else return new LabelBMFontCanvasRenderCmd(this);
   }
 

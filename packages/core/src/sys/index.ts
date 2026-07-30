@@ -1,2 +1,3 @@
 export { default as Sys } from './sys';
-export { default as RendererConfig } from './renderer-config';
+export { GlobalVertexBuffer, CanvasContextWrapper, RendererCanvas } from './renderer';
+

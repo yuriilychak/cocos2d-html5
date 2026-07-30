@@ -1,4 +1,4 @@
-import { Node, KM_GL_MODELVIEW, Matrix4, kmGLLoadMatrix, kmGLMatrixMode, kmGLPopMatrix, kmGLPushMatrix } from "@aspect/core";
+import { Node, KMGLMatrixMode, Matrix4, ServiceLocator } from "@aspect/core";
 
 export class GLNode extends Node {
     constructor() {
@@ -18,13 +18,13 @@ export class GLNode extends Node {
             this._matrix.mat[5] = wt.d;
             this._matrix.mat[13] = wt.ty;
 
-            kmGLMatrixMode(KM_GL_MODELVIEW);
-            kmGLPushMatrix();
-            kmGLLoadMatrix(this._matrix);
+            ServiceLocator.kmglMatrix.matrixMode(KMGLMatrixMode.MODELVIEW);
+            ServiceLocator.kmglMatrix.pushMatrix();
+            ServiceLocator.kmglMatrix.loadMatrix(this._matrix);
 
             this._node.draw(ctx);
 
-            kmGLPopMatrix();
+            ServiceLocator.kmglMatrix.popMatrix();
         };
     }
     draw(ctx) {

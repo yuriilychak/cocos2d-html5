@@ -51,7 +51,7 @@ type Scene = Node;
 export default class Director extends BaseClass {
   static readonly defaultFPS = 60;
 
-  TransitionSceneClass: (new (...args: any[]) => unknown) | null = null;
+  #transitionSceneClass: (new (...args: any[]) => unknown) | null = null;
   #nextDeltaTimeZero = false;
   #paused = false;
   #purgeDirectorInNextLoop = false;
@@ -272,11 +272,11 @@ export default class Director extends BaseClass {
 
   setNextScene(): void {
     const runningIsTransition =
-      !!this.TransitionSceneClass &&
-      this.#runningScene instanceof this.TransitionSceneClass;
+      !!this.#transitionSceneClass &&
+      this.#runningScene instanceof this.#transitionSceneClass;
     const newIsTransition =
-      !!this.TransitionSceneClass &&
-      this.#nextScene instanceof this.TransitionSceneClass;
+      !!this.#transitionSceneClass &&
+      this.#nextScene instanceof this.#transitionSceneClass;
 
     if (!newIsTransition) {
       this.#setRunningSceneState(false);
@@ -371,6 +371,16 @@ export default class Director extends BaseClass {
 
   get animationEnabled(): boolean {
     return this.#animationEnabled;
+  }
+
+  get transitionSceneClass(): (new (...args: any[]) => unknown) | null {
+    return this.#transitionSceneClass;
+  }
+
+  set transitionSceneClass(
+    transitionSceneClass: (new (...args: any[]) => unknown) | null
+  ) {
+    this.#transitionSceneClass = transitionSceneClass;
   }
 
   set animationEnabled(enabled: boolean) {

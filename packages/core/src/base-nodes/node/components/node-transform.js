@@ -2,6 +2,7 @@ import { Point, Rect, Size, AffineTransform } from "../../../geometry";
 import { log, _LogInfos } from "../../../boot/debugger";
 import { Component } from "../../../components";
 import { dirtyFlags } from "../node-canvas-render-cmd";
+import { NodeComponentName } from "../../../enums";
 
 export default class NodeTransform extends Component {
   #rotation = new Point();
@@ -18,7 +19,7 @@ export default class NodeTransform extends Component {
   #additionalTransformDirty = false;
 
   constructor() {
-    super("transform");
+    super(NodeComponentName.Transform);
   }
 
   get #renderCmd() {

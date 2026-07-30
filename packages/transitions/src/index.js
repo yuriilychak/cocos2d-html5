@@ -1,4 +1,4 @@
-import { Director } from '@aspect/core';
+import { ServiceLocator } from '@aspect/core';
 import { SCENE_FADE, ADJUST_FACTOR, TRANSITION_ORIENTATION_LEFT_OVER, TRANSITION_ORIENTATION_RIGHT_OVER, TRANSITION_ORIENTATION_UP_OVER, TRANSITION_ORIENTATION_DOWN_OVER } from "./transition/constants";
 import { TransitionScene } from "./transition/transition-scene";
 import { TransitionSceneOriented } from "./transition/transition-scene-oriented";
@@ -34,7 +34,7 @@ import { TransitionProgressOutIn } from "./transition-progress/transition-progre
 
 import { TransitionPageTurn } from "./transition-page-turn";
 
-Director.TransitionSceneClass = TransitionScene;
+ServiceLocator.director.transitionSceneClass = TransitionScene;
 
 export {
     SCENE_FADE,

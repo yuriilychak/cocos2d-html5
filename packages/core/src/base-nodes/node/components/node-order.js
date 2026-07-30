@@ -1,5 +1,6 @@
 import { Component } from "../../../components";
 import { ServiceLocator } from "../../../service-locator";
+import { NodeComponentName } from "../../../enums";
 
 export default class NodeOrder extends Component {
   #localZOrder = 0;
@@ -9,7 +10,7 @@ export default class NodeOrder extends Component {
   #arrivalOrder = 0;
 
   constructor() {
-    super("order");
+    super(NodeComponentName.Order);
   }
 
   get localZOrder() { return this.#localZOrder; }

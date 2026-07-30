@@ -163,6 +163,14 @@ export enum NodeStateCallbackType {
   max = 6
 }
 
+export enum NodeComponentName {
+  ActionManager = "ActionManager",
+  Color = "Color",
+  Order = "Order",
+  Scheduler = "Scheduler",
+  Transform = "Transform"
+}
+
 /**
  * Key map for keyboard event.
  */

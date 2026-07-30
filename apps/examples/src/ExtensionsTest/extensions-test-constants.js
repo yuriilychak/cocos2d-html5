@@ -31,7 +31,7 @@ import { runEditBoxTest } from "./EditBoxTest/EditBoxTest";
 import { runSocketIOTest } from "./NetworkTest/SocketIOTest";
 import { runWebSocketTest } from "./NetworkTest/WebSocketTest";
 import { runTableViewTest } from "./TableViewTest/table-view-test-scene-helpers";
-import { Director, OperatingSystem, ServiceLocator } from "@aspect/core";
+import { OperatingSystem, ServiceLocator } from "@aspect/core";
 
 export const extensionsTestItems = [
   {

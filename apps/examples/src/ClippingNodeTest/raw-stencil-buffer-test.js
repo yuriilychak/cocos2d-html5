@@ -38,8 +38,6 @@ import {
   CustomRenderCmd,
   Point,
   Sprite,
-  kmGLPopMatrix,
-  kmGLPushMatrix,
   log,
   ServiceLocator
 } from "@aspect/core";
@@ -103,10 +101,10 @@ export class RawStencilBufferTest extends BaseClippingNodeTest {
         new Color(255, 255, 255, 255)
       );
 
-      kmGLPushMatrix();
+      ServiceLocator.kmglMatrix.pushMatrix();
       this.transform();
       this._sprite.visit();
-      kmGLPopMatrix();
+      ServiceLocator.kmglMatrix.popMatrix();
 
       this.setupStencilForDrawingOnPlane(i);
       //checkGLErrorDebug();
@@ -117,10 +115,10 @@ export class RawStencilBufferTest extends BaseClippingNodeTest {
         _planeColor[i]
       );
 
-      kmGLPushMatrix();
+      ServiceLocator.kmglMatrix.pushMatrix();
       this.transform();
       this._sprite.visit();
-      kmGLPopMatrix();
+      ServiceLocator.kmglMatrix.popMatrix();
     }
 
     gl.disable(gl.STENCIL_TEST);

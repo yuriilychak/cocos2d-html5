@@ -2,12 +2,13 @@ import { assert, log, _LogInfos } from "../../../boot/debugger";
 import { Component } from "../../../components";
 import { ACTION_TAG_INVALID } from "../../../platform/macro/constants";
 import { ServiceLocator } from "../../../service-locator";
+import { NodeComponentName } from "../../../enums";
 
 export default class NodeActionManager extends Component {
   #actionManager = null;
 
   constructor() {
-    super("actionManager");
+    super(NodeComponentName.ActionManager);
   }
 
   get actionManager() {
