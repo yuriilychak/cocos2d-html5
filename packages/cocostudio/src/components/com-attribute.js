@@ -29,13 +29,11 @@
 import { log, Component, ServiceLocator } from "@aspect/core";
 
 export class ComAttribute extends Component {
-  static componentName = "CCComAttribute";
-
   /**
    * Construction of ComAttribute
    */
   constructor() {
-    super();
+    super("CCComAttribute");
     this._jsonDict = {};
     this._filePath = "";
     this.init();
@@ -195,4 +193,3 @@ export class ComAttribute extends Component {
     this._jsonDict = ServiceLocator.loader.get(filename);
   }
 };
-

@@ -35,9 +35,8 @@ export class ComRender extends Component {
    * @param {String} comName
    */
   constructor(node, comName) {
-    super();
+    super(comName);
     this._render = node;
-    this.name = comName;
     this.isRenderer = true;
     this.init();
   }

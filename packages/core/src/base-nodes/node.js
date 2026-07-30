@@ -24,15 +24,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { BaseClass } from "../platform/class";
 import { dirtyFlags } from "./node-canvas-render-cmd";
 import { Point, Rect, AffineTransform } from "../geometry";
 import { log, assert, _LogInfos } from "../boot/debugger";
-import {
-  REPEAT_FOREVER,
-  ACTION_TAG_INVALID
-} from "../platform/macro/constants";
-
 import { arrayRemoveObject } from "../platform/macro/utils";
 import { ComponentContainer } from "../components";
 import Touch from "../event-manager/touch";
@@ -41,6 +35,8 @@ import { WebGLRenderCmd as NodeWebGLRenderCmd } from "./node-webgl-render-cmd";
 import { NodeTransform } from "./node-transform";
 import { NodeColor } from "./node-color";
 import { NodeOrder } from "./node-order";
+import { NodeScheduler } from "./node-scheduler";
+import { NodeActionManager } from "./node-action-manager";
 import { ServiceLocator } from "../service-locator";
 
 /**
@@ -147,18 +143,17 @@ export function setGlobalOrderOfArrival(val) {
  * @property {GLProgram}         shaderProgram       - The shader program currently used for this node
  * @property {Number}               glServerState       - The state of OpenGL server side
  */
-export class Node extends BaseClass {
+export class Node extends ComponentContainer {
   #tag = NODE_TAG_INVALID;
   #userData = null;
 
   #visible = true;
   #parent = null;
   #running = false;
-  #actionManager = null;
-  #scheduler = null;
+  #actionManager = new NodeActionManager();
   #reorderChildDirty = false;
 
-  #componentContainer = new ComponentContainer(this);
+  #scheduler = new NodeScheduler();
   #name = "";
 
   #transitionFinished = false;
@@ -174,6 +169,8 @@ export class Node extends BaseClass {
    */
   constructor() {
     super();
+    this.addComponent(this.#scheduler);
+    this.addComponent(this.#actionManager);
     this.renderCmd = this.createRenderCmd();
   }
 
@@ -624,7 +621,7 @@ export class Node extends BaseClass {
   onExit() {
     this.#running = false;
     this.pause();
-    this.removeAllComponents();
+    this.removeAllComponents([this.#scheduler.name, this.#actionManager.name]);
   }
 
   // actions
@@ -637,10 +634,7 @@ export class Node extends BaseClass {
    * @return {Action} An Action pointer
    */
   runAction(action) {
-    assert(action, _LogInfos.Node_runAction);
-
-    this.actionManager.addAction(action, this, !this.#running);
-    return action;
+    return this.#actionManager.runAction(action);
   }
 
   /**
@@ -648,7 +642,7 @@ export class Node extends BaseClass {
    * @function
    */
   stopAllActions() {
-    this.actionManager && this.actionManager.removeAllActionsFromTarget(this);
+    this.#actionManager.stopAllActions();
   }
 
   /**
@@ -657,7 +651,7 @@ export class Node extends BaseClass {
    * @param {Action} action An action object to be removed.
    */
   stopAction(action) {
-    this.actionManager.removeAction(action);
+    this.#actionManager.stopAction(action);
   }
 
   /**
@@ -666,11 +660,7 @@ export class Node extends BaseClass {
    * @param {Number} tag A tag that indicates the action to be removed.
    */
   stopActionByTag(tag) {
-    if (tag === ACTION_TAG_INVALID) {
-      log(_LogInfos.Node_stopActionByTag);
-      return;
-    }
-    this.actionManager.removeActionByTag(tag, this);
+    this.#actionManager.stopActionByTag(tag);
   }
 
   /**
@@ -681,11 +671,7 @@ export class Node extends BaseClass {
    * @return {Action} The action object with the given tag.
    */
   getActionByTag(tag) {
-    if (tag === ACTION_TAG_INVALID) {
-      log(_LogInfos.Node_getActionByTag);
-      return null;
-    }
-    return this.actionManager.getActionByTag(tag, this);
+    return this.#actionManager.getActionByTag(tag);
   }
 
   /** <p>Returns the numbers of actions that are running plus the ones that are schedule to run (actions in actionsToAdd and actions arrays).<br/>
@@ -696,7 +682,7 @@ export class Node extends BaseClass {
    * @return {Number} The number of actions that are running plus the ones that are schedule to run
    */
   getNumberOfRunningActions() {
-    return this.actionManager.numberOfRunningActionsInTarget(this);
+    return this.#actionManager.numberOfRunningActions;
   }
 
   // Node - Callbacks
@@ -709,7 +695,7 @@ export class Node extends BaseClass {
    * @function
    */
   scheduleUpdate() {
-    this.scheduleUpdateWithPriority(0);
+    this.#scheduler.scheduleUpdate();
   }
 
   /**
@@ -723,7 +709,7 @@ export class Node extends BaseClass {
    * @param {Number} priority
    */
   scheduleUpdateWithPriority(priority) {
-    this.scheduler.scheduleUpdate(this, priority, !this.#running);
+    this.#scheduler.scheduleUpdateWithPriority(priority);
   }
 
   /**
@@ -732,7 +718,7 @@ export class Node extends BaseClass {
    * @see Node#scheduleUpdate
    */
   unscheduleUpdate() {
-    this.scheduler.unscheduleUpdate(this);
+    this.#scheduler.unscheduleUpdate();
   }
 
   /**
@@ -746,71 +732,7 @@ export class Node extends BaseClass {
    * @param {String} key The only string identifying the callback
    */
   schedule(callback, interval, repeat, delay, key) {
-    var len = arguments.length;
-    if (typeof callback === "function") {
-      //callback, interval, repeat, delay, key
-      if (len === 1) {
-        //callback
-        interval = 0;
-        repeat = REPEAT_FOREVER;
-        delay = 0;
-        key = this.instanceId;
-      } else if (len === 2) {
-        if (typeof interval === "number") {
-          //callback, interval
-          repeat = REPEAT_FOREVER;
-          delay = 0;
-          key = this.instanceId;
-        } else {
-          //callback, key
-          key = interval;
-          interval = 0;
-          repeat = REPEAT_FOREVER;
-          delay = 0;
-        }
-      } else if (len === 3) {
-        if (typeof repeat === "string") {
-          //callback, interval, key
-          key = repeat;
-          repeat = REPEAT_FOREVER;
-        } else {
-          //callback, interval, repeat
-          key = this.instanceId;
-        }
-        delay = 0;
-      } else if (len === 4) {
-        key = this.instanceId;
-      }
-    } else {
-      //selector
-      //selector, interval
-      //selector, interval, repeat, delay
-      if (len === 1) {
-        interval = 0;
-        repeat = REPEAT_FOREVER;
-        delay = 0;
-      } else if (len === 2) {
-        repeat = REPEAT_FOREVER;
-        delay = 0;
-      }
-    }
-
-    assert(callback, _LogInfos.Node_schedule);
-    assert(interval >= 0, _LogInfos.Node_schedule_2);
-
-    interval = interval || 0;
-    repeat = isNaN(repeat) ? REPEAT_FOREVER : repeat;
-    delay = delay || 0;
-
-    this.scheduler.schedule(
-      callback,
-      this,
-      interval,
-      repeat,
-      delay,
-      !this.#running,
-      key
-    );
+    this.#scheduler.schedule(...arguments);
   }
 
   /**
@@ -822,10 +744,7 @@ export class Node extends BaseClass {
    * @param {String} key The only string identifying the callback
    */
   scheduleOnce(callback, delay, key) {
-    //selector, delay
-    //callback, delay, key
-    if (key === undefined) key = this.instanceId;
-    this.schedule(callback, 0, 0, delay, key);
+    this.#scheduler.scheduleOnce(callback, delay, key);
   }
 
   /**
@@ -835,11 +754,7 @@ export class Node extends BaseClass {
    * @param {function} callback_fn  A function wrapped as a selector
    */
   unschedule(callback_fn) {
-    //key
-    //selector
-    if (!callback_fn) return;
-
-    this.scheduler.unschedule(callback_fn, this);
+    this.#scheduler.unschedule(callback_fn);
   }
 
   /**
@@ -848,7 +763,7 @@ export class Node extends BaseClass {
    * @function
    */
   unscheduleAllCallbacks() {
-    this.scheduler.unscheduleAllForTarget(this);
+    this.#scheduler.unscheduleAllCallbacks();
   }
 
   /**
@@ -856,8 +771,8 @@ export class Node extends BaseClass {
    * This method is called internally by onEnter</p>
    */
   resume() {
-    this.scheduler.resumeTarget(this);
-    this.actionManager && this.actionManager.resumeTarget(this);
+    this.#scheduler.resume();
+    this.#actionManager.resume();
     ServiceLocator.eventManager.resumeTarget(this);
   }
 
@@ -867,8 +782,8 @@ export class Node extends BaseClass {
    * @function
    */
   pause() {
-    this.scheduler.pauseTarget(this);
-    this.actionManager && this.actionManager.pauseTarget(this);
+    this.#scheduler.pause();
+    this.#actionManager.pause();
     ServiceLocator.eventManager.pauseTarget(this);
   }
 
@@ -1032,18 +947,6 @@ export class Node extends BaseClass {
   }
 
   /**
-   * Update will be called automatically every frame if "scheduleUpdate" is called when the node is "live".<br/>
-   * The default behavior is to invoke the visit function of node's componentContainer.<br/>
-   * Override me to implement your own update logic.
-   * @function
-   * @param {Number} dt Delta time since last update
-   */
-  update(dt) {
-    if (this.#componentContainer && !this.#componentContainer.isEmpty())
-      this.#componentContainer.visit(dt);
-  }
-
-  /**
    * <p>
    * Calls children's updateTransform() method recursively.                                        <br/>
    *                                                                                               <br/>
@@ -1060,46 +963,6 @@ export class Node extends BaseClass {
       node = children[i];
       if (node) node.updateTransform();
     }
-  }
-
-  /**
-   * Returns a component identified by the name given.
-   * @function
-   * @param {String} name The name to search for
-   * @return {Component} The component found
-   */
-  getComponent(name) {
-    if (this.#componentContainer)
-      return this.#componentContainer.getComponent(name);
-    return null;
-  }
-
-  /**
-   * Adds a component to the node's component container.
-   * @function
-   * @param {Component} component
-   */
-  addComponent(component) {
-    if (this.#componentContainer) this.#componentContainer.add(component);
-  }
-
-  /**
-   * Removes a component identified by the given name or removes the component object given
-   * @function
-   * @param {String|Component} component
-   */
-  removeComponent(component) {
-    if (this.#componentContainer)
-      return this.#componentContainer.remove(component);
-    return false;
-  }
-
-  /**
-   * Removes all components of Node, it called when Node is exiting from stage.
-   * @function
-   */
-  removeAllComponents() {
-    if (this.#componentContainer) this.#componentContainer.removeAll();
   }
 
   /**
@@ -1531,25 +1394,19 @@ export class Node extends BaseClass {
   }
 
   get actionManager() {
-    return this.#actionManager || ServiceLocator.actionManager;
+    return this.#actionManager.actionManager;
   }
 
   set actionManager(value) {
-    if (this.#actionManager !== value) {
-      this.stopAllActions();
-      this.#actionManager = value;
-    }
+    this.#actionManager.actionManager = value;
   }
 
   get scheduler() {
-    return this.#scheduler || ServiceLocator.scheduler;
+    return this.#scheduler.scheduler;
   }
 
   set scheduler(value) {
-    if (this.#scheduler !== value) {
-      this.unscheduleAllCallbacks();
-      this.#scheduler = value;
-    }
+    this.#scheduler.scheduler = value;
   }
 
   get shaderProgram() {

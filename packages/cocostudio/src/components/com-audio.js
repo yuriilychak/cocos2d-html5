@@ -29,13 +29,11 @@
 import { Component, ServiceLocator } from "@aspect/core";
 
 export class ComAudio extends Component {
-  static componentName = "Audio";
-
   /**
    * Construction of ComAudio
    */
   constructor() {
-    super();
+    super("Audio");
     this._filePath = "";
     this._loop = false;
     this.init();
@@ -272,4 +270,3 @@ export class ComAudio extends Component {
     return this._loop;
   }
 };
-

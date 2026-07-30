@@ -26,25 +26,17 @@
 import { BaseClass } from "../platform/class";
 import type { ComponentOwnerLike } from './types';
 
-type ComponentConstructor = typeof Component & {
-  componentName?: string;
-  NAME?: string;
-};
-
 /**
  * The base class of component in CocoStudio
  */
 export class Component extends BaseClass {
-  public static componentName?: string;
-  protected _name?: string;
   #owner: ComponentOwnerLike | null = null;
-  #name = "";
+  #name: string;
   #enabled = true;
 
-  public constructor() {
+  public constructor(name: string) {
     super();
-    const ctor = this.constructor as ComponentConstructor;
-    this.#name = ctor.componentName || ctor.NAME || "";
+    this.#name = name;
   }
 
   public init(): boolean {
@@ -68,8 +60,7 @@ export class Component extends BaseClass {
   }
 
   public get name(): string {
-    const ctor = this.constructor as ComponentConstructor;
-    return this.#name || ctor.componentName || ctor.NAME || this._name || "";
+    return this.#name;
   }
 
   public set name(name: string) {

@@ -26,123 +26,98 @@
 import { log } from "../boot/debugger";
 import { BaseClass } from "../platform/class";
 import { Component } from "./component";
-import type { ComponentOwnerLike } from './types';
-
-type ComponentMap = Record<string, Component>;
+import { ComponentOwnerLike } from "./types";
 
 /**
- * The component container for Cocostudio, it has some components.
+ * Component container class to implemeent composition for Node class.
  */
 export class ComponentContainer extends BaseClass {
-  public _components: ComponentMap | null = null;
-  public _owner: ComponentOwnerLike;
+  #components = new Map<string, Component>();
 
-  public constructor(node: ComponentOwnerLike) {
-    super();
-    this._owner = node;
+  /**
+   * Returns a component identified by the given name.
+   */
+  public getComponent(name: string): Component | null {
+    return this.#components.get(name.trim()) || null;
   }
 
-  public getComponent(name: string): Component | undefined {
-    if (!name) {
-      throw new Error("ComponentContainer.getComponent(): name should be non-null");
-    }
-
-    const componentName = name.trim();
-    if (!this._components) {
-      this._components = {};
-    }
-
-    return this._components[componentName];
-  }
-
-  public add(component: Component | null): boolean {
-    if (!component) {
-      throw new Error("ComponentContainer.add(): component should be non-null");
-    }
+  /**
+   * Adds a component to the node's component container.
+   */
+  public addComponent(component: Component): boolean {
 
     if (component.owner) {
-      log("ComponentContainer.add(): Component already added. It can't be added again");
+      log("ComponentContainer.addComponent(): Component already added. It can't be added again");
       return false;
     }
 
-    if (this._components == null) {
-      this._components = {};
-      this._owner.scheduleUpdate?.();
-    }
-
-    const oldComponent = this._components[component.name];
+    const oldComponent = this.#components.get(component.name);
     if (oldComponent) {
-      log("ComponentContainer.add(): Component already added. It can't be added again");
+      log("ComponentContainer.addComponent(): Component already added. It can't be added again");
       return false;
     }
 
-    component.owner = this._owner;
-    this._components[component.name] = component;
+    component.owner = this as ComponentOwnerLike;
+    this.#components.set(component.name, component);
     component.onEnter();
     return true;
   }
 
-  public remove(name: string | Component): boolean {
-    if (!name) {
-      throw new Error("ComponentContainer.remove(): name should be non-null");
-    }
+  /**
+   * Removes a component identified by the given name or removes the component given object.
+   */
+  public removeComponent(name: string): boolean
+  public removeComponent(component: Component): boolean;
+  public removeComponent(nameOrComponent: string | Component): boolean {
+    const component: Component | null = nameOrComponent instanceof Component
+      ? nameOrComponent
+      : this.getComponent(nameOrComponent);
 
-    if (!this._components) {
-      return false;
-    }
-
-    if (name instanceof Component) {
-      return this._removeByComponent(name);
-    }
-
-    return this._removeByComponent(this._components[name.trim()]);
-  }
-
-  public _removeByComponent(component?: Component): boolean {
-    if (!component) {
+    if (component === null) {
       return false;
     }
 
     component.onExit();
     component.owner = null;
-    delete this._components?.[component.name];
+    this.#components.delete(component.name);
+
     return true;
   }
 
-  public removeAll(): void {
-    if (!this._components) {
+  /**
+   * Removes all components of Node, it called when Node is exiting from stage.
+   */
+  public removeAllComponents(excludedNames: readonly string[] = []): void {
+    if (!this.hasComponents) {
       return;
     }
 
-    const components = this._components;
-    for (const component of Object.values(components)) {
+    for (const [name, component] of this.#components) {
+      if (excludedNames.includes(name)) {
+        continue;
+      }
+
       component.onExit();
       component.owner = null;
+      this.#components.delete(name);
     }
-
-    this._owner.unscheduleUpdate?.();
-    this._components = null;
   }
 
-  public _alloc(): void {
-    this._components = {};
-  }
-
-  public visit(delta: number): void {
-    if (!this._components) {
+  /**
+   * Update will be called automatically every frame if "scheduleUpdate" is called when the node is "live".<br/>
+   * The default behavior is to invoke the visit function of node's componentContainer.<br/>
+   */
+  public update(delta: number): void {
+    if(!this.hasComponents) {
       return;
     }
 
-    for (const component of Object.values(this._components)) {
+    for (const component of this.#components.values()) {
       component.update(delta);
     }
   }
 
-  public isEmpty(): boolean {
-    if (!this._components) {
-      return true;
-    }
-
-    return Object.keys(this._components).length === 0;
+  public get hasComponents(): boolean {
+    return this.#components.size > 0;
   }
 }

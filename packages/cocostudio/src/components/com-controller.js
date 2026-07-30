@@ -29,12 +29,11 @@ import { Component } from "@aspect/core";
  * The controller component for Cocostudio.
  */
 export class ComController extends Component {
-  static componentName = "ComController";
   /**
    * Construction of ComController.
    */
   constructor() {
-    super();
+    super("ComController");
     this.init();
   }
 

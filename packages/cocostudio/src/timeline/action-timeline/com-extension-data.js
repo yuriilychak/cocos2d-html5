@@ -27,13 +27,11 @@ import { Component } from "@aspect/core";
 import { ActionTimelineData } from "./action-timeline-data.js";
 
 export class ComExtensionData extends Component {
-  static componentName = "ComExtensionData";
-
   _customProperty = null;
   _timelineData = null;
   
   constructor() {
-    super();
+    super("ComExtensionData");
     this._customProperty = "";
     this._timelineData = new ActionTimelineData(0);
   }
@@ -54,4 +52,3 @@ export class ComExtensionData extends Component {
     return this._customProperty;
   }
 }
-

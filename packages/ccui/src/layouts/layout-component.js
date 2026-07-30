@@ -24,10 +24,8 @@ export const LayoutComponent_SizeType = {
 };
 
 export class LayoutComponent extends Component {
-  static componentName = LayoutComponent.NAME;
-
   constructor() {
-    super();
+    super(LayoutComponent.NAME);
     this._horizontalEdge = 0;
     this._verticalEdge = 0;
 
