@@ -40,12 +40,6 @@ export class LayerColor extends Layer {
     return this._blendFunc;
   }
 
-  set opacityModifyRGB(value) {}
-
-  get opacityModifyRGB() {
-    return false;
-  }
-
   constructor(color, width, height) {
     super();
     this._blendFunc = null;

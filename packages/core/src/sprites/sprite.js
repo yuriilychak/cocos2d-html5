@@ -31,6 +31,7 @@ import { log, assert, _LogInfos } from "../boot/debugger";
 import { Texture2D } from "../textures/texture-2d";
 import { SpriteFrame } from "./sprite-frame";
 import { PolygonInfo } from "./polygon-info";
+import SpriteColor from "./sprite-color";
 
 import {
   sizePointsToPixels,
@@ -132,8 +133,6 @@ export class Sprite extends EventHelper(Node) {
     // Offset Position (used by Zwoptex)
     this._offsetPosition = null; // absolute
     this._unflippedOffsetPositionFromCenter = null;
-
-    this._opacityModifyRGB = false;
 
     // image is flipped
     this._flippedX = false; //Whether the sprite is flipped horizontally or not.
@@ -358,29 +357,6 @@ export class Sprite extends EventHelper(Node) {
    */
   isFlippedY() {
     return this._flippedY;
-  }
-
-  //
-  // RGBA protocol
-  //
-  /**
-   * Sets whether opacity modify color or not.
-   * @function
-   * @param {Boolean} modify
-   */
-  set opacityModifyRGB(modify) {
-    if (this._opacityModifyRGB !== modify) {
-      this._opacityModifyRGB = modify;
-      this.renderCmd._setColorDirty();
-    }
-  }
-
-  /**
-   * Returns whether opacity modify color or not.
-   * @return {Boolean}
-   */
-  get opacityModifyRGB() {
-    return this._opacityModifyRGB;
   }
 
   /**
@@ -941,6 +917,10 @@ export class Sprite extends EventHelper(Node) {
 
   get quad() {
     return this.getQuad();
+  }
+
+  createColor() {
+    return new SpriteColor();
   }
 
   createRenderCmd() {
