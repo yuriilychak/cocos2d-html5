@@ -214,7 +214,7 @@ export class GScrollView extends Layer {
   setContentOffsetInDuration(offset, dt) {
     var scroll = new MoveTo(dt, offset);
     var expire = new CallFunc(this._stoppedAnimatedScroll, this);
-    this._container.runAction(new Sequence(scroll, expire));
+    this._container.actionManager.runAction(new Sequence(scroll, expire));
     this.scheduler.schedule(this._performedAnimatedScroll);
   }
 
@@ -258,7 +258,7 @@ export class GScrollView extends Layer {
       var locScale = this._container.scale;
       if (locScale !== s) {
         var scaleAction = new ActionTween(dt, "zoomScale", locScale, s);
-        this.runAction(scaleAction);
+        this.actionManager.runAction(scaleAction);
       }
     } else {
       this.setZoomScale(s);

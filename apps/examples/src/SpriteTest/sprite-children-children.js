@@ -69,7 +69,7 @@ export class SpriteChildrenChildren extends SpriteTestDemo {
         var l1 = new Sprite(ServiceLocator.spriteFrameCache.get("father.gif"));
         l1.x = winSize.width / 2;
         l1.y = winSize.height / 2;
-        l1.runAction(seq.clone());
+        l1.actionManager.runAction(seq.clone());
         aParent.addChild(l1);
         var l1W = l1.width, l1H = l1.height;
 
@@ -77,7 +77,7 @@ export class SpriteChildrenChildren extends SpriteTestDemo {
         var l2a = new Sprite(ServiceLocator.spriteFrameCache.get("sister1.gif"));
         l2a.x = -50 + l1W / 2;
         l2a.y = 0 + l1H / 2;
-        l2a.runAction(rot_back_fe.clone());
+        l2a.actionManager.runAction(rot_back_fe.clone());
         l1.addChild(l2a);
         var l2aW = l2a.width, l2aH = l2a.height;
 
@@ -86,7 +86,7 @@ export class SpriteChildrenChildren extends SpriteTestDemo {
         var l2b = new Sprite(ServiceLocator.spriteFrameCache.get("sister2.gif"));
         l2b.x = +50 + l1W / 2;
         l2b.y = 0 + l1H / 2;
-        l2b.runAction(rot_back_fe.clone());
+        l2b.actionManager.runAction(rot_back_fe.clone());
         l1.addChild(l2b);
         var l2bW = l2b.width, l2bH = l2b.height;
 

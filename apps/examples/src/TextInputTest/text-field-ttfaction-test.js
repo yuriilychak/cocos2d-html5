@@ -101,14 +101,14 @@ export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
   //CCTextFieldDelegate
   onTextFieldAttachWithIME(sender) {
     if (!this._action) {
-      this._textField.runAction(this._textFieldAction);
+      this._textField.actionManager.runAction(this._textFieldAction);
       this._action = true;
     }
     return false;
   }
   onTextFieldDetachWithIME(sender) {
     if (this._action) {
-      this._textField.stopAction(this._textFieldAction);
+      this._textField.actionManager.stopAction(this._textFieldAction);
       this._textField.opacity = 255;
       this._action = false;
     }
@@ -151,7 +151,7 @@ export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
       ),
       new CallFunc(this.callbackRemoveNodeWhenDidAction, this)
     );
-    label.runAction(seq);
+    label.actionManager.runAction(seq);
     return false;
   }
 
@@ -187,7 +187,7 @@ export class TextFieldTTFActionTest extends KeyboardNotificationLayer {
       ),
       new CallFunc(this.callbackRemoveNodeWhenDidAction, this)
     );
-    label.runAction(seq);
+    label.actionManager.runAction(seq);
     return false;
   }
   onDraw(sender) {

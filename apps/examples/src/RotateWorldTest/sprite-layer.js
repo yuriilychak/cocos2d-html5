@@ -66,7 +66,7 @@ export class SpriteLayer extends Layer {
     this.addChild(spriteSister1);
     this.addChild(spriteSister2);
 
-    sprite.runAction(rot);
+    sprite.actionManager.runAction(rot);
 
     var jump1 = new JumpBy(4, new Point(-400, 0), 100, 4);
     var jump2 = jump1.reverse();
@@ -74,12 +74,12 @@ export class SpriteLayer extends Layer {
     var rot1 = new RotateBy(4, 360 * 2);
     var rot2 = rot1.reverse();
 
-    spriteSister1.runAction(new Sequence(jump2, jump1).repeat(5));
-    spriteSister2.runAction(
+    spriteSister1.actionManager.runAction(new Sequence(jump2, jump1).repeat(5));
+    spriteSister2.actionManager.runAction(
       new Sequence(jump1.clone(), jump2.clone()).repeat(5)
     );
 
-    spriteSister1.runAction(new Sequence(rot1, rot2).repeat(5));
-    spriteSister2.runAction(new Sequence(rot2.clone(), rot1.clone()).repeat(5));
+    spriteSister1.actionManager.runAction(new Sequence(rot1, rot2).repeat(5));
+    spriteSister2.actionManager.runAction(new Sequence(rot2.clone(), rot1.clone()).repeat(5));
   }
 }

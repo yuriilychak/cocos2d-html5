@@ -103,12 +103,12 @@ export class SpriteBatchNodeOffsetAnchorScale extends SpriteTestDemo {
       }
 
       var animation = new Animation(animFrames, 0.3);
-      sprite.runAction(new Animate(animation).repeatForever());
+      sprite.actionManager.runAction(new Animate(animation).repeatForever());
 
       var scale = new ScaleBy(2, 2);
       var scale_back = scale.reverse();
       var seq_scale = new Sequence(scale, scale_back);
-      sprite.runAction(seq_scale.repeatForever());
+      sprite.actionManager.runAction(seq_scale.repeatForever());
 
       batch.addChild(sprite, i);
     }

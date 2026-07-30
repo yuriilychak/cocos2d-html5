@@ -64,7 +64,7 @@ export class TMXOrthoFromXMLTest extends TileDemo {
     }
 
     var action = new ScaleBy(2, 0.5);
-    map.runAction(action);
+    map.actionManager.runAction(action);
   }
   title() {
     return "TMX created from XML test";

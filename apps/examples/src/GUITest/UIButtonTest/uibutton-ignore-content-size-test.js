@@ -69,7 +69,7 @@ export class UIButtonIgnoreContentSizeTest extends UIMainLayer {
       button2.setZoomScale(0.3);
       button2.setPressedActionEnabled(true);
       button2.addClickEventListener(function () {
-        button2.runAction(new ScaleTo(1.0, 1.2));
+        button2.actionManager.runAction(new ScaleTo(1.0, 1.2));
         log("clicked!");
       });
       this.addChild(button2);

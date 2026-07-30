@@ -13,7 +13,7 @@ export class TransitionMoveInL extends TransitionScene {
     this.initScenes();
 
     var action = this.action();
-    this._inScene.runAction(
+    this._inScene.actionManager.runAction(
       new Sequence(
         this.easeActionWithAction(action),
         new CallFunc(this.finish, this)

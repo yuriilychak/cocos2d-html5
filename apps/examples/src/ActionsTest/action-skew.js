@@ -57,11 +57,11 @@ export class ActionSkew extends ActionsDemo {
 
     var delay = new DelayTime(0.25);
 
-    this._tamara.runAction(new Sequence(actionTo, delay, actionToBack));
-    this._grossini.runAction(
+    this._tamara.actionManager.runAction(new Sequence(actionTo, delay, actionToBack));
+    this._grossini.actionManager.runAction(
       new Sequence(actionBy, delay.clone(), actionBy.reverse())
     );
-    this._kathia.runAction(
+    this._kathia.actionManager.runAction(
       new Sequence(actionBy2, delay.clone(), actionBy2.reverse())
     );
     //----end5----

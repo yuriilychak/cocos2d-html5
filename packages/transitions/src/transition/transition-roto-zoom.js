@@ -29,8 +29,8 @@ export class TransitionRotoZoom extends TransitionScene {
       new DelayTime(this._duration / 2)
     );
 
-    this._outScene.runAction(rotoZoom);
-    this._inScene.runAction(
+    this._outScene.actionManager.runAction(rotoZoom);
+    this._inScene.actionManager.runAction(
       new Sequence(rotoZoom.reverse(), new CallFunc(this.finish, this))
     );
   }

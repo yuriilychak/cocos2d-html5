@@ -49,7 +49,7 @@ export class SpriteProgressToHorizontal extends SpriteDemo {
         this.addChild(left);
         left.x = 200;
         left.y = winSize.height / 2;
-        left.runAction(to1.repeatForever());
+        left.actionManager.runAction(to1.repeatForever());
 
         var right = new ProgressTimer(new Sprite(s_pathSister2));
         right.type = ProgressTimer.TYPE_BAR;
@@ -60,7 +60,7 @@ export class SpriteProgressToHorizontal extends SpriteDemo {
         this.addChild(right);
         right.x = winSize.width - 200;
         right.y = winSize.height / 2;
-        right.runAction(to2.repeatForever());
+        right.actionManager.runAction(to2.repeatForever());
         //----end1----
     }
     title() {

@@ -60,7 +60,7 @@ export class UITextFieldTest_MaxLength extends UIMainLayer {
     var widgetSize = this._widget.contentSize;
     switch (type) {
       case TextField.EVENT_ATTACH_WITH_IME:
-        textField.runAction(
+        textField.actionManager.runAction(
           new MoveTo(
             0.225,
             new Point(
@@ -73,7 +73,7 @@ export class UITextFieldTest_MaxLength extends UIMainLayer {
           "attach with IME max length:" + textField.getMaxLength();
         break;
       case TextField.EVENT_DETACH_WITH_IME:
-        textField.runAction(
+        textField.actionManager.runAction(
           new MoveTo(
             0.175,
             new Point(widgetSize.width / 2.0, widgetSize.height / 2.0)

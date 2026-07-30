@@ -58,7 +58,7 @@ export class CCNodeTest4 extends TestNodeDemo {
     //----start1----delay2
     var node = this.getChildByTag(2);
     var action1 = new RotateBy(1, 360);
-    node.runAction(action1);
+    node.actionManager.runAction(action1);
     //----end1----
   }
   delay4(dt) {

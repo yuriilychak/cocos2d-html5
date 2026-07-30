@@ -48,7 +48,7 @@ export class SpriteProgressToRadialMidpointChanged extends SpriteDemo {
     left.midPoint = new Point(0.25, 0.75);
     left.x = 200;
     left.y = winSize.height / 2;
-    left.runAction(action.clone().repeatForever());
+    left.actionManager.runAction(action.clone().repeatForever());
 
     /**
      *  Our image on the left should be a radial progress indicator, counter clockwise
@@ -63,7 +63,7 @@ export class SpriteProgressToRadialMidpointChanged extends SpriteDemo {
     this.addChild(right);
     right.x = winSize.width - 200;
     right.y = winSize.height / 2;
-    right.runAction(action.clone().repeatForever());
+    right.actionManager.runAction(action.clone().repeatForever());
     //----end3----
   }
 

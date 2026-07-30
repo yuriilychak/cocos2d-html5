@@ -57,8 +57,8 @@ export class SpriteProgressBarTintAndFade extends SpriteDemo {
     this.addChild(left);
     left.x = 150;
     left.y = winSize.height / 2;
-    left.runAction(to.clone().repeatForever());
-    left.runAction(tint.clone().repeatForever());
+    left.actionManager.runAction(to.clone().repeatForever());
+    left.actionManager.runAction(tint.clone().repeatForever());
 
     left.addChild(new TextBMFont("Tint", s_simpleFont_fnt));
 
@@ -71,8 +71,8 @@ export class SpriteProgressBarTintAndFade extends SpriteDemo {
     this.addChild(middle);
     middle.x = winSize.width / 2;
     middle.y = winSize.height / 2;
-    middle.runAction(to.clone().repeatForever());
-    middle.runAction(fade.clone().repeatForever());
+    middle.actionManager.runAction(to.clone().repeatForever());
+    middle.actionManager.runAction(fade.clone().repeatForever());
 
     middle.addChild(new TextBMFont("Fade", s_simpleFont_fnt));
 
@@ -85,9 +85,9 @@ export class SpriteProgressBarTintAndFade extends SpriteDemo {
     this.addChild(right);
     right.x = winSize.width - 150;
     right.y = winSize.height / 2;
-    right.runAction(to.clone().repeatForever());
-    right.runAction(tint.clone().repeatForever());
-    right.runAction(fade.clone().repeatForever());
+    right.actionManager.runAction(to.clone().repeatForever());
+    right.actionManager.runAction(tint.clone().repeatForever());
+    right.actionManager.runAction(fade.clone().repeatForever());
 
     right.addChild(new TextBMFont("Tint and Fade", s_simpleFont_fnt));
     //----end5----

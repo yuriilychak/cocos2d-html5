@@ -56,7 +56,7 @@ export default class Action extends BaseClass {
 
   /**
    * called after the action has finished. It will set the 'target' to nil. <br />
-   * IMPORTANT: You should never call "action stop" manually. Instead, use: "target.stopAction(action);"
+   * IMPORTANT: You should never call "action stop" manually. Instead, use: "target.actionManager.stopAction(action);"
    */
   stop() {
     this.target = null;

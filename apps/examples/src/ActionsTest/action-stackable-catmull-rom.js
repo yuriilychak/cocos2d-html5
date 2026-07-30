@@ -49,7 +49,7 @@ export class ActionStackableCatmullRom extends ActionsDemo {
     var move_back = move.reverse();
     var move_seq = new Sequence(move, move_back);
     var move_rep = move_seq.repeatForever();
-    this._grossini.runAction(move_rep);
+    this._grossini.actionManager.runAction(move_rep);
 
     // CatmullRom
     var array = [
@@ -66,7 +66,7 @@ export class ActionStackableCatmullRom extends ActionsDemo {
     var reverse1 = action1.reverse();
     var seq1 = new Sequence(action1, reverse1);
     var repeat = seq1.repeatForever();
-    this._grossini.runAction(repeat);
+    this._grossini.actionManager.runAction(repeat);
     //----end36----
   }
   title() {

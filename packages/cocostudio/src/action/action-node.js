@@ -298,7 +298,7 @@ export class ActionNode extends BaseClass {
 
   _runAction() {
     var node = this.getActionNode();
-    if (node !== null && this.#action !== null) node.runAction(this.#action);
+    if (node !== null && this.#action !== null) node.actionManager.runAction(this.#action);
   }
 
   /**
@@ -307,7 +307,7 @@ export class ActionNode extends BaseClass {
   stopAction() {
     var node = this.getActionNode();
     if (node !== null && this.#action !== null) {
-      if (!this.#action.isDone()) node.stopAction(this.#action);
+      if (!this.#action.isDone()) node.actionManager.stopAction(this.#action);
     }
   }
 

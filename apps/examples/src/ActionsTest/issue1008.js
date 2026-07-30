@@ -69,11 +69,11 @@ export class Issue1008 extends ActionsDemo {
     var delay = new DelayTime(0.25);
 
     var rep = new Sequence(bz1, bz2, trace, delay).repeatForever();
-    this._grossini.runAction(rep);
+    this._grossini.actionManager.runAction(rep);
 
     //----end10----
 
-    //this._grossini.runAction(new Sequence(bz1, bz2, trace,delay));
+    //this._grossini.actionManager.runAction(new Sequence(bz1, bz2, trace,delay));
   }
   onTrace(sender) {
     var pos = new Point(sender.x, sender.y);

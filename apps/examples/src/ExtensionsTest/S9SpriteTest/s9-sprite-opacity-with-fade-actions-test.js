@@ -58,7 +58,7 @@ export class S9SpriteOpacityWithFadeActionsTest extends S9SpriteTestDemo {
     var fadeOutAction = new FadeOut(0.8);
     var fadeInAction = new FadeIn(0.8);
 
-    colorLayer.runAction(
+    colorLayer.actionManager.runAction(
       new Sequence(
         fadeToAction,
         delay,

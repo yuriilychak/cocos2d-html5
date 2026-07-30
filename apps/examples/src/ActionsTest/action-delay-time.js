@@ -50,7 +50,7 @@ export class ActionDelayTime extends ActionsDemo {
     var move = new MoveBy(1, new Point(150, 0));
     var action = new Sequence(move, new DelayTime(2), move.clone());
 
-    this._grossini.runAction(action);
+    this._grossini.actionManager.runAction(action);
     //----end20----
   }
   title() {

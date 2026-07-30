@@ -62,10 +62,10 @@ export class CCNodeTest6 extends TestNodeDemo {
     this.addChild(sp2, 0, TAG_SPRITE2);
     sp2.addChild(sp21, 21);
 
-    sp1.runAction(forever1);
-    sp11.runAction(forever11);
-    sp2.runAction(forever2);
-    sp21.runAction(forever21);
+    sp1.actionManager.runAction(forever1);
+    sp11.actionManager.runAction(forever11);
+    sp2.actionManager.runAction(forever2);
+    sp21.actionManager.runAction(forever21);
 
     this.scheduler.schedule(this.onAddAndRemove, 2.0);
     //----end3----

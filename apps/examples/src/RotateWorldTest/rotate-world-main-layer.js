@@ -75,9 +75,9 @@ export class RotateWorldMainLayer extends Layer {
 
     var rot = new RotateBy(8, 720);
 
-    blue.runAction(rot);
-    red.runAction(rot.clone());
-    green.runAction(rot.clone());
-    white.runAction(rot.clone());
+    blue.actionManager.runAction(rot);
+    red.actionManager.runAction(rot.clone());
+    green.actionManager.runAction(rot.clone());
+    white.actionManager.runAction(rot.clone());
   }
 }

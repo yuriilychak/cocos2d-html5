@@ -45,8 +45,8 @@ export class ActionRotateJerk extends ActionsDemo {
 
     var rep1 = seq.repeat(10);
     var rep2 = seq.clone().repeatForever();
-    this._tamara.runAction(rep1);
-    this._kathia.runAction(rep2);
+    this._tamara.actionManager.runAction(rep1);
+    this._kathia.actionManager.runAction(rep2);
     //----end24----
   }
   title() {

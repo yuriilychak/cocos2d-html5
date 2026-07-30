@@ -87,7 +87,7 @@ export class BakeLayerColorTest extends BakeLayerBaseTest {
 
     this._bakeLayer = bakeLayer;
     bakeLayer.bake();
-    bakeLayer.runAction(
+    bakeLayer.actionManager.runAction(
       new Sequence(
         new MoveBy(2, new Point(100, 100)),
         new MoveBy(2, new Point(-100, -100))
@@ -112,6 +112,6 @@ export class BakeLayerColorTest extends BakeLayerBaseTest {
   }
 
   onRunAction() {
-    this._actionSprite.runAction(new RotateBy(2, 180));
+    this._actionSprite.actionManager.runAction(new RotateBy(2, 180));
   }
 }

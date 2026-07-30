@@ -52,13 +52,13 @@ export class NodeToWorld extends TestNodeDemo {
     var rot = new RotateBy(3, 360);
     var delay = new DelayTime(0.3);
     var fe = new Sequence(rot, delay).repeatForever();
-    item.runAction(fe);
+    item.actionManager.runAction(fe);
 
     var move = new MoveBy(3, new Point(200, 0));
     var move_back = move.reverse();
     var seq = new Sequence(move, delay.clone(), move_back);
     var fe2 = seq.repeatForever();
-    back.runAction(fe2);
+    back.actionManager.runAction(fe2);
 
     //Automation parameters
     this.autoParam = item;

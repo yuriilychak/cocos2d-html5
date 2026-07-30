@@ -66,7 +66,7 @@ export class UITextFieldTest extends UIMainLayer {
     switch (type) {
       case TextField.EVENT_ATTACH_WITH_IME:
         var widgetSize = this._widget.contentSize;
-        textField.runAction(
+        textField.actionManager.runAction(
           new MoveTo(
             0.225,
             new Point(widgetSize.width / 2, widgetSize.height / 2 + 30)
@@ -76,7 +76,7 @@ export class UITextFieldTest extends UIMainLayer {
         break;
       case TextField.EVENT_DETACH_WITH_IME:
         var widgetSize = this._widget.contentSize;
-        textField.runAction(
+        textField.actionManager.runAction(
           new MoveTo(
             0.175,
             new Point(widgetSize.width / 2.0, widgetSize.height / 2.0)

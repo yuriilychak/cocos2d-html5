@@ -51,7 +51,7 @@ export class SceneTestLayer1 extends MenuTestLayer {
     this.addChild(sprite);
     sprite.x = s.width - 40;
     sprite.y = s.height / 2;
-    sprite.runAction(new RotateBy(2, 360).repeatForever());
+    sprite.actionManager.runAction(new RotateBy(2, 360).repeatForever());
   }
 
   onEnter() {
@@ -92,7 +92,7 @@ export class SceneTestLayer1 extends MenuTestLayer {
     sprite.position = new Point(winSize.width / 2, winSize.height / 2);
     layerTemp.addChild(sprite);
     ServiceLocator.director.notificationNode = layerTemp;
-    sprite.runAction(new RotateBy(2, 360).repeatForever());
+    sprite.actionManager.runAction(new RotateBy(2, 360).repeatForever());
     log("notificationNode set!");
   }
 

@@ -85,7 +85,7 @@ export class SpriteBatchNodeChildren extends SpriteTestDemo {
     }
 
     var animation = new Animation(animFrames, 0.2);
-    sprite1.runAction(new Animate(animation).repeatForever());
+    sprite1.actionManager.runAction(new Animate(animation).repeatForever());
     // END NEW CODE
 
     var action = new MoveBy(2, new Point(200, 0));
@@ -95,11 +95,11 @@ export class SpriteBatchNodeChildren extends SpriteTestDemo {
     var action_s_back = action_s.reverse();
 
     var seq2 = action_rot.reverse();
-    sprite2.runAction(seq2.repeatForever());
+    sprite2.actionManager.runAction(seq2.repeatForever());
 
-    sprite1.runAction(action_rot.repeatForever());
-    sprite1.runAction(new Sequence(action, action_back).repeatForever());
-    sprite1.runAction(new Sequence(action_s, action_s_back).repeatForever());
+    sprite1.actionManager.runAction(action_rot.repeatForever());
+    sprite1.actionManager.runAction(new Sequence(action, action_back).repeatForever());
+    sprite1.actionManager.runAction(new Sequence(action_s, action_s_back).repeatForever());
     //----end29----
   }
   //

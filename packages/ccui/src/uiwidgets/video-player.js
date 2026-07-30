@@ -274,7 +274,7 @@ export class VideoPlayer extends Widget {
 
   cleanup() {
     this.renderCmd.removeDom();
-    this.stopAllActions();
+    this.actionManager.stopAllActions();
     this.scheduler.unscheduleAllCallbacks();
   }
 

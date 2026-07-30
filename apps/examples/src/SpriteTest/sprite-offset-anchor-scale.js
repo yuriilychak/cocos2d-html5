@@ -100,13 +100,13 @@ export class SpriteOffsetAnchorScale extends SpriteTestDemo {
       }
 
       var animation = new Animation(animFrames, 0.3);
-      sprite.runAction(new Animate(animation).repeatForever());
+      sprite.actionManager.runAction(new Animate(animation).repeatForever());
 
       var scale = new ScaleBy(2, 2);
       var scale_back = scale.reverse();
       var delay = new DelayTime(0.25);
       var seq_scale = new Sequence(scale, delay, scale_back);
-      sprite.runAction(seq_scale.repeatForever());
+      sprite.actionManager.runAction(seq_scale.repeatForever());
 
       this.addChild(sprite, 0);
     }

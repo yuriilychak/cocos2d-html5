@@ -124,7 +124,7 @@ export class Sprite1 extends SpriteTestDemo {
     var action_back = action.reverse();
     var seq = new Sequence(action, action_back);
 
-    sprite.runAction(seq.repeatForever());
+    sprite.actionManager.runAction(seq.repeatForever());
     this.testSprite = sprite;
     //----end0----
   }

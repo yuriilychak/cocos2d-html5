@@ -61,13 +61,13 @@ export class SchedulerTest extends EaseSpriteDemo {
     var action3 = action.clone();
 
     //old api
-    //this._grossini.runAction(new Speed(action, 0.5));
-    //this._tamara.runAction(new Speed(action2, 1.5));
-    //this._kathia.runAction(new Speed(action3, 1.0));
+    //this._grossini.actionManager.runAction(new Speed(action, 0.5));
+    //this._tamara.actionManager.runAction(new Speed(action2, 1.5));
+    //this._kathia.actionManager.runAction(new Speed(action3, 1.0));
 
-    this._grossini.runAction(action.speed(0.5));
-    this._tamara.runAction(action2.speed(1.5));
-    this._kathia.runAction(action3.speed(1.0));
+    this._grossini.actionManager.runAction(action.speed(0.5));
+    this._tamara.actionManager.runAction(action2.speed(1.5));
+    this._kathia.actionManager.runAction(action3.speed(1.0));
 
     var emitter = new ParticleFireworks();
     emitter.setTotalParticles(250);

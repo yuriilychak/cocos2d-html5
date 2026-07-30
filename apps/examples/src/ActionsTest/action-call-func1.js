@@ -73,9 +73,9 @@ export class ActionCallFunc1 extends ActionsDemo {
       new CallFunc(this.onCallback3, this, "Hi!") // If you want to pass a optional value, like "Hi!", then you should pass 'this' too
     );
 
-    this._grossini.runAction(action);
-    this._tamara.runAction(action2);
-    this._kathia.runAction(action3);
+    this._grossini.actionManager.runAction(action);
+    this._tamara.actionManager.runAction(action2);
+    this._kathia.actionManager.runAction(action3);
     //----end25----
   }
   onCallback1(nodeExecutingAction, value) {

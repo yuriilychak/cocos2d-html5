@@ -110,7 +110,7 @@ export class ConvertToNode extends TestNodeDemo {
       point.y = sprite.y;
 
       var copy = action.clone();
-      sprite.runAction(copy);
+      sprite.actionManager.runAction(copy);
       this.addChild(sprite, i);
     }
     //----end9----

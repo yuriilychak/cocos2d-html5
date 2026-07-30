@@ -84,7 +84,7 @@ export class SpriteAnchorPoint extends SpriteTestDemo {
             point.y = sprite.y;
 
             //var copy = action.clone();
-            sprite.runAction(action);
+            sprite.actionManager.runAction(action);
             this.addChild(sprite, i);
         }
         //----end4----

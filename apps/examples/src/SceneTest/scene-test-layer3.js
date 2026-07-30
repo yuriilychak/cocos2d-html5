@@ -58,7 +58,7 @@ export class SceneTestLayer3 extends LayerColor {
     sprite.y = s.height / 2;
     var rotate = new RotateBy(2, 360);
     var repeat = rotate.repeatForever();
-    sprite.runAction(repeat);
+    sprite.actionManager.runAction(repeat);
     //----end0----
   }
 

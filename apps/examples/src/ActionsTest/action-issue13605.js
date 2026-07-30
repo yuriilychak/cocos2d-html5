@@ -44,7 +44,7 @@ export class ActionIssue13605 extends ActionsDemo {
       move_back,
       new DelayTime(1)
     );
-    this._kathia.runAction(move_seq.repeat(2));
+    this._kathia.actionManager.runAction(move_seq.repeat(2));
 
     var moveClone = move.clone();
     var moveCloneBack = moveClone.reverse();
@@ -54,7 +54,7 @@ export class ActionIssue13605 extends ActionsDemo {
       moveCloneBack,
       new DelayTime(1)
     );
-    this._tamara.runAction(moveCloneSeq.repeat(2));
+    this._tamara.actionManager.runAction(moveCloneSeq.repeat(2));
     //----end47----
   }
 

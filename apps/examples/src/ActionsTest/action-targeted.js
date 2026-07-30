@@ -57,7 +57,7 @@ export class ActionTargeted extends ActionsDemo {
 
     var always = seq.repeatForever();
 
-    this._tamara.runAction(always);
+    this._tamara.actionManager.runAction(always);
     //----end31----
   }
   title() {

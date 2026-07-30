@@ -46,9 +46,9 @@ export class PauseResumeActions extends ActionsDemo {
     super.onEnter();
     this.centerSprites(2);
 
-    this._tamara.runAction(new RotateBy(3, 360).repeatForever());
-    this._grossini.runAction(new RotateBy(3, -360).repeatForever());
-    this._kathia.runAction(new RotateBy(3, 360).repeatForever());
+    this._tamara.actionManager.runAction(new RotateBy(3, 360).repeatForever());
+    this._grossini.actionManager.runAction(new RotateBy(3, -360).repeatForever());
+    this._kathia.actionManager.runAction(new RotateBy(3, 360).repeatForever());
 
     this.scheduler.schedule(this.pause, 3, false, 0);
     this.scheduler.schedule(this.resume, 5, false, 0);

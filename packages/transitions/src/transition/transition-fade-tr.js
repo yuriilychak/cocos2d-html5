@@ -29,7 +29,7 @@ export class TransitionFadeTR extends TransitionScene {
     var y = 12;
 
     var action = this.actionWithSize(new Size(x, y));
-    this._gridProxy.runAction(
+    this._gridProxy.actionManager.runAction(
       new Sequence(
         this.easeActionWithAction(action),
         new CallFunc(this.finish, this),

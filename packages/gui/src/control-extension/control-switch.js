@@ -57,7 +57,7 @@ export class ControlSwitch extends Control {
     this._on = isOn;
     var xPosition = this._on ? this._maxX : this._minX;
     if (animated) {
-      this.runAction(new ActionTween(0.2, "sliderX", this.sliderX, xPosition));
+      this.actionManager.runAction(new ActionTween(0.2, "sliderX", this.sliderX, xPosition));
     } else {
       this.sliderX = xPosition;
     }

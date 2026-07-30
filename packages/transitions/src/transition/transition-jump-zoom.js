@@ -35,8 +35,8 @@ export class TransitionJumpZoom extends TransitionScene {
     var jumpZoomIn = new Sequence(jump, scaleIn);
 
     var delay = new DelayTime(this._duration / 2);
-    this._outScene.runAction(jumpZoomOut);
-    this._inScene.runAction(
+    this._outScene.actionManager.runAction(jumpZoomOut);
+    this._inScene.actionManager.runAction(
       new Sequence(delay, jumpZoomIn, new CallFunc(this.finish, this))
     );
   }

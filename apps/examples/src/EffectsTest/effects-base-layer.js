@@ -69,7 +69,7 @@ export class EffectsBaseLayer extends BaseTestLayer {
     //Whether to demonstrate the effects inside a smaller rect
     var nodeGrid = new NodeGrid();
     nodeGrid.addChild(node);
-    nodeGrid.runAction(this.getEffect(3));
+    nodeGrid.actionManager.runAction(this.getEffect(3));
     this.addChild(nodeGrid);
 
     // back gradient
@@ -100,8 +100,8 @@ export class EffectsBaseLayer extends BaseTestLayer {
     var seq = new Sequence(sc, sc_back);
     var repeat = seq.repeatForever();
 
-    sister1.runAction(repeat);
-    sister2.runAction(repeat.clone());
+    sister1.actionManager.runAction(repeat);
+    sister2.actionManager.runAction(repeat.clone());
   }
 
   getEffect(duration) {

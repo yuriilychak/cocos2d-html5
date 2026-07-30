@@ -51,7 +51,7 @@ export class Issue1288 extends ActionsDemo {
     var act3 = new Sequence(act1, act2);
     var act4 = act3.repeat(2);
 
-    spr.runAction(act4);
+    spr.actionManager.runAction(act4);
     //----end41----
   }
   title() {

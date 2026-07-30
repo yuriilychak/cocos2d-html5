@@ -83,9 +83,9 @@ export class SpriteEaseBezierTest extends EaseSpriteDemo {
       easeBezierAction(0.0, 0.5, -5.0, 1.0)
     );
 
-    this._grossini.runAction(bezierEaseTo);
-    this._tamara.runAction(bezierEaseTo1);
-    this._kathia.runAction(bezierEaseTo2);
+    this._grossini.actionManager.runAction(bezierEaseTo);
+    this._tamara.actionManager.runAction(bezierEaseTo1);
+    this._kathia.actionManager.runAction(bezierEaseTo2);
 
     //----end14----
   }

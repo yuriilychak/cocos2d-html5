@@ -70,13 +70,13 @@ export class SpriteEase extends EaseSpriteDemo {
       delay.clone()
     );
 
-    var a2 = this._grossini.runAction(seq1.repeatForever());
+    var a2 = this._grossini.actionManager.runAction(seq1.repeatForever());
     a2.tag = 1;
 
-    var a1 = this._tamara.runAction(seq2.repeatForever());
+    var a1 = this._tamara.actionManager.runAction(seq2.repeatForever());
     a1.tag = 1;
 
-    var a = this._kathia.runAction(seq3.repeatForever());
+    var a = this._kathia.actionManager.runAction(seq3.repeatForever());
     a.tag = 1;
 
     this.scheduler.scheduleOnce(this.testStopAction, 4.1);
@@ -87,9 +87,9 @@ export class SpriteEase extends EaseSpriteDemo {
   }
 
   testStopAction(dt) {
-    this._tamara.stopActionByTag(1);
-    this._kathia.stopActionByTag(1);
-    this._grossini.stopActionByTag(1);
+    this._tamara.actionManager.stopActionByTag(1);
+    this._kathia.actionManager.stopActionByTag(1);
+    this._grossini.actionManager.stopActionByTag(1);
   }
 
   //

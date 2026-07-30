@@ -37,7 +37,7 @@ export class SpriteTest extends BasicTest {
 
   stencil() {
     var node = this.grossini();
-    node.runAction(this.actionRotate());
+    node.actionManager.runAction(this.actionRotate());
     return node;
   }
 
@@ -49,7 +49,7 @@ export class SpriteTest extends BasicTest {
 
   content() {
     var node = this.shape();
-    node.runAction(this.actionScale());
+    node.actionManager.runAction(this.actionScale());
     return node;
   }
 }

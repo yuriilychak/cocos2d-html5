@@ -50,11 +50,11 @@ export class ActionRepeatForever extends ActionsDemo {
       new CallFunc(this.repeatForever)
     ); // not passing 'this' since it is not used by the callback func
 
-    this._grossini.runAction(action);
+    this._grossini.actionManager.runAction(action);
     //----end22----
   }
   repeatForever(sender) {
-    sender.runAction(
+    sender.actionManager.runAction(
       new Sequence(
           new RotateBy(2, 90).easing(easeElasticInOut(0.5)),
           new RotateBy(0.5, 90)

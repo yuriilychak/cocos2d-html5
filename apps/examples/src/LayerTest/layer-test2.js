@@ -77,8 +77,8 @@ export class LayerTest2 extends LayerTest {
       var seq2 = new Sequence(actionFade, actionFadeBack);
     }
 
-    layer1.runAction(seq1);
-    layer2.runAction(seq2);
+    layer1.actionManager.runAction(seq1);
+    layer2.actionManager.runAction(seq2);
     //----end1----
   }
   title() {

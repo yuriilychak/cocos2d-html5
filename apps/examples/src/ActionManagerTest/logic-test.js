@@ -54,7 +54,7 @@ export class LogicTest extends ActionManagerTest {
     grossini.x = 200;
     grossini.y = 200;
 
-    grossini.runAction(
+    grossini.actionManager.runAction(
       new Sequence(
         new MoveBy(1, new Point(150, 0)),
         new CallFunc(this.onBugMe, this)
@@ -71,8 +71,8 @@ export class LogicTest extends ActionManagerTest {
   }
   onBugMe(node) {
     //----start1----onBugMe
-    node.stopAllActions(); //After this stop next action not working, if remove this stop everything is working
-    node.runAction(new ScaleTo(2, 2));
+    node.actionManager.stopAllActions(); //After this stop next action not working, if remove this stop everything is working
+    node.actionManager.runAction(new ScaleTo(2, 2));
     //----end1----
   }
 

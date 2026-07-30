@@ -53,17 +53,17 @@ export class ActionRotate extends ActionsDemo {
     var actionTo = new RotateTo(2, 45);
     var actionTo2 = new RotateTo(2, -45);
     var actionTo0 = new RotateTo(2, 0);
-    this._tamara.runAction(
+    this._tamara.actionManager.runAction(
       new Sequence(actionTo, new DelayTime(0.25), actionTo0)
     );
 
     var actionBy = new RotateBy(2, 360);
     var actionByBack = actionBy.reverse();
-    this._grossini.runAction(
+    this._grossini.actionManager.runAction(
       new Sequence(actionBy, new DelayTime(0.25), actionByBack)
     );
 
-    this._kathia.runAction(
+    this._kathia.actionManager.runAction(
       new Sequence(actionTo2, new DelayTime(0.25), actionTo0.clone())
     );
 

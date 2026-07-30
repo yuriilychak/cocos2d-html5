@@ -131,7 +131,7 @@ export class ParticleDemo extends BaseTestLayer {
     var move_back = move.reverse();
 
     var seq = new Sequence(move, move_back);
-    this._background.runAction(seq.repeatForever());
+    this._background.actionManager.runAction(seq.repeatForever());
     this.scheduler.scheduleUpdate();
   }
 

@@ -71,7 +71,7 @@ export class SpriteSkewNegativeScaleChildren extends SpriteTestDemo {
       if (i === 1) sprite.scale = -1.0;
 
       var seq_skew = new Sequence(skewX, skewX_back, skewY, skewY_back);
-      sprite.runAction(seq_skew.repeatForever());
+      sprite.actionManager.runAction(seq_skew.repeatForever());
 
       var child1 = new Sprite("#grossini_dance_01.png");
       child1.x = sprite.width / 2.0;

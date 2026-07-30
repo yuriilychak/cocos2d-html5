@@ -87,7 +87,7 @@ export class SpriteBatchNodeAnchorPoint extends SpriteTestDemo {
             point.x = sprite.x;
 
             point.y = sprite.y;
-            sprite.runAction(action);
+            sprite.actionManager.runAction(action);
             batch.addChild(sprite, i);
         }
         //----end5----

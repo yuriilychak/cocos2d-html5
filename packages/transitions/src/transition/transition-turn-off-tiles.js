@@ -28,7 +28,7 @@ export class TransitionTurnOffTiles extends TransitionScene {
     var y = 12;
     var toff = turnOffTiles(this._duration, new Size(x, y));
     var action = this.easeActionWithAction(toff);
-    this._gridProxy.runAction(
+    this._gridProxy.actionManager.runAction(
       new Sequence(action, new CallFunc(this.finish, this), stopGrid())
     );
   }

@@ -103,7 +103,7 @@ export class SpriteBatchNodeOffsetAnchorFlip extends SpriteTestDemo {
       }
 
       var animation = new Animation(animFrames, 0.3);
-      sprite.runAction(new Animate(animation).repeatForever());
+      sprite.actionManager.runAction(new Animate(animation).repeatForever());
 
       animFrames = null;
 
@@ -111,7 +111,7 @@ export class SpriteBatchNodeOffsetAnchorFlip extends SpriteTestDemo {
       var flip_back = new FlipY(false);
       var delay = new DelayTime(1);
       var seq = new Sequence(delay, flip, delay.clone(), flip_back);
-      sprite.runAction(seq.repeatForever());
+      sprite.actionManager.runAction(seq.repeatForever());
 
       spritebatch.addChild(sprite, i);
     }

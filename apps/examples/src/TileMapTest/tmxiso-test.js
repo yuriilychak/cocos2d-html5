@@ -55,7 +55,7 @@ export class TMXIsoTest extends TileDemo {
     //   x: -ms.width * ts.width / 2,
     //   y: -ms.height * ts.height / 2
     // };
-    map.runAction(
+    map.actionManager.runAction(
       new MoveTo(
         1.0,
         new Point((-ms.width * ts.width) / 2, (-ms.height * ts.height) / 2)

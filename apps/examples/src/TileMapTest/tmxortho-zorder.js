@@ -61,7 +61,7 @@ export class TMXOrthoZorder extends TileDemo {
     var move = new MoveBy(5, Point.mult(new Point(400, 450), 0.58));
     var back = move.reverse();
     var seq = new Sequence(move, back);
-    this.tamara.runAction(seq.repeatForever());
+    this.tamara.actionManager.runAction(seq.repeatForever());
 
     this.scheduler.schedule(this.repositionSprite);
   }

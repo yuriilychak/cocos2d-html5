@@ -1,15 +1,15 @@
+import { Component } from "../components";
 import { ServiceLocator } from "../service-locator";
 
-export class NodeOrder {
-  #renderCmd;
+export class NodeOrder extends Component {
   #localZOrder = 0;
   #globalZOrder = 0;
   #vertexZ = 0;
   #hasCustomVertexZ = false;
   #arrivalOrder = 0;
 
-  constructor(renderCmd) {
-    this.#renderCmd = renderCmd;
+  constructor() {
+    super("order");
   }
 
   get localZOrder() { return this.#localZOrder; }
@@ -22,7 +22,7 @@ export class NodeOrder {
   set globalZOrder(value) {
     if (this.#globalZOrder === value) return;
     this.#globalZOrder = value;
-    ServiceLocator.eventManager._setDirtyForNode(this.#renderCmd._node);
+    ServiceLocator.eventManager._setDirtyForNode(this.owner.renderCmd._node);
   }
 
   get vertexZ() { return this.#vertexZ; }

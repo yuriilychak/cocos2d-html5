@@ -54,8 +54,8 @@ export class ActionRepeat extends ActionsDemo {
     var action2 = new Sequence(a1.clone(), a1.reverse(), new DelayTime(0.25))
       .repeatForever();
 
-    this._kathia.runAction(action1);
-    this._tamara.runAction(action2);
+    this._kathia.actionManager.runAction(action1);
+    this._tamara.actionManager.runAction(action2);
     //----end21----
   }
   title() {

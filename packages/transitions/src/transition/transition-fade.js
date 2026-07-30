@@ -27,7 +27,7 @@ export class TransitionFade extends TransitionScene {
       new FadeOut(this._duration / 2),
       new CallFunc(this.finish, this)
     );
-    f.runAction(a);
+    f.actionManager.runAction(a);
   }
 
   onExit() {

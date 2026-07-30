@@ -137,8 +137,9 @@ export function setGlobalOrderOfArrival(val) {
  * @property {Number}               tag                 - Tag of node
  * @property {Object}               userData            - Custom user data
  * @property {Number}               arrivalOrder        - The arrival order, indicates which children is added previously
- * @property {ActionManager}     actionManager       - The ActionManager object that is used by all actions.
- * @property {Scheduler}         scheduler           - Scheduler used to schedule all "updates" and timers.
+ * @property {NodeActionManager} actionManager       - Component that manages this node's actions.
+ * @property {NodeScheduler}     scheduler           - Component that schedules this node's updates and timers.
+ * @property {NodeOrder}         order               - Component that manages this node's draw order.
  * @property {GridBase}          grid                - grid object that is used when applying effects
  * @property {GLProgram}         shaderProgram       - The shader program currently used for this node
  * @property {Number}               glServerState       - The state of OpenGL server side
@@ -160,7 +161,7 @@ export class Node extends ComponentContainer {
   #renderCmd;
   #transform;
   #color;
-  #order;
+  #order = new NodeOrder();
   #children = [];
 
   /**
@@ -171,6 +172,7 @@ export class Node extends ComponentContainer {
     super();
     this.addComponent(this.#scheduler);
     this.addComponent(this.#actionManager);
+    this.addComponent(this.#order);
     this.renderCmd = this.createRenderCmd();
   }
 
@@ -204,7 +206,7 @@ export class Node extends ComponentContainer {
    */
   cleanup() {
     // actions
-    this.stopAllActions();
+    this.#actionManager.stopAllActions();
     this.#scheduler.unscheduleAllCallbacks();
 
     // event
@@ -621,68 +623,7 @@ export class Node extends ComponentContainer {
   onExit() {
     this.#running = false;
     this.pause();
-    this.removeAllComponents([this.#scheduler.name, this.#actionManager.name]);
-  }
-
-  // actions
-  /**
-   * Executes an action, and returns the action that is executed.<br/>
-   * The node becomes the action's target. Refer to Action's getTarget()
-   * @function
-   * @warning Starting from v0.8 actions don't retain their target anymore.
-   * @param {Action} action
-   * @return {Action} An Action pointer
-   */
-  runAction(action) {
-    return this.#actionManager.runAction(action);
-  }
-
-  /**
-   * Stops and removes all actions from the running action list .
-   * @function
-   */
-  stopAllActions() {
-    this.#actionManager.stopAllActions();
-  }
-
-  /**
-   * Stops and removes an action from the running action list.
-   * @function
-   * @param {Action} action An action object to be removed.
-   */
-  stopAction(action) {
-    this.#actionManager.stopAction(action);
-  }
-
-  /**
-   * Removes an action from the running action list by its tag.
-   * @function
-   * @param {Number} tag A tag that indicates the action to be removed.
-   */
-  stopActionByTag(tag) {
-    this.#actionManager.stopActionByTag(tag);
-  }
-
-  /**
-   * Returns an action from the running action list by its tag.
-   * @function
-   * @see Node#getTag and Node#setTag
-   * @param {Number} tag
-   * @return {Action} The action object with the given tag.
-   */
-  getActionByTag(tag) {
-    return this.#actionManager.getActionByTag(tag);
-  }
-
-  /** <p>Returns the numbers of actions that are running plus the ones that are schedule to run (actions in actionsToAdd and actions arrays).<br/>
-   *    Composable actions are counted as 1 action. Example:<br/>
-   *    If you are running 1 Sequence of 7 actions, it will return 1. <br/>
-   *    If you are running 7 Sequences of 2 actions, it will return 7.</p>
-   * @function
-   * @return {Number} The number of actions that are running plus the ones that are schedule to run
-   */
-  getNumberOfRunningActions() {
-    return this.#actionManager.numberOfRunningActions;
+    this.removeAllComponents([this.#scheduler.name, this.#actionManager.name, this.#order.name]);
   }
 
   /**
@@ -1201,7 +1142,6 @@ export class Node extends ComponentContainer {
     this.#renderCmd = renderCmd;
     this.#transform = new NodeTransform(renderCmd);
     this.#color = new NodeColor(renderCmd);
-    this.#order = new NodeOrder(renderCmd);
   }
 
   get transform() {
@@ -1313,15 +1253,15 @@ export class Node extends ComponentContainer {
   }
 
   get actionManager() {
-    return this.#actionManager.actionManager;
-  }
-
-  set actionManager(value) {
-    this.#actionManager.actionManager = value;
+    return this.#actionManager;
   }
 
   get scheduler() {
     return this.#scheduler;
+  }
+
+  get order() {
+    return this.#order;
   }
 
   get shaderProgram() {

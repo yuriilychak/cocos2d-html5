@@ -99,7 +99,7 @@ export class Issue704 extends ParticleDemo {
         this._emitter.setBlendAdditive(false);
 
         var rot = new RotateBy(16, 360);
-        this._emitter.runAction(rot.repeatForever());
+        this._emitter.actionManager.runAction(rot.repeatForever());
     }
     title() {
         return "Issue 704. Free + Rot";

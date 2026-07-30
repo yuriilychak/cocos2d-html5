@@ -52,7 +52,7 @@ export class ActionSequence extends ActionsDemo {
       new RotateBy(1.5, 540)
     );
 
-    this._grossini.runAction(action);
+    this._grossini.actionManager.runAction(action);
     //----end16----
   }
   title() {

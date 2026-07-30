@@ -64,7 +64,7 @@ export class StressTest1 extends TestNodeDemo {
     explosion.x = winSize.width / 2;
     explosion.y = winSize.height / 2;
 
-    this.runAction(
+    this.actionManager.runAction(
       new Sequence(new RotateBy(2, 360), new CallFunc(this.onRemoveMe, this))
     );
 

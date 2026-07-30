@@ -58,7 +58,7 @@ export class NestedTest extends BaseClippingNodeTest {
         y: parent.height / 2
       });
       clipper.alphaThreshold = 0.05;
-      clipper.runAction(
+      clipper.actionManager.runAction(
         new RotateBy(i % 3 ? 1.33 : 1.66, i % 2 ? 90 : -90).repeatForever()
       );
       parent.addChild(clipper);
@@ -72,7 +72,7 @@ export class NestedTest extends BaseClippingNodeTest {
         y: clipper.height / 2,
         visible: false
       });
-      stencil.runAction(new Sequence(new DelayTime(i), new Show()));
+      stencil.actionManager.runAction(new Sequence(new DelayTime(i), new Show()));
       clipper.stencil = stencil;
 
       clipper.addChild(stencil);

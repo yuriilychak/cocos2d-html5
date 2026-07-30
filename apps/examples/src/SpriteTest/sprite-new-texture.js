@@ -143,7 +143,7 @@ export class SpriteNewTexture extends SpriteTestDemo {
     var action_back = action.reverse();
     var seq = new Sequence(action, action_back);
 
-    sprite.runAction(seq.repeatForever());
+    sprite.actionManager.runAction(seq.repeatForever());
     //----end26----
   }
 

@@ -55,14 +55,14 @@ export class ActionStackableMove extends ActionsDemo {
     var delay = new DelayTime(0.25);
     var move_seq = new Sequence(move, move_back);
     var move_rep = move_seq.repeatForever();
-    this._grossini.runAction(move_rep);
+    this._grossini.actionManager.runAction(move_rep);
 
     // move
     var action = new MoveBy(2, new Point(winSize.width - 80, 0));
     var back = action.reverse();
     var seq = new Sequence(action, back);
     var repeat = seq.repeatForever();
-    this._grossini.runAction(repeat);
+    this._grossini.actionManager.runAction(repeat);
     //----end33----
   }
   title() {

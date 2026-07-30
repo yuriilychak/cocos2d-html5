@@ -68,7 +68,7 @@ export class TMXIsoVertexZ extends TMXFixBugLayer {
     var back = move.reverse();
     var delay = new DelayTime(0.5);
     var seq = new Sequence(move, delay, back);
-    this.tamara.runAction(seq.repeatForever());
+    this.tamara.actionManager.runAction(seq.repeatForever());
 
     if (
       !ServiceLocator.sys.isNative &&

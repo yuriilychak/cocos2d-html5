@@ -60,7 +60,7 @@ export class ScrollViewDemo extends BaseClippingNodeTest {
     clipper.anchorY = 0.5;
     clipper.x = this.width / 2;
     clipper.y = this.height / 2;
-    clipper.runAction(new RotateBy(1, 45).repeatForever());
+    clipper.actionManager.runAction(new RotateBy(1, 45).repeatForever());
     this.addChild(clipper);
 
     var stencil = new DrawNode();

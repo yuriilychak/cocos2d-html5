@@ -48,7 +48,7 @@ export class SpriteProgressBarVarious extends SpriteDemo {
         this.addChild(left);
         left.x = 150;
         left.y = winSize.height / 2;
-        left.runAction(to.clone().repeatForever());
+        left.actionManager.runAction(to.clone().repeatForever());
 
         var middle = new ProgressTimer(new Sprite(s_pathSister2));
         middle.type = ProgressTimer.TYPE_BAR;
@@ -59,7 +59,7 @@ export class SpriteProgressBarVarious extends SpriteDemo {
         this.addChild(middle);
         middle.x = winSize.width / 2;
         middle.y = winSize.height / 2;
-        middle.runAction(to.clone().repeatForever());
+        middle.actionManager.runAction(to.clone().repeatForever());
 
         var right = new ProgressTimer(new Sprite(s_pathSister2));
         right.type = ProgressTimer.TYPE_BAR;
@@ -70,7 +70,7 @@ export class SpriteProgressBarVarious extends SpriteDemo {
         this.addChild(right);
         right.x = winSize.width - 150;
         right.y = winSize.height / 2;
-        right.runAction(to.clone().repeatForever());
+        right.actionManager.runAction(to.clone().repeatForever());
         //----end4----
     }
 

@@ -63,7 +63,7 @@ export class ParallaxParticle extends ParticleDemo {
     var move = new MoveBy(4, new Point(300, 0));
     var move_back = move.reverse();
     var seq = new Sequence(move, move_back);
-    p.runAction(seq.repeatForever());
+    p.actionManager.runAction(seq.repeatForever());
   }
   title() {
     return "Parallax + Particles";

@@ -35,7 +35,7 @@ export class SequenceRepeatTest extends ActionsDemo {
     super.onEnter();
     this.centerSprites(2);
 
-    this._kathia.runAction(
+    this._kathia.actionManager.runAction(
       new Repeat(new Sequence(new Blink(2, 3), new DelayTime(2)), 3)
     );
 
@@ -47,7 +47,7 @@ export class SequenceRepeatTest extends ActionsDemo {
       move_back,
       new DelayTime(1)
     );
-    this._tamara.runAction(move_seq.repeat(3));
+    this._tamara.actionManager.runAction(move_seq.repeat(3));
     //----end47----
   }
 

@@ -52,7 +52,7 @@ export class ActionSpawn extends ActionsDemo {
       new RotateBy(2, 720)
     );
 
-    this._grossini.runAction(action);
+    this._grossini.actionManager.runAction(action);
     //----end18----
   }
   title() {

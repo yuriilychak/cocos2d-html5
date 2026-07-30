@@ -94,7 +94,7 @@ export class AnimationCacheFile extends SpriteTestDemo {
     this.addChild(grossini);
 
     // run the animation
-    grossini.runAction(seq);
+    grossini.actionManager.runAction(seq);
     //----end54----
   }
   //

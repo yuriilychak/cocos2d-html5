@@ -60,6 +60,6 @@ export class S9FrameNameSpriteSheet extends S9SpriteTestDemo {
 
     var moveBy = new MoveBy(1, new Point(80, 80));
     var moveByBack = moveBy.reverse();
-    blocks.runAction(new Sequence(moveBy, moveByBack));
+    blocks.actionManager.runAction(new Sequence(moveBy, moveByBack));
   }
 }

@@ -25,8 +25,8 @@ export class TransitionSlideInL extends TransitionScene {
       new CallFunc(this.finish, this)
     );
     var outAction = this.easeActionWithAction(outA);
-    this._inScene.runAction(inAction);
-    this._outScene.runAction(outAction);
+    this._inScene.actionManager.runAction(inAction);
+    this._outScene.actionManager.runAction(outAction);
   }
 
   initScenes() {

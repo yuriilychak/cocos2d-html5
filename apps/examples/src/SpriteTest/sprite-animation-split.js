@@ -85,7 +85,7 @@ export class SpriteAnimationSplit extends SpriteTestDemo {
       new FlipX(false)
     );
 
-    sprite.runAction(seq.repeatForever());
+    sprite.actionManager.runAction(seq.repeatForever());
     //----end10----
   }
   onExit() {

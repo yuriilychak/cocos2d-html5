@@ -50,7 +50,7 @@ export class TMXOrthoTest extends TileDemo {
     var map = new TMXTiledMap(s_resprefix + "TileMaps/orthogonal-test1.tmx");
     this.addChild(map, 0, TAG_TILE_MAP);
 
-    map.runAction(new ScaleBy(2, 0.5));
+    map.actionManager.runAction(new ScaleBy(2, 0.5));
   }
   title() {
     return "TMX Ortho test";

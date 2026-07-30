@@ -139,7 +139,7 @@ export class AnimationCacheTest extends SpriteTestDemo {
     this.addChild(grossini);
 
     // run the animation
-    grossini.runAction(seq);
+    grossini.actionManager.runAction(seq);
     //----end40----
   }
   //

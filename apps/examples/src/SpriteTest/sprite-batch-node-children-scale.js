@@ -73,7 +73,7 @@ export class SpriteBatchNodeChildrenScale extends SpriteTestDemo {
         sprite1.y = winSize.height / 4;
         sprite1.scaleX = 0.5;
         sprite1.scaleY = 2.0;
-        sprite1.runAction(seq);
+        sprite1.actionManager.runAction(seq);
 
 
         var sprite2 = new Sprite(ServiceLocator.spriteFrameCache.get("grossinis_sister2.png"));
@@ -96,7 +96,7 @@ export class SpriteBatchNodeChildrenScale extends SpriteTestDemo {
         sprite1.y = winSize.height / 4;
         sprite1.scaleX = 0.5;
         sprite1.scaleY = 2.0;
-        sprite1.runAction(seq);
+        sprite1.actionManager.runAction(seq);
 
         sprite2 = new Sprite(ServiceLocator.spriteFrameCache.get("grossinis_sister2.png"));
         sprite2.x = 50;
@@ -118,7 +118,7 @@ export class SpriteBatchNodeChildrenScale extends SpriteTestDemo {
         sprite1.y = 2 * winSize.height / 3;
         sprite1.scaleX = 1.5;
         sprite1.scaleY = 0.5;
-        sprite1.runAction(seq);
+        sprite1.actionManager.runAction(seq);
 
         sprite2 = new Sprite(ServiceLocator.spriteFrameCache.get("grossinis_sister2.png"));
         sprite2.x = 50;
@@ -140,7 +140,7 @@ export class SpriteBatchNodeChildrenScale extends SpriteTestDemo {
         sprite1.y = 2 * winSize.height / 3;
         sprite1.scaleX = 1.5;
         sprite1.scaleY = 0.5;
-        sprite1.runAction(seq);
+        sprite1.actionManager.runAction(seq);
 
         sprite2 = new Sprite(ServiceLocator.spriteFrameCache.get("grossinis_sister2.png"));
         sprite2.x = 50;

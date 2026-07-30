@@ -67,10 +67,10 @@ export class ResumeTest extends ActionManagerTest {
     grossini.x = s.width / 2;
     grossini.y = s.height / 2;
 
-    grossini.runAction(new ScaleBy(2, 2));
+    grossini.actionManager.runAction(new ScaleBy(2, 2));
 
     ServiceLocator.actionManager.pauseTarget(grossini);
-    grossini.runAction(new RotateBy(2, 360));
+    grossini.actionManager.runAction(new RotateBy(2, 360));
 
     this.scheduler.schedule(this.resumeGrossini, 3.0);
     //----end4----

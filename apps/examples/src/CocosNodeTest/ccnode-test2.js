@@ -72,8 +72,8 @@ export class CCNodeTest2 extends TestNodeDemo {
     sp2.anchorX = 0;
     sp2.anchorY = 0;
 
-    sp1.runAction(action1);
-    sp2.runAction(action2);
+    sp1.actionManager.runAction(action1);
+    sp2.actionManager.runAction(action2);
     //----end0----
   }
   title() {

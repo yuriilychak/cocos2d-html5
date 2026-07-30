@@ -95,7 +95,7 @@ export class ActionCatmullRom extends ActionsDemo {
     var reverse1 = action1.reverse();
     var seq1 = new Sequence(action1, delay, reverse1);
 
-    this._tamara.runAction(seq1);
+    this._tamara.actionManager.runAction(seq1);
 
     //
     // sprite 2 (To)
@@ -116,7 +116,7 @@ export class ActionCatmullRom extends ActionsDemo {
 
     var seq2 = new Sequence(action2, delay.clone(), reverse2);
 
-    this._kathia.runAction(seq2);
+    this._kathia.actionManager.runAction(seq2);
 
     this._drawNode1.drawCatmullRom(array, 50, 1);
     this._drawNode2.drawCatmullRom(array2, 50, 1);

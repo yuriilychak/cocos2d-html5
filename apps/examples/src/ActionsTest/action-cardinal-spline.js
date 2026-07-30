@@ -98,7 +98,7 @@ export class ActionCardinalSpline extends ActionsDemo {
 
     this._tamara.x = 50;
     this._tamara.y = 50;
-    this._tamara.runAction(seq);
+    this._tamara.actionManager.runAction(seq);
 
     //
     // sprite 2 (By)
@@ -111,7 +111,7 @@ export class ActionCardinalSpline extends ActionsDemo {
 
     this._kathia.x = winSize.width / 2;
     this._kathia.y = 50;
-    this._kathia.runAction(seq2);
+    this._kathia.actionManager.runAction(seq2);
 
     this._drawNode1.drawCardinalSpline(array, 0, 100, 1);
     this._drawNode2.drawCardinalSpline(array, 1, 100, 1);

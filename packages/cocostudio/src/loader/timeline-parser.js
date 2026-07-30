@@ -1234,7 +1234,7 @@ parser.initProjectNode = function (json, resourcePath) {
         var InnerActionSpeed = json["InnerActionSpeed"];
         if (InnerActionSpeed !== undefined)
           obj.action.setTimeSpeed(InnerActionSpeed);
-        obj.node.runAction(obj.action);
+        obj.node.actionManager.runAction(obj.action);
         obj.action.gotoFrameAndPause(0);
       }
       return obj.node;

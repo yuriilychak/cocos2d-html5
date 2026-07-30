@@ -55,7 +55,7 @@ export class TransitionCrossFade extends TransitionScene {
       new CallFunc(this.finish, this)
     );
 
-    outTexture.sprite.runAction(layerAction);
+    outTexture.sprite.actionManager.runAction(layerAction);
 
     this.addChild(layer, 2, SCENE_FADE);
   }

@@ -46,11 +46,11 @@ export class Effect3 extends EffectAdvanceTextLayer {
     var waves = new Waves(5, new Size(15, 10), 5, 20, true, false);
     var shaky = new Shaky3D(5, new Size(15, 10), 4, false);
 
-    target1.runAction(waves.repeatForever());
-    target2.runAction(shaky.repeatForever());
+    target1.actionManager.runAction(waves.repeatForever());
+    target2.actionManager.runAction(shaky.repeatForever());
 
     // moving background. Testing issue #244
     var move = new MoveBy(3, new Point(200, 0));
-    bg.runAction(new Sequence(move, move.reverse()).repeatForever());
+    bg.actionManager.runAction(new Sequence(move, move.reverse()).repeatForever());
   }
 }

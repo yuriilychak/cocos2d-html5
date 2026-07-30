@@ -52,14 +52,14 @@ export class ActionReverseSequence2 extends ActionsDemo {
 
     // Test:
     //   Also test that the reverse of Hide is Show, and vice-versa
-    this._kathia.runAction(action);
+    this._kathia.actionManager.runAction(action);
 
     var move_tamara = new MoveBy(1, new Point(100, 0));
     var move_tamara2 = new MoveBy(1, new Point(50, 0));
     var hide = new Hide();
     var seq_tamara = new Sequence(move_tamara, hide, move_tamara2);
     var seq_back = seq_tamara.reverse();
-    this._tamara.runAction(new Sequence(seq_tamara, seq_back));
+    this._tamara.actionManager.runAction(new Sequence(seq_tamara, seq_back));
     //----end29----
   }
   subtitle() {

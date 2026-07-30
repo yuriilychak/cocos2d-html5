@@ -56,7 +56,7 @@ export class ActionSequence2 extends ActionsDemo {
       new CallFunc(this.onCallback2.bind(this)),
       new CallFunc(this.onCallback3, this)
     );
-    this._grossini.runAction(action);
+    this._grossini.actionManager.runAction(action);
 
     this.called1 = this.called2 = this.called3 = false;
     //----end17----

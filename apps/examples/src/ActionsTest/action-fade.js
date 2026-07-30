@@ -52,8 +52,8 @@ export class ActionFade extends ActionsDemo {
     var action2 = new FadeOut(1.0);
     var action2Back = action2.reverse();
 
-    this._tamara.runAction(new Sequence(action1, delay, action1Back));
-    this._kathia.runAction(
+    this._tamara.actionManager.runAction(new Sequence(action1, delay, action1Back));
+    this._kathia.actionManager.runAction(
       new Sequence(action2, delay.clone(), action2Back)
     );
     //----end14----

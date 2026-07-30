@@ -113,7 +113,7 @@ export class Parallax1 extends ParallaxDemo {
     var goDown = goUp.reverse();
     var goLeft = goRight.reverse();
     var seq = new Sequence(goUp, goRight, delay, goDown, goLeft);
-    this._parentNode.runAction(seq.repeatForever());
+    this._parentNode.actionManager.runAction(seq.repeatForever());
 
     this.addChild(this._parentNode);
   }

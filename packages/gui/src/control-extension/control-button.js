@@ -308,14 +308,14 @@ export class ControlButton extends Control {
     this._state = enabled ? CONTROL_STATE_HIGHLIGHTED : CONTROL_STATE_NORMAL;
     this._highlighted = enabled;
     this.needsLayout();
-    var action = this.getActionByTag(CONTROL_ZOOM_ACTION_TAG);
-    if (action) this.stopAction(action);
+    var action = this.actionManager.getActionByTag(CONTROL_ZOOM_ACTION_TAG);
+    if (action) this.actionManager.stopAction(action);
     if (this.zoomOnTouchDown) {
       var scaleValue =
         this.isHighlighted() && this.enabled && !this.isSelected() ? 1.1 : 1.0;
       var zoomAction = new ScaleTo(0.05, scaleValue);
       zoomAction.tag = CONTROL_ZOOM_ACTION_TAG;
-      this.runAction(zoomAction);
+      this.actionManager.runAction(zoomAction);
     }
   }
 

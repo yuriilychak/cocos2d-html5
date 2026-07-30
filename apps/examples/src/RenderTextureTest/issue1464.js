@@ -70,7 +70,7 @@ export class Issue1464 extends RenderTextureBaseLayer {
     var delay = new DelayTime(0.25);
     var seq = new Sequence(fadeout, delay, fadein, delay.clone());
     var fe = seq.repeatForever();
-    rend.getSprite().runAction(fe);
+    rend.getSprite().actionManager.runAction(fe);
 
     if (
       !ServiceLocator.sys.isNative &&

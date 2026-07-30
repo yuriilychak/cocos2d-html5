@@ -99,7 +99,7 @@ export class SpriteBatchNodeOffsetAnchorSkew extends SpriteTestDemo {
       }
 
       var animation = new Animation(animFrames, 0.3);
-      sprite.runAction(new Animate(animation).repeatForever());
+      sprite.actionManager.runAction(new Animate(animation).repeatForever());
 
       animFrames = null;
 
@@ -109,7 +109,7 @@ export class SpriteBatchNodeOffsetAnchorSkew extends SpriteTestDemo {
       var skewY_back = skewY.reverse();
 
       var seq_skew = new Sequence(skewX, skewX_back, skewY, skewY_back);
-      sprite.runAction(seq_skew.repeatForever());
+      sprite.actionManager.runAction(seq_skew.repeatForever());
 
       spritebatch.addChild(sprite, i);
     }

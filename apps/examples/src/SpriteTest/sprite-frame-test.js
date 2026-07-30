@@ -80,7 +80,7 @@ export class SpriteFrameTest extends SpriteTestDemo {
         }
 
         var animation = new Animation(animFrames, 0.3);
-        this._sprite1.runAction(new Animate(animation).repeatForever());
+        this._sprite1.actionManager.runAction(new Animate(animation).repeatForever());
 
         // to test issue #732, uncomment the following line
         this._sprite1.flippedX = false;
@@ -111,7 +111,7 @@ export class SpriteFrameTest extends SpriteTestDemo {
         moreFrames = moreFrames.concat(animFrames);
         var animMixed = new Animation(moreFrames, 0.3);
 
-        this._sprite2.runAction(new Animate(animMixed).repeatForever());
+        this._sprite2.actionManager.runAction(new Animate(animMixed).repeatForever());
 
         // to test issue #732, uncomment the following line
         this._sprite2.flippedX = false;

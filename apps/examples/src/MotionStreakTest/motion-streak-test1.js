@@ -63,10 +63,10 @@ export class MotionStreakTest1 extends MotionStreakTest {
 
     var action1 = a1.repeatForever();
     var motion = new MoveBy(2, new Point(100, 0));
-    this.#root.runAction(
+    this.#root.actionManager.runAction(
       new Sequence(motion, motion.reverse()).repeatForever()
     );
-    this.#root.runAction(action1);
+    this.#root.actionManager.runAction(action1);
 
     var colorAction = new Sequence(
       new TintTo(0.2, 255, 0, 0),
@@ -78,7 +78,7 @@ export class MotionStreakTest1 extends MotionStreakTest {
       new TintTo(0.2, 255, 255, 255)
     ).repeatForever();
 
-    this.streak.runAction(colorAction);
+    this.streak.actionManager.runAction(colorAction);
 
     this.#pos.set(this.#target.width / 2, 0);
   }

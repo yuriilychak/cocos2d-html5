@@ -48,8 +48,8 @@ export class ActionBlink extends ActionsDemo {
     var action1 = new Blink(2, 10);
     var action2 = new Blink(2, 5);
 
-    this._tamara.runAction(action1);
-    this._kathia.runAction(action2);
+    this._tamara.actionManager.runAction(action1);
+    this._kathia.actionManager.runAction(action2);
     //----end13----
   }
   title() {

@@ -72,6 +72,6 @@ export class Issue631 extends EffectAdvanceTextLayer {
     nodeGrid.addChild(layer2);
     this.addChild(nodeGrid, 1);
 
-    nodeGrid.runAction(effect.repeatForever());
+    nodeGrid.actionManager.runAction(effect.repeatForever());
   }
 }

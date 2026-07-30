@@ -46,17 +46,17 @@ export class TransitionPageTurn extends TransitionScene {
     if (!this._back) {
       gridProxy.setTarget(this._outScene);
       gridProxy._performRecursive(Node._stateCallbackType.onEnter);
-      gridProxy.runAction(
+      gridProxy.actionManager.runAction(
         new Sequence(action, new CallFunc(this.finish, this), stopGrid())
       );
     } else {
       gridProxy.setTarget(this._inScene);
       gridProxy._performRecursive(Node._stateCallbackType.onEnter);
       this._inScene.visible = false;
-      gridProxy.runAction(
+      gridProxy.actionManager.runAction(
         new Sequence(action, new CallFunc(this.finish, this), stopGrid())
       );
-      this._inScene.runAction(new Show());
+      this._inScene.actionManager.runAction(new Show());
     }
   }
 

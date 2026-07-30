@@ -88,12 +88,12 @@ export class Sprite6 extends SpriteTestDemo {
       }
       var rotate = new RotateBy(5, 360);
       var action = rotate.repeatForever();
-      sprite.runAction(action.clone());
+      sprite.actionManager.runAction(action.clone());
       batch.addChild(sprite, i);
     }
 
-    batch.runAction(scale_forever);
-    batch.runAction(rotate_forever);
+    batch.actionManager.runAction(scale_forever);
+    batch.actionManager.runAction(rotate_forever);
     //----end21----
   }
   // Automation

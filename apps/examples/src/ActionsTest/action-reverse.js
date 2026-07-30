@@ -51,7 +51,7 @@ export class ActionReverse extends ActionsDemo {
     var delay = new DelayTime(0.25);
     var action = new Sequence(jump, delay, jump.reverse());
 
-    this._grossini.runAction(action);
+    this._grossini.actionManager.runAction(action);
     //----end19----
   }
   title() {

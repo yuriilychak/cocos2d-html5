@@ -64,10 +64,10 @@ export class S9SpriteActionTest extends S9SpriteTestDemo {
     var moveBy = new MoveBy(1, new Point(80, 80));
     var moveByBack = moveBy.reverse();
 
-    blocks_with_insets.runAction(new Sequence(rotateBy, delay, rotateByBack));
-    blocks_with_insets.runAction(
+    blocks_with_insets.actionManager.runAction(new Sequence(rotateBy, delay, rotateByBack));
+    blocks_with_insets.actionManager.runAction(
       new Sequence(scaleTo, delay.clone(), scaleToBack)
     );
-    blocks_with_insets.runAction(new Sequence(moveBy, moveByBack));
+    blocks_with_insets.actionManager.runAction(new Sequence(moveBy, moveByBack));
   }
 }

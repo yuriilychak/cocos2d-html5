@@ -530,17 +530,17 @@ export class BMButton extends Widget {
   _onPressStateChangedToNormal() {
     this._buttonScale9Renderer.setSpriteFrame(this._buttonNormalSpriteFrame);
     this._buttonScale9Renderer.setState(Scale9Sprite.state.NORMAL);
-    this._buttonScale9Renderer.stopAllActions();
+    this._buttonScale9Renderer.actionManager.stopAllActions();
 
     if (this._pressedTextureLoaded) {
       if (this.pressedActionEnabled) {
         this._buttonScale9Renderer.scale = 1.0;
 
         if (this._titleRenderer) {
-          this._titleRenderer.stopAllActions();
+          this._titleRenderer.actionManager.stopAllActions();
 
           if (this._unifySize) {
-            this._titleRenderer.runAction(
+            this._titleRenderer.actionManager.runAction(
               new ScaleTo(BMButton.ZOOM_ACTION_TIME_STEP, 1, 1)
             );
           } else {
@@ -553,14 +553,14 @@ export class BMButton extends Widget {
       this._buttonScale9Renderer.scale = 1.0;
 
       if (this._titleRenderer) {
-        this._titleRenderer.stopAllActions();
+        this._titleRenderer.actionManager.stopAllActions();
         this._titleRenderer.scaleX = 1;
         this._titleRenderer.scaleY = 1;
       }
     }
 
     if (this._normalBgColor) {
-      this._buttonScale9Renderer.runAction(
+      this._buttonScale9Renderer.actionManager.runAction(
         new TintTo(
           BMButton.TINT_ACTION_TIME_STEP,
           this._normalBgColor.r,
@@ -575,13 +575,13 @@ export class BMButton extends Widget {
 
   _onPressStateChangedToPressed() {
     this._buttonScale9Renderer.setState(Scale9Sprite.state.NORMAL);
-    this._buttonScale9Renderer.stopAllActions();
+    this._buttonScale9Renderer.actionManager.stopAllActions();
 
     if (this._pressedTextureLoaded) {
       this._buttonScale9Renderer.setSpriteFrame(this._buttonClickedSpriteFrame);
 
       if (this.pressedActionEnabled) {
-        this._buttonScale9Renderer.runAction(
+        this._buttonScale9Renderer.actionManager.runAction(
           new ScaleTo(
             BMButton.ZOOM_ACTION_TIME_STEP,
             1.0 + this._zoomScale,
@@ -590,8 +590,8 @@ export class BMButton extends Widget {
         );
 
         if (this._titleRenderer) {
-          this._titleRenderer.stopAllActions();
-          this._titleRenderer.runAction(
+          this._titleRenderer.actionManager.stopAllActions();
+          this._titleRenderer.actionManager.runAction(
             new ScaleTo(
               BMButton.ZOOM_ACTION_TIME_STEP,
               1 + this._zoomScale,
@@ -606,14 +606,14 @@ export class BMButton extends Widget {
       this._buttonScale9Renderer.scaleY = 1.0 + this._zoomScale;
 
       if (this._titleRenderer) {
-        this._titleRenderer.stopAllActions();
+        this._titleRenderer.actionManager.stopAllActions();
         this._titleRenderer.scaleX = 1 + this._zoomScale;
         this._titleRenderer.scaleY = 1 + this._zoomScale;
       }
     }
 
     if (this._pressedBgColor) {
-      this._buttonScale9Renderer.runAction(
+      this._buttonScale9Renderer.actionManager.runAction(
         new TintTo(
           BMButton.TINT_ACTION_TIME_STEP,
           this._pressedBgColor.r,
@@ -625,7 +625,7 @@ export class BMButton extends Widget {
   }
 
   _onPressStateChangedToDisabled() {
-    this._buttonScale9Renderer.stopAllActions();
+    this._buttonScale9Renderer.actionManager.stopAllActions();
 
     if (!this._disabledTextureLoaded) {
       if (this._normalTextureLoaded) {
@@ -638,7 +638,7 @@ export class BMButton extends Widget {
     this._buttonScale9Renderer.scale = 1.0;
 
     if (this._disabledBgColor) {
-      this._buttonScale9Renderer.runAction(
+      this._buttonScale9Renderer.actionManager.runAction(
         new TintTo(
           BMButton.TINT_ACTION_TIME_STEP,
           this._disabledBgColor.r,

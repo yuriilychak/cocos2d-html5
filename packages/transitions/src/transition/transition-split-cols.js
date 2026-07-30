@@ -29,7 +29,7 @@ export class TransitionSplitCols extends TransitionScene {
       split.reverse()
     );
 
-    this._gridProxy.runAction(
+    this._gridProxy.actionManager.runAction(
       new Sequence(
         this.easeActionWithAction(seq),
         new CallFunc(this.finish, this),

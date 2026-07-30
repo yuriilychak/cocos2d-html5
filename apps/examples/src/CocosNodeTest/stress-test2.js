@@ -48,7 +48,7 @@ export class StressTest2 extends TestNodeDemo {
     var move_ease_inout3 = move.clone().easing(easeInOut(2.0));
     var move_ease_inout_back3 = move_ease_inout3.reverse();
     var seq3 = new Sequence(move_ease_inout3, move_ease_inout_back3);
-    sp1.runAction(seq3.repeatForever());
+    sp1.actionManager.runAction(seq3.repeatForever());
     sublayer.addChild(sp1, 1);
 
     var fire = new ParticleFire();
@@ -58,7 +58,7 @@ export class StressTest2 extends TestNodeDemo {
 
     var copy_seq3 = seq3.clone();
 
-    fire.runAction(copy_seq3.repeatForever());
+    fire.actionManager.runAction(copy_seq3.repeatForever());
     sublayer.addChild(fire, 2);
 
     this.scheduler.schedule(this.shouldNotLeak, 6.0);

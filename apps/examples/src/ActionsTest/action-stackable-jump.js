@@ -49,14 +49,14 @@ export class ActionStackableJump extends ActionsDemo {
     var move_back = move.reverse();
     var move_seq = new Sequence(move, move_back);
     var move_rep = move_seq.repeatForever();
-    this._grossini.runAction(move_rep);
+    this._grossini.actionManager.runAction(move_rep);
 
     // jump
     var action = new JumpBy(2, new Point(winSize.width - 80, 0), 90, 5);
     var back = action.reverse();
     var seq = new Sequence(action, back);
     var repeat = seq.repeatForever();
-    this._grossini.runAction(repeat);
+    this._grossini.actionManager.runAction(repeat);
     //----end34----
   }
   title() {

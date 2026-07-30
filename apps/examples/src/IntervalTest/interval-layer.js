@@ -108,7 +108,7 @@ export class IntervalLayer extends LayerGradient {
     var jump = new JumpBy(3, new Point(s.width - 80, 0), 50, 4);
 
     this.addChild(sprite);
-    sprite.runAction(new Sequence(jump, jump.reverse()).repeatForever());
+    sprite.actionManager.runAction(new Sequence(jump, jump.reverse()).repeatForever());
 
     // pause button
     const pauseBtn = new BMButton(

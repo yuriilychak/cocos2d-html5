@@ -77,7 +77,7 @@ export class HoleDemo extends BaseClippingNodeTest {
     this._outerClipper.anchorY = 0.5;
     this._outerClipper.x = this.width * 0.5;
     this._outerClipper.y = this.height * 0.5;
-    this._outerClipper.runAction(new RotateBy(1, 45).repeatForever());
+    this._outerClipper.actionManager.runAction(new RotateBy(1, 45).repeatForever());
 
     this._outerClipper.stencil = stencil;
 
@@ -149,7 +149,7 @@ export class HoleDemo extends BaseClippingNodeTest {
     });
 
     this._holesStencil.addChild(holeStencil);
-    this._outerClipper.runAction(
+    this._outerClipper.actionManager.runAction(
       new Sequence(new ScaleBy(0.05, 0.95), new ScaleTo(0.125, 1))
     );
   }

@@ -60,9 +60,9 @@ export class SpeedTest extends EaseSpriteDemo {
     action2.tag = TAG_ACTION1_EASE_ACTIONS;
     action3.tag = TAG_ACTION1_EASE_ACTIONS;
 
-    this._grossini.runAction(action2);
-    this._tamara.runAction(action3);
-    this._kathia.runAction(action);
+    this._grossini.actionManager.runAction(action2);
+    this._tamara.actionManager.runAction(action3);
+    this._kathia.actionManager.runAction(action);
 
     this.scheduler.schedule(this.altertime, 1.0);
     //----end12----
@@ -73,9 +73,9 @@ export class SpeedTest extends EaseSpriteDemo {
 
   altertime(dt) {
     //----start12----altertime
-    var action1 = this._grossini.getActionByTag(TAG_ACTION1_EASE_ACTIONS);
-    var action2 = this._tamara.getActionByTag(TAG_ACTION1_EASE_ACTIONS);
-    var action3 = this._kathia.getActionByTag(TAG_ACTION1_EASE_ACTIONS);
+    var action1 = this._grossini.actionManager.getActionByTag(TAG_ACTION1_EASE_ACTIONS);
+    var action2 = this._tamara.actionManager.getActionByTag(TAG_ACTION1_EASE_ACTIONS);
+    var action3 = this._kathia.actionManager.getActionByTag(TAG_ACTION1_EASE_ACTIONS);
 
     action1.setSpeed(Math.random() * 2);
     action2.setSpeed(Math.random() * 2);

@@ -50,8 +50,8 @@ export class ActionRotateToRepeat extends ActionsDemo {
     var seq = new Sequence(act1, act2);
     var seq2 = seq.clone();
 
-    this._tamara.runAction(seq.repeatForever());
-    this._kathia.runAction(seq2.repeat(4));
+    this._tamara.actionManager.runAction(seq.repeatForever());
+    this._kathia.actionManager.runAction(seq2.repeat(4));
     //----end23----
   }
   title() {

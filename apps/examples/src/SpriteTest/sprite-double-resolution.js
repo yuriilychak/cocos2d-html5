@@ -86,8 +86,8 @@ export class SpriteDoubleResolution extends SpriteTestDemo {
 
     var seq_copy = seq.clone();
 
-    spriteSD.runAction(seq);
-    spriteHD.runAction(seq_copy);
+    spriteSD.actionManager.runAction(seq);
+    spriteHD.actionManager.runAction(seq_copy);
     //----end52----
   }
 }

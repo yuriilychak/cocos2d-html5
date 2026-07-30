@@ -7,7 +7,7 @@ import { Rect, Point, ServiceLocator } from "@aspect/core";
  * @example
  * //example
  * //Instead of using Camera as a "follower", use this action instead.
- * layer.runAction(follow(hero));
+ * layer.actionManager.runAction(follow(hero));
  *
  * @property {Number}  leftBoundary - world leftBoundary.
  * @property {Number}  rightBoundary - world rightBoundary.
@@ -20,12 +20,12 @@ import { Rect, Point, ServiceLocator } from "@aspect/core";
  * // creates the action with a set boundary
  * var sprite = new Sprite("spriteFileName");
  * var followAction = new Follow(sprite, rect(0, 0, s.width * 2 - 100, s.height));
- * this.runAction(followAction);
+ * this.actionManager.runAction(followAction);
  *
  * // creates the action with no boundary set
  * var sprite = new Sprite("spriteFileName");
  * var followAction = new Follow(sprite);
- * this.runAction(followAction);
+ * this.actionManager.runAction(followAction);
  *
  */
 export default class Follow extends Action {

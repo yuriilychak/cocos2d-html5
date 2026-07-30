@@ -51,7 +51,7 @@ export class ActionCallFunc2 extends ActionsDemo {
       new CallFunc(this.removeFromParentAndCleanup, this._grossini, true)
     );
 
-    this._grossini.runAction(action);
+    this._grossini.actionManager.runAction(action);
     //----end26----
   }
 

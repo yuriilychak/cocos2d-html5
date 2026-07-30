@@ -67,7 +67,7 @@ export class Issue1327 extends ActionsDemo {
       act8,
       act9
     );
-    spr.runAction(actF);
+    spr.actionManager.runAction(actF);
     //----end43----
   }
   onLogSprRotation(pSender) {

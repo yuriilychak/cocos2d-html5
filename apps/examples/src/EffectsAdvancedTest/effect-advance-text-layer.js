@@ -75,7 +75,7 @@ export class EffectAdvanceTextLayer extends BaseTestLayer {
     grossini.y = winSize.height / 2;
     var sc = new ScaleBy(2, 5);
     var sc_back = sc.reverse();
-    grossini.runAction(new Sequence(sc, sc_back).repeatForever());
+    grossini.actionManager.runAction(new Sequence(sc, sc_back).repeatForever());
 
     var tamara = new Sprite(s_pathSister1);
     var tamaraGrid = new NodeGrid();
@@ -85,7 +85,7 @@ export class EffectAdvanceTextLayer extends BaseTestLayer {
     tamara.y = winSize.height / 2;
     var sc2 = new ScaleBy(2, 5);
     var sc2_back = sc2.reverse();
-    tamara.runAction(new Sequence(sc2, sc2_back).repeatForever());
+    tamara.actionManager.runAction(new Sequence(sc2, sc2_back).repeatForever());
   }
 
   title() {

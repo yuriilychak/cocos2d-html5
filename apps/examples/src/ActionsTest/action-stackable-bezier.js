@@ -49,7 +49,7 @@ export class ActionStackableBezier extends ActionsDemo {
     var move_back = move.reverse();
     var move_seq = new Sequence(move, move_back);
     var move_rep = move_seq.repeatForever();
-    this._grossini.runAction(move_rep);
+    this._grossini.actionManager.runAction(move_rep);
 
     // Bezier
     var controlPoints = [
@@ -61,7 +61,7 @@ export class ActionStackableBezier extends ActionsDemo {
     var bezierForward = new BezierBy(3, controlPoints);
     var repeat = new Sequence(bezierForward, bezierForward.reverse())
       .repeatForever();
-    this._grossini.runAction(repeat);
+    this._grossini.actionManager.runAction(repeat);
     //----end35----
   }
   title() {

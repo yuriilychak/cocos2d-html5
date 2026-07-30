@@ -54,7 +54,7 @@ export class ActionAnimate extends ActionsDemo {
     animation.restoreOriginalFrame = true;
 
     var action = new Animate(animation);
-    this._grossini.runAction(new Sequence(action, action.reverse()));
+    this._grossini.actionManager.runAction(new Sequence(action, action.reverse()));
 
     //
     // File animation
@@ -66,7 +66,7 @@ export class ActionAnimate extends ActionsDemo {
     var animation2 = animCache.get("dance_1");
 
     var action2 = new Animate(animation2);
-    this._tamara.runAction(new Sequence(action2, action2.reverse()));
+    this._tamara.actionManager.runAction(new Sequence(action2, action2.reverse()));
 
     //
     // File animation
@@ -76,7 +76,7 @@ export class ActionAnimate extends ActionsDemo {
     animation3.loops = 4;
 
     var action3 = new Animate(animation3);
-    this._kathia.runAction(action3);
+    this._kathia.actionManager.runAction(action3);
     //----end44----
   }
 

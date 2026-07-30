@@ -64,8 +64,8 @@ export class ActionBezierToCopy extends ActionsDemo {
     this._kathia.y = 160;
     var bezierTo2 = bezierTo1.clone();
 
-    this._tamara.runAction(bezierTo1);
-    this._kathia.runAction(bezierTo2);
+    this._tamara.actionManager.runAction(bezierTo1);
+    this._kathia.actionManager.runAction(bezierTo2);
     //----end9----
   }
   title() {

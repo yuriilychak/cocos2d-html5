@@ -59,7 +59,7 @@ export class RemoveTest extends ActionManagerTest {
     l.y = 245;
 
     var move = new MoveBy(2, new Point(200, 0));
-    var callback = new CallFunc(this.stopAction, this);
+    var callback = new CallFunc(this.actionManager.stopAction, this);
     var sequence = new Sequence(move, callback);
     sequence.tag = TAG_SEQUENCE;
 
@@ -68,14 +68,14 @@ export class RemoveTest extends ActionManagerTest {
     child.y = 200;
 
     this.addChild(child, 1, TAG_GROSSINI);
-    child.runAction(sequence);
+    child.actionManager.runAction(sequence);
     //----end3----
   }
 
   stopAction() {
     //----start3----onEnter
     var sprite = this.getChildByTag(TAG_GROSSINI);
-    sprite.stopActionByTag(TAG_SEQUENCE);
+    sprite.actionManager.stopActionByTag(TAG_SEQUENCE);
     //----end3----
   }
 

@@ -99,10 +99,10 @@ export class TMXReadWriteTest extends TileDemo {
       finish
     );
 
-    tile0.runAction(seq0);
-    tile1.runAction(seq0.clone());
-    tile2.runAction(seq0.clone());
-    tile3.runAction(seq0.clone());
+    tile0.actionManager.runAction(seq0);
+    tile1.actionManager.runAction(seq0.clone());
+    tile2.actionManager.runAction(seq0.clone());
+    tile3.actionManager.runAction(seq0.clone());
 
     this.gid = layer.getTileGIDAt(new Point(0, 63));
 

@@ -48,7 +48,7 @@ export class InnerActionFrame extends Frame {
    */
   onEnter(nextFrame) {
     if (!this._node) return;
-    var innerActiontimeline = this._node.getActionByTag(this._node.tag);
+    var innerActiontimeline = this._node.actionManager.getActionByTag(this._node.tag);
     if (!innerActiontimeline) return;
     if (InnerActionType.SingleFrame === this._innerActionType) {
       innerActiontimeline.gotoFrameAndPause(this._singleFrameIndex);

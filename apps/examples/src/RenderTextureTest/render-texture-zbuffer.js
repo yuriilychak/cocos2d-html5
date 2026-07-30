@@ -207,6 +207,6 @@ export class RenderTextureZbuffer extends RenderTextureBaseLayer {
     this.addChild(sprite, 999999);
     sprite.color = Color.GREEN;
 
-    sprite.runAction(new Sequence(new FadeTo(2, 0), new Hide()));
+    sprite.actionManager.runAction(new Sequence(new FadeTo(2, 0), new Hide()));
   }
 }

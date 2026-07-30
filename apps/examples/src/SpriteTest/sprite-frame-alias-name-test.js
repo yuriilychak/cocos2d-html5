@@ -86,7 +86,7 @@ export class SpriteFrameAliasNameTest extends SpriteTestDemo {
 
         var animation = new Animation(animFrames, 0.3);
         // 14 frames * 1sec = 14 seconds
-        sprite.runAction(new Animate(animation).repeatForever());
+        sprite.actionManager.runAction(new Animate(animation).repeatForever());
         this.testSprite = sprite;
         //----end3----
     }

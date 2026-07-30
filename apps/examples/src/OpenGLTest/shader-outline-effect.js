@@ -90,7 +90,7 @@ export class ShaderOutlineEffect extends OpenGLTestLayer {
         x: winSize.width / 2,
         y: winSize.height / 2
       });
-      this.sprite.runAction(
+      this.sprite.actionManager.runAction(
         new Sequence(
           new RotateTo(1.0, 10),
           new RotateTo(1.0, -10)

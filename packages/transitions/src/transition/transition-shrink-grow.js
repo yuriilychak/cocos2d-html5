@@ -24,13 +24,13 @@ export class TransitionShrinkGrow extends TransitionScene {
     var scaleOut = new ScaleTo(this._duration, 0.01);
     var scaleIn = new ScaleTo(this._duration, 1.0);
 
-    this._inScene.runAction(
+    this._inScene.actionManager.runAction(
       new Sequence(
         this.easeActionWithAction(scaleIn),
         new CallFunc(this.finish, this)
       )
     );
-    this._outScene.runAction(this.easeActionWithAction(scaleOut));
+    this._outScene.actionManager.runAction(this.easeActionWithAction(scaleOut));
   }
 
   easeActionWithAction(action) {

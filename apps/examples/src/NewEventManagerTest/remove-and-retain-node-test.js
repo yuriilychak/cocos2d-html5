@@ -93,7 +93,7 @@ export class RemoveAndRetainNodeTest extends EventDispatcherTestDemo {
     });
     ServiceLocator.eventManager.addListener(listener1, this._sprite);
 
-    this.runAction(
+    this.actionManager.runAction(
       new Sequence(
         new DelayTime(5.0),
         new CallFunc(function () {

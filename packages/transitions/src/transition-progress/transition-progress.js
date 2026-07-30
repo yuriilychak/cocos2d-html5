@@ -48,7 +48,7 @@ export class TransitionProgress extends TransitionScene {
     var layerAction = new Sequence(
       new ProgressFromTo(this._duration, this._from, this._to),
       new CallFunc(this.finish, this));
-    pNode.runAction(layerAction);
+    pNode.actionManager.runAction(layerAction);
 
     this.addChild(pNode, 2, SCENE_RADIAL);
   }

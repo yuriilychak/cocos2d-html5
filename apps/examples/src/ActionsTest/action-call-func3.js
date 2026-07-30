@@ -53,7 +53,7 @@ export class ActionCallFunc3 extends ActionsDemo {
       "Hello world"
     );
 
-    this.runAction(action);
+    this.actionManager.runAction(action);
     //----end27----
   }
 

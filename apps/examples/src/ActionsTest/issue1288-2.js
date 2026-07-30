@@ -47,7 +47,7 @@ export class Issue1288_2 extends ActionsDemo {
     this.addChild(spr);
 
     var act1 = new MoveBy(0.5, new Point(100, 0));
-    spr.runAction(act1.repeat(1));
+    spr.actionManager.runAction(act1.repeat(1));
     //----end42----
   }
   title() {

@@ -55,7 +55,7 @@ export class TMXUncompressedTest extends TileDemo {
     // move map to the center of the screen
     var ms = map.getMapSize();
     var ts = map.getTileSize();
-    map.runAction(
+    map.actionManager.runAction(
       new MoveTo(
         1.0,
         new Point((-ms.width * ts.width) / 2, (-ms.height * ts.height) / 2)

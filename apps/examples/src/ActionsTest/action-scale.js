@@ -53,11 +53,11 @@ export class ActionScale extends ActionsDemo {
     var actionBy = new ScaleBy(2, 2);
     var actionBy2 = new ScaleBy(2, 0.25, 4.5);
 
-    this._tamara.runAction(actionTo);
-    this._kathia.runAction(
+    this._tamara.actionManager.runAction(actionTo);
+    this._kathia.actionManager.runAction(
       new Sequence(actionBy2, new DelayTime(0.25), actionBy2.reverse())
     );
-    this._grossini.runAction(
+    this._grossini.actionManager.runAction(
       new Sequence(actionBy, new DelayTime(0.25), actionBy.reverse())
     );
 

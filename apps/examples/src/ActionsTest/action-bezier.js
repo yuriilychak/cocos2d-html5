@@ -87,9 +87,9 @@ export class ActionBezier extends ActionsDemo {
     this._kathia.y = 160;
     var bezierTo2 = new BezierTo(2, controlPoints3);
 
-    this._grossini.runAction(rep);
-    this._tamara.runAction(bezierTo1);
-    this._kathia.runAction(bezierTo2);
+    this._grossini.actionManager.runAction(rep);
+    this._tamara.actionManager.runAction(bezierTo1);
+    this._kathia.actionManager.runAction(bezierTo2);
     //----end8----
   }
   title() {

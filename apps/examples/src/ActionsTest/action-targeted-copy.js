@@ -48,7 +48,7 @@ export class ActionTargetedCopy extends ActionsDemo {
 
     var seq = new Sequence(jump1, t_copy);
 
-    this._tamara.runAction(seq);
+    this._tamara.actionManager.runAction(seq);
     //----end32----
   }
   title() {

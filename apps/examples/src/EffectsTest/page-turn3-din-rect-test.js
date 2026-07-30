@@ -73,7 +73,7 @@ export class PageTurn3DInRectTest extends BaseTestLayer {
     );
     var gridNodeTarget = new NodeGrid(gridRect);
 
-    gridNodeTarget.runAction(this.getEffect(3));
+    gridNodeTarget.actionManager.runAction(this.getEffect(3));
     this.addChild(gridNodeTarget);
 
     // back gradient
@@ -104,8 +104,8 @@ export class PageTurn3DInRectTest extends BaseTestLayer {
     var seq = new Sequence(sc, sc_back);
     var repeat = seq.repeatForever();
 
-    sister1.runAction(repeat);
-    sister2.runAction(repeat.clone());
+    sister1.actionManager.runAction(repeat);
+    sister2.actionManager.runAction(repeat.clone());
   }
 
   getEffect(duration) {

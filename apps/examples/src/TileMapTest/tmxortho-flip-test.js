@@ -50,7 +50,7 @@ export class TMXOrthoFlipTest extends TileDemo {
     this.log("ContentSize:" + map.width + "," + map.height);
 
     var action = new ScaleBy(2, 0.5);
-    map.runAction(action);
+    map.actionManager.runAction(action);
   }
   title() {
     return "TMX tile flip test";

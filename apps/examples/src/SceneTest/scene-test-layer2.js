@@ -49,7 +49,7 @@ export class SceneTestLayer2 extends MenuTestLayer {
     this.addChild(sprite);
     sprite.x = s.width - 40;
     sprite.y = s.height / 2;
-    sprite.runAction(new RotateBy(2, 360).repeatForever());
+    sprite.actionManager.runAction(new RotateBy(2, 360).repeatForever());
   }
 
   onItemCallback(idx) {

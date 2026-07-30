@@ -72,8 +72,8 @@ export class SpriteAliased extends SpriteTestDemo {
     var seq2 = new Sequence(scale2, scale_back2);
     var repeat2 = seq2.repeatForever();
 
-    sprite1.runAction(repeat);
-    sprite2.runAction(repeat2);
+    sprite1.actionManager.runAction(repeat);
+    sprite2.actionManager.runAction(repeat2);
     //----end24----
   }
   onEnter() {

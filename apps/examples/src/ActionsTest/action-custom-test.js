@@ -120,15 +120,15 @@ export class ActionCustomTest extends ActionsDemo {
     var spriteTemp = this.addandCreateSpriteTemp("Show");
     spriteTemp.visible = false;
     var show = new (createCustomAction(Show))();
-    spriteTemp.runAction(show);
+    spriteTemp.actionManager.runAction(show);
 
     spriteTemp = this.addandCreateSpriteTemp("Hide", true);
     var hide = new (createCustomAction(Hide))();
-    spriteTemp.runAction(hide);
+    spriteTemp.actionManager.runAction(hide);
 
     spriteTemp = this.addandCreateSpriteTemp("FlipX");
     var flipX = new (createCustomAction(FlipX))(true);
-    spriteTemp.runAction(flipX);
+    spriteTemp.actionManager.runAction(flipX);
 
     /**
      * group 2
@@ -136,20 +136,20 @@ export class ActionCustomTest extends ActionsDemo {
 
     spriteTemp = this.addandCreateSpriteTemp("FlipY");
     var flipY = new (createCustomAction(FlipY))(true);
-    spriteTemp.runAction(flipY);
+    spriteTemp.actionManager.runAction(flipY);
 
     // RemoveSelf action don't need test
     // skip
 
     spriteTemp = this.addandCreateSpriteTemp("Place");
     var place = new (createCustomAction(Place))(spriteTemp.position);
-    spriteTemp.runAction(place);
+    spriteTemp.actionManager.runAction(place);
 
     spriteTemp = this.addandCreateSpriteTemp("CallFunc");
     var callFunc = new (createCustomAction(CallFunc))(function () {
       log("callfunc");
     }, this);
-    spriteTemp.runAction(callFunc);
+    spriteTemp.actionManager.runAction(callFunc);
   }
   createActionInterval() {
     this.initActionProperty();
@@ -159,14 +159,14 @@ export class ActionCustomTest extends ActionsDemo {
      */
     var spriteTemp = this.addandCreateSpriteTemp("MoveBy");
     var move = new CustomMoveBy(5, new Point(50, 0));
-    spriteTemp.runAction(move);
+    spriteTemp.actionManager.runAction(move);
 
     spriteTemp = this.addandCreateSpriteTemp("MoveTo");
     var customMoveTo = new (createCustomAction(MoveTo))(
       5,
       new Point(spriteTemp.position.x + 50, spriteTemp.position.y)
     );
-    spriteTemp.runAction(customMoveTo);
+    spriteTemp.actionManager.runAction(customMoveTo);
 
     spriteTemp = this.addandCreateSpriteTemp("sequence");
     var moveSeq = new Sequence(
@@ -175,7 +175,7 @@ export class ActionCustomTest extends ActionsDemo {
       new (createCustomAction(MoveBy))(5, new Point(50, 0)),
       new DelayTime(1)
     );
-    spriteTemp.runAction(moveSeq);
+    spriteTemp.actionManager.runAction(moveSeq);
     /**
      * group 2
      */
@@ -184,7 +184,7 @@ export class ActionCustomTest extends ActionsDemo {
       new (createCustomAction(MoveBy))(5, new Point(50, 0)),
       2
     );
-    spriteTemp.runAction(moveRepeat);
+    spriteTemp.actionManager.runAction(moveRepeat);
 
     spriteTemp = this.addandCreateSpriteTemp("repeatForever");
     var moveRepeatForever = new RepeatForever(
@@ -193,36 +193,36 @@ export class ActionCustomTest extends ActionsDemo {
         new (createCustomAction(MoveBy))(5, new Point(-50, 0))
       )
     );
-    spriteTemp.runAction(moveRepeatForever);
+    spriteTemp.actionManager.runAction(moveRepeatForever);
 
     spriteTemp = this.addandCreateSpriteTemp("spawn");
     var moveRoationSpawn = new Spawn(
       new (createCustomAction(MoveBy))(5, new Point(50, 0)),
       new (createCustomAction(RotateBy))(5, 360)
     );
-    spriteTemp.runAction(moveRoationSpawn);
+    spriteTemp.actionManager.runAction(moveRoationSpawn);
 
     /**
      * group 3
      */
     spriteTemp = this.addandCreateSpriteTemp("RotateTo");
     var rotateTo = new (createCustomAction(RotateTo))(5, 180);
-    spriteTemp.runAction(rotateTo);
+    spriteTemp.actionManager.runAction(rotateTo);
 
     spriteTemp = this.addandCreateSpriteTemp("RotateBy");
     var rotateBy = new (createCustomAction(RotateBy))(5, 270);
-    spriteTemp.runAction(rotateBy);
+    spriteTemp.actionManager.runAction(rotateBy);
 
     spriteTemp = this.addandCreateSpriteTemp("SkewTo");
     var skewTo = new (createCustomAction(SkewTo))(5, 20, 20);
-    spriteTemp.runAction(skewTo);
+    spriteTemp.actionManager.runAction(skewTo);
 
     /**
      * group 4
      */
     spriteTemp = this.addandCreateSpriteTemp("SkewBy");
     var skewBy = new (createCustomAction(SkewBy))(5, 20, 20);
-    spriteTemp.runAction(skewBy);
+    spriteTemp.actionManager.runAction(skewBy);
 
     spriteTemp = this.addandCreateSpriteTemp("JumpBy");
     var jumpBy = new (createCustomAction(JumpBy))(
@@ -231,7 +231,7 @@ export class ActionCustomTest extends ActionsDemo {
       50,
       4
     );
-    spriteTemp.runAction(jumpBy);
+    spriteTemp.actionManager.runAction(jumpBy);
 
     spriteTemp = this.addandCreateSpriteTemp("JumpTo");
     var jumpTo = new (createCustomAction(JumpTo))(
@@ -240,7 +240,7 @@ export class ActionCustomTest extends ActionsDemo {
       50,
       4
     );
-    spriteTemp.runAction(jumpTo);
+    spriteTemp.actionManager.runAction(jumpTo);
 
     /**
      * group 5
@@ -252,7 +252,7 @@ export class ActionCustomTest extends ActionsDemo {
       new Point(winSize.x, spriteTemp.position.y),
       spriteTemp.position
     ]);
-    spriteTemp.runAction(bezierBy);
+    spriteTemp.actionManager.runAction(bezierBy);
 
     spriteTemp = this.addandCreateSpriteTemp("BezierTo");
     var bezierTo = new (createCustomAction(BezierTo))(5, [
@@ -260,26 +260,26 @@ export class ActionCustomTest extends ActionsDemo {
       new Point(300, -winSize.height / 2),
       new Point(300, 100)
     ]);
-    spriteTemp.runAction(bezierTo);
+    spriteTemp.actionManager.runAction(bezierTo);
 
     spriteTemp = this.addandCreateSpriteTemp("ScaleTo");
     var scaleTo = new (createCustomAction(ScaleTo))(5, 0.5);
-    spriteTemp.runAction(scaleTo);
+    spriteTemp.actionManager.runAction(scaleTo);
 
     /**
      * group 6
      */
     spriteTemp = this.addandCreateSpriteTemp("ScaleBy");
     var scaleBy = new (createCustomAction(ScaleBy))(5, 1.5);
-    spriteTemp.runAction(scaleBy);
+    spriteTemp.actionManager.runAction(scaleBy);
 
     spriteTemp = this.addandCreateSpriteTemp("Blink");
     var blink = new (createCustomAction(Blink))(5, 2);
-    spriteTemp.runAction(blink);
+    spriteTemp.actionManager.runAction(blink);
 
     spriteTemp = this.addandCreateSpriteTemp("FadeTo");
     var fadeTo = new (createCustomAction(FadeTo))(5, 64);
-    spriteTemp.runAction(fadeTo);
+    spriteTemp.actionManager.runAction(fadeTo);
 
     /**
      * group 7
@@ -287,23 +287,23 @@ export class ActionCustomTest extends ActionsDemo {
     spriteTemp = this.addandCreateSpriteTemp("FadeIn");
     spriteTemp.opacity = 128;
     var fadeIn = new (createCustomAction(FadeIn))(5);
-    spriteTemp.runAction(fadeIn);
+    spriteTemp.actionManager.runAction(fadeIn);
 
     spriteTemp = this.addandCreateSpriteTemp("FadeOut");
     spriteTemp.opacity = 128;
     var fadeOut = new (createCustomAction(FadeOut))(5);
-    spriteTemp.runAction(fadeOut);
+    spriteTemp.actionManager.runAction(fadeOut);
 
     spriteTemp = this.addandCreateSpriteTemp("TintTo");
     var tintTo = new (createCustomAction(TintTo))(5, 255, 0, 255);
-    spriteTemp.runAction(tintTo);
+    spriteTemp.actionManager.runAction(tintTo);
 
     /**
      * group 8
      */
     spriteTemp = this.addandCreateSpriteTemp("TintBy");
     var tintBy = new (createCustomAction(TintBy))(5, -127, -255, -127);
-    spriteTemp.runAction(tintBy);
+    spriteTemp.actionManager.runAction(tintBy);
 
     spriteTemp = this.addandCreateSpriteTemp("Animate");
     var animation = new Animation();
@@ -315,7 +315,7 @@ export class ActionCustomTest extends ActionsDemo {
     animation.delayPerUnit = 5 / 14;
     animation.restoreOriginalFrame = true;
     var animate = new (createCustomAction(Animate))(animation);
-    spriteTemp.runAction(animate);
+    spriteTemp.actionManager.runAction(animate);
   }
   addandCreateSpriteTemp(actionTypeName, addLabelInLayerFlag) {
     var spriteTemp = new Sprite(s_pathGrossini);

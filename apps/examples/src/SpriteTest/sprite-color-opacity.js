@@ -143,10 +143,10 @@ export class SpriteColorOpacity extends SpriteTestDemo {
     this.addChild(sprite7, 0, TAG_SPRITE7);
     this.addChild(sprite8, 0, TAG_SPRITE8);
 
-    sprite5.runAction(red);
-    sprite6.runAction(green);
-    sprite7.runAction(blue);
-    sprite8.runAction(fade);
+    sprite5.actionManager.runAction(red);
+    sprite6.actionManager.runAction(green);
+    sprite7.actionManager.runAction(blue);
+    sprite8.actionManager.runAction(fade);
 
     this.scheduler.schedule(this.removeAndAddSprite, 2);
     //----end11----

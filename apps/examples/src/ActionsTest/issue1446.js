@@ -66,7 +66,7 @@ export class Issue1446 extends ActionsDemo {
       ),
       1
     );
-    label.runAction(this.backwardsFade);
+    label.actionManager.runAction(this.backwardsFade);
 
     // Comment out to see that 1.0 in the update function is called which is expected
     // Leave it uncommented to see that 0.0 is never called when going in reverse

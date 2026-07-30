@@ -59,7 +59,7 @@ export class Issue1438 extends ActionsDemo {
     animation.restoreOriginalFrame = true;
 
     var action = new Animate(animation);
-    this._kathia.runAction(action);
+    this._kathia.actionManager.runAction(action);
 
     //
     // File animation
@@ -70,7 +70,7 @@ export class Issue1438 extends ActionsDemo {
     animation2.delayPerUnit = 1 / 60;
 
     var action2 = new Animate(animation2);
-    this._tamara.runAction(new Sequence(action2, action2.reverse()));
+    this._tamara.actionManager.runAction(new Sequence(action2, action2.reverse()));
     //----end45----
   }
 

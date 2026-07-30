@@ -62,7 +62,7 @@ export class Effect2 extends EffectAdvanceTextLayer {
     var reuse = new ReuseGrid(2);
     var delay = new DelayTime(1);
 
-    target.runAction(
+    target.actionManager.runAction(
       new Sequence(shaky, delay, reuse, shuffle, delay.clone(), turnoff, turnon)
     );
   }

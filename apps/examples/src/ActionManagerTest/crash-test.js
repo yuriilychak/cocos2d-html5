@@ -50,14 +50,14 @@ export class CrashTest extends ActionManagerTest {
     this.addChild(child, 1);
 
     //Sum of all action's duration is 1.5 second.
-    child.runAction(new RotateBy(1.5, 90));
-    // child.runAction(new Sequence(
+    child.actionManager.runAction(new RotateBy(1.5, 90));
+    // child.actionManager.runAction(new Sequence(
     //     new DelayTime(1.4),
     //     new FadeOut(1.1))
     // );
 
     //After 1.5 second, self will be removed.
-    this.runAction(
+    this.actionManager.runAction(
       new Sequence(
         new DelayTime(1.4),
         new CallFunc(this.onRemoveThis, this)
@@ -67,7 +67,7 @@ export class CrashTest extends ActionManagerTest {
   }
 
   onExitTransitionDidStart() {
-    this.stopAllActions();
+    this.actionManager.stopAllActions();
     super.onExitTransitionDidStart();
   }
 

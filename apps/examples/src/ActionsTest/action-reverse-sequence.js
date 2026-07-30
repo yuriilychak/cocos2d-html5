@@ -45,7 +45,7 @@ export class ActionReverseSequence extends ActionsDemo {
     var seq = new Sequence(move1, move2, move1.reverse());
     var action = new Sequence(seq, seq.reverse());
 
-    this._grossini.runAction(action);
+    this._grossini.actionManager.runAction(action);
     //----end28----
   }
   subtitle() {

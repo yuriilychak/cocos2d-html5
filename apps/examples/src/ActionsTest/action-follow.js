@@ -50,9 +50,9 @@ export class ActionFollow extends ActionsDemo {
 
     var rep = seq.repeatForever();
 
-    this._grossini.runAction(rep);
+    this._grossini.actionManager.runAction(rep);
 
-    this.runAction(
+    this.actionManager.runAction(
       new Follow(this._grossini, new Rect(0, 0, s.width * 2 - 100, s.height))
     );
     //----end30----

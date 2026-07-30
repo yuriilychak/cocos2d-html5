@@ -86,7 +86,7 @@ export class SpriteChildrenVisibility extends SpriteTestDemo {
         sprite1.addChild(sprite2, -2);
         sprite1.addChild(sprite3, 2);
 
-        sprite1.runAction(new Blink(5, 10));
+        sprite1.actionManager.runAction(new Blink(5, 10));
 
         //
         // Sprite
@@ -112,7 +112,7 @@ export class SpriteChildrenVisibility extends SpriteTestDemo {
         sprite1.addChild(sprite2, -2);
         sprite1.addChild(sprite3, 2);
 
-        sprite1.runAction(new Blink(5, 10));
+        sprite1.actionManager.runAction(new Blink(5, 10));
         //----end31----
     }
     //

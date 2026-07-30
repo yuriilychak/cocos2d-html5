@@ -94,8 +94,8 @@ export class SpriteOffsetAnchorRotation extends SpriteTestDemo {
             }
 
             var animation = new Animation(animFrames, 0.3);
-            sprite.runAction(new Animate(animation).repeatForever());
-            sprite.runAction(new RotateBy(10, 360).repeatForever());
+            sprite.actionManager.runAction(new Animate(animation).repeatForever());
+            sprite.actionManager.runAction(new RotateBy(10, 360).repeatForever());
 
             this.addChild(sprite, 0);
         }

@@ -525,11 +525,11 @@ export class Button extends Widget {
 
     if (this._pressedTextureLoaded) {
       if (this.pressedActionEnabled) {
-        this._buttonScale9Renderer.stopAllActions();
+        this._buttonScale9Renderer.actionManager.stopAllActions();
         this._buttonScale9Renderer.scale = 1.0;
 
         if (this._titleRenderer) {
-          this._titleRenderer.stopAllActions();
+          this._titleRenderer.actionManager.stopAllActions();
 
           if (this._unifySize) {
             var zoomTitleAction = new ScaleTo(
@@ -537,7 +537,7 @@ export class Button extends Widget {
               1,
               1
             );
-            this._titleRenderer.runAction(zoomTitleAction);
+            this._titleRenderer.actionManager.runAction(zoomTitleAction);
           } else {
             this._titleRenderer.scaleX = 1;
             this._titleRenderer.scaleY = 1;
@@ -545,7 +545,7 @@ export class Button extends Widget {
         }
       }
     } else {
-      this._buttonScale9Renderer.stopAllActions();
+      this._buttonScale9Renderer.actionManager.stopAllActions();
       this._buttonScale9Renderer.scale = 1.0;
 
       if (this._scale9Enabled) {
@@ -553,7 +553,7 @@ export class Button extends Widget {
       }
 
       if (this._titleRenderer) {
-        this._titleRenderer.stopAllActions();
+        this._titleRenderer.actionManager.stopAllActions();
 
         this._titleRenderer.scaleX = 1;
         this._titleRenderer.scaleY = 1;
@@ -568,18 +568,18 @@ export class Button extends Widget {
       this._buttonScale9Renderer.setSpriteFrame(this._buttonClickedSpriteFrame);
 
       if (this.pressedActionEnabled) {
-        this._buttonScale9Renderer.stopAllActions();
+        this._buttonScale9Renderer.actionManager.stopAllActions();
 
         var zoomAction = new ScaleTo(
           Button.ZOOM_ACTION_TIME_STEP,
           1.0 + this._zoomScale,
           1.0 + this._zoomScale
         );
-        this._buttonScale9Renderer.runAction(zoomAction);
+        this._buttonScale9Renderer.actionManager.runAction(zoomAction);
 
         if (this._titleRenderer) {
-          this._titleRenderer.stopAllActions();
-          this._titleRenderer.runAction(
+          this._titleRenderer.actionManager.stopAllActions();
+          this._titleRenderer.actionManager.runAction(
             new ScaleTo(
               Button.ZOOM_ACTION_TIME_STEP,
               1 + this._zoomScale,
@@ -591,12 +591,12 @@ export class Button extends Widget {
     } else {
       this._buttonScale9Renderer.setSpriteFrame(this._buttonClickedSpriteFrame);
 
-      this._buttonScale9Renderer.stopAllActions();
+      this._buttonScale9Renderer.actionManager.stopAllActions();
       this._buttonScale9Renderer.scaleX = 1.0 + this._zoomScale;
       this._buttonScale9Renderer.scaleY = 1.0 + this._zoomScale;
 
       if (this._titleRenderer) {
-        this._titleRenderer.stopAllActions();
+        this._titleRenderer.actionManager.stopAllActions();
         this._titleRenderer.scaleX = 1 + this._zoomScale;
         this._titleRenderer.scaleY = 1 + this._zoomScale;
       }

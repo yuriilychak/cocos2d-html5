@@ -57,6 +57,6 @@ export class Effect1 extends EffectAdvanceTextLayer {
     var reuse = new ReuseGrid(1);
     var delay = new DelayTime(8);
 
-    target.runAction(new Sequence(lens, delay, reuse, waves));
+    target.actionManager.runAction(new Sequence(lens, delay, reuse, waves));
   }
 }

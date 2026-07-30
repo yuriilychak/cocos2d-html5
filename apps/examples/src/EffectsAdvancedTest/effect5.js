@@ -43,6 +43,6 @@ export class Effect5 extends EffectAdvanceTextLayer {
     var stopEffect = new Sequence(effect, new DelayTime(2), new StopGrid());
 
     var bg = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);
-    bg.runAction(stopEffect);
+    bg.actionManager.runAction(stopEffect);
   }
 }

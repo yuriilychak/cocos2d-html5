@@ -72,9 +72,9 @@ export class SpriteEaseInOut extends EaseSpriteDemo {
       delay.clone()
     );
 
-    this._tamara.runAction(seq1.repeatForever());
-    this._kathia.runAction(seq2.repeatForever());
-    this._grossini.runAction(seq3.repeatForever());
+    this._tamara.actionManager.runAction(seq1.repeatForever());
+    this._kathia.actionManager.runAction(seq2.repeatForever());
+    this._grossini.actionManager.runAction(seq3.repeatForever());
     //----end1----
   }
   title() {

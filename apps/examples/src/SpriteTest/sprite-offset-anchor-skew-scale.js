@@ -97,7 +97,7 @@ export class SpriteOffsetAnchorSkewScale extends SpriteTestDemo {
       }
 
       var animation = new Animation(animFrames, 0.3);
-      sprite.runAction(new Animate(animation).repeatForever());
+      sprite.actionManager.runAction(new Animate(animation).repeatForever());
 
       animFrames = null;
 
@@ -108,13 +108,13 @@ export class SpriteOffsetAnchorSkewScale extends SpriteTestDemo {
       var skewY_back = skewY.reverse();
 
       var seq_skew = new Sequence(skewX, skewX_back, skewY, skewY_back);
-      sprite.runAction(seq_skew.repeatForever());
+      sprite.actionManager.runAction(seq_skew.repeatForever());
 
       // Scale
       var scale = new ScaleBy(2, 2);
       var scale_back = scale.reverse();
       var seq_scale = new Sequence(scale, scale_back);
-      sprite.runAction(seq_scale.repeatForever());
+      sprite.actionManager.runAction(seq_scale.repeatForever());
 
       this.addChild(sprite, 0);
     }

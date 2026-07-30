@@ -38,13 +38,13 @@ export class ShapeTest extends BasicTest {
 
   stencil() {
     var node = this.shape();
-    node.runAction(this.actionRotate());
+    node.actionManager.runAction(this.actionRotate());
     return node;
   }
 
   content() {
     var node = this.grossini();
-    node.runAction(this.actionScale());
+    node.actionManager.runAction(this.actionScale());
     return node;
   }
 }

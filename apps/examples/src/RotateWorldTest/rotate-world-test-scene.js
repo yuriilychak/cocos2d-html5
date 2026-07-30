@@ -38,7 +38,7 @@ export class RotateWorldTestScene extends TestScene {
   runThisTest() {
     var layer = new RotateWorldMainLayer();
     this.addChild(layer);
-    this.runAction(new RotateBy(4, -360));
+    this.actionManager.runAction(new RotateBy(4, -360));
     director.runScene(this);
   }
 }

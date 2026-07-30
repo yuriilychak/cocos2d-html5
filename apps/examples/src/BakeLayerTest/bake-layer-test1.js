@@ -78,7 +78,7 @@ export class BakeLayerTest1 extends BakeLayerBaseTest {
       bakeLayer.addChild(sprite1);
     }
     this._bakeLayer = bakeLayer;
-    bakeLayer.runAction(
+    bakeLayer.actionManager.runAction(
       new Sequence(
         new MoveBy(2, new Point(100, 100)),
         new MoveBy(2, new Point(-100, -100))
@@ -103,6 +103,6 @@ export class BakeLayerTest1 extends BakeLayerBaseTest {
   }
 
   onRunAction() {
-    this._actionSprite.runAction(new RotateBy(1, 180));
+    this._actionSprite.actionManager.runAction(new RotateBy(1, 180));
   }
 }

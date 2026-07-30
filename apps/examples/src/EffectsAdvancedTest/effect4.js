@@ -57,7 +57,7 @@ export class Effect4 extends EffectAdvanceTextLayer {
     this.addChild(target);
 
     ServiceLocator.actionManager.addAction(seq, target, false);
-    bgNodeGrid.runAction(
+    bgNodeGrid.actionManager.runAction(
       new Sequence(
         lens,
         new CallFunc(function (sender) {

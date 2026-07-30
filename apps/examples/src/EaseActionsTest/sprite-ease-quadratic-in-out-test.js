@@ -53,8 +53,8 @@ export class SpriteEaseQuadraticInOutTest extends EaseSpriteDemo {
 
     this.positionForTwo();
 
-    this._grossini.runAction(seq1);
-    this._tamara.runAction(seq2);
+    this._grossini.actionManager.runAction(seq1);
+    this._tamara.actionManager.runAction(seq2);
     //----end16----
   }
   title() {

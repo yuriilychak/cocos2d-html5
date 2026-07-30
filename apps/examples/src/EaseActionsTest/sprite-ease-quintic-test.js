@@ -69,9 +69,9 @@ export class SpriteEaseQuinticTest extends EaseSpriteDemo {
       delay.clone()
     );
 
-    this._grossini.runAction(seq1.repeatForever());
-    this._tamara.runAction(seq2.repeatForever());
-    this._kathia.runAction(seq3.repeatForever());
+    this._grossini.actionManager.runAction(seq1.repeatForever());
+    this._tamara.actionManager.runAction(seq2.repeatForever());
+    this._kathia.actionManager.runAction(seq3.repeatForever());
 
     //----end19----
   }

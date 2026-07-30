@@ -54,7 +54,7 @@ export class TMXOrthoFlipRunTimeTest extends TileDemo {
     this.log("ContentSize:" + map.width + "," + map.height);
 
     var action = new ScaleBy(2, 0.5);
-    map.runAction(action);
+    map.actionManager.runAction(action);
 
     this.scheduler.schedule(this.onFlipIt, 1);
   }

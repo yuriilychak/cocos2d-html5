@@ -55,8 +55,8 @@ export class ActionTint extends ActionsDemo {
     var action2 = new TintBy(2, -127, -255, -127);
     var action2Back = action2.reverse();
 
-    this._tamara.runAction(action1);
-    this._kathia.runAction(
+    this._tamara.actionManager.runAction(action1);
+    this._kathia.actionManager.runAction(
       new Sequence(action2, new DelayTime(0.25), action2Back)
     );
     //----end15----

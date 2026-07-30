@@ -97,7 +97,7 @@ export class SpriteOffsetAnchorFlip extends SpriteTestDemo {
       }
 
       var animation = new Animation(animFrames, 0.3);
-      sprite.runAction(new Animate(animation).repeatForever());
+      sprite.actionManager.runAction(new Animate(animation).repeatForever());
 
       animFrames = null;
 
@@ -106,7 +106,7 @@ export class SpriteOffsetAnchorFlip extends SpriteTestDemo {
       var delay = new DelayTime(1);
       var delay1 = new DelayTime(1);
       var seq = new Sequence(delay, flip, delay1, flip_back);
-      sprite.runAction(seq.repeatForever());
+      sprite.actionManager.runAction(seq.repeatForever());
 
       this.addChild(sprite, 0);
     }

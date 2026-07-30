@@ -7,7 +7,7 @@ import ActionInterval from "../action-interval/action-interval";
  * @example
  * //For example, if you want to modify the "width" property of a target from 200 to 300 in 2 seconds, then:
  *  var modifyWidth = actionTween(2,"width",200,300)
- *  target.runAction(modifyWidth);
+ *  target.actionManager.runAction(modifyWidth);
  *
  * //Another example: ScaleTo action could be rewriten using PropertyAction:
  * // scaleA and scaleB are equivalents

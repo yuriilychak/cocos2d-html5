@@ -67,7 +67,7 @@ export class SchedulerTimeScale extends SchedulerTestLayer {
     var tamara = new Sprite("Images/grossinis_sister1.png");
     var kathia = new Sprite("Images/grossinis_sister2.png");
 
-    grossini.actionManager = this._newActionManager;
+    grossini.actionManager.actionManager = this._newActionManager;
     grossini.scheduler.scheduler = this._newScheduler;
 
     grossini.position = new Point(40, 80);
@@ -78,9 +78,9 @@ export class SchedulerTimeScale extends SchedulerTestLayer {
     this.addChild(tamara);
     this.addChild(kathia);
 
-    grossini.runAction(new Speed(action, 0.5));
-    tamara.runAction(new Speed(action2, 1.5));
-    kathia.runAction(new Speed(action3, 1.0));
+    grossini.actionManager.runAction(new Speed(action, 0.5));
+    tamara.actionManager.runAction(new Speed(action2, 1.5));
+    kathia.actionManager.runAction(new Speed(action3, 1.0));
 
     ServiceLocator.scheduler.scheduleUpdate(this._newScheduler, 0, false);
 

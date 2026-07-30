@@ -93,7 +93,7 @@ export class SpriteHybrid extends SpriteTestDemo {
             sprite.y = y;
 
             var action = new RotateBy(4, 360);
-            sprite.runAction(action.repeatForever());
+            sprite.actionManager.runAction(action.repeatForever());
         }
 
         this._usingSpriteBatchNode = false;
