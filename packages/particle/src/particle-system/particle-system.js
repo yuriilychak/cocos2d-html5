@@ -45,6 +45,7 @@ import {
 } from "@aspect/core";
 import { unzipBase64AsArray } from "@aspect/compression";
 import { Particle, ParticleModeA, ParticleModeB } from "./particle";
+import ParticleSystemColor from "./particle-system-color";
 import { PNGReader } from "../png-reader";
 import { tiffReader } from "../tiff-reader";
 
@@ -197,7 +198,6 @@ export class ParticleSystem extends Node {
   _totalParticles = 0;
   _texture = null;
   _blendFunc = null;
-  #opacityModifyRGB = false;
   positionType = null;
   autoRemoveOnFinish = false;
   emitterMode = 0;
@@ -258,7 +258,6 @@ export class ParticleSystem extends Node {
     this.emissionRate = 0;
     this._totalParticles = 0;
     this._texture = null;
-    this.#opacityModifyRGB = false;
     this.positionType = ParticleSystem.TYPE_FREE;
     this.autoRemoveOnFinish = false;
 
@@ -433,6 +432,10 @@ export class ParticleSystem extends Node {
     if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new ParticleSystem.CanvasRenderCmd(this);
     else return new ParticleSystem.WebGLRenderCmd(this);
+  }
+
+  createColor() {
+    return new ParticleSystemColor();
   }
 
   /**
@@ -1311,22 +1314,6 @@ export class ParticleSystem extends Node {
   }
 
   /**
-   * does the alpha value modify color getter
-   * @return {Boolean}
-   */
-  get opacityModifyRGB() {
-    return this.#opacityModifyRGB;
-  }
-
-  /**
-   * does the alpha value modify color setter
-   * @param newValue
-   */
-  set opacityModifyRGB(newValue) {
-    this.#opacityModifyRGB = newValue;
-  }
-
-  /**
    * <p>whether or not the particles are using blend additive.<br/>
    *     If enabled, the following blending function will be used.<br/>
    * </p>
@@ -1638,7 +1625,7 @@ export class ParticleSystem extends Node {
       //don't get the internal texture if a batchNode is used
       if (!this._batchNode) {
         // Set a compatible default for the alpha transfer
-        this.#opacityModifyRGB = false;
+        this.opacityModifyRGB = false;
 
         // texture
         // Try to get the texture from the cache
@@ -2174,14 +2161,14 @@ export class ParticleSystem extends Node {
 
     var locTexture = this._texture;
     if (locTexture && locTexture instanceof Texture2D) {
-      this.#opacityModifyRGB = false;
+      this.opacityModifyRGB = false;
       var locBlendFunc = this._blendFunc;
       if (
         locBlendFunc.src === GLState.BLEND_SRC &&
         locBlendFunc.dst === GLState.BLEND_DST
       ) {
         if (locTexture.renderer.hasPremultipliedAlpha) {
-          this.#opacityModifyRGB = true;
+          this.opacityModifyRGB = true;
         } else {
           locBlendFunc.src = GLState.SRC_ALPHA;
           locBlendFunc.dst = GLState.ONE_MINUS_SRC_ALPHA;
