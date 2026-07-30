@@ -99,7 +99,7 @@ export class LoaderScene extends Scene {
       fontSize
     ));
     label.position = Point.add(ServiceLocator.eglView.visibleRect.center, new Point(0, lblHeight));
-    label.color = new Color(180, 180, 180);
+    label.color.color = new Color(180, 180, 180);
     bgLayer.addChild(this._label, 10);
     return true;
   }

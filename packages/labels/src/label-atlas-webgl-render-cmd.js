@@ -26,8 +26,8 @@ export class LabelAtlasWebGLRenderCmd extends AtlasNode.WebGLRenderCmd {
 
   setCascade() {
     const node = this._node;
-    node.cascadeOpacity = true;
-    node.cascadeColor = true;
+    node.color.cascadeOpacity = true;
+    node.color.cascadeColor = true;
   }
 
   rendering(ctx) {

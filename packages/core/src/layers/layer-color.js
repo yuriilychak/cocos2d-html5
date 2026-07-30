@@ -54,8 +54,8 @@ export class LayerColor extends Layer {
     width = width === undefined ? winSize.width : width;
     height = height === undefined ? winSize.height : height;
 
-    this.color = color;
-    this.opacity = color.a;
+    this.color.color = color;
+    this.color.opacity = color.a;
     this.renderCmd.setDirtyFlag(
       Node._dirtyFlags.colorDirty | Node._dirtyFlags.opacityDirty
     );

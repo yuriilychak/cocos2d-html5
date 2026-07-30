@@ -40,8 +40,8 @@ export class Layer extends Node {
     this.anchorX = 0.5;
     this.anchorY = 0.5;
     this.contentSize = ServiceLocator.eglView.winSizeInPoints;
-    this.cascadeColor = false;
-    this.cascadeOpacity = false;
+    this.color.cascadeColor = false;
+    this.color.cascadeOpacity = false;
   }
 
   bake() {

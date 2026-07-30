@@ -105,7 +105,7 @@ export class LabelTTF extends Sprite {
     this._dimensions = new Size();
     this._hAlignment = TextAlignment.LEFT;
     this._vAlignment = VerticalTextAlignment.TOP;
-    this.opacityModifyRGB = false;
+    this.color.opacityModifyRGB = false;
     this._fontName = "Arial";
 
     this._shadowEnabled = false;
@@ -168,7 +168,7 @@ export class LabelTTF extends Sprite {
     hAlignment = hAlignment || TextAlignment.LEFT;
     vAlignment = vAlignment || VerticalTextAlignment.TOP;
 
-    this.opacityModifyRGB = false;
+    this.color.opacityModifyRGB = false;
     this._dimensions = new Size(dimensions.width, dimensions.height);
     this._fontName = fontName || "Arial";
     this._hAlignment = hAlignment;

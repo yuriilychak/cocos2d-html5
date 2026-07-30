@@ -73,7 +73,7 @@ export default class TintBy extends ActionInterval {
   startWithTarget(target) {
     super.startWithTarget(target);
 
-    var color = target.color;
+    var color = target.color.color;
     this._fromR = color.r;
     this._fromG = color.g;
     this._fromB = color.b;
@@ -86,7 +86,7 @@ export default class TintBy extends ActionInterval {
   update(dt) {
     dt = this._computeEaseTime(dt);
 
-    this.target.color = new Color(
+    this.target.color.color = new Color(
       this._fromR + this._deltaR * dt,
       this._fromG + this._deltaG * dt,
       this._fromB + this._deltaB * dt

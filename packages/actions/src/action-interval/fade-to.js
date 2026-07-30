@@ -54,7 +54,7 @@ export default class FadeTo extends ActionInterval {
     time = this._computeEaseTime(time);
     const fromOpacity =
       this._fromOpacity !== undefined ? this._fromOpacity : 255;
-    this.target.opacity = fromOpacity + (this._toOpacity - fromOpacity) * time;
+    this.target.color.opacity = fromOpacity + (this._toOpacity - fromOpacity) * time;
   }
 
   /**
@@ -63,6 +63,6 @@ export default class FadeTo extends ActionInterval {
    */
   startWithTarget(target) {
     super.startWithTarget(target);
-    this._fromOpacity = target.opacity;
+    this._fromOpacity = target.color.opacity;
   }
 }

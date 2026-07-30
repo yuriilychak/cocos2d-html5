@@ -64,7 +64,7 @@ export default class TintTo extends ActionInterval {
   startWithTarget(target) {
     super.startWithTarget(target);
 
-    this._from = this.target.color;
+    this._from = this.target.color.color;
   }
 
   /**
@@ -76,7 +76,7 @@ export default class TintTo extends ActionInterval {
     var locFrom = this._from,
       locTo = this._to;
     if (locFrom) {
-      this.target.color = new Color(
+      this.target.color.color = new Color(
         locFrom.r + (locTo.r - locFrom.r) * dt,
         locFrom.g + (locTo.g - locFrom.g) * dt,
         locFrom.b + (locTo.b - locFrom.b) * dt
