@@ -17,14 +17,13 @@ import {
   Path,
   ServiceLocator
 } from "@aspect/core";
+import LabelBMFontColor from "./label-bmfont-color";
 
 export class LabelBMFont extends EventHelper(SpriteBatchNode) {
   //property string is Getter and Setter.
   //property textAlign is Getter and Setter.
   //property boundingWidth is Getter and Setter.
   //property fontSize is Getter and Setter.
-  #opacityModifyRGB = false;
-
   _string = "";
   _config = null;
 
@@ -50,6 +49,10 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
   createRenderCmd() {
     if (ServiceLocator.sys.rendererConfig.isWebGL) return new LabelBMFont.WebGLRenderCmd(this);
     else return new LabelBMFont.CanvasRenderCmd(this);
+  }
+
+  createColor() {
+    return new LabelBMFontColor();
   }
 
   get boundingWidth() {
@@ -125,29 +128,6 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
    */
   textureLoaded() {
     return this._textureLoaded;
-  }
-
-  /**
-   * Conforms to RGBAProtocol protocol.
-   * @return {Boolean}
-   */
-  get opacityModifyRGB() {
-    return this.#opacityModifyRGB;
-  }
-
-  /**
-   * Set whether to support RGBAProtocol protocol
-   * @param {Boolean} opacityModifyRGB
-   */
-  set opacityModifyRGB(opacityModifyRGB) {
-    this.#opacityModifyRGB = opacityModifyRGB;
-    var locChildren = this.children;
-    if (locChildren) {
-      for (var i = 0; i < locChildren.length; i++) {
-        var node = locChildren[i];
-        if (node) node.opacityModifyRGB = this.#opacityModifyRGB;
-      }
-    }
   }
 
   _changeTextureColor() {
@@ -355,7 +335,7 @@ export class LabelBMFont extends EventHelper(SpriteBatchNode) {
       }
 
       // Apply label properties
-      fontChar.opacityModifyRGB = this.#opacityModifyRGB;
+      fontChar.opacityModifyRGB = this.opacityModifyRGB;
       cmd._updateCharColorAndOpacity(fontChar);
       fontChar.scale = locScale;
 

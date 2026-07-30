@@ -1,5 +1,6 @@
 import { Layer, Node, Color, Rect, EventListener, EventListenerType, arrayRemoveObject, ServiceLocator } from "@aspect/core";
 import { Invocation } from "./invocation";
+import ControlColor from "./control-color";
 import {
   CONTROL_STATE_NORMAL,
   CONTROL_STATE_DISABLED,
@@ -7,7 +8,6 @@ import {
 } from "./constants";
 
 export class Control extends Layer {
-  #opacityModifyRGB = false;
   _hasVisibleParents = false;
   _touchListener = null;
 
@@ -143,19 +143,8 @@ export class Control extends Layer {
 
   needsLayout() {}
 
-  get opacityModifyRGB() {
-    return this.#opacityModifyRGB;
-  }
-
-  set opacityModifyRGB(value) {
-    this.#opacityModifyRGB = value;
-    var children = this.children;
-    for (var i = 0, len = children.length; i < len; i++) {
-      var selNode = children[i];
-      if (selNode && Object.hasOwnProperty(selNode, "opacityModifyRGB")) {
-        selNode.opacityModifyRGB = value;
-      }
-    }
+  createColor() {
+    return new ControlColor();
   }
 
   getState() {

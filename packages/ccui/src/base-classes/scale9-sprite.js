@@ -16,6 +16,7 @@ import {
   ServiceLocator,
   GLState
 } from "@aspect/core";
+import Scale9SpriteColor from "./scale9-sprite-color";
 
 const dataPool = {
   _pool: {},
@@ -337,8 +338,6 @@ var scale9QuadGenerator = {
 };
 
 export class Scale9Sprite extends EventHelper(Node) {
-  #opacityModifyRGB = false;
-
   constructor(file, rectOrCapInsets, capInsets) {
     super();
 
@@ -617,7 +616,7 @@ export class Scale9Sprite extends EventHelper(Node) {
       ) {
         blendFunc.src = GLState.SRC_ALPHA;
       }
-      this.#opacityModifyRGB = false;
+      this.opacityModifyRGB = false;
     } else {
       if (
         blendFunc.src === GLState.SRC_ALPHA &&
@@ -625,19 +624,8 @@ export class Scale9Sprite extends EventHelper(Node) {
       ) {
         blendFunc.src = GLState.ONE;
       }
-      this.#opacityModifyRGB = true;
+      this.opacityModifyRGB = true;
     }
-  }
-
-  set opacityModifyRGB(value) {
-    if (this.#opacityModifyRGB !== value) {
-      this.#opacityModifyRGB = value;
-      this.renderCmd._setColorDirty();
-    }
-  }
-
-  get opacityModifyRGB() {
-    return this.#opacityModifyRGB;
   }
 
   setSpriteFrame(spriteFrame) {
@@ -839,6 +827,10 @@ export class Scale9Sprite extends EventHelper(Node) {
     if (ServiceLocator.sys.rendererConfig.isCanvas)
       return new this.constructor.CanvasRenderCmd(this);
     else return new this.constructor.WebGLRenderCmd(this);
+  }
+
+  createColor() {
+    return new Scale9SpriteColor();
   }
 }
 
