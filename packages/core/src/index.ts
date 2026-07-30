@@ -116,9 +116,8 @@ export {
 } from "./platform";
 export { Texture2D, defaultPixelFormat, PIXEL_FORMAT_NAMES, PIXEL_FORMAT_BITS, TextureAtlas } from "./textures";
 export { GLProgramState, GLProgram, setProgramForNode } from "./shaders";
+export { Matrix4, KMGLMatrix } from "./kazmath";
 export type {
-  Matrix4, 
-  KMGLMatrix,
   AABBLike,
   Mat3Like,
   Mat4Like,
