@@ -27,6 +27,7 @@
 import { Node } from "../node";
 import EventHelper from "../../event-manager/event-helper";
 import { log, _LogInfos } from "../../boot/debugger";
+import AtlasNodeColor from "./atlas-node-color";
 
 import { ServiceLocator } from "../../service-locator";
 import { GLState } from "../../enums";
@@ -52,7 +53,6 @@ import { GLState } from "../../enums";
  * @property {Number}           quadsToDraw     - Number of quads to draw
  */
 export class AtlasNode extends EventHelper(Node) {
-  #opacityModifyRGB = false;
 
   /**
    * <p>Constructor function, override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.</p>
@@ -96,6 +96,10 @@ export class AtlasNode extends EventHelper(Node) {
     return new AtlasNode.WebGLRenderCmd(this);
   }
 
+  createColor() {
+    return new AtlasNodeColor();
+  }
+
   /**
    * Updates the Atlas (indexed vertex array).
    * Empty implementation, shall be overridden in subclasses
@@ -103,38 +107,6 @@ export class AtlasNode extends EventHelper(Node) {
    */
   updateAtlasValues() {
     log(_LogInfos.AtlasNode_updateAtlasValues);
-  }
-
-  /**
-   * Get color value of the atlas node
-   * @function
-   * @return {Color}
-   */
-  get color() {
-    return this.#opacityModifyRGB
-      ? this.renderCmd._colorUnmodified
-      : super.color;
-  }
-
-  /**
-   * Set whether color should be changed with the opacity value,
-   * if true, node color will change while opacity changes.
-   * @function
-   * @param {Boolean} value
-   */
-  set opacityModifyRGB(value) {
-    var oldColor = this.color;
-    this.#opacityModifyRGB = value;
-    this.color = oldColor;
-  }
-
-  /**
-   * Get whether color should be changed with the opacity value
-   * @function
-   * @return {Boolean}
-   */
-  get opacityModifyRGB() {
-    return this.#opacityModifyRGB;
   }
 
   /**
@@ -226,24 +198,6 @@ export class AtlasNode extends EventHelper(Node) {
       tileHeight,
       itemsToRender
     );
-  }
-
-  /**
-   * Set node's color
-   * @function
-   * @param {Color} color Color object created with color(r, g, b).
-   */
-  set color(color) {
-    this.renderCmd.color = color;
-  }
-
-  /**
-   * Set node's opacity
-   * @function
-   * @param {Number} opacity The opacity value
-   */
-  set opacity(opacity) {
-    this.renderCmd.opacity = opacity;
   }
 
   /**

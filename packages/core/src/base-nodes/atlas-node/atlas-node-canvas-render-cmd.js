@@ -27,6 +27,7 @@ import { Node } from "../node";
 import { Color } from "../../platform/types/color";
 import { Rect } from "../../geometry";
 import { log, _LogInfos } from "../../boot/debugger";
+import { NodeComponentName } from "../../enums";
 
 /**
  * AtlasNode's rendering objects of Canvas
@@ -67,6 +68,7 @@ export class AtlasNodeCanvasRenderCmd extends NodeCanvasRenderCmd {
     )
       return;
     this._colorUnmodified = color3;
+    node.getComponent(NodeComponentName.Color).colorFromRenderer = color3;
     this._changeTextureColor();
   }
 
@@ -94,7 +96,7 @@ export class AtlasNodeCanvasRenderCmd extends NodeCanvasRenderCmd {
   }
 
   set opacity(opacity) {
-    this._node.opacity = opacity;
+    this._node.getComponent(NodeComponentName.Color).opacityFromRenderer = opacity;
   }
 
   _calculateMaxItems() {

@@ -30,7 +30,7 @@ import Matrix4 from "../../kazmath/mat4";
 import { TextureAtlas } from "../../textures/texture-atlas";
 
 import { ServiceLocator } from "../../service-locator";
-import { ShaderName, GLState } from "../../enums";
+import { ShaderName, GLState, NodeComponentName } from "../../enums";
 import { BYTE } from "../../constants";
 
 /**
@@ -139,11 +139,11 @@ export class AtlasNodeWebGLRenderCmd extends NodeWebGLRenderCmd {
       temp.g = (temp.g * locDisplayedOpacity) / BYTE;
       temp.b = (temp.b * locDisplayedOpacity) / BYTE;
     }
-    node.color = temp;
+    node.getComponent(NodeComponentName.Color).colorFromRenderer = temp;
   }
 
   set opacity(opacity) {
-    this._node.opacity = opacity;
+    this._node.getComponent(NodeComponentName.Color).opacityFromRenderer = opacity;
     // special opacity for premultiplied textures
     if (this._node.opacityModifyRGB) {
       this._node.color = this._colorUnmodified;
