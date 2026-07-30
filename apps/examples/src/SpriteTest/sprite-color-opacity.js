@@ -148,7 +148,7 @@ export class SpriteColorOpacity extends SpriteTestDemo {
     sprite7.runAction(blue);
     sprite8.runAction(fade);
 
-    this.schedule(this.removeAndAddSprite, 2);
+    this.scheduler.schedule(this.removeAndAddSprite, 2);
     //----end11----
   }
   // this function test if remove and add works as expected:

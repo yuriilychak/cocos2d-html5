@@ -128,9 +128,9 @@ export class ActionCardinalSpline extends ActionsDemo {
   // Automation
   //
   setupAutomation() {
-    this.scheduleOnce(this.checkControl1, 0.5);
-    this.scheduleOnce(this.checkControl2, 1.0);
-    this.scheduleOnce(this.checkControl3, 1.5);
+    this.scheduler.scheduleOnce(this.checkControl1, 0.5);
+    this.scheduler.scheduleOnce(this.checkControl2, 1.0);
+    this.scheduler.scheduleOnce(this.checkControl3, 1.5);
   }
   checkControl1(dt) {
     this.control1 = new Point(this._tamara.x, this._tamara.y);

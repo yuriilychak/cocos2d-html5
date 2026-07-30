@@ -175,7 +175,7 @@ export class AssetsManagerLoaderScene extends TestScene {
       ServiceLocator.director.runScene(this);
     }
 
-    this.schedule(this.updateProgress, 0.5);
+    this.scheduler.schedule(this.updateProgress, 0.5);
   }
 
   updateProgress() {

@@ -57,7 +57,7 @@ export class MotionStreakTest1 extends MotionStreakTest {
     this.streak = new MotionStreak(2, 3, 32, Color.GREEN, s_streak);
     this.addChild(this.streak);
     // schedule an update on each frame so we can synchronize the streak with the target
-    this.schedule(this.onUpdate);
+    this.scheduler.schedule(this.onUpdate);
 
     var a1 = new RotateBy(2, 360);
 

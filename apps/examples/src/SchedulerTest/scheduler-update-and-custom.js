@@ -36,9 +36,9 @@ export class SchedulerUpdateAndCustom extends SchedulerTestLayer {
     //----start6----onEnter
     super.onEnter();
 
-    this.scheduleUpdate();
-    this.schedule(this.onTick);
-    this.schedule(this.onStopCallbacks, 4);
+    this.scheduler.scheduleUpdate();
+    this.scheduler.schedule(this.onTick);
+    this.scheduler.schedule(this.onStopCallbacks, 4);
     //----end6----
   }
   title() {
@@ -60,7 +60,7 @@ export class SchedulerUpdateAndCustom extends SchedulerTestLayer {
   }
   onStopCallbacks(dt) {
     //----start6----onStopCallbacks
-    this.unscheduleAllCallbacks();
+    this.scheduler.unscheduleAllCallbacks();
     //----end6----
   }
 }

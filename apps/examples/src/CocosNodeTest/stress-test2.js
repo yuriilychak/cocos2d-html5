@@ -61,14 +61,14 @@ export class StressTest2 extends TestNodeDemo {
     fire.runAction(copy_seq3.repeatForever());
     sublayer.addChild(fire, 2);
 
-    this.schedule(this.shouldNotLeak, 6.0);
+    this.scheduler.schedule(this.shouldNotLeak, 6.0);
 
     this.addChild(sublayer, 0, TAG_SPRITE1);
     //----end5----
   }
   shouldNotLeak(dt) {
     //----start5----shouleNotLeak
-    this.unschedule(this.shouldNotLeak);
+    this.scheduler.unschedule(this.shouldNotLeak);
     var sublayer = this.getChildByTag(TAG_SPRITE1);
     sublayer.removeAllChildren();
     //----end5----

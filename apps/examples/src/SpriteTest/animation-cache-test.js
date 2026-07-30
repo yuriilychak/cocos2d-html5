@@ -155,7 +155,7 @@ export class AnimationCacheTest extends SpriteTestDemo {
         5
       );
     };
-    this.scheduleOnce(fun1, 0.4);
+    this.scheduler.scheduleOnce(fun1, 0.4);
 
     var fun2 = function () {
       this.cPixel2 = this.readPixels(
@@ -165,7 +165,7 @@ export class AnimationCacheTest extends SpriteTestDemo {
         5
       );
     };
-    this.scheduleOnce(fun2, 3.2);
+    this.scheduler.scheduleOnce(fun2, 3.2);
 
     var fun3 = function () {
       this.cPixel3 = this.readPixels(
@@ -175,7 +175,7 @@ export class AnimationCacheTest extends SpriteTestDemo {
         5
       );
     };
-    this.scheduleOnce(fun3, 6);
+    this.scheduler.scheduleOnce(fun3, 6);
     //----end40----
   }
   getExpectedResult() {

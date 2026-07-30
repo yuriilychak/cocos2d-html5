@@ -99,8 +99,8 @@ export class ActionBezier extends ActionsDemo {
   // Automation
   //
   setupAutomation() {
-    this.scheduleOnce(this.checkControl1, 0.66667);
-    this.scheduleOnce(this.checkControl2, 1.33333);
+    this.scheduler.scheduleOnce(this.checkControl1, 0.66667);
+    this.scheduler.scheduleOnce(this.checkControl2, 1.33333);
   }
   checkControl1(dt) {
     this.control1 = new Point(this._grossini.x, this._grossini.y);

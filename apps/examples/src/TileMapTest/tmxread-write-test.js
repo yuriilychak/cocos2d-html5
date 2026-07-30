@@ -106,9 +106,9 @@ export class TMXReadWriteTest extends TileDemo {
 
     this.gid = layer.getTileGIDAt(new Point(0, 63));
 
-    this.schedule(this.updateCol, 2.0);
-    this.schedule(this.repaintWithGID, 2.0);
-    this.schedule(this.removeTiles, 1.0);
+    this.scheduler.schedule(this.updateCol, 2.0);
+    this.scheduler.schedule(this.repaintWithGID, 2.0);
+    this.scheduler.schedule(this.removeTiles, 1.0);
 
     this.gid2 = 0;
   }
@@ -142,7 +142,7 @@ export class TMXReadWriteTest extends TileDemo {
     }
   }
   removeTiles(dt) {
-    this.unschedule(this.removeTiles);
+    this.scheduler.unschedule(this.removeTiles);
 
     var map = this.getChildByTag(TAG_TILE_MAP);
 

@@ -76,7 +76,7 @@ export class LayerTestBlend extends LayerTest {
       label.y = winSize.height / 2;
     }
 
-    this.schedule(this.onNewBlend, 1.0);
+    this.scheduler.schedule(this.onNewBlend, 1.0);
     this._blend = true;
     //----end2----
   }

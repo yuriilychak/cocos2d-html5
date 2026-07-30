@@ -115,7 +115,7 @@ export class ControlStepper extends Control {
 
   startAutorepeat() {
     this._autorepeatCount = -1;
-    this.schedule(
+    this.scheduler.schedule(
       this.update,
       ControlStepper.AUTOREPEAT_DELTATIME,
       REPEAT_FOREVER,
@@ -124,7 +124,7 @@ export class ControlStepper extends Control {
   }
 
   stopAutorepeat() {
-    this.unschedule(this.update);
+    this.scheduler.unschedule(this.update);
   }
 
   update(dt) {

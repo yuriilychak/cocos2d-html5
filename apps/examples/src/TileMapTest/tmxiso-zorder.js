@@ -66,7 +66,7 @@ export class TMXIsoZorder extends TileDemo {
     var seq = new Sequence(move, delay, back);
     this.tamara.runAction(seq.repeatForever());
 
-    this.schedule(this.repositionSprite);
+    this.scheduler.schedule(this.repositionSprite);
   }
   title() {
     return "TMX Iso Zorder";
@@ -75,7 +75,7 @@ export class TMXIsoZorder extends TileDemo {
     return "Sprite should hide behind the trees";
   }
   onExit() {
-    this.unschedule(this.repositionSprite);
+    this.scheduler.unschedule(this.repositionSprite);
     super.onExit();
   }
   repositionSprite(dt) {

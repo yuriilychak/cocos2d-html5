@@ -63,7 +63,7 @@ export class TMXOrthoZorder extends TileDemo {
     var seq = new Sequence(move, back);
     this.tamara.runAction(seq.repeatForever());
 
-    this.schedule(this.repositionSprite);
+    this.scheduler.schedule(this.repositionSprite);
   }
   title() {
     return "TMX Ortho Zorder";

@@ -66,7 +66,7 @@ export class CCNodeTest5 extends TestNodeDemo {
     sp1.runAction(forever);
     sp2.runAction(forever2);
 
-    this.schedule(this.onAddAndRemove, 2.0);
+    this.scheduler.schedule(this.onAddAndRemove, 2.0);
     //----end2----
   }
   onAddAndRemove(dt) {

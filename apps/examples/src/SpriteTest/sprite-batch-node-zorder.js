@@ -77,7 +77,7 @@ export class SpriteBatchNodeZOrder extends SpriteTestDemo {
         sprite.y = winSize.height / 2 - 20;
         sprite.scaleX = 10;
         sprite.color = Color.RED;
-        this.schedule(this.reorderSprite, 1);
+        this.scheduler.schedule(this.reorderSprite, 1);
         //----end14----
     }
     reorderSprite(dt) {

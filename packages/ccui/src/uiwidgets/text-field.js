@@ -297,7 +297,7 @@ export class TextField extends Widget {
    */
   onEnter() {
     super.onEnter();
-    this.scheduleUpdate();
+    this.scheduler.scheduleUpdate();
   }
 
   _initRenderer() {

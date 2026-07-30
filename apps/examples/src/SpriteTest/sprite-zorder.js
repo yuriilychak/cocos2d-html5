@@ -73,7 +73,7 @@ export class SpriteZOrder extends SpriteTestDemo {
         sprite.scaleX = 10;
         sprite.color = Color.RED;
 
-        this.schedule(this.reorderSprite, 1);
+        this.scheduler.schedule(this.reorderSprite, 1);
         //----end13----
     }
     reorderSprite(dt) {

@@ -68,7 +68,7 @@ export class ShaderRetroEffect extends OpenGLTestLayer {
       label.y = winSize.height / 2;
       this.addChild(label);
 
-      this.scheduleUpdate();
+      this.scheduler.scheduleUpdate();
 
       this.label = label;
       this.accum = 0;

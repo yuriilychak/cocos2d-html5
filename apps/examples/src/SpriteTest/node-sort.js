@@ -81,13 +81,13 @@ export class NodeSort extends SpriteTestDemo {
     this._sprite5.y = 160;
     this._node.addChild(this._sprite5, -3, 5);
 
-    this.schedule(this.reorderSprite);
+    this.scheduler.schedule(this.reorderSprite);
     //----end49----
   }
 
   reorderSprite(dt) {
     //----start49----reorderSprite
-    this.unschedule(this.reorderSprite);
+    this.scheduler.unschedule(this.reorderSprite);
 
     log("Before reorder--");
 

@@ -39,11 +39,11 @@ export class Lens3DTarget extends Node {
   }
   onEnter() {
     super.onEnter();
-    this.scheduleUpdate();
+    this.scheduler.scheduleUpdate();
   }
 
   onExit() {
     super.onExit();
-    this.unscheduleUpdate();
+    this.scheduler.unscheduleUpdate();
   }
 }

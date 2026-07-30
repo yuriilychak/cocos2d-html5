@@ -83,7 +83,7 @@ export class TMXIsoVertexZ extends TMXFixBugLayer {
       label.y = winSize.height / 2;
     }
 
-    this.schedule(this.repositionSprite);
+    this.scheduler.schedule(this.repositionSprite);
   }
   title() {
     return "TMX Iso VertexZ";

@@ -138,7 +138,7 @@ export class SpriteBatchNodeColorOpacity extends SpriteTestDemo {
     sprite7.runAction(blue);
     sprite8.runAction(fade);
 
-    this.schedule(this.removeAndAddSprite, 2);
+    this.scheduler.schedule(this.removeAndAddSprite, 2);
     //----end12----
   }
   // this function test if remove and add works as expected:

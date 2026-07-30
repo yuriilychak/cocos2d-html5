@@ -109,7 +109,7 @@ export class UIListViewTest_Vertical extends UIMainLayer {
       this._reuseItemOffset =
         (this._itemTemplateHeight + spacing) * this._spawnCount;
 
-      this.scheduleUpdate();
+      this.scheduler.scheduleUpdate();
       return true;
     }
     return false;

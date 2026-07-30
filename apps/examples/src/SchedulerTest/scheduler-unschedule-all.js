@@ -36,11 +36,11 @@ export class SchedulerUnscheduleAll extends SchedulerTestLayer {
     //----start2----onEnter
     super.onEnter();
 
-    this.schedule(this.onTick1, 0.5);
-    this.schedule(this.onTick2, 1.0);
-    this.schedule(this.onTick3, 1.5);
-    this.schedule(this.onTick4, 1.5);
-    this.schedule(this.onUnscheduleAll, 4);
+    this.scheduler.schedule(this.onTick1, 0.5);
+    this.scheduler.schedule(this.onTick2, 1.0);
+    this.scheduler.schedule(this.onTick3, 1.5);
+    this.scheduler.schedule(this.onTick4, 1.5);
+    this.scheduler.schedule(this.onUnscheduleAll, 4);
     //----end2----
   }
   title() {
@@ -72,7 +72,7 @@ export class SchedulerUnscheduleAll extends SchedulerTestLayer {
   }
   onUnscheduleAll(dt) {
     //----start2----onUnscheduleAll
-    this.unscheduleAllCallbacks();
+    this.scheduler.unscheduleAllCallbacks();
     //----end2----
   }
 }

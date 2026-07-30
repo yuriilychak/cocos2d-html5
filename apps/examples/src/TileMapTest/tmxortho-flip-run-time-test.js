@@ -56,7 +56,7 @@ export class TMXOrthoFlipRunTimeTest extends TileDemo {
     var action = new ScaleBy(2, 0.5);
     map.runAction(action);
 
-    this.schedule(this.onFlipIt, 1);
+    this.scheduler.schedule(this.onFlipIt, 1);
   }
   title() {
     return "TMX tile flip run time test";
@@ -105,7 +105,7 @@ export class TMXOrthoFlipRunTimeTest extends TileDemo {
     var fun = function () {
       this.pixel1 = this.readPixels(104, 154, 5, 5);
     };
-    this.scheduleOnce(fun, 2.2);
+    this.scheduler.scheduleOnce(fun, 2.2);
   }
   getExpectedResult() {
     var ret = { pixel1: "yes", pixel2: "yes" };

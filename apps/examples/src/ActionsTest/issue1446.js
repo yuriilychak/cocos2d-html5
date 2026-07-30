@@ -70,7 +70,7 @@ export class Issue1446 extends ActionsDemo {
 
     // Comment out to see that 1.0 in the update function is called which is expected
     // Leave it uncommented to see that 0.0 is never called when going in reverse
-    this.scheduleOnce(this.stepForwardGoBackward, 0.1);
+    this.scheduler.scheduleOnce(this.stepForwardGoBackward, 0.1);
     //----end46----
   }
 

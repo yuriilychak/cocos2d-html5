@@ -148,7 +148,7 @@ export class ScrollView extends Layout {
    */
   onEnter() {
     super.onEnter();
-    this.scheduleUpdate();
+    this.scheduler.scheduleUpdate();
   }
 
   onExit() {

@@ -39,7 +39,7 @@ export class TestNode extends Node {
         this._pString = "";
         this.init();
         this._pString = str;
-        this.scheduleUpdateWithPriority(priority);
+        this.scheduler.scheduleUpdateWithPriority(priority);
     }
     update(dt) {
         log( this._pString );

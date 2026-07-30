@@ -132,7 +132,7 @@ export class ParticleDemo extends BaseTestLayer {
 
     var seq = new Sequence(move, move_back);
     this._background.runAction(seq.repeatForever());
-    this.scheduleUpdate();
+    this.scheduler.scheduleUpdate();
   }
 
   _onButtonClick(i) {

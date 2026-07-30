@@ -350,11 +350,11 @@ export class EditBoxInputBase {
   }
 
   _startCaretBlink() {
-    this._editBox.schedule(this._caretBlinker, CARET_BLINK_INTERVAL);
+    this._editBox.scheduler.schedule(this._caretBlinker, CARET_BLINK_INTERVAL);
   }
 
   _stopCaretBlink() {
-    this._editBox.unschedule(this._caretBlinker);
+    this._editBox.scheduler.unschedule(this._caretBlinker);
   }
 
   // --- Editing lifecycle ---

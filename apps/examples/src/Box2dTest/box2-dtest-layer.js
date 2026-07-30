@@ -75,7 +75,7 @@ export class Box2DTestLayer extends LayerColor {
       }.bind(this)
     );
 
-    this.scheduleUpdate();
+    this.scheduler.scheduleUpdate();
     //----end0----
   }
 

@@ -121,7 +121,7 @@ export class SpriteBatchNodeReorderIssue767 extends SpriteTestDemo {
         l3b2.y = +50 + l2bH / 2;
         l2b.addChild(l3b2, 1);
 
-        this.schedule(this.reorderSprites, 1);
+        this.scheduler.schedule(this.reorderSprites, 1);
         //----end18----
     }
     reorderSprites(dt) {
@@ -147,7 +147,7 @@ export class SpriteBatchNodeReorderIssue767 extends SpriteTestDemo {
         var fun = function(){
             this.curPixel1 = this.readPixels(winSize.width / 2 + 11, winSize.height / 2 - 11, 2, 2);
         }
-        this.scheduleOnce(fun, 0.5);
+        this.scheduler.scheduleOnce(fun, 0.5);
     }
     getExpectedResult() {
         var ret = {"pixel1":"yes", "pixel2":"yes"};

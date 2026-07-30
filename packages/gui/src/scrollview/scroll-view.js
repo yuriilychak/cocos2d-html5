@@ -215,7 +215,7 @@ export class GScrollView extends Layer {
     var scroll = new MoveTo(dt, offset);
     var expire = new CallFunc(this._stoppedAnimatedScroll, this);
     this._container.runAction(new Sequence(scroll, expire));
-    this.schedule(this._performedAnimatedScroll);
+    this.scheduler.schedule(this._performedAnimatedScroll);
   }
 
   setZoomScale(scale, animated) {
@@ -505,7 +505,7 @@ export class GScrollView extends Layer {
     if (!this.visible) return;
 
     if (this._touches.length === 1 && this._touchMoved)
-      this.schedule(this._deaccelerateScrolling);
+      this.scheduler.schedule(this._deaccelerateScrolling);
 
     this._touches.length = 0;
     this._dragging = false;
@@ -653,7 +653,7 @@ export class GScrollView extends Layer {
 
   _deaccelerateScrolling(dt) {
     if (this._dragging) {
-      this.unschedule(this._deaccelerateScrolling);
+      this.scheduler.unschedule(this._deaccelerateScrolling);
       return;
     }
 
@@ -689,14 +689,14 @@ export class GScrollView extends Layer {
       newY === maxInset.y ||
       newY === minInset.y
     ) {
-      this.unschedule(this._deaccelerateScrolling);
+      this.scheduler.unschedule(this._deaccelerateScrolling);
       this._relocateContainer(true);
     }
   }
 
   _performedAnimatedScroll(dt) {
     if (this._dragging) {
-      this.unschedule(this._performedAnimatedScroll);
+      this.scheduler.unschedule(this._performedAnimatedScroll);
       return;
     }
 
@@ -705,7 +705,7 @@ export class GScrollView extends Layer {
   }
 
   _stoppedAnimatedScroll(node) {
-    this.unschedule(this._performedAnimatedScroll);
+    this.scheduler.unschedule(this._performedAnimatedScroll);
     if (this._delegate && this._delegate.scrollViewDidScroll) {
       this._delegate.scrollViewDidScroll(this);
     }

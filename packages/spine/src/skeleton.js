@@ -58,11 +58,11 @@ export class Skeleton extends Node {
 
   onEnter() {
     super.onEnter();
-    this.scheduleUpdate();
+    this.scheduler.scheduleUpdate();
   }
 
   onExit() {
-    this.unscheduleUpdate();
+    this.scheduler.unscheduleUpdate();
     super.onExit();
   }
 

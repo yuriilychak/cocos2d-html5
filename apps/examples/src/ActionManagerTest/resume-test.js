@@ -72,12 +72,12 @@ export class ResumeTest extends ActionManagerTest {
     ServiceLocator.actionManager.pauseTarget(grossini);
     grossini.runAction(new RotateBy(2, 360));
 
-    this.schedule(this.resumeGrossini, 3.0);
+    this.scheduler.schedule(this.resumeGrossini, 3.0);
     //----end4----
   }
   resumeGrossini(time) {
     //----start4----resumeGrossini
-    this.unschedule(this.resumeGrossini);
+    this.scheduler.unschedule(this.resumeGrossini);
 
     var grossini = this.getChildByTag(TAG_GROSSINI);
     ServiceLocator.actionManager.resumeTarget(grossini);
@@ -88,8 +88,8 @@ export class ResumeTest extends ActionManagerTest {
   // Automation
   //
   setupAutomation() {
-    this.scheduleOnce(this.checkControl1, 1.0);
-    this.scheduleOnce(this.checkControl2, 5.5);
+    this.scheduler.scheduleOnce(this.checkControl1, 1.0);
+    this.scheduler.scheduleOnce(this.checkControl2, 5.5);
   }
   checkControl1(dt) {
     this.control1ScaleX = this._grossini.scaleX;

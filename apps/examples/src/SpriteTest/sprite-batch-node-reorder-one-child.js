@@ -118,7 +118,7 @@ export class SpriteBatchNodeReorderOneChild extends SpriteTestDemo {
     l3b2.y = 50 + l2bH / 2;
     l2b.addChild(l3b2);
 
-    this.scheduleOnce(this.reorderSprite, 2.0);
+    this.scheduler.scheduleOnce(this.reorderSprite, 2.0);
     //----end48----
   }
 

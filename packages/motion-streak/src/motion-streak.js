@@ -72,7 +72,7 @@ export class MotionStreak extends Node {
     this.#colorPointerBuffer = gl.createBuffer();
     this.#texture = texture;
     this.color = color;
-    this.scheduleUpdate();
+    this.scheduler.scheduleUpdate();
 
     // bind buffer
     gl.bindBuffer(gl.ARRAY_BUFFER, this.#verticesBuffer);

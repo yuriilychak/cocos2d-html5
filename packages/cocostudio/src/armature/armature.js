@@ -364,7 +364,7 @@ export class Armature extends Node {
    */
   onEnter() {
     super.onEnter();
-    this.scheduleUpdate();
+    this.scheduler.scheduleUpdate();
   }
 
   /**
@@ -373,7 +373,7 @@ export class Armature extends Node {
    */
   onExit() {
     super.onExit();
-    this.unscheduleUpdate();
+    this.scheduler.unscheduleUpdate();
   }
 
   /**

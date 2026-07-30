@@ -44,7 +44,7 @@ export class UILoadingBarTest extends UIMainLayer {
 
       this.createLoadingBar();
 
-      this.scheduleUpdate();
+      this.scheduler.scheduleUpdate();
       return true;
     }
     return false;
@@ -62,17 +62,17 @@ export class UILoadingBarTest extends UIMainLayer {
   }
 
   previousCallback(sender, type) {
-    this.unscheduleUpdate();
+    this.scheduler.unscheduleUpdate();
     super.previousCallback(sender, type);
   }
 
   restartCallback(sender, type) {
-    this.unscheduleUpdate();
+    this.scheduler.unscheduleUpdate();
     super.restartCallback(sender, type);
   }
 
   nextCallback(sender, type) {
-    this.unscheduleUpdate();
+    this.scheduler.unscheduleUpdate();
     super.nextCallback(sender, type);
   }
 }

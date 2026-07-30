@@ -77,11 +77,11 @@ export class IntervalLayer extends LayerGradient {
     this.label3 = Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
     this.label4 = Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
 
-    this.scheduleUpdate();
-    this.schedule(this.step1);
-    this.schedule(this.step2, 0);
-    this.schedule(this.step3, 1.0);
-    this.schedule(this.step4, 2.0);
+    this.scheduler.scheduleUpdate();
+    this.scheduler.schedule(this.step1);
+    this.scheduler.schedule(this.step2, 0);
+    this.scheduler.schedule(this.step3, 1.0);
+    this.scheduler.schedule(this.step4, 2.0);
 
     this.label0.x = (s.width * 1) / 6;
     this.label0.y = s.height / 2;

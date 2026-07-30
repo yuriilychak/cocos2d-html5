@@ -74,7 +74,7 @@ export class TransitionBase extends BaseTestLayer {
     label.y = y / 2;
     this.addChild(label);
 
-    // this.schedule(this.step, 1.0);
+    // this.scheduler.schedule(this.step, 1.0);
   }
   onRestartCallback(sender) {
     var s = new TransitionsTestScene();

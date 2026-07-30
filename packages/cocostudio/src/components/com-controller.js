@@ -42,6 +42,6 @@ export class ComController extends Component {
    * @override
    */
   onEnter() {
-    if (this.owner !== null) this.owner.scheduleUpdate();
+    if (this.owner !== null) this.owner.scheduler.scheduleUpdate();
   }
 }

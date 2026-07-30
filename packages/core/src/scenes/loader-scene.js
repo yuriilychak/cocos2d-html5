@@ -119,7 +119,7 @@ export class LoaderScene extends Scene {
   onEnter() {
     var self = this;
     Node.prototype.onEnter.call(self);
-    self.schedule(self._startLoading, 0.3);
+    self.scheduler.schedule(self._startLoading, 0.3);
   }
 
   onExit() {
@@ -136,7 +136,7 @@ export class LoaderScene extends Scene {
 
   _startLoading() {
     var self = this;
-    self.unschedule(self._startLoading);
+    self.scheduler.unschedule(self._startLoading);
     var res = self.resources;
     ServiceLocator.loader.load(
       res,

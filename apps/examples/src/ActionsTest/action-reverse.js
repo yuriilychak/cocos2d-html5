@@ -62,7 +62,7 @@ export class ActionReverse extends ActionsDemo {
   // Automation
   //
   setupAutomation() {
-    this.scheduleOnce(this.checkControl1, 2.1);
+    this.scheduler.scheduleOnce(this.checkControl1, 2.1);
   }
   checkControl1(dt) {
     this.control1 = new Point(this._grossini.x, this._grossini.y);

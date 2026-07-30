@@ -70,7 +70,7 @@ export class TMXOrthoTest4 extends TileDemo {
     sprite = layer.getTileAt(new Point(s.width - 1, s.height - 1));
     sprite.scale = 2;
 
-    this.scheduleOnce(this.onRemoveSprite, 0.2);
+    this.scheduler.scheduleOnce(this.onRemoveSprite, 0.2);
   }
   onRemoveSprite(dt) {
     var map = this.getChildByTag(TAG_TILE_MAP);

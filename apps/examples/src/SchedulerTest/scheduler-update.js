@@ -57,7 +57,7 @@ export class SchedulerUpdate extends SchedulerTestLayer {
     var f = new TestNode(str, -5);
     this.addChild(f);
 
-    this.schedule(this.onRemoveUpdates, 4.0);
+    this.scheduler.schedule(this.onRemoveUpdates, 4.0);
     //----end5----
   }
   title() {
@@ -74,7 +74,7 @@ export class SchedulerUpdate extends SchedulerTestLayer {
     for (var i = 0; i < children.length; i++) {
       var node = children[i];
       if (node) {
-        node.unscheduleAllCallbacks();
+        node.scheduler.unscheduleAllCallbacks();
       }
     }
     //----end5----

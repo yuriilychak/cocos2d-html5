@@ -71,12 +71,12 @@ export class SpriteBatchNodeReorderIssue766 extends SpriteTestDemo {
     this._sprite3.x = 328;
     this._sprite3.y = 160;
 
-    this.schedule(this.reorderSprite, 2);
+    this.scheduler.schedule(this.reorderSprite, 2);
     //----end17----
   }
   reorderSprite(dt) {
     //----start17----reorderSprite
-    this.unschedule(this.reorderSprite);
+    this.scheduler.unschedule(this.reorderSprite);
 
     this._batchNode.reorderChild(this._sprite1, 4);
     //----end17----

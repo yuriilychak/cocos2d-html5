@@ -1746,7 +1746,7 @@ export class ParticleSystem extends Node {
     this._transformSystemDirty = false;
 
     // udpate after action in run!
-    this.scheduleUpdateWithPriority(1);
+    this.scheduler.scheduleUpdateWithPriority(1);
     this.renderCmd._initWithTotalParticles(numberOfParticles);
     return true;
   }
@@ -1757,7 +1757,7 @@ export class ParticleSystem extends Node {
    * @see scheduleUpdate();
    */
   destroyParticleSystem() {
-    this.unscheduleUpdate();
+    this.scheduler.unscheduleUpdate();
   }
 
   /**
@@ -2132,7 +2132,7 @@ export class ParticleSystem extends Node {
 
           --this.particleCount;
           if (this.particleCount === 0 && this.autoRemoveOnFinish) {
-            this.unscheduleUpdate();
+            this.scheduler.unscheduleUpdate();
             this.parent.removeChild(this, true);
             return;
           }

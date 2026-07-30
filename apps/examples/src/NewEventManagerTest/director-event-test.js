@@ -94,7 +94,7 @@ export class DirectorEventTest extends EventDispatcherTestDemo {
       }
     );
 
-    this.scheduleUpdate();
+    this.scheduler.scheduleUpdate();
   }
 
   onExit() {

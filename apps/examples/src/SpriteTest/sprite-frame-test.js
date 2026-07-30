@@ -117,7 +117,7 @@ export class SpriteFrameTest extends SpriteTestDemo {
         this._sprite2.flippedX = false;
         this._sprite2.flippedY = false;
 
-        this.schedule(this.onStartIn05Secs, 0.5);
+        this.scheduler.schedule(this.onStartIn05Secs, 0.5);
         this._counter = 0;
         //----end2----
     }
@@ -131,8 +131,8 @@ export class SpriteFrameTest extends SpriteTestDemo {
     }
     onStartIn05Secs() {
         //----start2----onStartIn05Secs
-        this.unschedule(this.onStartIn05Secs);
-        this.schedule(this.onFlipSprites, 1.0);
+        this.scheduler.unschedule(this.onStartIn05Secs);
+        this.scheduler.schedule(this.onFlipSprites, 1.0);
         //----end2----
     }
     onFlipSprites(dt) {

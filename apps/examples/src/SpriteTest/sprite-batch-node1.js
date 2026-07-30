@@ -142,7 +142,7 @@ export class SpriteBatchNode1 extends SpriteTestDemo {
       sprite.x = winSize.width / 2;
       sprite.y = winSize.height / 2;
     };
-    this.scheduleOnce(fun, 0.5);
+    this.scheduler.scheduleOnce(fun, 0.5);
   }
   getExpectedResult() {
     var ret = { useBatch: true, pixel: "yes" };

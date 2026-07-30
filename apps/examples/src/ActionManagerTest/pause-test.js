@@ -77,14 +77,14 @@ export class PauseTest extends ActionManagerTest {
 
     ServiceLocator.actionManager.addAction(action, grossini, true);
 
-    this.schedule(this.onUnpause, 3);
+    this.scheduler.schedule(this.onUnpause, 3);
 
     //
     // only for automation
     //
     if (autoTestEnabled) {
-      this.scheduleOnce(this.checkControl1, 2.0);
-      this.scheduleOnce(this.checkControl2, 4.5);
+      this.scheduler.scheduleOnce(this.checkControl1, 2.0);
+      this.scheduler.scheduleOnce(this.checkControl2, 4.5);
       this._grossini = grossini;
     }
     //----end2----
@@ -92,7 +92,7 @@ export class PauseTest extends ActionManagerTest {
 
   onUnpause(dt) {
     //----start2----onUnpause
-    this.unschedule(this.onUnpause);
+    this.scheduler.unschedule(this.onUnpause);
     var node = this.getChildByTag(TAG_GROSSINI);
     ServiceLocator.actionManager.resumeTarget(node);
     //----end2----

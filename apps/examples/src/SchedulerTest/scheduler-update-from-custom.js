@@ -36,7 +36,7 @@ export class SchedulerUpdateFromCustom extends SchedulerTestLayer {
     //----start7----onEnter
     super.onEnter();
 
-    this.schedule(this.onSchedUpdate, 2.0);
+    this.scheduler.schedule(this.onSchedUpdate, 2.0);
     //----end7----
   }
   title() {
@@ -53,15 +53,15 @@ export class SchedulerUpdateFromCustom extends SchedulerTestLayer {
   }
   onSchedUpdate(dt) {
     //----start7----onSchedUpdate
-    this.unschedule(this.onSchedUpdate);
-    this.scheduleUpdate();
-    this.schedule(this.onStopUpdate, 2.0);
+    this.scheduler.unschedule(this.onSchedUpdate);
+    this.scheduler.scheduleUpdate();
+    this.scheduler.schedule(this.onStopUpdate, 2.0);
     //----end7----
   }
   onStopUpdate(dt) {
     //----start7----onStopUpdate
-    this.unscheduleUpdate();
-    this.unschedule(this.onStopUpdate);
+    this.scheduler.unscheduleUpdate();
+    this.scheduler.unschedule(this.onStopUpdate);
     //----end7----
   }
 }

@@ -113,7 +113,7 @@ export class RenderTextureTestDepthStencil extends RenderTextureBaseLayer {
     gl.enable(gl.STENCIL_TEST);
 
     this._rend.end();
-    this.schedule(this.releaseMask, 0.5);
+    this.scheduler.schedule(this.releaseMask, 0.5);
   }
 
   title() {

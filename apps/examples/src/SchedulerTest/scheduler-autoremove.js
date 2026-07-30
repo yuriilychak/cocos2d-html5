@@ -41,8 +41,8 @@ export class SchedulerAutoremove extends SchedulerTestLayer {
     //----start0----onEnter
     super.onEnter();
 
-    this.schedule(this.onAutoremove, 0.5);
-    this.schedule(this.onTick, 0.5);
+    this.scheduler.schedule(this.onAutoremove, 0.5);
+    this.scheduler.schedule(this.onTick, 0.5);
     this._accum = 0;
     //----end0----
   }
@@ -59,7 +59,7 @@ export class SchedulerAutoremove extends SchedulerTestLayer {
     log("Time: " + this._accum);
 
     if (this._accum > 3) {
-      this.unschedule(this.onAutoremove);
+      this.scheduler.unschedule(this.onAutoremove);
       log("scheduler removed");
     }
     //----end0----

@@ -101,9 +101,9 @@ export class AnimationCacheFile extends SpriteTestDemo {
   // Automation
   //
   setupAutomation() {
-    this.scheduleOnce(this.getPixel1, 0.4);
-    this.scheduleOnce(this.getPixel2, 3.2);
-    this.scheduleOnce(this.getPixel3, 6);
+    this.scheduler.scheduleOnce(this.getPixel1, 0.4);
+    this.scheduler.scheduleOnce(this.getPixel2, 3.2);
+    this.scheduler.scheduleOnce(this.getPixel3, 6);
   }
   getPixel1() {
     this.cPixel1 = this.readPixels(winSize.width / 2, winSize.height / 2, 5, 5);

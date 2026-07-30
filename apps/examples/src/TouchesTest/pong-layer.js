@@ -85,7 +85,7 @@ export class PongLayer extends Layer {
       this.addChild(this._paddles[i]);
     }
 
-    this.schedule(this.doStep);
+    this.scheduler.schedule(this.doStep);
   }
   resetAndScoreBallForPlayer(player) {
     if (Math.abs(this._ball.getVelocity().y) < 300) {

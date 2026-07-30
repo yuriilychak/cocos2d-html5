@@ -119,7 +119,7 @@ export class SpriteChildrenVisibility extends SpriteTestDemo {
     // Automation
     //
     setupAutomation() {
-        this.scheduleOnce(this.getSpriteVisible, 1.2);
+        this.scheduler.scheduleOnce(this.getSpriteVisible, 1.2);
     }
     getSpriteVisible() {
         var ret1 = this.readPixels(winSize.width / 3, winSize.height / 2 + 38, 5, 5);

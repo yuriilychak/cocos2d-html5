@@ -72,7 +72,7 @@ export class SpriteFlip extends SpriteTestDemo {
         sprite2.y = winSize.height / 2;
         this.addChild(sprite2, 0, TAG_SPRITE2);
 
-        this.schedule(this.onFlipSprites, 1);
+        this.scheduler.schedule(this.onFlipSprites, 1);
         //----end22----
     }
     onFlipSprites(dt) {
@@ -88,7 +88,7 @@ export class SpriteFlip extends SpriteTestDemo {
     // Automation
     //
     setupAutomation() {
-        this.scheduleOnce(this.getBeforePixel, 0.5);
+        this.scheduler.scheduleOnce(this.getBeforePixel, 0.5);
     }
     getBeforePixel() {
         this.pixel1 = this.readPixels(winSize.width / 2 - 131, winSize.height / 2 - 11, 5, 5);

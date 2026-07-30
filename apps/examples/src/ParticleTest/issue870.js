@@ -52,7 +52,7 @@ export class Issue870 extends ParticleDemo {
         this._emitter.x = ServiceLocator.eglView.winSizeInPoints.width / 2;
         this._emitter.y = ServiceLocator.eglView.winSizeInPoints.height / 2 - 50;
         this._index = 0;
-        this.schedule(this.updateQuads, 2.0);
+        this.scheduler.schedule(this.updateQuads, 2.0);
     }
     title() {
         return "Issue 870. SubRect";

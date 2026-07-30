@@ -50,8 +50,8 @@ export class PauseResumeActions extends ActionsDemo {
     this._grossini.runAction(new RotateBy(3, -360).repeatForever());
     this._kathia.runAction(new RotateBy(3, 360).repeatForever());
 
-    this.schedule(this.pause, 3, false, 0);
-    this.schedule(this.resume, 5, false, 0);
+    this.scheduler.schedule(this.pause, 3, false, 0);
+    this.scheduler.schedule(this.resume, 5, false, 0);
     //----end38----
   }
 

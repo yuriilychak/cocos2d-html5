@@ -37,9 +37,9 @@ export class SchedulerPauseResume extends SchedulerTestLayer {
     //----start1----onEnter
     super.onEnter();
 
-    this.schedule(this.onTick1, 0.5);
-    this.schedule(this.onTick2, 0.5);
-    this.schedule(this.onPause, 3);
+    this.scheduler.schedule(this.onTick1, 0.5);
+    this.scheduler.schedule(this.onTick2, 0.5);
+    this.scheduler.schedule(this.onPause, 3);
     //----end1----
   }
   title() {

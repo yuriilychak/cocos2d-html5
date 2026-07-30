@@ -92,7 +92,7 @@ export class CCPoolTest extends BaseTestLayer {
       sp.x = 50 + 8 * i;
     }
     this.setDirectLabel(this.timeEnd("directly"));
-    this.schedule(
+    this.scheduler.schedule(
       function () {
         for (var i = 0; i < this.datalist1.length; i++) {
           this.datalist1[i].removeFromParent(true);
@@ -119,7 +119,7 @@ export class CCPoolTest extends BaseTestLayer {
       sp.x = 50 + 8 * i;
     }
     this.setPoolLabel(this.timeEnd("use Pool"));
-    this.schedule(
+    this.scheduler.schedule(
       function () {
         for (var i = 0; i < this.datalist2.length; i++) {
           this.datalist2[i].removeFromParent(true);

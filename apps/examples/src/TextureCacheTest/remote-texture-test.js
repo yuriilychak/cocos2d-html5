@@ -51,7 +51,7 @@ export class RemoteTextureTest extends TextureCacheTestBase {
       label.x = winSize.width / 2;
       label.y = winSize.height / 2;
       this.addChild(label, 100);
-    } else this.scheduleOnce(this.startDownload, 0.1);
+    } else this.scheduler.scheduleOnce(this.startDownload, 0.1);
   }
 
   startDownload() {

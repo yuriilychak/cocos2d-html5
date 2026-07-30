@@ -264,7 +264,7 @@ export class Widget extends ProtectedNode {
   }
 
   onExit() {
-    this.unscheduleUpdate();
+    this.scheduler.unscheduleUpdate();
     super.onExit();
   }
   _getOrCreateLayoutComponent() {

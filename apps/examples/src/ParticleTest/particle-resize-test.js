@@ -44,7 +44,7 @@ export class ParticleResizeTest extends ParticleDemo {
         emitter1.y = winSize.height/2;
         this.addChild(emitter1);
 
-        this.schedule( this.onResizeParticle50, 2 );
+        this.scheduler.schedule( this.onResizeParticle50, 2 );
 
         // to be able to use "reset" button
         this.removeChild(this._background, true);
@@ -53,7 +53,7 @@ export class ParticleResizeTest extends ParticleDemo {
     }
     onResizeParticle50(dt) {
         this._emitter.totalParticles = 50;
-        this.scheduleOnce( this.onResizeParticle400, 1);
+        this.scheduler.scheduleOnce( this.onResizeParticle400, 1);
     }
     onResizeParticle400(dt) {
         this._emitter.totalParticles = 400;

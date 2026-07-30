@@ -93,7 +93,7 @@ export class RenderTextureTargetNode extends RenderTextureBaseLayer {
 
     renderTexture.setAutoDraw(true);
 
-    this.scheduleUpdate();
+    this.scheduler.scheduleUpdate();
 
     // Toggle clear on / off
     const clearOnOffBtn = new BMButton(

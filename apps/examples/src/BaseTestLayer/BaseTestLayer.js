@@ -66,7 +66,7 @@ export class BaseTestLayer extends LayerGradient {
 
     if (autoTestEnabled) {
       this.totalNumberOfTests = this.numberOfPendingTests();
-      this.scheduleOnce(this.endTest, this.testDuration);
+      this.scheduler.scheduleOnce(this.endTest, this.testDuration);
 
       this.setupAutomation();
     }

@@ -83,7 +83,7 @@ export class TMXOrthoVertexZ extends TMXFixBugLayer {
       label.y = winSize.height / 2;
     }
 
-    this.schedule(this.repositionSprite);
+    this.scheduler.schedule(this.repositionSprite);
 
     this.log("DEPTH BUFFER MUST EXIST IN ORDER");
   }

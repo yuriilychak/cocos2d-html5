@@ -98,7 +98,7 @@ export class SpriteHybrid extends SpriteTestDemo {
 
         this._usingSpriteBatchNode = false;
 
-        this.schedule(this.reparentSprite, 2);
+        this.scheduler.schedule(this.reparentSprite, 2);
         //----end28----
     }
     onExit() {
@@ -147,8 +147,8 @@ export class SpriteHybrid extends SpriteTestDemo {
     // Automation
     //
     setupAutomation() {
-        this.scheduleOnce(this.addTestSprite, 1);
-        this.scheduleOnce(this.checkFirstPixel, 1.5);
+        this.scheduler.scheduleOnce(this.addTestSprite, 1);
+        this.scheduler.scheduleOnce(this.checkFirstPixel, 1.5);
     }
     addTestSprite() {
         var p = this.getChildByTag(TAG_NODE);

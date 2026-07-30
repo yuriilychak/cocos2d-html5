@@ -134,7 +134,7 @@ export class ScrollViewBar extends ProtectedNode {
 
     onEnter() {
         super.onEnter();
-        this.scheduleUpdate();
+        this.scheduler.scheduleUpdate();
     }
 
     /**

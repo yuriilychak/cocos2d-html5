@@ -64,7 +64,7 @@ export class SpeedTest extends EaseSpriteDemo {
     this._tamara.runAction(action3);
     this._kathia.runAction(action);
 
-    this.schedule(this.altertime, 1.0);
+    this.scheduler.schedule(this.altertime, 1.0);
     //----end12----
   }
   title() {

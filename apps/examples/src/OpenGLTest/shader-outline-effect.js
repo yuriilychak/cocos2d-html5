@@ -114,7 +114,7 @@ export class ShaderOutlineEffect extends OpenGLTestLayer {
 
       this.addChild(this.sprite);
 
-      this.scheduleUpdate();
+      this.scheduler.scheduleUpdate();
     }
   }
   update(dt) {

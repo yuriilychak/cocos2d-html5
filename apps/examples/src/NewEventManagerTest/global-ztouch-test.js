@@ -96,7 +96,7 @@ export class GlobalZTouchTest extends EventDispatcherTestDemo {
       sprite.y = ServiceLocator.eglView.visibleRect.center.y;
     }
 
-    this.scheduleUpdate();
+    this.scheduler.scheduleUpdate();
   }
 
   update(dt) {

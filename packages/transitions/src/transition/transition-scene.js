@@ -13,7 +13,7 @@ export class TransitionScene extends Scene {
   }
 
   _setNewScene(dt) {
-    this.unschedule(this._setNewScene);
+    this.scheduler.unschedule(this._setNewScene);
     var director = ServiceLocator.director;
     this._isSendCleanupToScene = director.sendCleanupToScene;
     director.runScene(this._inScene);
@@ -110,7 +110,7 @@ export class TransitionScene extends Scene {
       rotation: 0.0
     });
 
-    this.schedule(this._setNewScene, 0);
+    this.scheduler.schedule(this._setNewScene, 0);
   }
 
   hideOutShowIn() {

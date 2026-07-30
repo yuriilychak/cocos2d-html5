@@ -43,7 +43,7 @@ export class GLGetActiveTest extends OpenGLTestLayer {
       this.addChild(sprite);
 
       // after auto test
-      this.scheduleOnce(this.onTest, 0.5);
+      this.scheduler.scheduleOnce(this.onTest, 0.5);
     }
   }
 

@@ -79,7 +79,7 @@ export class SpriteEase extends EaseSpriteDemo {
     var a = this._kathia.runAction(seq3.repeatForever());
     a.tag = 1;
 
-    this.scheduleOnce(this.testStopAction, 4.1);
+    this.scheduler.scheduleOnce(this.testStopAction, 4.1);
     //----end0----
   }
   title() {

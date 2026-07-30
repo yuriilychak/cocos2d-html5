@@ -51,7 +51,7 @@ export class ShaderNode extends GLNode {
       this.uniformResolution = gl.getUniformLocation(program, "resolution");
       this.initBuffers();
 
-      this.scheduleUpdate();
+      this.scheduler.scheduleUpdate();
       this._time = 0;
     }
   }

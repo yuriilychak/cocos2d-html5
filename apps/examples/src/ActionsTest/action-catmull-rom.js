@@ -132,9 +132,9 @@ export class ActionCatmullRom extends ActionsDemo {
   // Automation
   //
   setupAutomation() {
-    this.scheduleOnce(this.checkControl1, (3 / 4) * 0);
-    this.scheduleOnce(this.checkControl2, (3 / 4) * 1);
-    this.scheduleOnce(this.checkControl3, (3 / 4) * 2);
+    this.scheduler.scheduleOnce(this.checkControl1, (3 / 4) * 0);
+    this.scheduler.scheduleOnce(this.checkControl2, (3 / 4) * 1);
+    this.scheduler.scheduleOnce(this.checkControl3, (3 / 4) * 2);
   }
   checkControl1(dt) {
     this.control1 = new Point(this._kathia.x, this._kathia.y);

@@ -59,7 +59,7 @@ export class ActionBlink extends ActionsDemo {
   // Automation
   //
   setupAutomation() {
-    this.scheduleOnce(this.checkControl1, 0.1);
+    this.scheduler.scheduleOnce(this.checkControl1, 0.1);
   }
   checkControl1(dt) {
     this.control1 = this._kathia.visible;

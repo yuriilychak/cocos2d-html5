@@ -50,12 +50,12 @@ export class StressTest1 extends TestNodeDemo {
     sp1.x = winSize.width / 2;
     sp1.y = winSize.height / 2;
 
-    this.schedule(this.onShouldNotCrash, 1.0);
+    this.scheduler.schedule(this.onShouldNotCrash, 1.0);
     //----end4----
   }
   onShouldNotCrash(dt) {
     //----start4----onShouldNotCrash
-    this.unschedule(this.onShouldNotCrash);
+    this.scheduler.unschedule(this.onShouldNotCrash);
 
     // if the node has timers, it crashes
     var explosion = new ParticleSun();

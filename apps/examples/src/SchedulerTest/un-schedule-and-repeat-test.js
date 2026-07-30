@@ -37,12 +37,12 @@ export class unScheduleAndRepeatTest extends SchedulerTestLayer {
   onEnter() {
     super.onEnter();
     log("start schedule 'repeat': run once and repeat 4 times");
-    this.schedule(this.repeat, 0.5, 4);
+    this.scheduler.schedule(this.repeat, 0.5, 4);
     log("start schedule 'forever': repeat forever (stop in 8s)");
-    this.schedule(this.forever, 0.5);
-    this.schedule(function () {
+    this.scheduler.schedule(this.forever, 0.5);
+    this.scheduler.schedule(function () {
       log("stop the 'forever'");
-      this.unschedule(this.forever);
+      this.scheduler.unschedule(this.forever);
     }, 8);
   }
 

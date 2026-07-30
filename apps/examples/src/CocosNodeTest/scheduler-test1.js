@@ -44,11 +44,11 @@ export class SchedulerTest1 extends TestNodeDemo {
     //UXLOG("retain count after addChild is %d", layer->retainCount());
     // 2
 
-    layer.schedule(this.doSomething);
+    layer.scheduler.schedule(this.doSomething);
     //UXLOG("retain count after schedule is %d", layer->retainCount());
     // 3 : (objective-c version), but win32 version is still 2, because CCTimer class don't save target.
 
-    layer.unschedule(this.doSomething);
+    layer.scheduler.unschedule(this.doSomething);
     //UXLOG("retain count after unschedule is %d", layer->retainCount());
     // STILL 3!  (win32 is '2')
     //----end7----

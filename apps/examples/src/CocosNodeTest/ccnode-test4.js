@@ -47,8 +47,8 @@ export class CCNodeTest4 extends TestNodeDemo {
     this.addChild(sp1, 0, 2);
     this.addChild(sp2, 0, 3);
 
-    this.schedule(this.delay2, 2.0);
-    this.schedule(this.delay4, 4.0);
+    this.scheduler.schedule(this.delay2, 2.0);
+    this.scheduler.schedule(this.delay4, 4.0);
 
     //Automation param
     this.autoParam = sp1;
@@ -63,7 +63,7 @@ export class CCNodeTest4 extends TestNodeDemo {
   }
   delay4(dt) {
     //----start1----delay4
-    this.unschedule(this.delay4);
+    this.scheduler.unschedule(this.delay4);
     this.removeChildByTag(3, false);
     //----end1----
   }

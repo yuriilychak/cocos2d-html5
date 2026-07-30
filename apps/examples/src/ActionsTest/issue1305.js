@@ -54,7 +54,7 @@ export class Issue1305 extends ActionsDemo {
          */
 
     this._spriteTmp.runAction(new CallFunc(this.onLog, this));
-    this.scheduleOnce(this.onAddSprite, 2);
+    this.scheduler.scheduleOnce(this.onAddSprite, 2);
     //----end39----
   }
   onExit() {

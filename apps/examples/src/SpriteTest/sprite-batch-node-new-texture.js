@@ -153,7 +153,7 @@ export class SpriteBatchNodeNewTexture extends SpriteTestDemo {
   // Automation
   //
   setupAutomation() {
-    this.scheduleOnce(this.addTestSprite, 0.5);
+    this.scheduler.scheduleOnce(this.addTestSprite, 0.5);
   }
   addTestSprite() {
     var node = this.getChildByTag(TAG_SPRITE_BATCH_NODE);

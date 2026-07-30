@@ -36,9 +36,9 @@ export class SchedulerSchedulesAndRemove extends SchedulerTestLayer {
     //----start4----onEnter
     super.onEnter();
 
-    this.schedule(this.onTick1, 0.5);
-    this.schedule(this.onTick2, 1.0);
-    this.schedule(this.onScheduleAndUnschedule, 4.0);
+    this.scheduler.schedule(this.onTick1, 0.5);
+    this.scheduler.schedule(this.onTick2, 1.0);
+    this.scheduler.schedule(this.onScheduleAndUnschedule, 4.0);
     //----end4----
   }
   title() {
@@ -70,12 +70,12 @@ export class SchedulerSchedulesAndRemove extends SchedulerTestLayer {
   }
   onScheduleAndUnschedule(dt) {
     //----start4----onScheduleAndUnschedule
-    this.unschedule(this.onTick1);
-    this.unschedule(this.onTick2);
-    this.unschedule(this.onScheduleAndUnschedule);
+    this.scheduler.unschedule(this.onTick1);
+    this.scheduler.unschedule(this.onTick2);
+    this.scheduler.unschedule(this.onScheduleAndUnschedule);
 
-    this.schedule(this.onTick3, 1.0);
-    this.schedule(this.onTick4, 1.0);
+    this.scheduler.schedule(this.onTick3, 1.0);
+    this.scheduler.schedule(this.onTick4, 1.0);
     //----end4----
   }
 }

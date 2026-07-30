@@ -64,7 +64,7 @@ export class Issue1358 extends MotionStreakTest {
     this._center = new Point(size.width / 2, size.height / 2);
     this._radius = size.width / 3;
     this._angle = 0.0;
-    this.schedule(this.update, 0);
+    this.scheduler.schedule(this.update, 0);
   }
 
   update(dt) {

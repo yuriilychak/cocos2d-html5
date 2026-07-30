@@ -68,7 +68,7 @@ export class SchedulerTimeScale extends SchedulerTestLayer {
     var kathia = new Sprite("Images/grossinis_sister2.png");
 
     grossini.actionManager = this._newActionManager;
-    grossini.scheduler = this._newScheduler;
+    grossini.scheduler.scheduler = this._newScheduler;
 
     grossini.position = new Point(40, 80);
     tamara.position = new Point(40, 80);
