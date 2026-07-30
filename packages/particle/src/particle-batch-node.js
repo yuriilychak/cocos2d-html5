@@ -29,6 +29,7 @@
 
 import {
   Node,
+  NodeStateCallbackType,
   Texture2D,
   TextureAtlas,
   BlendFunc,
@@ -549,9 +550,9 @@ export class ParticleBatchNode extends Node {
     child.localZOrder = z;
     child.parent = this;
     if (this.running) {
-      child._performRecursive(Node._stateCallbackType.onEnter);
+      child._performRecursive(NodeStateCallbackType.onEnter);
       child._performRecursive(
-        Node._stateCallbackType.onEnterTransitionDidFinish
+        NodeStateCallbackType.onEnterTransitionDidFinish
       );
     }
     return pos;

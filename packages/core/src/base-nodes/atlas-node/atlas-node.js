@@ -24,12 +24,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Node } from "./node";
-import EventHelper from "../event-manager/event-helper";
-import { log, _LogInfos } from "../boot/debugger";
+import { Node } from "../node";
+import EventHelper from "../../event-manager/event-helper";
+import { log, _LogInfos } from "../../boot/debugger";
 
-import { ServiceLocator } from "../service-locator";
-import { GLState } from "../enums";
+import { ServiceLocator } from "../../service-locator";
+import { GLState } from "../../enums";
 
 /**
  * <p>AtlasNode is a subclass of Node, it knows how to render a TextureAtlas object. </p>

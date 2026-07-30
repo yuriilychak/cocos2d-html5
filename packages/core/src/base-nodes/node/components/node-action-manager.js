@@ -1,9 +1,9 @@
-import { assert, log, _LogInfos } from "../boot/debugger";
-import { Component } from "../components";
-import { ACTION_TAG_INVALID } from "../platform/macro/constants";
-import { ServiceLocator } from "../service-locator";
+import { assert, log, _LogInfos } from "../../../boot/debugger";
+import { Component } from "../../../components";
+import { ACTION_TAG_INVALID } from "../../../platform/macro/constants";
+import { ServiceLocator } from "../../../service-locator";
 
-export class NodeActionManager extends Component {
+export default class NodeActionManager extends Component {
   #actionManager = null;
 
   constructor() {
@@ -93,7 +93,7 @@ export class NodeActionManager extends Component {
    * @function
    * @return {number} The number of actions that are running plus the ones scheduled to run.
    */
-  get numberOfRunningActions() {
+  get runningActionCount() {
     return this.actionManager.numberOfRunningActionsInTarget(this.owner);
   }
 

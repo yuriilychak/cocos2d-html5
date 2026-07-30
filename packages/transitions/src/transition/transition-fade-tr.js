@@ -1,4 +1,4 @@
-import { Node, Size, ServiceLocator } from "@aspect/core";
+import { Node, NodeStateCallbackType, Size, ServiceLocator } from "@aspect/core";
 import { NodeGrid } from "@aspect/node-grid";
 import { fadeOutTRTiles, stopGrid } from "@aspect/actions3d";
 import { Sequence, CallFunc } from "@aspect/actions";
@@ -21,7 +21,7 @@ export class TransitionFadeTR extends TransitionScene {
     super.onEnter();
 
     this._gridProxy.setTarget(this._outScene);
-    this._gridProxy._performRecursive(Node._stateCallbackType.onEnter);
+    this._gridProxy._performRecursive(NodeStateCallbackType.onEnter);
 
     var winSize = ServiceLocator.eglView.winSizeInPoints;
     var aspect = winSize.width / winSize.height;

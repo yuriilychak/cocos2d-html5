@@ -22,11 +22,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { CanvasRenderCmd as NodeCanvasRenderCmd } from "./node-canvas-render-cmd";
-import { Node } from "./node";
-import { Color } from "../platform/types/color";
-import { Rect } from "../geometry";
-import { log, _LogInfos } from "../boot/debugger";
+import { CanvasRenderCmd as NodeCanvasRenderCmd } from "../node";
+import { Node } from "../node";
+import { Color } from "../../platform/types/color";
+import { Rect } from "../../geometry";
+import { log, _LogInfos } from "../../boot/debugger";
 
 /**
  * AtlasNode's rendering objects of Canvas

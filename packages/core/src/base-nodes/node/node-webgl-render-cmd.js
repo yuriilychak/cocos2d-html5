@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 import { RenderCmd } from './node-canvas-render-cmd';
-import { GLProgramState } from "../shaders/program-state";
+import { GLProgramState } from "../../shaders/program-state";
 
 // ------------------------------ The ode's render command for WebGL ----------------------------------
 export class WebGLRenderCmd extends RenderCmd {
@@ -56,4 +56,3 @@ export class WebGLRenderCmd extends RenderCmd {
     set _shaderProgram(value) { this.setShaderProgram(value); }
     get _shaderProgram() { return this.getShaderProgram(); }
 }
-

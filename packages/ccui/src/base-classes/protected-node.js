@@ -1,5 +1,6 @@
 import {
   Node,
+  NodeStateCallbackType,
   assert,
   log,
   NODE_TAG_INVALID,
@@ -93,10 +94,10 @@ export class ProtectedNode extends Node {
     child.arrivalOrder = s_globalOrderOfArrival;
 
     if (this.running) {
-      child._performRecursive(Node._stateCallbackType.onEnter);
+      child._performRecursive(NodeStateCallbackType.onEnter);
       if (this.transitionFinished)
         child._performRecursive(
-          Node._stateCallbackType.onEnterTransitionDidFinish
+          NodeStateCallbackType.onEnterTransitionDidFinish
         );
     }
     if (this.cascadeColor)
@@ -120,12 +121,12 @@ export class ProtectedNode extends Node {
     if (idx > -1) {
       if (this.running) {
         child._performRecursive(
-          Node._stateCallbackType.onExitTransitionDidStart
+          NodeStateCallbackType.onExitTransitionDidStart
         );
-        child._performRecursive(Node._stateCallbackType.onExit);
+        child._performRecursive(NodeStateCallbackType.onExit);
       }
 
-      if (cleanup) child._performRecursive(Node._stateCallbackType.cleanup);
+      if (cleanup) child._performRecursive(NodeStateCallbackType.cleanup);
 
       child.parent = null;
       locChildren.splice(idx, 1);
@@ -153,12 +154,12 @@ export class ProtectedNode extends Node {
       var child = locChildren[i];
       if (this.running) {
         child._performRecursive(
-          Node._stateCallbackType.onExitTransitionDidStart
+          NodeStateCallbackType.onExitTransitionDidStart
         );
-        child._performRecursive(Node._stateCallbackType.onExit);
+        child._performRecursive(NodeStateCallbackType.onExit);
       }
 
-      if (cleanup) child._performRecursive(Node._stateCallbackType.cleanup);
+      if (cleanup) child._performRecursive(NodeStateCallbackType.cleanup);
       child.parent = null;
     }
     locChildren.length = 0;

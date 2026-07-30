@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { CanvasRenderCmd as NodeCanvasRenderCmd } from "../../base-nodes/node-canvas-render-cmd";
+import { CanvasRenderCmd as NodeCanvasRenderCmd } from "../../base-nodes/node";
 import { Node } from "../../base-nodes/node";
 import { Point, Rect } from "../../geometry";
 import { BakeSprite } from "../../sprites/bake-sprite";

@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { WebGLRenderCmd as NodeWebGLRenderCmd } from "../base-nodes/node-webgl-render-cmd";
+import { WebGLRenderCmd as NodeWebGLRenderCmd } from "../base-nodes/node";
 import { Rect, Point } from "../geometry";
 import { log, error, _LogInfos } from "../boot/debugger";
 import {

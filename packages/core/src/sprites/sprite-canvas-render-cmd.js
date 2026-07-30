@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { CanvasRenderCmd as NodeCanvasRenderCmd } from "../base-nodes/node-canvas-render-cmd";
+import { CanvasRenderCmd as NodeCanvasRenderCmd } from "../base-nodes/node";
 import { Node } from "../base-nodes/node";
 import { Rect } from "../geometry";
 import { error, _LogInfos } from "../boot/debugger";

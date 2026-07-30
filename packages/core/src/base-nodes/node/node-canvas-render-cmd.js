@@ -22,14 +22,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Point, Rect, AffineTransform } from "../geometry";
-import { Color } from "../platform/types/color";
-import Region from "../sys/renderer/region";
+import { Point, Rect, AffineTransform } from "../../geometry";
+import { Color } from "../../platform/types/color";
+import Region from "../../sys/renderer/region";
 import { Node } from "./node";
 
-import { ServiceLocator } from "../service-locator";
-import { GLState } from "../enums";
-import { BYTE } from "../constants";
+import { ServiceLocator } from "../../service-locator";
+import { GLState } from "../../enums";
+import { BYTE } from "../../constants";
 
 //---------------------- Customer render cmd --------------------
 export class CustomRenderCmd {

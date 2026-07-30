@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { WebGLRenderCmd as NodeWebGLRenderCmd } from '../../base-nodes/node-webgl-render-cmd';
+import { WebGLRenderCmd as NodeWebGLRenderCmd } from '../../base-nodes/node';
 
 /**
  * Layer's WebGL render command

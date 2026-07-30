@@ -1,9 +1,9 @@
-import { Point, Rect, Size, AffineTransform } from "../geometry";
-import { log, _LogInfos } from "../boot/debugger";
-import { Component } from "../components";
-import { dirtyFlags } from "./node-canvas-render-cmd";
+import { Point, Rect, Size, AffineTransform } from "../../../geometry";
+import { log, _LogInfos } from "../../../boot/debugger";
+import { Component } from "../../../components";
+import { dirtyFlags } from "../node-canvas-render-cmd";
 
-export class NodeTransform extends Component {
+export default class NodeTransform extends Component {
   #rotation = new Point();
   #position = new Point();
   #normalizedPosition = new Point();

@@ -26,6 +26,7 @@
 import {
   BaseClass,
   Node,
+  NodeStateCallbackType,
   Point,
   Rect,
   Size,
@@ -143,7 +144,7 @@ export class DisplayManager extends BaseClass {
     } else if (display instanceof ParticleSystem) {
       displayData = new ParticleDisplayData();
       display.removeFromParent();
-      display._performRecursive(Node._stateCallbackType.cleanup);
+      display._performRecursive(NodeStateCallbackType.cleanup);
       var armature = this._bone.armature;
       if (armature) display.parent = armature;
     } else if (display instanceof Armature) {

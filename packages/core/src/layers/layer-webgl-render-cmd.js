@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { WebGLRenderCmd as NodeWebGLRenderCmd } from "../base-nodes/node-webgl-render-cmd";
+import { WebGLRenderCmd as NodeWebGLRenderCmd } from "../base-nodes/node";
 import { Node } from "../base-nodes/node";
 import { Point, Rect, AffineTransform } from "../geometry";
 import Matrix4 from "../kazmath/mat4";

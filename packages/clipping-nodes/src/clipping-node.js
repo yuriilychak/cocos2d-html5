@@ -1,4 +1,4 @@
-import { Node, ServiceLocator } from "@aspect/core";
+import { Node, NodeStateCallbackType, ServiceLocator } from "@aspect/core";
 
 export class ClippingNode extends Node {
   static stencilBits = -1;
@@ -38,26 +38,26 @@ export class ClippingNode extends Node {
   onEnter() {
     super.onEnter();
     if (this._stencil)
-      this._stencil._performRecursive(Node._stateCallbackType.onEnter);
+      this._stencil._performRecursive(NodeStateCallbackType.onEnter);
   }
 
   onEnterTransitionDidFinish() {
     super.onEnterTransitionDidFinish();
     if (this._stencil)
       this._stencil._performRecursive(
-        Node._stateCallbackType.onEnterTransitionDidFinish
+        NodeStateCallbackType.onEnterTransitionDidFinish
       );
   }
 
   onExitTransitionDidStart() {
     this._stencil._performRecursive(
-      Node._stateCallbackType.onExitTransitionDidStart
+      NodeStateCallbackType.onExitTransitionDidStart
     );
     super.onExitTransitionDidStart();
   }
 
   onExit() {
-    this._stencil._performRecursive(Node._stateCallbackType.onExit);
+    this._stencil._performRecursive(NodeStateCallbackType.onExit);
     super.onExit();
   }
 

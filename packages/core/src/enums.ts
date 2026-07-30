@@ -154,6 +154,15 @@ export enum EventManagerDirtyFlag {
   ALL = 3
 }
 
+export enum NodeStateCallbackType {
+  onEnter = 1,
+  onExit = 2,
+  cleanup = 3,
+  onEnterTransitionDidFinish = 4,
+  onExitTransitionDidStart = 5,
+  max = 6
+}
+
 /**
  * Key map for keyboard event.
  */

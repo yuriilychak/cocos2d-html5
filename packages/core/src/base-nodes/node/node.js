@@ -25,19 +25,22 @@
  ****************************************************************************/
 
 import { dirtyFlags } from "./node-canvas-render-cmd";
-import { Point, Rect, AffineTransform } from "../geometry";
-import { log, assert, _LogInfos } from "../boot/debugger";
-import { arrayRemoveObject } from "../platform/macro/utils";
-import { ComponentContainer } from "../components";
-import Touch from "../event-manager/touch";
+import { Point, Rect, AffineTransform } from "../../geometry";
+import { log, assert, _LogInfos } from "../../boot/debugger";
+import { arrayRemoveObject } from "../../platform/macro/utils";
+import { ComponentContainer } from "../../components";
+import Touch from "../../event-manager/touch";
 import { CanvasRenderCmd as NodeCanvasRenderCmd } from "./node-canvas-render-cmd";
 import { WebGLRenderCmd as NodeWebGLRenderCmd } from "./node-webgl-render-cmd";
-import { NodeTransform } from "./node-transform";
-import { NodeColor } from "./node-color";
-import { NodeOrder } from "./node-order";
-import { NodeScheduler } from "./node-scheduler";
-import { NodeActionManager } from "./node-action-manager";
-import { ServiceLocator } from "../service-locator";
+import {
+  NodeActionManager,
+  NodeColor,
+  NodeOrder,
+  NodeScheduler,
+  NodeTransform,
+} from "./components";
+import { NodeStateCallbackType } from "../../enums";
+import { ServiceLocator } from "../../service-locator";
 
 /**
  * Default Node tag
@@ -299,11 +302,11 @@ export class Node extends ComponentContainer {
     setGlobalOrderOfArrival(s_globalOrderOfArrival + 1);
 
     if (this.#running) {
-      child._performRecursive(Node._stateCallbackType.onEnter);
+      child._performRecursive(NodeStateCallbackType.onEnter);
       // prevent onEnterTransitionDidFinish to be called twice when a node is added in onEnter
       if (this.#transitionFinished)
         child._performRecursive(
-          Node._stateCallbackType.onEnterTransitionDidFinish
+          NodeStateCallbackType.onEnterTransitionDidFinish
         );
     }
     child.renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
@@ -388,13 +391,13 @@ export class Node extends ComponentContainer {
         if (node) {
           if (this.#running) {
             node._performRecursive(
-              Node._stateCallbackType.onExitTransitionDidStart
+              NodeStateCallbackType.onExitTransitionDidStart
             );
-            node._performRecursive(Node._stateCallbackType.onExit);
+            node._performRecursive(NodeStateCallbackType.onExit);
           }
 
           // If you don't do cleanup, the node's actions will not get removed and the
-          if (cleanup) node._performRecursive(Node._stateCallbackType.cleanup);
+          if (cleanup) node._performRecursive(NodeStateCallbackType.cleanup);
 
           // set parent nil at the end
           node.parent = null;
@@ -411,12 +414,12 @@ export class Node extends ComponentContainer {
     //  -1st do onExit
     //  -2nd cleanup
     if (this.#running) {
-      child._performRecursive(Node._stateCallbackType.onExitTransitionDidStart);
-      child._performRecursive(Node._stateCallbackType.onExit);
+      child._performRecursive(NodeStateCallbackType.onExitTransitionDidStart);
+      child._performRecursive(NodeStateCallbackType.onExit);
     }
 
     // If you don't do cleanup, the child's actions will not get removed and the
-    if (doCleanup) child._performRecursive(Node._stateCallbackType.cleanup);
+    if (doCleanup) child._performRecursive(NodeStateCallbackType.cleanup);
 
     // set parent nil at the end
     child.parent = null;
@@ -534,8 +537,7 @@ export class Node extends ComponentContainer {
   }
 
   _performRecursive(callbackType) {
-    var nodeCallbackType = Node._stateCallbackType;
-    if (callbackType >= nodeCallbackType.max) {
+    if (callbackType >= NodeStateCallbackType.max) {
       return;
     }
 
@@ -576,19 +578,19 @@ export class Node extends ComponentContainer {
 
       // Perform actual action
       switch (callbackType) {
-        case nodeCallbackType.onEnter:
+        case NodeStateCallbackType.onEnter:
           curr.onEnter();
           break;
-        case nodeCallbackType.onExit:
+        case NodeStateCallbackType.onExit:
           curr.onExit();
           break;
-        case nodeCallbackType.onEnterTransitionDidFinish:
+        case NodeStateCallbackType.onEnterTransitionDidFinish:
           curr.onEnterTransitionDidFinish();
           break;
-        case nodeCallbackType.cleanup:
+        case NodeStateCallbackType.cleanup:
           curr.cleanup();
           break;
-        case nodeCallbackType.onExitTransitionDidStart:
+        case NodeStateCallbackType.onExitTransitionDidStart:
           curr.onExitTransitionDidStart();
           break;
       }
@@ -835,7 +837,7 @@ export class Node extends ComponentContainer {
   /**
    * Recursive method that visit its children and draw them
    * @function
-   * @param {Node} parent
+   * @param {Node | null} parent
    */
   visit(parent = null, renderer = ServiceLocator.sys.rendererConfig.renderer) {
     var cmd = this.#renderCmd,
@@ -1092,14 +1094,6 @@ export class Node extends ComponentContainer {
     return ret;
   }
 
-  static _stateCallbackType = {
-    onEnter: 1,
-    onExit: 2,
-    cleanup: 3,
-    onEnterTransitionDidFinish: 4,
-    onExitTransitionDidStart: 5,
-    max: 6
-  };
   static _performStacks = [[]];
   static _performing = 0;
   static _dirtyFlags = dirtyFlags;

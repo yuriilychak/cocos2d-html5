@@ -2,25 +2,11 @@
 import "./boot";
 
 // ======================================================================
-// Platform — Foundation
-// ======================================================================
-
-// ======================================================================
 // Renderer & Utils
 // ======================================================================
 import { ServiceLocator } from "./service-locator";
 import { KMGLMatrixMode } from "./enums";
 import type { Mat4Like } from "./kazmath";
-
-// ======================================================================
-// Base Nodes
-// ======================================================================
-import { Node } from "./base-nodes/node";
-import { CanvasRenderCmd as NodeCanvasRenderCmd } from "./base-nodes/node-canvas-render-cmd";
-import { WebGLRenderCmd as NodeWebGLRenderCmd } from "./base-nodes/node-webgl-render-cmd";
-import { AtlasNode } from "./base-nodes/atlas-node";
-import { AtlasNodeCanvasRenderCmd } from "./base-nodes/atlas-node-canvas-render-cmd";
-import { AtlasNodeWebGLRenderCmd } from "./base-nodes/atlas-node-webgl-render-cmd";
 
 // ======================================================================
 // Layers
@@ -55,28 +41,16 @@ import {
 } from "./labelttf/label-ttf-canvas-render-cmd";
 import { WebGLRenderCmd as LabelTTFWebGLRenderCmd } from "./labelttf/label-ttf-webgl-render-cmd";
 
-// ======================================================================
-// Kazmath
-// ======================================================================
-
-// ======================================================================
-// Namespace assignments
-// ======================================================================
-
 // Construct, wire and configure all core services up front. All service setup
 // (dependency injection, loader registration, matrix init) lives in the
 // locator, so index.js never manipulates service instances directly.
 ServiceLocator.construct();
 
 // Render command wiring
-Node.CanvasRenderCmd = NodeCanvasRenderCmd;
-Node.WebGLRenderCmd = NodeWebGLRenderCmd;
 Layer.CanvasRenderCmd = LayerCanvasRenderer;
 Layer.WebGLRenderCmd = LayerWebGLRenderer;
 Sprite.CanvasRenderCmd = SpriteCanvasRenderCmd;
 Sprite.WebGLRenderCmd = SpriteWebGLRenderCmd;
-AtlasNode.CanvasRenderCmd = AtlasNodeCanvasRenderCmd;
-AtlasNode.WebGLRenderCmd = AtlasNodeWebGLRenderCmd;
 LabelTTF.wrapInspection = LabelTTFWrapInspection;
 LabelTTF._wordRex = LabelTTFWordRex;
 LabelTTF._symbolRex = LabelTTFSymbolRex;
@@ -135,6 +109,7 @@ export {
   AttributeName,
   MouseEvent,
   MouseButton,
+  NodeStateCallbackType,
   TouchEvent,
   UserRenderMode,
   UniformValueType,
@@ -237,34 +212,33 @@ export type {
 } from "./kazmath";
 export { BYTE, FULL_BYTE } from "./constants";
 export { default as GlobalVertexBuffer } from "./sys/renderer/global-vertex-buffer";
-export { Node } from "./base-nodes/node";
+
 export { Scene } from "./scenes/scene";
 export { LoaderScene } from "./scenes/loader-scene";
 export { LayerColor } from "./layers/layer-color";
 export * from "./event-manager";
 export {
+  NODE_TAG_INVALID,
+  s_globalOrderOfArrival,
+  setGlobalOrderOfArrival,
+  Node,
+  AtlasNode,
+  WebGLRenderCmd as NodeWebGLRenderCmd,
   CanvasRenderCmd as NodeCanvasRenderCmd,
   CustomRenderCmd
-} from "./base-nodes/node-canvas-render-cmd";
-export { WebGLRenderCmd as NodeWebGLRenderCmd } from "./base-nodes/node-webgl-render-cmd";
+} from "./base-nodes";
 export { CanvasContextWrapper, RendererCanvas } from "./sys/renderer";
 export { Sprite } from "./sprites/sprite";
 export { Configuration } from "./sys/configuration";
 export { setProgramForNode } from "./shaders/utils";
 export { KEY } from "./enums";
 export { LabelTTF } from "./labelttf/label-ttf";
-export { AtlasNode } from "./base-nodes/atlas-node";
 export { SpriteBatchNode } from "./sprites/sprite-batch-node";
 export { Layer } from "./layers/layer";
 export { isFunction, isString } from "./boot/utils";
 export { Animation, AnimationFrame, PolygonInfo, Triangles, SpriteFrame, type TriangleLike, type TriangleVertex } from "./sprites";
 export { Component, ComponentContainer } from "./components";
 export { assert, error, Path, Loader, isObject, isUndefined, LoaderStrategy } from "./boot";
-export {
-  NODE_TAG_INVALID,
-  s_globalOrderOfArrival,
-  setGlobalOrderOfArrival
-} from "./base-nodes/node";
 export { LayerGradient } from "./layers/layer-gradient";
 export { TextureAtlas } from "./textures/texture-atlas";
 export { GLProgram } from "./shaders";

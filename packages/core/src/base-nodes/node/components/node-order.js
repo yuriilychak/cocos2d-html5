@@ -1,7 +1,7 @@
-import { Component } from "../components";
-import { ServiceLocator } from "../service-locator";
+import { Component } from "../../../components";
+import { ServiceLocator } from "../../../service-locator";
 
-export class NodeOrder extends Component {
+export default class NodeOrder extends Component {
   #localZOrder = 0;
   #globalZOrder = 0;
   #vertexZ = 0;

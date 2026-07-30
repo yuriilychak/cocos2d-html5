@@ -28,7 +28,7 @@ import { Color } from "../../platform/types/color";
 import {
   CustomRenderCmd,
   CanvasRenderCmd as NodeCanvasRenderCmd
-} from "../../base-nodes/node-canvas-render-cmd";
+} from "../../base-nodes/node";
 import { ServiceLocator } from "../../service-locator";
 import { BYTE } from "../../constants";
 

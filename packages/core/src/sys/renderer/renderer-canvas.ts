@@ -25,7 +25,7 @@
 import DirtyRegion from "./dirty-region";
 import { log } from "../../boot/debugger";
 import { arrayRemoveObject } from "../../platform/macro/utils";
-import { CanvasRenderCmd as NodeCanvasRenderCmd } from "../../base-nodes/node-canvas-render-cmd";
+import { CanvasRenderCmd as NodeCanvasRenderCmd } from "../../base-nodes/node";
 import { ServiceLocator } from "../../service-locator";
 import { BYTE } from "../../constants";
 import { AffineTransform } from "../../geometry";

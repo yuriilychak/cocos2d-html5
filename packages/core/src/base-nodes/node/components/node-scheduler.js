@@ -1,9 +1,9 @@
-import { assert, _LogInfos } from "../boot/debugger";
-import { Component } from "../components";
-import { REPEAT_FOREVER } from "../platform/macro/constants";
-import { ServiceLocator } from "../service-locator";
+import { assert, _LogInfos } from "../../../boot/debugger";
+import { Component } from "../../../components";
+import { REPEAT_FOREVER } from "../../../platform/macro/constants";
+import { ServiceLocator } from "../../../service-locator";
 
-export class NodeScheduler extends Component {
+export default class NodeScheduler extends Component {
   #scheduler = null;
 
   constructor() {

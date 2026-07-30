@@ -1,5 +1,6 @@
 import {
   Node,
+  NodeStateCallbackType,
   Size,
   Rect,
   Color,
@@ -98,7 +99,7 @@ export class Layout extends Widget {
   onEnter() {
     super.onEnter();
     if (this._clippingStencil)
-      this._clippingStencil._performRecursive(Node._stateCallbackType.onEnter);
+      this._clippingStencil._performRecursive(NodeStateCallbackType.onEnter);
     this._doLayoutDirty = true;
     this._clippingRectDirty = true;
   }
@@ -106,7 +107,7 @@ export class Layout extends Widget {
   onExit() {
     super.onExit();
     if (this._clippingStencil)
-      this._clippingStencil._performRecursive(Node._stateCallbackType.onExit);
+      this._clippingStencil._performRecursive(NodeStateCallbackType.onExit);
   }
 
   visit(parent) {
@@ -294,13 +295,13 @@ export class Layout extends Widget {
           this.renderCmd.rebindStencilRendering(this._clippingStencil);
           if (this.running)
             this._clippingStencil._performRecursive(
-              Node._stateCallbackType.onEnter
+              NodeStateCallbackType.onEnter
             );
           this._setStencilClippingSize(this.contentSize);
         } else {
           if (this.running && this._clippingStencil)
             this._clippingStencil._performRecursive(
-              Node._stateCallbackType.onExit
+              NodeStateCallbackType.onExit
             );
           this._clippingStencil = null;
         }

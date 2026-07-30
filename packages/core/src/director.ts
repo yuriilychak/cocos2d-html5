@@ -30,7 +30,8 @@ import EventCustom from "./event-manager/event/event-custom";
 import { Node } from "./base-nodes/node";
 import {
   DirectorEvent,
-  GameEvent
+  GameEvent,
+  NodeStateCallbackType
 } from "./enums";
 import { assert, _LogInfos } from "./boot/debugger";
 import { _fpsImage } from "./boot/base64-images";
@@ -344,18 +345,18 @@ export default class Director extends BaseClass {
 
   #performSceneActions(scene: Scene, cleanup = true): void {
     if (scene.running) {
-      scene._performRecursive(Node._stateCallbackType.onExitTransitionDidStart);
-      scene._performRecursive(Node._stateCallbackType.onExit);
+      scene._performRecursive(NodeStateCallbackType.onExitTransitionDidStart);
+      scene._performRecursive(NodeStateCallbackType.onExit);
     }
 
     if (cleanup) {
-      scene._performRecursive(Node._stateCallbackType.cleanup);
+      scene._performRecursive(NodeStateCallbackType.cleanup);
     }
   }
 
   #enterScene(scene: Scene): void {
-    scene._performRecursive(Node._stateCallbackType.onEnter);
-    scene._performRecursive(Node._stateCallbackType.onEnterTransitionDidFinish);
+    scene._performRecursive(NodeStateCallbackType.onEnter);
+    scene._performRecursive(NodeStateCallbackType.onEnterTransitionDidFinish);
   }
 
   #onProjectionChange(): void {

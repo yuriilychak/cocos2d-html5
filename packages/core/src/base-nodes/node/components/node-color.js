@@ -1,9 +1,9 @@
-import { Color } from "../platform/types/color";
-import { BYTE } from "../constants";
-import { Component } from "../components";
-import { dirtyFlags } from "./node-canvas-render-cmd";
+import { Color } from "../../../platform/types/color";
+import { BYTE } from "../../../constants";
+import { Component } from "../../../components";
+import { dirtyFlags } from "../node-canvas-render-cmd";
 
-export class NodeColor extends Component {
+export default class NodeColor extends Component {
   #realColor = new Color(BYTE, BYTE, BYTE, BYTE);
   #cascadeColorEnabled = false;
   #cascadeOpacityEnabled = false;

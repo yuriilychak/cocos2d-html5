@@ -1,4 +1,4 @@
-import { Scene, Node, ServiceLocator } from "@aspect/core";
+import { Scene, Node, NodeStateCallbackType, ServiceLocator } from "@aspect/core";
 
 export class TransitionScene extends Scene {
   _inScene = null;
@@ -40,24 +40,24 @@ export class TransitionScene extends Scene {
     Node.prototype.onEnter.call(this);
     ServiceLocator.eventManager.enabled = false;
     this._outScene._performRecursive(
-      Node._stateCallbackType.onExitTransitionDidStart
+      NodeStateCallbackType.onExitTransitionDidStart
     );
-    this._inScene._performRecursive(Node._stateCallbackType.onEnter);
+    this._inScene._performRecursive(NodeStateCallbackType.onEnter);
   }
 
   onExit() {
     Node.prototype.onExit.call(this);
     ServiceLocator.eventManager.enalbed = true;
-    this._outScene._performRecursive(Node._stateCallbackType.onExit);
+    this._outScene._performRecursive(NodeStateCallbackType.onExit);
     this._inScene._performRecursive(
-      Node._stateCallbackType.onEnterTransitionDidFinish
+      NodeStateCallbackType.onEnterTransitionDidFinish
     );
   }
 
   cleanup() {
     Node.prototype.cleanup.call(this);
     if (this._isSendCleanupToScene)
-      this._outScene._performRecursive(Node._stateCallbackType.cleanup);
+      this._outScene._performRecursive(NodeStateCallbackType.cleanup);
   }
 
   initWithDuration(t, scene) {

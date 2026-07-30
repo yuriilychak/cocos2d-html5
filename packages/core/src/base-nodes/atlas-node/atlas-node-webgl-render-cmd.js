@@ -22,16 +22,16 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { WebGLRenderCmd as NodeWebGLRenderCmd } from "./node-webgl-render-cmd";
-import { Color } from "../platform/types/color";
-import { log, _LogInfos } from "../boot/debugger";
-import { Node } from "./node";
-import Matrix4 from "../kazmath/mat4";
-import { TextureAtlas } from "../textures/texture-atlas";
+import { WebGLRenderCmd as NodeWebGLRenderCmd } from "../node";
+import { Color } from "../../platform/types/color";
+import { log, _LogInfos } from "../../boot/debugger";
+import { Node } from "../node";
+import Matrix4 from "../../kazmath/mat4";
+import { TextureAtlas } from "../../textures/texture-atlas";
 
-import { ServiceLocator } from "../service-locator";
-import { ShaderName, GLState } from "../enums";
-import { BYTE } from "../constants";
+import { ServiceLocator } from "../../service-locator";
+import { ShaderName, GLState } from "../../enums";
+import { BYTE } from "../../constants";
 
 /**
  * AtlasNode's rendering objects of WebGL

@@ -1,4 +1,4 @@
-import { Node, Size, ServiceLocator } from "@aspect/core";
+import { Node, NodeStateCallbackType, Size, ServiceLocator } from "@aspect/core";
 import { NodeGrid } from "@aspect/node-grid";
 import { pageTurn3D, reverseTime, stopGrid } from "@aspect/actions3d";
 import { Sequence, CallFunc, Show } from "@aspect/actions";
@@ -45,13 +45,13 @@ export class TransitionPageTurn extends TransitionScene {
 
     if (!this._back) {
       gridProxy.setTarget(this._outScene);
-      gridProxy._performRecursive(Node._stateCallbackType.onEnter);
+      gridProxy._performRecursive(NodeStateCallbackType.onEnter);
       gridProxy.actionManager.runAction(
         new Sequence(action, new CallFunc(this.finish, this), stopGrid())
       );
     } else {
       gridProxy.setTarget(this._inScene);
-      gridProxy._performRecursive(Node._stateCallbackType.onEnter);
+      gridProxy._performRecursive(NodeStateCallbackType.onEnter);
       this._inScene.visible = false;
       gridProxy.actionManager.runAction(
         new Sequence(action, new CallFunc(this.finish, this), stopGrid())
