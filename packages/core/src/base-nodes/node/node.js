@@ -1433,9 +1433,11 @@ export class Node extends ComponentContainer {
     this.#color.color = color;
   }
 
-  set opacityModifyRGB(opacityValue) {}
+  set opacityModifyRGB(opacityValue) {
+    this.#color.opacityModifyRGB = opacityValue;
+  }
 
   get opacityModifyRGB() {
-    return false;
+    return this.#color.opacityModifyRGB;
   }
 }

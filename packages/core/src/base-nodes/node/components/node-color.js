@@ -59,4 +59,7 @@ export default class NodeColor extends Component {
     this.#cascadeOpacityEnabled = value;
     this.#renderCmd.setCascadeOpacityEnabledDirty();
   }
+
+  get opacityModifyRGB() { return false; }
+  set opacityModifyRGB(value) { void value; }
 }
