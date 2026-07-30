@@ -341,7 +341,7 @@ export class Armature extends Node {
    * armatureTransformDirty getter
    * @returns {Boolean}
    */
-  getArmatureTransformDirty() {
+  get armatureTransformDirty() {
     return this._armatureTransformDirty;
   }
 

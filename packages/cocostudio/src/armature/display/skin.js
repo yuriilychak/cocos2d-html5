@@ -143,12 +143,12 @@ export class Skin extends Sprite {
    * Returns skin's world transform.
    * @returns {AffineTransform}
    */
-  getNodeToWorldTransform() {
-    return this.renderCmd.getNodeToWorldTransform();
+  get nodeToWorldTransform() {
+    return this.renderCmd.nodeToWorldTransform;
   }
 
-  getNodeToWorldTransformAR() {
-    return this.renderCmd.getNodeToWorldTransformAR();
+  get nodeToWorldTransformAR() {
+    return this.renderCmd.nodeToWorldTransformAR;
   }
 
   /**

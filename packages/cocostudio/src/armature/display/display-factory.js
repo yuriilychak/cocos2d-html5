@@ -94,7 +94,7 @@ export const displayFactory = {
                 this.updateArmatureDisplay(bone, display, dt);
                 break;
             default:
-                var transform = bone.getNodeToArmatureTransform();
+                var transform = bone.nodeToArmatureTransform;
                 display.additionalTransform = transform;
                 break;
         }

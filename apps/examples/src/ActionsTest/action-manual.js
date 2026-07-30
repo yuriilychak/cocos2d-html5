@@ -97,14 +97,14 @@ export class ActionManual extends ActionsDemo {
     var ret = [];
     ret.push(this._tamara.scaleX);
     ret.push(new Point(this._tamara.x, this._tamara.y));
-    ret.push(this._tamara.opacity);
+    ret.push(this._tamara.color.opacity);
 
     ret.push(this._grossini.rotation);
     ret.push(new Point(this._grossini.x, this._grossini.y));
-    ret.push(this._grossini.color);
+    ret.push(this._grossini.color.color);
 
     ret.push(new Point(this._kathia.x, this._kathia.y));
-    ret.push(this._kathia.color);
+    ret.push(this._kathia.color.color);
 
     return JSON.stringify(ret);
   }

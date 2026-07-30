@@ -241,7 +241,7 @@ export class Bone extends Node {
     displayFactory.updateDisplay(
       this,
       delta,
-      this._boneTransformDirty || this._armature.getArmatureTransformDirty()
+      this._boneTransformDirty || this._armature.armatureTransformDirty
     );
     for (var i = 0; i < this._children.length; i++) {
       var childBone = this._children[i];
@@ -415,7 +415,7 @@ export class Bone extends Node {
    * Return the worldTransform of Bone.
    * @returns {AffineTransform}
    */
-  getNodeToArmatureTransform() {
+  get nodeToArmatureTransform() {
     return this._worldTransform;
   }
 
@@ -424,7 +424,7 @@ export class Bone extends Node {
    * @override
    * @returns {AffineTransform}
    */
-  getNodeToWorldTransform() {
+  get nodeToWorldTransform() {
     return AffineTransform.concat(
       this._worldTransform,
       this._armature.nodeToWorldTransform
@@ -647,19 +647,11 @@ export class Bone extends Node {
    * @return {AffineTransform}
    * @deprecated since v3.0, please use getNodeToArmatureTransform instead.
    */
-  nodeToArmatureTransform() {
-    return this.getNodeToArmatureTransform();
-  }
-
   /**
    * @deprecated
    * Returns the world affine transform matrix. The matrix is in Pixels.
    * @returns {AffineTransform}
    */
-  nodeToWorldTransform() {
-    return this.nodeToWorldTransform;
-  }
-
   /**
    * Returns the collider body list in this bone.
    * @returns {Array|null}

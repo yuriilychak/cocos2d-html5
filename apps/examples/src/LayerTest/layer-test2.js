@@ -111,8 +111,8 @@ export class LayerTest2 extends LayerTest {
       return false;
     };
     var s = ServiceLocator.eglView.winSizeInPoints;
-    var tint = this.getChildByTag(LAYERTEST2_LAYER1_TAG).color;
-    var op = this.getChildByTag(LAYERTEST2_LAYER2_TAG).opacity;
+    var tint = this.getChildByTag(LAYERTEST2_LAYER1_TAG).color.color;
+    var op = this.getChildByTag(LAYERTEST2_LAYER2_TAG).color.opacity;
     var ret = {
       tint: inColorRange(tint, this.tintTest) ? "yes" : "no",
       opacity: op

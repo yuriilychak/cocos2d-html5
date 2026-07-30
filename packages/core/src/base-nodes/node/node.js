@@ -830,7 +830,7 @@ export class Node extends ComponentContainer {
     return this.#renderCmd.nodeToParentTransform;
   }
 
-  getNodeToParentTransform(ancestor) {
+  nodeToAncestorTransform(ancestor) {
     var t = this.nodeToParentTransform;
     if (ancestor) {
       var T = { a: t.a, b: t.b, c: t.c, d: t.d, tx: t.tx, ty: t.ty };

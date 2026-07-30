@@ -70,8 +70,8 @@ export class ActionFade extends ActionsDemo {
   }
   getCurrentResult() {
     var ret = [];
-    ret.push(this._tamara.opacity);
-    ret.push(this._kathia.opacity);
+    ret.push(this._tamara.color.opacity);
+    ret.push(this._kathia.color.opacity);
     return JSON.stringify(ret);
   }
 }

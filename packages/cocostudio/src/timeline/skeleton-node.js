@@ -135,7 +135,7 @@ class SkeletonNode extends BoneNode {
       bone = allBones[i];
       var r = AffineTransform.applyToRect(
         bone.getVisibleSkinsRect(),
-        bone.getNodeToParentTransform(bone.getRootSkeletonNode())
+        bone.nodeToAncestorTransform(bone.getRootSkeletonNode())
       );
       if (r.x === 0 && r.y === 0 && r.width === 0 && r.height === 0) continue;
 

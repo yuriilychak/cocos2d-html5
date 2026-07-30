@@ -45,7 +45,7 @@ import { AffineTransform, Node, Sprite } from "@aspect/core";
 
             if (dirty || pt) {
                 this.originTransform();
-                AffineTransform.concatIn(this._transform, node.bone.getNodeToArmatureTransform());
+                AffineTransform.concatIn(this._transform, node.bone.nodeToArmatureTransform);
                 this._dirtyFlag &= ~Node._dirtyFlags.transformDirty;
             }
 
@@ -87,11 +87,11 @@ import { AffineTransform, Node, Sprite } from "@aspect/core";
             }
         }
 
-        getNodeToWorldTransform() {
+        get nodeToWorldTransform() {
             return AffineTransform.concat(this._transform, this._node.bone.armature.nodeToWorldTransform);
         }
 
-        getNodeToWorldTransformAR() {
+        get nodeToWorldTransformAR() {
             var displayTransform = this._transform, node = this._node;
             this._anchorPointInPoints = AffineTransform.applyToPoint(this._anchorPointInPoints, displayTransform);
             displayTransform.tx = this._anchorPointInPoints.x;
@@ -129,7 +129,7 @@ import { AffineTransform, Node, Sprite } from "@aspect/core";
 
             if (dirty || pt) {
                 this.originTransform();
-                AffineTransform.concatIn(this._transform, node.bone.getNodeToArmatureTransform());
+                AffineTransform.concatIn(this._transform, node.bone.nodeToArmatureTransform);
                 this._dirtyFlag &= ~Node._dirtyFlags.transformDirty;
             }
 
@@ -166,11 +166,11 @@ import { AffineTransform, Node, Sprite } from "@aspect/core";
             }
         }
 
-        getNodeToWorldTransform() {
+        get nodeToWorldTransform() {
             return AffineTransform.concat(this._transform, this._node.bone.armature.nodeToWorldTransform);
         }
 
-        getNodeToWorldTransformAR() {
+        get nodeToWorldTransformAR() {
             var displayTransform = this._transform, node = this._node;
             this._anchorPointInPoints = AffineTransform.applyToPoint(this._anchorPointInPoints, displayTransform);
             displayTransform.tx = this._anchorPointInPoints.x;

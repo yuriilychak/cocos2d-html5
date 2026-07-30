@@ -1434,7 +1434,7 @@ export class ParticleSystem extends Node {
    * return bounding box of particle system in world space
    * @return {Rect}
    */
-  getBoundingBoxToWorld() {
+  get boundingBoxToWorld() {
     return new Rect(
       0,
       0,

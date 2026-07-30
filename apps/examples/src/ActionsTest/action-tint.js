@@ -76,8 +76,8 @@ export class ActionTint extends ActionsDemo {
   }
   getCurrentResult() {
     var ret = [];
-    ret.push(this._tamara.color);
-    ret.push(this._kathia.color);
+    ret.push(this._tamara.color.color);
+    ret.push(this._kathia.color.color);
     return JSON.stringify(ret);
   }
 }
