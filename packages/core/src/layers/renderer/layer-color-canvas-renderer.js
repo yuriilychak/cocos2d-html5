@@ -145,7 +145,7 @@ export default class LayerColorCanvasRenderer extends LayerCanvasRenderer {
     for (let i = 0; i < locChildren.length; i++) {
       const child = locChildren[i];
       if (child && child.visible) {
-        const childRect = child._getBoundingBoxToCurrentNode(trans);
+        const childRect = child.getBoundingBoxToCurrentNode(trans);
         rect = Rect.union(rect, childRect);
       }
     }

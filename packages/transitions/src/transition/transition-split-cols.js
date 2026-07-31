@@ -20,7 +20,7 @@ export class TransitionSplitCols extends TransitionScene {
   onEnter() {
     super.onEnter();
     this._gridProxy.setTarget(this._outScene);
-    this._gridProxy._performRecursive(NodeStateCallbackType.onEnter);
+    this._gridProxy.performRecursive(NodeStateCallbackType.onEnter);
 
     var split = this.action();
     var seq = new Sequence(
@@ -40,7 +40,7 @@ export class TransitionSplitCols extends TransitionScene {
 
   onExit() {
     this._gridProxy.setTarget(null);
-    this._gridProxy._performRecursive(NodeStateCallbackType.onExit);
+    this._gridProxy.performRecursive(NodeStateCallbackType.onExit);
     super.onExit();
   }
 

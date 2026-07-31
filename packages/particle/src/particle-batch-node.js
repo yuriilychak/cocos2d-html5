@@ -218,7 +218,7 @@ export class ParticleBatchNode extends Node {
     }
 
     //no lazy sorting, so don't call super addChild, call helper instead
-    var pos = this._addChildHelper(child, zOrder, tag);
+    var pos = this.addChildHelper(child, zOrder, tag);
 
     //get new atlasIndex
     var atlasIndex = 0;
@@ -477,14 +477,14 @@ export class ParticleBatchNode extends Node {
   // @return {Number}
   // @private
   //
-  _addChildHelper(child, z, aTag) {
+  addChildHelper(child, z, aTag) {
     if (!child)
       throw new Error(
-        "ParticleBatchNode._addChildHelper(): child should be non-null"
+        "ParticleBatchNode.addChildHelper(): child should be non-null"
       );
     if (child.parent) {
       log(
-        "ParticleBatchNode._addChildHelper(): child already added. It can't be added again"
+        "ParticleBatchNode.addChildHelper(): child already added. It can't be added again"
       );
       return null;
     }
@@ -497,8 +497,8 @@ export class ParticleBatchNode extends Node {
     child.order.localZOrder = z;
     child.parent = this;
     if (this.running) {
-      child._performRecursive(NodeStateCallbackType.onEnter);
-      child._performRecursive(
+      child.performRecursive(NodeStateCallbackType.onEnter);
+      child.performRecursive(
         NodeStateCallbackType.onEnterTransitionDidFinish
       );
     }

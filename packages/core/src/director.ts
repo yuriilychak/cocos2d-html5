@@ -345,18 +345,18 @@ export default class Director extends BaseClass {
 
   #performSceneActions(scene: Scene, cleanup = true): void {
     if (scene.running) {
-      scene._performRecursive(NodeStateCallbackType.onExitTransitionDidStart);
-      scene._performRecursive(NodeStateCallbackType.onExit);
+      scene.performRecursive(NodeStateCallbackType.onExitTransitionDidStart);
+      scene.performRecursive(NodeStateCallbackType.onExit);
     }
 
     if (cleanup) {
-      scene._performRecursive(NodeStateCallbackType.cleanup);
+      scene.performRecursive(NodeStateCallbackType.cleanup);
     }
   }
 
   #enterScene(scene: Scene): void {
-    scene._performRecursive(NodeStateCallbackType.onEnter);
-    scene._performRecursive(NodeStateCallbackType.onEnterTransitionDidFinish);
+    scene.performRecursive(NodeStateCallbackType.onEnter);
+    scene.performRecursive(NodeStateCallbackType.onEnterTransitionDidFinish);
   }
 
   #onProjectionChange(): void {

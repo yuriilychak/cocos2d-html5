@@ -21,7 +21,7 @@ export class TransitionFadeTR extends TransitionScene {
     super.onEnter();
 
     this._gridProxy.setTarget(this._outScene);
-    this._gridProxy._performRecursive(NodeStateCallbackType.onEnter);
+    this._gridProxy.performRecursive(NodeStateCallbackType.onEnter);
 
     var winSize = ServiceLocator.eglView.winSizeInPoints;
     var aspect = winSize.width / winSize.height;

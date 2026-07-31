@@ -37,7 +37,7 @@ import {
   NodeColor,
   NodeOrder,
   NodeScheduler,
-  NodeTransform,
+  NodeTransform
 } from "./components";
 import { NodeStateCallbackType } from "../../enums";
 import { ServiceLocator } from "../../service-locator";
@@ -251,7 +251,8 @@ export class Node extends ComponentContainer {
    * @param {Number|String} [tag=]  An integer or a name to identify the node easily. Please refer to tag = int and name = string
    */
   addChild(child, localZOrder, tag) {
-    localZOrder = localZOrder === undefined ? child.order.localZOrder : localZOrder;
+    localZOrder =
+      localZOrder === undefined ? child.order.localZOrder : localZOrder;
     var name,
       setTag = false;
     if (tag === undefined) {
@@ -270,11 +271,11 @@ export class Node extends ComponentContainer {
       "child already added. It can't be added again"
     );
 
-    this._addChildHelper(child, localZOrder, tag, name, setTag);
+    this.addChildHelper(child, localZOrder, tag, name, setTag);
   }
 
-  _addChildHelper(child, localZOrder, tag, name, setTag) {
-    this._insertChild(child, localZOrder);
+  addChildHelper(child, localZOrder, tag, name, setTag) {
+    this.#insertChild(child, localZOrder);
     if (setTag) child.tag = tag;
     else child.name = name;
 
@@ -283,15 +284,16 @@ export class Node extends ComponentContainer {
     setGlobalOrderOfArrival(s_globalOrderOfArrival + 1);
 
     if (this.#running) {
-      child._performRecursive(NodeStateCallbackType.onEnter);
+      child.performRecursive(NodeStateCallbackType.onEnter);
       // prevent onEnterTransitionDidFinish to be called twice when a node is added in onEnter
       if (this.#transitionFinished)
-        child._performRecursive(
+        child.performRecursive(
           NodeStateCallbackType.onEnterTransitionDidFinish
         );
     }
     child.renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
-    if (this.#color.cascadeColor) child.renderCmd.setDirtyFlag(dirtyFlags.colorDirty);
+    if (this.#color.cascadeColor)
+      child.renderCmd.setDirtyFlag(dirtyFlags.colorDirty);
     if (this.#color.cascadeOpacity)
       child.renderCmd.setDirtyFlag(dirtyFlags.opacityDirty);
   }
@@ -326,7 +328,7 @@ export class Node extends ComponentContainer {
     if (this.#children.length === 0) return;
 
     if (cleanup === undefined) cleanup = true;
-    if (this.#children.indexOf(child) > -1) this._detachChild(child, cleanup);
+    if (this.#children.indexOf(child) > -1) this.#detachChild(child, cleanup);
 
     //this.renderCmd.setDirtyFlag(dirtyFlags.visibleDirty);
     ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty = true;
@@ -371,14 +373,14 @@ export class Node extends ComponentContainer {
         var node = __children[i];
         if (node) {
           if (this.#running) {
-            node._performRecursive(
+            node.performRecursive(
               NodeStateCallbackType.onExitTransitionDidStart
             );
-            node._performRecursive(NodeStateCallbackType.onExit);
+            node.performRecursive(NodeStateCallbackType.onExit);
           }
 
           // If you don't do cleanup, the node's actions will not get removed and the
-          if (cleanup) node._performRecursive(NodeStateCallbackType.cleanup);
+          if (cleanup) node.performRecursive(NodeStateCallbackType.cleanup);
 
           // set parent nil at the end
           node.parent = null;
@@ -390,17 +392,17 @@ export class Node extends ComponentContainer {
     }
   }
 
-  _detachChild(child, doCleanup) {
+  #detachChild(child, doCleanup) {
     // IMPORTANT:
     //  -1st do onExit
     //  -2nd cleanup
     if (this.#running) {
-      child._performRecursive(NodeStateCallbackType.onExitTransitionDidStart);
-      child._performRecursive(NodeStateCallbackType.onExit);
+      child.performRecursive(NodeStateCallbackType.onExitTransitionDidStart);
+      child.performRecursive(NodeStateCallbackType.onExit);
     }
 
     // If you don't do cleanup, the child's actions will not get removed and the
-    if (doCleanup) child._performRecursive(NodeStateCallbackType.cleanup);
+    if (doCleanup) child.performRecursive(NodeStateCallbackType.cleanup);
 
     // set parent nil at the end
     child.parent = null;
@@ -412,7 +414,7 @@ export class Node extends ComponentContainer {
     this.#renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
   }
 
-  _insertChild(child, z) {
+  #insertChild(child, z) {
     ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty =
       this.#order.reorderChildDirty = true;
     this.#children.push(child);
@@ -454,7 +456,7 @@ export class Node extends ComponentContainer {
     this.resume();
   }
 
-  _performRecursive(callbackType) {
+  performRecursive(callbackType) {
     if (callbackType >= NodeStateCallbackType.max) {
       return;
     }
@@ -553,7 +555,7 @@ export class Node extends ComponentContainer {
       this.#actionManager.name,
       this.#transform.name,
       this.#color.name,
-      this.#order.name,
+      this.#order.name
     ]);
   }
 
@@ -644,9 +646,10 @@ export class Node extends ComponentContainer {
    * @return {AffineTransform}
    */
   get nodeToWorldTransform() {
-    var t = this.nodeToParentTransform;
-    for (var p = this.#parent; p !== null; p = p.parent)
+    let t = this.nodeToParentTransform;
+    for (var p = this.#parent; p !== null; p = p.parent) {
       t = AffineTransform.concat(t, p.nodeToParentTransform);
+    }
     return t;
   }
 
@@ -666,10 +669,7 @@ export class Node extends ComponentContainer {
    * @return {Point}
    */
   convertToNodeSpace(worldPoint) {
-    return AffineTransform.applyToPoint(
-      worldPoint,
-      this.worldToNodeTransform
-    );
+    return AffineTransform.applyToPoint(worldPoint, this.worldToNodeTransform);
   }
 
   /**
@@ -679,10 +679,7 @@ export class Node extends ComponentContainer {
    * @return {Point}
    */
   convertToWorldSpace(nodePoint = new Point()) {
-    return AffineTransform.applyToPoint(
-      nodePoint,
-      this.nodeToWorldTransform
-    );
+    return AffineTransform.applyToPoint(nodePoint, this.nodeToWorldTransform);
   }
 
   /**
@@ -712,7 +709,7 @@ export class Node extends ComponentContainer {
     return this.convertToWorldSpace(pt);
   }
 
-  _convertToWindowSpace(nodePoint) {
+  #convertToWindowSpace(nodePoint) {
     var worldPoint = this.convertToWorldSpace(nodePoint);
     return ServiceLocator.eglView.convertToUI(worldPoint);
   }
@@ -758,23 +755,22 @@ export class Node extends ComponentContainer {
    * @param {Node | null} parent
    */
   visit(parent = null, renderer = ServiceLocator.sys.rendererConfig.renderer) {
-    var cmd = this.#renderCmd,
-      parentCmd = parent ? parent.renderCmd : null;
+    var parentCmd = parent ? parent.renderCmd : null;
 
     // quick return if not visible
     if (!this.visible) {
-      cmd._propagateFlagsDown(parentCmd);
+      this.#renderCmd._propagateFlagsDown(parentCmd);
       return;
     }
 
-    cmd.visit(parentCmd, renderer);
+    this.#renderCmd.visit(parentCmd, renderer);
 
     var i,
       children = this.#children,
       len = children.length,
       child;
     if (len > 0) {
-        this.#order.sortAllChildren();
+      this.#order.sortAllChildren();
       // draw children zOrder < 0
       for (i = 0; i < len; i++) {
         child = children[i];
@@ -785,14 +781,14 @@ export class Node extends ComponentContainer {
         }
       }
 
-      renderer.pushRenderCommand(cmd);
+      renderer.pushRenderCommand(this.#renderCmd);
       for (; i < len; i++) {
         children[i].visit(this, renderer);
       }
     } else {
-      renderer.pushRenderCommand(cmd);
+      renderer.pushRenderCommand(this.#renderCmd);
     }
-    cmd._dirtyFlag = 0;
+    this.#renderCmd._dirtyFlag = 0;
   }
 
   /**
@@ -818,7 +814,7 @@ export class Node extends ComponentContainer {
   nodeToAncestorTransform(ancestor) {
     var t = this.nodeToParentTransform;
     if (ancestor) {
-      var T = { a: t.a, b: t.b, c: t.c, d: t.d, tx: t.tx, ty: t.ty };
+      var T = new AffineTransform(t);
       for (var p = this.#parent; p != null && p != ancestor; p = p.parent) {
         AffineTransform.concatIn(T, p.nodeToParentTransform);
       }
@@ -843,22 +839,19 @@ export class Node extends ComponentContainer {
     for (var i = 0; i < locChildren.length; i++) {
       var child = locChildren[i];
       if (child && child.visible) {
-        var childRect = child._getBoundingBoxToCurrentNode(trans);
+        var childRect = child.getBoundingBoxToCurrentNode(trans);
         if (childRect) rect = Rect.union(rect, childRect);
       }
     }
     return rect;
   }
 
-  _getBoundingBoxToCurrentNode(parentTransform) {
+  getBoundingBoxToCurrentNode(parentTransform) {
     var rect = new Rect(0, 0, this.width, this.height);
     var trans =
       parentTransform === undefined
         ? this.nodeToParentTransform
-        : AffineTransform.concat(
-            this.nodeToParentTransform,
-            parentTransform
-          );
+        : AffineTransform.concat(this.nodeToParentTransform, parentTransform);
     rect = AffineTransform.applyToRect(rect, trans);
 
     //query child's BoundingBox
@@ -866,7 +859,7 @@ export class Node extends ComponentContainer {
     for (var i = 0; i < locChildren.length; i++) {
       var child = locChildren[i];
       if (child && child.visible) {
-        var childRect = child._getBoundingBoxToCurrentNode(trans);
+        var childRect = child.getBoundingBoxToCurrentNode(trans);
         if (childRect) rect = Rect.union(rect, childRect);
       }
     }
@@ -1373,5 +1366,4 @@ export class Node extends ComponentContainer {
   set additionalTransform(additionalTransform) {
     this.#transform.additionalTransform = additionalTransform;
   }
-
 }

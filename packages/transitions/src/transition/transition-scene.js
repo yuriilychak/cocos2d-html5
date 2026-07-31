@@ -39,17 +39,17 @@ export class TransitionScene extends Scene {
   onEnter() {
     Node.prototype.onEnter.call(this);
     ServiceLocator.eventManager.enabled = false;
-    this._outScene._performRecursive(
+    this._outScene.performRecursive(
       NodeStateCallbackType.onExitTransitionDidStart
     );
-    this._inScene._performRecursive(NodeStateCallbackType.onEnter);
+    this._inScene.performRecursive(NodeStateCallbackType.onEnter);
   }
 
   onExit() {
     Node.prototype.onExit.call(this);
     ServiceLocator.eventManager.enalbed = true;
-    this._outScene._performRecursive(NodeStateCallbackType.onExit);
-    this._inScene._performRecursive(
+    this._outScene.performRecursive(NodeStateCallbackType.onExit);
+    this._inScene.performRecursive(
       NodeStateCallbackType.onEnterTransitionDidFinish
     );
   }
@@ -57,7 +57,7 @@ export class TransitionScene extends Scene {
   cleanup() {
     Node.prototype.cleanup.call(this);
     if (this._isSendCleanupToScene)
-      this._outScene._performRecursive(NodeStateCallbackType.cleanup);
+      this._outScene.performRecursive(NodeStateCallbackType.cleanup);
   }
 
   initWithDuration(t, scene) {

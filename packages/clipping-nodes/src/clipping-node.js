@@ -38,26 +38,26 @@ export class ClippingNode extends Node {
   onEnter() {
     super.onEnter();
     if (this._stencil)
-      this._stencil._performRecursive(NodeStateCallbackType.onEnter);
+      this._stencil.performRecursive(NodeStateCallbackType.onEnter);
   }
 
   onEnterTransitionDidFinish() {
     super.onEnterTransitionDidFinish();
     if (this._stencil)
-      this._stencil._performRecursive(
+      this._stencil.performRecursive(
         NodeStateCallbackType.onEnterTransitionDidFinish
       );
   }
 
   onExitTransitionDidStart() {
-    this._stencil._performRecursive(
+    this._stencil.performRecursive(
       NodeStateCallbackType.onExitTransitionDidStart
     );
     super.onExitTransitionDidStart();
   }
 
   onExit() {
-    this._stencil._performRecursive(NodeStateCallbackType.onExit);
+    this._stencil.performRecursive(NodeStateCallbackType.onExit);
     super.onExit();
   }
 

@@ -45,13 +45,13 @@ export class TransitionPageTurn extends TransitionScene {
 
     if (!this._back) {
       gridProxy.setTarget(this._outScene);
-      gridProxy._performRecursive(NodeStateCallbackType.onEnter);
+      gridProxy.performRecursive(NodeStateCallbackType.onEnter);
       gridProxy.actionManager.runAction(
         new Sequence(action, new CallFunc(this.finish, this), stopGrid())
       );
     } else {
       gridProxy.setTarget(this._inScene);
-      gridProxy._performRecursive(NodeStateCallbackType.onEnter);
+      gridProxy.performRecursive(NodeStateCallbackType.onEnter);
       this._inScene.visible = false;
       gridProxy.actionManager.runAction(
         new Sequence(action, new CallFunc(this.finish, this), stopGrid())

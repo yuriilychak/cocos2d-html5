@@ -187,10 +187,10 @@ export default class LayerCanvasRenderer extends NodeCanvasRenderCmd {
       const child = locChildren[i];
       if (child && child.visible) {
         if (rect) {
-          const childRect = child._getBoundingBoxToCurrentNode(trans);
+          const childRect = child.getBoundingBoxToCurrentNode(trans);
           if (childRect) rect = Rect.union(rect, childRect);
         } else {
-          rect = child._getBoundingBoxToCurrentNode(trans);
+          rect = child.getBoundingBoxToCurrentNode(trans);
         }
       }
     }
