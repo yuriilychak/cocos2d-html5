@@ -41,6 +41,7 @@ import {
   radiansToDegrees,
   ServiceLocator
 } from "@aspect/core";
+import SkinTransform from "./skin-transform";
 
 export class Skin extends Sprite {
   constructor(fileName, rect) {
@@ -139,14 +140,6 @@ export class Skin extends Sprite {
     this.renderCmd.transform();
   }
 
-  /**
-   * Returns skin's world transform.
-   * @returns {AffineTransform}
-   */
-  get nodeToWorldTransform() {
-    return this.renderCmd.nodeToWorldTransform;
-  }
-
   get nodeToWorldTransformAR() {
     return this.renderCmd.nodeToWorldTransformAR;
   }
@@ -175,6 +168,10 @@ export class Skin extends Sprite {
    */
   getDisplayName() {
     return this._displayName;
+  }
+
+  createTransform() {
+    return new SkinTransform();
   }
 
   createRenderCmd() {

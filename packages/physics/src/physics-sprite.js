@@ -120,10 +120,6 @@ export class PhysicsSprite extends Sprite {
     }
   }
 
-  get nodeToParentTransform() {
-    return this.renderCmd.nodeToParentTransform;
-  }
-
   isDirty() {
     return !this._body.isSleeping();
   }

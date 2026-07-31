@@ -66,6 +66,7 @@ import { BaseData } from "./utils/datas/base-data.js";
 import { FrameData } from "./utils/datas/frame-data.js";
 import { TransformHelp } from "./utils/transform-help.js";
 import { BoneOrder } from "./bone-order.js";
+import BoneTransform from "./bone-transform";
 export class Bone extends Node {
   constructor(name) {
     super();
@@ -420,18 +421,6 @@ export class Bone extends Node {
   }
 
   /**
-   * Returns the world transform of Bone.
-   * @override
-   * @returns {AffineTransform}
-   */
-  get nodeToWorldTransform() {
-    return AffineTransform.concat(
-      this._worldTransform,
-      this._armature.nodeToWorldTransform
-    );
-  }
-
-  /**
    * Returns the display render node.
    * @returns {Node}
    */
@@ -680,6 +669,10 @@ export class Bone extends Node {
 
   createOrder() {
     return new BoneOrder();
+  }
+
+  createTransform() {
+    return new BoneTransform();
   }
 }
 

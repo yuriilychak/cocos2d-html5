@@ -179,6 +179,26 @@ export default class NodeTransform extends Component {
     this.#renderCmd._updateAnchorPointInPoint();
   }
 
+  get nodeToParentTransform() {
+    return this.#renderCmd.nodeToParentTransform;
+  }
+
+  get nodeToWorldTransform() {
+    let transform = this.nodeToParentTransform;
+    for (let parent = this.owner.parent; parent !== null; parent = parent.parent) {
+      transform = AffineTransform.concat(transform, parent.nodeToParentTransform);
+    }
+    return transform;
+  }
+
+  get worldToNodeTransform() {
+    return AffineTransform.invert(this.nodeToWorldTransform);
+  }
+
+  convertToNodeSpace(worldPoint) {
+    return AffineTransform.applyToPoint(worldPoint, this.worldToNodeTransform);
+  }
+
   get boundingBox() {
     const rect = new Rect(0, 0, this.#contentSize.width, this.#contentSize.height);
     return AffineTransform._applyToRectIn(

@@ -646,11 +646,7 @@ export class Node extends ComponentContainer {
    * @return {AffineTransform}
    */
   get nodeToWorldTransform() {
-    let t = this.nodeToParentTransform;
-    for (var p = this.#parent; p !== null; p = p.parent) {
-      t = AffineTransform.concat(t, p.nodeToParentTransform);
-    }
-    return t;
+    return this.#transform.nodeToWorldTransform;
   }
 
   /**
@@ -659,7 +655,7 @@ export class Node extends ComponentContainer {
    * @return {AffineTransform}
    */
   get worldToNodeTransform() {
-    return AffineTransform.invert(this.nodeToWorldTransform);
+    return this.#transform.worldToNodeTransform;
   }
 
   /**
@@ -669,7 +665,7 @@ export class Node extends ComponentContainer {
    * @return {Point}
    */
   convertToNodeSpace(worldPoint) {
-    return AffineTransform.applyToPoint(worldPoint, this.worldToNodeTransform);
+    return this.#transform.convertToNodeSpace(worldPoint);
   }
 
   /**
@@ -808,11 +804,11 @@ export class Node extends ComponentContainer {
    * @return {AffineTransform} The affine transform object
    */
   get nodeToParentTransform() {
-    return this.#renderCmd.nodeToParentTransform;
+    return this.#transform.nodeToParentTransform;
   }
 
   nodeToAncestorTransform(ancestor) {
-    var t = this.nodeToParentTransform;
+    var t = this.#transform.nodeToParentTransform;
     if (ancestor) {
       var T = new AffineTransform(t);
       for (var p = this.#parent; p != null && p != ancestor; p = p.parent) {
