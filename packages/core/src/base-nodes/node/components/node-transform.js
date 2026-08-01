@@ -3,6 +3,7 @@ import { log, _LogInfos } from "../../../boot/debugger";
 import { Component } from "../../../components";
 import { dirtyFlags } from "../node-canvas-render-cmd";
 import { NodeComponentName } from "../../../enums";
+import { ServiceLocator } from "../../../service-locator";
 
 export default class NodeTransform extends Component {
   #rotation = new Point();
@@ -183,6 +184,19 @@ export default class NodeTransform extends Component {
     return this.#renderCmd.nodeToParentTransform;
   }
 
+  /**
+   * Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.<br/>
+   * The matrix is in Pixels.
+   * @return {AffineTransform}
+   */
+  get parentToNodeTransform() {
+    return this.#renderCmd.parentToNodeTransform;
+  }
+
+  /**
+   * Returns the world affine transform matrix. The matrix is in Pixels.
+   * @return {AffineTransform}
+   */
   get nodeToWorldTransform() {
     let transform = this.nodeToParentTransform;
     for (let parent = this.owner.parent; parent !== null; parent = parent.parent) {
@@ -191,16 +205,71 @@ export default class NodeTransform extends Component {
     return transform;
   }
 
+  /**
+   * Returns the inverse world affine transform matrix. The matrix is in Pixels.
+   * @return {AffineTransform}
+   */
   get worldToNodeTransform() {
     return AffineTransform.invert(this.nodeToWorldTransform);
   }
 
+  /**
+   * Converts a Point to node (local) space coordinates. The result is in Points.
+   * @param {Point} worldPoint
+   * @return {Point}
+   */
   convertToNodeSpace(worldPoint) {
     return AffineTransform.applyToPoint(worldPoint, this.worldToNodeTransform);
   }
 
+  /**
+   * Converts a Point to world space coordinates. The result is in Points.
+   * @param {Point} nodePoint
+   * @return {Point}
+   */
+  convertToWorldSpace(nodePoint = new Point()) {
+    return AffineTransform.applyToPoint(nodePoint, this.nodeToWorldTransform);
+  }
+
+  /**
+   * Converts a Point to node (local) space coordinates. The result is in Points.<br/>
+   * treating the returned/received node point as anchor relative.
+   * @param {Point} worldPoint
+   * @return {Point}
+   */
+  convertToNodeSpaceAR(worldPoint) {
+    return Point.sub(
+      this.convertToNodeSpace(worldPoint),
+      this.#renderCmd.anchorPointInPoints
+    );
+  }
+
+  /**
+   * Converts a local Point to world space coordinates.The result is in Points.<br/>
+   * treating the returned/received node point as anchor relative.
+   * @param {Point} nodePoint
+   * @return {Point}
+   */
+  convertToWorldSpaceAR(nodePoint) {
+    const point = Point.add(
+      nodePoint || new Point(),
+      this.#renderCmd.anchorPointInPoints
+    );
+    return this.convertToWorldSpace(point);
+  }
+
+  /**
+   * converts a Touch (world coordinates) into a local coordinate. This method is AR (Anchor Relative).
+   * @param {Touch} touch The touch object
+   * @return {Point}
+   */
+  convertTouchToNodeSpaceAR(touch) {
+    return this.convertToNodeSpaceAR(ServiceLocator.eglView.convertToGL(touch));
+  }
+
   get boundingBox() {
     const rect = new Rect(0, 0, this.#contentSize.width, this.#contentSize.height);
+    
     return AffineTransform._applyToRectIn(
       rect,
       this.#renderCmd.nodeToParentTransform
@@ -241,20 +310,78 @@ export default class NodeTransform extends Component {
 
   get ignoreAnchorPointForPosition() { return this.#ignoreAnchorPointForPosition; }
   set ignoreAnchorPointForPosition(value) {
-    if (value === this.#ignoreAnchorPointForPosition) return;
+    if (value === this.#ignoreAnchorPointForPosition) {
+      return;
+    }
+
     this.#ignoreAnchorPointForPosition = value;
     this.#setTransformDirty();
   }
 
   get additionalTransform() { return this.#additionalTransform; }
   get additionalTransformDirty() { return this.#additionalTransformDirty; }
+  /**
+   *<p>Sets the additional transform.<br/>
+   *  The additional transform will be concatenated at the end of getNodeToParentTransform.<br/>
+   *  It could be used to simulate `parent-child` relationship between two nodes (e.g. one is in BatchNode, another isn't).<br/>
+   *  </p>
+   *  @param {AffineTransform} additionalTransform  The additional transform
+   *  @example
+   * // create a batchNode
+   * var batch = new SpriteBatchNode("Icon-114.png");
+   * this.addChild(batch);
+   *
+   * // create two sprites, spriteA will be added to batchNode, they are using different textures.
+   * var spriteA = new Sprite(batch->getTexture());
+   * var spriteB = new Sprite("Icon-72.png");
+   *
+   * batch.addChild(spriteA);
+   *
+   * // We can't make spriteB as spriteA's child since they use different textures. So just add it to layer.
+   * // But we want to simulate `parent-child` relationship for these two node.
+   * this.addChild(spriteB);
+   *
+   * //position
+   * spriteA.position = new Point(200, 200);
+   *
+   * // Gets the spriteA's transform.
+   * var t = spriteA.nodeToParentTransform;
+   *
+   * // Sets the additional transform to spriteB, spriteB's position will based on its pseudo parent i.e. spriteA.
+   * spriteB.additionalTransform = t;
+   *
+   * //scale
+   * spriteA.scale = 2;
+   *
+   * // Gets the spriteA's transform.
+   * t = spriteA.nodeToParentTransform;
+   *
+   * // Sets the additional transform to spriteB, spriteB's scale will based on its pseudo parent i.e. spriteA.
+   * spriteB.additionalTransform = t;
+   *
+   * //rotation
+   * spriteA.rotation = 20;
+   *
+   * // Gets the spriteA's transform.
+   * t = spriteA.nodeToParentTransform;
+   *
+   * // Sets the additional transform to spriteB, spriteB's rotation will based on its pseudo parent i.e. spriteA.
+   * spriteB.additionalTransform = t;
+   */
   set additionalTransform(value) {
     if (value === undefined) {
-      if (!this.#additionalTransformDirty) return;
+      if (!this.#additionalTransformDirty) {
+        return;
+      }
+
       this.#additionalTransformDirty = false;
       return;
     }
-    if (value === this.#additionalTransform && this.#additionalTransformDirty) return;
+
+    if (value === this.#additionalTransform && this.#additionalTransformDirty) {
+      return;
+    }
+
     this.#additionalTransform = value;
     this.#additionalTransformDirty = true;
     this.#setTransformDirty();

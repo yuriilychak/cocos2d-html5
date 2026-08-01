@@ -571,150 +571,36 @@ export class Node extends ComponentContainer {
     ServiceLocator.eventManager.pauseTarget(this);
   }
 
-  /**
-   *<p>Sets the additional transform.<br/>
-   *  The additional transform will be concatenated at the end of getNodeToParentTransform.<br/>
-   *  It could be used to simulate `parent-child` relationship between two nodes (e.g. one is in BatchNode, another isn't).<br/>
-   *  </p>
-   *  @function
-   *  @param {AffineTransform} additionalTransform  The additional transform
-   *  @example
-   * // create a batchNode
-   * var batch = new SpriteBatchNode("Icon-114.png");
-   * this.addChild(batch);
-   *
-   * // create two sprites, spriteA will be added to batchNode, they are using different textures.
-   * var spriteA = new Sprite(batch->getTexture());
-   * var spriteB = new Sprite("Icon-72.png");
-   *
-   * batch.addChild(spriteA);
-   *
-   * // We can't make spriteB as spriteA's child since they use different textures. So just add it to layer.
-   * // But we want to simulate `parent-child` relationship for these two node.
-   * this.addChild(spriteB);
-   *
-   * //position
-   * spriteA.position = new Point(200, 200);
-   *
-   * // Gets the spriteA's transform.
-   * var t = spriteA.nodeToParentTransform;
-   *
-   * // Sets the additional transform to spriteB, spriteB's position will based on its pseudo parent i.e. spriteA.
-   * spriteB.additionalTransform = t;
-   *
-   * //scale
-   * spriteA.scale = 2;
-   *
-   * // Gets the spriteA's transform.
-   * t = spriteA.nodeToParentTransform;
-   *
-   * // Sets the additional transform to spriteB, spriteB's scale will based on its pseudo parent i.e. spriteA.
-   * spriteB.additionalTransform = t;
-   *
-   * //rotation
-   * spriteA.rotation = 20;
-   *
-   * // Gets the spriteA's transform.
-   * t = spriteA.nodeToParentTransform;
-   *
-   * // Sets the additional transform to spriteB, spriteB's rotation will based on its pseudo parent i.e. spriteA.
-   * spriteB.additionalTransform = t;
-   */
-
-  /**
-   * Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.<br/>
-   * The matrix is in Pixels.
-   * @function
-   * @return {AffineTransform}
-   */
   get parentToNodeTransform() {
-    return this.#renderCmd.parentToNodeTransform;
+    return this.#transform.parentToNodeTransform;
   }
 
-  /**
-   * Returns the world affine transform matrix. The matrix is in Pixels.
-   * @function
-   * @return {AffineTransform}
-   */
   get nodeToWorldTransform() {
     return this.#transform.nodeToWorldTransform;
   }
 
-  /**
-   * Returns the inverse world affine transform matrix. The matrix is in Pixels.
-   * @function
-   * @return {AffineTransform}
-   */
   get worldToNodeTransform() {
     return this.#transform.worldToNodeTransform;
   }
 
-  /**
-   * Converts a Point to node (local) space coordinates. The result is in Points.
-   * @function
-   * @param {Point} worldPoint
-   * @return {Point}
-   */
   convertToNodeSpace(worldPoint) {
     return this.#transform.convertToNodeSpace(worldPoint);
   }
 
-  /**
-   * Converts a Point to world space coordinates. The result is in Points.
-   * @function
-   * @param {Point} nodePoint
-   * @return {Point}
-   */
   convertToWorldSpace(nodePoint = new Point()) {
-    return AffineTransform.applyToPoint(nodePoint, this.nodeToWorldTransform);
+    return this.#transform.convertToWorldSpace(nodePoint);
   }
 
-  /**
-   * Converts a Point to node (local) space coordinates. The result is in Points.<br/>
-   * treating the returned/received node point as anchor relative.
-   * @function
-   * @param {Point} worldPoint
-   * @return {Point}
-   */
   convertToNodeSpaceAR(worldPoint) {
-    return Point.sub(
-      this.convertToNodeSpace(worldPoint),
-      this.#renderCmd.anchorPointInPoints
-    );
+    return this.#transform.convertToNodeSpaceAR(worldPoint);
   }
 
-  /**
-   * Converts a local Point to world space coordinates.The result is in Points.<br/>
-   * treating the returned/received node point as anchor relative.
-   * @function
-   * @param {Point} nodePoint
-   * @return {Point}
-   */
   convertToWorldSpaceAR(nodePoint) {
-    nodePoint = nodePoint || new Point();
-    var pt = Point.add(nodePoint, this.#renderCmd.anchorPointInPoints);
-    return this.convertToWorldSpace(pt);
+    return this.#transform.convertToWorldSpaceAR(nodePoint);
   }
 
-  #convertToWindowSpace(nodePoint) {
-    var worldPoint = this.convertToWorldSpace(nodePoint);
-    return ServiceLocator.eglView.convertToUI(worldPoint);
-  }
-
-  /** convenience methods which take a Touch instead of Point
-   * @function
-   * @param {Touch} touch The touch object
-   * @return {Point}
-   */
-  /**
-   * converts a Touch (world coordinates) into a local coordinate. This method is AR (Anchor Relative).
-   * @function
-   * @param {Touch} touch The touch object
-   * @return {Point}
-   */
   convertTouchToNodeSpaceAR(touch) {
-    var point = ServiceLocator.eglView.convertToGL(touch);
-    return this.convertToNodeSpaceAR(point);
+    return this.#transform.convertTouchToNodeSpaceAR(touch);
   }
 
   /**
