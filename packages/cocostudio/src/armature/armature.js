@@ -306,7 +306,7 @@ export class Armature extends Node {
    */
   updateOffsetPoint() {
     // Set contentsize and Calculate anchor point.
-    var rect = this.boundingBox;
+    var rect = this.transform.boundingBox;
     this.contentSize = rect;
     var locOffsetPoint = this._offsetPoint;
     locOffsetPoint.x = -rect.x;

@@ -1156,7 +1156,4 @@ export class Node extends ComponentContainer {
     this.#userData = Var;
   }
 
-  get boundingBox() {
-    return this.#transform.boundingBox;
-  }
 }

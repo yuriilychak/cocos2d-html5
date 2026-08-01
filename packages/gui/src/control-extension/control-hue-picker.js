@@ -28,7 +28,7 @@ export class ControlHuePicker extends Control {
     set huePercentage(hueValueInPercent) {
         this._huePercentage = hueValueInPercent;
         this._hue = this._huePercentage * 360.0;
-        var backgroundBox = this._background.boundingBox;
+        var backgroundBox = this._background.transform.boundingBox;
         var centerX = this._startPos.x + backgroundBox.width * 0.5;
         var centerY = this._startPos.y + backgroundBox.height * 0.5;
         var limit = backgroundBox.width * 0.5 - 15.0;
@@ -59,7 +59,7 @@ export class ControlHuePicker extends Control {
         if (super.init()) {
             this._background = Control.addSpriteToTargetWithPosAndAnchor(new Sprite("#default_theme/color_picker/color.png"), target, pos, new Point(0.0, 0.0));
             this._slider = Control.addSpriteToTargetWithPosAndAnchor(new Sprite("#default_theme/color_picker/picker.png"), target, pos, new Point(0.5, 0.5));
-            this._slider.position = { x: pos.x, y: pos.y + this._background.boundingBox.height * 0.5 };
+            this._slider.position = { x: pos.x, y: pos.y + this._background.transform.boundingBox.height * 0.5 };
             this._startPos = pos;
             this._hue = 0.0;
             this._huePercentage = 0.0;
@@ -69,7 +69,7 @@ export class ControlHuePicker extends Control {
     }
 
     _updateSliderPosition(location) {
-        var backgroundBox = this._background.boundingBox;
+        var backgroundBox = this._background.transform.boundingBox;
         var centerX = this._startPos.x + backgroundBox.width * 0.5;
         var centerY = this._startPos.y + backgroundBox.height * 0.5;
         var dx = location.x - centerX;

@@ -88,9 +88,9 @@ export class LayoutComponent extends Component {
   }
 
   set anchor(point) {
-    var oldRect = this.owner.boundingBox;
+    var oldRect = this.owner.transform.boundingBox;
     this.owner.anchor = point;
-    var newRect = this.owner.boundingBox;
+    var newRect = this.owner.transform.boundingBox;
     var offSetX = oldRect.x - newRect.x,
       offSetY = oldRect.y - newRect.y;
 

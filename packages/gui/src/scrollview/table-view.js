@@ -493,7 +493,7 @@ export class TableView extends GScrollView {
     if (!this.visible) return;
 
     if (this._touchedCell) {
-      var bb = this.boundingBox;
+      var bb = this.transform.boundingBox;
       var tmpOrigin = new Point(bb.x, bb.y);
       tmpOrigin = this.parent.transform.convertToWorldSpace(tmpOrigin);
       bb.x = tmpOrigin.x;
