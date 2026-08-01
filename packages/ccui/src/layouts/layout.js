@@ -275,11 +275,6 @@ export class Layout extends Widget {
     this._doLayoutDirty = true;
   }
 
-  removeAllChildrenWithCleanup(cleanup) {
-    super.removeAllChildrenWithCleanup(cleanup);
-    this._doLayoutDirty = true;
-  }
-
   isClippingEnabled() {
     return this._clippingEnabled;
   }

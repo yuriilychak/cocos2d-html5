@@ -276,16 +276,8 @@ export class ListView extends ScrollView {
   /**
    * Removes all children from ListView.
    */
-  removeAllChildren() {
-    this.removeAllChildrenWithCleanup(true);
-  }
-
-  /**
-   * Removes all children from ListView and do a cleanup all running actions depending on the cleanup parameter.
-   * @param {Boolean} cleanup
-   */
-  removeAllChildrenWithCleanup(cleanup) {
-    super.removeAllChildrenWithCleanup(cleanup);
+  removeAllChildren(cleanup = true) {
+    super.removeAllChildren(cleanup);
     this._items = [];
 
     this._onItemListChanged();

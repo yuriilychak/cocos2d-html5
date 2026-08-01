@@ -224,8 +224,8 @@ export class RenderCmd {
         }
       }
 
-      if (node.additionalTransformDirty) {
-        AffineTransform.concatIn(t, node.additionalTransform);
+      if (node.transform.additionalTransformDirty) {
+        AffineTransform.concatIn(t, node.transform.additionalTransform);
       }
 
       if (pt) {
@@ -262,8 +262,8 @@ export class RenderCmd {
         }
       }
 
-      if (node.additionalTransformDirty) {
-        AffineTransform.concatIn(t, node.additionalTransform);
+      if (node.transform.additionalTransformDirty) {
+        AffineTransform.concatIn(t, node.transform.additionalTransform);
       }
 
       if (pt) {

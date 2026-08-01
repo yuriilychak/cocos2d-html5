@@ -48,7 +48,6 @@ export const _LogInfos = {
     Node_getBoundingBox: "getBoundingBox is deprecated. Use boundingBox instead",
     Node_removeChildByTag: "argument tag is an invalid tag",
     Node_removeChildByTag_2: "cocos2d: removeChildByTag(tag = %s): child not found!",
-    Node_removeAllChildrenWithCleanup: "removeAllChildrenWithCleanup is deprecated. Use removeAllChildren instead",
     Node_stopActionByTag: "Node.stopActionBy(): argument tag an invalid tag",
     Node_getActionByTag: "Node.actionManager.getActionByTag(): argument tag is an invalid tag",
     Node_resumeSchedulerAndActions: "resumeSchedulerAndActions is deprecated, please use resume instead.",

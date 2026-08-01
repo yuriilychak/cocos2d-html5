@@ -354,14 +354,6 @@ export class Node extends ComponentContainer {
   }
 
   /**
-   * Removes all children from the container and do a cleanup all running actions depending on the cleanup parameter.
-   * @param {Boolean} [cleanup=true]
-   */
-  removeAllChildrenWithCleanup(cleanup = true) {
-    this.removeAllChildren(cleanup);
-  }
-
-  /**
    * Removes all children from the container and do a cleanup all running actions depending on the cleanup parameter. <br/>
    * If the cleanup parameter is not passed, it will force a cleanup. <br/>
    * @function
@@ -1166,17 +1158,5 @@ export class Node extends ComponentContainer {
 
   get boundingBox() {
     return this.#transform.boundingBox;
-  }
-
-  get additionalTransform() {
-    return this.#transform.additionalTransform;
-  }
-
-  get additionalTransformDirty() {
-    return this.#transform.additionalTransformDirty;
-  }
-
-  set additionalTransform(additionalTransform) {
-    this.#transform.additionalTransform = additionalTransform;
   }
 }

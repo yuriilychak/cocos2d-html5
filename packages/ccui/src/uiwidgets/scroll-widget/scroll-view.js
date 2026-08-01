@@ -489,16 +489,8 @@ export class ScrollView extends Layout {
   /**
    * Removes all children.
    */
-  removeAllChildren() {
-    this.removeAllChildrenWithCleanup(true);
-  }
-
-  /**
-   * Removes all children.
-   * @param {Boolean} cleanup
-   */
-  removeAllChildrenWithCleanup(cleanup) {
-    this._innerContainer.removeAllChildrenWithCleanup(cleanup);
+  removeAllChildren(cleanup = true) {
+    this._innerContainer.removeAllChildren(cleanup);
   }
 
   /**
