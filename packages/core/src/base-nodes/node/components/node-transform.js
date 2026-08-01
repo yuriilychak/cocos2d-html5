@@ -207,6 +207,38 @@ export default class NodeTransform extends Component {
     );
   }
 
+  get boundingBoxToWorld() {
+    const owner = this.owner;
+    let rect = new Rect(0, 0, owner.width, owner.height);
+    const transform = this.nodeToWorldTransform;
+    rect = AffineTransform.applyToRect(rect, transform);
+
+    for (const child of owner.children) {
+      if (child && child.visible) {
+        const childRect = child.getBoundingBoxToCurrentNode(transform);
+        if (childRect) rect = Rect.union(rect, childRect);
+      }
+    }
+    return rect;
+  }
+
+  getBoundingBoxToCurrentNode(parentTransform) {
+    const owner = this.owner;
+    let rect = new Rect(0, 0, owner.width, owner.height);
+    const transform = parentTransform === undefined
+      ? this.nodeToParentTransform
+      : AffineTransform.concat(this.nodeToParentTransform, parentTransform);
+    rect = AffineTransform.applyToRect(rect, transform);
+
+    for (const child of owner.children) {
+      if (child && child.visible) {
+        const childRect = child.getBoundingBoxToCurrentNode(transform);
+        if (childRect) rect = Rect.union(rect, childRect);
+      }
+    }
+    return rect;
+  }
+
   get ignoreAnchorPointForPosition() { return this.#ignoreAnchorPointForPosition; }
   set ignoreAnchorPointForPosition(value) {
     if (value === this.#ignoreAnchorPointForPosition) return;

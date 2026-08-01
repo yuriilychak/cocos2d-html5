@@ -25,7 +25,7 @@
  ****************************************************************************/
 
 import { dirtyFlags } from "./node-canvas-render-cmd";
-import { Point, Rect, AffineTransform } from "../../geometry";
+import { Point, AffineTransform } from "../../geometry";
 import { log, assert, _LogInfos } from "../../boot/debugger";
 import { arrayRemoveObject } from "../../platform/macro/utils";
 import { ComponentContainer } from "../../components";
@@ -228,15 +228,14 @@ export class Node extends ComponentContainer {
    * @return {Node} a Node object whose name equals to the input parameter
    */
   getChildByName(name) {
-    if (!name) {
-      log("Invalid name");
-      return null;
+    const childCount = this.#children.length;
+
+    for (let i = 0; i < childCount; ++i) {
+      if (this.#children[i].name === name) {
+        return this.#children[i];
+      }
     }
 
-    var locChildren = this.#children;
-    for (var i = 0, len = locChildren.length; i < len; i++) {
-      if (locChildren[i].name === name) return locChildren[i];
-    }
     return null;
   }
 
@@ -292,10 +291,12 @@ export class Node extends ComponentContainer {
         );
     }
     child.renderCmd.setDirtyFlag(dirtyFlags.transformDirty);
-    if (this.#color.cascadeColor)
+    if (this.#color.cascadeColor) {
       child.renderCmd.setDirtyFlag(dirtyFlags.colorDirty);
-    if (this.#color.cascadeOpacity)
+    }
+    if (this.#color.cascadeOpacity) {
       child.renderCmd.setDirtyFlag(dirtyFlags.opacityDirty);
+    }
   }
 
   // composition: REMOVE
@@ -307,9 +308,8 @@ export class Node extends ComponentContainer {
    * @param {Boolean} [cleanup=true] true if all actions and callbacks on this node should be removed, false otherwise.
    * @see Node#removeFromParentAndCleanup
    */
-  removeFromParent(cleanup) {
+  removeFromParent(cleanup = true) {
     if (this.#parent) {
-      if (cleanup === undefined) cleanup = true;
       this.#parent.removeChild(this, cleanup);
     }
   }
@@ -323,12 +323,15 @@ export class Node extends ComponentContainer {
    * @param {Node} child  The child node which will be removed.
    * @param {Boolean} [cleanup=true]  true if all running actions and callbacks on the child node will be cleanup, false otherwise.
    */
-  removeChild(child, cleanup) {
+  removeChild(child, cleanup = true) {
     // explicit nil handling
-    if (this.#children.length === 0) return;
+    if (this.#children.length === 0) {
+      return;
+    }
 
-    if (cleanup === undefined) cleanup = true;
-    if (this.#children.indexOf(child) > -1) this.#detachChild(child, cleanup);
+    if (this.#children.indexOf(child) > -1) {
+      this.#detachChild(child, cleanup);
+    }
 
     //this.renderCmd.setDirtyFlag(dirtyFlags.visibleDirty);
     ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty = true;
@@ -342,7 +345,7 @@ export class Node extends ComponentContainer {
    * @param {Boolean} [cleanup=true] true if all running actions and callbacks on the child node will be cleanup, false otherwise.
    * @see Node#removeChildByTag
    */
-  removeChildByTag(tag, cleanup) {
+  removeChildByTag(tag, cleanup = true) {
     if (tag === NODE_TAG_INVALID) log(_LogInfos.Node_removeChildByTag);
 
     var child = this.getChildByTag(tag);
@@ -354,7 +357,7 @@ export class Node extends ComponentContainer {
    * Removes all children from the container and do a cleanup all running actions depending on the cleanup parameter.
    * @param {Boolean} [cleanup=true]
    */
-  removeAllChildrenWithCleanup(cleanup) {
+  removeAllChildrenWithCleanup(cleanup = true) {
     this.removeAllChildren(cleanup);
   }
 
@@ -364,35 +367,18 @@ export class Node extends ComponentContainer {
    * @function
    * @param {Boolean} [cleanup=true] true if all running actions on all children nodes should be cleanup, false otherwise.
    */
-  removeAllChildren(cleanup) {
+  removeAllChildren(cleanup = true) {
     // not using detachChild improves speed here
-    var __children = this.#children;
-    if (__children !== null) {
-      if (cleanup === undefined) cleanup = true;
-      for (var i = 0; i < __children.length; i++) {
-        var node = __children[i];
-        if (node) {
-          if (this.#running) {
-            node.performRecursive(
-              NodeStateCallbackType.onExitTransitionDidStart
-            );
-            node.performRecursive(NodeStateCallbackType.onExit);
-          }
-
-          // If you don't do cleanup, the node's actions will not get removed and the
-          if (cleanup) node.performRecursive(NodeStateCallbackType.cleanup);
-
-          // set parent nil at the end
-          node.parent = null;
-          node.renderCmd.detachFromParent();
-        }
+    for (let i = 0; i < this.#children.length; ++i) {
+      if (this.#children[i]) {
+        this.#detachChild(this.#children[i], cleanup, false);
       }
-      this.#children.length = 0;
-      ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty = true;
     }
+    this.#children.length = 0;
+    ServiceLocator.sys.rendererConfig.renderer.childrenOrderDirty = true;
   }
 
-  #detachChild(child, doCleanup) {
+  #detachChild(child, cleanup, removeFromArray = false) {
     // IMPORTANT:
     //  -1st do onExit
     //  -2nd cleanup
@@ -402,12 +388,17 @@ export class Node extends ComponentContainer {
     }
 
     // If you don't do cleanup, the child's actions will not get removed and the
-    if (doCleanup) child.performRecursive(NodeStateCallbackType.cleanup);
+    if (cleanup) {
+      child.performRecursive(NodeStateCallbackType.cleanup);
+    }
 
     // set parent nil at the end
     child.parent = null;
     child.renderCmd.detachFromParent();
-    arrayRemoveObject(this.#children, child);
+
+    if (removeFromArray) {
+      arrayRemoveObject(this.#children, child);
+    }
   }
 
   setNodeDirty() {
@@ -809,15 +800,16 @@ export class Node extends ComponentContainer {
 
   nodeToAncestorTransform(ancestor) {
     var t = this.#transform.nodeToParentTransform;
+    
     if (ancestor) {
       var T = new AffineTransform(t);
       for (var p = this.#parent; p != null && p != ancestor; p = p.parent) {
         AffineTransform.concatIn(T, p.nodeToParentTransform);
       }
       return T;
-    } else {
-      return t;
-    }
+    } 
+     
+    return t;
   }
 
   /**
@@ -826,40 +818,11 @@ export class Node extends ComponentContainer {
    * @return {Rect}
    */
   get boundingBoxToWorld() {
-    var rect = new Rect(0, 0, this.width, this.height);
-    var trans = this.nodeToWorldTransform;
-    rect = AffineTransform.applyToRect(rect, trans);
-
-    //query child's BoundingBox
-    var locChildren = this.#children;
-    for (var i = 0; i < locChildren.length; i++) {
-      var child = locChildren[i];
-      if (child && child.visible) {
-        var childRect = child.getBoundingBoxToCurrentNode(trans);
-        if (childRect) rect = Rect.union(rect, childRect);
-      }
-    }
-    return rect;
+    return this.#transform.boundingBoxToWorld;
   }
 
   getBoundingBoxToCurrentNode(parentTransform) {
-    var rect = new Rect(0, 0, this.width, this.height);
-    var trans =
-      parentTransform === undefined
-        ? this.nodeToParentTransform
-        : AffineTransform.concat(this.nodeToParentTransform, parentTransform);
-    rect = AffineTransform.applyToRect(rect, trans);
-
-    //query child's BoundingBox
-    var locChildren = this.#children;
-    for (var i = 0; i < locChildren.length; i++) {
-      var child = locChildren[i];
-      if (child && child.visible) {
-        var childRect = child.getBoundingBoxToCurrentNode(trans);
-        if (childRect) rect = Rect.union(rect, childRect);
-      }
-    }
-    return rect;
+    return this.#transform.getBoundingBoxToCurrentNode(parentTransform);
   }
 
   /**

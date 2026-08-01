@@ -46,6 +46,7 @@ import {
 import { unzipBase64AsArray } from "@aspect/compression";
 import { Particle, ParticleModeA, ParticleModeB } from "./particle";
 import ParticleSystemColor from "./particle-system-color";
+import ParticleSystemTransform from "./particle-system-transform";
 import { PNGReader } from "../png-reader";
 import { tiffReader } from "../tiff-reader";
 
@@ -1430,17 +1431,8 @@ export class ParticleSystem extends Node {
     return this.initWithDictionary(dict, "");
   }
 
-  /**
-   * return bounding box of particle system in world space
-   * @return {Rect}
-   */
-  get boundingBoxToWorld() {
-    return new Rect(
-      0,
-      0,
-      ServiceLocator.eglView.canvas.width,
-      ServiceLocator.eglView.canvas.height
-    );
+  createTransform() {
+    return new ParticleSystemTransform();
   }
 
   /**
