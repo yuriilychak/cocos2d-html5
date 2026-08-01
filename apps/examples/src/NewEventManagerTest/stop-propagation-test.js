@@ -173,7 +173,7 @@ export class StopPropagationTest extends EventDispatcherTestDemo {
     var s = node.contentSize;
     return Rect.containsPoint(
       new Rect(0, 0, s.width, s.height),
-      node.transform.convertToNodeSpace(pt)
+      node.transformComponent.convertToNodeSpace(pt)
     );
     //----end9----
   }

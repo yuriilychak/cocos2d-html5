@@ -453,7 +453,7 @@ export class DisplayManager extends BaseClass {
 
   get boundingBox() {
     if (!this._displayRenderNode) return new Rect();
-    return this._displayRenderNode.transform.boundingBox;
+    return this._displayRenderNode.transformComponent.boundingBox;
   }
 
   get anchor() {

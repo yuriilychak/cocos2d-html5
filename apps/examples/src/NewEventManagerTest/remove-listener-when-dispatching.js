@@ -56,7 +56,7 @@ export class RemoveListenerWhenDispatching extends EventDispatcherTestDemo {
       event: EventListenerType.TOUCH_ONE_BY_ONE,
       swallowTouches: true,
       onTouchBegan: function (touch, event) {
-        var locationInNode = sprite1.transform.convertToNodeSpace(touch);
+        var locationInNode = sprite1.transformComponent.convertToNodeSpace(touch);
         var s = sprite1.contentSize;
         var rect = new Rect(0, 0, s.width, s.height);
 

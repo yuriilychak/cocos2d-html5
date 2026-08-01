@@ -232,15 +232,15 @@ export class GScrollView extends Layer {
       if (this._touchLength === 0.0) {
         var locViewSize = this._viewSize;
         center = new Point(locViewSize.width * 0.5, locViewSize.height * 0.5);
-        center = this.transform.convertToWorldSpace(center);
+        center = this.transformComponent.convertToWorldSpace(center);
       } else center = this._touchPoint;
 
-      oldCenter = locContainer.transform.convertToNodeSpace(center);
+      oldCenter = locContainer.transformComponent.convertToNodeSpace(center);
       locContainer.scale = Math.max(
         this._minScale,
         Math.min(this._maxScale, scale)
       );
-      newCenter = locContainer.transform.convertToWorldSpace(oldCenter);
+      newCenter = locContainer.transformComponent.convertToWorldSpace(oldCenter);
 
       var offset = Point.sub(center, newCenter);
       if (this._delegate && this._delegate.scrollViewDidZoom)
@@ -290,7 +290,7 @@ export class GScrollView extends Layer {
       size.height / scale
     );
 
-    return Rect.intersects(viewRect, node.transform.boundingBox);
+    return Rect.intersects(viewRect, node.transformComponent.boundingBox);
   }
 
   pause(sender) {
@@ -373,8 +373,8 @@ export class GScrollView extends Layer {
     var frame = this._getViewRect();
 
     var locContainer = this._container;
-    var locPoint = locContainer.transform.convertToWorldSpace(
-      locContainer.transform.convertToNodeSpace(touch)
+    var locPoint = locContainer.transformComponent.convertToWorldSpace(
+      locContainer.transformComponent.convertToNodeSpace(touch)
     );
     var locTouches = this._touches;
     if (
@@ -387,7 +387,7 @@ export class GScrollView extends Layer {
     locTouches.push(touch);
 
     if (locTouches.length === 1) {
-      this._touchPoint = this.transform.convertToNodeSpace(touch);
+      this._touchPoint = this.transformComponent.convertToNodeSpace(touch);
       this._touchMoved = false;
       this._dragging = true;
       this._scrollDistance.x = 0;
@@ -395,12 +395,12 @@ export class GScrollView extends Layer {
       this._touchLength = 0.0;
     } else if (locTouches.length === 2) {
       this._touchPoint = Point.midpoint(
-        this.transform.convertToNodeSpace(locTouches[0]),
-        this.transform.convertToNodeSpace(locTouches[1])
+        this.transformComponent.convertToNodeSpace(locTouches[0]),
+        this.transformComponent.convertToNodeSpace(locTouches[1])
       );
       this._touchLength = Point.distance(
-        locContainer.transform.convertToNodeSpace(locTouches[0]),
-        locContainer.transform.convertToNodeSpace(locTouches[1])
+        locContainer.transformComponent.convertToNodeSpace(locTouches[0]),
+        locContainer.transformComponent.convertToNodeSpace(locTouches[1])
       );
       this._dragging = false;
     }
@@ -416,7 +416,7 @@ export class GScrollView extends Layer {
       this._touchMoved = true;
       var frame = this._getViewRect();
 
-      var newPoint = this.transform.convertToNodeSpace(touch);
+      var newPoint = this.transformComponent.convertToNodeSpace(touch);
       var moveDistance = Point.sub(newPoint, this._touchPoint);
 
       var dis = 0.0,
@@ -494,8 +494,8 @@ export class GScrollView extends Layer {
       }
     } else if (this._touches.length === 2 && !this._dragging) {
       var len = Point.distance(
-        this._container.transform.convertToNodeSpace(this._touches[0]),
-        this._container.transform.convertToNodeSpace(this._touches[1])
+        this._container.transformComponent.convertToNodeSpace(this._touches[0]),
+        this._container.transformComponent.convertToNodeSpace(this._touches[1])
       );
       this.setZoomScale((this.getZoomScale() * len) / this._touchLength);
     }
@@ -714,7 +714,7 @@ export class GScrollView extends Layer {
   _handleZoom() {}
 
   _getViewRect() {
-    var screenPos = this.transform.convertToWorldSpace(new Point(0, 0));
+    var screenPos = this.transformComponent.convertToWorldSpace(new Point(0, 0));
     var locViewSize = this._viewSize;
 
     var scaleX = this.scaleX;

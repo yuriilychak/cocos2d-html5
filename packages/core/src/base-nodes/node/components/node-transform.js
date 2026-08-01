@@ -348,7 +348,7 @@ export default class NodeTransform extends Component {
    * var t = spriteA.nodeToParentTransform;
    *
    * // Sets the additional transform to spriteB, spriteB's position will based on its pseudo parent i.e. spriteA.
-   * spriteB.transform.additionalTransform = t;
+   * spriteB.transformComponent.additionalTransform = t;
    *
    * //scale
    * spriteA.scale = 2;
@@ -357,7 +357,7 @@ export default class NodeTransform extends Component {
    * t = spriteA.nodeToParentTransform;
    *
    * // Sets the additional transform to spriteB, spriteB's scale will based on its pseudo parent i.e. spriteA.
-   * spriteB.transform.additionalTransform = t;
+   * spriteB.transformComponent.additionalTransform = t;
    *
    * //rotation
    * spriteA.rotation = 20;
@@ -366,7 +366,7 @@ export default class NodeTransform extends Component {
    * t = spriteA.nodeToParentTransform;
    *
    * // Sets the additional transform to spriteB, spriteB's rotation will based on its pseudo parent i.e. spriteA.
-   * spriteB.transform.additionalTransform = t;
+   * spriteB.transformComponent.additionalTransform = t;
    */
   set additionalTransform(value) {
     if (value === undefined) {

@@ -277,7 +277,7 @@ export class EditBox extends Node {
   _onTouchBegan(touch) {
     if (!this.visible || !this._isAncestorsVisible(this)) return;
     var bb = new Rect(0, 0, this.width, this.height);
-    var hitted = Rect.containsPoint(bb, this.transform.convertToNodeSpace(touch));
+    var hitted = Rect.containsPoint(bb, this.transformComponent.convertToNodeSpace(touch));
     if (hitted) {
       return true;
     } else {

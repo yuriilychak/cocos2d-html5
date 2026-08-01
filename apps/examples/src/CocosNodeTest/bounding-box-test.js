@@ -45,7 +45,7 @@ export class BoundingBoxTest extends TestNodeDemo {
     this.addChild(sprite);
     sprite.x = winSize.width / 2;
     sprite.y = winSize.height / 2;
-    var bb = sprite.transform.boundingBox;
+    var bb = sprite.transformComponent.boundingBox;
     log("BoundingBox:");
     //for( var i in bb )
     //    log( i + " = " + bb[i] );

@@ -496,7 +496,7 @@ export class Slider extends Widget {
    * @returns {boolean}
    */
   hitTest(pt) {
-    var nsp = this._slidBallNormalRenderer.transform.convertToNodeSpace(pt);
+    var nsp = this._slidBallNormalRenderer.transformComponent.convertToNodeSpace(pt);
     var ballSize = this._slidBallNormalRenderer.contentSize;
     var ballRect = new Rect(0, 0, ballSize.width, ballSize.height);
     return (
@@ -510,7 +510,7 @@ export class Slider extends Widget {
   onTouchBegan(touch, event) {
     var pass = super.onTouchBegan(touch, event);
     if (this._hit) {
-      var nsp = this.transform.convertToNodeSpace(this._touchBeganPosition);
+      var nsp = this.transformComponent.convertToNodeSpace(this._touchBeganPosition);
       this.setPercent(this._getPercentWithBallPos(nsp.x));
       this._percentChangedEvent();
     }
@@ -518,7 +518,7 @@ export class Slider extends Widget {
   }
 
   onTouchMoved(touch, event) {
-    var nsp = this.transform.convertToNodeSpace(touch);
+    var nsp = this.transformComponent.convertToNodeSpace(touch);
     this.setPercent(this._getPercentWithBallPos(nsp.x));
     this._percentChangedEvent();
   }

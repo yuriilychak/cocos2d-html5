@@ -85,7 +85,7 @@ export class MotionStreakTest1 extends MotionStreakTest {
 
   onUpdate(delta) {
     this.#pos.set(this.#target.width / 2, 0);
-    this.streak.position = this.#target.transform.convertToWorldSpace(this.#pos);
+    this.streak.position = this.#target.transformComponent.convertToWorldSpace(this.#pos);
   }
 
   title() {

@@ -136,8 +136,8 @@ export default class LayerColorCanvasRenderer extends LayerCanvasRenderer {
       node.width,
       node.height
     );
-    const trans = node.transform.nodeToWorldTransform;
-    rect = AffineTransform.applyToRect(rect, node.transform.nodeToWorldTransform);
+    const trans = node.transformComponent.nodeToWorldTransform;
+    rect = AffineTransform.applyToRect(rect, node.transformComponent.nodeToWorldTransform);
 
     if (node.children.length === 0) return rect;
 

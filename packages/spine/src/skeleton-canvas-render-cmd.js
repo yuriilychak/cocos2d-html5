@@ -77,7 +77,7 @@ export class SkeletonCanvasRenderCmd extends Node.CanvasRenderCmd {
   }
 
   getLocalBB() {
-    return this._node.transform.boundingBox;
+    return this._node.transformComponent.boundingBox;
   }
 
   _updateRegionAttachmentSlot(attachment, slot, points) {

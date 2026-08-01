@@ -95,7 +95,7 @@ export const displayFactory = {
                 break;
             default:
                 var transform = bone.nodeToArmatureTransform;
-                display.transform.additionalTransform = transform;
+                display.transformComponent.additionalTransform = transform;
                 break;
         }
         if (ENABLE_PHYSICS_CHIPMUNK_DETECT || ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX) {

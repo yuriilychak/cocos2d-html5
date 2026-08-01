@@ -367,7 +367,7 @@ export class LayerGradientWebGLRenderCmd extends LayerColorWebGLRenderCmd {
         node.width,
         node.height
       );
-      const trans = node.transform.nodeToWorldTransform;
+      const trans = node.transformComponent.nodeToWorldTransform;
       this._clipRect = AffineTransform._applyToRectIn(rect, trans);
     }
     return this._clipRect;

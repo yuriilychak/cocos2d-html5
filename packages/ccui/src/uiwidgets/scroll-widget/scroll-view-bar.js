@@ -23,15 +23,15 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-import { Point, Color, Size, NodeComponentName } from '@aspect/core';
-import { ProtectedNode } from '../../base-classes/protected-node';
-import { Scale9Sprite } from '../../base-classes/scale9-sprite';
-import { helper } from '../../system/helper';
-import ScrollViewBarColor from './scroll-view-bar-color';
+import { Point, Color, Size, NodeComponentName } from "@aspect/core";
+import { ProtectedNode } from "../../base-classes/protected-node";
+import { Scale9Sprite } from "../../base-classes/scale9-sprite";
+import { helper } from "../../system/helper";
+import ScrollViewBarColor from "./scroll-view-bar-color";
 
 // Local copies of ScrollView direction constants to avoid a circular import
 // (ScrollView imports ScrollViewBar; if ScrollViewBar imported ScrollView the cycle would break).
-const DIR_VERTICAL = 1;   // ScrollView.DIR_VERTICAL
+const DIR_VERTICAL = 1; // ScrollView.DIR_VERTICAL
 const DIR_HORIZONTAL = 2; // ScrollView.DIR_HORIZONTAL
 
 /**
@@ -43,354 +43,400 @@ const DIR_HORIZONTAL = 2; // ScrollView.DIR_HORIZONTAL
  * @property {Number}               autoHideTime             - Auto hide time of the scroll view bar
  */
 export class ScrollViewBar extends ProtectedNode {
-    _parentScroll = null;
-    _direction = null;
+  _parentScroll = null;
+  _direction = null;
 
-    _opacity = 255;
+  _opacity = 255;
 
-    _marginFromBoundary = 0;
-    _marginForLength = 0;
+  _marginFromBoundary = 0;
+  _marginForLength = 0;
 
-    _touching = false;
+  _touching = false;
 
-    _autoHideEnabled = true;
-    autoHideTime = 0;
-    _autoHideRemainingTime = 0;
+  _autoHideEnabled = true;
+  autoHideTime = 0;
+  _autoHideRemainingTime = 0;
 
-    _thumbSprite = null;
-    _thumbTextureFile = null;
-    _thumbCapInsets = null;
-    _thumbColor = null;
+  _thumbSprite = null;
+  _thumbTextureFile = null;
+  _thumbCapInsets = null;
+  _thumbColor = null;
 
-    /**
-     * Allocates and initializes a UIScrollViewBar.
-     * Constructor of ScrollViewBar. override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
-     * @param {ScrollView} parent A parent of scroll bar.
-     * @param {ScrollView.DIR_NONE | ScrollView.DIR_HORIZONTAL | ScrollView.DIR_VERTICAL | ScrollView.DIR_BOTH} direction
-     */
-    constructor(parent, direction) {
-        super();
-        this._direction = direction;
-        this._parentScroll = parent;
+  /**
+   * Allocates and initializes a UIScrollViewBar.
+   * Constructor of ScrollViewBar. override it to extend the construction behavior, remember to call "this._super()" in the extended "ctor" function.
+   * @param {ScrollView} parent A parent of scroll bar.
+   * @param {ScrollView.DIR_NONE | ScrollView.DIR_HORIZONTAL | ScrollView.DIR_VERTICAL | ScrollView.DIR_BOTH} direction
+   */
+  constructor(parent, direction) {
+    super();
+    this._direction = direction;
+    this._parentScroll = parent;
 
-        this._marginFromBoundary = ScrollViewBar.DEFAULT_MARGIN;
-        this._marginForLength = ScrollViewBar.DEFAULT_MARGIN;
-        this.color.opacity = 255 * ScrollViewBar.DEFAULT_SCROLLBAR_OPACITY;
-        this.autoHideTime = ScrollViewBar.DEFAULT_AUTO_HIDE_TIME;
-        this._autoHideEnabled = true;
+    this._marginFromBoundary = ScrollViewBar.DEFAULT_MARGIN;
+    this._marginForLength = ScrollViewBar.DEFAULT_MARGIN;
+    this.color.opacity = 255 * ScrollViewBar.DEFAULT_SCROLLBAR_OPACITY;
+    this.autoHideTime = ScrollViewBar.DEFAULT_AUTO_HIDE_TIME;
+    this._autoHideEnabled = true;
 
-        this.init();
+    this.init();
 
-        this.color.cascadeColor = true;
-        this.color.cascadeOpacity = true;
+    this.color.cascadeColor = true;
+    this.color.cascadeOpacity = true;
+  }
+
+  get autoHideEnabled() {
+    return this.isAutoHideEnabled();
+  }
+  set autoHideEnabled(v) {
+    this.setAutoHideEnabled(v);
+  }
+
+  /**
+   * Initializes a ScrollViewBar. Please do not call this function by yourself, you should pass the parameters to constructor to initialize it.
+   * @returns {boolean}
+   */
+  init() {
+    this._upperHalfCircle = helper._createSpriteFromBase64(
+      ScrollViewBar.HALF_CIRCLE_IMAGE,
+      ScrollViewBar.HALF_CIRCLE_IMAGE_KEY
+    );
+    this._upperHalfCircle.anchor = new Point(0.5, 0);
+
+    this._lowerHalfCircle = helper._createSpriteFromBase64(
+      ScrollViewBar.HALF_CIRCLE_IMAGE,
+      ScrollViewBar.HALF_CIRCLE_IMAGE_KEY
+    );
+    this._lowerHalfCircle.anchor = new Point(0.5, 0);
+    this._lowerHalfCircle.scaleY = -1;
+
+    this.addProtectedChild(this._upperHalfCircle);
+    this.addProtectedChild(this._lowerHalfCircle);
+
+    this._body = helper._createSpriteFromBase64(
+      ScrollViewBar.BODY_IMAGE_1_PIXEL_HEIGHT,
+      ScrollViewBar.BODY_IMAGE_1_PIXEL_HEIGHT_KEY
+    );
+    this._body.anchor = new Point(0.5, 0);
+    this.addProtectedChild(this._body);
+
+    this.color.color = ScrollViewBar.DEFAULT_COLOR;
+    this.onScrolled(new Point());
+    this.getComponent(NodeComponentName.Color).opacityFromRenderer = 0;
+    this._autoHideRemainingTime = 0;
+
+    if (this._direction === DIR_HORIZONTAL) {
+      this.rotation = 90;
+    }
+  }
+
+  /**
+   * Set the scroll bar position from the left-bottom corner (horizontal) or right-top corner (vertical).
+   * @param {Point} positionFromCorner The position from the left-bottom corner (horizontal) or right-top corner (vertical).
+   */
+  setPositionFromCorner(positionFromCorner) {
+    if (this._direction === DIR_VERTICAL) {
+      this._marginForLength = positionFromCorner.y;
+      this._marginFromBoundary = positionFromCorner.x;
+    } else {
+      this._marginForLength = positionFromCorner.x;
+      this._marginFromBoundary = positionFromCorner.y;
+    }
+  }
+
+  onEnter() {
+    super.onEnter();
+    this.scheduler.scheduleUpdate();
+  }
+
+  /**
+   * Get the scroll bar position from the left-bottom corner (horizontal) or right-top corner (vertical).
+   * @returns {Point}
+   */
+  getPositionFromCorner() {
+    if (this._direction === DIR_VERTICAL) {
+      return new Point(this._marginFromBoundary, this._marginForLength);
+    } else {
+      return new Point(this._marginForLength, this._marginFromBoundary);
+    }
+  }
+
+  /**
+   * Set the scroll bar's width
+   * @param {number} width The scroll bar's width
+   */
+  setWidth(width) {
+    if (this._thumbSprite) {
+      this._thumbSprite.setPreferredSize(
+        new Size(width, this._thumbSprite.getPreferredSize().height)
+      );
+    } else {
+      var scale = width / this._body.width;
+      this._body.scaleX = scale;
+      this._upperHalfCircle.scale = scale;
+      this._lowerHalfCircle.scale = -scale;
+    }
+  }
+
+  /**
+   * Get the scroll bar's width
+   * @returns {number} the scroll bar's width
+   */
+  getWidth() {
+    if (this._thumbSprite) {
+      return this._thumbSprite.getPreferredSize().width;
+    }
+    return this._body.transformComponent.boundingBox.width;
+  }
+
+  /**
+   * Set scroll bar auto hide state
+   * @param {boolean} autoHideEnabled scroll bar auto hide state
+   */
+  setAutoHideEnabled(autoHideEnabled) {
+    this._autoHideEnabled = autoHideEnabled;
+
+    this.color.opacityFromRenderer =
+      !this._autoHideEnabled &&
+      !this._touching &&
+      this._autoHideRemainingTime <= 0
+        ? this.color.opacity
+        : 0;
+  }
+
+  /**
+   * Query scroll bar auto hide state
+   * @returns {boolean} True if scroll bar auto hide is enabled, false otherwise.
+   */
+  isAutoHideEnabled() {
+    return this._autoHideEnabled;
+  }
+
+  createColor() {
+    return new ScrollViewBarColor();
+  }
+
+  /**
+   * Set a custom Scale9Sprite texture for the scroll bar thumb, replacing the default
+   * three-part (half-circles + body) appearance.
+   * @param {string|SpriteFrame} file Texture file path or SpriteFrame.
+   * @param {Rect} [capInsets] Nine-slice cap insets. If omitted the sprite uses its default thirds.
+   * @param {Color} [color] Tint color applied to the thumb sprite. Defaults to white (no tint).
+   */
+  setThumbTexture(file, capInsets, color) {
+    if (this._thumbSprite) {
+      this.removeProtectedChild(this._thumbSprite);
+      this._thumbSprite = null;
+    } else {
+      // First call: remove the default three-part sprites.
+      this.removeProtectedChild(this._upperHalfCircle);
+      this.removeProtectedChild(this._lowerHalfCircle);
+      this.removeProtectedChild(this._body);
     }
 
-    get autoHideEnabled() { return this.isAutoHideEnabled(); }
-    set autoHideEnabled(v) { this.setAutoHideEnabled(v); }
+    this._thumbTextureFile = file;
+    this._thumbCapInsets = capInsets || null;
+    this._thumbColor = color || null;
 
+    // Make the bar a color+opacity pass-through so the thumb sprite's own
+    // color and alpha are displayed as-is, without the bar's DEFAULT_COLOR
+    // (52,65,87) multiplying into the cascade and darkening the thumb.
+    this._opacity = 255;
+    this.color.color = new Color(255, 255, 255);
 
-    /**
-     * Initializes a ScrollViewBar. Please do not call this function by yourself, you should pass the parameters to constructor to initialize it.
-     * @returns {boolean}
-     */
-    init() {
-        this._upperHalfCircle = helper._createSpriteFromBase64(ScrollViewBar.HALF_CIRCLE_IMAGE, ScrollViewBar.HALF_CIRCLE_IMAGE_KEY);
-        this._upperHalfCircle.anchor = new Point(0.5, 0);
+    var initialWidth = this.getWidth();
+    this._thumbSprite = new Scale9Sprite(file, capInsets);
+    this._thumbSprite.anchor = new Point(0.5, 0);
+    this._thumbSprite.setPreferredSize(new Size(initialWidth, 0));
+    var alpha = color && color.a != null ? color.a : 255;
+    if (color) {
+      this._thumbSprite.color.color = color;
+    }
+    this._thumbSprite.color.opacity = alpha;
+    this.addProtectedChild(this._thumbSprite);
+  }
 
-        this._lowerHalfCircle = helper._createSpriteFromBase64(ScrollViewBar.HALF_CIRCLE_IMAGE, ScrollViewBar.HALF_CIRCLE_IMAGE_KEY);
-        this._lowerHalfCircle.anchor = new Point(0.5, 0);
-        this._lowerHalfCircle.scaleY = -1;
+  /**
+   * Returns the texture file/SpriteFrame used for the custom thumb, or null if using the default.
+   * @returns {string|SpriteFrame|null}
+   */
+  getThumbTexture() {
+    return this._thumbTextureFile;
+  }
 
-        this.addProtectedChild(this._upperHalfCircle);
-        this.addProtectedChild(this._lowerHalfCircle);
+  /**
+   * Returns the cap insets used for the custom thumb's Scale9Sprite, or null if not set.
+   * @returns {Rect|null}
+   */
+  getThumbCapInsets() {
+    return this._thumbCapInsets;
+  }
 
-        this._body = helper._createSpriteFromBase64(ScrollViewBar.BODY_IMAGE_1_PIXEL_HEIGHT, ScrollViewBar.BODY_IMAGE_1_PIXEL_HEIGHT_KEY);
-        this._body.anchor = new Point(0.5, 0);
-        this.addProtectedChild(this._body);
+  /**
+   * Returns the tint color applied to the custom thumb, or null if not set.
+   * @returns {Color|null}
+   */
+  getThumbColor() {
+    return this._thumbColor;
+  }
 
-        this.color.color = ScrollViewBar.DEFAULT_COLOR;
-        this.onScrolled(new Point());
-        this.getComponent(NodeComponentName.Color).opacityFromRenderer = 0;
-        this._autoHideRemainingTime = 0;
+  _updateLength(length) {
+    if (this._thumbSprite) {
+      this._thumbSprite.setPreferredSize(
+        new Size(this._thumbSprite.getPreferredSize().width, length)
+      );
+    } else {
+      var ratio = length / this._body.getTextureRect().height;
+      this._body.scaleY = ratio;
+      this._upperHalfCircle.y = this._body.y + length;
+    }
+  }
 
-        if (this._direction === DIR_HORIZONTAL) {
-            this.rotation = 90;
-        }
+  _processAutoHide(dt) {
+    if (!this._autoHideEnabled || this._autoHideRemainingTime <= 0) {
+      return;
+    } else if (this._touching) {
+      // If it is touching, don't auto hide.
+      return;
     }
 
-    /**
-     * Set the scroll bar position from the left-bottom corner (horizontal) or right-top corner (vertical).
-     * @param {Point} positionFromCorner The position from the left-bottom corner (horizontal) or right-top corner (vertical).
-     */
-    setPositionFromCorner(positionFromCorner) {
-        if (this._direction === DIR_VERTICAL) {
-            this._marginForLength = positionFromCorner.y;
-            this._marginFromBoundary = positionFromCorner.x;
-        }
-        else {
-            this._marginForLength = positionFromCorner.x;
-            this._marginFromBoundary = positionFromCorner.y;
-        }
+    this._autoHideRemainingTime -= dt;
+    if (this._autoHideRemainingTime <= this.autoHideTime) {
+      this._autoHideRemainingTime = Math.max(0, this._autoHideRemainingTime);
+      this.getComponent(NodeComponentName.Color).opacityFromRenderer =
+        this._opacity * (this._autoHideRemainingTime / this.autoHideTime);
+    }
+  }
+
+  update(dt) {
+    this._processAutoHide(dt);
+  }
+
+  /**
+   * This is called by parent ScrollView when a touch is began. Don't call this directly.
+   */
+  onTouchBegan() {
+    if (!this._autoHideEnabled) {
+      return;
+    }
+    this._touching = true;
+  }
+
+  /**
+   * This is called by parent ScrollView when a touch is ended. Don't call this directly.
+   */
+  onTouchEnded() {
+    if (!this._autoHideEnabled) {
+      return;
+    }
+    this._touching = false;
+
+    if (this._autoHideRemainingTime <= 0) {
+      // If the remaining time is 0, it means that it didn't moved after touch started so scroll bar is not showing.
+      return;
+    }
+    this._autoHideRemainingTime = this.autoHideTime;
+  }
+
+  /**
+   * @brief This is called by parent ScrollView when the parent is scrolled. Don't call this directly.
+   *
+   * @param {Point} outOfBoundary amount how much the inner container of ScrollView is out of boundary
+   */
+  onScrolled(outOfBoundary) {
+    if (this._autoHideEnabled) {
+      this._autoHideRemainingTime = this.autoHideTime;
+      this.color.opacityFromRenderer = this.color.opacity;
     }
 
-    onEnter() {
-        super.onEnter();
-        this.scheduler.scheduleUpdate();
+    var innerContainer = this._parentScroll.getInnerContainer();
+
+    var innerContainerMeasure = 0;
+    var scrollViewMeasure = 0;
+    var outOfBoundaryValue = 0;
+    var innerContainerPosition = 0;
+
+    if (this._direction === DIR_VERTICAL) {
+      innerContainerMeasure = innerContainer.height;
+      scrollViewMeasure = this._parentScroll.height;
+      outOfBoundaryValue = outOfBoundary.y;
+      innerContainerPosition = -innerContainer.y;
+    } else if (this._direction === DIR_HORIZONTAL) {
+      innerContainerMeasure = innerContainer.width;
+      scrollViewMeasure = this._parentScroll.width;
+      outOfBoundaryValue = outOfBoundary.x;
+      innerContainerPosition = -innerContainer.x;
     }
 
-    /**
-     * Get the scroll bar position from the left-bottom corner (horizontal) or right-top corner (vertical).
-     * @returns {Point}
-     */
-    getPositionFromCorner() {
-        if (this._direction === DIR_VERTICAL) {
-            return new Point(this._marginFromBoundary, this._marginForLength);
-        }
-        else {
-            return new Point(this._marginForLength, this._marginFromBoundary);
-        }
+    var length = this._calculateLength(
+      innerContainerMeasure,
+      scrollViewMeasure,
+      outOfBoundaryValue
+    );
+    var position = this._calculatePosition(
+      innerContainerMeasure,
+      scrollViewMeasure,
+      innerContainerPosition,
+      outOfBoundaryValue,
+      length
+    );
+    this._updateLength(length);
+    this.position = position;
+  }
+
+  _calculateLength(
+    innerContainerMeasure,
+    scrollViewMeasure,
+    outOfBoundaryValue
+  ) {
+    var denominatorValue = innerContainerMeasure;
+    if (outOfBoundaryValue !== 0) {
+      // If it is out of boundary, the length of scroll bar gets shorter quickly.
+      var GETTING_SHORTER_FACTOR = 20;
+      denominatorValue +=
+        (outOfBoundaryValue > 0 ? outOfBoundaryValue : -outOfBoundaryValue) *
+        GETTING_SHORTER_FACTOR;
     }
 
-    /**
-     * Set the scroll bar's width
-     * @param {number} width The scroll bar's width
-     */
-    setWidth(width) {
-        if (this._thumbSprite) {
-            this._thumbSprite.setPreferredSize(new Size(width, this._thumbSprite.getPreferredSize().height));
-        } else {
-            var scale = width / this._body.width;
-            this._body.scaleX = scale;
-            this._upperHalfCircle.scale = scale;
-            this._lowerHalfCircle.scale = -scale;
-        }
+    var lengthRatio = scrollViewMeasure / denominatorValue;
+    return (
+      Math.abs(scrollViewMeasure - 2 * this._marginForLength) * lengthRatio
+    );
+  }
+
+  _calculatePosition(
+    innerContainerMeasure,
+    scrollViewMeasure,
+    innerContainerPosition,
+    outOfBoundaryValue,
+    length
+  ) {
+    var denominatorValue = innerContainerMeasure - scrollViewMeasure;
+    if (outOfBoundaryValue !== 0) {
+      denominatorValue += Math.abs(outOfBoundaryValue);
     }
 
-    /**
-     * Get the scroll bar's width
-     * @returns {number} the scroll bar's width
-     */
-    getWidth() {
-        if (this._thumbSprite) {
-            return this._thumbSprite.getPreferredSize().width;
-        }
-        return this._body.transform.boundingBox.width;
+    var positionRatio = 0;
+
+    if (denominatorValue !== 0) {
+      positionRatio = innerContainerPosition / denominatorValue;
+      positionRatio = Math.max(positionRatio, 0);
+      positionRatio = Math.min(positionRatio, 1);
     }
 
-    /**
-     * Set scroll bar auto hide state
-     * @param {boolean} autoHideEnabled scroll bar auto hide state
-     */
-    setAutoHideEnabled(autoHideEnabled) {
-        this._autoHideEnabled = autoHideEnabled;
+    var position =
+      (scrollViewMeasure - length - 2 * this._marginForLength) * positionRatio +
+      this._marginForLength;
 
-        this.color.opacityFromRenderer = !this._autoHideEnabled && !this._touching && this._autoHideRemainingTime <= 0 ? this.color.opacity : 0;
+    if (this._direction === DIR_VERTICAL) {
+      return new Point(
+        this._parentScroll.width - this._marginFromBoundary,
+        position
+      );
+    } else {
+      return new Point(position, this._marginFromBoundary);
     }
-
-    /**
-     * Query scroll bar auto hide state
-     * @returns {boolean} True if scroll bar auto hide is enabled, false otherwise.
-     */
-    isAutoHideEnabled() {
-        return this._autoHideEnabled;
-    }
-
-    createColor() {
-        return new ScrollViewBarColor();
-    }
-
-    /**
-     * Set a custom Scale9Sprite texture for the scroll bar thumb, replacing the default
-     * three-part (half-circles + body) appearance.
-     * @param {string|SpriteFrame} file Texture file path or SpriteFrame.
-     * @param {Rect} [capInsets] Nine-slice cap insets. If omitted the sprite uses its default thirds.
-     * @param {Color} [color] Tint color applied to the thumb sprite. Defaults to white (no tint).
-     */
-    setThumbTexture(file, capInsets, color) {
-        if (this._thumbSprite) {
-            this.removeProtectedChild(this._thumbSprite);
-            this._thumbSprite = null;
-        } else {
-            // First call: remove the default three-part sprites.
-            this.removeProtectedChild(this._upperHalfCircle);
-            this.removeProtectedChild(this._lowerHalfCircle);
-            this.removeProtectedChild(this._body);
-        }
-
-        this._thumbTextureFile = file;
-        this._thumbCapInsets = capInsets || null;
-        this._thumbColor = color || null;
-
-        // Make the bar a color+opacity pass-through so the thumb sprite's own
-        // color and alpha are displayed as-is, without the bar's DEFAULT_COLOR
-        // (52,65,87) multiplying into the cascade and darkening the thumb.
-        this._opacity = 255;
-        this.color.color = new Color(255, 255, 255);
-
-        var initialWidth = this.getWidth();
-        this._thumbSprite = new Scale9Sprite(file, capInsets);
-        this._thumbSprite.anchor = new Point(0.5, 0);
-        this._thumbSprite.setPreferredSize(new Size(initialWidth, 0));
-        var alpha = color && color.a != null ? color.a : 255;
-        if (color) {
-            this._thumbSprite.color.color = color;
-        }
-        this._thumbSprite.color.opacity = alpha;
-        this.addProtectedChild(this._thumbSprite);
-    }
-
-    /**
-     * Returns the texture file/SpriteFrame used for the custom thumb, or null if using the default.
-     * @returns {string|SpriteFrame|null}
-     */
-    getThumbTexture() {
-        return this._thumbTextureFile;
-    }
-
-    /**
-     * Returns the cap insets used for the custom thumb's Scale9Sprite, or null if not set.
-     * @returns {Rect|null}
-     */
-    getThumbCapInsets() {
-        return this._thumbCapInsets;
-    }
-
-    /**
-     * Returns the tint color applied to the custom thumb, or null if not set.
-     * @returns {Color|null}
-     */
-    getThumbColor() {
-        return this._thumbColor;
-    }
-
-    _updateLength(length) {
-        if (this._thumbSprite) {
-            this._thumbSprite.setPreferredSize(new Size(this._thumbSprite.getPreferredSize().width, length));
-        } else {
-            var ratio = length / this._body.getTextureRect().height;
-            this._body.scaleY = ratio;
-            this._upperHalfCircle.y = this._body.y + length;
-        }
-    }
-
-    _processAutoHide(dt) {
-        if (!this._autoHideEnabled || this._autoHideRemainingTime <= 0) {
-            return;
-        }
-        else if (this._touching) {
-            // If it is touching, don't auto hide.
-            return;
-        }
-
-        this._autoHideRemainingTime -= dt;
-        if (this._autoHideRemainingTime <= this.autoHideTime) {
-            this._autoHideRemainingTime = Math.max(0, this._autoHideRemainingTime);
-            this.getComponent(NodeComponentName.Color).opacityFromRenderer = this._opacity * (this._autoHideRemainingTime / this.autoHideTime);
-        }
-    }
-
-    update(dt) {
-        this._processAutoHide(dt);
-    }
-
-    /**
-     * This is called by parent ScrollView when a touch is began. Don't call this directly.
-     */
-    onTouchBegan() {
-        if (!this._autoHideEnabled) {
-            return;
-        }
-        this._touching = true;
-    }
-
-    /**
-     * This is called by parent ScrollView when a touch is ended. Don't call this directly.
-     */
-    onTouchEnded() {
-        if (!this._autoHideEnabled) {
-            return;
-        }
-        this._touching = false;
-
-        if (this._autoHideRemainingTime <= 0) {
-            // If the remaining time is 0, it means that it didn't moved after touch started so scroll bar is not showing.
-            return;
-        }
-        this._autoHideRemainingTime = this.autoHideTime;
-    }
-
-    /**
-     * @brief This is called by parent ScrollView when the parent is scrolled. Don't call this directly.
-     *
-     * @param {Point} outOfBoundary amount how much the inner container of ScrollView is out of boundary
-     */
-    onScrolled(outOfBoundary) {
-        if (this._autoHideEnabled) {
-            this._autoHideRemainingTime = this.autoHideTime;
-            this.color.opacityFromRenderer = this.color.opacity;
-        }
-
-        var innerContainer = this._parentScroll.getInnerContainer();
-
-        var innerContainerMeasure = 0;
-        var scrollViewMeasure = 0;
-        var outOfBoundaryValue = 0;
-        var innerContainerPosition = 0;
-
-        if (this._direction === DIR_VERTICAL) {
-            innerContainerMeasure = innerContainer.height;
-            scrollViewMeasure = this._parentScroll.height;
-            outOfBoundaryValue = outOfBoundary.y;
-            innerContainerPosition = -innerContainer.y;
-        }
-        else if (this._direction === DIR_HORIZONTAL) {
-            innerContainerMeasure = innerContainer.width;
-            scrollViewMeasure = this._parentScroll.width;
-            outOfBoundaryValue = outOfBoundary.x;
-            innerContainerPosition = -innerContainer.x;
-        }
-
-        var length = this._calculateLength(innerContainerMeasure, scrollViewMeasure, outOfBoundaryValue);
-        var position = this._calculatePosition(innerContainerMeasure, scrollViewMeasure, innerContainerPosition, outOfBoundaryValue, length);
-        this._updateLength(length);
-        this.position = position;
-    }
-
-    _calculateLength(innerContainerMeasure, scrollViewMeasure, outOfBoundaryValue) {
-        var denominatorValue = innerContainerMeasure;
-        if (outOfBoundaryValue !== 0) {
-            // If it is out of boundary, the length of scroll bar gets shorter quickly.
-            var GETTING_SHORTER_FACTOR = 20;
-            denominatorValue += (outOfBoundaryValue > 0 ? outOfBoundaryValue : -outOfBoundaryValue) * GETTING_SHORTER_FACTOR;
-        }
-
-        var lengthRatio = scrollViewMeasure / denominatorValue;
-        return Math.abs(scrollViewMeasure - 2 * this._marginForLength) * lengthRatio;
-    }
-
-    _calculatePosition(innerContainerMeasure, scrollViewMeasure, innerContainerPosition, outOfBoundaryValue, length) {
-        var denominatorValue = innerContainerMeasure - scrollViewMeasure;
-        if (outOfBoundaryValue !== 0) {
-            denominatorValue += Math.abs(outOfBoundaryValue);
-        }
-
-        var positionRatio = 0;
-
-        if (denominatorValue !== 0) {
-            positionRatio = innerContainerPosition / denominatorValue;
-            positionRatio = Math.max(positionRatio, 0);
-            positionRatio = Math.min(positionRatio, 1);
-        }
-
-        var position = (scrollViewMeasure - length - 2 * this._marginForLength) * positionRatio + this._marginForLength;
-
-        if (this._direction === DIR_VERTICAL) {
-            return new Point(this._parentScroll.width - this._marginFromBoundary, position);
-        }
-        else {
-            return new Point(position, this._marginFromBoundary);
-        }
-    }
+  }
 }
 
 /**
@@ -401,6 +447,8 @@ ScrollViewBar.DEFAULT_MARGIN = 20;
 ScrollViewBar.DEFAULT_AUTO_HIDE_TIME = 0.2;
 ScrollViewBar.DEFAULT_SCROLLBAR_OPACITY = 0.4;
 ScrollViewBar.HALF_CIRCLE_IMAGE_KEY = "/__half_circle_image";
-ScrollViewBar.HALF_CIRCLE_IMAGE = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAGCAMAAADAMI+zAAAAJ1BMVEX///////////////////////////////////////////////////9Ruv0SAAAADHRSTlMABgcbbW7Hz9Dz+PmlcJP5AAAAMElEQVR4AUXHwQ2AQAhFwYcLH1H6r1djzDK3ASxUpTBeK/uTCyz7dx54b44m4p5cD1MwAooEJyk3AAAAAElFTkSuQmCC";
+ScrollViewBar.HALF_CIRCLE_IMAGE =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAGCAMAAADAMI+zAAAAJ1BMVEX///////////////////////////////////////////////////9Ruv0SAAAADHRSTlMABgcbbW7Hz9Dz+PmlcJP5AAAAMElEQVR4AUXHwQ2AQAhFwYcLH1H6r1djzDK3ASxUpTBeK/uTCyz7dx54b44m4p5cD1MwAooEJyk3AAAAAElFTkSuQmCC";
 ScrollViewBar.BODY_IMAGE_1_PIXEL_HEIGHT_KEY = "/__body_image_height";
-ScrollViewBar.BODY_IMAGE_1_PIXEL_HEIGHT = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAABCAMAAADdNb8LAAAAA1BMVEX///+nxBvIAAAACklEQVR4AWNABgAADQABYc2cpAAAAABJRU5ErkJggg==";
+ScrollViewBar.BODY_IMAGE_1_PIXEL_HEIGHT =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAABCAMAAADdNb8LAAAAA1BMVEX///+nxBvIAAAACklEQVR4AWNABgAADQABYc2cpAAAAABJRU5ErkJggg==";

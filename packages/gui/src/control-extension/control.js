@@ -91,12 +91,12 @@ export class Control extends Layer {
   }
 
   getTouchLocation(touch) {
-    return this.transform.convertToNodeSpace(touch);
+    return this.transformComponent.convertToNodeSpace(touch);
   }
 
   isTouchInside(touch) {
-    const touchLocation = this.parent.transform.convertToNodeSpace(touch);
-    return Rect.containsPoint(this.transform.boundingBox, touchLocation);
+    const touchLocation = this.parent.transformComponent.convertToNodeSpace(touch);
+    return Rect.containsPoint(this.transformComponent.boundingBox, touchLocation);
   }
 
   _invocationWithTargetAndActionForControlEvent(target, action, controlEvent) {

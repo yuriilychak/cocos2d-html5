@@ -89,8 +89,8 @@ export class ControlStepper extends Control {
       });
 
       var maxRect = Rect.union(
-        this._minusButton.transform.boundingBox,
-        this._plusButton.transform.boundingBox
+        this._minusButton.transformComponent.boundingBox,
+        this._plusButton.transformComponent.boundingBox
       );
       this.width =
         this._minusButton.width +

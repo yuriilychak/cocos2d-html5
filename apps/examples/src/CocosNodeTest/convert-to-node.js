@@ -122,8 +122,8 @@ export class ConvertToNode extends TestNodeDemo {
     for (var i = 0; i < 3; i++) {
       var node = this.getChildByTag(100 + i);
 
-      var p1 = node.transform.convertToNodeSpaceAR(location);
-      var p2 = node.transform.convertToNodeSpace(location);
+      var p1 = node.transformComponent.convertToNodeSpaceAR(location);
+      var p2 = node.transformComponent.convertToNodeSpace(location);
 
       log(
         "AR: x=" +

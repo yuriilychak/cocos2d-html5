@@ -25,7 +25,7 @@ if (
 }
 
 function adjustEditBoxPosition(editBox) {
-  var worldPos = editBox.transform.convertToWorldSpace(new Point(0, 0));
+  var worldPos = editBox.transformComponent.convertToWorldSpace(new Point(0, 0));
   var windowHeight = ServiceLocator.eglView.visibleRect.height;
   var windowWidth = ServiceLocator.eglView.visibleRect.width;
   var factor = windowWidth > windowHeight ? 0.7 : 0.5;

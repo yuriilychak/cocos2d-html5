@@ -293,7 +293,7 @@ class BoneNode extends Node {
     var boneSkins = this._boneSkins;
     for (var skin, i = 0; i < boneSkins.length; i++) {
       skin = boneSkins[i];
-      var r = skin.transform.boundingBox;
+      var r = skin.transformComponent.boundingBox;
       if (
         !skin.visible ||
         (r.x === 0 && r.y === 0 && r.width === 0 && r.height === 0)

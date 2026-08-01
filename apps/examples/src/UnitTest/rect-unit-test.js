@@ -120,7 +120,7 @@ export class RectUnitTest extends UnitTestBase {
     var node = new Node();
     node.width = 99;
     node.height = 101;
-    var bb = node.transform.boundingBox;
+    var bb = node.transformComponent.boundingBox;
     if (bb.height != 101 || bb.width != 99) throw "Fail boundingBox";
     ret.push(bb.height);
     ret.push(bb.width);

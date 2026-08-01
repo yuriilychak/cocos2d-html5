@@ -563,7 +563,7 @@ export class Node extends ComponentContainer {
     ServiceLocator.eventManager.pauseTarget(this);
   }
 
-  get transform() {
+  get transformComponent() {
     return this.#transform;
   }
 

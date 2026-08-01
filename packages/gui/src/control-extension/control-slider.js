@@ -74,8 +74,8 @@ export class ControlSlider extends Control {
   }
 
   isTouchInside(touch) {
-    const touchLocation = this.parent.transform.convertToNodeSpace(touch);
-    const rect = this.transform.boundingBox;
+    const touchLocation = this.parent.transformComponent.convertToNodeSpace(touch);
+    const rect = this.transformComponent.boundingBox;
     const thumbSize = this._thumb !== null ? this._thumb.contentSize : Size.ZERO;
     rect.width += thumbSize.width;
     rect.x -= thumbSize.width / 2;
@@ -84,7 +84,7 @@ export class ControlSlider extends Control {
   }
 
   locationFromTouch(touch) {
-    const touchLocation = this.transform.convertToNodeSpace(touch);
+    const touchLocation = this.transformComponent.convertToNodeSpace(touch);
 
     touchLocation.x = Math.min(
       this._progressSize.width,

@@ -1849,7 +1849,7 @@ export class ParticleSystem extends Node {
 
     // position
     if (this.positionType === ParticleSystem.TYPE_FREE)
-      particle.startPos = this.transform.convertToWorldSpace(this._pointZeroForParticle);
+      particle.startPos = this.transformComponent.convertToWorldSpace(this._pointZeroForParticle);
     else if (this.positionType === ParticleSystem.TYPE_RELATIVE) {
       particle.startPos.x = this.x;
       particle.startPos.y = this.y;
@@ -1985,7 +1985,7 @@ export class ParticleSystem extends Node {
     if (this.positionType === ParticleSystem.TYPE_FREE) {
       Point.copyIn(
         currentPosition,
-        this.transform.convertToWorldSpace(this._pointZeroForParticle)
+        this.transformComponent.convertToWorldSpace(this._pointZeroForParticle)
       );
     } else if (this.positionType === ParticleSystem.TYPE_RELATIVE) {
       currentPosition.x = this.x;

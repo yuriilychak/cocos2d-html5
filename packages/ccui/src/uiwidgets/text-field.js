@@ -337,7 +337,7 @@ export class TextField extends Widget {
    */
   hitTest(pt) {
     if (this._useTouchArea) {
-      var nsp = this.transform.convertToNodeSpace(pt);
+      var nsp = this.transformComponent.convertToNodeSpace(pt);
       var bb = new Rect(
         -this._touchWidth * this.anchorX,
         -this._touchHeight * this.anchorY,
