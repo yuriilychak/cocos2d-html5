@@ -80,7 +80,7 @@ export class NodeToWorld extends TestNodeDemo {
     return JSON.stringify(ret);
   }
   getCurrentResult() {
-    var ret = this.autoParam.nodeToWorldTransform;
+    var ret = this.autoParam.transform.nodeToWorldTransform;
     ret.b = ret.b.toFixed(2);
     ret.c = ret.c.toFixed(2);
     ret.tx = ret.tx.toFixed(0);

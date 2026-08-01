@@ -180,7 +180,7 @@ export default class LayerCanvasRenderer extends NodeCanvasRenderCmd {
 
     if (node.children.length === 0)
       return new Rect(0, 0, 10, 10);
-    const trans = node.nodeToWorldTransform;
+    const trans = node.transform.nodeToWorldTransform;
 
     const locChildren = node.children;
     for (let i = 0, len = locChildren.length; i < len; i++) {

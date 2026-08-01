@@ -68,7 +68,7 @@ export class Paddle extends Sprite {
 
         myRect.x += this.x;
         myRect.y += this.y;
-        return Rect.containsPoint(myRect, touch);//this.convertTouchToNodeSpaceAR(touch));
+        return Rect.containsPoint(myRect, touch);//this.transform.convertTouchToNodeSpaceAR(touch));
     }
 
     onTouchBegan(touch, event) {

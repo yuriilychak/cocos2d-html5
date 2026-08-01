@@ -1253,8 +1253,8 @@ export class ScrollView extends Layout {
   }
 
   _handleMoveLogic(touch) {
-    var touchPositionInNodeSpace = this.convertToNodeSpace(touch),
-      previousTouchPositionInNodeSpace = this.convertToNodeSpace(
+    var touchPositionInNodeSpace = this.transform.convertToNodeSpace(touch),
+      previousTouchPositionInNodeSpace = this.transform.convertToNodeSpace(
         touch.previousLocation
       );
     var delta = Point.sub(
@@ -1267,8 +1267,8 @@ export class ScrollView extends Layout {
   }
 
   _handleReleaseLogic(touch) {
-    var touchPositionInNodeSpace = this.convertToNodeSpace(touch),
-      previousTouchPositionInNodeSpace = this.convertToNodeSpace(
+    var touchPositionInNodeSpace = this.transform.convertToNodeSpace(touch),
+      previousTouchPositionInNodeSpace = this.transform.convertToNodeSpace(
         touch.previousLocation
       );
     var delta = Point.sub(

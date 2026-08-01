@@ -597,7 +597,7 @@ export class Widget extends ProtectedNode {
   }
 
   getWorldPosition() {
-    return this.convertToWorldSpace(
+    return this.transform.convertToWorldSpace(
       new Point(
         this.anchorX * this.width,
         this.anchorY * this.height
@@ -890,7 +890,7 @@ export class Widget extends ProtectedNode {
 
   hitTest(pt) {
     var bb = new Rect(0, 0, this.width, this.height);
-    return Rect.containsPoint(bb, this.convertToNodeSpace(pt));
+    return Rect.containsPoint(bb, this.transform.convertToNodeSpace(pt));
   }
 
   isClippingParentContainsPoint(pt) {

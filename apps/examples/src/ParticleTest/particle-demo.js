@@ -198,7 +198,7 @@ export class ParticleDemo extends BaseTestLayer {
   _moveToTouchPoint(location) {
     var pos = new Point(0, 0);
     if (this._background) {
-      pos = this._background.convertToWorldSpace(new Point(0, 0));
+      pos = this._background.transform.convertToWorldSpace(new Point(0, 0));
     }
     this._emitter.x = location.x - pos.x;
     this._emitter.y = location.y - pos.y;

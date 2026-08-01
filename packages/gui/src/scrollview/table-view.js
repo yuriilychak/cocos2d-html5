@@ -495,7 +495,7 @@ export class TableView extends GScrollView {
     if (this._touchedCell) {
       var bb = this.boundingBox;
       var tmpOrigin = new Point(bb.x, bb.y);
-      tmpOrigin = this.parent.convertToWorldSpace(tmpOrigin);
+      tmpOrigin = this.parent.transform.convertToWorldSpace(tmpOrigin);
       bb.x = tmpOrigin.x;
       bb.y = tmpOrigin.y;
       var locTableViewDelegate = this._tableViewDelegate;
@@ -520,7 +520,7 @@ export class TableView extends GScrollView {
     if (this._touches.length === 1) {
       var index, point;
 
-      point = this.getContainer().convertToNodeSpace(touch);
+      point = this.getContainer().transform.convertToNodeSpace(touch);
 
       index = this._indexFromOffset(point);
       if (index === INVALID_INDEX) this._touchedCell = null;

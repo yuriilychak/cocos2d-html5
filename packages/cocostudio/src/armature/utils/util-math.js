@@ -39,7 +39,7 @@ var CC_SAFE_RELEASE = function (obj) {
 };
 
 export function isSpriteContainPoint(sprite, point, outPoint) {
-  var p = sprite.convertToNodeSpace(point);
+  var p = sprite.transform.convertToNodeSpace(point);
   if (outPoint) {
     outPoint.x = p.x;
     outPoint.y = p.y;

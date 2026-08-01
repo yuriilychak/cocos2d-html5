@@ -343,8 +343,8 @@ export class Layout extends Widget {
 
   _getClippingRect() {
     if (this._clippingRectDirty) {
-      var worldPos = this.convertToWorldSpace(new Point(0, 0));
-      var t = this.nodeToWorldTransform;
+      var worldPos = this.transform.convertToWorldSpace(new Point(0, 0));
+      var t = this.transform.nodeToWorldTransform;
       var scissorWidth = this.width * t.a;
       var scissorHeight = this.height * t.d;
       var parentClippingRect;
@@ -956,7 +956,7 @@ export class Layout extends Widget {
       widget instanceof Layout
         ? widget._getLayoutAccumulatedSize()
         : widget.contentSize;
-    return widget.convertToWorldSpace(
+    return widget.transform.convertToWorldSpace(
       new Point(widgetSize.width / 2, widgetSize.height / 2)
     );
   }

@@ -235,7 +235,7 @@ export default class LayerGradientWebGLRenderer extends LayerColorWebGLRenderer 
         node.width,
         node.height
       );
-      const trans = node.nodeToWorldTransform;
+      const trans = node.transform.nodeToWorldTransform;
       this._clipRect = AffineTransform._applyToRectIn(rect, trans);
     }
     return this._clipRect;

@@ -92,7 +92,7 @@ export class ControlSwitch extends Control {
   }
 
   locationFromTouch(touch) {
-    return this.convertToNodeSpace(touch);
+    return this.transform.convertToNodeSpace(touch);
   }
 
   onTouchBegan(touch, event) {

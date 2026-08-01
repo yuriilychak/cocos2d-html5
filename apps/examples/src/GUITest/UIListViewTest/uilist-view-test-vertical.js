@@ -128,8 +128,8 @@ export class UIListViewTest_Vertical extends UIMainLayer {
   }
 
   getItemPositionYInView(item) {
-    var worldPos = item.parent.convertToWorldSpaceAR(item.position);
-    var viewPos = this.listView.convertToNodeSpaceAR(worldPos);
+    var worldPos = item.parent.transform.convertToWorldSpaceAR(item.position);
+    var viewPos = this.listView.transform.convertToNodeSpaceAR(worldPos);
     return viewPos.y;
   }
 

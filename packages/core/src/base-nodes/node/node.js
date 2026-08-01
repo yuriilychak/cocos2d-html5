@@ -571,36 +571,8 @@ export class Node extends ComponentContainer {
     ServiceLocator.eventManager.pauseTarget(this);
   }
 
-  get parentToNodeTransform() {
-    return this.#transform.parentToNodeTransform;
-  }
-
-  get nodeToWorldTransform() {
-    return this.#transform.nodeToWorldTransform;
-  }
-
-  get worldToNodeTransform() {
-    return this.#transform.worldToNodeTransform;
-  }
-
-  convertToNodeSpace(worldPoint) {
-    return this.#transform.convertToNodeSpace(worldPoint);
-  }
-
-  convertToWorldSpace(nodePoint = new Point()) {
-    return this.#transform.convertToWorldSpace(nodePoint);
-  }
-
-  convertToNodeSpaceAR(worldPoint) {
-    return this.#transform.convertToNodeSpaceAR(worldPoint);
-  }
-
-  convertToWorldSpaceAR(nodePoint) {
-    return this.#transform.convertToWorldSpaceAR(nodePoint);
-  }
-
-  convertTouchToNodeSpaceAR(touch) {
-    return this.#transform.convertTouchToNodeSpaceAR(touch);
+  get transform() {
+    return this.#transform;
   }
 
   /**
@@ -907,10 +879,6 @@ export class Node extends ComponentContainer {
 
   set renderCmd(renderCmd) {
     this.#renderCmd = renderCmd;
-  }
-
-  get transform() {
-    return this.#transform;
   }
 
   get width() {
