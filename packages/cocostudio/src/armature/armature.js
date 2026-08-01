@@ -36,11 +36,9 @@
  * @property {ColliderFilter}       colliderFilter  - <@writeonly> The collider filter of the armature
  */
 import {
-  AffineTransform,
   BlendFunc,
   Node,
   Point,
-  Rect,
   arrayRemoveObject,
   assert,
   log,
@@ -54,6 +52,7 @@ import { Bone } from "./bone.js";
 import { armatureDataManager } from "./utils/armature-data-manager.js";
 import { ArmatureData } from "./utils/datas/armature-data.js";
 import { AnimationData } from "./utils/datas/utils.js";
+import ArmatureTransform from "./armature-transform.js";
 export class Armature extends Node {
   /**
    * Create a armature node.
@@ -376,56 +375,8 @@ export class Armature extends Node {
     this.scheduler.unscheduleUpdate();
   }
 
-  /**
-   * This boundingBox will calculate all bones' boundingBox every time
-   * @returns {Rect}
-   */
-  get boundingBox() {
-    var minX,
-      minY,
-      maxX,
-      maxY = 0;
-    var first = true;
-
-    var boundingBox = new Rect(0, 0, 0, 0),
-      locChildren = this.children;
-
-    var len = locChildren.length;
-    for (var i = 0; i < len; i++) {
-      var bone = locChildren[i];
-      if (bone) {
-        var r = bone.getDisplayManager().boundingBox;
-        if (r.x === 0 && r.y === 0 && r.width === 0 && r.height === 0) continue;
-
-        if (first) {
-          minX = r.x;
-          minY = r.y;
-          maxX = r.x + r.width;
-          maxY = r.y + r.height;
-          first = false;
-        } else {
-          minX = r.x < boundingBox.x ? r.x : boundingBox.x;
-          minY = r.y < boundingBox.y ? r.y : boundingBox.y;
-          maxX =
-            r.x + r.width > boundingBox.x + boundingBox.width
-              ? r.x + r.width
-              : boundingBox.x + boundingBox.width;
-          maxY =
-            r.y + r.height > boundingBox.y + boundingBox.height
-              ? r.y + r.height
-              : boundingBox.y + boundingBox.height;
-        }
-
-        boundingBox.x = minX;
-        boundingBox.y = minY;
-        boundingBox.width = maxX - minX;
-        boundingBox.height = maxY - minY;
-      }
-    }
-    return AffineTransform.applyToRect(
-      boundingBox,
-      this.nodeToParentTransform
-    );
+  createTransform() {
+    return new ArmatureTransform();
   }
 
   /**

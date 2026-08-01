@@ -46,6 +46,7 @@ import {
 } from "@aspect/core";
 import { DrawNode } from "@aspect/shape-nodes";
 import { BoneNodeOrder } from "./bone-node-order.js";
+import BoneNodeTransform from "./bone-node-transform.js";
 
 let _SkeletonNode = null;
 export function _setSkeletonNodeClass(SN) {
@@ -317,12 +318,8 @@ class BoneNode extends Node {
     return displayRect;
   }
 
-  get boundingBox() {
-    var boundingBox = this.getVisibleSkinsRect();
-    return AffineTransform.applyToRect(
-      boundingBox,
-      this.nodeToParentTransform
-    );
+  createTransform() {
+    return new BoneNodeTransform();
   }
 
   batchBoneDrawToSkeleton(bone) {}

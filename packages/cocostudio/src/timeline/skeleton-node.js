@@ -30,7 +30,6 @@
  */
 
 import {
-  AffineTransform,
   Point,
   Rect,
   Size,
@@ -39,6 +38,7 @@ import {
 } from "@aspect/core";
 
 import { BoneNode } from "./bone-node.js";
+import SkeletonNodeTransform from "./skeleton-node-transform.js";
 var type = {
   p: new Point(),
   size: new Size(),
@@ -110,57 +110,8 @@ class SkeletonNode extends BoneNode {
     this._skinGroupMap[groupName] = boneSkinNameMap;
   }
 
-  get boundingBox() {
-    var minx,
-      miny,
-      maxx,
-      maxy = 0;
-    minx = miny = maxx = maxy;
-    var boundingBox = this.getVisibleSkinsRect();
-    var first = true;
-    if (
-      boundingBox.x !== 0 ||
-      boundingBox.y !== 0 ||
-      boundingBox.width !== 0 ||
-      boundingBox.height !== 0
-    ) {
-      minx = Rect.getMinX(boundingBox);
-      miny = Rect.getMinY(boundingBox);
-      maxx = Rect.getMaxX(boundingBox);
-      maxy = Rect.getMaxY(boundingBox);
-      first = false;
-    }
-    var allBones = this.getAllSubBones();
-    for (var bone, i = 0; i < allBones.length; i++) {
-      bone = allBones[i];
-      var r = AffineTransform.applyToRect(
-        bone.getVisibleSkinsRect(),
-        bone.nodeToAncestorTransform(bone.getRootSkeletonNode())
-      );
-      if (r.x === 0 && r.y === 0 && r.width === 0 && r.height === 0) continue;
-
-      if (first) {
-        minx = Rect.getMinX(r);
-        miny = Rect.getMinY(r);
-        maxx = Rect.getMaxX(r);
-        maxy = Rect.getMaxY(r);
-
-        first = false;
-      } else {
-        minx = Math.min(Rect.getMinX(r), minx);
-        miny = Math.min(Rect.getMinY(r), miny);
-        maxx = Math.max(Rect.getMaxX(r), maxx);
-        maxy = Math.max(Rect.getMaxY(r), maxy);
-      }
-    }
-    boundingBox.x = minx;
-    boundingBox.y = miny;
-    boundingBox.width = maxx - minx;
-    boundingBox.height = maxy - miny;
-    return AffineTransform.applyToRect(
-      boundingBox,
-      this.nodeToParentTransform
-    );
+  createTransform() {
+    return new SkeletonNodeTransform();
   }
 
   _visit(parentCmd) {

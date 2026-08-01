@@ -1,9 +1,7 @@
 import {
   Node,
-  Rect,
   isString,
   log,
-  FLT_MAX,
   Path,
   OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA,
   ServiceLocator
@@ -13,11 +11,10 @@ import {
   AtlasAttachmentLoader,
   SkeletonJson,
   Skeleton as SpineSkeleton,
-  Utils,
-  RegionAttachment,
   Physics
 } from "@esotericsoftware/spine-core";
 import { SkeletonTexture } from "./skeleton-texture";
+import SkeletonTransform from "./skeleton-transform";
 
 export class Skeleton extends Node {
   constructor(skeletonDataFile, atlasFile, scale) {
@@ -124,57 +121,8 @@ export class Skeleton extends Node {
     this.init();
   }
 
-  get boundingBox() {
-    let minX = FLT_MAX,
-      minY = FLT_MAX,
-      maxX = -FLT_MAX,
-      maxY = -FLT_MAX;
-    const scaleX = this.scaleX,
-      scaleY = this.scaleY;
-    const slots = this._skeleton.slots;
-
-    for (let i = 0, n = slots.length; i < n; ++i) {
-      const slot = slots[i];
-      const attachment = slot.attachment;
-      if (!attachment || !(attachment instanceof RegionAttachment)) continue;
-      const vertices = Utils.setArraySize(new Array(), 8, 0);
-      attachment.computeWorldVertices(slot, vertices, 0, 2);
-      minX = Math.min(
-        minX,
-        vertices[0] * scaleX,
-        vertices[6] * scaleX,
-        vertices[4] * scaleX,
-        vertices[2] * scaleX
-      );
-      minY = Math.min(
-        minY,
-        vertices[1] * scaleY,
-        vertices[7] * scaleY,
-        vertices[5] * scaleY,
-        vertices[3] * scaleY
-      );
-      maxX = Math.max(
-        maxX,
-        vertices[0] * scaleX,
-        vertices[6] * scaleX,
-        vertices[4] * scaleX,
-        vertices[2] * scaleX
-      );
-      maxY = Math.max(
-        maxY,
-        vertices[1] * scaleY,
-        vertices[7] * scaleY,
-        vertices[5] * scaleY,
-        vertices[3] * scaleY
-      );
-    }
-    const position = this.position;
-    return new Rect(
-      position.x + minX,
-      position.y + minY,
-      maxX - minX,
-      maxY - minY
-    );
+  createTransform() {
+    return new SkeletonTransform();
   }
 
   updateWorldTransform() {
